@@ -173,6 +173,7 @@ conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.1 svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
+conv/proe-g.1 svneol=native#text/plain
 conv/proe-g.c svneol=native#text/plain
 conv/tankill-g.1 svneol=native#text/plain
 conv/tankill-g.c svneol=native#text/plain
