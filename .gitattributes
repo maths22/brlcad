@@ -4846,6 +4846,7 @@ src/util/wavelet.1 svneol=native#text/plain
 src/util/wavelet.c svneol=native#text/plain
 src/util/xyz-pl.c svneol=native#text/plain
 src/util/yuv-pix.c svneol=native#text/plain
+src/vas4/.cvsignore svneol=native#text/plain
 src/vas4/Makefile.am svneol=native#text/plain
 src/vas4/init_ik.c svneol=native#text/plain
 src/vas4/record_seq.c svneol=native#text/plain

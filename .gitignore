@@ -535,4 +535,5 @@ src/util/ttcp
 src/util/wavelet
 src/util/xyz-pl
 src/util/yuv-pix
+src/vas4/vas4
 src/vdeck/vdeck
