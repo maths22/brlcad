@@ -1246,6 +1246,7 @@ librt/hist.c svneol=native#text/plain
 librt/librt.3 svneol=native#text/plain
 librt/mater.c svneol=native#text/plain
 librt/memalloc.c svneol=native#text/plain
+librt/mkbundle.c svneol=native#text/plain
 librt/nmg_bool.c svneol=native#text/plain
 librt/nmg_ck.c svneol=native#text/plain
 librt/nmg_class.c svneol=native#text/plain
