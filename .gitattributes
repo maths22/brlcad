@@ -650,6 +650,7 @@ liboptical/sh_stxt.c svneol=native#text/plain
 liboptical/sh_text.c svneol=native#text/plain
 liboptical/sh_toyota.c svneol=native#text/plain
 liboptical/sh_wood.c svneol=native#text/plain
+liboptical/turb.c svneol=native#text/plain
 liborle/Cakefile -text
 liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
