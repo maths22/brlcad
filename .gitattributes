@@ -21,6 +21,7 @@ bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
 /brlcad.spec.in svneol=native#text/plain
 /configure.ac svneol=native#text/plain
+db/.cvsignore svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
