@@ -4142,6 +4142,8 @@ pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
+pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
+pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
 pro-engineer/text/Cakefile -text
 pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
