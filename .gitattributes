@@ -1140,6 +1140,7 @@ util/pl-X.1 svneol=native#text/plain
 util/pl-X.c svneol=native#text/plain
 util/pl-X10.1.stub -text
 util/pl-X10.c svneol=native#text/plain
+util/pl-asc.1 svneol=native#text/plain
 util/pl-asc.c svneol=native#text/plain
 util/pl-hpgl.c svneol=native#text/plain
 util/pl-pl.1 svneol=native#text/plain
