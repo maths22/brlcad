@@ -3807,8 +3807,6 @@ libz/zlib.html svneol=native#text/html
 libz/zutil.c svneol=native#text/plain
 libz/zutil.h svneol=native#text/plain
 /ltconfig -text
-/makefile.vc svneol=native#text/plain
-/makemsc.hdr -text
 mged/Makefile.am svneol=native#text/plain
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
