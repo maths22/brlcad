@@ -4391,16 +4391,6 @@ rt/viewsil.c svneol=native#text/plain
 rt/viewweight.c svneol=native#text/plain
 rt/viewxray.c svneol=native#text/plain
 rt/worker.c svneol=native#text/plain
-rttherm/pixtest.c svneol=native#text/plain
-rttherm/rttherm.1 svneol=native#text/plain
-rttherm/spectrum.c svneol=native#text/plain
-rttherm/ssamp-bw.1 svneol=native#text/plain
-rttherm/ssamp-bw.c svneol=native#text/plain
-rttherm/ssampview.c svneol=native#text/plain
-rttherm/ssampview.tcl svneol=native#text/plain
-rttherm/std_day_1km.dat -text
-rttherm/test.sh svneol=native#text/x-sh
-rttherm/viewtherm.c svneol=native#text/plain
 sh/Makefile.am svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
 sh/brlcad-check.sh svneol=native#text/x-sh
