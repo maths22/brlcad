@@ -526,6 +526,7 @@ util/pix-ikr.c svneol=native#text/plain
 util/pix-lowp-ik.c svneol=native#text/plain
 util/pix-orle.c svneol=native#text/plain
 util/pix-rle.c svneol=native#text/plain
+util/pix-spm.c svneol=native#text/plain
 util/pix3filter.c svneol=native#text/plain
 util/pixbackgnd.c svneol=native#text/plain
 util/pixbustup.c svneol=native#text/plain
