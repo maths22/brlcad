@@ -1291,6 +1291,7 @@ remrt/ihost.h svneol=native#text/plain
 remrt/protocol.h svneol=native#text/plain
 remrt/remrt.1 svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
+remrt/rtmon.c svneol=native#text/plain
 remrt/rtnode.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 remrt/rtsync.c svneol=native#text/plain
