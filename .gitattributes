@@ -1291,6 +1291,7 @@ tab/txyz-pl.c svneol=native#text/plain
 tcl/Cakefile -text
 tcl/tclAppInit.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
+tclscripts/html_library.tcl svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
@@ -1299,6 +1300,7 @@ tclscripts/mged/raypick.tcl svneol=native#text/plain
 tclscripts/mged/sliders.tcl svneol=native#text/plain
 tclscripts/mged/solclick.tcl svneol=native#text/plain
 tclscripts/mged/solcreate.tcl svneol=native#text/plain
+tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
