@@ -1,7 +1,6 @@
 * text=auto !eol
 /.cvsignore svneol=native#text/plain
 /AUTHORS svneol=native#text/plain
-BRL-CAD.pbproj/project.pbxproj svneol=native#text/plain
 /COPYRIGHT -text
 /Cakefile.defs -text
 /HISTORY -text
