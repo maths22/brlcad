@@ -692,6 +692,7 @@ libbu/magic.c svneol=native#text/plain
 libbu/malloc.c svneol=native#text/plain
 libbu/memset.c svneol=native#text/plain
 libbu/parallel.c svneol=native#text/plain
+libbu/parse.c svneol=native#text/plain
 libbu/printb.c svneol=native#text/plain
 libbu/ptbl.c svneol=native#text/plain
 libbu/rb_create.c svneol=native#text/plain
