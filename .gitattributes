@@ -709,6 +709,7 @@ util/pixrot.c svneol=native#text/plain
 util/pixsaturate.c svneol=native#text/plain
 util/pixscale.1 svneol=native#text/plain
 util/pixscale.c svneol=native#text/plain
+util/pixshrink.c svneol=native#text/plain
 util/pixstat.1 svneol=native#text/plain
 util/pixstat.c svneol=native#text/plain
 util/pixt-ik.c svneol=native#text/plain
