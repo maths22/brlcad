@@ -374,6 +374,7 @@ util/pixtile.c svneol=native#text/plain
 util/pixuntile.c svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/pldebug.c svneol=native#text/plain
+util/plgetframe.1 svneol=native#text/plain
 util/plgetframe.c svneol=native#text/plain
 util/plrot.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
