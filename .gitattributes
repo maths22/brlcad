@@ -448,6 +448,7 @@ util/pixtile.c svneol=native#text/plain
 util/pixuntile.c svneol=native#text/plain
 util/pl-X.c svneol=native#text/plain
 util/pl-X10.c svneol=native#text/plain
+util/pl-pl.c svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/plcolor.c svneol=native#text/plain
 util/pldebug.c svneol=native#text/plain
