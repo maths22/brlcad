@@ -2799,9 +2799,6 @@ libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtermio/vers.c svneol=native#text/plain
-libtk8.3/Cakefile -text
-libtk8.3/ChangeLog svneol=native#text/plain
-libtk8.3/README svneol=native#text/plain
 libtk8.3/bitmaps/error.bmp -text svneol=unset#image/bmp
 libtk8.3/bitmaps/gray12.bmp -text svneol=unset#image/bmp
 libtk8.3/bitmaps/gray25.bmp -text svneol=unset#image/bmp
@@ -2812,7 +2809,6 @@ libtk8.3/bitmaps/info.bmp -text svneol=unset#image/bmp
 libtk8.3/bitmaps/questhead.bmp -text svneol=unset#image/bmp
 libtk8.3/bitmaps/question.bmp -text svneol=unset#image/bmp
 libtk8.3/bitmaps/warning.bmp -text svneol=unset#image/bmp
-libtk8.3/changes -text
 libtk8.3/compat/license.terms svneol=native#text/plain
 libtk8.3/compat/limits.h svneol=native#text/plain
 libtk8.3/compat/stdlib.h svneol=native#text/plain
@@ -2957,7 +2953,6 @@ libtk8.3/doc/toplevel.n svneol=native#text/plain
 libtk8.3/doc/winfo.n svneol=native#text/plain
 libtk8.3/doc/wish.1 svneol=native#text/plain
 libtk8.3/doc/wm.n svneol=native#text/plain
-libtk8.3/fix_makefile.sh svneol=native#text/x-sh
 libtk8.3/generic/README svneol=native#text/plain
 libtk8.3/generic/default.h svneol=native#text/plain
 libtk8.3/generic/ks_names.h svneol=native#text/plain
@@ -3157,7 +3152,6 @@ libtk8.3/library/text.tcl svneol=native#text/plain
 libtk8.3/library/tk.tcl svneol=native#text/plain
 libtk8.3/library/tkfbox.tcl svneol=native#text/plain
 libtk8.3/library/xmfbox.tcl svneol=native#text/plain
-libtk8.3/license.terms svneol=native#text/plain
 libtk8.3/mac/MW_TkHeader.h svneol=native#text/plain
 libtk8.3/mac/MW_TkHeader.pch -text
 libtk8.3/mac/MW_TkOldImgHeader.h svneol=native#text/plain
