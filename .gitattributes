@@ -1019,6 +1019,7 @@ util/alias-pix.1 svneol=native#text/plain
 util/alias-pix.c svneol=native#text/plain
 util/ap-pix.1 svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
+util/asc-pl.c svneol=native#text/plain
 util/azel.1 svneol=native#text/plain
 util/azel.c svneol=native#text/plain
 util/brlcad.1 svneol=native#text/plain
