@@ -217,6 +217,7 @@ util/bwcrop.c svneol=native#text/plain
 util/bwdiff.c svneol=native#text/plain
 util/bwfilter.c svneol=native#text/plain
 util/bwhist.c svneol=native#text/plain
+util/bwhisteq.c svneol=native#text/plain
 util/bwmod.c svneol=native#text/plain
 util/bwrect.c svneol=native#text/plain
 util/bwrot.c svneol=native#text/plain
