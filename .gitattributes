@@ -320,6 +320,7 @@ fbed/std.h svneol=native#text/plain
 fbed/try.c svneol=native#text/plain
 fbed/try.h svneol=native#text/plain
 fbserv/Cakefile -text
+fbserv/fbserv.1 svneol=native#text/plain
 fbserv/fbserv.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
 h/Cakefile -text
