@@ -1023,6 +1023,7 @@ libdm/Cakefile -text
 libdm/clip.c svneol=native#text/plain
 libdm/cmd.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
+libdm/db_obj.c svneol=native#text/plain
 libdm/dm-Null.c svneol=native#text/plain
 libdm/dm-X.c svneol=native#text/plain
 libdm/dm-generic.c svneol=native#text/plain
