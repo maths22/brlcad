@@ -1233,6 +1233,7 @@ librt/db_scan.c svneol=native#text/plain
 librt/db_tree.c svneol=native#text/plain
 librt/db_walk.c svneol=native#text/plain
 librt/debug.h svneol=native#text/plain
+librt/dg_obj.c svneol=native#text/plain
 librt/dir.c svneol=native#text/plain
 librt/fast.sh svneol=native#text/x-sh
 librt/fixpt.h svneol=native#text/plain
