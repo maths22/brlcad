@@ -233,6 +233,7 @@ h/msr.h svneol=native#text/plain
 h/nmg.h svneol=native#text/plain
 h/noalias-prag.h svneol=native#text/plain
 h/noalias.h svneol=native#text/plain
+h/nurb.h svneol=native#text/plain
 h/orle.h svneol=native#text/plain
 h/pkg.h svneol=native#text/plain
 h/plot3.h svneol=native#text/plain
