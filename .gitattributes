@@ -2020,7 +2020,6 @@ src/other/libitcl/CHANGES -text
 src/other/libitcl/ChangeLog svneol=native#text/plain
 src/other/libitcl/INCOMPATIBLE -text
 src/other/libitcl/Makefile.am svneol=native#text/plain
-src/other/libitcl/Makefile.pmac svneol=native#text/plain
 src/other/libitcl/README svneol=native#text/plain
 src/other/libitcl/TODO svneol=native#text/plain
 src/other/libitcl/confdefs.h svneol=native#text/plain
