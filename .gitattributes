@@ -1101,6 +1101,7 @@ util/bwstat.1 svneol=native#text/plain
 util/bwstat.c svneol=native#text/plain
 util/bwthresh.1 svneol=native#text/plain
 util/bwthresh.c svneol=native#text/plain
+util/cv.c svneol=native#text/plain
 util/dpix-pix.1 svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
