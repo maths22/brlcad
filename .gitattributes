@@ -191,6 +191,7 @@ conv/cy-g.1 svneol=native#text/plain
 conv/cy-g.c svneol=native#text/plain
 conv/dbclean.1 svneol=native#text/plain
 conv/dbclean.sh svneol=native#text/x-sh
+conv/dbupgrade.c svneol=native#text/plain
 conv/dxf-g.1 svneol=native#text/plain
 conv/dxf-g.c svneol=native#text/plain
 conv/euclid-g.1 svneol=native#text/plain
