@@ -1611,7 +1611,6 @@ liboptical/sh_air.c svneol=native#text/plain
 liboptical/sh_brdf.c svneol=native#text/plain
 liboptical/sh_camo.c svneol=native#text/plain
 liboptical/sh_cloud.c svneol=native#text/plain
-liboptical/sh_cloud3d.c svneol=native#text/plain
 liboptical/sh_cook.c svneol=native#text/plain
 liboptical/sh_cs.c svneol=native#text/plain
 liboptical/sh_fbm.c svneol=native#text/plain
