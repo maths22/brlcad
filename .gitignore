@@ -1,10 +1,12 @@
 /.anim.*
 /.bench.*
 /.burst.*
+/.cake*.*
 /.canon.*
 /.comgeom-g.*
 /.conv.*
 /.cvsignore
+/.cwish.*
 /.db.*
 /.fb.*
 /.fbed.*
