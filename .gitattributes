@@ -286,6 +286,7 @@ mged/utility1.c svneol=native#text/plain
 mged/utility2.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 /mtype.sh svneol=native#text/x-sh
+proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
 proc-db/clutter.c svneol=native#text/plain
