@@ -11,6 +11,7 @@
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
 anim/Cakefile -text
+anim/cattrack.c svneol=native#text/plain
 awf/AWF_COPYRIGHT -text
 awf/Cakefile -text
 awf/awf.1 svneol=native#text/plain
