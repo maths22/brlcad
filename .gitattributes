@@ -1157,6 +1157,7 @@ mged/dm-tek4109.c svneol=native#text/plain
 mged/dm-xgl.c svneol=native#text/plain
 mged/dm-xgl.info -text
 mged/dodraw.c svneol=native#text/plain
+mged/doevent.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
 mged/edarb.c svneol=native#text/plain
 mged/edars.c svneol=native#text/plain
