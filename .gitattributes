@@ -1810,6 +1810,12 @@ src/other/URToolkit/man/wasatchrle.1 svneol=native#text/plain
 src/other/URToolkit/patchlevel.h svneol=native#text/plain
 src/other/URToolkit/tools/applymap.c svneol=native#text/plain
 src/other/URToolkit/tools/avg4.c svneol=native#text/plain
+src/other/URToolkit/tools/clock/README svneol=native#text/plain
+src/other/URToolkit/tools/clock/font.c svneol=native#text/plain
+src/other/URToolkit/tools/clock/font.h svneol=native#text/plain
+src/other/URToolkit/tools/clock/font.src -text
+src/other/URToolkit/tools/clock/makeFont -text
+src/other/URToolkit/tools/clock/rleClock.c svneol=native#text/plain
 src/other/URToolkit/tools/crop.c svneol=native#text/plain
 src/other/URToolkit/tools/fant.c svneol=native#text/plain
 src/other/URToolkit/tools/into.c svneol=native#text/plain
