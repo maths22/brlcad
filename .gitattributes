@@ -341,6 +341,7 @@ iges/brlabs.c svneol=native#text/plain
 iges/bubbleup.c svneol=native#text/plain
 iges/check_names.c svneol=native#text/plain
 iges/cone.c svneol=native#text/plain
+iges/conv_drawings.c svneol=native#text/plain
 iges/convassem.c svneol=native#text/plain
 iges/convinst.c svneol=native#text/plain
 iges/convsolids.c svneol=native#text/plain
