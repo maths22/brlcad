@@ -4099,7 +4099,6 @@ rt/.cvsignore svneol=native#text/plain
 rt/Makefile.am svneol=native#text/plain
 rt/do.c svneol=native#text/plain
 rt/ext.h svneol=native#text/plain
-rt/fast.sh svneol=native#text/x-sh
 rt/libfb-dummy.c svneol=native#text/plain
 rt/light.h svneol=native#text/plain
 rt/main.c svneol=native#text/plain
