@@ -887,6 +887,7 @@ src/fbserv/.cvsignore svneol=native#text/plain
 src/fbserv/Makefile.am svneol=native#text/plain
 src/fbserv/fbserv.1 svneol=native#text/plain
 src/fbserv/fbserv.c svneol=native#text/plain
+src/gtools/.cvsignore svneol=native#text/plain
 src/gtools/Makefile.am svneol=native#text/plain
 src/gtools/g_diff.1 svneol=native#text/plain
 src/gtools/g_diff.c svneol=native#text/plain
