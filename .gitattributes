@@ -856,6 +856,7 @@ src/fb/pp-fb.c svneol=native#text/plain
 src/fb/rle-fb.1 svneol=native#text/plain
 src/fb/rle-fb.c svneol=native#text/plain
 src/fb/spm-fb.c svneol=native#text/plain
+src/fbed/.cvsignore svneol=native#text/plain
 src/fbed/Makefile.am svneol=native#text/plain
 src/fbed/Makefile.loc svneol=native#text/plain
 src/fbed/ascii.h svneol=native#text/plain

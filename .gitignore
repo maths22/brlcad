@@ -181,6 +181,7 @@ src/fb/polar-fb
 src/fb/pp-fb
 src/fb/rle-fb
 src/fb/spm-fb
+src/fbed/fbed
 src/iges/.deps
 src/iges/.libs
 src/iges/Makefile
