@@ -110,6 +110,7 @@ canon/canon.h svneol=native#text/plain
 canon/canonize.c svneol=native#text/plain
 canon/canonlib.c svneol=native#text/plain
 canon/canonserver.c svneol=native#text/plain
+canon/ipustat.c svneol=native#text/plain
 canon/pix-ipu.c svneol=native#text/plain
 canon/png-ipu.c svneol=native#text/plain
 comgeom-g/3d.h svneol=native#text/plain
