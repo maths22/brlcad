@@ -691,6 +691,7 @@ libbu/linebuf.c svneol=native#text/plain
 libbu/log.c svneol=native#text/plain
 libbu/magic.c svneol=native#text/plain
 libbu/malloc.c svneol=native#text/plain
+libbu/mappedfile.c svneol=native#text/plain
 libbu/memset.c svneol=native#text/plain
 libbu/parallel.c svneol=native#text/plain
 libbu/parse.c svneol=native#text/plain
