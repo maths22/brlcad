@@ -550,6 +550,7 @@ util/pix-sun.c svneol=native#text/plain
 util/pix3filter.c svneol=native#text/plain
 util/pixbackgnd.c svneol=native#text/plain
 util/pixbustup.c svneol=native#text/plain
+util/pixcolors.c svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
 util/pixfade.c svneol=native#text/plain
 util/pixfilter.c svneol=native#text/plain
