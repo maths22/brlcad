@@ -148,6 +148,7 @@ doc/pkg.doc svneol=native#text/plain
 doc/plot3.5 svneol=native#text/plain
 doc/press-release -text
 doc/regions.doc svneol=native#text/plain
+doc/rel4.0.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
 doc/summary.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
