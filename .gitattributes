@@ -468,6 +468,7 @@ irprep/ir-X.1 svneol=native#text/plain
 irprep/ir-X.c svneol=native#text/plain
 irprep/ir-sgi.1 svneol=native#text/plain
 irprep/ir-sgi.c svneol=native#text/plain
+irprep/irdisp.c svneol=native#text/plain
 irprep/pictsgi.1 svneol=native#text/plain
 irprep/pictsgi.c svneol=native#text/plain
 irprep/pictx.1 svneol=native#text/plain
