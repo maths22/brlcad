@@ -3984,6 +3984,7 @@ mged/dm_old/dm-glX.c svneol=native#text/plain
 mged/dm_old/dm-glx.c svneol=native#text/plain
 mged/dm_old/dm-hp.c svneol=native#text/plain
 mged/dm_old/dm-mer.c svneol=native#text/plain
+mged/dm_old/dm-oglX.c svneol=native#text/plain
 mged/dm_old/dm-pex.c svneol=native#text/plain
 mged/dm_old/dm-sun.c svneol=native#text/plain
 mged/dm_old/dm-tek.c svneol=native#text/plain
