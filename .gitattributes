@@ -10,6 +10,7 @@ conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
 doc/movie.doc svneol=native#text/plain
 doc/regions.doc svneol=native#text/plain
+doc/summary-mil.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
 fb/bw-fb.c svneol=native#text/plain
 fb/cmap-fb.1 svneol=native#text/plain
