@@ -101,6 +101,7 @@ cake/COPYING svneol=native#text/plain
 cake/Makefile svneol=native#text/plain
 cake/README svneol=native#text/plain
 cake/act.c svneol=native#text/plain
+cake/cake.1 svneol=native#text/plain
 cake/cake.h svneol=native#text/plain
 cake/cake_g.y svneol=native#text/plain
 cake/cake_s.l svneol=native#text/plain
