@@ -3627,8 +3627,10 @@ src/other/libtk/tests/winfo.test svneol=native#text/plain
 src/other/libtk/tests/wm.test svneol=native#text/plain
 src/other/libtk/tests/xmfbox.test svneol=native#text/plain
 src/other/libtk/unix/Makefile.am svneol=native#text/plain
+src/other/libtk/unix/Makefile.in svneol=native#text/plain
 src/other/libtk/unix/README svneol=native#text/plain
 src/other/libtk/unix/aclocal.m4 svneol=native#text/plain
+src/other/libtk/unix/configure -text
 src/other/libtk/unix/install-sh svneol=native#text/plain
 src/other/libtk/unix/license.terms svneol=native#text/plain
 src/other/libtk/unix/mkLinks -text
