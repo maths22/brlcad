@@ -804,6 +804,7 @@ rt/rtrange.1 svneol=native#text/plain
 rt/rtray.1 svneol=native#text/plain
 rt/rtregis.1 svneol=native#text/plain
 rt/rtregis.c svneol=native#text/plain
+rt/rtscale.1 svneol=native#text/plain
 rt/rtscale.c svneol=native#text/plain
 rt/rtshot.1 svneol=native#text/plain
 rt/rtshot.c svneol=native#text/plain
