@@ -499,6 +499,7 @@ misc/.cvsignore svneol=native#text/plain
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/Makefile.am svneol=native#text/plain
+misc/batch-indent-region.el -text
 misc/cvs2cl.pl svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
 misc/enigma/Makefile.am svneol=native#text/plain
