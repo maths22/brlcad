@@ -2033,6 +2033,7 @@ tclscripts/mged/list.tcl svneol=native#text/plain
 tclscripts/mged/make_solid.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
+tclscripts/mged/mgedrc.tcl svneol=native#text/plain
 tclscripts/mged/mouse.tcl svneol=native#text/plain
 tclscripts/mged/muves.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
