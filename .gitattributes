@@ -232,6 +232,7 @@ conv/g-wave.c svneol=native#text/plain
 conv/g-x3d.1 svneol=native#text/plain
 conv/g-x3d.c svneol=native#text/plain
 conv/g-xxx.c svneol=native#text/plain
+conv/g-xxx_facets.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/g4-g5.c svneol=native#text/plain
