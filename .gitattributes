@@ -178,6 +178,7 @@ rt/viewray.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
 util/Makefile svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
+util/bw-imp.c svneol=native#text/plain
 util/bw3-pix.c svneol=native#text/plain
 util/bwcrop.c svneol=native#text/plain
 util/bwdiff.c svneol=native#text/plain
