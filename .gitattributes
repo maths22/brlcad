@@ -322,6 +322,7 @@ librt/debug.h svneol=native#text/plain
 librt/dir.c svneol=native#text/plain
 librt/g_arb.c svneol=native#text/plain
 librt/g_ars.c svneol=native#text/plain
+librt/g_ebm.c svneol=native#text/plain
 librt/g_ell.c svneol=native#text/plain
 librt/g_half.c svneol=native#text/plain
 librt/g_pg.c svneol=native#text/plain
