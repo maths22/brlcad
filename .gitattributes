@@ -632,6 +632,7 @@ sig/i-f.c svneol=native#text/plain
 sig/ihist.c svneol=native#text/plain
 sig/imod.c svneol=native#text/plain
 sig/interp.c svneol=native#text/plain
+sig/istat.c svneol=native#text/plain
 sig/smod.c svneol=native#text/plain
 sig/syn.c svneol=native#text/plain
 sig/umod.c svneol=native#text/plain
