@@ -4,6 +4,7 @@
 /Cakefile.lib -text
 /Cakefile.prog -text
 /Cakefile.rules -text
+/Copyright_1989_US_Army -text
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
