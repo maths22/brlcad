@@ -197,6 +197,7 @@ util/bwscale.c svneol=native#text/plain
 util/bwstat.c svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
 util/dunnsnap.c svneol=native#text/plain
+util/gencolor.c svneol=native#text/plain
 util/loop.1 svneol=native#text/plain
 util/loop.c svneol=native#text/plain
 util/lowp.c svneol=native#text/plain
