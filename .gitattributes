@@ -3101,6 +3101,7 @@ util/plline2.c svneol=native#text/plain
 util/plrot.1 svneol=native#text/plain
 util/plrot.c svneol=native#text/plain
 util/plstat.c svneol=native#text/plain
+util/png-bw.c svneol=native#text/plain
 util/png-pix.c svneol=native#text/plain
 util/query.1 svneol=native#text/plain
 util/query.c svneol=native#text/plain
