@@ -305,6 +305,7 @@ rt/mathtab.h svneol=native#text/plain
 rt/rdebug.h svneol=native#text/plain
 rt/refract.c svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
+rt/rtcheck.1 svneol=native#text/plain
 rt/rtpp.1 svneol=native#text/plain
 rt/rtray.1 svneol=native#text/plain
 rt/rtshot.1 svneol=native#text/plain
