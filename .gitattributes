@@ -2339,13 +2339,8 @@ libtcl/win/tclWinTime.c svneol=native#text/plain
 libtcl/win/tclsh.rc -text svneol=CRLF#text/plain
 libtcl/win/winDumpExts.c svneol=native#text/plain
 libtclcad/Cakefile -text
-libtclcad/limits.h svneol=native#text/plain
-libtclcad/stdlib.h svneol=native#text/plain
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
-libtclcad/tkPort.h svneol=native#text/plain
-libtclcad/tkUnixPort.h svneol=native#text/plain
-libtclcad/unistd.h svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtk/Cakefile -text
