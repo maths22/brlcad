@@ -1290,6 +1290,7 @@ util/pix-ikr.c svneol=native#text/plain
 util/pix-lowp-ik.c svneol=native#text/plain
 util/pix-orle.1 svneol=native#text/plain
 util/pix-orle.c svneol=native#text/plain
+util/pix-ppm.c svneol=native#text/plain
 util/pix-ps.1 svneol=native#text/plain
 util/pix-ps.c svneol=native#text/plain
 util/pix-rle.1 svneol=native#text/plain
