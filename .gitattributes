@@ -2996,9 +2996,6 @@ tclscripts/pl-dm/menu.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
 tk/Cakefile -text
 tk/bwish.c svneol=native#text/plain
-tk/tkAppInit.c svneol=native#text/plain
-tk/tkSquare.c svneol=native#text/plain
-tk/tkTest.c svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
 tools/applymap.c svneol=native#text/plain
