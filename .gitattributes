@@ -4059,7 +4059,6 @@ src/rt/rt.dsw -text svneol=CRLF#text/plain
 src/rt/rt.ncb -text svneol=unset#unset
 src/rt/rt.opt -text svneol=unset#unset
 src/rt/rt_bot_faces.1 svneol=native#text/plain
-src/rt/rt_bot_faces_vers.c svneol=native#text/plain
 src/rt/rt_simple.c svneol=native#text/plain
 src/rt/rtcheck.1 svneol=native#text/plain
 src/rt/rtedge.1 svneol=native#text/plain
