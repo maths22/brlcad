@@ -1303,6 +1303,7 @@ rt/viewrad.c svneol=native#text/plain
 rt/viewrange.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
 rt/viewscat.c svneol=native#text/plain
+rt/viewsil.c svneol=native#text/plain
 rt/viewtherm.c svneol=native#text/plain
 rt/viewweight.c svneol=native#text/plain
 rt/viewxray.c svneol=native#text/plain
