@@ -335,6 +335,7 @@ fb/fb-orle.1 svneol=native#text/plain
 fb/fb-orle.c svneol=native#text/plain
 fb/fb-pix.1 svneol=native#text/plain
 fb/fb-pix.c svneol=native#text/plain
+fb/fb-png.c svneol=native#text/plain
 fb/fb-rle.1 svneol=native#text/plain
 fb/fb-rle.c svneol=native#text/plain
 fb/fbanim.1 svneol=native#text/plain
