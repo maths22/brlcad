@@ -643,6 +643,7 @@ libwdb/Cakefile -text
 libwdb/arbn.c svneol=native#text/plain
 libwdb/ars.c svneol=native#text/plain
 libwdb/export.c svneol=native#text/plain
+libwdb/id.c svneol=native#text/plain
 libwdb/libwdb.3 svneol=native#text/plain
 libwdb/nmg.c svneol=native#text/plain
 libwdb/pipe.c svneol=native#text/plain
