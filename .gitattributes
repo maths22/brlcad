@@ -930,6 +930,7 @@ sh/cakeinclude.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
 sh/newvers.sh svneol=native#text/x-sh
+sh/pixinfo.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
 sh/ranlib5.sh svneol=native#text/x-sh
