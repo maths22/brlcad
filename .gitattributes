@@ -158,6 +158,7 @@ libfb/if_adage.c svneol=native#text/plain
 libfb/if_debug.c svneol=native#text/plain
 libfb/if_disk.c svneol=native#text/plain
 libfb/if_ptty.c svneol=native#text/plain
+libfb/if_rat.c svneol=native#text/plain
 libfb/if_remote.c svneol=native#text/plain
 libfb/if_sgi.c svneol=native#text/plain
 libfb/if_sgiw.c svneol=native#text/plain
