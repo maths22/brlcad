@@ -48,6 +48,7 @@ conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
 db/Cakefile -text
 doc/benchmark.doc svneol=native#text/plain
+doc/install.doc svneol=native#text/plain
 doc/movie.doc svneol=native#text/plain
 doc/regions.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
