@@ -4200,12 +4200,17 @@ regress/systems.d/localhost -text
 regress/systems.d/wide -text
 regress/systems.d/wider -text
 regress/systems.d/widest -text
+regress/tests.d/build -text
+regress/tests.d/library -text
 regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
 regress/tests.d/ref/shaders.pix -text svneol=unset#image/x-rgb
 regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
 regress/tests.d/shaders.sh svneol=native#text/x-sh
+regress/tests.d/solids -text
 regress/tests.d/solids.sh svneol=native#text/x-sh
+regress/tests.d/spdi -text
 regress/tests.d/spdi.sh svneol=native#text/x-sh
+regress/tests.d/template -text
 remrt/Cakefile -text
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
