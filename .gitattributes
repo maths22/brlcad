@@ -1164,6 +1164,7 @@ tab/tabinterp.1 svneol=native#text/plain
 tab/tabinterp.c svneol=native#text/plain
 tab/tabsub.1 svneol=native#text/plain
 tab/tabsub.c svneol=native#text/plain
+tab/tokens.h svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
