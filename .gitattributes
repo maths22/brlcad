@@ -1362,6 +1362,7 @@ tcl/Cakefile -text
 tcl/tclAppInit.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
+tclscripts/mged/e_id.tcl svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
