@@ -1672,6 +1672,9 @@ src/other/URToolkit/MANIFEST -text
 src/other/URToolkit/Makefile.am svneol=native#text/plain
 src/other/URToolkit/README svneol=native#text/plain
 src/other/URToolkit/blurb -text
+src/other/URToolkit/cnv/rletocgm.c svneol=native#text/plain
+src/other/URToolkit/cnv/rletovcr.c svneol=native#text/plain
+src/other/URToolkit/cnv/vcrtorle.c svneol=native#text/plain
 src/other/URToolkit/copyright -text
 src/other/URToolkit/patchlevel.h svneol=native#text/plain
 src/other/awf/AWF_COPYRIGHT -text
