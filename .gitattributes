@@ -371,6 +371,7 @@ doc/html/manuals/shaders/camo.html svneol=native#text/html
 doc/html/manuals/small-eagleCAD.gif -text svneol=unset#image/gif
 doc/hypot.txt svneol=native#text/plain
 doc/irprep.tr svneol=native#text/plain
+doc/legal/Makefile.am svneol=native#text/plain
 doc/legal/bsd.txt svneol=native#text/plain
 doc/legal/fdl.txt svneol=native#text/plain
 doc/legal/gpl.txt svneol=native#text/plain
