@@ -498,6 +498,7 @@ sh/machinetype.sh svneol=native#text/x-sh
 sh/newvers.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
+sh/ranlib5.sh svneol=native#text/x-sh
 sh/sgisnap.sh svneol=native#text/x-sh
 tab/tabinterp.c svneol=native#text/plain
 tab/tabsub.c svneol=native#text/plain
