@@ -1108,6 +1108,7 @@ mged/chgtree.c svneol=native#text/plain
 mged/chgview.c svneol=native#text/plain
 mged/clip.c svneol=native#text/plain
 mged/cmd.c svneol=native#text/plain
+mged/cmd.h svneol=native#text/plain
 mged/columns.c svneol=native#text/plain
 mged/comb_bool.h svneol=native#text/plain
 mged/comb_bool_parse.y svneol=native#text/plain
