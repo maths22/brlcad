@@ -36,6 +36,7 @@
 /.vas4.*
 /.vdeck.*
 html/manuals/mged/mged_cmd_index.html
+sample_applications/makefile
 tclscripts/lib/tclIndex
 tclscripts/mged/tclIndex
 tclscripts/pl-dm/tclIndex
