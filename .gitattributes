@@ -991,8 +991,14 @@ libsysv/regfree.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
 libtclcad/Cakefile -text
+libtclcad/limits.h svneol=native#text/plain
+libtclcad/stdlib.h svneol=native#text/plain
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
+libtclcad/tkInt.h svneol=native#text/plain
+libtclcad/tkPort.h svneol=native#text/plain
+libtclcad/tkUnixPort.h svneol=native#text/plain
+libtclcad/unistd.h svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtkGLX/makedescnames.sh svneol=native#text/x-sh
