@@ -1528,6 +1528,16 @@ libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtk/Cakefile -text
 libtk/README svneol=native#text/plain
+libtk/bitmaps/error.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/gray12.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/gray25.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/gray50.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/gray75.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/hourglass.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/info.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/questhead.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/question.bmp -text svneol=unset#image/bmp
+libtk/bitmaps/warning.bmp -text svneol=unset#image/bmp
 libtk/changes -text
 libtk/compat/license.terms svneol=native#text/plain
 libtk/compat/limits.h svneol=native#text/plain
