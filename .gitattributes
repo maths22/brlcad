@@ -1151,6 +1151,7 @@ util/bw-pix.1 svneol=native#text/plain
 util/bw-pix.c svneol=native#text/plain
 util/bw-ps.1 svneol=native#text/plain
 util/bw-ps.c svneol=native#text/plain
+util/bw-rle.1 svneol=native#text/plain
 util/bw-rle.c svneol=native#text/plain
 util/bw3-pix.1 svneol=native#text/plain
 util/bw3-pix.c svneol=native#text/plain
