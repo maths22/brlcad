@@ -320,6 +320,7 @@ fbserv/fbserv.c svneol=native#text/plain
 h/Cakefile -text
 h/XtndRunsv.h svneol=native#text/plain
 h/anim.h svneol=native#text/plain
+h/conf.h svneol=native#text/plain
 h/db.h svneol=native#text/plain
 h/externs.h svneol=native#text/plain
 h/fb.h svneol=native#text/plain
