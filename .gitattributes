@@ -257,6 +257,7 @@ util/pixhist.c svneol=native#text/plain
 util/pixhist3d-pl.c svneol=native#text/plain
 util/pixhist3d.c svneol=native#text/plain
 util/pixinterp2x.c svneol=native#text/plain
+util/pixmerge.c svneol=native#text/plain
 util/pixrect.c svneol=native#text/plain
 util/pixrot.c svneol=native#text/plain
 util/pixscale.c svneol=native#text/plain
