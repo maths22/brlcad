@@ -4563,6 +4563,27 @@ tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeF/title.txt svneol=native#text/plain
+tclscripts/rtwizard/lib/Cakefile -text
+tclscripts/rtwizard/lib/DbPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/ExamplePage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FbPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FeedbackDialog.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FrameBufferDialog.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FullColorPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/GhostPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/HelpPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/HighlightedPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/IntroPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/LinePage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/MGEDpage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeA.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeB.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeBase.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeC.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
 tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 tclscripts/util/.cvsignore svneol=native#text/plain
 tclscripts/util/Cakefile -text
