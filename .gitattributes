@@ -665,6 +665,7 @@ libbn/Cakefile -text
 libbn/Makefile svneol=native#text/plain
 libbn/Makefile.loc svneol=native#text/plain
 libbn/anim.c svneol=native#text/plain
+libbn/asize.c svneol=native#text/plain
 libbn/axis.c svneol=native#text/plain
 libbn/bn_tcl.c svneol=native#text/plain
 libbn/complex.c svneol=native#text/plain
