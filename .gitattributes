@@ -1640,6 +1640,7 @@ util/mac-pix.c svneol=native#text/plain
 util/morphedit.1 svneol=native#text/plain
 util/morphedit.tcl svneol=native#text/plain
 util/msrandom.c svneol=native#text/plain
+util/mst.c svneol=native#text/plain
 util/op-bw.1 svneol=native#text/plain
 util/op-bw.c svneol=native#text/plain
 util/orle-pix.1 svneol=native#text/plain
