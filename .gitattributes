@@ -519,6 +519,7 @@ misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image
 misc/macosx/openUp.c svneol=native#text/plain
 misc/pro-engineer/Makefile.am svneol=native#text/plain
 misc/pro-engineer/install.doc svneol=native#text/plain
+misc/pro-engineer/mk.in svneol=native#text/plain
 misc/pro-engineer/proe-brl.c svneol=native#text/plain
 misc/pro-engineer/proe_brl.res svneol=native#text/plain
 misc/pro-engineer/proe_brl_error.res svneol=native#text/plain
