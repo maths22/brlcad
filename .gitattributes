@@ -21,10 +21,6 @@ bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
 /brlcad.spec.in svneol=native#text/plain
-brlman/Makefile.am svneol=native#text/plain
-brlman/awf -text
-brlman/brlman -text
-brlman/brlman.1 svneol=native#text/plain
 /configure.ac svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
