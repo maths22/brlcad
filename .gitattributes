@@ -895,6 +895,7 @@ librt/prep.c svneol=native#text/plain
 librt/qmath.c svneol=native#text/plain
 librt/regionfix.c svneol=native#text/plain
 librt/roots.c svneol=native#text/plain
+librt/rt_dspline.c svneol=native#text/plain
 librt/rtlex.c svneol=native#text/plain
 librt/shoot.c svneol=native#text/plain
 librt/snoise.c svneol=native#text/plain
