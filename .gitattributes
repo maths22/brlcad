@@ -429,6 +429,7 @@ h/compat/unistd.h svneol=native#text/plain
 h/compat4.h svneol=native#text/plain
 h/conf.h svneol=native#text/plain
 h/db.h svneol=native#text/plain
+h/db5.h svneol=native#text/plain
 h/dm-Null.h svneol=native#text/plain
 h/dm-X.h svneol=native#text/plain
 h/dm-glx.h svneol=native#text/plain
