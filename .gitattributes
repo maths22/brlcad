@@ -1,17 +1,24 @@
 * text=auto !eol
+/Cakefile -text
+/Cakefile.lib -text
+/Cakefile.prog -text
+/Cakefile.rules -text
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
+conv/Cakefile -text
 conv/asc2g.c svneol=native#text/plain
 conv/asc2pix.c svneol=native#text/plain
 conv/conv-vg2g.c svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
+db/Cakefile -text
 doc/movie.doc svneol=native#text/plain
 doc/regions.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
+fb/Cakefile -text
 fb/bw-fb.c svneol=native#text/plain
 fb/cmap-fb.1 svneol=native#text/plain
 fb/cmap-fb.c svneol=native#text/plain
@@ -50,6 +57,7 @@ fb/pix-fb.c svneol=native#text/plain
 fb/pl-fb.c svneol=native#text/plain
 fb/pp-fb.1 svneol=native#text/plain
 fb/pp-fb.c svneol=native#text/plain
+fbed/Cakefile -text
 fbed/ascii.h svneol=native#text/plain
 fbed/char.c svneol=native#text/plain
 fbed/cursorbits.h svneol=native#text/plain
@@ -74,6 +82,7 @@ fbed/squash.c svneol=native#text/plain
 fbed/std.h svneol=native#text/plain
 fbed/try.c svneol=native#text/plain
 fbed/try.h svneol=native#text/plain
+fbserv/Cakefile -text
 fbserv/fbserv.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
 h/db.h svneol=native#text/plain
@@ -110,6 +119,7 @@ jove/jove_term.c svneol=native#text/plain
 jove/jove_tune.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
 jove/termcap.h svneol=native#text/plain
+lgt/Cakefile -text
 lgt/ascii.h svneol=native#text/plain
 lgt/char.c svneol=native#text/plain
 lgt/cursors.h svneol=native#text/plain
@@ -156,8 +166,10 @@ libbn/symbol.c svneol=native#text/plain
 libbn/tplot.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libcursor/Cakefile -text
 libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
+libfb/Cakefile -text
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
 libfb/adageframe.h svneol=native#text/plain
@@ -190,9 +202,12 @@ liboptical/sh_light.c svneol=native#text/plain
 liboptical/sh_plastic.c svneol=native#text/plain
 liboptical/sh_stack.c svneol=native#text/plain
 liboptical/sh_text.c svneol=native#text/plain
+liborle/Cakefile -text
 liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
+libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
+librt/Cakefile -text
 librt/anim.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
@@ -227,12 +242,16 @@ librt/timercos.c svneol=native#text/plain
 librt/timerhep.c svneol=native#text/plain
 librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
+libsysv/Cakefile -text
 libsysv/getopt.c svneol=native#text/plain
+libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
+libwdb/Cakefile -text
 libwdb/libwdb.3 svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
+mged/Cakefile -text
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
 mged/arb.c svneol=native#text/plain
@@ -299,6 +318,7 @@ proc-db/room.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
+rt/Cakefile -text
 rt/do.c svneol=native#text/plain
 rt/libfb-dummy.c svneol=native#text/plain
 rt/light.h svneol=native#text/plain
@@ -330,9 +350,11 @@ rt/viewrad.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
 rt/worker.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
+rttherm/Cakefile -text
 sh/cakeinclude.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
+util/Cakefile -text
 util/Makefile svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
 util/bw-imp.c svneol=native#text/plain
@@ -392,6 +414,7 @@ util/plgetframe.c svneol=native#text/plain
 util/plrot.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
+vas4/Cakefile -text
 vas4/init_ik.c svneol=native#text/plain
 vas4/record_seq.c svneol=native#text/plain
 vas4/status.c svneol=native#text/plain
@@ -399,6 +422,7 @@ vas4/vas4.1 svneol=native#text/plain
 vas4/vas4.c svneol=native#text/plain
 vas4/vas4.h svneol=native#text/plain
 vas4/vas_io.c svneol=native#text/plain
+vdeck/Cakefile -text
 vdeck/Makefile svneol=native#text/plain
 vdeck/cgarbs.c svneol=native#text/plain
 vdeck/match.c svneol=native#text/plain
