@@ -3791,6 +3791,7 @@ misc/macosx/Resources/License.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
 misc/macosx/Resources/ReadMe.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
+misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
 mk/Cakefile -text
 mk/mk_bolt.1 svneol=native#text/plain
