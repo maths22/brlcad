@@ -771,6 +771,7 @@ librt/vshoot.c svneol=native#text/plain
 libsysv/Cakefile -text
 libsysv/bsdselect.c svneol=native#text/plain
 libsysv/getopt.c svneol=native#text/plain
+libsysv/linebuf.c svneol=native#text/plain
 libsysv/memset.c svneol=native#text/plain
 libsysv/redata.c svneol=native#text/plain
 libsysv/regex.c svneol=native#text/plain
