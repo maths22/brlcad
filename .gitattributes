@@ -40,6 +40,7 @@ librt/g_ell.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
 librt/g_torus.c svneol=native#text/plain
 librt/mat.c svneol=native#text/plain
+librt/mater.c svneol=native#text/plain
 librt/plane.h svneol=native#text/plain
 librt/polylib.c svneol=native#text/plain
 librt/polyno.h svneol=native#text/plain
