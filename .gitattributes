@@ -3821,7 +3821,6 @@ libutahrle/vaxshort.c svneol=native#text/plain
 libwdb/Cakefile -text
 libwdb/arbn.c svneol=native#text/plain
 libwdb/ars.c svneol=native#text/plain
-libwdb/binary_obj.c svneol=native#text/plain
 libwdb/bot.c svneol=native#text/plain
 libwdb/cline.c svneol=native#text/plain
 libwdb/export.c svneol=native#text/plain
