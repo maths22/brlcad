@@ -374,10 +374,14 @@ iges/wedge.c svneol=native#text/plain
 iges/wing128.igs -text svneol=unset#model/iges
 iges/woodie.igs -text svneol=unset#model/iges
 irprep/Cakefile -text
+irprep/display.1 svneol=native#text/plain
+irprep/display.c svneol=native#text/plain
 irprep/firpass.1 svneol=native#text/plain
 irprep/firpass.c svneol=native#text/plain
 irprep/secpass.1 svneol=native#text/plain
 irprep/secpass.c svneol=native#text/plain
+irprep/see.1 svneol=native#text/plain
+irprep/see.c svneol=native#text/plain
 irprep/shapefact.1 svneol=native#text/plain
 irprep/shapefact.c svneol=native#text/plain
 irprep/subroutines.c svneol=native#text/plain
