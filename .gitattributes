@@ -1315,6 +1315,7 @@ proc-db/terrain.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 remrt/Cakefile -text
+remrt/cloud.tcl svneol=native#text/plain
 remrt/demo.tcl svneol=native#text/plain
 remrt/dg.tcl svneol=native#text/plain
 remrt/ihost.c svneol=native#text/plain
