@@ -1037,6 +1037,7 @@ libbu/getopt.c svneol=native#text/plain
 libbu/hist.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libbu/htonf.c svneol=native#text/plain
 libbu/ispar.c svneol=native#text/plain
 libbu/lex.c svneol=native#text/plain
 libbu/libbu.3 svneol=native#text/plain
