@@ -4200,6 +4200,7 @@ regress/systems.d/localhost -text
 regress/systems.d/wide -text
 regress/systems.d/wider -text
 regress/systems.d/widest -text
+regress/tests.d/README svneol=native#text/plain
 regress/tests.d/build -text
 regress/tests.d/geometry -text
 regress/tests.d/library -text
