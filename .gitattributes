@@ -834,6 +834,7 @@ tools/rletoabA60.c svneol=native#text/plain
 tools/rletoabA62.c svneol=native#text/plain
 tools/rletoascii.c svneol=native#text/plain
 tools/rletogif.c svneol=native#text/plain
+tools/rletogif.h svneol=native#text/plain
 tools/rletogray.c svneol=native#text/plain
 tools/rletopaint.c svneol=native#text/plain
 tools/rletops.c svneol=native#text/plain
