@@ -702,6 +702,7 @@ rt/mathtab.h svneol=native#text/plain
 rt/opt.c svneol=native#text/plain
 rt/rad.h svneol=native#text/plain
 rt/rdebug.h svneol=native#text/plain
+rt/read-rtlog.c svneol=native#text/plain
 rt/refract.c svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
 rt/rtcheck.1 svneol=native#text/plain
