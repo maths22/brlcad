@@ -34,6 +34,7 @@ db/db.php svneol=native#text/plain
 db/demo.asc svneol=native#text/plain
 db/galileo.asc svneol=native#text/plain
 db/havoc.asc svneol=native#text/plain
+db/include/Makefile.am svneol=native#text/plain
 db/include/ctype.inc -text
 db/include/debug.inc -text
 db/kman.asc svneol=native#text/plain
