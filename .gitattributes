@@ -230,6 +230,7 @@ h/vfont-if.h svneol=native#text/plain
 h/vmath.h svneol=native#text/plain
 h/wdb.h svneol=native#text/plain
 halftone/main.c svneol=native#text/plain
+halftone/sharpen.c svneol=native#text/plain
 halftone/tone_classic.c svneol=native#text/plain
 halftone/tone_floyd.c svneol=native#text/plain
 halftone/tone_folly.c svneol=native#text/plain
