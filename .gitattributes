@@ -1689,6 +1689,7 @@ src/other/URToolkit/cnv/rlb_header.h svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA60.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA62/COPYRIGHT -text
 src/other/URToolkit/cnv/rletoabA62/rle.c svneol=native#text/plain
+src/other/URToolkit/cnv/rletoabA62/rletoabA62.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoalias.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoascii.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletocgm.c svneol=native#text/plain
