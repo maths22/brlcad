@@ -2002,6 +2002,7 @@ tclscripts/mged/Cakefile -text
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
 tclscripts/mged/apply.tcl svneol=native#text/plain
+tclscripts/mged/apply_mat.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/bot_face_select.tcl svneol=native#text/plain
 tclscripts/mged/calipers.tcl svneol=native#text/plain
