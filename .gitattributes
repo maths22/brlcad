@@ -730,6 +730,7 @@ util/plline2.1 svneol=native#text/plain
 util/plline2.c svneol=native#text/plain
 util/plrot.1 svneol=native#text/plain
 util/plrot.c svneol=native#text/plain
+util/query.1 svneol=native#text/plain
 util/rle-pix.1 svneol=native#text/plain
 util/rle-pix.c svneol=native#text/plain
 util/sgi-pix.c svneol=native#text/plain
