@@ -525,7 +525,6 @@ misc/pro-engineer/text/usermsg.txt svneol=native#text/plain
 misc/vfont/Makefile.am svneol=native#text/plain
 misc/vfont/fix.6r -text svneol=unset#unset
 misc/vfont/nonie.r.12 -text svneol=unset#unset
-pix/Makefile.dist svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
 pix/bldg391.pix -text svneol=unset#image/x-rgb
 pix/golf_ball.pix -text svneol=unset#image/x-rgb
