@@ -1006,6 +1006,7 @@ patch/patch-g.c svneol=native#text/plain
 patch/patch-g.h svneol=native#text/plain
 patch/pull_comp.sh svneol=native#text/x-sh
 patch/pull_solidsub.sh svneol=native#text/x-sh
+patch/rpatch.1 svneol=native#text/plain
 patch/rpatch.c svneol=native#text/plain
 patch/rpatch.f svneol=native#text/plain
 pix/Cakefile -text
