@@ -651,6 +651,7 @@ html/manuals/cadwidgets/View.html svneol=native#text/html
 html/manuals/cadwidgets/skeleton.html svneol=native#text/html
 html/manuals/eagleCAD.gif -text svneol=unset#image/gif
 html/manuals/index.html svneol=native#text/html
+html/manuals/libbu/Cakefile -text
 html/manuals/libbu/cmdhist_obj.html svneol=native#text/html
 html/manuals/libdm/Cakefile -text
 html/manuals/libdm/api.html svneol=native#text/html
