@@ -789,6 +789,7 @@ html/manuals/mged/mug_camo.gif -text svneol=unset#image/gif
 html/manuals/mged/mug_camo.jpg -text svneol=unset#image/jpeg
 html/manuals/mged/mug_green.gif -text svneol=unset#image/gif
 html/manuals/mged/mug_green.jpg -text svneol=unset#image/jpeg
+html/manuals/mged/notes.html svneol=native#text/html
 html/manuals/mged/outline -text
 html/manuals/mged/peewee.gif -text svneol=unset#image/gif
 html/manuals/mged/peewee.jpg -text svneol=unset#image/jpeg
