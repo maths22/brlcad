@@ -807,6 +807,12 @@ nirt/showshot.1 svneol=native#text/plain
 nirt/showshot.c svneol=native#text/plain
 nirt/str_manip.c svneol=native#text/plain
 nirt/usrfmt.h svneol=native#text/plain
+patch/patch-g.1 svneol=native#text/plain
+patch/patch-g.c svneol=native#text/plain
+patch/patch-g.h svneol=native#text/plain
+patch/pull_comp.sh svneol=native#text/x-sh
+patch/pull_solidsub.sh svneol=native#text/x-sh
+patch/rpatch.f svneol=native#text/plain
 pix/Cakefile -text
 pix/Makefile svneol=native#text/plain
 pix/Makefile.dist svneol=native#text/plain
