@@ -3141,6 +3141,17 @@ mged/dm-tek.c svneol=native#text/plain
 mged/dm-tek4109.c svneol=native#text/plain
 mged/dm-xgl.c svneol=native#text/plain
 mged/dm-xgl.info -text
+mged/dm_old/dm-4d.c svneol=native#text/plain
+mged/dm_old/dm-glX.c svneol=native#text/plain
+mged/dm_old/dm-glx.c svneol=native#text/plain
+mged/dm_old/dm-hp.c svneol=native#text/plain
+mged/dm_old/dm-mer.c svneol=native#text/plain
+mged/dm_old/dm-pex.c svneol=native#text/plain
+mged/dm_old/dm-sun.c svneol=native#text/plain
+mged/dm_old/dm-tek.c svneol=native#text/plain
+mged/dm_old/dm-tek4109.c svneol=native#text/plain
+mged/dm_old/dm-xgl.c svneol=native#text/plain
+mged/dm_old/dm-xgl.info -text
 mged/dodraw.c svneol=native#text/plain
 mged/doevent.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
