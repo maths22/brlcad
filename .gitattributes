@@ -1530,6 +1530,7 @@ tclscripts/mged/attach4.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/calipers.tcl svneol=native#text/plain
 tclscripts/mged/color.tcl svneol=native#text/plain
+tclscripts/mged/combmenu.tcl svneol=native#text/plain
 tclscripts/mged/e_id.tcl svneol=native#text/plain
 tclscripts/mged/editmenu.tcl svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
