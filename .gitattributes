@@ -883,6 +883,7 @@ src/fbed/squash.c svneol=native#text/plain
 src/fbed/std.h svneol=native#text/plain
 src/fbed/try.c svneol=native#text/plain
 src/fbed/try.h svneol=native#text/plain
+src/fbserv/.cvsignore svneol=native#text/plain
 src/fbserv/Makefile.am svneol=native#text/plain
 src/fbserv/fbserv.1 svneol=native#text/plain
 src/fbserv/fbserv.c svneol=native#text/plain

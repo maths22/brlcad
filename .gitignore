@@ -182,6 +182,7 @@ src/fb/pp-fb
 src/fb/rle-fb
 src/fb/spm-fb
 src/fbed/fbed
+src/fbserv/fbserv
 src/iges/.deps
 src/iges/.libs
 src/iges/Makefile
