@@ -1191,6 +1191,7 @@ remrt/rtsrv.c svneol=native#text/plain
 remrt/rtsync.c svneol=native#text/plain
 rt/Cakefile -text
 rt/disp.c svneol=native#text/plain
+rt/disp.tcl svneol=native#text/plain
 rt/do.c svneol=native#text/plain
 rt/ext.h svneol=native#text/plain
 rt/fast.sh svneol=native#text/x-sh
@@ -1271,6 +1272,7 @@ rt/wray.c svneol=native#text/plain
 rttherm/Cakefile -text
 rttherm/spectrum.c svneol=native#text/plain
 rttherm/ssampview.c svneol=native#text/plain
+rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/viewtherm.c svneol=native#text/plain
 /setup.sh svneol=native#text/x-sh
 sh/cadbug.sh svneol=native#text/x-sh
