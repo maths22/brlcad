@@ -3482,6 +3482,7 @@ tclscripts/mged/muves.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
 tclscripts/mged/openw.tcl svneol=native#text/plain
 tclscripts/mged/plot.tcl svneol=native#text/plain
+tclscripts/mged/prj_add.tcl svneol=native#text/plain
 tclscripts/mged/ps.tcl svneol=native#text/plain
 tclscripts/mged/qray.tcl svneol=native#text/plain
 tclscripts/mged/ray.tcl svneol=native#text/plain
