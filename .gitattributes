@@ -345,6 +345,7 @@ libsysv/bsdselect.c svneol=native#text/plain
 libsysv/getopt.c svneol=native#text/plain
 libsysv/redata.c svneol=native#text/plain
 libsysv/regex.c svneol=native#text/plain
+libsysv/strchr.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libwdb/Cakefile -text
