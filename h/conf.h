@@ -320,6 +320,9 @@
 #	define HAVE_BZERO	1
 #endif
 
+/* Apple Mac OS X (Darwin -- not YellowDog Linux or others where __PPC__ is
+ * defined instead of __ppc__ 
+ */
 #if defined(__ppc__)
 #       define USE_PROTOTYPES   1
 #       define USE_REGCOMP      1
@@ -352,6 +355,33 @@
 #       define HAVE_VFORK                       1
 #       define HAVE_VPRINTF             1
 #       define HAVE_WRITEV              1
+#endif
+
+#if defined(__sp3__)
+#	define USE_PROTOTYPES	1
+#       define USE_STRING_H     1
+#	define HAS_POSIX_THREADS	1
+#	define HAVE_FLOAT_H	1
+#	define HAVE_GETHOSTNAME	1
+#	define HAVE_GETOPT	1
+#	define HAVE_GETOPT_DECL	1
+#	define HAVE_LIMITS_H	1
+#	define HAVE_MEMORY_H	1
+#	define HAVE_SBRK	1
+#	define HAVE_SBRK_DECL	1
+#	define HAVE_STRCHR	1
+#	define HAVE_STDLIB_H	1
+#	define HAVE_STDARG_H	1
+#	define HAVE_STRING_H	1
+#	define HAVE_SYS_MMAN_H	1
+#	define HAVE_SYS_SOCKET_H	1
+#	define HAVE_TERMIOS_H	1
+#	define HAVE_UNISTD_H	1
+#	define HAVE_UNIX_DOMAIN_SOCKETS	1
+#	define HAVE_UNIX_IO	1
+#	define HAVE_VFORK	1
+#	define HAVE_VPRINTF	1
+#	define HAVE_WRITEV	1
 #endif
 
 #if defined(__STDC__)
@@ -494,7 +524,7 @@
         defined(pyr) || defined(apollo) || defined(aux) || \
         defined(_AIX) || defined(NeXT) || defined(convex) || \
 	defined(hpux) || defined(__hppa) || defined(__convex__) || \
-	defined(__ppc__)
+	(defined(__ppc__) || defined(__PPC__))
 
         /*  These systems already operate in
          *  IEEE format internally, using big-endian order.

@@ -56,6 +56,10 @@ static const char RCSid[] = "$Header$";
  *	Christopher T. Johnson	- 90/03/21
  *
  * $Log$
+ * Revision 11.5  2000/09/01 02:48:08  mike
+ *
+ * lint
+ *
  * Revision 11.4  2000/08/24 23:09:00  mike
  *
  * lint

@@ -135,6 +135,10 @@ extern "C" {
  *  This constant places an upper bound on the size object which
  *  can be represented in the model.
  */
+#ifdef INFINITY
+#	undef INFINITY
+#endif
+
 #if defined(vax) || (defined(sgi) && !defined(mips))
 #	define INFINITY	(1.0e20)	/* VAX limit is 10**37 */
 #else
@@ -702,7 +706,8 @@ union cutter  {
 		int	bn_len;		/* # of solids in list */
 		int	bn_maxlen;	/* # of ptrs allocated to list */
 		struct rt_piecelist *bn_piecelist; /* [] solids with pieces */
-		int	bn_piecelen;	/* # of solids with pieces */
+		int	bn_piecelen;	/* # of piecelists used */
+		int	bn_maxpiecelen; /* # of piecelists allocated */
 	} bn;
 	struct nugridnode {
 		int	nu_type;
@@ -1470,6 +1475,28 @@ extern struct resource	rt_uniresource;	/* default.  Defined in librt/shoot.c */
 		(_tp)->tr_b.tb_op = OP_FREE; \
 		(_res)->re_tree_free++; \
 	}
+
+
+/*			R T _ R E P R E P _ O B J _ L I S T
+ *
+ *	Structure used by the "reprep" routines
+ */
+struct rt_reprep_obj_list {
+	int ntopobjs;		/* number of objects in the original call to gettrees */
+	char **topobjs;		/* list of the above object names */
+	int nunprepped;		/* number of objects to be unprepped and re-prepped */
+	char **unprepped;	/* list of the above objects */
+	struct bu_ptbl paths;	/* list of all paths from topobjs to unprepped objects */
+	struct db_tree_state **tsp;	/* tree state used by tree walker in "reprep" routines */
+	struct bu_ptbl unprep_regions;	/* list of region structures that will be "unprepped" */
+	long old_nsolids;		/* rtip->nsolids before unprep */
+	long old_nregions;		/* rtip->nregions before unprep */
+	long nsolids_unprepped;		/* number of soltab structures eliminated by unprep */
+	long nregions_unprepped;	/* number of region structures eliminated by unprep */
+};
+
+
+
 
 /*
  *			P I X E L _ E X T
@@ -2490,7 +2517,9 @@ BU_EXTERN(void rt_color_free, () );
 /* cut.c */
 extern void rt_pr_cut_info(const struct rt_i	*rtip,
 			   const char		*str);
-
+extern void remove_from_bsp( struct soltab *stp, union cutter *cutp );
+extern void insert_in_bsp( struct soltab *stp, union cutter *cutp, struct resource *resp, fastf_t bb[6] );
+extern void fill_out_bsp( struct rt_i *rtip, union cutter *cutp, struct resource *resp, fastf_t bb[6] );
 BU_EXTERN(void rt_cut_extend, (union cutter *cutp, struct soltab *stp,
 	const struct rt_i *rtip) );
 					/* find RPP of one region */
@@ -2823,7 +2852,8 @@ void db_ck_directory(const struct db_i *dbip);
 
 extern void db_inmem(struct directory	*dp,
 		     struct bu_external	*ext,
-		     int			flags);
+		     int		flags,
+		     struct db_i	*dbip);
 
 extern int db_is_directory_non_empty( const struct db_i	*dbip);
 
@@ -3119,12 +3149,21 @@ void rt_init_resource(
 	int		cpu_num,
 	struct rt_i	*rtip);
 BU_EXTERN(void rt_clean_resource, (struct rt_i *rtip, struct resource *resp));
+extern int rt_unprep( struct rt_i *rtip, struct rt_reprep_obj_list *objs, struct resource *resp );
+extern int rt_reprep( struct rt_i *rtip, struct rt_reprep_obj_list *objs, struct resource *resp );
+extern int re_prep_solids( struct rt_i *rtip, int num_solids, char **solid_names, struct resource *resp );
+extern int rt_find_paths( struct db_i *dbip,
+	       struct directory *start,
+	       struct directory *end,
+	       struct bu_ptbl *paths,
+	       struct resource *resp );
 
 /* shoot.c */
 BU_EXTERN(void rt_add_res_stats, (struct rt_i *rtip, struct resource *resp) );
 					/* Tally stats into struct rt_i */
 extern void rt_res_pieces_clean(struct resource *resp,
 			   struct rt_i *rtip);
+extern void rt_res_pieces_init( struct resource *resp, struct rt_i *rtip );
 extern void rt_vstub(struct soltab	       *stp[],
 		     struct xray		*rp[],
 		     struct  seg            segp[],

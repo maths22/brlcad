@@ -119,6 +119,9 @@ extern int db_warn;	/* defined in ged.c */
 extern int db_upgrade;	/* defined in ged.c */
 extern int db_version;	/* defined in ged.c */
 
+extern struct rt_tess_tol     mged_ttol; /* do_draw.c */
+extern struct bn_tol	      mged_tol; /* ged.c */
+
 int glob_compat_mode = 1;
 int output_as_return = 1;
 
@@ -179,6 +182,7 @@ static struct cmdtab cmdtab[] = {
 	{"c", cmd_comb_std},
 	{"cat", cmd_cat},
 	{"center", cmd_center},
+	{"closedb", f_closedb},
 	{"cmd_win", cmd_cmd_win},
 	{"color", cmd_color},
 	{"comb", cmd_comb},
@@ -272,11 +276,11 @@ static struct cmdtab cmdtab[] = {
 	{"l_muves", f_l_muves},
 	{"labelvert", f_labelvert},
 	{"left",		bv_left},
-	{"listeval", cmd_pathsum},
 	{"lm", cmd_lm},
 #ifdef DM_X
 	{"loadtk", cmd_tk},
 #endif
+	{"loadview", f_loadview},
 	{"lookat", cmd_lookat},
 	{"ls", cmd_ls},
 	{"M", f_mouse},
@@ -287,6 +291,7 @@ static struct cmdtab cmdtab[] = {
 	{"mater", f_mater},
 	{"matpick", f_matpick},
 	{"memprint", f_memprint},
+	{"listeval", cmd_pathsum},
 #ifdef DM_X
 	{"mged_update", f_update},
 	{"mged_wait", f_wait},
@@ -755,10 +760,7 @@ mged_setup()
 #endif
 
 	bu_vls_init(&str);
-	bu_vls_printf(&str, "set auto_path [linsert $auto_path 0 \
-                             %stclscripts/mged %stclscripts \
-                             %stclscripts/lib %stclscripts/util]",
-		      filename, filename, filename, filename);
+	bu_vls_printf(&str, "set auto_path [linsert $auto_path 0 %stclscripts/mged %stclscripts %stclscripts/lib %stclscripts/util %stclscripts/geometree]", filename, filename, filename, filename, filename);
 	(void)Tcl_Eval(interp, bu_vls_addr(&str));
 
 	/* Tcl needs to write nulls onto subscripted variable names */
@@ -3260,9 +3262,20 @@ cmd_tol(ClientData	clientData,
 	int		argc,
 	char		**argv)
 {
+	int ret;
+
 	CHECK_DBI_NULL;
 
-	return wdb_tol_cmd(wdbp, interp, argc, argv);
+	ret = wdb_tol_cmd(wdbp, interp, argc, argv);
+
+	/* hack to keep mged tolerance settings current */
+	mged_ttol = wdbp->wdb_ttol;
+	mged_tol = wdbp->wdb_tol;
+	mged_abs_tol = mged_ttol.abs;
+	mged_rel_tol = mged_ttol.rel;
+	mged_nrm_tol = mged_ttol.norm;
+
+	return( ret );
 }
 
 /* defined in chgview.c */

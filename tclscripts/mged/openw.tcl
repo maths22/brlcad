@@ -477,61 +477,66 @@ proc gui { args } {
 	hoc_register_menu_data "File" "Open..." "Open Database"\
 			{ { summary "Open an existing database." }
 	{ see_also opendb } }
-	.$id.menubar.file add command -label "Insert..." -underline 0 -command "do_Concat $id"
-	hoc_register_menu_data "File" "Insert..." "Insert Database"\
-			{ { summary "Insert another database into the current database." }
-	{ see_also dbconcat } }
-	.$id.menubar.file add command -label "Extract..." -underline 0 -command "init_extractTool $id"
-	hoc_register_menu_data "File" "Extract..." "Extract Objects"\
-			{ { summary "Tool for extracting objects out of the current database." }
-	{ see_also keep } }
-	.$id.menubar.file add command -label "G2asc..." -underline 0 -command "init_g2asc $id"
-	hoc_register_menu_data "File" "G2asc..." "Convert to Ascii"\
-			{ { summary "Convert the current database into an ascii file." } }
+	.$id.menubar.file add separator
+	.$id.menubar.file add cascade -label "Import" -underline 0 -menu .$id.menubar.file.import
+	.$id.menubar.file add cascade -label "Export" -underline 0 -menu .$id.menubar.file.export
+
 	.$id.menubar.file add separator
 	.$id.menubar.file add command -label "Load Script..." -underline 0 \
 			-command "do_LoadScript $id"
 	hoc_register_menu_data "File" "Load Script..." "Load Script"\
-			{ { summary "Browse directories for a Tcl script file to load." } }
+			{ { summary "Browse directories for a Tcl script file to load." } { see_also "loadview, source" } }
 	.$id.menubar.file add separator
 	.$id.menubar.file add command -label "Raytrace" -underline 0 -command "init_Raytrace $id"
 	hoc_register_menu_data "File" "Raytrace" "Raytrace View"\
 			{ { summary "Tool for raytracing the current view." }
 	{ see_also rt } }
-	.$id.menubar.file add cascade -label "Save View As" -underline 0 -menu .$id.menubar.file.saveview
+	.$id.menubar.file add cascade -label "Render View" -underline 0 -menu .$id.menubar.file.renderview
 	.$id.menubar.file add separator
 	.$id.menubar.file add cascade -label "Preferences" -underline 0 -menu .$id.menubar.file.pref
 	.$id.menubar.file add separator
-	.$id.menubar.file add command -label "Update/Create .mgedrc" -underline 0 \
+	.$id.menubar.file add command -label "Create/Initialize .mgedrc" -underline 0 \
 			-command "update_mgedrc"
-	hoc_register_menu_data "File" "Update/Create .mgedrc" "Update/Create .mgedrc"\
-			{ { summary "Update or create the .mgedrc startup file." }
+	hoc_register_menu_data "File" "Create/Initialize .mgedrc" "Create/Initialize .mgedrc"\
+			{ { summary "Create or initialize the .mgedrc startup file with default variable settings." }
 	{ see_also } }
 	.$id.menubar.file add command -label "Close" -underline 0 \
-			-command "gui_destroy $id"
-	hoc_register_menu_data "File" "Close" "Close Window"\
-			{ { summary "Close this graphical user interface." }
-	{ see_also } }
+			-command "closedb"
+	hoc_register_menu_data "File" "Close" "Close Database"\
+			{ { summary "Close any presently open database." }
+	{ see_also opendb } }
 	.$id.menubar.file add command -label "Exit" -underline 1 -command _mged_quit
 	hoc_register_menu_data "File" "Exit" "Exit MGED"\
 			{ { summary "Exit MGED." }
 	{ see_also "exit q quit" } }
 
-	menu .$id.menubar.file.saveview -title "Save View As" -tearoff $mged_default(tearoff_menus)
-	.$id.menubar.file.saveview add command -label "RT Script..." -underline 0\
+	menu .$id.menubar.file.import -title "Import" -tearoff $mged_default(tearoff_menus)
+	.$id.menubar.file.import add command -label "Ascii Database" -underline 0 -command "init_asc2g $id"
+	hoc_register_menu_data "Import" "Ascii Database" "g2asc Ascii Database" { { summary "Import a database in ascii format using asc2g" } { see_also asc2g } }
+	.$id.menubar.file.import add command -label "Binary Database" -underline 0 -command "do_Concat $id"
+	hoc_register_menu_data "Import" "Insert Database" "Insert Database"	{ { summary "Insert another database into the current database." }	{ see_also dbconcat } }
+
+	menu .$id.menubar.file.export -title "Export" -tearoff $mged_default(tearoff_menus)
+	.$id.menubar.file.export add command -label "Ascii Database" -underline 0 -command "init_g2asc $id"
+	hoc_register_menu_data "Export" "Ascii Database" "g2asc Ascii Database" { { summary "Export the current database in ascii format using g2asc" } { see_also g2asc } }
+	.$id.menubar.file.export add command -label "Database Objects" -underline 0 -command "init_extractTool $id"
+	hoc_register_menu_data "Export" "Extract Objects" "Extract Objects" { { summary "Tool for extracting objects out of the current database." } { see_also keep } }
+
+	menu .$id.menubar.file.renderview -title "Render View" -tearoff $mged_default(tearoff_menus)
+	.$id.menubar.file.renderview add command -label "RT Script..." -underline 0\
 			-command "init_rtScriptTool $id"
-	hoc_register_menu_data "Save View As" "RT Script..." "RT Script File"\
+	hoc_register_menu_data "Render View" "RT Script..." "RT Script File"\
 			{ { summary "Save the current view as an RT script file." }
 	{ see_also saveview } }
-	.$id.menubar.file.saveview add command -label "Plot..." -underline 1\
+	.$id.menubar.file.renderview add command -label "Plot..." -underline 1\
 			-command "init_plotTool $id"
-	hoc_register_menu_data "Save View As" "Plot..." "Plot File"\
-			{ { summary "Save the current view as a Plot file." }
+	hoc_register_menu_data "Render View As" "Plot..." "Plot File"\
+			{ { summary "Render the current view to a Plot file." }
 	{ see_also pl } }
-	.$id.menubar.file.saveview add command -label "PostScript..." -underline 0\
+	.$id.menubar.file.renderview add command -label "PostScript..." -underline 0\
 			-command "init_psTool $id"
-	hoc_register_menu_data "Save View As" "PostScript..." "PostScript File"\
-			{ { summary "Save the current view as a PostScript file." }
+	hoc_register_menu_data "Render View As" "PostScript..." "PostScript File"\
+			{ { summary "Render the current view to a PostScript file." }
 	{ see_also ps } }
 
 	menu .$id.menubar.file.pref -title "Preferences" -tearoff $mged_default(tearoff_menus)
@@ -728,7 +733,7 @@ hoc_register_menu_data "Edit" "Combination Editor" "Combination Editor"\
 		{ { summary "A tool for editing/creating combinations." } }
 .$id.menubar.edit add command -label "Attribute Editor" -underline 0 \
 		-command "Attr_editor::start_editor $id"
-
+.$id.menubar.edit add command -label "Browse Geometry" -underline 0 -command "geometree"
 
 menu .$id.menubar.create -title "Create" -tearoff $mged_default(tearoff_menus)
 
@@ -1773,37 +1778,16 @@ hoc_register_menu_data "ViewRing" "Add View" "Add View"\
 		{ see_also "dm" } }
 	}
 
+	# BEGIN TOOLS MENU
+
+	# BEGIN CONTROL PANELS (control behavior and settings)
+
 	menu .$id.menubar.tools -title "Tools" -tearoff $mged_default(tearoff_menus)
 	.$id.menubar.tools add command -label "ADC Control Panel" -underline 0\
 			-command "init_adc_control $id"
 	hoc_register_menu_data "Tools" "ADC Control Panel" "ADC Control Panel"\
 			{ { summary "Tool for controlling the angle distance cursor." }
 	{ see_also "adc" } }
-	.$id.menubar.tools add command -label "Grid Control Panel" -underline 0\
-			-command "init_grid_control $id"
-	hoc_register_menu_data "Tools" "Grid Control Panel" "Grid Control Panel"\
-			{ { summary "Tool for setting grid parameters." }
-	{ see_also "rset" } }
-	.$id.menubar.tools add command -label "Query Ray Control Panel" -underline 0\
-			-command "init_qray_control $id"
-	hoc_register_menu_data "Tools" "Query Ray Control Panel" "Query Ray Control Panel"\
-			{ { summary "Tool for setting query ray parameters." }
-	{ see_also "qray" } }
-	.$id.menubar.tools add command -label "Raytrace Control Panel" -underline 0\
-			-command "init_Raytrace $id"
-	hoc_register_menu_data "Tools" "Raytrace Control Panel" "Raytrace Control Panel"\
-			{ { summary "Tool for raytracing." }
-	{ see_also rt } }
-
-	.$id.menubar.tools add command -label "Build Pattern Tool" -underline 0\
-			-command "pattern_control .#auto"
-	hoc_register_menu_data "Tools" "Build Pattern Tool" "Build Pattern Tool"\
-			{ { summary "A tool for building a repetitive pattern from an existing object." } }
-
-	.$id.menubar.tools add command -label "Overlap Tool" -underline 0\
-			-command "overlap_tool $id"
-	hoc_register_menu_data "Tools" "Overlap Tool" "Overlap Tool"\
-			{ { summary "A tool for discovering and correcting overlapping regions." } }
 
 	.$id.menubar.tools add command -label "AnimMate Control Panel" -underline 1\
 			-command "animmate $id .$id"
@@ -1811,36 +1795,85 @@ hoc_register_menu_data "ViewRing" "Add View" "Add View"\
 			{ { summary "Tool for building animation scripts." }
 	{ see_also animmate } }
 
+	.$id.menubar.tools add command -label "Grid Control Panel" -underline 0\
+			-command "init_grid_control $id"
+	hoc_register_menu_data "Tools" "Grid Control Panel" "Grid Control Panel"\
+			{ { summary "Tool for setting grid parameters." }
+	{ see_also "rset" } }
+
+	.$id.menubar.tools add command -label "Query Ray Control Panel" -underline 0\
+			-command "init_qray_control $id"
+	hoc_register_menu_data "Tools" "Query Ray Control Panel" "Query Ray Control Panel"\
+			{ { summary "Tool for setting query ray parameters." }
+	{ see_also "qray" } }
+
+	.$id.menubar.tools add command -label "Raytrace Control Panel" -underline 0\
+			-command "init_Raytrace $id"
+	hoc_register_menu_data "Tools" "Raytrace Control Panel" "Raytrace Control Panel"\
+			{ { summary "Tool for raytracing." }
+	{ see_also rt } }
+
+	# BEGIN TOOLS (perform operation (subtle (bogus) difference))
+
+	.$id.menubar.tools add separator
+
+	.$id.menubar.tools add command -label "Build Pattern Tool" -underline 0\
+			-command "pattern_control .#auto"
+	hoc_register_menu_data "Tools" "Build Pattern Tool" "Build Pattern Tool"\
+			{ { summary "A tool for building a repetitive pattern from an existing object." } }
+
+	.$id.menubar.tools add command -label "Color Selector" -underline 1\
+			-command "cadColorWidget tool .$id colorEditTool\
+			-title \"Color Selector\"\
+			-initialcolor black"
+	hoc_register_menu_data "Tools" "Color Selector" "Color Selector"\
+			{ { summary "Tool for creating, displaying, and selecting colors." } }
+
+	.$id.menubar.tools add command -label "Geometry Browser" -underline 0\
+			-command "geometree"
+	hoc_register_menu_data "Tools" "Geometry Browser" "Geometry Browser"\
+			{ { summary "Tool for browsing the geometry in a database." } }
+
+	.$id.menubar.tools add command -label "Overlap Tool" -underline 0\
+			-command "overlap_tool $id"
+	hoc_register_menu_data "Tools" "Overlap Tool" "Overlap Tool"\
+			{ { summary "A tool for discovering and correcting overlapping regions." } }
+
+	# BEGIN ACTIONS (perform some operation (subtle (bogus) difference))
+
+	.$id.menubar.tools add separator
+
 	.$id.menubar.tools add command -label "Upgrade Database..." -underline 1\
 			-command "dbupgrade"
 	hoc_register_menu_data "Tools" "Upgrade Database..." "Upgrade Database..."\
 			{ { summary "Upgrade to the current database format." }
 	{ see_also dbupgrade } }
 
+# XXX These are already included on the edit menu! -- csm
+#	.$id.menubar.tools add separator
+#	.$id.menubar.tools add command -label "Prim Editor" -underline 0\
+#			-command "init_edit_solid $id"
+#	hoc_register_menu_data "Tools" "Prim Editor" "Prim Editor"\
+#			{ { summary "Tool for creating/editing primitives." } }
+#	.$id.menubar.tools add command -label "Combination Editor" -underline 0\
+#			-command "init_comb $id"
+#	hoc_register_menu_data "Tools" "Combination Editor" "Combination Editor"\
+#			{ { summary "Tool for creating/editing combinations." } }
+
+	# BEGIN WINDOWS (display main windows)
+
 	.$id.menubar.tools add separator
-	.$id.menubar.tools add command -label "Prim Editor" -underline 0\
-			-command "init_edit_solid $id"
-	hoc_register_menu_data "Tools" "Prim Editor" "Prim Editor"\
-			{ { summary "Tool for creating/editing primitives." } }
-	.$id.menubar.tools add command -label "Combination Editor" -underline 0\
-			-command "init_comb $id"
-	hoc_register_menu_data "Tools" "Combination Editor" "Combination Editor"\
-			{ { summary "Tool for creating/editing combinations." } }
-	.$id.menubar.tools add command -label "Color Editor" -underline 1\
-			-command "cadColorWidget tool .$id colorEditTool\
-			-title \"Color Editor\"\
-			-initialcolor black"
-	hoc_register_menu_data "Tools" "Color Editor" "Color Editor"\
-			{ { summary "Tool for creating/displaying colors." } }
-	.$id.menubar.tools add separator
+
 	.$id.menubar.tools add command -label "Command Window" -underline 6\
 			-command "raise .$id"
 	hoc_register_menu_data "Tools" "Command Window" "Command Window"\
 			{ { summary "Raise the command window." } }
-	.$id.menubar.tools add command -label "Geometry Window" -underline 7\
+	.$id.menubar.tools add command -label "Graphics Window" -underline 7\
 			-command "raise $mged_gui($id,top)"
-	hoc_register_menu_data "Tools" "Geometry Window" "Geometry Window"\
+	hoc_register_menu_data "Tools" "Graphics Window" "Graphics Window"\
 			{ { summary "Raise the geometry window." } }
+
+	# END TOOLS MENU
 
 	menu .$id.menubar.help -title "Help" -tearoff $mged_default(tearoff_menus)
 	.$id.menubar.help add command -label "Dedication" -underline 0\
@@ -2286,10 +2319,15 @@ proc gui_destroy args {
 	catch { destroy $mged_gui($id,top) }
 	catch { destroy .$id }
 
+# this will disable the File->Close option
+# XXX this should be disabled initially, and then enabled during an opendb or
+# a file->open action.
+#
 	if { [llength $mged_players] == 1 } {
 		set id [lindex $mged_players 0]
 		.$id.menubar.file entryconfigure 14 -state disabled
 	}
+
 }
 
 proc reconfig_gui_default { id } {

@@ -37,7 +37,9 @@ NFS=1
 # Label number for this CAD Release,
 # RCS main Revision number, and date.
 #RELEASE=M.N;	RCS_REVISION=X;		REL=DATE=dd-mmm-yy
-RELEASE=6.01;	RCS_REVISION=17;	REL_DATE=2-July-02	# 6.0.1
+RELEASE=6.1DP;	RCS_REVISION=18;	REL_DATE=25-Oct-02	# 6.1 developer preview
+#RELEASE=6.02;	RCS_REVISION=18;	REL_DATE=13-Sep-02	# 6.0.2
+#RELEASE=6.01;	RCS_REVISION=17;	REL_DATE=2-July-02	# 6.0.1
 #RELEASE=6.0;	RCS_REVISION=16;	REL_DATE=22-March-02	# 6.0
 #RELEASE=5.4;	RCS_REVISION=15;	REL_DATE=18-Jul-01	# internal
 #RELEASE=5.3;	RCS_REVISION=14;	REL_DATE=5-Mar-01	# 5.3
@@ -233,7 +235,7 @@ BDIRS="bench \
 #
 # Cakefiles to execute in tclscripts.
 #
-TSDIRS=". mged nirt pl-dm lib util rtwizard/examples/PictureTypeA rtwizard/examples/PictureTypeB rtwizard/examples/PictureTypeC rtwizard/examples/PictureTypeD rtwizard/examples/PictureTypeE rtwizard/examples/PictureTypeF rtwizard/lib rtwizard"
+TSDIRS=". mged nirt pl-dm lib util rtwizard/examples/PictureTypeA rtwizard/examples/PictureTypeB rtwizard/examples/PictureTypeC rtwizard/examples/PictureTypeD rtwizard/examples/PictureTypeE rtwizard/examples/PictureTypeF rtwizard/lib rtwizard geometree"
 
 HTML_DIRS="html/manuals html/manuals/shaders html/manuals/Anim_Tutorial html/manuals/libdm html/manuals/mged html/manuals/mged/animmate html/manuals/librt html/manuals/libbu html/manuals/cadwidgets html/ReleaseNotes html/ReleaseNotes/Rel5.0 html/ReleaseNotes/Rel5.0/Summary"
 INSTALL_ONLY_DIRS="sample_applications $HTML_DIRS"

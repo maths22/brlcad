@@ -45,6 +45,10 @@ extern double Beta;
  *	Christopher T. Johnson
  *
  * $Log$
+ * Revision 11.3  2000/08/24 23:09:00  mike
+ *
+ * lint
+ *
  * Revision 11.2  2000/08/24 23:07:42  mike
  *
  * lint

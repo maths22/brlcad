@@ -49,6 +49,10 @@ int eq_cubic();
  *	tone scale.  If eqptr is null then Set EqCubic to evaluate to a line.
  *
  * $Log$
+ * Revision 11.4  2000/08/24 23:09:00  mike
+ *
+ * lint
+ *
  * Revision 11.3  2000/01/31 16:20:25  jra
  * Eliminated an unused variable
  *
