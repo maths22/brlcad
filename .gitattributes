@@ -1489,7 +1489,6 @@ libbu/brlcad_path.c svneol=native#text/plain
 libbu/bu_tcl.c svneol=native#text/plain
 libbu/color.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
-libbu/file.c svneol=native#text/plain
 libbu/getopt.c svneol=native#text/plain
 libbu/hist.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
