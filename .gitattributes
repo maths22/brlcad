@@ -2951,8 +2951,6 @@ src/other/libtcl/tools/white.bmp -text svneol=unset#image/bmp
 src/other/libtcl/unix/Makefile.am svneol=native#text/plain
 src/other/libtcl/unix/README svneol=native#text/plain
 src/other/libtcl/unix/aclocal.m4 svneol=native#text/plain
-src/other/libtcl/unix/config.log svneol=native#text/plain
-src/other/libtcl/unix/config.status -text
 src/other/libtcl/unix/configure -text
 src/other/libtcl/unix/configure.in svneol=native#text/plain
 src/other/libtcl/unix/dltest/README svneol=native#text/plain
@@ -3661,8 +3659,6 @@ src/other/libtk/tests/xmfbox.test svneol=native#text/plain
 src/other/libtk/unix/Makefile.am svneol=native#text/plain
 src/other/libtk/unix/README svneol=native#text/plain
 src/other/libtk/unix/aclocal.m4 svneol=native#text/plain
-src/other/libtk/unix/config.log svneol=native#text/plain
-src/other/libtk/unix/config.status -text
 src/other/libtk/unix/configure -text
 src/other/libtk/unix/configure.in svneol=native#text/plain
 src/other/libtk/unix/install-sh svneol=native#text/plain
