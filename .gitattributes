@@ -999,6 +999,7 @@ libbn/axis.c svneol=native#text/plain
 libbn/bn_tcl.c svneol=native#text/plain
 libbn/complex.c svneol=native#text/plain
 libbn/const.c svneol=native#text/plain
+libbn/fast.sh svneol=native#text/x-sh
 libbn/font.c svneol=native#text/plain
 libbn/fortran.c svneol=native#text/plain
 libbn/htester.c svneol=native#text/plain
