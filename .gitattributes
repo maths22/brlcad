@@ -172,6 +172,7 @@ conv/g-euclid.1 svneol=native#text/plain
 conv/g-euclid.c svneol=native#text/plain
 conv/g-euclid1.c svneol=native#text/plain
 conv/g-nmg.c svneol=native#text/plain
+conv/g-tankill.1 svneol=native#text/plain
 conv/g-tankill.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
