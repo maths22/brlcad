@@ -2299,6 +2299,7 @@ libsysv/regexec.c svneol=native#text/plain
 libsysv/regfree.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
+libsysv/vers.c svneol=native#text/plain
 libtcl8.3/Cakefile -text
 libtcl8.3/ChangeLog svneol=native#text/plain
 libtcl8.3/README svneol=native#text/plain
