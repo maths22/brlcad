@@ -90,8 +90,3 @@ src/tclscripts/mged/tclIndex
 src/tclscripts/pl-dm/tclIndex
 src/tclscripts/tclIndex
 src/tclscripts/util/tclIndex
-tclscripts/lib/tclIndex
-tclscripts/mged/tclIndex
-tclscripts/pl-dm/tclIndex
-tclscripts/tclIndex
-tclscripts/util/tclIndex
