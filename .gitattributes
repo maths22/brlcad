@@ -231,6 +231,7 @@ h/vmath.h svneol=native#text/plain
 h/wdb.h svneol=native#text/plain
 halftone/main.c svneol=native#text/plain
 halftone/tone_classic.c svneol=native#text/plain
+halftone/tone_floyd.c svneol=native#text/plain
 halftone/tone_folly.c svneol=native#text/plain
 halftone/tone_simple.c svneol=native#text/plain
 halftone/tonescale.c svneol=native#text/plain
