@@ -28,8 +28,7 @@
  *	This should cut Chop() from order N ^ 2 to N * log( N ).
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
-static char	sccsid[] = "@(#)cad_boundp.c	1.13";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -112,6 +111,7 @@ Usage() 				/* print usage message */
 }
 
 
+int
 main( argc, argv )			/* "cad_boundp" entry point */
 int	argc;			/* argument count */
 char	*argv[];		/* argument strings */
@@ -261,10 +261,10 @@ Chop()					/* chop vectors into segments */
 				i = Intersect( pp, segp );
 				if ( i != NULL )
 				{
-					if ( !EndPoint( i, pp  )
-					    && !Split( i, pp, &piecehead )
-					    || !EndPoint( i, segp )
-					    && !Split( i, segp, &seghead )
+					if ( ( !EndPoint( i, pp  )
+					    && !Split( i, pp, &piecehead ) )
+					    || ( !EndPoint( i, segp )
+					    && !Split( i, segp, &seghead ) )
 					    )	/* out of memory */
 						return false;
 

@@ -6,12 +6,17 @@
 			(301)278-6651 or DSN 298-6651
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #ifdef HAVE_STDARG_H
 #include <stdarg.h>
 #else

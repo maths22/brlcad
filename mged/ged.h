@@ -48,12 +48,17 @@
 #include <sys/time.h>
 #include <time.h>
 #include "tcl.h"
+#include "wdb.h"
 
 /*	Stuff needed from db.h */
 #ifndef NAMESIZE
 
 #define NAMESIZE 16
 #define NAMEMOVE(from,to)       (void)strncpy(to, from, NAMESIZE)
+
+#define MGED_DB_NAME "db"
+#define MGED_INMEM_NAME ".inmem"
+#define MGED_DG_NAME "dg"
 
 #define ID_NO_UNIT	0		/* unspecified */
 #define ID_MM_UNIT	1		/* millimeters (preferred) */
@@ -90,6 +95,8 @@ extern double	degtorad, radtodeg;	/* Defined in usepen.c */
  */
 extern struct db_i	*dbip;		       /* defined in ged.c */
 extern int		 dbih;		       /* defined in ged.c */
+extern struct rt_wdb	*wdbp;			/* defined in ged.c */
+extern struct dg_obj	*dgop;			/* defined in ged.c */
 #define	base2local	(dbip->dbi_base2local)
 #define local2base	(dbip->dbi_local2base)
 #define	cur_title	(dbip->dbi_title)      /* current model title */
@@ -220,11 +227,15 @@ MGED_EXTERN(int chg_state, (int from, int to, char *str) );
 MGED_EXTERN(void state_err, (char *str) );
 
 MGED_EXTERN(void do_list, (struct bu_vls *outstrp, struct directory *dp, int verbose));
+MGED_EXTERN(int invoke_db_wrapper, (Tcl_Interp *interp, int argc, char **argv));
 
 /* history.c */
-
-extern int cmd_prev(), cmd_next();
-extern void history_record();
+void history_record(
+	struct bu_vls *cmdp,
+	struct timeval *start,
+	struct timeval *finish,
+	int status);			   /* Either CMD_OK or CMD_BAD */
+void history_setup(void);
 
 
 /* cmd.c */
@@ -452,4 +463,428 @@ extern struct run_rt head_run_rt;
 #define CMD_BAD		920
 #define CMD_MORE	921
 #define MORE_ARGS_STR    "more arguments needed::"
+
+/* adc.c */
+int f_adc (
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+
+/* attach.c */
+#if defined(SEEN_MGED_DM_H)
+int mged_attach(
+	struct w_dm *wp,
+	int argc,
+	char *argv[]);
+#else
+int mged_attach();
+#endif
+
+/* buttons.c */
+int bv_zoomin(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_zoomout(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_rate_toggle(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_top(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_bottom(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_right(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_left(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_front(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_rear(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_vrestore(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_vsave(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_adcursor(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_reset(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_45_45(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_35_25(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_illuminate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_illuminate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_scale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_x(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_y(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_xy(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_rotate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_accept(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_reject(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_edit(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_rotate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_trans(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_scale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_xscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_yscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_zscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+void btn_head_menu(int i, int menu, int item);
+void chg_l2menu(int i);
+
+/* chgmodel.c */
+int extract_mater_from_line(
+	char *line,
+	char *name,
+	char *shader,
+	int *r, int *g, int *b,
+	int *override,
+	int *inherit);
+int f_rmater(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int     argc,
+	char    *argv[]);
+int
+f_wmater(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int     argc,
+	char    *argv[]);
+
+
+/* chgtree.c */
+int cmd_kill(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int cmd_name(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+
+/* chgview.c */
+int edit_com(
+     int	argc,
+     char	**argv,
+     int	kind,
+     int	catch_sigint);
+void eraseobjpath(
+     Tcl_Interp	*interp,
+     int	argc,
+     char	**argv,
+     int	noisy,
+     int	all);
+int f_edit(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int f_erase(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int     argc,
+	char    **argv);
+int f_erase_all(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int     argc,
+	char    **argv);
+int f_sed(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int f_zap(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int mged_erot_xyz(
+	char origin,
+	vect_t rvec);
+int mged_svbase(void);
+int mged_vrot_xyz(
+	char origin,
+	char coords,
+	vect_t rvec);
+void size_reset(void);
+void solid_list_callback(void);
+void view_ring_destroy(struct dm_list *dlp);
+
+/* cmd.c */
+int cmdline( struct bu_vls *vp, int record);
+int f_quit(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int mged_cmd(
+	int argc,
+	char **argv,
+	struct funtab in_functions[]);
+void mged_print_result(int status);
+
+/* color_scheme.c */
+void cs_set_bg(void);
+void cs_update(void);
+void cs_set_dirty_flag(void);
+
+/* columns.c */
+void
+vls_col_item(
+	struct bu_vls	*str,
+	const char	*cp);
+void vls_col_eol( struct bu_vls *str );
+void vls_col_pr4v(struct bu_vls *vls, struct directory **list_of_names, int num_in_list);
+void vls_line_dpp(
+	struct bu_vls *vls,
+	struct directory **list_of_names,
+	int num_in_list,
+	int aflag,	/* print all objects */
+	int cflag,	/* print combinations */
+	int rflag,	/* print regions */
+	int sflag);	/* print solids */
+void vls_long_dpp(
+	struct bu_vls *vls,
+	struct directory **list_of_names,
+	int num_in_list,
+	int aflag,	/* print all objects */
+	int cflag,	/* print combinations */
+	int rflag,	/* print regions */
+	int sflag);	/* print solids */
+
+/* dir.c */
+void dir_summary(int flag);
+int cmd_killall(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int cmd_killtree(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+
+/* dodraw.c */
+void cvt_vlblock_to_solids(
+	struct bn_vlblock	*vbp,
+	const char		*name,
+	int			copy);
+void drawH_part2(
+	int			dashflag,
+	struct bu_list		*vhead,
+	struct db_full_path	*pathp,
+	struct db_tree_state	*tsp,
+	struct solid		*existing_sp);
+int drawtrees(
+	int	argc,
+	char	**argv,
+	int	kind);
+int invent_solid(
+	const char	*name,
+	struct bu_list	*vhead,
+	long		rgb,
+	int		copy);
+void pathHmat(
+	register struct solid *sp,
+	matp_t matp,
+	int depth);
+int replot_modified_solid(
+	struct solid			*sp,
+	struct rt_db_internal		*ip,
+	const mat_t			mat);
+int replot_original_solid( struct solid *sp );
+void add_solid_path_to_result(
+	Tcl_Interp *interp,
+	struct solid *sp);
+
+/* dozoom.c */
+void createDList(struct solid *sp);
+void createDLists(struct bu_list *hsp);
+void createDListALL(struct solid *sp);
+void createDListsAll(struct bu_list *hsp);
+void freeDListsAll(unsigned int dlist, int range);
+
+/* edarb.c */
+int editarb( vect_t pos_model );
+int mv_edge(
+	vect_t thru,
+	int bp1, int bp2, int end1, int end2,
+	const vect_t	dir);
+
+/* edars.c */
+#if defined(SEEN_RTGEOM_H)
+void find_nearest_ars_pt(
+	int *crv,
+	int *col,
+	struct rt_ars_internal *ars,
+	point_t pick_pt,
+	vect_t dir);
+#else
+void find_nearest_ars_pt();
+#endif
+
+/* ged.c */
+int event_check( int non_blocking );
+int f_opendb(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+void new_edit_mats(void);
+void new_mats(void);
+void pr_prompt(void);
+void pr_beep(void);
+
+/* grid.c */
+void round_to_grid(fastf_t *view_dx, fastf_t *view_dy);
+void snap_keypoint_to_grid(void);
+void snap_view_center_to_grid(void);
+void snap_to_grid(
+	fastf_t *mx,		/* input and return values */
+	fastf_t *my);		/* input and return values */
+void snap_view_to_grid(fastf_t view_dx, fastf_t view_dy);
+
+/* menu.c */
+int mmenu_select( int pen_y, int do_func );
+
+/* overlay.c */
+int f_overlay(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+
+/* predictor.c */
+void predictor_frame();
+
+/* usepen.c */
+int f_mouse(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+int f_aip(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int argc,
+	char **argv);
+void buildHrot( mat_t mat, double alpha, double beta, double ggamma );
+void wrt_view( mat_t out, const mat_t change, const mat_t in );
+void wrt_point( mat_t out, const mat_t change, const mat_t in, const point_t point );
+void wrt_point_direc( mat_t out, const mat_t change, const mat_t in, const point_t point, const vect_t direc );
+int f_matpick(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv);
+
+/* tedit.c */
+int editit( const char *file );
+
+/* titles.c */
+void create_text_overlay( struct bu_vls *vp );
+void screen_vls(
+	int	xbase,
+	int	ybase,
+	struct bu_vls	*vp);
+void dotitles(struct bu_vls *overlay_vls);
+
+/* rect.c */
+void zoom_rect_area(void);
+void paint_rect_area(void);
+void rt_rect_area(void);
+void draw_rect(void);
+void set_rect(void);
+void rect_view2image(void);
+void rect_image2view(void);
+void rb_set_dirty_flag(void);
+
+
+/* track.c */
+int wrobj( char name[], int flags );
+
+/* red.c */
+int writecomb( const struct rt_comb_internal *comb, const char *name );
+int checkcomb(void);
+
+/* edsol.c */
+void vls_solid( struct bu_vls *vp, const struct rt_db_internal *ip, const mat_t mat );
+void transform_editing_solid(
+	struct rt_db_internal	*os,		/* output solid */
+	const mat_t		mat,
+	struct rt_db_internal	*is,		/* input solid */
+	int			free);
+void replot_editing_solid(void);
+void sedit_abs_scale(void);
+void sedit_accept(void);
+void sedit_mouse( const vect_t mousevec );
+void sedit_reject(void);
+void sedit_vpick( point_t v_pos );
+void oedit_abs_scale(void);
+void oedit_accept(void);
+void oedit_reject(void);
+void objedit_mouse( const vect_t mousevec );
+extern int nurb_closest2d();
+void label_edited_solid(
+	int *num_lines,
+	point_t *lines,
+	struct rt_point_labels	pl[],
+	int			max_pl,
+	const mat_t		xform,
+	struct rt_db_internal	*ip);
+void init_oedit(void);
+void init_sedit(void);
+int rt_arb_calc_planes(
+	plane_t			planes[6],
+	struct rt_arb_internal	*arb,
+	int			type,
+	const struct bn_tol	*tol);
+
+
+/* share.c */
+void usurp_all_resources(struct dm_list *dlp1, struct dm_list *dlp2);
+
+/* inside.c */
+int torin(struct rt_db_internal *ip, fastf_t thick[6] );
+int tgcin(struct rt_db_internal *ip, fastf_t thick[6]);
+int rhcin(struct rt_db_internal *ip, fastf_t thick[4]);
+int rpcin(struct rt_db_internal *ip, fastf_t thick[4]);
+int partin(struct rt_db_internal *ip, fastf_t *thick );
+int nmgin( struct rt_db_internal *ip, fastf_t thick );
+int arbin(
+	struct rt_db_internal	*ip,
+	fastf_t	thick[6],
+	int	nface,
+	int	cgtype,		/* # of points, 4..8 */
+	plane_t	planes[6]);
+int ehyin(struct rt_db_internal *ip, fastf_t thick[2]);
+int ellgin(struct rt_db_internal *ip, fastf_t thick[6]);
+int epain(struct rt_db_internal *ip, fastf_t thick[2]);
+int etoin(struct rt_db_internal *ip, fastf_t thick[1]);
+
+/* set.c */
+void set_scroll_private(void);
+void mged_variable_setup(Tcl_Interp *interp);
+
+/* scroll.c */
+void set_scroll(void);
+int scroll_select( int pen_x, int pen_y, int do_func );
+int scroll_display( int y_top );
+
+/* edpipe.c */
+void pipe_scale_od( struct rt_db_internal *db_int, fastf_t scale);
+void pipe_scale_id( struct rt_db_internal *db_int, fastf_t scale );
+void pipe_seg_scale_od( struct wdb_pipept *ps, fastf_t scale );
+void pipe_seg_scale_id( struct wdb_pipept *ps, fastf_t scale );
+void pipe_seg_scale_radius( struct wdb_pipept *ps, fastf_t scale );
+void pipe_scale_radius( struct rt_db_internal *db_int, fastf_t scale );
+struct wdb_pipept *find_pipept_nearest_pt( const struct bu_list *pipe_hd, const point_t pt );
+struct wdb_pipept *add_pipept( struct rt_pipe_internal *pipe, struct wdb_pipept *pp, const point_t new_pt );
+void ins_pipept( struct rt_pipe_internal *pipe, struct wdb_pipept *pp, const point_t new_pt );
+struct wdb_pipept *del_pipept( struct wdb_pipept *ps );
+void move_pipept( struct rt_pipe_internal *pipe, struct wdb_pipept *ps, const point_t new_pt );
+
+/* vparse.c */
+void mged_vls_struct_parse_old(
+	struct bu_vls *vls,
+	const char *title,
+	struct bu_structparse *how_to_parse,
+	char *structp,
+	int argc,
+	char *argv[]);
+
+/* rtif.c */
+int build_tops(char **start, char **end);
+
+/* mater.c */
+void color_soltab(void);
 

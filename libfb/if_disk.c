@@ -14,12 +14,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#include <sys/types.h>
+#include <unistd.h>
+       
 #ifdef HAVE_SYS_FILE_H
 #include <sys/file.h>
 #else
@@ -228,7 +235,7 @@ _LOCAL_ int
 dsk_write( ifp, x, y, pixelp, count )
 FBIO	*ifp;
 int	x, y;
-CONST unsigned char	*pixelp;
+const unsigned char	*pixelp;
 long	count;
 {
 	register long	bytes = count * (long) sizeof(RGBpixel);
@@ -287,7 +294,7 @@ ColorMap	*cmap;
 _LOCAL_ int
 dsk_wmap( ifp, cmap )
 FBIO	*ifp;
-CONST ColorMap	*cmap;
+const ColorMap	*cmap;
 {
 	if( cmap == (ColorMap *) NULL )
 		/* Do not write default map to file. */

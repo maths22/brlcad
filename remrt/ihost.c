@@ -14,7 +14,7 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -23,18 +23,29 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include <ctype.h>
 #include <signal.h>
 #include <errno.h>
-#include <netdb.h>
 #include <math.h>
 #ifdef USE_STRING_H
+
 # include <string.h>
 #else
 # include <strings.h>
+#endif
+
+#ifdef BSD
+#  define __BSDbackup BSD
+#  undef BSD
+#endif
+#include <netdb.h>
+#ifdef __BSDbackup
+#  define BSD __BSDbackup
+#  undef __BSDbackup
 #endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include "machine.h"
 #include "vmath.h"

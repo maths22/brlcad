@@ -17,18 +17,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
 HIDDEN int	stk_setup(), stk_render();
 HIDDEN void	stk_print(), stk_free();
@@ -104,6 +105,97 @@ struct mfuncs	**headp;
 	return status;
 }
 
+/*
+ *			S T K _ D O S E T U P
+ */
+static int stk_dosetup( cp, rp, dpp, mpp, rtip, headp )
+char	*cp;
+struct region	*rp;
+char	**dpp;		/* udata pointer address */
+char	**mpp;		/* mfuncs pointer address */
+struct rt_i	*rtip;
+struct mfuncs	**headp;
+{
+	register struct mfuncs *mfp;
+#ifdef HAVE_DLOPEN
+	register struct mfuncs *mfp_new;
+#endif
+	struct bu_vls	arg;
+	char	matname[32];
+	int	ret;
+	int	i;
+
+	RT_CK_RTI(rtip);
+
+	if(rdebug&RDEBUG_MATERIAL)
+		bu_log( "...starting \"%s\"\n", cp );
+
+	/* skip leading white space */
+	while( *cp == ' ' || *cp == '\t' )
+		cp++;
+
+	for( i = 0; i < 31 && *cp != '\0'; i++, cp++ ) {
+		if (*cp == ' ' || *cp == '\t' ) {
+			matname[i++] = '\0';
+			break;
+		} else
+			matname[i] = *cp;
+	}
+	matname[i] = '\0';	/* ensure null termination */
+
+#ifdef HAVE_DLOPEN
+retry:
+#endif
+	for( mfp = *headp; mfp != MF_NULL; mfp = mfp->mf_forw )  {
+		if (matname[0] != mfp->mf_name[0]  ||
+		    strcmp( matname, mfp->mf_name ) != 0 )
+			continue;
+		goto found;
+	}
+#ifdef HAVE_DLOPEN
+	/* If we get here, then the shader wasn't found in the list of 
+	 * compiled-in (or previously loaded) shaders.  See if we can
+	 * dynamically load it.
+	 */
+
+	bu_log("Shader \"%s\"... ", matname);
+
+	if ((mfp_new = load_dynamic_shader(matname, strlen(matname)))) {
+		mlib_add_shader(headp, mfp_new);
+		goto retry;
+	}
+#else
+	bu_log("****** dynamic shader loading not available ******\n");
+#endif
+
+
+
+	bu_log("stack_setup(%s):  material not known\n",
+		matname );
+	ret = -1;
+	goto out;
+
+found:
+	*mpp = (char *)mfp;
+	*dpp = (char *)0;
+	bu_vls_init( &arg );
+	if (*cp != '\0' )
+		bu_vls_strcat( &arg, ++cp );
+	if (rdebug&RDEBUG_MATERIAL)
+		bu_log("calling %s with %s\n", mfp->mf_name, bu_vls_addr(&arg));
+	if (mfp->mf_setup( rp, &arg, dpp, mfp, rtip, headp ) < 0 )  {
+		/* Setup has failed */
+		bu_vls_free( &arg );
+		ret = -1;		/* BAD */
+		goto out;
+	}
+	bu_vls_free( &arg );
+	ret = 0;			/* OK */
+out:
+	if (rdebug&RDEBUG_MATERIAL)
+		bu_log( "...finished \"%s\", ret=%d\n", matname, ret );
+	return ret;
+}
 
 /*
  *			S T K _ S E T U P
@@ -147,7 +239,7 @@ struct mfuncs	**headp;
 			}
 			/* add one */
 			if (stk_dosetup(start, rp, &sp->udata[i],
-				&sp->mfuncs[i], rtip, headp) == 0 )  {
+				(char **)&sp->mfuncs[i], rtip, headp) == 0 )  {
 					inputs |= sp->mfuncs[i]->mf_inputs;
 					i++;
 			} else {
@@ -165,7 +257,7 @@ struct mfuncs	**headp;
 			return( 0 );
 		}
 		/* add one */
-		if (stk_dosetup(start, rp, &sp->udata[i], &sp->mfuncs[i],
+		if (stk_dosetup(start, rp, &sp->udata[i], (char **)&sp->mfuncs[i],
 		    rtip, headp ) == 0 )  {
 			inputs |= sp->mfuncs[i]->mf_inputs;
 			i++;
@@ -191,7 +283,7 @@ struct mfuncs	**headp;
  *	0	stack processing aborted
  *	1	stack processed to completion
  */
-HIDDEN
+HIDDEN int
 stk_render( ap, pp, swp, dp )
 struct application	*ap;
 struct partition	*pp;
@@ -264,62 +356,3 @@ char *cp;
 	bu_free( cp, "stk_specific" );
 }
 
-/*
- *			S T K _ D O S E T U P
- */
-stk_dosetup( cp, rp, dpp, mpp, rtip, headp )
-char	*cp;
-struct region	*rp;
-char	**dpp;		/* udata pointer address */
-char	**mpp;		/* mfuncs pointer address */
-struct rt_i	*rtip;
-struct mfuncs	**headp;
-{
-	register struct mfuncs *mfp;
-	struct bu_vls	arg;
-	char	matname[32];
-	int	i;
-
-	RT_CK_RTI(rtip);
-
-	if(rdebug&RDEBUG_MATERIAL)
-		bu_log( "...starting \"%s\"\n", cp );
-
-	/* skip leading white space */
-	while( *cp == ' ' || *cp == '\t' )
-		cp++;
-
-	for( i = 0; i < 31 && *cp != '\0'; i++, cp++ ) {
-		if (*cp == ' ' || *cp == '\t' ) {
-			matname[i++] = '\0';
-			break;
-		} else
-			matname[i] = *cp;
-	}
-	matname[i] = '\0';	/* ensure null termination */
-
-	for( mfp = *headp; mfp != MF_NULL; mfp = mfp->mf_forw )  {
-		if (matname[0] != mfp->mf_name[0]  ||
-		    strcmp( matname, mfp->mf_name ) != 0 )
-			continue;
-		goto found;
-	}
-	bu_log("stack_setup(%s):  material not known\n",
-		matname );
-	return(-1);
-
-found:
-	*mpp = (char *)mfp;
-	*dpp = (char *)0;
-	bu_vls_init( &arg );
-	if (*cp != '\0' )
-		bu_vls_strcat( &arg, ++cp );
-	if (rdebug&RDEBUG_SHADE)
-		bu_log("calling %s with %s\n", mfp->mf_name, bu_vls_addr(&arg));
-	if (mfp->mf_setup( rp, &arg, dpp, mfp, rtip, headp ) < 0 )  {
-		/* What to do if setup fails? */
-		return(-1);		/* BAD */
-	}
-	bu_vls_free( &arg );
-	return(0);			/* OK */
-}

@@ -18,7 +18,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCScook[] = "@(#)$Header$ (BRL)";
+static const char RCScook[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -31,9 +31,12 @@ static char RCScook[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
-#include "../rt/light.h"
+#include "rtprivate.h"
+#include "light.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 /* from view.c */
 extern double AmbientIntensity;
 

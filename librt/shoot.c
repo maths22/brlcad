@@ -37,7 +37,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSshoot[] = "@(#)$Header$ (BRL)";
+static const char RCSshoot[] = "@(#)$Header$ (BRL)";
 #endif
 
 char rt_CopyRight_Notice[] = "@(#) Copyright (C) 1985,1991,2000 by the United States Army";
@@ -46,10 +46,16 @@ char rt_CopyRight_Notice[] = "@(#) Copyright (C) 1985,1991,2000 by the United St
 
 #include <stdio.h>
 #include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "vmath.h"
 #include "bu.h"
 #include "raytrace.h"
+#include "plot3.h"
 #include "./debug.h"
 
 struct resource rt_uniresource;		/* Resources for uniprocessor */
@@ -96,6 +102,7 @@ struct rt_i	*rtip;
 		psp->stp = stp;
 		psp->shot = bu_bitv_new(stp->st_npieces);
 		rt_htbl_init( &psp->htab, 8, "psp->htab" );
+		psp->cutp = CUTTER_NULL;
 	} RT_VISIT_ALL_SOLTABS_END
 }
 
@@ -108,14 +115,15 @@ struct resource	*resp;
 struct rt_i	*rtip;
 {
 	struct rt_piecestate	*psp;
-	struct soltab		*stp;
 	int			i;
 
 	RT_CK_RESOURCE(resp);
 	RT_CK_RTI(rtip);
 
-	if( !resp->re_pieces )  return;
-
+	if( !resp->re_pieces ) {
+		rtip->rti_nsolids_with_pieces = 0;
+		return;
+	}
 	for( i = rtip->rti_nsolids_with_pieces-1; i >= 0; i-- )  {
 		psp = &resp->re_pieces[i];
 		RT_CK_PIECESTATE(psp);
@@ -128,6 +136,8 @@ struct rt_i	*rtip;
 	resp->re_pieces = NULL;
 
 	bu_ptbl_free( &resp->re_pieces_pending );
+
+	rtip->rti_nsolids_with_pieces = 0;
 }
 
 /*
@@ -178,12 +188,12 @@ again:
  *			R T _ A D V A N C E _ T O _ N E X T _ C E L L
  */
 
-CONST union cutter *
+const union cutter *
 rt_advance_to_next_cell( ssp )
 register struct rt_shootray_status	*ssp;
 {
-	register CONST union cutter		*cutp, *curcut = ssp->curcut;
-	register CONST struct application	*ap = ssp->ap;
+	register const union cutter		*cutp, *curcut = ssp->curcut;
+	register const struct application	*ap = ssp->ap;
 	register fastf_t			t0, px, py, pz;
 	int					push_flag = 0;
 	double					fraction;
@@ -247,13 +257,13 @@ top:		switch( curcut->cut_type ) {
 			 ****************************************************************************************
 			 */
 			register int out_axis;
-			register CONST struct nu_axis  **nu_axis =
-			     (CONST struct nu_axis **)&curcut->nugn.nu_axis[0];
-			register CONST int		*nu_stepsize =
+			register const struct nu_axis  **nu_axis =
+			     (const struct nu_axis **)&curcut->nugn.nu_axis[0];
+			register const int		*nu_stepsize =
 			     &curcut->nugn.nu_stepsize[0];
-			register CONST int	        *nu_cells_per_axis =
+			register const int	        *nu_cells_per_axis =
 			     &curcut->nugn.nu_cells_per_axis[0];
-			register CONST union cutter	*nu_grid =
+			register const union cutter	*nu_grid =
 			     curcut->nugn.nu_grid;
 
 			if( ssp->lastcell == CUTTER_NULL ) {
@@ -361,7 +371,7 @@ again:				t0 = ssp->tv[out_axis];
 			ssp->out_axis = out_axis;
 			ssp->lastcell = cutp;
 			
-			if( rt_g.debug&DEBUG_ADVANCE )
+			if( RT_G_DEBUG&DEBUG_ADVANCE )
 				bu_log( "t0=%g found in cell (%d,%d,%d), out_axis=%c at %g; cell is %s\n",
 					t0,
 					ssp->igrid[X], ssp->igrid[Y],
@@ -432,7 +442,7 @@ pop_space_stack:
 		if( PT_DEPARTING_RPP( ssp->rstep, ssp->curmin, ssp->curmax, px, py, pz ) )
 			goto pop_space_stack;
 		
-		if( rt_g.debug&DEBUG_ADVANCE ) {
+		if( RT_G_DEBUG&DEBUG_ADVANCE ) {
 			bu_log(
 	           "rt_advance_to_next_cell() dist_corr=%g, pt=(%g, %g, %g)\n",
 				t0 /*ssp->dist_corr*/, px, py, pz );
@@ -469,7 +479,7 @@ pop_space_stack:
 
 		switch( cutp->cut_type ) {
 		case CUT_BOXNODE:
-			if( rt_g.debug&DEBUG_ADVANCE && 
+			if( RT_G_DEBUG&DEBUG_ADVANCE && 
 			    PT_DEPARTING_RPP( ssp->rstep, ssp->curmin, ssp->curmax, px, py, pz )
 			) {
 				/* This cell is old news. */
@@ -494,7 +504,7 @@ pop_space_stack:
 			if( cutp==ssp->lastcut ) {
 				fastf_t	delta;
 push_to_next_box:				;	
-				if( rt_g.debug & DEBUG_ADVANCE ) {
+				if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 					bu_log(
 						"%d,%d box push odist_corr=%.20e n=%.20e model_end=%.20e\n",
 						ap->a_x, ap->a_y,
@@ -520,7 +530,7 @@ push_to_next_box:				;
 				fraction = frexp( ssp->box_end,
 						  &exponent );
 
-				if( rt_g.debug & DEBUG_ADVANCE ) {
+				if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 					bu_log(
 						"exp=%d, fraction=%.20e\n",
 						exponent, fraction );
@@ -530,7 +540,7 @@ push_to_next_box:				;
 				else
 					fraction += 1.0e-14;
 				delta = ldexp( fraction, exponent );
-				if( rt_g.debug & DEBUG_ADVANCE ) {
+				if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 					bu_log(
 						"ldexp: delta=%g, fract=%g, exp=%d\n",
 						delta,
@@ -543,7 +553,7 @@ push_to_next_box:				;
 				ssp->box_start = ssp->box_end + delta;
 				ssp->box_end = ssp->box_start + delta;
 				
-				if( rt_g.debug & DEBUG_ADVANCE ) {
+				if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 					bu_log(
 						"push%d: was=%.20e, now=%.20e\n\n",
 						push_flag,
@@ -564,7 +574,7 @@ push_to_next_box:				;
 			}
 			if( push_flag ) {
 				push_flag = 0;
-				if( rt_g.debug & DEBUG_ADVANCE ) {
+				if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 					bu_log(
 						"%d,%d Escaped %d. dist_corr=%g, box_start=%g, box_end=%g\n",
 						ap->a_x, ap->a_y,
@@ -574,7 +584,7 @@ push_to_next_box:				;
 						ssp->box_end );
 				}
 			}
-			if( rt_g.debug & DEBUG_ADVANCE ) {
+			if( RT_G_DEBUG & DEBUG_ADVANCE ) {
 				bu_log(
 					"rt_advance_to_next_cell()=x%x lastcut=x%x\n",
 					cutp, ssp->lastcut);
@@ -603,7 +613,7 @@ done_return_cutp:	ssp->lastcut = cutp;
 			ssp->dist_corr = t0;
 			ssp->box_start = t0 + ssp->newray.r_min;
 			ssp->box_end = t0 + ssp->newray.r_max;
-			if( rt_g.debug & DEBUG_ADVANCE )  {
+			if( RT_G_DEBUG & DEBUG_ADVANCE )  {
 				bu_log(
 				"rt_advance_to_next_cell() box=(%g, %g)\n",
 					ssp->box_start, ssp->box_end );
@@ -637,7 +647,7 @@ done_return_cutp:	ssp->lastcut = cutp;
 		/* Continue with the current space partitioning algorithm. */
 	}
 	/* NOTREACHED */
-	bu_bomb("rt_advance_to_next_cell: escaped for(;;) loop: impossible!");
+	/*	bu_bomb("rt_advance_to_next_cell: escaped for(;;) loop: impossible!"); */
 
 	/*
 	 *  If ray has escaped from model RPP, and there are infinite solids
@@ -695,12 +705,11 @@ register struct application *ap;
 	auto struct partition	InitialPart;	/* Head of Initial Partitions */
 	auto struct partition	FinalPart;	/* Head of Final Partitions */
 	struct soltab		**stpp;
-	register CONST union cutter *cutp;
+	register const union cutter *cutp;
 	struct resource		*resp;
 	struct rt_i		*rtip;
-	CONST int		debug_shoot = rt_g.debug & DEBUG_SHOOT;
+	const int		debug_shoot = RT_G_DEBUG & DEBUG_SHOOT;
 	fastf_t			pending_hit = 0; /* dist of closest odd hit pending */
-	int			odd_hits_pending = 0;	/* boolean.  are odd hits pending? */
 
 	RT_AP_CHECK(ap);
 	if( ap->a_magic )  {
@@ -715,8 +724,9 @@ register struct application *ap;
 	}
 	if( ap->a_resource == RESOURCE_NULL )  {
 		ap->a_resource = &rt_uniresource;
-		rt_uniresource.re_magic = RESOURCE_MAGIC;
-		if(rt_g.debug)bu_log("rt_shootray:  defaulting a_resource to &rt_uniresource\n");
+		if(RT_G_DEBUG)bu_log("rt_shootray:  defaulting a_resource to &rt_uniresource\n");
+		if( rt_uniresource.re_magic == 0 )
+			rt_init_resource( &rt_uniresource, 0, ap->a_rt_i );
 	}
 	ss.ap = ap;
 	rtip = ap->a_rt_i;
@@ -725,7 +735,7 @@ register struct application *ap;
 	RT_RESOURCE_CHECK(resp);
 	ss.resp = resp;
 
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
 		bu_log_indent_delta(2);
 		bu_log("\n**********shootray cpu=%d  %d,%d lvl=%d a_onehit=%d (%s)\n",
 			resp->re_cpu,
@@ -737,6 +747,7 @@ register struct application *ap;
 			V3ARGS(ap->a_ray.r_pt),
 			V3ARGS(ap->a_ray.r_dir) );
 	}
+#ifndef NO_BADRAY_CHECKING
 	if(RT_BADVEC(ap->a_ray.r_pt)||RT_BADVEC(ap->a_ray.r_dir))  {
 		bu_log("\n**********shootray cpu=%d  %d,%d lvl=%d (%s)\n",
 			resp->re_cpu,
@@ -747,6 +758,7 @@ register struct application *ap;
 		VPRINT("r_dir", ap->a_ray.r_dir);
 		rt_bomb("rt_shootray() bad ray\n");
 	}
+#endif
 
 	if( rtip->needprep )
 		rt_prep_parallel(rtip, 1);	/* Stay on our CPU */
@@ -763,6 +775,8 @@ register struct application *ap;
 	ap->a_finished_segs_hdp = &finished_segs;
 
 	if( BU_LIST_UNINITIALIZED( &resp->re_parthead ) )  {
+		/* XXX This shouldn't happen any more */
+		bu_log("rt_shootray() resp=x%x uninitialized, fixing it\n", resp);
 		/*
 		 *  We've been handed a mostly un-initialized resource struct,
 		 *  with only a magic number and a cpu number filled in.
@@ -770,12 +784,11 @@ register struct application *ap;
 		 *  This is how application-provided resource structures
 		 *  are remembered for later cleanup by the library.
 		 */
-		rt_init_resource( resp, resp->re_cpu );
+		rt_init_resource( resp, resp->re_cpu, rtip );
 	}
 	/* Ensure that this CPU's resource structure is registered */
-	if( BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu) == NULL )  {
-		BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu) = (long *)resp;
-	}
+	if( resp != &rt_uniresource )
+		BU_ASSERT_PTR( BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu), !=, NULL );
 
 	if( BU_LIST_IS_EMPTY( &resp->re_solid_bitv ) )  {
 		solidbits = bu_bitv_new( rtip->nsolids );
@@ -805,7 +818,7 @@ register struct application *ap;
 	bu_ptbl_reset( &resp->re_pieces_pending );
 
 	/* Verify that direction vector has unit length */
-	if(rt_g.debug) {
+	if(RT_G_DEBUG) {
 		FAST fastf_t f, diff;
 		/* Fancy version of BN_VEC_NON_UNIT_LEN() */
 		f = MAGSQ(ap->a_ray.r_dir);
@@ -974,7 +987,6 @@ start_cell:
 			for( ; plp >= cutp->bn.bn_piecelist; plp-- )  {
 				struct rt_piecestate *psp;
 				struct soltab	*stp;
-				int piecenum;
 				int ret;
 				int had_hits_before;
 
@@ -992,7 +1004,7 @@ start_cell:
 					psp->ray_seqno = resp->re_nshootray;
 					rt_htbl_reset( &psp->htab );
 
-					/* Compute ray entry and exit */
+					/* Compute ray entry and exit to entire solid's bounding box */
 					if( !rt_in_rpp( &ss.newray, ss.inv_dir,
 					    stp->st_min, stp->st_max ) )  {
 						if(debug_shoot)bu_log("rpp miss %s (all pieces)\n", stp->st_name);
@@ -1013,8 +1025,17 @@ start_cell:
 					had_hits_before = psp->htab.end;
 				}
 
-				/* Allow solid to shoot all pieces in this cell at once */
+				/*
+				 *  Allow this solid to shoot at all of its
+				 *  'pieces' in this cell, all at once.
+				 *  'newray' has been transformed to be near
+				 *  to this cell, and
+				 *  'dist_corr' is the additive correction
+				 *  factor that ft_piece_shot() must apply
+				 *  to hits calculated using 'newray'.
+				 */
 				resp->re_piece_shots++;
+				psp->cutp = cutp;
 
 				if( (ret = stp->st_meth->ft_piece_shot(
 				    psp, plp, ss.dist_corr, &ss.newray, ap, &waiting_segs )) <= 0 )  {
@@ -1027,6 +1048,7 @@ start_cell:
 
 				/*  See if this solid has been fully processed yet.
 				 *  If ray has passed through bounding volume, we're done.
+				 *  ft_piece_hitsegs() will only be called once per ray.
 				 */
 				if( ss.box_end > psp->maxdist && psp->htab.end > 0 ) {
 					/* Convert hits into segs */
@@ -1112,7 +1134,7 @@ start_cell:
 				resp->re_shot_hit++;
 			}
 		}
-		if( rt_g.debug & DEBUG_ADVANCE )
+		if( RT_G_DEBUG & DEBUG_ADVANCE )
 			rt_plot_cell( cutp, &ss, &(waiting_segs.l), rtip);
 
 		/*
@@ -1171,7 +1193,7 @@ start_cell:
 	 *  Weave any remaining segments into the partition list.
 	 */
 weave:
-	if( rt_g.debug&DEBUG_ADVANCE )
+	if( RT_G_DEBUG&DEBUG_ADVANCE )
 		bu_log( "rt_shootray: ray has left known space\n" );
 
 	/* Process any pending hits into segs */
@@ -1196,7 +1218,7 @@ weave:
 	/* finished_segs chain now has all segments hit by this ray */
 	if( BU_LIST_IS_EMPTY( &(finished_segs.l) ) )  {
 		ap->a_return = ap->a_miss( ap );
-		status = "MISS solids";
+		status = "MISS prims";
 		goto out;
 	}
 
@@ -1242,7 +1264,7 @@ hitit:
 	 *  finished_segs is only used by special hit routines
 	 *  which don't follow the traditional solid modeling paradigm.
 	 */
-	if(rt_g.debug&DEBUG_ALLHITS) rt_pr_partitions(rtip,&FinalPart,"Partition list passed to a_hit() routine");
+	if(RT_G_DEBUG&DEBUG_ALLHITS) rt_pr_partitions(rtip,&FinalPart,"Partition list passed to a_hit() routine");
 	ap->a_return = ap->a_hit( ap, &FinalPart, &finished_segs );
 	status = "HIT";
 
@@ -1270,7 +1292,7 @@ out:
 	}
 
 	/* Terminate any logging */
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS))  {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS))  {
 		bu_log_indent_delta(-2);
 		bu_log("----------shootray cpu=%d  %d,%d lvl=%d (%s) %s ret=%d\n",
 			resp->re_cpu,
@@ -1290,16 +1312,16 @@ out:
  *  Intended to mirror the operation of rt_shootray().
  *  The first cell is 0.
  */
-CONST union cutter *
+const union cutter *
 rt_cell_n_on_ray( ap, n )
 register struct application *ap;
 int	n;		/* First cell is #0 */
 {
 	struct rt_shootray_status	ss;
-	register CONST union cutter *cutp;
+	register const union cutter *cutp;
 	struct resource		*resp;
 	struct rt_i		*rtip;
-	CONST int		debug_shoot = rt_g.debug & DEBUG_SHOOT;
+	const int		debug_shoot = RT_G_DEBUG & DEBUG_SHOOT;
 
 	RT_AP_CHECK(ap);
 	if( ap->a_magic )  {
@@ -1314,8 +1336,9 @@ int	n;		/* First cell is #0 */
 	}
 	if( ap->a_resource == RESOURCE_NULL )  {
 		ap->a_resource = &rt_uniresource;
-		rt_uniresource.re_magic = RESOURCE_MAGIC;
-		if(rt_g.debug)bu_log("rt_cell_n_on_ray:  defaulting a_resource to &rt_uniresource\n");
+		if(RT_G_DEBUG)bu_log("rt_cell_n_on_ray:  defaulting a_resource to &rt_uniresource\n");
+		if( rt_uniresource.re_magic == 0 )
+			rt_init_resource( &rt_uniresource, 0, ap->a_rt_i );
 	}
 	ss.ap = ap;
 	rtip = ap->a_rt_i;
@@ -1324,7 +1347,7 @@ int	n;		/* First cell is #0 */
 	RT_RESOURCE_CHECK(resp);
 	ss.resp = resp;
 
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
 		bu_log_indent_delta(2);
 		bu_log("\n**********cell_n_on_ray cpu=%d  %d,%d lvl=%d (%s), n=%d\n",
 			resp->re_cpu,
@@ -1336,6 +1359,7 @@ int	n;		/* First cell is #0 */
 			ap->a_onehit );
 		VPRINT("Dir", ap->a_ray.r_dir);
 	}
+#ifndef NO_BADRAY_CHECKING
 	if(RT_BADVEC(ap->a_ray.r_pt)||RT_BADVEC(ap->a_ray.r_dir))  {
 		bu_log("\n**********cell_n_on_ray cpu=%d  %d,%d lvl=%d (%s)\n",
 			resp->re_cpu,
@@ -1346,11 +1370,14 @@ int	n;		/* First cell is #0 */
 		VPRINT("r_dir", ap->a_ray.r_dir);
 		rt_bomb("rt_cell_n_on_ray() bad ray\n");
 	}
+#endif
 
 	if( rtip->needprep )
 		rt_prep_parallel(rtip, 1);	/* Stay on our CPU */
 
 	if( BU_LIST_UNINITIALIZED( &resp->re_parthead ) )  {
+		/* XXX This shouldn't happen any more */
+		bu_log("rt_cell_n_on_ray() resp=x%x uninitialized, fixing it\n", resp);
 		/*
 		 *  We've been handed a mostly un-initialized resource struct,
 		 *  with only a magic number and a cpu number filled in.
@@ -1358,15 +1385,13 @@ int	n;		/* First cell is #0 */
 		 *  This is how application-provided resource structures
 		 *  are remembered for later cleanup by the library.
 		 */
-		rt_init_resource( resp, resp->re_cpu );
+		rt_init_resource( resp, resp->re_cpu, rtip );
 	}
 	/* Ensure that this CPU's resource structure is registered */
-	if( BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu) == NULL )  {
-		BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu) = (long *)resp;
-	}
+	BU_ASSERT_PTR( BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu), !=, NULL );
 
 	/* Verify that direction vector has unit length */
-	if(rt_g.debug) {
+	if(RT_G_DEBUG) {
 		FAST fastf_t f, diff;
 		/* Fancy version of BN_VEC_NON_UNIT_LEN() */
 		f = MAGSQ(ap->a_ray.r_dir);
@@ -1526,13 +1551,13 @@ int	n;		/* First cell is #0 */
  *	rp->r_min = dist from start of ray to point at which ray ENTERS solid
  *	rp->r_max = dist from start of ray to point at which ray LEAVES solid
  */
-rt_in_rpp( rp, invdir, min, max )
-struct xray		*rp;
-register CONST fastf_t *invdir;	/* inverses of rp->r_dir[] */
-register CONST fastf_t *min;
-register CONST fastf_t *max;
+int
+rt_in_rpp(struct xray		*rp,
+	  register const fastf_t *invdir,	/* inverses of rp->r_dir[] */
+	  register const fastf_t *min,
+	  register const fastf_t *max)
 {
-	register CONST fastf_t	*pt = &rp->r_pt[0];
+	register const fastf_t	*pt = &rp->r_pt[0];
 	register fastf_t	sv;
 #define st sv			/* reuse the register */
 	register fastf_t	rmin = -INFINITY;
@@ -1610,13 +1635,14 @@ register CONST fastf_t *max;
 }
 
 /* For debugging */
+int
 rt_DB_rpp( rp, invdir, min, max )
 register struct xray *rp;
-register CONST fastf_t *invdir;	/* inverses of rp->r_dir[] */
-register CONST fastf_t *min;
-register CONST fastf_t *max;
+register const fastf_t *invdir;	/* inverses of rp->r_dir[] */
+register const fastf_t *min;
+register const fastf_t *max;
 {
-	register CONST fastf_t *pt = &rp->r_pt[0];
+	register const fastf_t *pt = &rp->r_pt[0];
 	FAST fastf_t sv;
 
 	/* Start with infinite ray, and trim it down */
@@ -1907,7 +1933,7 @@ struct rt_i		*rtip;
 	for( ; stpp >= cutp->bn.bn_list; stpp-- )  {
 		register struct soltab *stp = *stpp;
 
-		rt_plot_solid( fp, rtip, stp );
+		rt_plot_solid( fp, rtip, stp, ap->a_resource );
 	}
 
 	/* Plot interval of ray in box, in green */

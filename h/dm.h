@@ -173,6 +173,7 @@ struct dm {
   int dm_light;			/* !0 means lighting on */
   int dm_zbuffer;		/* !0 means zbuffer on */
   int dm_zclip;			/* !0 means zclipping */
+  int dm_depthcue;		/* !0 means depthcueing on (not used, only here for X dm to reference) */
   Tcl_Interp *dm_interp;	/* Tcl interpreter */
 };
 
@@ -222,6 +223,7 @@ extern fastf_t dm_Xx2Normal();
 extern int dm_Normal2Xx();
 extern fastf_t dm_Xy2Normal();
 extern int dm_Normal2Xy();
+extern void dm_fogHint();
 extern int dm_processOptions();
 extern int dm_limit();
 extern int dm_unlimit();
@@ -229,10 +231,10 @@ extern fastf_t dm_wrap();
 extern void Nu_void();
 extern int Nu_int0();
 extern unsigned Nu_unsign();
+#if 0
 extern void dm_configureWindowShape();
 extern void dm_zbuffer();
 extern void dm_lighting();
-#if 0
 extern Tcl_Interp *interp;   /* This must be defined by the application */
 #endif
 

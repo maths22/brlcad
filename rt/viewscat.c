@@ -23,7 +23,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSppview[] = "@(#)$Header$ (BRL)";
+static const char RCSppview[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -33,8 +33,8 @@ static char RCSppview[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
-#include "./rdebug.h"
-#include "../librad/rad.h"
+#include "rtprivate.h"
+#include "rad.h"
 
 #ifndef M_PI
 #define M_PI            3.14159265358979323846
@@ -400,7 +400,7 @@ static int
 isvisible( ap, hitp, norm )
 struct application *ap;
 struct hit *hitp;
-CONST vect_t	norm;
+const vect_t	norm;
 {
 	LOCAL int cpu_num;
 	LOCAL struct application sub_ap;

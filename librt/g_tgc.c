@@ -27,12 +27,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCStgc[] = "@(#)$Header$ (BRL)";
+static const char RCStgc[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -69,14 +72,15 @@ struct  tgc_specific {
 #define VLARGE		1000000.0
 #define	ALPHA(x,y,c,d)	( (x)*(x)*(c) + (y)*(y)*(d) )
 
-CONST struct bu_structparse rt_tgc_parse[] = {
+const struct bu_structparse rt_tgc_parse[] = {
     { "%f", 3, "V", offsetof(struct rt_tgc_internal, v[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "H", offsetof(struct rt_tgc_internal, h[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "A", offsetof(struct rt_tgc_internal, a[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "B", offsetof(struct rt_tgc_internal, b[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "C", offsetof(struct rt_tgc_internal, c[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "D", offsetof(struct rt_tgc_internal, d[X]), BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+};
 
 /*
  *			R T _ T G C _ P R E P
@@ -366,8 +370,8 @@ struct tgc_specific	*tgc;
 	VUNITIZE( uC );
 	VMOVE( tgc->tgc_N, uC );
 
-	bn_mat_idn( Rot );
-	bn_mat_idn( Inv );
+	MAT_IDN( Rot );
+	MAT_IDN( Inv );
 
 	Rot[0] = Inv[0] = uA[X];
 	Rot[1] = Inv[4] = uA[Y];
@@ -397,13 +401,13 @@ struct tgc_specific	*tgc;
  */
 static void
 rt_tgc_shear( vect, axis, Shr, Trn, Inv )
-CONST vect_t	vect;
+const vect_t	vect;
 int		axis;
 mat_t		Shr, Trn, Inv;
 {
-	bn_mat_idn( Shr );
-	bn_mat_idn( Trn );
-	bn_mat_idn( Inv );
+	MAT_IDN( Shr );
+	MAT_IDN( Trn );
+	MAT_IDN( Inv );
 
 	if( NEAR_ZERO( vect[axis], SMALL_FASTF ) )
 		rt_bomb("rt_tgc_shear() divide by zero\n");
@@ -428,8 +432,8 @@ rt_tgc_scale( a, b, h, Scl, Inv )
 fastf_t	a, b, h;
 mat_t	Scl, Inv;
 {
-	bn_mat_idn( Scl );
-	bn_mat_idn( Inv );
+	MAT_IDN( Scl );
+	MAT_IDN( Inv );
 	Scl[0]  /= a;
 	Scl[5]  /= b;
 	Scl[10] /= h;
@@ -444,9 +448,9 @@ mat_t	Scl, Inv;
  */
 void
 rt_tgc_print( stp )
-register CONST struct soltab	*stp;
+register const struct soltab	*stp;
 {
-	register CONST struct tgc_specific	*tgc =
+	register const struct tgc_specific	*tgc =
 	(struct tgc_specific *)stp->st_specific;
 
 	VPRINT( "V", tgc->tgc_V );
@@ -507,7 +511,7 @@ register struct xray	*rp;
 struct application	*ap;
 struct seg		*seghead;
 {
-	register CONST struct tgc_specific	*tgc =
+	register const struct tgc_specific	*tgc =
 	(struct tgc_specific *)stp->st_specific;
 	register struct seg	*segp;
 	LOCAL vect_t		pprime;
@@ -1346,9 +1350,7 @@ struct application	*ap;
  *  Sorts the values in t[] in descending order.
  */
 void
-rt_pt_sort( t, npts )
-register fastf_t t[];
-int npts;
+rt_pt_sort(register fastf_t t[], int npts)
 {
 	FAST fastf_t	u;
 	register short	lim, n;
@@ -1551,9 +1553,9 @@ rt_tgc_class()
 int
 rt_tgc_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	struct rt_tgc_internal	*tip;
 	union record		*rp;
@@ -1567,7 +1569,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_TGC;
 	ip->idb_meth = &rt_functab[ID_TGC];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_tgc_internal), "rt_tgc_internal");
@@ -1594,9 +1597,9 @@ CONST struct db_i		*dbip;
 int
 rt_tgc_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_tgc_internal	*tip;
 	union record		*rec;
@@ -1606,7 +1609,7 @@ CONST struct db_i		*dbip;
 	tip = (struct rt_tgc_internal *)ip->idb_ptr;
 	RT_TGC_CK_MAGIC(tip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "tgc external");
 	rec = (union record *)ep->ext_buf;
@@ -1626,6 +1629,85 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ T G C _ I M P O R T 5
+ *
+ *  Import a TGC from the database format to the internal format.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_tgc_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_tgc_internal	*tip;
+	fastf_t			vec[3*6];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 3*6 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_TGC;
+	ip->idb_meth = &rt_functab[ID_TGC];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_tgc_internal), "rt_tgc_internal");
+
+	tip = (struct rt_tgc_internal *)ip->idb_ptr;
+	tip->magic = RT_TGC_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 3*6 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( tip->v, mat, &vec[0*3] );
+	MAT4X3VEC( tip->h, mat, &vec[1*3] );
+	MAT4X3VEC( tip->a, mat, &vec[2*3] );
+	MAT4X3VEC( tip->b, mat, &vec[3*3] );
+	MAT4X3VEC( tip->c, mat, &vec[4*3] );
+	MAT4X3VEC( tip->d, mat, &vec[5*3] );
+
+	return(0);		/* OK */
+}
+
+/*
+ *			R T _ T G C _ E X P O R T 5
+ */
+int
+rt_tgc_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_tgc_internal	*tip;
+	fastf_t			vec[3*6];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_TGC && ip->idb_type != ID_REC )  return(-1);
+	tip = (struct rt_tgc_internal *)ip->idb_ptr;
+	RT_TGC_CK_MAGIC(tip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 3*6;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "tgc external");
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*3], tip->v, local2mm );
+	VSCALE( &vec[1*3], tip->h, local2mm );
+	VSCALE( &vec[2*3], tip->a, local2mm );
+	VSCALE( &vec[3*3], tip->b, local2mm );
+	VSCALE( &vec[4*3], tip->c, local2mm );
+	VSCALE( &vec[5*3], tip->d, local2mm );
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 3*6 );
+
+	return(0);
+}
+
+/*
  *			R T _ T G C _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1635,7 +1717,7 @@ CONST struct db_i		*dbip;
 int
 rt_tgc_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -1653,6 +1735,12 @@ double			mm2local;
 	    tip->v[X] * mm2local,
 	    tip->v[Y] * mm2local,
 	    tip->v[Z] * mm2local );
+	bu_vls_strcat( str, buf );
+
+	sprintf(buf, "\tTop (%g, %g, %g)\n",
+	    (tip->v[X] + tip->h[X]) * mm2local,
+	    (tip->v[Y] + tip->h[Y]) * mm2local,
+	    (tip->v[Z] + tip->h[Z]) * mm2local );
 	bu_vls_strcat( str, buf );
 
 	Hmag = MAGNITUDE(tip->h);
@@ -1728,8 +1816,8 @@ int
 rt_tgc_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	LOCAL struct rt_tgc_internal	*tip;
 	register int		i;
@@ -1801,7 +1889,7 @@ struct soltab *stp;
 	 * in ideal coords.  This is a symmetric matrix with
 	 * the columns (dNx, dNy, dNz).
 	 */
-	bn_mat_idn( dN );
+	MAT_IDN( dN );
 	dN[0] = Q2;
 	dN[2] = dN[8] = 2.0*Q*tgc->tgc_DdBm1 * hitp->hit_vpriv[X];
 	dN[5] = R2;
@@ -1870,8 +1958,8 @@ rt_tgc_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	struct shell		*s;		/* shell to hold facetted TGC */
 	struct faceuse		*fu,*fu_top,*fu_base;
@@ -2045,7 +2133,8 @@ CONST struct bn_tol	*tol;
 
 	/* get nunber and placement of intermediate ellipses */
 	{
-		fastf_t ratios[4],max_ratio,new_ratio;
+		fastf_t ratios[4],max_ratio;
+		fastf_t new_ratio = 0;
 		int which_ratio;
 		fastf_t len_ha,len_hb;
 		vect_t ha,hb;
@@ -2610,7 +2699,7 @@ rt_tgc_tnurb( r, m, ip, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct bn_tol		*tol;
+const struct bn_tol		*tol;
 {
 	LOCAL struct rt_tgc_internal	*tip;
 
@@ -2647,8 +2736,8 @@ CONST struct bn_tol		*tol;
 
 	/* Create transformation matrix  for the top cap surface*/
 
-	bn_mat_idn( omat );
-	bn_mat_idn( mat);
+	MAT_IDN( omat );
+	MAT_IDN( mat);
 	
 	omat[0] = MAGNITUDE(tip->c);
 	omat[5] = MAGNITUDE(tip->d);
@@ -2665,7 +2754,7 @@ CONST struct bn_tol		*tol;
         VUNITIZE(bnorm);
         VUNITIZE(cnorm);
 
-        bn_mat_idn( omat );
+        MAT_IDN( omat );
 
         VMOVE( &omat[0], anorm);
         VMOVE( &omat[4], bnorm);
@@ -2697,8 +2786,8 @@ CONST struct bn_tol		*tol;
 
 	/* Create transformation matrix  for the bottom cap surface*/
 
-	bn_mat_idn( omat );
-	bn_mat_idn( mat);
+	MAT_IDN( omat );
+	MAT_IDN( mat);
 	
 	omat[0] = MAGNITUDE(tip->a);
 	omat[5] = MAGNITUDE(tip->b);
@@ -2715,7 +2804,7 @@ CONST struct bn_tol		*tol;
         VUNITIZE(bnorm);
         VUNITIZE(cnorm);
 
-        bn_mat_idn( omat );
+        MAT_IDN( omat );
 
         VMOVE( &omat[0], anorm);
         VMOVE( &omat[4], bnorm);

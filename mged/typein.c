@@ -26,6 +26,7 @@
  *	ehy_in		reads elliptical hyperboloid params from keyboard
  *	eto_in		reads elliptical torus params from keyboard
  *	part_in		reads particle params from keyboard
+ *	extrude_in	reads extrude params from keyboard
  *	checkv		checks for zero vector from keyboard
  *
  * Authors -
@@ -44,7 +45,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -68,6 +69,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "wdb.h"
 #include "./ged.h"
 #include "./mged_dm.h"
+#include "./cmd.h"
 
 void	aexists();
 
@@ -81,11 +83,23 @@ char *p_half[] = {
 	"Enter the distance from the origin: "
 };
 
-char *p_dsp[] = {
+char *p_dsp_v4[] = {
 	"Enter name of displacement-map file: ",
 	"Enter width of displacement-map (number of values): ",
 	"Enter length of displacement-map (number of values): ",
 	"Normal Interpolation? 0=no 1=yes: ",
+	"Cell size: ",
+	"Unit elevation: "
+};
+
+
+char *p_dsp_v5[] = {
+	"Take data from file or database binary object [f|o]:",
+	"Enter name of file/object: ",
+	"Enter width of displacement-map (number of values): ",
+	"Enter length of displacement-map (number of values): ",
+	"Normal Interpolation? 0=no 1=yes: ",
+	"Cut direction [ad|lR|Lr] ",
 	"Cell size: ",
 	"Unit elevation: "
 };
@@ -152,6 +166,14 @@ char *p_bot[] = {
 	"Enter thickness"
 };
 
+char *p_arbn[] = {
+	"Enter number of planes: ",
+	"Enter coefficients",
+	"Enter Y-coordinate of normal",
+	"Enter Z-coordinate of normal",
+	"Enter distance of plane along normal from origin"
+};
+
 char *p_pipe[] = {
 	"Enter number of points: ",
 	"Enter X, Y, Z, inner diameter, outer diameter, and bend radius for first point: ",
@@ -172,8 +194,8 @@ char *p_ars[] = {
 	"Enter number of points per waterline, and number of waterlines: ",
 	"Enter number of waterlines: ",
 	"Enter X, Y, Z for First row point: ",
-	"Enter Y: ",
-	"Enter Z: ",
+	"Enter Y for First row point: ",
+	"Enter Z for First row point: ",
 	"Enter X  Y  Z",
 	"Enter Y",
 	"Enter Z",
@@ -352,6 +374,12 @@ char *p_rpp[] = {
 	"Enter ZMAX: "
 };
 
+char *p_orpp[] = {
+	"Enter XMAX, YMAX, ZMAX: ",
+	"Enter YMAX, ZMAX: ",
+	"Enter ZMAX: "
+};
+
 char *p_rpc[] = {
 	"Enter X, Y, Z of vertex: ",
 	"Enter Y: ",
@@ -424,11 +452,45 @@ char *p_eto[] = {
 	"Enter X, Y, Z, of normal vector: ",
 	"Enter Y: ",
 	"Enter Z: ",
+	"Enter radius of revolution, r: ",
 	"Enter X, Y, Z, of vector C: ",
 	"Enter Y: ",
 	"Enter Z: ",
-	"Enter radius of revolution, r: ",
 	"Enter magnitude of elliptical semi-minor axis, d: "
+};
+
+char *p_binunif[] = {
+	"Enter minor type (f,d,c,s,i,L,C,S,I, or L): ",
+	"Enter name of file containing the data: "
+};
+
+char *p_extrude[] = {
+	"Enter X, Y, Z of vertex: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter X, Y, Z of H: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter X, Y, Z of A: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter X, Y, Z of B: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter name of sketch: ",
+	"Enter K: ",
+	NULL
+};
+
+char *p_grip[] = {
+	"Enter X, Y, Z of center: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter X, Y, Z of normal: ",
+	"Enter Y: ",
+	"Enter Z: ",
+	"Enter Magnitude: ",
+	NULL
 };
 
 /*	F _ I N ( ) :  	decides which solid reader to call
@@ -442,7 +504,7 @@ int argc;
 char **argv;
 {
 	register struct directory *dp;
-	char			name[NAMESIZE+2];
+	char			*name;
 	struct rt_db_internal	internal;
 	char			*new_cmd[3], **menu;
 	int			c;
@@ -451,14 +513,15 @@ char **argv;
 	int			nvals, (*fn_in)();
 	int			arb_in(), box_in(), ehy_in(), ell_in(),
 				epa_in(), eto_in(), half_in(), rec_in(),
-				rcc_in(), rhc_in(), rpc_in(), rpp_in(),
-				sph_in(), tec_in(), tgc_in(), tor_in(),
+				rcc_in(), rhc_in(), rpc_in(), rpp_in(), orpp_in(),
+				sph_in(), tec_in(), tgc_in(), tor_in(), ars_in(),
 				trc_in(), ebm_in(), vol_in(), hf_in(), bot_in(),
-				dsp_in(), submodel_in(), part_in(), pipe_in();
+				dsp_in_v4(),dsp_in_v5(), submodel_in(), part_in(), pipe_in(),
+				binunif_in(), arbn_in(), extrude_in(), grip_in();
 
 	CHECK_DBI_NULL;
 
-	if(argc < 1 || MAXARGS < argc){
+	if(argc < 1){
 	  struct bu_vls vls;
 
 	  bu_vls_init(&vls);
@@ -506,16 +569,16 @@ char **argv;
 	  aexists( argv[1] );
 	  return TCL_ERROR;
 	}
-	if( (int)strlen(argv[1]) >= NAMESIZE )  {
+	if( dbip->dbi_version <= 4 && (int)strlen(argv[1]) >= NAMESIZE )  {
 	  struct bu_vls tmp_vls;
 
 	  bu_vls_init(&tmp_vls);
-	  bu_vls_printf(&tmp_vls, "ERROR, names are limited to %d characters\n", NAMESIZE-1);
+	  bu_vls_printf(&tmp_vls, "ERROR, v4 names are limited to %d characters\n", NAMESIZE-1);
 	  Tcl_AppendResult(interp, bu_vls_addr(&tmp_vls), (char *)NULL);
 	  return TCL_ERROR;
 	}
-	/* Save the solid name since argv[] might get bashed */
-	strcpy( name, argv[1] );
+	/* Save the solid name */
+	name = argv[1];
 
 	/* Get the solid type to be created and make it */
 	if( argc < 3 )  {
@@ -534,12 +597,23 @@ char **argv;
 		nvals = 4;
 		menu = p_ebm;
 		fn_in = ebm_in;
+	} else if( strcmp( argv[2], "arbn" ) == 0 ) {
+		switch( arbn_in(argc, argv, &internal, &p_arbn[0]) ) {
+		case CMD_BAD:
+		  Tcl_AppendResult(interp, "ERROR, ARBN not made!\n",
+				   (char *)NULL);
+		  rt_db_free_internal( &internal, &rt_uniresource );
+		  return TCL_ERROR;
+		case CMD_MORE:
+		  return TCL_ERROR;
+		}
+		goto do_new_update;
 	} else if( strcmp( argv[2], "bot" ) == 0 ) {
 		switch( bot_in(argc, argv, &internal, &p_bot[0]) ) {
 		case CMD_BAD:
-		  Tcl_AppendResult(interp, "ERROR, BOT not made!\n", (char *)NULL);
-		  if(internal.idb_type) rt_functab[internal.idb_type].
-					  ft_ifree( &internal );
+		  Tcl_AppendResult(interp, "ERROR, BOT not made!\n",
+				   (char *)NULL);
+		  rt_db_free_internal( &internal, &rt_uniresource );
 		  return TCL_ERROR;
 		case CMD_MORE:
 		  return TCL_ERROR;
@@ -554,19 +628,35 @@ char **argv;
 		menu = p_vol;
 		fn_in = vol_in;
 	} else if( strcmp( argv[2], "hf" ) == 0 )  {
-		nvals = 19;
-		menu = p_hf;
-		fn_in = hf_in;
+		if (dbip->dbi_version <= 4) {
+			nvals = 19;
+			menu = p_hf;
+			fn_in = hf_in;
+			Tcl_AppendResult(interp, "in: the height field is deprecated. Use the dsp primitive.\n", (char *)NULL);
+		} else {
+			Tcl_AppendResult(interp, "in: the height field is deprecated and not supported by this command when using a new\nstyle database. Use the dsp primitive.\n", (char *)NULL);
+			return TCL_ERROR;
+		}
+	} else if (strcmp(argv[2], "poly") == 0 ||
+		   strcmp(argv[2], "pg") == 0) {
+		Tcl_AppendResult(interp, "in: the polysolid is deprecated and not supported by this command.\nUse the bot primitive.\n", (char *)NULL);
+		return TCL_ERROR;
 	} else if( strcmp( argv[2], "dsp" ) == 0 )  {
-		nvals = 6;
-		menu = p_dsp;
-		fn_in = dsp_in;
+		if (dbip->dbi_version <= 4) {
+			nvals = 6;
+			menu = p_dsp_v4;
+			fn_in = dsp_in_v4;
+		} else {
+			nvals = 8;
+			menu = p_dsp_v5;
+			fn_in = dsp_in_v5;
+		}
+
 	} else if( strcmp( argv[2], "pipe" ) == 0 ) {
 		switch( pipe_in(argc, argv, &internal, &p_pipe[0]) ) {
 		case CMD_BAD:
 		  Tcl_AppendResult(interp, "ERROR, pipe not made!\n", (char *)NULL);
-		  if(internal.idb_type) rt_functab[internal.idb_type].
-					  ft_ifree( &internal );
+		  rt_db_free_internal( &internal, &rt_uniresource );
 		  return TCL_ERROR;
 		case CMD_MORE:
 		  return TCL_ERROR;
@@ -576,8 +666,7 @@ char **argv;
 		switch( ars_in(argc, argv, &internal, &p_ars[0]) ) {
 		case CMD_BAD:
 		  Tcl_AppendResult(interp, "ERROR, ars not made!\n", (char *)NULL);
-		  if(internal.idb_type) rt_functab[internal.idb_type].
-					  ft_ifree( &internal );
+		  rt_db_free_internal( &internal, &rt_uniresource );
 		  return TCL_ERROR;
 		case CMD_MORE:
 		  return TCL_ERROR;
@@ -647,9 +736,13 @@ char **argv;
 		menu = p_box;
 		fn_in = box_in;
 	} else if( strcmp( argv[2], "rpp" ) == 0 )  {
-		nvals = 6*1;
+		nvals = 3*2;
 		menu = p_rpp;
 		fn_in = rpp_in;
+	} else if( strcmp( argv[2], "orpp" ) == 0 )  {
+		nvals = 3*1;
+		menu = p_orpp;
+		fn_in = orpp_in;
 	} else if( strcmp( argv[2], "rpc" ) == 0 )  {
 		nvals = 3*3 + 1;
 		menu = p_rpc;
@@ -674,6 +767,33 @@ char **argv;
 		nvals = 2*3 + 2;
 		menu = p_part;
 		fn_in = part_in;
+	} else if( strcmp( argv[2], "binunif" ) == 0 ) {
+		if (dbip->dbi_version <= 4) {
+			Tcl_AppendResult(interp, "in: the binunif primitive is not supported by this command when using an old style database", (char *)NULL);
+			return TCL_ERROR;
+		} else {
+			nvals = 2;
+			menu = p_binunif;
+			fn_in = binunif_in;
+			do_solid_edit = 0;
+			dont_draw = 1;
+		}
+	} else if (strcmp(argv[2], "extrude") == 0) {
+		nvals = 4*3 + 2;
+		menu = p_extrude;
+		fn_in = extrude_in;
+	} else if (strcmp(argv[2], "grip") == 0) {
+		nvals = 2*3 + 1;
+		menu = p_grip;
+		fn_in = grip_in;
+	} else if (strcmp(argv[2], "cline") == 0 ||
+		   strcmp(argv[2], "grip") == 0 ||
+		   strcmp(argv[2], "nmg") == 0 ||
+		   strcmp(argv[2], "nurb") == 0 ||
+		   strcmp(argv[2], "sketch") == 0 ||
+		   strcmp(argv[2], "spline") == 0) {
+		Tcl_AppendResult(interp, "in: the ", argv[2], " primitive is not supported by this command", (char *)NULL);
+		return TCL_ERROR;
 	} else {
 	  Tcl_AppendResult(interp, "f_in:  ", argv[2], " is not a known primitive\n",
 			   (char *)NULL);
@@ -686,24 +806,30 @@ char **argv;
 	  return TCL_ERROR;
 	}
 
-	if (fn_in(argv, &internal, menu) != 0)  {
+	if (fn_in(argv, &internal, name) != 0)  {
 	  Tcl_AppendResult(interp, "ERROR, ", argv[2], " not made!\n", (char *)NULL);
-	  if(internal.idb_type) rt_functab[internal.idb_type].
-				  ft_ifree( &internal );
+	  if( internal.idb_ptr ) {
+		  /* a few input functions do not use the internal pointer
+		   * only free it, if it has been used
+		   */
+		  rt_db_free_internal( &internal, &rt_uniresource );
+	  }
 	  return TCL_ERROR;
 	}
 
 do_new_update:
-	if( (dp=db_diradd( dbip, name, -1L, 0, DIR_SOLID, NULL)) == DIR_NULL )
-	{
-		rt_db_free_internal( &internal );
-		Tcl_AppendResult(interp, "Cannot add '", name, "' to directory\n", (char *)NULL );
-		return TCL_ERROR;
-	}
-	if( rt_db_put_internal( dp, dbip, &internal ) < 0 )
-	{
-		rt_db_free_internal( &internal );
-		TCL_WRITE_ERR_return;
+	/* The function may have already written via LIBWDB */
+	if( internal.idb_ptr != NULL )  {
+		if( (dp=db_diradd( dbip, name, -1L, 0, DIR_SOLID, (genptr_t)&internal.idb_type)) == DIR_NULL )  {
+			rt_db_free_internal( &internal, &rt_uniresource );
+			Tcl_AppendResult(interp, "Cannot add '", name, "' to directory\n", (char *)NULL );
+			return TCL_ERROR;
+		}
+		if( rt_db_put_internal( dp, dbip, &internal, &rt_uniresource ) < 0 )
+		{
+			rt_db_free_internal( &internal, &rt_uniresource );
+			TCL_WRITE_ERR_return;
+		}
 	}
 
 	if( dont_draw )  return TCL_OK;
@@ -712,7 +838,7 @@ do_new_update:
 	new_cmd[0] = "e";
 	new_cmd[1] = name;
 	new_cmd[2] = (char *)NULL;
-	(void)f_edit( clientData, interp, 2, new_cmd );
+	(void)cmd_draw( clientData, interp, 2, new_cmd );
 
 	if( do_solid_edit )  {
 		/* Also kick off solid edit mode */
@@ -722,6 +848,67 @@ do_new_update:
 		(void)f_sed( clientData, interp, 2, new_cmd );
 	}
 	return TCL_OK;
+}
+
+int
+binunif_in( cmd_argvs, intern, name )
+char			*cmd_argvs[];
+struct rt_db_internal	*intern;
+const char		*name;
+{
+	unsigned int minor_type;
+
+	CHECK_DBI_NULL;
+
+	intern->idb_ptr = NULL;
+
+	if( strlen( cmd_argvs[3] ) != 1 ) {
+		bu_log( "Unrecognized minor type (%s)\n", cmd_argvs[3] );
+		return 1;
+	}
+	
+	switch( *cmd_argvs[3] ) {
+		case 'f':
+			minor_type = DB5_MINORTYPE_BINU_FLOAT;
+			break;
+		case 'd':
+			minor_type = DB5_MINORTYPE_BINU_DOUBLE;
+			break;
+		case 'c':
+			minor_type = DB5_MINORTYPE_BINU_8BITINT;
+			break;
+		case 's':
+			minor_type = DB5_MINORTYPE_BINU_16BITINT;
+			break;
+		case 'i':
+			minor_type = DB5_MINORTYPE_BINU_32BITINT;
+			break;
+		case 'l':
+			minor_type = DB5_MINORTYPE_BINU_64BITINT;
+			break;
+		case 'C':
+			minor_type = DB5_MINORTYPE_BINU_8BITINT_U;
+			break;
+		case 'S':
+			minor_type = DB5_MINORTYPE_BINU_16BITINT_U;
+			break;
+		case 'I':
+			minor_type = DB5_MINORTYPE_BINU_32BITINT_U;
+			break;
+		case 'L':
+			minor_type = DB5_MINORTYPE_BINU_64BITINT_U;
+			break;
+		default:
+			bu_log( "Unrecognized minor type (%c)\n", *cmd_argvs[3] );
+			return 1;
+	}
+	if( mk_binunif( wdbp, name, cmd_argvs[4], minor_type ) ) {
+		bu_log( "Failed to create binary object %s from file %s\n",
+			name, cmd_argvs[4] );
+		return 1;
+	}
+
+	return 0;
 }
 
 /*			E B M _ I N
@@ -739,6 +926,7 @@ struct rt_db_internal	*intern;
 	CHECK_DBI_NULL;
 
 	BU_GETSTRUCT( ebm, rt_ebm_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_EBM;
 	intern->idb_meth = &rt_functab[ID_EBM];
 	intern->idb_ptr = (genptr_t)ebm;
@@ -748,7 +936,7 @@ struct rt_db_internal	*intern;
 	ebm->xdim = atoi( cmd_argvs[4] );
 	ebm->ydim = atoi( cmd_argvs[5] );
 	ebm->tallness = atof( cmd_argvs[6] ) * local2base;
-	bn_mat_idn( ebm->mat );
+	MAT_IDN( ebm->mat );
 
 	return( 0 );
 }
@@ -768,14 +956,17 @@ struct rt_db_internal	*intern;
 	CHECK_DBI_NULL;
 
 	BU_GETSTRUCT( sip, rt_submodel_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_SUBMODEL;
 	intern->idb_meth = &rt_functab[ID_SUBMODEL];
 	intern->idb_ptr = (genptr_t)sip;
 	sip->magic = RT_SUBMODEL_INTERNAL_MAGIC;
 
-	strcpy( sip->treetop, cmd_argvs[3] );
+	bu_vls_init( &sip->treetop );
+	bu_vls_strcpy( &sip->treetop, cmd_argvs[3] );
 	sip->meth = atoi( cmd_argvs[4] );
-	strcpy( sip->file, cmd_argvs[5] );
+	bu_vls_init( &sip->file );
+	bu_vls_strcpy( &sip->file, cmd_argvs[5] );
 
 	return( 0 );
 }
@@ -785,28 +976,93 @@ struct rt_db_internal	*intern;
  *	Read DSP solid from keyboard
  */
 int
-dsp_in ( cmd_argvs, intern )
+dsp_in_v4 ( cmd_argvs, intern )
 char			*cmd_argvs[];
 struct rt_db_internal	*intern;
 {
 	struct rt_dsp_internal	*dsp;
 
 	BU_GETSTRUCT( dsp, rt_dsp_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_DSP;
 	intern->idb_meth = &rt_functab[ID_DSP];
 	intern->idb_ptr = (genptr_t)dsp;
 	dsp->magic = RT_DSP_INTERNAL_MAGIC;
 
-	strcpy( dsp->dsp_file, cmd_argvs[3] );
+	bu_vls_init( &dsp->dsp_name );
+	bu_vls_strcpy( &dsp->dsp_name, cmd_argvs[3] );
+
 	dsp->dsp_xcnt = atoi( cmd_argvs[4] );
 	dsp->dsp_ycnt = atoi( cmd_argvs[5] );
 	dsp->dsp_smooth = atoi( cmd_argvs[6] );
-	bn_mat_idn( dsp->dsp_stom );
+	MAT_IDN( dsp->dsp_stom );
 	
 	dsp->dsp_stom[0] = dsp->dsp_stom[5] = 
 		atof( cmd_argvs[7] ) * local2base;
 
 	dsp->dsp_stom[10] = atof( cmd_argvs[8] ) * local2base;
+
+	bn_mat_inv( dsp->dsp_mtos, dsp->dsp_stom );
+
+	return( 0 );
+}
+
+extern void dsp_dump(struct rt_dsp_internal *dsp);
+
+/*			D S P _ I N
+ *
+ *	Read DSP solid from keyboard
+ */
+int
+dsp_in_v5 ( cmd_argvs, intern )
+char			*cmd_argvs[];
+struct rt_db_internal	*intern;
+{
+	struct rt_dsp_internal	*dsp;
+
+	BU_GETSTRUCT( dsp, rt_dsp_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern->idb_type = ID_DSP;
+	intern->idb_meth = &rt_functab[ID_DSP];
+	intern->idb_ptr = (genptr_t)dsp;
+	dsp->magic = RT_DSP_INTERNAL_MAGIC;
+
+	if (*cmd_argvs[3] == 'f' || *cmd_argvs[3] == 'F')
+		dsp->dsp_datasrc = RT_DSP_SRC_FILE;
+	else if (*cmd_argvs[3] == 'O' || *cmd_argvs[3] == 'o')
+		dsp->dsp_datasrc = RT_DSP_SRC_OBJ;
+	else
+		return -1;
+
+	bu_vls_init( &dsp->dsp_name );
+	bu_vls_strcpy( &dsp->dsp_name, cmd_argvs[4] );
+
+	dsp->dsp_xcnt = atoi( cmd_argvs[5] );
+	dsp->dsp_ycnt = atoi( cmd_argvs[6] );
+	dsp->dsp_smooth = atoi( cmd_argvs[7] );
+	switch ( *cmd_argvs[8] ) {
+	case 'a':	/* adaptive */
+	case 'A': 
+	    dsp->dsp_cuttype = DSP_CUT_DIR_ADAPT;
+	    break;
+	case 'l':	/* lower left to upper right */
+	    dsp->dsp_cuttype = DSP_CUT_DIR_llUR;
+	    break;
+	case 'L':	/* Upper Left to lower right */
+	    dsp->dsp_cuttype = DSP_CUT_DIR_ULlr;
+	    break;
+	default:
+	    bu_log("Error: dsp_cuttype:\"%s\"\n", cmd_argvs[8]);
+	    return -1;
+	    break;
+	}
+
+	MAT_IDN( dsp->dsp_stom );
+	
+	dsp->dsp_stom[0] = dsp->dsp_stom[5] = 
+		atof( cmd_argvs[9] ) * local2base;
+
+	dsp->dsp_stom[10] = atof( cmd_argvs[10] ) * local2base;
 
 	bn_mat_inv( dsp->dsp_mtos, dsp->dsp_stom );
 
@@ -830,6 +1086,7 @@ struct rt_db_internal	*intern;
 	CHECK_DBI_NULL;
 
 	BU_GETSTRUCT( hf, rt_hf_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_HF;
 	intern->idb_meth = &rt_functab[ID_HF];
 	intern->idb_ptr = (genptr_t)hf;
@@ -895,6 +1152,7 @@ struct rt_db_internal	*intern;
 	CHECK_DBI_NULL;
 
 	BU_GETSTRUCT( vol, rt_vol_internal );
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_VOL;
 	intern->idb_meth = &rt_functab[ID_VOL];
 	intern->idb_ptr = (genptr_t)vol;
@@ -909,7 +1167,7 @@ struct rt_db_internal	*intern;
 	vol->cellsize[0] = atof( cmd_argvs[9] ) * local2base;
 	vol->cellsize[1] = atof( cmd_argvs[10] ) * local2base;
 	vol->cellsize[2] = atof( cmd_argvs[11] ) * local2base;
-	bn_mat_idn( vol->mat );
+	MAT_IDN( vol->mat );
 
 	return( 0 );
 }
@@ -1010,6 +1268,7 @@ char			*prompt[];
 		}
 	}
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_BOT;
 	intern->idb_meth = &rt_functab[ID_BOT];
 	bot = (struct rt_bot_internal *)bu_malloc( sizeof( struct rt_bot_internal ), "rt_bot_internal" );
@@ -1065,6 +1324,59 @@ char			*prompt[];
 }
 
 /*
+ *			A R B N _ I N
+ */
+int arbn_in( argc, argv, intern, prompt )
+int			argc;
+char			**argv;
+struct rt_db_internal	*intern;
+char			*prompt[];
+{
+	struct rt_arbn_internal *arbn;
+	int num_planes=0;
+	int i;
+
+	CHECK_DBI_NULL;
+
+	if( argc < 4 ) {
+	  Tcl_AppendResult(interp, MORE_ARGS_STR, prompt[argc-3], (char *)NULL);
+	  return CMD_MORE;
+	}
+
+	num_planes = atoi( argv[3] );
+
+	if( argc < num_planes * 4 + 4 ) {
+		struct bu_vls tmp_vls;
+
+		bu_vls_init( &tmp_vls );
+		bu_vls_printf( &tmp_vls, "%s for plane %d : ", prompt[(argc-4)%4 + 1], 1+(argc-4)/4 );
+
+		Tcl_AppendResult(interp, MORE_ARGS_STR, bu_vls_addr(&tmp_vls), (char *)NULL);
+		bu_vls_free(&tmp_vls);
+
+		return CMD_MORE;
+	}
+
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern->idb_type = ID_ARBN;
+	intern->idb_meth = &rt_functab[ID_ARBN];
+	intern->idb_ptr = (genptr_t)bu_malloc( sizeof( struct rt_arbn_internal ),
+					       "rt_arbn_internal" );
+	arbn = (struct rt_arbn_internal *)intern->idb_ptr;
+	arbn->magic = RT_ARBN_INTERNAL_MAGIC;
+	arbn->neqn = num_planes;
+	arbn->eqn = (plane_t *)bu_calloc( arbn->neqn, sizeof( plane_t ), "arbn planes" );
+	for( i=0 ; i<arbn->neqn ; i++ ) {
+		arbn->eqn[i][0] = atof( argv[4+i*4] );
+		arbn->eqn[i][1] = atof( argv[4+i*4+1] );
+		arbn->eqn[i][2] = atof( argv[4+i*4+2] );
+		arbn->eqn[i][3] = atof( argv[4+i*4+3] );
+	}
+
+	return CMD_OK;
+}
+
+/*
  *			P I P E _ I N
  */
 int
@@ -1110,6 +1422,7 @@ char			*prompt[];
 		return CMD_MORE;
 	}
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_PIPE;
 	intern->idb_meth = &rt_functab[ID_PIPE];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof( struct rt_pipe_internal ), "rt_pipe_internal" );
@@ -1156,63 +1469,119 @@ char			*promp[];
 	int			cv;	/* current curve (waterline) # */
 	int			axis;	/* current fastf_t in waterline */
 	int			ncurves_minus_one;
-	int num_pts, num_curves;
-
+	int num_pts = 0;
+	int num_curves = 0;
+	int vals_present, total_vals_needed;
+	struct bu_vls tmp_vls;
 
 	CHECK_DBI_NULL;
 
-	if( argc < 5 ) {
-	  Tcl_AppendResult(interp, MORE_ARGS_STR, promp[argc-3], (char *)NULL);
+	vals_present = argc - 3;
+
+	if (vals_present > 0) {
+	    num_pts = atoi(argv[3]);
+	    if (num_pts < 3 ) {
+		Tcl_AppendResult(interp,
+				 "points per waterline must be >= 3\n",
+				 (char *)NULL);
+		intern->idb_meth = &rt_functab[ID_ARS];
+		return CMD_BAD;
+	    }
+	}
+
+	if (vals_present > 1) {
+	    num_curves = atoi(argv[4]);
+	    if (num_curves < 3) {
+		Tcl_AppendResult(interp, "points per waterline must be >= 3\n",
+				 (char *)NULL);
+		intern->idb_meth = &rt_functab[ID_ARS];
+		return CMD_BAD;
+	    }
+	}
+
+	if (vals_present < 5) {
+	    /* for #rows, #pts/row & first point, 
+	     * pre-formatted prompts exist
+	     */
+	  Tcl_AppendResult(interp, MORE_ARGS_STR,
+			   promp[vals_present], (char *)NULL);
 	  return CMD_MORE;
 	}
 
-	num_pts = atoi(argv[3]);
-	num_curves = atoi(argv[4]);
+	total_vals_needed = 2 +		/* #rows, #pts/row */
+	    (ELEMENTS_PER_PT * 2) +	/* the first point, and very last */
+	    (num_pts * ELEMENTS_PER_PT * (num_curves-2)); /* the curves */
 
-	if (num_pts < 3 || num_curves < 3 ) {
-	  Tcl_AppendResult(interp, "Invalid number of lines or pts_per_curve\n", (char *)NULL);
-	  return CMD_BAD;
+	if (vals_present < (total_vals_needed - ELEMENTS_PER_PT)) {
+	    /* if we're looking for points on the curves, and not 
+	     * the last point which makes up the last curve, we
+	     * have to format up a prompt string
+	     */
+	    bu_vls_init(&tmp_vls);
+
+	    switch ((vals_present-2) % 3) {
+	    case 0:
+		bu_vls_printf(&tmp_vls, "%s for Waterline %d, Point %d : ",
+			      promp[5],
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    case 1:
+		bu_vls_printf(&tmp_vls, "%s for Waterline %d, Point %d : ",
+			      promp[6], 
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    case 2:
+		bu_vls_printf(&tmp_vls, "%s for Waterline %d, Point %d : ",
+			      promp[7], 
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    }
+
+	    Tcl_AppendResult(interp, MORE_ARGS_STR, bu_vls_addr(&tmp_vls),
+			     (char *)NULL);
+	    bu_vls_free(&tmp_vls);
+
+	    return CMD_MORE;
+	} else if (vals_present < total_vals_needed) {
+	    /* we're looking for the last point which is used for all points
+	     * on the last curve
+	     */
+	    bu_vls_init(&tmp_vls);
+
+
+	    switch ((vals_present-2) % 3) {
+	    case 0:
+		bu_vls_printf(&tmp_vls, "%s for pt of last Waterline : ",
+			      promp[5],
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    case 1:
+		bu_vls_printf(&tmp_vls, "%s for pt of last Waterline : ",
+			      promp[6], 
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    case 2:
+		bu_vls_printf(&tmp_vls, "%s for pt of last Waterline : ",
+			      promp[7], 
+			      1+(argc-8)/3/num_pts,
+			      ((argc-8)/3)%num_pts );
+		break;
+	    }
+
+
+	    Tcl_AppendResult(interp, MORE_ARGS_STR, bu_vls_addr(&tmp_vls),
+			     (char *)NULL);
+	    bu_vls_free(&tmp_vls);
+
+	    return CMD_MORE;
 	}
 
-	if( argc < 8 ) {
-	  Tcl_AppendResult(interp, MORE_ARGS_STR, promp[argc-3], (char *)NULL);
-	  return CMD_MORE;
-	}
-
-#if 0
-	if( argc < 8+((num_curves-2)*num_pts*3) ) {
-		bu_log("%s for Waterline %d, Point %d : ",
-			promp[5+(argc-8)%3], 1+(argc-8)/3/num_pts, ((argc-8)/3)%
-			num_pts );
-		return CMD_MORE;
-	}
-
-	if( argc < 8+((num_curves-2)*num_pts*3+3)) {
-		bu_log("%s for point of last waterline : ",
-			promp[5+(argc-8)%3]);
-		return CMD_MORE;
-	}
-#else
-	if( argc < 5+3*(num_curves-1)*num_pts ) {
-	  struct bu_vls tmp_vls;
-
-	  bu_vls_init(&tmp_vls);
-	  bu_vls_printf(&tmp_vls, "%s for Waterline %d, Point %d : ",
-			promp[5+(argc-8)%3], 1+(argc-8)/3/num_pts, ((argc-8)/3)%num_pts );
-
-	  Tcl_AppendResult(interp, MORE_ARGS_STR, bu_vls_addr(&tmp_vls), (char *)NULL);
-	  bu_vls_free(&tmp_vls);
-
-	  return CMD_MORE;
-	}
-
-	if( argc < 5+3*num_curves*num_pts ) {
-	  Tcl_AppendResult(interp, MORE_ARGS_STR, promp[5+(argc-8)%3],
-			   " for point of last waterline : ", (char *)NULL);
-	  return CMD_MORE;
-	}
-#endif
-
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_ARS;
 	intern->idb_meth = &rt_functab[ID_ARS];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_ars_internal), "rt_ars_internal");
@@ -1267,33 +1636,32 @@ char			*promp[];
  *					1 if unsuccessful read
  */
 int
-half_in(cmd_argvs, intern)
+half_in(cmd_argvs, intern, name)
 char			*cmd_argvs[];
 struct rt_db_internal	*intern;
+const char		*name;
 {
-	int			i;
-	struct rt_half_internal	*hip;
+	vect_t norm;
+	double d;
 
 	CHECK_DBI_NULL;
 
-	intern->idb_type = ID_HALF;
-	intern->idb_meth = &rt_functab[ID_HALF];
-	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_half_internal),
-		"rt_half_internal" );
-	hip = (struct rt_half_internal *)intern->idb_ptr;
-	hip->magic = RT_HALF_INTERNAL_MAGIC;
+	intern->idb_ptr = NULL;
 
-	for (i = 0; i < ELEMENTS_PER_PLANE; i++) {
-		hip->eqn[i] = atof(cmd_argvs[3+i]) * local2base;
-	}
-	VUNITIZE( hip->eqn );
-	
-	if (MAGNITUDE(hip->eqn) < RT_LEN_TOL) {
+	norm[X] = atof(cmd_argvs[3+0]);
+	norm[Y] = atof(cmd_argvs[3+1]);
+	norm[Z] = atof(cmd_argvs[3+2]);
+	d = atof(cmd_argvs[3+3]) * local2base;
+
+	if (MAGNITUDE(norm) < RT_LEN_TOL) {
 	  Tcl_AppendResult(interp, "ERROR, normal vector is too small!\n", (char *)NULL);
 	  return(1);	/* failure */
 	}
-	
-	return(0);	/* success */
+
+	VUNITIZE( norm );
+	if( mk_half( wdbp, name, norm, d ) < 0 )
+		return 1;	/* failure */
+	return 0;	/* success */
 }
 
 /*   A R B _ I N ( ) :   	reads arb parameters from keyboard
@@ -1310,6 +1678,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_ARB8;
 	intern->idb_meth = &rt_functab[ID_ARB8];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_arb_internal),
@@ -1348,37 +1717,32 @@ struct rt_db_internal	*intern;
  *					1 if unsuccessful read
  */
 int
-sph_in(cmd_argvs, intern)
+sph_in(cmd_argvs, intern, name)
 char			*cmd_argvs[];
 struct rt_db_internal	*intern;
+const char		*name;
 {
+	point_t			center;
 	fastf_t			r;
 	int			i;
-	struct rt_ell_internal	*sip;
 
 	CHECK_DBI_NULL;
 
-	intern->idb_type = ID_ELL;
-	intern->idb_meth = &rt_functab[ID_ELL];
-	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_ell_internal),
-		"rt_ell_internal" );
-	sip = (struct rt_ell_internal *)intern->idb_ptr;
-	sip->magic = RT_ELL_INTERNAL_MAGIC;
+	intern->idb_ptr = NULL;
 
 	for (i = 0; i < ELEMENTS_PER_PT; i++) {
-		sip->v[i] = atof(cmd_argvs[3+i]) * local2base;
+		center[i] = atof(cmd_argvs[3+i]) * local2base;
 	}
 	r = atof(cmd_argvs[6]) * local2base;
-	VSET( sip->a, r, 0., 0. );
-	VSET( sip->b, 0., r, 0. );
-	VSET( sip->c, 0., 0., r );
 	
 	if (r < RT_LEN_TOL) {
 	  Tcl_AppendResult(interp, "ERROR, radius must be greater than zero!\n", (char *)NULL);
 	  return(1);	/* failure */
 	}
-	
-	return(0);	/* success */
+
+	if( mk_sph( wdbp, name, center, r ) < 0 )
+		return 1;	/* failure */
+	return 0;	/* success */
 }
 
 /*   E L L _ I N ( ) :   	reads ell parameters from keyboard
@@ -1400,6 +1764,7 @@ struct rt_db_internal	*intern;
 	if (cmd_argvs[2][3] != '\0')	/* ELLG and ELL1 have seven */
 		n = 7;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_ELL;
 	intern->idb_meth = &rt_functab[ID_ELL];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_ell_internal),
@@ -1423,7 +1788,7 @@ struct rt_db_internal	*intern;
 	
 	if (!strcmp("ellg", cmd_argvs[2])) {
 		/* V, f1, f2, len */
-		/* convert ELL format into ELL1 format */
+		/* convert ELLG format into ELL1 format */
 		len = vals[6];
 		/* V is halfway between the foci */
 		VADD2( eip->v, &vals[0], &vals[3] );
@@ -1474,6 +1839,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TOR;
 	intern->idb_meth = &rt_functab[ID_TOR];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tor_internal),
@@ -1516,6 +1882,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TGC;
 	intern->idb_meth = &rt_functab[ID_TGC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tgc_internal),
@@ -1569,6 +1936,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TGC;
 	intern->idb_meth = &rt_functab[ID_TGC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tgc_internal),
@@ -1616,6 +1984,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TGC;
 	intern->idb_meth = &rt_functab[ID_TGC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tgc_internal),
@@ -1659,6 +2028,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TGC;
 	intern->idb_meth = &rt_functab[ID_TGC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tgc_internal),
@@ -1702,6 +2072,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_TGC;
 	intern->idb_meth = &rt_functab[ID_TGC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_tgc_internal),
@@ -1753,6 +2124,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_ARB8;
 	intern->idb_meth = &rt_functab[ID_ARB8];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_arb_internal),
@@ -1802,52 +2174,82 @@ struct rt_db_internal	*intern;
  *					1 if unsuccessful read
  */
 int
-rpp_in(cmd_argvs, intern)
+rpp_in(cmd_argvs, intern, name)
 char			*cmd_argvs[];
 struct rt_db_internal	*intern;
+const char		*name;
 {
-	fastf_t			xmin, xmax, ymin, ymax, zmin, zmax;
-	struct rt_arb_internal	*aip;
+	point_t		min, max;
 
 	CHECK_DBI_NULL;
 
-	intern->idb_type = ID_ARB8;
-	intern->idb_meth = &rt_functab[ID_ARB8];
-	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_arb_internal),
-		"rt_arb_internal" );
-	aip = (struct rt_arb_internal *)intern->idb_ptr;
-	aip->magic = RT_ARB_INTERNAL_MAGIC;
+	intern->idb_ptr = NULL;
 
-	xmin = atof(cmd_argvs[3+0]) * local2base;
-	xmax = atof(cmd_argvs[3+1]) * local2base;
-	ymin = atof(cmd_argvs[3+2]) * local2base;
-	ymax = atof(cmd_argvs[3+3]) * local2base;
-	zmin = atof(cmd_argvs[3+4]) * local2base;
-	zmax = atof(cmd_argvs[3+5]) * local2base;
+	min[X] = atof(cmd_argvs[3+0]) * local2base;
+	max[X] = atof(cmd_argvs[3+1]) * local2base;
+	min[Y] = atof(cmd_argvs[3+2]) * local2base;
+	max[Y] = atof(cmd_argvs[3+3]) * local2base;
+	min[Z] = atof(cmd_argvs[3+4]) * local2base;
+	max[Z] = atof(cmd_argvs[3+5]) * local2base;
 
-	if (xmin >= xmax) {
+	if (min[X] >= max[X]) {
 	  Tcl_AppendResult(interp, "ERROR, XMIN greater than XMAX!\n", (char *)NULL);
 	  return(1);	/* failure */
 	}
-	if (ymin >= ymax) {
+	if (min[Y] >= max[Y]) {
 	  Tcl_AppendResult(interp, "ERROR, YMIN greater than YMAX!\n", (char *)NULL);
 	  return(1);	/* failure */
 	}
-	if (zmin >= zmax) {
+	if (min[Z] >= max[Z]) {
 	  Tcl_AppendResult(interp, "ERROR, ZMIN greater than ZMAX!\n", (char *)NULL);
 	  return(1);	/* failure */
 	}
 
-	VSET( aip->pt[0], xmax, ymin, zmin );
-	VSET( aip->pt[1], xmax, ymax, zmin );
-	VSET( aip->pt[2], xmax, ymax, zmax );
-	VSET( aip->pt[3], xmax, ymin, zmax );
-	VSET( aip->pt[4], xmin, ymin, zmin );
-	VSET( aip->pt[5], xmin, ymax, zmin );
-	VSET( aip->pt[6], xmin, ymax, zmax );
-	VSET( aip->pt[7], xmin, ymin, zmax );
+	if( mk_rpp( wdbp, name, min, max ) < 0 )
+		return 1;
+	return 0;	/* success */
+}
 
-	return(0);	/* success */
+/*
+ *			O R P P _ I N ( )
+ *
+ * Reads origin-min rpp (box) parameters from keyboard
+ *				returns 0 if successful read
+ *					1 if unsuccessful read
+ */
+int
+orpp_in(cmd_argvs, intern, name)
+char			*cmd_argvs[];
+struct rt_db_internal	*intern;
+const char		*name;
+{
+	point_t		min, max;
+
+	CHECK_DBI_NULL;
+
+	intern->idb_ptr = NULL;
+
+	VSETALL( min, 0 );
+	max[X] = atof(cmd_argvs[3+0]) * local2base;
+	max[Y] = atof(cmd_argvs[3+1]) * local2base;
+	max[Z] = atof(cmd_argvs[3+2]) * local2base;
+
+	if (min[X] >= max[X]) {
+	  Tcl_AppendResult(interp, "ERROR, XMIN greater than XMAX!\n", (char *)NULL);
+	  return(1);	/* failure */
+	}
+	if (min[Y] >= max[Y]) {
+	  Tcl_AppendResult(interp, "ERROR, YMIN greater than YMAX!\n", (char *)NULL);
+	  return(1);	/* failure */
+	}
+	if (min[Z] >= max[Z]) {
+	  Tcl_AppendResult(interp, "ERROR, ZMIN greater than ZMAX!\n", (char *)NULL);
+	  return(1);	/* failure */
+	}
+
+	if( mk_rpp( wdbp, name, min, max ) < 0 )
+		return 1;
+	return 0;	/* success */
 }
 
 /*   P A R T _ I N ( ) :	reads particle parameters from keyboard
@@ -1864,6 +2266,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_PARTICLE;
 	intern->idb_meth = &rt_functab[ID_PARTICLE];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_part_internal),
@@ -1904,6 +2307,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_RPC;
 	intern->idb_meth = &rt_functab[ID_RPC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_rpc_internal),
@@ -1944,6 +2348,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_RHC;
 	intern->idb_meth = &rt_functab[ID_RHC];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_rhc_internal),
@@ -1985,6 +2390,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_EPA;
 	intern->idb_meth = &rt_functab[ID_EPA];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_epa_internal),
@@ -2030,6 +2436,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_EHY;
 	intern->idb_meth = &rt_functab[ID_EHY];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_ehy_internal),
@@ -2076,6 +2483,7 @@ struct rt_db_internal	*intern;
 
 	CHECK_DBI_NULL;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_ETO;
 	intern->idb_meth = &rt_functab[ID_ETO];
 	intern->idb_ptr = (genptr_t)bu_malloc( sizeof(struct rt_eto_internal),
@@ -2086,9 +2494,9 @@ struct rt_db_internal	*intern;
 	for (i = 0; i < ELEMENTS_PER_PT; i++) {
 		eip->eto_V[i] = atof(cmd_argvs[3+i]) * local2base;
 		eip->eto_N[i] = atof(cmd_argvs[6+i]) * local2base;
-		eip->eto_C[i] = atof(cmd_argvs[9+i]) * local2base;
+		eip->eto_C[i] = atof(cmd_argvs[10+i]) * local2base;
 	}
-	eip->eto_r = atof(cmd_argvs[12]) * local2base;
+	eip->eto_r = atof(cmd_argvs[9]) * local2base;
 	eip->eto_rd = atof(cmd_argvs[13]) * local2base;
 	
 	if (MAGNITUDE(eip->eto_N) < RT_LEN_TOL
@@ -2108,3 +2516,85 @@ struct rt_db_internal	*intern;
 	return(0);	/* success */
 }
 
+/*   E X T R U D E _ I N ( ) :   	reads extrude parameters from keyboard
+ *					returns 0 if successful read
+ *					1 if unsuccessful read
+ */
+int
+extrude_in(cmd_argvs, intern)
+char			*cmd_argvs[];
+struct rt_db_internal	*intern;
+{
+	int			i;
+	struct rt_extrude_internal	*eip;
+	struct rt_db_internal		tmp_ip;
+	struct directory		*dp;
+
+	CHECK_DBI_NULL;
+
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern->idb_type = ID_EXTRUDE;
+	intern->idb_meth = &rt_functab[ID_EXTRUDE];
+	intern->idb_ptr = (genptr_t)bu_malloc(sizeof(struct rt_extrude_internal),
+					      "rt_extrude_internal");
+	eip = (struct rt_extrude_internal *)intern->idb_ptr;
+	eip->magic = RT_EXTRUDE_INTERNAL_MAGIC;
+
+	for (i = 0; i < ELEMENTS_PER_PT; i++) {
+		eip->V[i] = atof(cmd_argvs[3+i]) * local2base;
+		eip->h[i] = atof(cmd_argvs[6+i]) * local2base;
+		eip->u_vec[i] = atof(cmd_argvs[9+i]) * local2base;
+		eip->v_vec[i] = atof(cmd_argvs[12+i]) * local2base;
+	}
+	eip->sketch_name = bu_strdup(cmd_argvs[15]);
+	eip->keypoint = atoi(cmd_argvs[16]);
+
+	if ((dp=db_lookup(dbip, eip->sketch_name, LOOKUP_NOISY)) == DIR_NULL) {
+		Tcl_AppendResult(interp, "Cannot find sketch (", eip->sketch_name,
+				 ") for extrusion (", cmd_argvs[1], ")\n", (char *)NULL);
+		eip->skt = (struct rt_sketch_internal *)NULL;
+		return 1;
+	}
+
+	if (rt_db_get_internal(&tmp_ip, dp, dbip, bn_mat_identity, &rt_uniresource) != ID_SKETCH) {
+		Tcl_AppendResult(interp, "Cannot import sketch (", eip->sketch_name,
+				 ") for extrusion (", cmd_argvs[1], ")\n", (char *)NULL);
+		eip->skt = (struct rt_sketch_internal *)NULL;
+		return 1;
+	} else
+		eip->skt = (struct rt_sketch_internal *)tmp_ip.idb_ptr;
+
+	return 0;	/* success */
+}
+
+/*   G R I P _ I N ( ) :   	reads grip parameters from keyboard
+ *				returns 0 if successful read
+ *				1 if unsuccessful read
+ */
+int
+grip_in(cmd_argvs, intern)
+char			*cmd_argvs[];
+struct rt_db_internal	*intern;
+{
+	int			i;
+	struct rt_grip_internal	*gip;
+
+	CHECK_DBI_NULL;
+
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern->idb_type = ID_GRIP;
+	intern->idb_meth = &rt_functab[ID_GRIP];
+	intern->idb_ptr = (genptr_t)bu_malloc(sizeof(struct rt_grip_internal),
+					      "rt_grip_internal");
+	gip = (struct rt_grip_internal *)intern->idb_ptr;
+	gip->magic = RT_GRIP_INTERNAL_MAGIC;
+
+	for (i = 0; i < ELEMENTS_PER_PT; i++) {
+		gip->center[i] = atof(cmd_argvs[3+i]) * local2base;
+		gip->normal[i] = atof(cmd_argvs[6+i]) * local2base;
+	}
+
+	gip->mag = atof(cmd_argvs[9]);
+
+	return 0;
+}

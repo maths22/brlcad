@@ -16,14 +16,18 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
 #include <ctype.h>
-
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "externs.h"			/* For calloc */
 #include "fb.h"
@@ -328,7 +332,7 @@ _LOCAL_ int
 mem_write( ifp, x, y, pixelp, count )
 FBIO	*ifp;
 int	x, y;
-CONST unsigned char	*pixelp;
+const unsigned char	*pixelp;
 int	count;
 {
 	int	pixels_to_end;
@@ -364,7 +368,7 @@ ColorMap	*cmp;
 _LOCAL_ int
 mem_wmap( ifp, cmp )
 FBIO	*ifp;
-CONST ColorMap	*cmp;
+const ColorMap	*cmp;
 {
 	if( cmp == COLORMAP_NULL )  {
 		fb_make_linear_cmap( &(MI(ifp)->cmap) );
@@ -411,7 +415,7 @@ int	*xzoom, *yzoom;
 _LOCAL_ int
 mem_setcursor( ifp, bits, xbits, ybits, xorig, yorig )
 FBIO	*ifp;
-CONST unsigned char *bits;
+const unsigned char *bits;
 int	xbits, ybits;
 int	xorig, yorig;
 {

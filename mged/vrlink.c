@@ -14,7 +14,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -23,7 +23,12 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <math.h>
 
 #include "tcl.h"
-#include "tk.h"
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
 #include "externs.h"
@@ -36,7 +41,9 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 extern int		(*cmdline_hook)();	/* cmd.c */
 
+#if 0
 extern point_t		eye_pos_scr;		/* dozoom.c */
+#endif
 
 static struct pkg_conn	*vrmgr;			/* PKG connection to VR mgr */
 static char		*vr_host = "None";	/* host running VR mgr */
@@ -117,7 +124,7 @@ vr_input_hook()
 		bu_log("vrmgr sent us an EOF\n");
 	}
 	if( val <= 0 )  {
-		Tk_DeleteFileHandler(vrmgr->pkc_fd);
+		Tcl_DeleteFileHandler(vrmgr->pkc_fd);
 		pkg_close(vrmgr);
 		vrmgr = PKC_NULL;
 		return;
@@ -144,20 +151,19 @@ vr_viewpoint_hook()
 	bu_vls_init_if_uninit(&old_str);
 	bu_vls_init(&str);
 
-	quat_mat2quat( orient, view_state->vs_Viewrot );
+	quat_mat2quat(orient, view_state->vs_vop->vo_rotation);
 
 	/* Need to send current viewpoint to VR mgr */
 	/* XXX more will be needed */
 	/* Eye point, quaturnion for orientation */
-	bu_vls_printf( &str, "pov %e %e %e   %e %e %e %e   %e   %e %e %e  %e\n", 
-		-view_state->vs_toViewcenter[MDX],
-		-view_state->vs_toViewcenter[MDY],
-		-view_state->vs_toViewcenter[MDZ],
-		V4ARGS(orient),
-		view_state->vs_Viewscale,
-		V3ARGS(eye_pos_scr),
-		mged_variables->mv_perspective
-		);
+	bu_vls_printf(&str, "pov {%e %e %e}   {%e %e %e %e}   %e   {%e %e %e}  %e\n", 
+		      -view_state->vs_vop->vo_center[MDX],
+		      -view_state->vs_vop->vo_center[MDY],
+		      -view_state->vs_vop->vo_center[MDZ],
+		      V4ARGS(orient),
+		      view_state->vs_vop->vo_scale,
+		      V3ARGS(view_state->vs_vop->vo_eye_pos),
+		      view_state->vs_vop->vo_perspective);
 
 	if( strcmp( bu_vls_addr(&old_str), bu_vls_addr(&str) ) == 0 )  {
 		bu_vls_free( &str );
@@ -182,49 +188,17 @@ vr_viewpoint_hook()
  *  XXX this should move to chgview.c when finished.
  */
 int
-f_pov(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int	argc;
-char	*argv[];
+cmd_pov(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		*argv[])
 {
-	quat_t		orient;
+	int	ret;
 
-	if(argc < 8 || MAXARGS < argc){
-	  struct bu_vls vls;
+	if ((ret = vo_pov_cmd(view_state->vs_vop, interp, argc, argv)) != TCL_OK)
+		return ret;
 
-	  bu_vls_init(&vls);
-	  bu_vls_printf(&vls, "help pov");
-	  Tcl_Eval(interp, bu_vls_addr(&vls));
-	  bu_vls_free(&vls);
-	  return TCL_ERROR;
-	}
-
-	if( argc < 1+3+4+1+3+1 )  {
-	  struct bu_vls tmp_vls;
-
-	  bu_vls_init(&tmp_vls);
-	  bu_vls_printf(&tmp_vls, "pov: insufficient args, only got %d\n", argc);
-	  Tcl_AppendResult(interp, bu_vls_addr(&tmp_vls), (char *)NULL);
-	  bu_vls_free(&tmp_vls);
-	  return TCL_ERROR;
-	}
-
-	view_state->vs_toViewcenter[MDX] = -atof(argv[1]);
-	view_state->vs_toViewcenter[MDY] = -atof(argv[2]);
-	view_state->vs_toViewcenter[MDZ] = -atof(argv[3]);
-	orient[0] = atof(argv[4]);
-	orient[1] = atof(argv[5]);
-	orient[2] = atof(argv[6]);
-	orient[3] = atof(argv[7]);
-	quat_quat2mat( view_state->vs_Viewrot, orient );
-	view_state->vs_Viewscale = atof(argv[8]);
-	eye_pos_scr[X] = atof(argv[9]);		/* interpreted in dozoom.c */
-	eye_pos_scr[Y] = atof(argv[10]);
-	eye_pos_scr[Z] = atof(argv[11]);
-	mged_variables->mv_perspective = atof(argv[12]);
-	new_mats();
-
+	mged_variables->mv_perspective = view_state->vs_vop->vo_perspective;
 	return TCL_OK;
 }
 
@@ -245,7 +219,7 @@ char	*argv[];
 	struct bu_vls	str;
 	char		*role;
 
-	if(argc < 3 || MAXARGS < argc){
+	if(argc < 3){
 	  struct bu_vls vls;
 
 	  bu_vls_init(&vls);
@@ -304,8 +278,8 @@ char	*argv[];
 	} else if( strcmp( role, "overview" ) == 0 )  {
 		/* No hooks required, just listen */
 	}
-	Tk_CreateFileHandler(vrmgr->pkc_fd, TK_READABLE,
-			     (Tk_FileProc (*))vr_input_hook, (ClientData)NULL);
+	Tcl_CreateFileHandler(vrmgr->pkc_fd, TCL_READABLE,
+			     (Tcl_FileProc (*))vr_input_hook, (ClientData)NULL);
 	bu_vls_free( &str );
 
 	return TCL_OK;

@@ -15,6 +15,12 @@
 
 #include <stdio.h>
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include "machine.h"
 #include "externs.h"			/* For malloc, calloc, and free */
 #include "rle.h"
@@ -62,7 +68,7 @@ void copy_raw();
  * 	Then "rerun" the input, mapping the pixel values and writing
  * 	them to the output file.
  */
-void
+int
 main( argc, argv )
 int argc;
 char **argv;

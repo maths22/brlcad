@@ -9,15 +9,21 @@
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 #include <tcl.h>
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 #define tcl_MAGIC 0x54434C00    /* "TCL" */
 #define CK_tcl_SP(_p) BU_CKMAG(_p, tcl_MAGIC, "tcl_specific")
 
@@ -35,14 +41,13 @@ struct tcl_specific {
 };
 
 /* The default values for the variables in the shader specific structure */
-CONST static
+const static
 struct tcl_specific tcl_defaults = {
 	tcl_MAGIC,
 	{	0.0, 0.0, 0.0, 0.0,	/* tcl_m_to_r */
 		0.0, 0.0, 0.0, 0.0,
 		0.0, 0.0, 0.0, 0.0,
-		0.0, 0.0, 0.0, 0.0 },
-	(Tcl_Interp *)NULL
+		0.0, 0.0, 0.0, 0.0 }
 	};
 
 #define SHDR_NULL	((struct tcl_specific *)0)
@@ -85,7 +90,7 @@ struct mfuncs tcl_mfuncs[] = {
 };
 
 
-/*	T C L _ S E T U P
+/*	T C L _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -100,8 +105,6 @@ struct mfuncs		*mfp;
 struct rt_i		*rtip;	/* New since 4.4 release */
 {
 	register struct tcl_specific	*tcl_sp;
-	mat_t	tmp;
-	vect_t	bb_min, bb_max, v_tmp;
 	int cpu;
 
 	/* check the arguments */
@@ -145,7 +148,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	 *
 	 * Shading is be done in "region coordinates":
 	 */
-	db_region_mat(tcl_sp->tcl_m_to_r, rtip->rti_dbip, rp->reg_name);
+	db_region_mat(tcl_sp->tcl_m_to_r, rtip->rti_dbip, rp->reg_name, &rt_uniresource);
 
 
 	if (rdebug&RDEBUG_SHADE) {
@@ -157,7 +160,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	T C L _ P R I N T
  */
 HIDDEN void
@@ -178,7 +181,7 @@ char *cp;
 	bu_free( cp, "tcl_specific" );
 }
 
-/*
+/*
  *	T C L _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c) once for each hit point
@@ -196,7 +199,6 @@ char			*dp;	/* ptr to the shader-specific struct */
 		(struct tcl_specific *)dp;
 	point_t pt;
 	int tcl_status;
-	char newVal[64];
 	register int cpu = ap->a_resource->re_cpu;
 
 	/* check the validity of the arguments we got */

@@ -18,7 +18,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSebm[] = "@(#)$Header$ (BRL)";
+static const char RCSebm[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -26,6 +26,13 @@ static char RCSebm[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <ctype.h>
+#include "tcl.h"
 #include "machine.h"
 #include "vmath.h"
 #include "db.h"
@@ -49,7 +56,7 @@ struct rt_ebm_specific {
 
 #define RT_EBM_O(m)	offsetof(struct rt_ebm_internal, m)
 
-CONST struct bu_structparse rt_ebm_parse[] = {
+const struct bu_structparse rt_ebm_parse[] = {
 #if CRAY && !__STDC__
 	{"%s",	RT_EBM_NAME_LEN, "file",	1,	BU_STRUCTPARSE_FUNC_NULL },
 #else
@@ -166,29 +173,29 @@ struct application *ap;
 	} else {
 		out_norm_code = NORM_ZNEG;
 	}
-	if(rt_g.debug&DEBUG_EBM)bu_log("kmin=%g, kmax=%g, out_norm_code=%d\n", kmin, kmax, out_norm_code );
+	if(RT_G_DEBUG&DEBUG_EBM)bu_log("kmin=%g, kmax=%g, out_norm_code=%d\n", kmin, kmax, out_norm_code );
 
 	count = 0;
 	while( BU_LIST_WHILE( curr, seg, &(in_hd->l) ) )  {
 		BU_LIST_DEQUEUE( &(curr->l) );
-		if(rt_g.debug&DEBUG_EBM)bu_log(" rt_seg_planeclip seg( %g, %g )\n", curr->seg_in.hit_dist, curr->seg_out.hit_dist );
+		if(RT_G_DEBUG&DEBUG_EBM)bu_log(" rt_seg_planeclip seg( %g, %g )\n", curr->seg_in.hit_dist, curr->seg_out.hit_dist );
 		if( curr->seg_out.hit_dist <= kmin )  {
-			if(rt_g.debug&DEBUG_EBM)bu_log("seg_out %g <= kmin %g, freeing\n", curr->seg_out.hit_dist, kmin );
+			if(RT_G_DEBUG&DEBUG_EBM)bu_log("seg_out %g <= kmin %g, freeing\n", curr->seg_out.hit_dist, kmin );
 			RT_FREE_SEG(curr, ap->a_resource);
 			continue;
 		}
 		if( curr->seg_in.hit_dist >= kmax )  {
-			if(rt_g.debug&DEBUG_EBM)bu_log("seg_in  %g >= kmax %g, freeing\n", curr->seg_in.hit_dist, kmax );
+			if(RT_G_DEBUG&DEBUG_EBM)bu_log("seg_in  %g >= kmax %g, freeing\n", curr->seg_in.hit_dist, kmax );
 			RT_FREE_SEG(curr, ap->a_resource);
 			continue;
 		}
 		if( curr->seg_in.hit_dist <= kmin )  {
-			if(rt_g.debug&DEBUG_EBM)bu_log("seg_in = kmin %g\n", kmin );
+			if(RT_G_DEBUG&DEBUG_EBM)bu_log("seg_in = kmin %g\n", kmin );
 			curr->seg_in.hit_dist = kmin;
 			curr->seg_in.hit_surfno = out_norm_code;
 		}
 		if( curr->seg_out.hit_dist >= kmax )  {
-			if(rt_g.debug&DEBUG_EBM)bu_log("seg_out= kmax %g\n", kmax );
+			if(RT_G_DEBUG&DEBUG_EBM)bu_log("seg_out= kmax %g\n", kmax );
 			curr->seg_out.hit_dist = kmax;
 			curr->seg_out.hit_surfno = (-out_norm_code);
 		}
@@ -258,13 +265,13 @@ struct seg		*seghead;
 	VJOIN1( P, rp->r_pt, rp->r_min, rp->r_dir );
 	/* P is hit point (on RPP?) */
 
-if(rt_g.debug&DEBUG_EBM)VPRINT("ebm_origin", ebmp->ebm_origin);
-if(rt_g.debug&DEBUG_EBM)VPRINT("r_pt", rp->r_pt);
-if(rt_g.debug&DEBUG_EBM)VPRINT("P", P);
-if(rt_g.debug&DEBUG_EBM)VPRINT("cellsize", ebmp->ebm_cellsize);
+if(RT_G_DEBUG&DEBUG_EBM)VPRINT("ebm_origin", ebmp->ebm_origin);
+if(RT_G_DEBUG&DEBUG_EBM)VPRINT("r_pt", rp->r_pt);
+if(RT_G_DEBUG&DEBUG_EBM)VPRINT("P", P);
+if(RT_G_DEBUG&DEBUG_EBM)VPRINT("cellsize", ebmp->ebm_cellsize);
 	t0 = rp->r_min;
 	tmax = rp->r_max;
-if(rt_g.debug&DEBUG_EBM)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r_max);
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r_max);
 
 	/* find grid cell where ray first hits ideal space bounding RPP */
 	igrid[X] = (P[X] - ebmp->ebm_origin[X]) / ebmp->ebm_cellsize[X];
@@ -279,7 +286,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r
 	} else if( igrid[Y] >= ebmp->ebm_i.ydim ) {
 		igrid[Y] = ebmp->ebm_i.ydim-1;
 	}
-if(rt_g.debug&DEBUG_EBM)bu_log("g[X] = %d, g[Y] = %d\n", igrid[X], igrid[Y]);
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("g[X] = %d, g[Y] = %d\n", igrid[X], igrid[Y]);
 
 	if( rp->r_dir[X] == 0.0 && rp->r_dir[Y] == 0.0 )  {
 		register struct seg	*segp;
@@ -288,7 +295,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("g[X] = %d, g[Y] = %d\n", igrid[X], igrid[Y]);
 		 *  Just check the one cell hit.
 		 *  Depend on higher level to clip ray to Z extent.
 		 */
-if(rt_g.debug&DEBUG_EBM)bu_log("ray on local Z axis\n");
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("ray on local Z axis\n");
 		if( BIT( &ebmp->ebm_i, igrid[X], igrid[Y] ) == 0 )
 			return(0);	/* MISS */
 		RT_GET_SEG(segp, ap->a_resource);
@@ -355,8 +362,8 @@ if(rt_g.debug&DEBUG_EBM)bu_log("ray on local Z axis\n");
 #endif
 
 	/* The delta[] elements *must* be positive, as t must increase */
-if(rt_g.debug&DEBUG_EBM)bu_log("t[X] = %g, delta[X] = %g\n", t[X], delta[X] );
-if(rt_g.debug&DEBUG_EBM)bu_log("t[Y] = %g, delta[Y] = %g\n", t[Y], delta[Y] );
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("t[X] = %g, delta[X] = %g\n", t[X], delta[X] );
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("t[Y] = %g, delta[Y] = %g\n", t[Y], delta[Y] );
 
 	/* Find face of entry into first cell -- max initial t value */
 	if( t[X] == INFINITY ) {
@@ -374,7 +381,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("t[Y] = %g, delta[Y] = %g\n", t[Y], delta[Y] );
 		in_index = Y;
 		t0 = t[Y];
 	}
-if(rt_g.debug&DEBUG_EBM)bu_log("Entry index is %s, t0=%g\n", in_index==X ? "X" : "Y", t0);
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("Entry index is %s, t0=%g\n", in_index==X ? "X" : "Y", t0);
 
 	/* Advance to next exits */
 	t[X] += delta[X];
@@ -389,7 +396,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Entry index is %s, t0=%g\n", in_index==X ? "X" :
 		bu_log("*** advancing t[Y]\n");
 		t[Y] += delta[Y];
 	}
-if(rt_g.debug&DEBUG_EBM)bu_log("Exit t[X]=%g, t[Y]=%g\n", t[X], t[Y] );
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("Exit t[X]=%g, t[Y]=%g\n", t[X], t[Y] );
 
 	inside = 0;
 
@@ -404,10 +411,10 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Exit t[X]=%g, t[Y]=%g\n", t[X], t[Y] );
 
 		/* Ray passes through cell igrid[XY] from t0 to t1 */
 		val = BIT( &ebmp->ebm_i, igrid[X], igrid[Y] );
-if(rt_g.debug&DEBUG_EBM)bu_log("igrid [%d %d] from %g to %g, val=%d\n",
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("igrid [%d %d] from %g to %g, val=%d\n",
 			igrid[X], igrid[Y],
 			t0, t1, val );
-if(rt_g.debug&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
+if(RT_G_DEBUG&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
 			out_index==X ? "X" : "Y", t[X], t[Y] );
 
 
@@ -439,7 +446,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
 				}
 				BU_LIST_INSERT( &(seghead->l), &(segp->l) );
 
-				if(rt_g.debug&DEBUG_EBM) bu_log("START t=%g, surfno=%d\n",
+				if(RT_G_DEBUG&DEBUG_EBM) bu_log("START t=%g, surfno=%d\n",
 					t0, segp->seg_in.hit_surfno);
 			} else {
 				/* Do nothing, marching through void */
@@ -471,7 +478,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
 					tail->seg_out.hit_surfno =
 						rt_ebm_normtab[in_index];
 				}
-				if(rt_g.debug&DEBUG_EBM) bu_log("END t=%g, surfno=%d\n",
+				if(RT_G_DEBUG&DEBUG_EBM) bu_log("END t=%g, surfno=%d\n",
 					t0, tail->seg_out.hit_surfno );
 			}
 		}
@@ -503,7 +510,7 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
 			/* go right, exit norm goes right */
 			tail->seg_out.hit_surfno = rt_ebm_normtab[in_index];
 		}
-		if(rt_g.debug&DEBUG_EBM) bu_log("closed END t=%g, surfno=%d\n",
+		if(RT_G_DEBUG&DEBUG_EBM) bu_log("closed END t=%g, surfno=%d\n",
 			tmax, tail->seg_out.hit_surfno );
 	}
 
@@ -522,9 +529,9 @@ if(rt_g.debug&DEBUG_EBM)bu_log("Exit index is %s, t[X]=%g, t[Y]=%g\n",
 int
 rt_ebm_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-CONST mat_t			mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+const mat_t			mat;
+const struct db_i		*dbip;
 {
 	union record	*rp;
 	register struct rt_ebm_internal *eip;
@@ -540,7 +547,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_EBM;
 	ip->idb_meth = &rt_functab[ID_EBM];
 	ip->idb_ptr = bu_calloc(1, sizeof(struct rt_ebm_internal), "rt_ebm_internal");
@@ -548,7 +556,7 @@ CONST struct db_i		*dbip;
 	eip->magic = RT_EBM_INTERNAL_MAGIC;
 
 	/* Provide default orientation info */
-	bn_mat_idn( eip->mat );
+	MAT_IDN( eip->mat );
 
 	bu_vls_init( &str );
 	bu_vls_strcpy( &str, rp->ss.ss_args );
@@ -575,7 +583,7 @@ CONST struct db_i		*dbip;
 
 	/* Apply any modeling transforms to get final matrix */
 	bn_mat_mul( tmat, mat, eip->mat );
-	bn_mat_copy( eip->mat, tmat );
+	MAT_COPY( eip->mat, tmat );
 
 	/* Get bit map from .bw(5) file */
 	if( !(mp = bu_open_mapped_file_with_path( dbip->dbi_filepath, eip->file, "ebm" )) )  {
@@ -632,9 +640,9 @@ fail:
 int
 rt_ebm_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_ebm_internal	*eip;
 	struct rt_ebm_internal	ebm;	/* scaled version */
@@ -650,7 +658,7 @@ CONST struct db_i		*dbip;
 	/* Apply scale factor */
 	ebm.mat[15] /= local2mm;
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record)*DB_SS_NGRAN;
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "ebm external");
 	rec = (union record *)ep->ext_buf;
@@ -666,6 +674,153 @@ CONST struct db_i		*dbip;
 	return(0);
 }
 
+
+/*
+ *			R T _ E B M _ I M P O R T 5
+ *
+ *  Read in the information from the string solid record.
+ *  Then, as a service to the application, read in the bitmap
+ *  and set up some of the associated internal variables.
+ */
+int
+rt_ebm_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+const mat_t			mat;
+const struct db_i		*dbip;
+{
+	register struct rt_ebm_internal *eip;
+	struct bu_vls	str;
+	int		nbytes;
+	mat_t		tmat;
+	struct bu_mapped_file	*mp;
+
+	BU_CK_EXTERNAL( ep );
+	RT_CK_DB_INTERNAL( ip );
+
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_EBM;
+	ip->idb_meth = &rt_functab[ID_EBM];
+	ip->idb_ptr = bu_calloc(1, sizeof(struct rt_ebm_internal), "rt_ebm_internal");
+	eip = (struct rt_ebm_internal *)ip->idb_ptr;
+	eip->magic = RT_EBM_INTERNAL_MAGIC;
+
+	/* Provide default orientation info */
+	MAT_IDN( eip->mat );
+
+	bu_vls_init( &str );
+	bu_vls_strcpy( &str, ep->ext_buf );
+	if( bu_struct_parse( &str, rt_ebm_parse, (char *)eip ) < 0 )  {
+		bu_vls_free( &str );
+		bu_free( (char *)eip , "rt_ebm_import: eip" );
+		ip->idb_type = ID_NULL;
+		ip->idb_ptr = (genptr_t)NULL;
+		return -2;
+	}
+	bu_vls_free( &str );
+
+	/* Check for reasonable values */
+	if( eip->file[0] == '\0' || eip->xdim < 1 ||
+	    eip->ydim < 1 || eip->mat[15] <= 0.0 ||
+	    eip->tallness <= 0.0 )  {
+	    	bu_struct_print( "Unreasonable EBM parameters", rt_ebm_parse,
+	    		(char *)eip );
+	    	bu_free( (char *)eip , "rt_ebm_import: eip" );
+	    	ip->idb_type = ID_NULL;
+	    	ip->idb_ptr = (genptr_t)NULL;
+		return -1;
+	}
+
+	/* Apply any modeling transforms to get final matrix */
+	bn_mat_mul( tmat, mat, eip->mat );
+	MAT_COPY( eip->mat, tmat );
+
+	/* Get bit map from .bw(5) file */
+	if( !(mp = bu_open_mapped_file_with_path( dbip->dbi_filepath, eip->file, "ebm" )) )  {
+		bu_log("rt_ebm_import() unable to open '%s'\n", eip->file);
+		bu_free( (char *)eip , "rt_ebm_import: eip" );
+fail:
+		ip->idb_type = ID_NULL;
+		ip->idb_ptr = (genptr_t)NULL;
+		return -1;
+	}
+	eip->mp = mp;
+	if( mp->buflen < eip->xdim*eip->ydim )  {
+		bu_log("rt_ebm_import() file '%s' is too short %d < %d\n",
+			eip->file, mp->buflen, eip->xdim*eip->ydim );
+		goto fail;
+	}
+
+	nbytes = (eip->xdim+BIT_XWIDEN*2)*(eip->ydim+BIT_YWIDEN*2);
+
+	/* If first use of this file, prepare in-memory buffer */
+	if( !mp->apbuf )  {
+		register int	y;
+		unsigned char	*cp;
+
+		/* Prevent a multi-processor race */
+		bu_semaphore_acquire(RT_SEM_MODEL);
+		if( mp->apbuf )  {
+			/* someone else beat us, nothing more to do */
+			bu_semaphore_release(RT_SEM_MODEL);
+			return 0;
+		}
+		mp->apbuf = (genptr_t)bu_calloc(
+			1, nbytes, "rt_ebm_import bitmap" );
+		mp->apbuflen = nbytes;
+
+		bu_semaphore_release(RT_SEM_MODEL);
+
+		/* Because of in-memory padding, read each scanline separately */
+		cp = (unsigned char *)mp->buf;
+		for( y=0; y < eip->ydim; y++ )  {
+			/* BIT() addresses into mp->apbuf */
+			bcopy( cp, &BIT( eip, 0, y), eip->xdim );
+			cp += eip->xdim;
+		}
+	}
+	return( 0 );
+}
+
+/*
+ *			R T _ E B M _ E X P O R T 5
+ *
+ *  The name will be added by the caller.
+ */
+int
+rt_ebm_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_ebm_internal	*eip;
+	struct rt_ebm_internal	ebm;	/* scaled version */
+	struct bu_vls		str;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_EBM )  return(-1);
+	eip = (struct rt_ebm_internal *)ip->idb_ptr;
+	RT_EBM_CK_MAGIC(eip);
+	ebm = *eip;			/* struct copy */
+
+	/* Apply scale factor */
+	ebm.mat[15] /= local2mm;
+
+	BU_CK_EXTERNAL(ep);
+
+	bu_vls_init( &str );
+	bu_vls_struct_print( &str, rt_ebm_parse, (char *)&ebm );
+
+	ep->ext_nbytes = bu_vls_strlen( &str ) + 1;
+	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "ebm external");
+
+	strcpy( ep->ext_buf , bu_vls_addr(&str) );
+	bu_vls_free( &str );
+
+	return(0);
+}
+
 /*
  *			R T _ E B M _ D E S C R I B E
  *
@@ -676,7 +831,7 @@ CONST struct db_i		*dbip;
 int
 rt_ebm_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -810,9 +965,9 @@ struct rt_i		*rtip;
  */
 void
 rt_ebm_print( stp )
-register CONST struct soltab	*stp;
+register const struct soltab	*stp;
 {
-	register CONST struct rt_ebm_specific *ebmp =
+	register const struct rt_ebm_specific *ebmp =
 		(struct rt_ebm_specific *)stp->st_specific;
 
 	bu_log("ebm file = %s\n", ebmp->ebm_i.file );
@@ -995,8 +1150,8 @@ int
 rt_ebm_plot( vhead, ip, ttol, tol )
 struct bu_list	*vhead;
 struct rt_db_internal *ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	register struct rt_ebm_internal *eip;
 	register int	x,y;
@@ -1288,8 +1443,8 @@ rt_ebm_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	struct rt_ebm_internal	*eip;
 	struct shell	*s;
@@ -1537,12 +1692,12 @@ char	**argv;
 
 	plotfp = fopen( "ebm.pl", "w" );
 
-	Tdir.d_namep = "Tsolid";
+	RT_DIR_SET_NAMEP(&Tdir, "Tsolid");
 	Tsolid.st_dp = &Tdir;
 	Tappl.a_purpose = "testing";
 	Tappl.a_resource = &resource;
 	Tsolid.st_matp = &Tmat;
-	bn_mat_idn( Tsolid.st_matp );
+	MAT_IDN( Tsolid.st_matp );
 
 	strcpy( rec.ss.ss_keyword, "ebm" );
 	strcpy( rec.ss.ss_args, "file=bm.bw w=6 n=6 d=6.0" );
@@ -1795,3 +1950,183 @@ vect_t	pt, dir;
 	pdv_3line( plotfp, a, b );
 }
 #endif /* test driver */
+
+/*
+ *		R T _ E B M _ T C L G E T
+ *
+ *	Routine to format the parameters of an EBM for "db get"
+ *
+ *	Legal requested parameters are:
+ *		"F" - bitmap file to extrude
+ *		"W" - number of cells in X direction
+ *		"N" - number of cells in Y direction
+ *		"H" - height of each cell (mm)
+ *		"M" - matrix to transform EBM solid into model coordinates
+ *
+ *	no paramaters requested returns all
+ */
+int
+rt_ebm_tclget( interp, intern, attr )
+Tcl_Interp			*interp;
+const struct rt_db_internal	*intern;
+const char			*attr;
+{
+	register struct rt_ebm_internal *ebm=(struct rt_ebm_internal *)intern->idb_ptr;
+	Tcl_DString	ds;
+	struct bu_vls	vls;
+	int		i;
+
+	RT_EBM_CK_MAGIC( ebm );
+
+	Tcl_DStringInit( &ds );
+	bu_vls_init( &vls );
+
+	if( attr == (char *)NULL ) {
+		bu_vls_strcpy( &vls, "ebm" );
+		bu_vls_printf( &vls, " F %s W %d N %d H %.25g",
+			       ebm->file, ebm->xdim, ebm->ydim, ebm->tallness );
+		bu_vls_printf( &vls, " M {" );
+		for( i=0 ; i<16 ; i++ )
+			bu_vls_printf( &vls, " %.25g", ebm->mat[i] );
+		bu_vls_printf( &vls, " }" );
+	}
+	else if( !strcmp( attr, "F" ) )
+		bu_vls_printf( &vls, "%s", ebm->file );
+	else if( !strcmp( attr, "W" ) )
+		bu_vls_printf( &vls, "%d", ebm->xdim );
+	else if( !strcmp( attr, "N" ) )
+		bu_vls_printf( &vls, "%d", ebm->ydim );
+	else if( !strcmp( attr, "H" ) )
+		bu_vls_printf( &vls, "%.25g", ebm->tallness );
+	else if( !strcmp( attr, "M" ) ) {
+		for( i=0 ; i<16 ; i++ )
+			bu_vls_printf( &vls, "%.25g ", ebm->mat[i] );
+	}
+	else {
+		Tcl_SetResult( interp,"ERROR: Unknown attribute, choices are F, W, N, or H\n",
+		TCL_STATIC );
+		bu_vls_free( &vls );
+		return( TCL_ERROR );       
+	}
+
+	Tcl_DStringAppend( &ds, bu_vls_addr( &vls ), -1 );
+	Tcl_DStringResult( interp, &ds );
+	Tcl_DStringFree( &ds );
+	bu_vls_free( &vls );
+	return( TCL_OK );
+}
+
+
+/*
+ *		R T _ E B M _ T C L A D J U S T
+ *
+ *	Routine to adjust the parameters of an EBM
+ *
+ *	Legal parameters are:
+ *		"F" - bitmap file to extrude
+ *		"W" - number of cells in X direction
+ *		"N" - number of cells in Y direction
+ *		"H" - height of each cell (mm)
+ *		"M" - matrix to transform EBM solid into model coordinates
+ */
+
+int
+rt_ebm_tcladjust( interp, intern, argc, argv )
+Tcl_Interp		*interp;
+struct rt_db_internal	*intern;
+int			argc;
+char			**argv;
+{
+	struct rt_ebm_internal *ebm;
+
+	RT_CK_DB_INTERNAL( intern );
+
+	ebm = (struct rt_ebm_internal *)intern->idb_ptr;
+	RT_EBM_CK_MAGIC( ebm );
+
+	while( argc >= 2 ) {
+		if( !strcmp( argv[0], "F" ) ) {
+			if( strlen( argv[1] ) >= RT_EBM_NAME_LEN ) {
+				Tcl_SetResult( interp,
+					       "ERROR: File name too long",
+					       TCL_STATIC );
+				return( TCL_ERROR );
+			}
+			strcpy( ebm->file, argv[1] );
+		}
+		else if( !strcmp( argv[0], "W" ) ) {
+			ebm->xdim = atoi( argv[1] );
+		}
+		else if( !strcmp( argv[0], "N" ) ) {
+			ebm->ydim = atoi( argv[1] );
+		}
+		else if( !strcmp( argv[0], "H" ) ) {
+			ebm->tallness = atof( argv[1] );
+		}
+		else if( !strcmp( argv[0], "M" ) ) {
+			int len=16;
+			fastf_t array[16];
+			fastf_t *ar_ptr;
+
+			ar_ptr = array;
+
+			if( tcl_list_to_fastf_array( interp, argv[1], &ar_ptr, &len) !=
+			    len ) {
+				Tcl_SetResult( interp,
+				      "ERROR: incorrect number of coefficents for matrix\n",
+				      TCL_STATIC );
+				return( TCL_ERROR );
+			}
+			MAT_COPY( ebm->mat, array )
+		}
+		else {
+			Tcl_SetResult( interp,
+			      "ERROR: illegal argument, choices are F, W, N, or H\n",
+			      TCL_STATIC );
+			return( TCL_ERROR );
+		}
+		argc -= 2;
+		argv += 2;
+	}
+	return( TCL_OK );
+}
+
+int
+rt_ebm_tclform( const struct rt_functab *ftp, Tcl_Interp *interp )
+{
+        RT_CK_FUNCTAB(ftp);
+
+        Tcl_AppendResult( interp,
+			  "F %s W %d N %d H %f M { %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f", (char *)NULL );
+
+        return TCL_OK;
+
+}
+
+
+/*
+ *		R T _ E B M _ M A K E
+ *
+ *	Routine to make a new EBM solid. The only purpose of this routine is
+ *	to initialize the matrix and height to legal values.
+ */
+void
+rt_ebm_make( ftp, intern, diameter )
+const struct rt_functab	*ftp;
+struct rt_db_internal	*intern;
+double			diameter;
+{
+	struct rt_ebm_internal *ebm;
+
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern->idb_type = ID_EBM;
+	BU_ASSERT(&rt_functab[intern->idb_type] == ftp);
+
+	intern->idb_meth = ftp;
+	ebm = (struct rt_ebm_internal *)bu_calloc( sizeof( struct rt_ebm_internal ), 1,
+				     "rt_ebm_internal");
+	intern->idb_ptr = (genptr_t)ebm;
+	ebm->magic = RT_EBM_INTERNAL_MAGIC;
+	MAT_IDN( ebm->mat );
+	ebm->tallness = 1.0;
+}

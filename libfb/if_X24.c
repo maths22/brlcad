@@ -210,7 +210,8 @@ struct	xinfo {
 	int		xi_usereg;	/* Flag determining whether or not to use regions */
 	Colormap	xi_cmap;	/* Colormap */
 	XImage		*xi_image;	/* XImage (size of screen) */
-	Window		xi_curswin;	/* Cursor Window ID */
+	Window		xi_cwinp;	/* Cursor's Parent Window ID */
+	Window		xi_cwin;	/* Cursor Window ID */
 	unsigned long	xi_wp;		/* White pixel */
 	unsigned long	xi_bp;		/* Black pixel */
 
@@ -555,13 +556,14 @@ char **argv;
 {
   Display *dpy;
   Window win;
+  Window cwinp;
   Colormap cmap;
   XVisualInfo *vip;
   int width;
   int height;
   GC gc;
 
-  if(argc != 8)
+  if(argc != 9)
     return -1;
 
   if(sscanf(argv[1], "%lu", (unsigned long *)&dpy) != 1)
@@ -570,29 +572,33 @@ char **argv;
   if(sscanf(argv[2], "%lu", (unsigned long *)&win) != 1)
     return -1;
 
-  if(sscanf(argv[3], "%lu", (unsigned long *)&cmap) != 1)
+  if(sscanf(argv[3], "%lu", (unsigned long *)&cwinp) != 1)
     return -1;
 
-  if(sscanf(argv[4], "%lu", (unsigned long *)&vip) != 1)
+  if(sscanf(argv[4], "%lu", (unsigned long *)&cmap) != 1)
     return -1;
 
-  if(sscanf(argv[5], "%d", &width) != 1)
+  if(sscanf(argv[5], "%lu", (unsigned long *)&vip) != 1)
     return -1;
 
-  if(sscanf(argv[6], "%d", &height) != 1)
+  if(sscanf(argv[6], "%d", &width) != 1)
     return -1;
 
-  if(sscanf(argv[7], "%lu", (unsigned long *)&gc) != 1)
+  if(sscanf(argv[7], "%d", &height) != 1)
     return -1;
 
-  return _X24_open_existing(ifp, dpy, win, cmap, vip, width, height, gc);
+  if(sscanf(argv[8], "%lu", (unsigned long *)&gc) != 1)
+    return -1;
+
+  return _X24_open_existing(ifp, dpy, win, cwinp, cmap, vip, width, height, gc);
 }
 
 int
-_X24_open_existing(ifp, dpy, win, cmap, vip, width, height, gc)
+_X24_open_existing(ifp, dpy, win, cwinp, cmap, vip, width, height, gc)
 FBIO *ifp;
 Display *dpy;
 Window win;
+Window cwinp;
 Colormap cmap;
 XVisualInfo *vip;
 int width;
@@ -603,6 +609,7 @@ GC gc;
 #if 0
   XRectangle rect;
 #endif
+  int getmem_stat;
 
   ifp->if_width = width;
   ifp->if_height = height;
@@ -631,26 +638,28 @@ GC gc;
   xi->xi_depth = vip->depth;
   xi->xi_cmap = cmap;
   xi->xi_win = win;
+  xi->xi_cwinp = cwinp;
 
   /*XXX For now use same GC for both */
   xi->xi_gc = gc;
   xi->xi_cgc = gc;
 
+
   switch (vip->class) {
   case TrueColor:
     if (vip->depth >= 24) {
       xi->xi_mode = FLG_VT24 << 1;
-      xi->xi_flags = FLG_VT24 | FLG_XCMAP;
+      xi->xi_flags = FLG_VT24;
       xi->xi_wp = 0xFFFFFF;
       xi->xi_bp = 0x000000;
     } else if (vip->depth >= 16) {
       xi->xi_mode = FLG_VT16 << 1;
-      xi->xi_flags = FLG_VT16 | FLG_XCMAP;
+      xi->xi_flags = FLG_VT16;
       xi->xi_wp = 0xFFFFFF;
       xi->xi_bp = 0x000000;
     } else {
       xi->xi_mode = FLG_VS1 << 1;
-      xi->xi_flags = FLG_VS1 | FLG_XCMAP;
+      xi->xi_flags = FLG_VS1;
       xi->xi_wp = 0x0;
       xi->xi_bp = 0x1;
     }
@@ -703,13 +712,24 @@ GC gc;
     break;
   }
 
+  if (!(xi->xi_flags & FLG_XCMAP)) {
+	  xi->xi_redmap = (unsigned char *)malloc(256);
+	  xi->xi_grnmap = (unsigned char *)malloc(256);
+	  xi->xi_blumap = (unsigned char *)malloc(256);
+
+	  if (!xi->xi_redmap || !xi->xi_grnmap || !xi->xi_blumap) {
+		  fb_log("if_X24: Can't allocate colormap memory\n");
+		  return (-1);
+	  }
+  }
+
   xi->xi_iwidth = width;
   xi->xi_iheight = height;
 
   /* Allocate backing store (shared memory or local) */
-  if ((X24_getmem(ifp)) == -1) {
-    free((char *)xi);
-    return -1;
+  if ((getmem_stat = X24_getmem(ifp)) == -1) {
+	  free((char *)xi);
+	  return -1;
   }
 
 #if 0
@@ -742,6 +762,14 @@ GC gc;
 
   /* Make the Display connection available for selecting on */
   ifp->if_selfd = ConnectionNumber(xi->xi_dpy);
+
+  if (getmem_stat == 0) {
+	  X24_wmap(ifp, xi->xi_rgb_cmap);
+	  X24_blit(ifp, 0, 0, xi->xi_iwidth, xi->xi_iheight, BLIT_DISP);
+  } else {
+	  /* Set up default linear colormap */
+	  X24_wmap(ifp, NULL);
+  }
 
   /* Mark display ready */
   xi->xi_flags |= FLG_INIT;
@@ -917,7 +945,7 @@ static int
 X24_write(ifp, x, y, pixelp, count)
 FBIO	*ifp;
 int	x, y;
-CONST unsigned char	*pixelp;
+const unsigned char	*pixelp;
 int	count;
 {
 	struct xinfo *xi = XI(ifp);
@@ -980,7 +1008,7 @@ printf("X24_rmap(ifp:0x%x, cmp:0x%x) entered.\n",
 static int
 X24_wmap(ifp, cmp)
 FBIO	*ifp;
-CONST ColorMap	*cmp;
+const ColorMap	*cmp;
 {
 	struct xinfo *xi = XI(ifp);
 	ColorMap *map = xi->xi_rgb_cmap;
@@ -1138,7 +1166,7 @@ printf("X24_getview(ifp:0x%x, xcenter:0x%x, ycenter:0x%x, xzoom:0x%x, yzoom:0x%x
 static int
 X24_setcursor(ifp, bits, xbits, ybits, xorig, yorig)
 FBIO	*ifp;
-CONST unsigned char *bits;
+const unsigned char *bits;
 int	xbits, ybits;
 int	xorig, yorig;
 {
@@ -1169,7 +1197,7 @@ int	x, y;
     register int delta;
 
     /* If we don't have a cursor, create it */
-    if (!xi->xi_curswin) {
+    if (!xi->xi_cwin) {
       XSetWindowAttributes xswa;
 
       xswa.background_pixel = xi->xi_bp;
@@ -1177,7 +1205,7 @@ int	x, y;
       xswa.colormap = xi->xi_cmap;
       xswa.save_under = True;
 
-      xi->xi_curswin = XCreateWindow(xi->xi_dpy, xi->xi_win,
+      xi->xi_cwin = XCreateWindow(xi->xi_dpy, xi->xi_cwinp,
 				     0, 0, 4, 4, 2, xi->xi_depth, InputOutput,
 				     xi->xi_visual, CWBackPixel | CWBorderPixel |
 				     CWSaveUnder | CWColormap, &xswa);
@@ -1195,14 +1223,14 @@ int	x, y;
     xy = xi->xi_xheight - xy;
 
     /* Move cursor into place; make it visible if it isn't */
-    XMoveWindow(xi->xi_dpy, xi->xi_curswin, xx - 4, xy - 4);
+    XMoveWindow(xi->xi_dpy, xi->xi_cwin, xx - 4, xy - 4);
 
     if (!ifp->if_cursmode)
-      XMapRaised(xi->xi_dpy, xi->xi_curswin);
+      XMapRaised(xi->xi_dpy, xi->xi_cwin);
   } else {
     /* If we have a cursor and it's visible, hide it */
-    if (xi->xi_curswin && ifp->if_cursmode)
-      XUnmapWindow(xi->xi_dpy, xi->xi_curswin);
+    if (xi->xi_cwin && ifp->if_cursmode)
+      XUnmapWindow(xi->xi_dpy, xi->xi_cwin);
   }
 
   /* Without this flush, cursor movement is sluggish */
@@ -1288,7 +1316,7 @@ X24_writerect(ifp, xmin, ymin, width, height, pp)
 FBIO	*ifp;
 int	xmin, ymin;
 int	width, height;
-CONST unsigned char	*pp;
+const unsigned char	*pp;
 {
 	struct xinfo *xi = XI(ifp);
 
@@ -1860,6 +1888,7 @@ printf("Creating window\n");
 		InputOutput, xi->xi_visual, CWEventMask | CWBackPixel |
 		    CWBorderPixel | CWBitGravity | CWBackingStore | CWColormap,
 		&xswa);
+	xi->xi_cwinp = xi->xi_win;
 
 	if (xi->xi_win == 0) {
 		fb_log("if_X: Can't create window\n");
@@ -3206,9 +3235,7 @@ printf("blit: xi_flags & FLG_VMASK = 0x%x\n", xi->xi_flags & FLG_VMASK );
 				/*
 				 * and copy that line to where we are now.
 				 */
-				for (x=xi->xi_image->bytes_per_line;x>=0;x--) {
-					*p++ = *src++;
-				}
+				memcpy(p, src, xi->xi_image->bytes_per_line);
 			}
 			/*
 			 * And again, move to the beginning of the next

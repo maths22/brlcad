@@ -12,6 +12,12 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include <stdio.h>
 #include <math.h>
 
@@ -36,6 +42,7 @@ int	op[256];		/* operations */
 double	val[256];		/* arguments to operations */
 double	buf[BUFLEN];		/* working buffer */
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -109,7 +116,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -164,4 +171,6 @@ char	**argv;
 		}
 		fwrite( buf, sizeof(*buf), n, stdout );
 	}
+
+	return 0;
 }

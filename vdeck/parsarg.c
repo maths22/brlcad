@@ -13,7 +13,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -35,10 +35,10 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 /*	p a r s A r g ( )
 	Parse the command line arguments.
  */
+int
 parsArg( argc, argv )	char	*argv[];
 	{ 	register int	i, c, arg_cnt;
 		extern int	optind;
-		extern char	*optarg;
 
 	while( (c = getopt( argc, argv, "d" )) != EOF )
 		{

@@ -21,26 +21,31 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #define		USAGE		"Usage: 'bwthresh val ...'\n"
 
+int
 main (argc, argv)
-
 int	argc;
 char	**argv;
-
 {
     int			Ch;		/* The current input character */
     int			*thresh_val;	/* The threshold value */
     int			nm_threshs;	/* How many thresholds? */
     int			i;
     unsigned char	*bin_color = (unsigned char *)0;/* resultant pixel values */
-
-    char		*malloc();
 
     if ((nm_threshs = argc - 1) < 1)
     {
@@ -91,4 +96,5 @@ char	**argv;
 		break;
 	(void) putchar(bin_color[i]);
     }
+    return 0;
 }

@@ -14,13 +14,18 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Id$ (BRL)";
+static const char RCSid[] = "@(#)$Id$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
-
+#include <unistd.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "fb.h"		/* For Pixel typedef */
 #include "orle.h"
@@ -45,6 +50,7 @@ static void	prnt_Usage();
 static int	non_linear_cmap = 0;
 
 /*	m a i n ( )							*/
+int
 main( argc, argv )
 int	argc;
 char	*argv[];

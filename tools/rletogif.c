@@ -42,7 +42,7 @@
 #include "rle.h"
 #include "./rletogif.h"
 
-CONST char *MY_NAME = "rletogif";
+const char *MY_NAME = "rletogif";
 
 static rle_hdr in_hdr;
 static rle_pixel **scan;
@@ -53,7 +53,7 @@ int get_scanlines();
 int get_color_bits();
 void GIFEncode();
 
-void
+int
 main(argc, argv)
 int argc;
 char *argv[];
@@ -89,6 +89,7 @@ char *argv[];
     rle_row_free(&in_hdr, scan);
     for (i = 0; i <= in_hdr.ymax; i++ ) free(scanbuf[i]);
     free(scanbuf);
+    return 0;
 }
 
 /*

@@ -35,7 +35,7 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include "raytrace.h"
 #include "spectrum.h"
 
-static CONST double rt_NTSC_R[][2] = {
+static const double rt_NTSC_R[][2] = {
 	{543, 0.0001},
 	{552, 0.05},
 	{562, 0.2},
@@ -59,7 +59,7 @@ static CONST double rt_NTSC_R[][2] = {
 	{-1, -1}
 };
 
-static CONST double rt_NTSC_G[][2] = {
+static const double rt_NTSC_G[][2] = {
 	{456, 0.0001},
 	{475, 0.05},
 	{480, 0.1},
@@ -83,7 +83,7 @@ static CONST double rt_NTSC_G[][2] = {
 	{-1, -1}
 };
 
-static CONST double rt_NTSC_B[][2] = {
+static const double rt_NTSC_B[][2] = {
 	{347, 0.0001},
 	{373, 0.05},
 	{385, 0.1},
@@ -123,11 +123,10 @@ struct bn_tabdata *rt_NTSC_b_tabdata;
  *  to NTSC RGB values.
  */
 void
-rt_spect_make_NTSC_RGB( rp, gp, bp, tabp )
-struct bn_tabdata		**rp;
-struct bn_tabdata		**gp;
-struct bn_tabdata		**bp;
-CONST struct bn_table		*tabp;
+rt_spect_make_NTSC_RGB(struct bn_tabdata		**rp,
+		       struct bn_tabdata		**gp,
+		       struct bn_tabdata		**bp,
+		       const struct bn_table		*tabp)
 {
 	BN_CK_TABLE(tabp);
 
@@ -165,11 +164,100 @@ bu_log("ntsc_B: area=%g\n", bn_tabdata_area2(rt_NTSC_b_tabdata) );
  *  Gives the XYZ coordinates of the NTSC primaries and D6500 white.
  *  Note:  X+Y+Z=1 for primaries (cf. equations of pg.54)
  */
-CONST static point_t      rgb_NTSC[4] = {
+const static point_t      rgb_NTSC[4] = {
     {0.670,     0.330,      0.000},     /* red */
     {0.210,     0.710,      0.080},     /* green */
     {0.140,     0.080,      0.780},     /* blue */
     {0.313,     0.329,      0.358}};    /* white */
+
+/* ****************************************************************
+ * clr__cspace_to_xyz (cspace, t_mat)
+ *  CLR_XYZ       cspace[4]   (in)  - the color space definition,
+ *                                      3 primaries and white
+ *  double        t_mat[3][3] (mod) - the color transformation
+ *
+ * Builds the transformation from a set of primaries to the CIEXYZ
+ *  color space.  This is the basis for the generation of the color
+ *  transformations in the CLR_ routine set.  The method used is
+ *  that detailed in Sect 3.2 Colorimetry and the RGB monitor.
+ *  Returns RGB to XYZ matrix.
+ *  From Roy Hall, pg 239-240.
+ *
+ *  The RGB white point of (1,1,1) times this matrix gives the
+ *  (Y=1 normalized) XYZ white point of (0.951368, 1, 1.08815)
+ *  From Roy Hall, pg 54.
+ *	MAT3X3VEC( xyz, rgb2xyz, rgb );
+ *
+ *  Returns -
+ *	0 if there is a singularity.
+ *	!0 if OK
+ */
+int
+rt_clr__cspace_to_xyz (const point_t	cspace[4],
+		       mat_t		rgb2xyz)
+{
+	int     ii, jj, kk, tmp_i, ind[3];
+	fastf_t  mult, white[3], scale[3];
+	mat_t	t_mat;
+
+	/* Might want to enforce X+Y+Z=1 for 4 inputs.  Roy does, on pg 229. */
+
+	/* normalize the white point to Y=1 */
+#define WHITE	3
+	if (cspace[WHITE][Y] <= 0.0) return 0;
+	white[0] = cspace[WHITE][X] / cspace[WHITE][Y];
+	white[1] = 1.0;
+	white[2] = cspace[WHITE][Z] / cspace[WHITE][Y];
+
+#define tmat(a,b)	t_mat[(a)*4+(b)]
+	MAT_IDN(t_mat);
+	for (ii=0; ii<=2; ii++) {
+		tmat(0,ii) = cspace[ii][X];
+		tmat(1,ii) = cspace[ii][Y];
+		tmat(2,ii) = cspace[ii][Z];
+		ind[ii] = ii;
+	}
+
+	/* gaussian elimination  with partial pivoting */
+	for (ii=0; ii<2; ii++) {
+		for (jj=ii+1; jj<=2; jj++)  {
+			if (fabs(tmat(ind[jj],ii)) > fabs(tmat(ind[ii],ii))) {
+				tmp_i=ind[jj];
+				ind[jj]=ind[ii];
+				ind[ii]=tmp_i;
+			}
+		}
+		if (tmat(ind[ii],ii) == 0.0) return 0;
+
+		for (jj=ii+1; jj<=2; jj++) {
+			mult = tmat(ind[jj],ii) / tmat(ind[ii],ii);
+			for (kk=ii+1; kk<=2; kk++)
+			tmat(ind[jj],kk) -= tmat(ind[ii],kk) * mult;
+			white[ind[jj]] -= white[ind[ii]] * mult;
+		}
+	}
+	if (tmat(ind[2],2) == 0.0) return 0;
+
+	/* back substitution to solve for scale */
+	scale[ind[2]] = white[ind[2]] / tmat(ind[2],2);
+	scale[ind[1]] = (white[ind[1]] - (tmat(ind[1],2) *
+			scale[ind[2]])) / tmat(ind[1],1);
+	scale[ind[0]] = (white[ind[0]] - (tmat(ind[0],1) *
+			scale[ind[1]]) - (tmat(ind[0],2) *
+			scale[ind[2]])) / tmat(ind[0],0);
+
+	/* build matrix.  Embed 3x3 in BRL-CAD 4x4 */
+	for (ii=0; ii<=2; ii++) {
+		rgb2xyz[0*4+ii] = cspace[ii][X] * scale[ii];
+		rgb2xyz[1*4+ii] = cspace[ii][Y] * scale[ii];
+		rgb2xyz[2*4+ii] = cspace[ii][Z] * scale[ii];
+			rgb2xyz[3*4+ii] = 0;
+	}
+	rgb2xyz[12] = rgb2xyz[13] = rgb2xyz[14];
+	rgb2xyz[15] = 1;
+
+	return 1;
+}
 
 /*
  *			R T _ M A K E _ N T S C _ X Y Z 2 R G B
@@ -234,95 +322,6 @@ mat_t	xyz2rgb;
 #endif
 }
 
-/* ****************************************************************
- * clr__cspace_to_xyz (cspace, t_mat)
- *  CLR_XYZ       cspace[4]   (in)  - the color space definition,
- *                                      3 primaries and white
- *  double        t_mat[3][3] (mod) - the color transformation
- *
- * Builds the transformation from a set of primaries to the CIEXYZ
- *  color space.  This is the basis for the generation of the color
- *  transformations in the CLR_ routine set.  The method used is
- *  that detailed in Sect 3.2 Colorimetry and the RGB monitor.
- *  Returns RGB to XYZ matrix.
- *  From Roy Hall, pg 239-240.
- *
- *  The RGB white point of (1,1,1) times this matrix gives the
- *  (Y=1 normalized) XYZ white point of (0.951368, 1, 1.08815)
- *  From Roy Hall, pg 54.
- *	MAT3X3VEC( xyz, rgb2xyz, rgb );
- *
- *  Returns -
- *	0 if there is a singularity.
- *	!0 if OK
- */
-int
-rt_clr__cspace_to_xyz (cspace, rgb2xyz)
-CONST point_t	cspace[4];
-mat_t		rgb2xyz;
-{
-	int     ii, jj, kk, tmp_i, ind[3];
-	fastf_t  mult, white[3], scale[3];
-	mat_t	t_mat;
-
-	/* Might want to enforce X+Y+Z=1 for 4 inputs.  Roy does, on pg 229. */
-
-	/* normalize the white point to Y=1 */
-#define WHITE	3
-	if (cspace[WHITE][Y] <= 0.0) return 0;
-	white[0] = cspace[WHITE][X] / cspace[WHITE][Y];
-	white[1] = 1.0;
-	white[2] = cspace[WHITE][Z] / cspace[WHITE][Y];
-
-#define tmat(a,b)	t_mat[(a)*4+(b)]
-	mat_idn(t_mat);
-	for (ii=0; ii<=2; ii++) {
-		tmat(0,ii) = cspace[ii][X];
-		tmat(1,ii) = cspace[ii][Y];
-		tmat(2,ii) = cspace[ii][Z];
-		ind[ii] = ii;
-	}
-
-	/* gaussian elimination  with partial pivoting */
-	for (ii=0; ii<2; ii++) {
-		for (jj=ii+1; jj<=2; jj++)  {
-			if (fabs(tmat(ind[jj],ii)) > fabs(tmat(ind[ii],ii))) {
-				tmp_i=ind[jj];
-				ind[jj]=ind[ii];
-				ind[ii]=tmp_i;
-			}
-		}
-		if (tmat(ind[ii],ii) == 0.0) return 0;
-
-		for (jj=ii+1; jj<=2; jj++) {
-			mult = tmat(ind[jj],ii) / tmat(ind[ii],ii);
-			for (kk=ii+1; kk<=2; kk++)
-			tmat(ind[jj],kk) -= tmat(ind[ii],kk) * mult;
-			white[ind[jj]] -= white[ind[ii]] * mult;
-		}
-	}
-	if (tmat(ind[2],2) == 0.0) return 0;
-
-	/* back substitution to solve for scale */
-	scale[ind[2]] = white[ind[2]] / tmat(ind[2],2);
-	scale[ind[1]] = (white[ind[1]] - (tmat(ind[1],2) *
-			scale[ind[2]])) / tmat(ind[1],1);
-	scale[ind[0]] = (white[ind[0]] - (tmat(ind[0],1) *
-			scale[ind[1]]) - (tmat(ind[0],2) *
-			scale[ind[2]])) / tmat(ind[0],0);
-
-	/* build matrix.  Embed 3x3 in BRL-CAD 4x4 */
-	for (ii=0; ii<=2; ii++) {
-		rgb2xyz[0*4+ii] = cspace[ii][X] * scale[ii];
-		rgb2xyz[1*4+ii] = cspace[ii][Y] * scale[ii];
-		rgb2xyz[2*4+ii] = cspace[ii][Z] * scale[ii];
-			rgb2xyz[3*4+ii] = 0;
-	}
-	rgb2xyz[12] = rgb2xyz[13] = rgb2xyz[14];
-	rgb2xyz[15] = 1;
-
-	return 1;
-}
 
 /*
  *			R T _ S P E C T _ C U R V E _ T O _ X Y Z
@@ -333,12 +332,12 @@ mat_t		rgb2xyz;
  *  has been folded into rt_spect_make_CIE_XYZ();
  */
 void
-rt_spect_curve_to_xyz( xyz, tabp, cie_x, cie_y, cie_z )
-point_t			xyz;
-CONST struct bn_tabdata	*tabp;
-CONST struct bn_tabdata	*cie_x;
-CONST struct bn_tabdata	*cie_y;
-CONST struct bn_tabdata	*cie_z;
+rt_spect_curve_to_xyz(
+		      point_t			xyz,
+		      const struct bn_tabdata	*tabp,
+		      const struct bn_tabdata	*cie_x,
+		      const struct bn_tabdata	*cie_y,
+		      const struct bn_tabdata	*cie_z)
 {
 	FAST fastf_t	tab_area;
 
@@ -376,10 +375,10 @@ rt_log(" tab_area = %g\n", tab_area);
 void
 rt_spect_rgb_to_curve( tabp, rgb, ntsc_r, ntsc_g, ntsc_b )
 struct bn_tabdata	*tabp;
-CONST point_t		rgb;
-CONST struct bn_tabdata	*ntsc_r;
-CONST struct bn_tabdata	*ntsc_g;
-CONST struct bn_tabdata	*ntsc_b;
+const point_t		rgb;
+const struct bn_tabdata	*ntsc_r;
+const struct bn_tabdata	*ntsc_g;
+const struct bn_tabdata	*ntsc_b;
 {
 	bn_tabdata_blend3( tabp,
 		rgb[0], ntsc_r,
@@ -400,10 +399,10 @@ XXX Converting rgb to a curve, directly, should be easy.
 void
 rt_spect_xyz_to_curve( tabp, xyz, cie_x, cie_y, cie_z )
 struct bn_tabdata	*tabp;
-CONST point_t		xyz;
-CONST struct bn_tabdata	*cie_x;
-CONST struct bn_tabdata	*cie_y;
-CONST struct bn_tabdata	*cie_z;
+const point_t		xyz;
+const struct bn_tabdata	*cie_x;
+const struct bn_tabdata	*cie_y;
+const struct bn_tabdata	*cie_z;
 {
 	bn_tabdata_blend3( tabp,
 		xyz[X], cie_x,

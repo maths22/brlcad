@@ -17,11 +17,12 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 #include <stdio.h>
+#include <string.h>
 #include "machine.h"
 #include "vmath.h"
 #include "nmg.h"
@@ -35,7 +36,7 @@ void
 nmg_merge_regions( r1, r2, tol )
 struct nmgregion *r1;
 struct nmgregion *r2;
-CONST struct bn_tol *tol;
+const struct bn_tol *tol;
 {
 	struct model *m;
 
@@ -89,8 +90,8 @@ CONST struct bn_tol *tol;
 void
 nmg_shell_coplanar_face_merge( s, tol, simplify )
 struct shell		*s;
-CONST struct bn_tol	*tol;
-CONST int		simplify;
+const struct bn_tol	*tol;
+const int		simplify;
 {
 	struct model	*m;
 	int		len;
@@ -255,7 +256,7 @@ struct shell *s;
 void
 nmg_rm_redundancies(s, tol)
 struct shell	*s;
-CONST struct bn_tol *tol;
+const struct bn_tol *tol;
 {
 	struct faceuse	*fu;
 	struct loopuse	*lu;
@@ -694,7 +695,7 @@ int		orient;
 void
 nmg_s_split_touchingloops(s, tol)
 struct shell		*s;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct faceuse	*fu;
 	struct loopuse	*lu;
@@ -739,7 +740,7 @@ CONST struct bn_tol	*tol;
 void
 nmg_s_join_touchingloops(s, tol)
 struct shell		*s;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct faceuse	*fu;
 	struct loopuse	*lu;
@@ -789,7 +790,7 @@ void
 nmg_js( s1, s2, tol )
 register struct shell	*s1;		/* destination */
 register struct shell	*s2;		/* source */
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct faceuse	*fu2;
 	struct faceuse	*nextfu;
@@ -901,7 +902,7 @@ CONST struct bn_tol	*tol;
 	/*
 	 * Final case:  shell of a single vertexuse
 	 */
-	if( vu = s2->vu_p )  {
+	if( (vu = s2->vu_p) )  {
 		NMG_CK_VERTEXUSE( vu );
 		NMG_CK_VERTEX( vu->v_p );
 		nmg_mv_vu_between_shells( s1, s2, vu );
@@ -953,7 +954,7 @@ CONST struct bn_tol	*tol;
 void
 nmg_invert_shell( s, tol )
 struct shell		*s;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct model	*m;
 	struct faceuse	*fu;
@@ -1050,7 +1051,7 @@ struct vertex	**verts[];
 int		n;
 {
 	struct faceuse *fu;
-	struct edgeuse *eu, *eur, *euold;
+	struct edgeuse *eu, *eur, *euold = NULL;
 	struct loopuse	*lu;
 	struct vertexuse	*vu;
 	int i;
@@ -1137,7 +1138,7 @@ int		n;
 	}
 
 	if( n > 1 )  {
-		if (eur = nmg_findeu(*verts[0], *verts[1], s, euold, 1))  {
+		if ((eur = nmg_findeu(*verts[0], *verts[1], s, euold, 1)))  {
 			nmg_je(eur, euold);
 		} else  {
 		    if (rt_g.NMG_debug & DEBUG_CMFACE)
@@ -1387,7 +1388,7 @@ int n, dir;
 int
 nmg_fu_planeeqn( fu, tol )
 struct faceuse		*fu;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct edgeuse		*eu, *eu_final, *eu_next;
 	struct loopuse		*lu;
@@ -1492,7 +1493,7 @@ void
 nmg_gluefaces(fulist, n, tol)
 struct faceuse *fulist[];
 int n;
-CONST struct bn_tol *tol;
+const struct bn_tol *tol;
 {
 	struct shell	*s;
 	struct loopuse	*lu;
@@ -1713,7 +1714,7 @@ register struct faceuse	*fu;
 int
 nmg_face_fix_radial_parity( fu, tol )
 struct faceuse		*fu;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct loopuse *lu;
 	struct edgeuse *eu;
@@ -2745,7 +2746,7 @@ struct vertexuse	*vu;
 void
 nmg_split_touchingloops( lu, tol )
 struct loopuse		*lu;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct edgeuse		*eu;
 	struct vertexuse	*vu;
@@ -2987,7 +2988,7 @@ top:
 
 int
 nmg_get_touching_jaunts( lu, tbl, need_init )
-CONST struct loopuse *lu;
+const struct loopuse *lu;
 struct bu_ptbl *tbl;
 int *need_init;
 {
@@ -3062,9 +3063,9 @@ struct edgeuse *start_eu;
 struct edgeuse **next_start_eu;
 int visit_count[];
 int jaunt_status[];
-CONST struct bu_ptbl *jaunt_tbl;
-CONST int jaunt_no;
-CONST int which_loop;
+const struct bu_ptbl *jaunt_tbl;
+const int jaunt_no;
+const int which_loop;
 {
 	struct edgeuse *loop_eu;
 	struct edgeuse *last_eu;
@@ -3152,7 +3153,7 @@ struct loopuse *lu;
 {
 	struct edgeuse *eu;
 	struct edgeuse *jaunt_eu1;
-	struct edgeuse *jaunt_eu2;
+	struct edgeuse *jaunt_eu2 = NULL;
 	struct edgeuse *jaunt_eu3;
 
 	NMG_CK_LOOPUSE( lu );
@@ -3231,7 +3232,7 @@ top:
 int
 nmg_loop_split_at_touching_jaunt(lu, tol)
 struct loopuse		*lu;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct bu_ptbl		jaunt_tbl;
 	struct loopuse		*new_lu;
@@ -4051,7 +4052,7 @@ int		share_geom;
 	struct edgeuse	*eu1,
 			*eu2,
 			*oldeumate;
-	struct shell *s;
+	struct shell *s = NULL;
 	struct loopuse	*lu;
 
 	NMG_CK_EDGEUSE(oldeu);
@@ -4425,6 +4426,7 @@ int		share_geom;
 
 	rt_bomb("nmg_esplit() unable to find eu starting at new v\n");
 	/* NOTREACHED */
+	return (struct edgeuse *)NULL;
 }
 
 /*
@@ -4477,7 +4479,7 @@ struct edgeuse *
 nmg_ebreaker(v, eu, tol)
 struct vertex		*v;			/* May be NULL */
 struct edgeuse		*eu;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	struct edgeuse	*new_eu;
 	struct edgeuse	*oeu;

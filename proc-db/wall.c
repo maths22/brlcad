@@ -14,9 +14,9 @@
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
-#include "rtlist.h"
-#include "wdb.h"
+#include "bu.h"
 #include "raytrace.h"
+#include "wdb.h"
 
 #define min(_a, _b) ((_a) < (_b) ? (_a) : (_b))
 #define max(_a, _b) ((_a) > (_b) ? (_a) : (_b))
@@ -35,7 +35,7 @@ char *type = "frame";
 char *units = "mm";
 double unit_conv = 1.0;
 matp_t trans_matrix = (matp_t)NULL; 
-CONST double degtorad =  0.01745329251994329573;
+const double degtorad =  0.01745329251994329573;
 
 int log_cmds = 0;	/* log sessions to a log file */
 /* standard construction brick:
@@ -472,7 +472,7 @@ struct boardseg *seglist;
 
 void
 mksolid(fd, pts, wm_hd)
-FILE *fd;
+struct rt_wdb *fd;
 point_t pts[8];
 struct wmember *wm_hd;
 {
@@ -480,7 +480,7 @@ struct wmember *wm_hd;
 	(void)sprintf(sol_name, "s.%s.%d", obj_name, sol_num++);
 
 	mk_arb8(fd, sol_name, &pts[0][X]);
-	wm = mk_addmember(sol_name, wm_hd, WMOP_UNION);
+	wm = mk_addmember(sol_name, &(wm_hd->l), NULL, WMOP_UNION);
 
 	if (trans_matrix)
 		bcopy((char *)trans_matrix, (char *)wm->wm_mat, sizeof(mat_t));
@@ -488,7 +488,7 @@ struct wmember *wm_hd;
 
 void
 mk_h_rpp(fd, wm_hd, xmin, xmax, ymin, ymax, zmin, zmax)
-FILE *fd;
+struct rt_wdb *fd;
 struct wmember *wm_hd;
 double xmin, xmax, ymin, ymax, zmin, zmax;
 {
@@ -508,7 +508,7 @@ double xmin, xmax, ymin, ymax, zmin, zmax;
 
 void
 mk_v_rpp(fd, wm_hd, xmin, xmax, ymin, ymax, zmin, zmax)
-FILE *fd;
+struct rt_wdb *fd;
 struct wmember *wm_hd;
 double xmin, xmax, ymin, ymax, zmin, zmax;
 {
@@ -531,7 +531,7 @@ double xmin, xmax, ymin, ymax, zmin, zmax;
  */
 void
 frame_o_sides(fd, wm_hd, op, h)
-FILE *fd;
+struct rt_wdb *fd;
 struct wmember *wm_hd;
 struct opening *op;
 double h;
@@ -596,7 +596,7 @@ double h;
  */
 void
 frame_opening(fd, wm_hd, op)
-FILE *fd;
+struct rt_wdb *fd;
 struct wmember *wm_hd;
 struct opening *op;
 {
@@ -753,7 +753,7 @@ struct opening *op;
 
 void
 frame(fd)
-FILE *fd;
+struct rt_wdb *fd;
 {
 	struct boardseg *s_hd, *seg;
 	struct opening *op;
@@ -876,7 +876,7 @@ FILE *fd;
 
 void
 sheetrock(fd)
-FILE *fd;
+struct rt_wdb *fd;
 {
 	point_t pts[8];
 	struct wmember wm_hd;
@@ -899,7 +899,7 @@ FILE *fd;
 
 	(void)sprintf(sol_name, "s.%s.sr1", obj_name);
 	mk_arb8(fd, sol_name, &pts[0][X]);
-	(void)mk_addmember(sol_name, &wm_hd, WMOP_UNION);
+	(void)mk_addmember(sol_name, &wm_hd.l, NULL, WMOP_UNION);
 
 	for (BU_LIST_FOR(op, opening, &ol_hd.l)) {
 		VSET(pts[0], op->sx, -0.01,		op->sz);
@@ -913,7 +913,7 @@ FILE *fd;
 
 		(void)sprintf(sol_name, "s.%s.o.%d", obj_name, i++);
 		mk_arb8(fd, sol_name, &pts[0][X]);
-		(void)mk_addmember(sol_name, &wm_hd, WMOP_SUBTRACT);
+		(void)mk_addmember(sol_name, &wm_hd.l, NULL, WMOP_SUBTRACT);
 	}
 
 	(void)sprintf(sol_name, "r.%s.sr1", obj_name);
@@ -924,7 +924,7 @@ FILE *fd;
 
 void
 mortar_brick(fd)
-FILE *fd;
+struct rt_wdb *fd;
 {
 	struct wmember wm_hd;
 #if 0
@@ -963,7 +963,7 @@ FILE *fd;
 	(void)sprintf(sol_name, "s.%s.b", obj_name);
 	mk_arb8(fd, sol_name, &pts[0][X]);
 
-	(void)mk_addmember(sol_name, &wm_hd, WMOP_UNION);
+	(void)mk_addmember(sol_name, &wm_hd.l, NULL, WMOP_UNION);
 	*sol_name = 'r';
 
 	if (rand_brick_color)
@@ -988,7 +988,7 @@ FILE *fd;
 	(void)sprintf(sol_name, "s.%s.vm", obj_name);
 	mk_arb8(fd, sol_name, &pts[0][X]);
 
-	(void)mk_addmember(sol_name, &wm_hd, WMOP_UNION);
+	(void)mk_addmember(sol_name, &wm_hd.l, NULL, WMOP_UNION);
 	*sol_name = 'r';
 	mk_lcomb(fd, sol_name, &wm_hd, 1, (char *)NULL, (char *)NULL,
 		mortar_color, 0);
@@ -1010,7 +1010,7 @@ FILE *fd;
 	(void)sprintf(sol_name, "s.%s.vm", obj_name);
 	mk_arb8(fd, sol_name, &pts[0][X]);
 
-	(void)mk_addmember(sol_name, &wm_hd, WMOP_UNION);
+	(void)mk_addmember(sol_name, &wm_hd.l, NULL, WMOP_UNION);
 	*sol_name = 'r';
 	mk_lcomb(fd, sol_name, &wm_hd, 1, (char *)NULL, (char *)NULL,
 		mortar_color, 0);
@@ -1026,7 +1026,7 @@ FILE *fd;
 
 void
 brick(fd)
-FILE *fd;
+struct rt_wdb *fd;
 {
 	struct wmember wm_hd;
 #if 0
@@ -1061,7 +1061,7 @@ FILE *fd;
 
 	(void)sprintf(proto_brick, "s.%s.b", obj_name);
 	mk_arb8(fd, proto_brick, &pts[0][X]);
-	(void)mk_addmember(proto_brick, &wm_hd, WMOP_UNION);
+	(void)mk_addmember(proto_brick, &wm_hd.l, NULL, WMOP_UNION);
 	*proto_brick = 'r';
 
 	mk_lcomb(fd, proto_brick, &wm_hd, 1, (char *)NULL, (char *)NULL,
@@ -1087,7 +1087,7 @@ int ac;
 char *av[];
 {
 	struct opening *op;
-	FILE *db_fd;
+	struct rt_wdb *db_fd;
 
 	ol_hd.ex = ol_hd.ez = 0.0;
 
@@ -1097,7 +1097,7 @@ char *av[];
 	if (ac < 2) usage((char *)NULL);
 
 	(void)sprintf(sol_name, "%s.g", obj_name);
-	if ((db_fd = fopen(sol_name, "w")) == (FILE *)NULL) {
+	if ((db_fd = wdb_fopen(sol_name)) == (struct rt_wdb *)NULL) {
 		perror(sol_name);
 		return(-1);
 	}
@@ -1119,5 +1119,6 @@ char *av[];
 		else brick(db_fd);
 	}
 
-	return(fclose(db_fd));
+	wdb_close(db_fd);
+	return 0;
 }

@@ -16,12 +16,17 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Id$ (BRL)";
+static const char RCSid[] = "@(#)$Id$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "externs.h"			/* For getopt() */
 #include "fb.h"
@@ -56,6 +61,7 @@ static char	*fb_file = (char *)NULL;
 void		fill_Buffer();
 
 /*	m a i n ( )							*/
+int
 main( argc, argv )
 int	argc;
 char	*argv[];
@@ -173,7 +179,7 @@ char	*argv[];
 	{	register int	page_fault = 1;
 		register int	dirty_flag = 1;
 		int		ymax = ypos + (ylen-1);
-		int		start_y;
+		int		start_y = 0;
 	for( y = 0; y < width; y++ )  {
 		if( page_fault )  {
 			start_y = y;

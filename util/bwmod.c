@@ -24,7 +24,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -62,6 +62,7 @@ unsigned char ibuf[BUFLEN];	/* input buffer */
 int mapbuf[MAPBUFLEN];		/* translation buffer/lookup table */
 int char_arith = 0;
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -191,7 +192,7 @@ void mk_trans_tbl()
 void mk_char_trans_tbl()
 {
 	register int j, i;
-	register SIGNED char d;
+	register signed char d;
 
 	/* create translation map */
 	for (j = 0; j < MAPBUFLEN ; ++j) {

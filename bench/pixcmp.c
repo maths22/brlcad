@@ -23,12 +23,17 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 
 long	matching;
 long	off1;
@@ -36,6 +41,7 @@ long	offmany;
 
 char usage[] = "Usage: pixcmp f1.pix f2.pix\n";
 
+int
 main(argc, argv)
 char **argv;
 {

@@ -160,7 +160,7 @@ char	*argv[];
 			break;
 		case 'x':
 			sscanf( optarg, "%x", &rt_g.debug );
-			bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+			bu_printb( "librt RT_G_DEBUG", RT_G_DEBUG, DEBUG_FORMAT );
 			bu_log("\n");
 			break;
 		case 'X':
@@ -193,7 +193,7 @@ char	*argv[];
 		edge_len_limits = 
 	}
 #endif
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
 	if( out_file == NULL )
 		fp_out = stdout;

@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSnmg_eval[] = "@(#)$Header$ (BRL)";
+static const char RCSnmg_eval[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -34,8 +34,8 @@ struct nmg_bool_state  {
 	struct shell	*bs_src;
 	int		bs_isA;		/* true if A, else doing B */
 	long		**bs_classtab;
-	CONST int	*bs_actions;
-	CONST struct bn_tol	*bs_tol;
+	const int	*bs_actions;
+	const struct bn_tol	*bs_tol;
 };
 
 static void nmg_eval_shell RT_ARGS( (struct shell *s,
@@ -48,7 +48,7 @@ static void nmg_eval_plot RT_ARGS( (struct nmg_bool_state *bs,
 #define BACTION_RETAIN			2
 #define BACTION_RETAIN_AND_FLIP		3
 
-static CONST char	*nmg_baction_names[] = {
+static const char	*nmg_baction_names[] = {
 	"*undefined 0*",
 	"BACTION_KILL",
 	"BACTION_RETAIN",
@@ -57,7 +57,7 @@ static CONST char	*nmg_baction_names[] = {
 };
 
 #define NMG_CLASS_BAD		8
-static CONST char	*nmg_class_names[] = {
+static const char	*nmg_class_names[] = {
 	"onAinB",
 	"onAonBshared",
 	"onAonBanti",
@@ -78,7 +78,7 @@ static CONST char	*nmg_class_names[] = {
 void
 nmg_ck_lu_orientation( lu, tolp )
 struct loopuse		*lu;
-CONST struct bn_tol	*tolp;
+const struct bn_tol	*tolp;
 {
 	struct faceuse	*fu;
 	plane_t		fu_peqn;
@@ -115,7 +115,7 @@ CONST struct bn_tol	*tolp;
  *
  *  Convert an NMG_CLASS_xxx token into a string name.
  */
-CONST char *
+const char *
 nmg_class_name(class)
 int	class;
 {
@@ -134,7 +134,7 @@ int	class;
  *	(Aon)	onAinB, onAonBshared, onAonBanti-shared, onAoutB,
  *	(Bon)	inAonB, onAonBshared, onAonBanti-shared, outAonB
  */
-static CONST int		subtraction_actions[8] = {
+static const int		subtraction_actions[8] = {
 	BACTION_KILL,
 	BACTION_KILL,		/* shared */
 	BACTION_RETAIN,		/* anti-shared */
@@ -146,7 +146,7 @@ static CONST int		subtraction_actions[8] = {
 	BACTION_KILL
 };
 
-static CONST int		union_actions[8] = {
+static const int		union_actions[8] = {
 	BACTION_KILL,
 	BACTION_RETAIN,		/* shared */
 	BACTION_KILL,		/* anti-shared */
@@ -158,7 +158,7 @@ static CONST int		union_actions[8] = {
 	BACTION_RETAIN
 };
 
-static CONST int		intersect_actions[8] = {
+static const int		intersect_actions[8] = {
 	BACTION_RETAIN,
 	BACTION_RETAIN,		/* shared */
 	BACTION_KILL,		/* anti-shared ==> non-manifold result */
@@ -189,9 +189,9 @@ struct shell	*sA;
 struct shell	*sB;
 int		op;
 long		*classlist[8];
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
-	int CONST	*actions;
+	int const	*actions;
 	struct nmg_bool_state	bool_state;
 
 	NMG_CK_SHELL(sA);
@@ -264,256 +264,6 @@ CONST struct bn_tol	*tol;
 }
 
 static int	nmg_eval_count = 0;	/* debug -- plot file numbering */
-
-/*
- *			N M G _ E V A L _ S H E L L
- *
- *  Make a life-and-death decision on every element of a shell.
- *  Descend the "great chain of being" from the face to loop to edge
- *  to vertex, saving or demoting along the way.
- *
- *  Note that there is no moving of items from one shell to another.
- */
-static void
-nmg_eval_shell( s, bs )
-register struct shell	*s;
-struct nmg_bool_state *bs;
-{
-	struct faceuse	*fu;
-	struct faceuse	*nextfu;
-	struct loopuse	*lu;
-	struct loopuse	*nextlu;
-	struct edgeuse	*eu;
-	struct edgeuse	*nexteu;
-	struct vertexuse *vu;
-	int		loops_retained;
-
-	NMG_CK_SHELL(s);
-	BN_CK_TOL(bs->bs_tol);
-
-	if( rt_g.NMG_debug & DEBUG_VERIFY )
-		nmg_vshell( &s->r_p->s_hd, s->r_p );
-
-	/*
-	 *  For each face in the shell, process all the loops in the face,
-	 *  and then handle the face and all loops as a unit.
-	 */
-	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-	fu = BU_LIST_FIRST( faceuse, &s->fu_hd );
-	while( BU_LIST_NOT_HEAD( fu, &s->fu_hd ) )  {
-		NMG_CK_FACEUSE(fu);
-		nextfu = BU_LIST_PNEXT( faceuse, fu );
-
-		/* Faceuse mates will be handled at same time as OT_SAME fu */
-		if( fu->orientation != OT_SAME )  {
-			fu = nextfu;
-			continue;
-		}
-		if( fu->fumate_p == nextfu )
-			nextfu = BU_LIST_PNEXT( faceuse, nextfu );
-
-		/* Consider this face */
-		NMG_CK_FACE(fu->f_p);
-
-		loops_retained = 0;
-		lu = BU_LIST_FIRST( loopuse, &fu->lu_hd );
-		while( BU_LIST_NOT_HEAD( lu, &fu->lu_hd ) )  {
-			NMG_CK_LOOPUSE(lu);
-			nextlu = BU_LIST_PNEXT( loopuse, lu );
-			if( lu->lumate_p == nextlu )
-				nextlu = BU_LIST_PNEXT( loopuse, nextlu );
-
-			NMG_CK_LOOP( lu->l_p );
-#if 0
-			if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
-#endif
-			{
-				nmg_ck_lu_orientation( lu, bs->bs_tol );
-			}
-			switch( nmg_eval_action( (genptr_t)lu->l_p, bs ) )  {
-			case BACTION_KILL:
-				/* Kill by demoting loop to edges */
-				if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) == NMG_VERTEXUSE_MAGIC )  {
-					/* loop of single vertex */
-					(void)nmg_klu( lu );
-				} else if( nmg_demote_lu( lu ) == 0 )  {
-					nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-				}
-				lu = nextlu;
-				continue;
-			case BACTION_RETAIN:
-				loops_retained++;
-				break;
-			default:
-				rt_bomb("nmg_eval_shell() bad BACTION\n");
-			}
-			lu = nextlu;
-		}
-
-		if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
-			bu_log("faceuse x%x loops retained=%d\n",
-				fu, loops_retained);
-		if( rt_g.NMG_debug & DEBUG_VERIFY )
-			nmg_vshell( &s->r_p->s_hd, s->r_p );
-
-		/*
-		 *  Here, faceuse will have 0 or more loopuses still in it.
-		 *  Decide the fate of the face;  if the face dies,
-		 *  then any remaining loops, edges, etc, will die too.
-		 */
-		if( BU_LIST_IS_EMPTY( &fu->lu_hd ) )  {
-			if( loops_retained )  rt_bomb("nmg_eval_shell() empty faceuse with retained loops?\n");
-			/* faceuse is empty, face & mate die */
-			if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
-		    		bu_log("faceuse x%x empty, kill\n", fu);
-			nmg_kfu( fu );	/* kill face & mate, dequeue from shell */
-			if( rt_g.NMG_debug & DEBUG_VERIFY )
-				nmg_vshell( &s->r_p->s_hd, s->r_p );
-			nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-			fu = nextfu;
-			continue;
-		}
-
-		if( loops_retained <= 0 )  {
-			nmg_pr_fu(fu, (char *)NULL);
-			rt_bomb("nmg_eval_shell() non-empty faceuse, no loops retained?\n");
-		}
-		fu = nextfu;
-	}
-	if( rt_g.NMG_debug & DEBUG_VERIFY )
-		nmg_vshell( &s->r_p->s_hd, s->r_p );
-
-	/*
-	 *  For each loop in the shell, process.
-	 *  Each loop is either a wire-loop, or a vertex-with-self-loop.
-	 *  Only consider wire loops here.
-	 */
-	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-	lu = BU_LIST_FIRST( loopuse, &s->lu_hd );
-	while( BU_LIST_NOT_HEAD( lu, &s->lu_hd ) )  {
-		NMG_CK_LOOPUSE(lu);
-		nextlu = BU_LIST_PNEXT( loopuse, lu );
-		if( lu->lumate_p == nextlu )
-			nextlu = BU_LIST_PNEXT( loopuse, nextlu );
-
-		if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) == NMG_VERTEXUSE_MAGIC )  {
-			/* ignore vertex-with-self-loop */
-			lu = nextlu;
-			continue;
-		}
-		NMG_CK_LOOP( lu->l_p );
-		switch( nmg_eval_action( (genptr_t)lu->l_p, bs ) )  {
-		case BACTION_KILL:
-			/* Demote the loopuse into wire edges */
-			/* kill loop & mate */
-			if( nmg_demote_lu( lu ) == 0 )
-				nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-			lu = nextlu;
-			continue;
-		case BACTION_RETAIN:
-			break;
-		default:
-			rt_bomb("nmg_eval_shell() bad BACTION\n");
-		}
-		lu = nextlu;
-	}
-	if( rt_g.NMG_debug & DEBUG_VERIFY )
-		nmg_vshell( &s->r_p->s_hd, s->r_p );
-
-	/*
-	 *  For each wire-edge in the shell, ...
-	 */
-	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-	eu = BU_LIST_FIRST( edgeuse, &s->eu_hd );
-	while( BU_LIST_NOT_HEAD( eu, &s->eu_hd ) )  {
-		NMG_CK_EDGEUSE(eu);
-		nexteu = BU_LIST_PNEXT( edgeuse, eu );	/* may be head */
-		if( eu->eumate_p == nexteu )
-			nexteu = BU_LIST_PNEXT( edgeuse, nexteu );
-
-		/* Consider this edge */
-		NMG_CK_EDGE( eu->e_p );
-		switch( nmg_eval_action( (genptr_t)eu->e_p, bs ) )  {
-		case BACTION_KILL:
-			/* Demote the edegeuse (and mate) into vertices */
-			if( nmg_demote_eu( eu ) == 0 )
-				nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-			eu = nexteu;
-			continue;
-		case BACTION_RETAIN:
-			break;
-		default:
-			rt_bomb("nmg_eval_shell() bad BACTION\n");
-		}
-		eu = nexteu;
-	}
-
-	/*
-	 *  For each lone vertex-with-self-loop, process.
-	 *  Note that these are intermixed in the loop list.
-	 *  Each loop is either a wire-loop, or a vertex-with-self-loop.
-	 *  Only consider cases of vertex-with-self-loop here.
-	 *
-	 *  This case has to be handled separately, because a wire-loop
-	 *  may be demoted to a set of wire-edges above, some of which
-	 *  may be retained.  The non-retained wire-edges may in turn
-	 *  be demoted into vertex-with-self-loop objects above,
-	 *  which will be processed here.
-	 */
-	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-	lu = BU_LIST_FIRST( loopuse, &s->lu_hd );
-	while( BU_LIST_NOT_HEAD( lu, &s->lu_hd ) )  {
-		NMG_CK_LOOPUSE(lu);
-		nextlu = BU_LIST_PNEXT( loopuse, lu );
-
-		if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) != NMG_VERTEXUSE_MAGIC )  {
-			/* ignore any remaining wire-loops */
-			lu = nextlu;
-			continue;
-		}
-		if( nextlu == lu->lumate_p )
-			nextlu = BU_LIST_PNEXT(loopuse, nextlu);
-		vu = BU_LIST_PNEXT( vertexuse, &lu->down_hd );
-		NMG_CK_VERTEXUSE( vu );
-		NMG_CK_VERTEX( vu->v_p );
-		switch( nmg_eval_action( (genptr_t)vu->v_p, bs ) )  {
-		case BACTION_KILL:
-			/* Eliminate the loopuse, and mate */
-			nmg_klu( lu );
-			lu = nextlu;
-			continue;
-		case BACTION_RETAIN:
-			break;
-		default:
-			rt_bomb("nmg_eval_shell() bad BACTION\n");
-		}
-		lu = nextlu;
-	}
-	if( rt_g.NMG_debug & DEBUG_VERIFY )
-		nmg_vshell( &s->r_p->s_hd, s->r_p );
-
-	/*
-	 * Final case:  shell of a single vertexuse
-	 */
-	if( vu = s->vu_p )  {
-		NMG_CK_VERTEXUSE( vu );
-		NMG_CK_VERTEX( vu->v_p );
-		switch( nmg_eval_action( (genptr_t)vu->v_p, bs ) )  {
-		case BACTION_KILL:
-			nmg_kvu( vu );
-			nmg_eval_plot( bs, nmg_eval_count++, 0 );	/* debug */
-			s->vu_p = (struct vertexuse *)0;	/* sanity */
-			break;
-		case BACTION_RETAIN:
-			break;
-		default:
-			rt_bomb("nmg_eval_shell() bad BACTION\n");
-		}
-	}
-	if( rt_g.NMG_debug & DEBUG_VERIFY )
-		nmg_vshell( &s->r_p->s_hd, s->r_p );
-	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
-}
 
 /*
  *			N M G _ E V A L _ A C T I O N
@@ -599,6 +349,257 @@ out:
 	}
 	return(ret);
 }
+
+/*
+ *			N M G _ E V A L _ S H E L L
+ *
+ *  Make a life-and-death decision on every element of a shell.
+ *  Descend the "great chain of being" from the face to loop to edge
+ *  to vertex, saving or demoting along the way.
+ *
+ *  Note that there is no moving of items from one shell to another.
+ */
+static void
+nmg_eval_shell( s, bs )
+register struct shell	*s;
+struct nmg_bool_state *bs;
+{
+	struct faceuse	*fu;
+	struct faceuse	*nextfu;
+	struct loopuse	*lu;
+	struct loopuse	*nextlu;
+	struct edgeuse	*eu;
+	struct edgeuse	*nexteu;
+	struct vertexuse *vu;
+	int		loops_retained;
+
+	NMG_CK_SHELL(s);
+	BN_CK_TOL(bs->bs_tol);
+
+	if( rt_g.NMG_debug & DEBUG_VERIFY )
+		nmg_vshell( &s->r_p->s_hd, s->r_p );
+
+	/*
+	 *  For each face in the shell, process all the loops in the face,
+	 *  and then handle the face and all loops as a unit.
+	 */
+	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+	fu = BU_LIST_FIRST( faceuse, &s->fu_hd );
+	while( BU_LIST_NOT_HEAD( fu, &s->fu_hd ) )  {
+		NMG_CK_FACEUSE(fu);
+		nextfu = BU_LIST_PNEXT( faceuse, fu );
+
+		/* Faceuse mates will be handled at same time as OT_SAME fu */
+		if( fu->orientation != OT_SAME )  {
+			fu = nextfu;
+			continue;
+		}
+		if( fu->fumate_p == nextfu )
+			nextfu = BU_LIST_PNEXT( faceuse, nextfu );
+
+		/* Consider this face */
+		NMG_CK_FACE(fu->f_p);
+
+		loops_retained = 0;
+		lu = BU_LIST_FIRST( loopuse, &fu->lu_hd );
+		while( BU_LIST_NOT_HEAD( lu, &fu->lu_hd ) )  {
+			NMG_CK_LOOPUSE(lu);
+			nextlu = BU_LIST_PNEXT( loopuse, lu );
+			if( lu->lumate_p == nextlu )
+				nextlu = BU_LIST_PNEXT( loopuse, nextlu );
+
+			NMG_CK_LOOP( lu->l_p );
+#if 0
+			if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
+#endif
+			{
+				nmg_ck_lu_orientation( lu, bs->bs_tol );
+			}
+			switch( nmg_eval_action( &lu->l_p->magic, bs ) )  {
+			case BACTION_KILL:
+				/* Kill by demoting loop to edges */
+				if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) == NMG_VERTEXUSE_MAGIC )  {
+					/* loop of single vertex */
+					(void)nmg_klu( lu );
+				} else if( nmg_demote_lu( lu ) == 0 )  {
+					nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+				}
+				lu = nextlu;
+				continue;
+			case BACTION_RETAIN:
+				loops_retained++;
+				break;
+			default:
+				rt_bomb("nmg_eval_shell() bad BACTION\n");
+			}
+			lu = nextlu;
+		}
+
+		if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
+			bu_log("faceuse x%x loops retained=%d\n",
+				fu, loops_retained);
+		if( rt_g.NMG_debug & DEBUG_VERIFY )
+			nmg_vshell( &s->r_p->s_hd, s->r_p );
+
+		/*
+		 *  Here, faceuse will have 0 or more loopuses still in it.
+		 *  Decide the fate of the face;  if the face dies,
+		 *  then any remaining loops, edges, etc, will die too.
+		 */
+		if( BU_LIST_IS_EMPTY( &fu->lu_hd ) )  {
+			if( loops_retained )  rt_bomb("nmg_eval_shell() empty faceuse with retained loops?\n");
+			/* faceuse is empty, face & mate die */
+			if (rt_g.NMG_debug & DEBUG_BOOLEVAL)
+		    		bu_log("faceuse x%x empty, kill\n", fu);
+			nmg_kfu( fu );	/* kill face & mate, dequeue from shell */
+			if( rt_g.NMG_debug & DEBUG_VERIFY )
+				nmg_vshell( &s->r_p->s_hd, s->r_p );
+			nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+			fu = nextfu;
+			continue;
+		}
+
+		if( loops_retained <= 0 )  {
+			nmg_pr_fu(fu, (char *)NULL);
+			rt_bomb("nmg_eval_shell() non-empty faceuse, no loops retained?\n");
+		}
+		fu = nextfu;
+	}
+	if( rt_g.NMG_debug & DEBUG_VERIFY )
+		nmg_vshell( &s->r_p->s_hd, s->r_p );
+
+	/*
+	 *  For each loop in the shell, process.
+	 *  Each loop is either a wire-loop, or a vertex-with-self-loop.
+	 *  Only consider wire loops here.
+	 */
+	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+	lu = BU_LIST_FIRST( loopuse, &s->lu_hd );
+	while( BU_LIST_NOT_HEAD( lu, &s->lu_hd ) )  {
+		NMG_CK_LOOPUSE(lu);
+		nextlu = BU_LIST_PNEXT( loopuse, lu );
+		if( lu->lumate_p == nextlu )
+			nextlu = BU_LIST_PNEXT( loopuse, nextlu );
+
+		if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) == NMG_VERTEXUSE_MAGIC )  {
+			/* ignore vertex-with-self-loop */
+			lu = nextlu;
+			continue;
+		}
+		NMG_CK_LOOP( lu->l_p );
+		switch( nmg_eval_action( &lu->l_p->magic, bs ) )  {
+		case BACTION_KILL:
+			/* Demote the loopuse into wire edges */
+			/* kill loop & mate */
+			if( nmg_demote_lu( lu ) == 0 )
+				nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+			lu = nextlu;
+			continue;
+		case BACTION_RETAIN:
+			break;
+		default:
+			rt_bomb("nmg_eval_shell() bad BACTION\n");
+		}
+		lu = nextlu;
+	}
+	if( rt_g.NMG_debug & DEBUG_VERIFY )
+		nmg_vshell( &s->r_p->s_hd, s->r_p );
+
+	/*
+	 *  For each wire-edge in the shell, ...
+	 */
+	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+	eu = BU_LIST_FIRST( edgeuse, &s->eu_hd );
+	while( BU_LIST_NOT_HEAD( eu, &s->eu_hd ) )  {
+		NMG_CK_EDGEUSE(eu);
+		nexteu = BU_LIST_PNEXT( edgeuse, eu );	/* may be head */
+		if( eu->eumate_p == nexteu )
+			nexteu = BU_LIST_PNEXT( edgeuse, nexteu );
+
+		/* Consider this edge */
+		NMG_CK_EDGE( eu->e_p );
+		switch( nmg_eval_action( &eu->e_p->magic, bs ) )  {
+		case BACTION_KILL:
+			/* Demote the edegeuse (and mate) into vertices */
+			if( nmg_demote_eu( eu ) == 0 )
+				nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+			eu = nexteu;
+			continue;
+		case BACTION_RETAIN:
+			break;
+		default:
+			rt_bomb("nmg_eval_shell() bad BACTION\n");
+		}
+		eu = nexteu;
+	}
+
+	/*
+	 *  For each lone vertex-with-self-loop, process.
+	 *  Note that these are intermixed in the loop list.
+	 *  Each loop is either a wire-loop, or a vertex-with-self-loop.
+	 *  Only consider cases of vertex-with-self-loop here.
+	 *
+	 *  This case has to be handled separately, because a wire-loop
+	 *  may be demoted to a set of wire-edges above, some of which
+	 *  may be retained.  The non-retained wire-edges may in turn
+	 *  be demoted into vertex-with-self-loop objects above,
+	 *  which will be processed here.
+	 */
+	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+	lu = BU_LIST_FIRST( loopuse, &s->lu_hd );
+	while( BU_LIST_NOT_HEAD( lu, &s->lu_hd ) )  {
+		NMG_CK_LOOPUSE(lu);
+		nextlu = BU_LIST_PNEXT( loopuse, lu );
+
+		if( BU_LIST_FIRST_MAGIC( &lu->down_hd ) != NMG_VERTEXUSE_MAGIC )  {
+			/* ignore any remaining wire-loops */
+			lu = nextlu;
+			continue;
+		}
+		if( nextlu == lu->lumate_p )
+			nextlu = BU_LIST_PNEXT(loopuse, nextlu);
+		vu = BU_LIST_PNEXT( vertexuse, &lu->down_hd );
+		NMG_CK_VERTEXUSE( vu );
+		NMG_CK_VERTEX( vu->v_p );
+		switch( nmg_eval_action( &vu->v_p->magic, bs ) )  {
+		case BACTION_KILL:
+			/* Eliminate the loopuse, and mate */
+			nmg_klu( lu );
+			lu = nextlu;
+			continue;
+		case BACTION_RETAIN:
+			break;
+		default:
+			rt_bomb("nmg_eval_shell() bad BACTION\n");
+		}
+		lu = nextlu;
+	}
+	if( rt_g.NMG_debug & DEBUG_VERIFY )
+		nmg_vshell( &s->r_p->s_hd, s->r_p );
+
+	/*
+	 * Final case:  shell of a single vertexuse
+	 */
+	if( (vu = s->vu_p) )  {
+		NMG_CK_VERTEXUSE( vu );
+		NMG_CK_VERTEX( vu->v_p );
+		switch( nmg_eval_action( &vu->v_p->magic, bs ) )  {
+		case BACTION_KILL:
+			nmg_kvu( vu );
+			nmg_eval_plot( bs, nmg_eval_count++, 0 );	/* debug */
+			s->vu_p = (struct vertexuse *)0;	/* sanity */
+			break;
+		case BACTION_RETAIN:
+			break;
+		default:
+			rt_bomb("nmg_eval_shell() bad BACTION\n");
+		}
+	}
+	if( rt_g.NMG_debug & DEBUG_VERIFY )
+		nmg_vshell( &s->r_p->s_hd, s->r_p );
+	nmg_eval_plot( bs, nmg_eval_count++, 1 );	/* debug */
+}
+
 
 /*
  *			N M G _ E V A L _ P L O T

@@ -1,6 +1,8 @@
 /*
  *  Multi Sine Synthesis
  */
+#include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <math.h>
 #include "./complex.h"
@@ -13,7 +15,7 @@ Usage: syn samples_per_set [ratio] > doubles\n";
 
 void makesintab();
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -46,6 +48,7 @@ char	**argv;
 				findex -= TABSIZE;
 		}
 	}
+	return 0;
 }
 
 void

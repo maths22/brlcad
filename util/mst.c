@@ -26,11 +26,16 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "externs.h"			/* for getopt() */
 #include "bu.h"
@@ -606,6 +611,7 @@ void print_usage ()
 /*
  *                                M A I N ( )
  */
+int
 main (argc, argv)
 
 int	argc;
@@ -764,4 +770,5 @@ char	*argv[];
 	}
     }
     bu_log("MST weight: %g\n", weight);
+    return 0;
 }

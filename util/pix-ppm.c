@@ -16,13 +16,17 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include "conf.h"
 #include "machine.h"
+#include "bu.h"
+#include "vmath.h"
+#include "bn.h"
 #include "externs.h"
 
 static int	file_width = 512;	/* default input width */
@@ -45,6 +49,7 @@ static char usage[] = "\
 Usage: pix-ppm [-a] [-#bytes] [-w file_width] [-n file_height]\n\
 	[-s square_file_size] [file.pix]\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -100,6 +105,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
+int
 main(argc, argv)
 int	argc;
 char	**argv;

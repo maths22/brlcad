@@ -15,7 +15,7 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -35,7 +35,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 char *
 strdup( cp )
-register CONST char *cp;
+register const char *cp;
 {
 	register char	*base;
 	register int	len;

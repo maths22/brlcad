@@ -19,13 +19,13 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$";
+static const char RCSid[] = "@(#)$Header$";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
-
+#include <string.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"

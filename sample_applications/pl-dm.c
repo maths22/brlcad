@@ -251,10 +251,10 @@ char *argv[];
   bzero((void *)&HeadPlot, sizeof(struct plot_list));
   BU_LIST_INIT(&HeadPlot.l);
 
-  bn_mat_idn(toViewcenter);
-  bn_mat_idn(Viewrot);
-  bn_mat_idn(model2view);
-  bn_mat_idn(view2model);
+  MAT_IDN(toViewcenter);
+  MAT_IDN(Viewrot);
+  MAT_IDN(model2view);
+  MAT_IDN(view2model);
 
   if(cmd_openpl((ClientData)NULL, (Tcl_Interp *)NULL,
 		   argc-bu_optind+1, argv+bu_optind-1) == TCL_ERROR)
@@ -368,7 +368,7 @@ double x, y, z;
 {
   mat_t newrot;
 
-  bn_mat_idn( newrot );
+  MAT_IDN( newrot );
   buildHrot( newrot,
 	     x * degtorad,
 	     y * degtorad,
@@ -499,7 +499,7 @@ size_reset()
   if( VNEAR_ZERO( radial , SQRT_SMALL_FASTF ) )
     VSETALL( radial , 1.0 );
 
-  bn_mat_idn( toViewcenter );
+  MAT_IDN( toViewcenter );
   MAT_DELTAS( toViewcenter, -center[X], -center[Y], -center[Z] );
   Viewscale = radial[X];
   V_MAX( Viewscale, radial[Y] );
@@ -1213,9 +1213,9 @@ char *argv[];
 
     if( argc < 2 )  {
       /* Bare set command, print out current settings */
-      bu_struct_print("X internal variables", X_vparse, (CONST char *)&((struct x_vars *)dmp->dm_vars.priv_vars)->mvars);
+      bu_struct_print("X internal variables", X_vparse, (const char *)&((struct x_vars *)dmp->dm_vars.priv_vars)->mvars);
     } else if( argc == 2 ) {
-      bu_vls_struct_item_named( &vls, X_vparse, argv[1], (CONST char *)&((struct x_vars *)dmp->dm_vars.priv_vars)->mvars, ',');
+      bu_vls_struct_item_named( &vls, X_vparse, argv[1], (const char *)&((struct x_vars *)dmp->dm_vars.priv_vars)->mvars, ',');
       bu_log( "%S\n", &vls );
     } else {
       bu_vls_printf( &vls, "%s=\"", argv[1] );
@@ -1429,9 +1429,9 @@ char *argv[];
 
     if( argc < 2 )  {
       /* Bare set command, print out current settings */
-      bu_struct_print("dm_ogl internal variables", Ogl_vparse, (CONST char *)&((struct ogl_vars *)dmp->dm_vars.priv_vars)->mvars );
+      bu_struct_print("dm_ogl internal variables", Ogl_vparse, (const char *)&((struct ogl_vars *)dmp->dm_vars.priv_vars)->mvars );
     } else if( argc == 2 ) {
-      bu_vls_struct_item_named( &vls, Ogl_vparse, argv[1], (CONST char *)&((struct ogl_vars *)dmp->dm_vars.priv_vars)->mvars, ',');
+      bu_vls_struct_item_named( &vls, Ogl_vparse, argv[1], (const char *)&((struct ogl_vars *)dmp->dm_vars.priv_vars)->mvars, ',');
       bu_log( "%S\n", &vls );
     } else {
       bu_vls_printf( &vls, "%s=\"", argv[1] );

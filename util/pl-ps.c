@@ -18,15 +18,23 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <math.h>
+#include <time.h>
 
 #include "machine.h"
+#include "bu.h"
+
 #include "externs.h"
 
 #define	TBAD	0	/* no such command */
@@ -190,6 +198,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;
@@ -329,6 +338,21 @@ char	**argv;
 	exit(0);
 }
 
+int
+getshort()
+{
+	register long	v, w;
+
+	v = getc(infp);
+	v |= (getc(infp)<<8);	/* order is important! */
+
+	/* worry about sign extension - sigh */
+	if( v <= 0x7FFF )  return(v);
+	w = -1;
+	w &= ~0x7FFF;
+	return( w | v );
+}
+
 void
 getargs( up )
 struct uplot *up;
@@ -369,28 +393,15 @@ getstring()
 	*cp = 0;
 }
 
-getshort()
-{
-	register long	v, w;
-
-	v = getc(infp);
-	v |= (getc(infp)<<8);	/* order is important! */
-
-	/* worry about sign extension - sigh */
-	if( v <= 0x7FFF )  return(v);
-	w = -1;
-	w &= ~0x7FFF;
-	return( w | v );
-}
 
 double
 getieee()
 {
-	char	in[8];
+	unsigned char	in[8];
 	double	d;
 
 	fread( in, 8, 1, infp );
-	ntohd( &d, in, 1 );
+	ntohd( (unsigned char *)&d, in, 1 );
 	return	d;
 }
 

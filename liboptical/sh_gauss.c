@@ -37,12 +37,15 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -50,8 +53,11 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include "rtgeom.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 
 /* The internal representation of the solids must be stored so that we
  * can access their parameters at shading time.  This is done with
@@ -73,7 +79,7 @@ struct reg_db_internals {
 struct tree_bark {
 	struct db_i	*dbip;
 	struct bu_list	*l;	/* lists solids in region (built in setup) */
-	CONST char	*name;
+	const char	*name;
 	struct gauss_specific *gs;
 };
 
@@ -96,7 +102,7 @@ struct gauss_specific {
 
 
 /* The default values for the variables in the shader specific structure */
-static CONST
+static const
 struct gauss_specific gauss_defaults = {
 	gauss_MAGIC,
 	4.0,
@@ -149,10 +155,11 @@ struct mfuncs gauss_mfuncs[] = {
 
 
 static void
-tree_solids(tp, tb, op)
+tree_solids(tp, tb, op, resp)
 union tree *tp;
 struct tree_bark *tb;
 int op;
+struct resource *resp;
 {
 	RT_CK_TREE(tp);
 
@@ -177,7 +184,7 @@ int op;
 
 		/* Get the internal form of this solid & add it to the list */
 		rt_db_get_internal(&dbint->ip, tp->tr_a.tu_stp->st_dp,
-			tb->dbip, mp);
+			tb->dbip, mp, resp);
 
 		RT_CK_DB_INTERNAL(&dbint->ip);
 		dbint->st_p = tp->tr_a.tu_stp;
@@ -185,7 +192,7 @@ int op;
 		sol_id = dbint->ip.idb_type;
 
 		if (sol_id < 0 || sol_id > rt_nfunctab ) {
-			bu_log("Solid ID %ld out of bounds\n", sol_id);
+			bu_log("Primitive ID %ld out of bounds\n", sol_id);
 			rt_bomb("");
 		}
 
@@ -193,11 +200,11 @@ int op;
 		if (sol_id != ID_ELL) {
 
 			if (op == OP_UNION)
-				bu_log( "Non-ellipse \"union\" solid of \"%s\" being ignored\n",
+				bu_log( "Non-ellipse \"union\" primitive of \"%s\" being ignored\n",
 					tb->name);
 
 			if (rdebug&RDEBUG_SHADE)
-				bu_log(" got a solid type %d \"%s\".  This solid ain't no ellipse bucko!\n",
+				bu_log(" got a primitive type %d \"%s\".  This primitive ain't no ellipse bucko!\n",
 					sol_id, rt_functab[sol_id].ft_name);
 
 			break;
@@ -207,7 +214,7 @@ int op;
 		ell_p = (struct rt_ell_internal *)dbint->ip.idb_ptr;
 
 		if (rdebug&RDEBUG_SHADE)
-			bu_log(" got a solid type %d \"%s\"\n",
+			bu_log(" got a primitive type %d \"%s\"\n",
 				sol_id,
 				rt_functab[sol_id].ft_name);
 
@@ -224,7 +231,7 @@ int op;
 		 * by the ellipse into model space, and get inverse for use
 		 * in the _render() proc
 		 */
-		bn_mat_idn(mp);
+		MAT_IDN(mp);
 		VMOVE(v, ell_p->a);	VUNITIZE(v);
 		mp[0] = v[0];	mp[4] = v[1];	mp[8] = v[2];
 
@@ -236,7 +243,7 @@ int op;
 
 		MAT_DELTAS_VEC(mp, ell_p->v);
 
-		bn_mat_copy(dbint->ell2model, mp);
+		MAT_COPY(dbint->ell2model, mp);
 		bn_mat_inv(dbint->model2ell, mp);
 
 
@@ -255,18 +262,18 @@ int op;
 		break;
 	}
 	case OP_UNION:
-		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op);
-		tree_solids(tp->tr_b.tb_right, tb, tp->tr_op);
+		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op, resp);
+		tree_solids(tp->tr_b.tb_right, tb, tp->tr_op, resp);
 		break;
 
 	case OP_NOT: bu_log("Warning: 'Not' region operator in %s\n",tb->name);
-		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op);
+		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op, resp);
 		break;
 	case OP_GUARD:bu_log("Warning: 'Guard' region operator in %s\n",tb->name);
-		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op);
+		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op, resp);
 		break;
 	case OP_XNOP:bu_log("Warning: 'XNOP' region operator in %s\n",tb->name);
-		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op);
+		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op, resp);
 		break;
 
 	case OP_INTERSECT:
@@ -275,8 +282,8 @@ int op;
 		/* XXX this can get us in trouble if 1 solid is subtracted
 		 * from less than all the "union" solids of the region.
 		 */
-		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op);
-		tree_solids(tp->tr_b.tb_right, tb, tp->tr_op);
+		tree_solids(tp->tr_b.tb_left, tb, tp->tr_op, resp);
+		tree_solids(tp->tr_b.tb_right, tb, tp->tr_op, resp);
 		return;
 
 	default:
@@ -284,7 +291,7 @@ int op;
 	}
 }
 
-/*	G A U S S _ S E T U P
+/*	G A U S S _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -339,7 +346,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	tb.name = rp->reg_name;
 	tb.gs = gauss_sp;
 
-	tree_solids ( rp->reg_treetop, &tb );
+	tree_solids ( rp->reg_treetop, &tb, OP_UNION, &rt_uniresource );
 
 
 	/* XXX If this puppy isn't axis-aligned, we should come up with a

@@ -18,12 +18,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSeto[] = "@(#)$Header$ (BRL)";
+static const char RCSeto[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -129,13 +132,14 @@ struct eto_specific {
 	fastf_t	eu, ev, fu, fv;
 };
 
-CONST struct bu_structparse rt_eto_parse[] = {
+const struct bu_structparse rt_eto_parse[] = {
     { "%f", 3, "V",   offsetof(struct rt_eto_internal, eto_V[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "N",   offsetof(struct rt_eto_internal, eto_N[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "C",   offsetof(struct rt_eto_internal, eto_C[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r",   offsetof(struct rt_eto_internal, eto_r),    BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_d", offsetof(struct rt_eto_internal, eto_rd),   BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+ };
 
 /*
  *  			R T _ E T O _ P R E P
@@ -210,7 +214,7 @@ struct rt_i		*rtip;
 	eto->fv =  eto->eu;
 
 	/* Compute R and invR matrices */
-	bn_mat_idn( eto->eto_R );
+	MAT_IDN( eto->eto_R );
 	VMOVE( &eto->eto_R[0], Bu );
 	VMOVE( &eto->eto_R[4], Au );
 	VMOVE( &eto->eto_R[8], Nu );
@@ -262,9 +266,9 @@ struct rt_i		*rtip;
  */
 void
 rt_eto_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct eto_specific *eto =
+	register const struct eto_specific *eto =
 		(struct eto_specific *)stp->st_specific;
 
 	VPRINT("V", eto->eto_V);
@@ -742,8 +746,8 @@ int
 rt_eto_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		a, b;	/* axis lengths of ellipse */
 	fastf_t		ang, ch, cv, dh, dv, ntol, dtol, phi, theta;
@@ -998,23 +1002,23 @@ rt_eto_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		a, b;	/* axis lengths of ellipse */
 	fastf_t		ang, ch, cv, dh, dv, ntol, dtol, phi, theta;
-	fastf_t		*eto_ells;
+	fastf_t		*eto_ells = NULL;
 	int		i, j, nfaces, npts, nells;
-	point_t		*ell;	/* array of ellipse points */
+	point_t		*ell = NULL;	/* array of ellipse points */
 	point_t		Ell_V;	/* vertex of an ellipse */
 	point_t		*rt_mk_ell();
 	struct rt_eto_internal	*tip;
 	struct shell	*s;
-	struct vertex	**verts;
-	struct faceuse	**faces;
+	struct vertex	**verts = NULL;
+	struct faceuse	**faces = NULL;
 	struct vertex	**vertp[4];
 	vect_t		Au, Bu, Nu, Cp, Dp, Xu;
-	vect_t		*norms;	/* normal vectors for each vertex */
+	vect_t		*norms = NULL;	/* normal vectors for each vertex */
 	int		fail=0;
 
 	RT_CK_DB_INTERNAL(ip);
@@ -1210,9 +1214,9 @@ failure:
 int
 rt_eto_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	struct rt_eto_internal	*tip;
 	union record		*rp;
@@ -1225,7 +1229,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_ETO;
 	ip->idb_meth = &rt_functab[ID_ETO];
 	ip->idb_ptr = bu_malloc(sizeof(struct rt_eto_internal), "rt_eto_internal");
@@ -1255,9 +1260,9 @@ CONST struct db_i		*dbip;
 int
 rt_eto_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_eto_internal	*tip;
 	union record		*eto;
@@ -1267,7 +1272,7 @@ CONST struct db_i		*dbip;
 	tip = (struct rt_eto_internal *)ip->idb_ptr;
 	RT_ETO_CK_MAGIC(tip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "eto external");
 	eto = (union record *)ep->ext_buf;
@@ -1299,6 +1304,103 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ E T O _ I M P O R T 5
+ *
+ *  Import a eto from the database format to the internal format.
+ *  Apply modeling transformations at the same time.
+ */
+int
+rt_eto_import5( ip, ep, mat, dbip )
+     struct rt_db_internal	*ip;
+     const struct bu_external	*ep;
+     register const mat_t	mat;
+     const struct db_i		*dbip;
+{
+	struct rt_eto_internal	*tip;
+	fastf_t			vec[11];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 11 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_ETO;
+	ip->idb_meth = &rt_functab[ID_ETO];
+	ip->idb_ptr = bu_malloc(sizeof(struct rt_eto_internal), "rt_eto_internal");
+
+	tip = (struct rt_eto_internal *)ip->idb_ptr;
+	tip->eto_magic = RT_ETO_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 11 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( tip->eto_V, mat, &vec[0*3] );
+	MAT4X3VEC( tip->eto_N, mat, &vec[1*3] );
+	MAT4X3VEC( tip->eto_C, mat, &vec[2*3] );
+	tip->eto_r  = vec[3*3] / mat[15];
+	tip->eto_rd = vec[3*3+1] / mat[15];
+
+	if( tip->eto_r < SMALL || tip->eto_rd < SMALL )  {
+		bu_log("rt_eto_import:  zero length R or Rd vector\n");
+		return(-1);
+	}
+
+	return(0);		/* OK */
+}
+
+/*
+ *			R T _ E T O _ E X P O R T 5
+ *
+ *  The name will be added by the caller.
+ */
+int
+rt_eto_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_eto_internal	*tip;
+	fastf_t			vec[11];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_ETO )  return(-1);
+	tip = (struct rt_eto_internal *)ip->idb_ptr;
+	RT_ETO_CK_MAGIC(tip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 11;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "eto external");
+
+	if (MAGNITUDE(tip->eto_C) < RT_LEN_TOL
+		|| MAGNITUDE(tip->eto_N) < RT_LEN_TOL
+		|| tip->eto_r < RT_LEN_TOL
+		|| tip->eto_rd < RT_LEN_TOL) {
+		bu_log("rt_eto_export: not all dimensions positive!\n");
+		return(-1);
+	}
+	
+	if (tip->eto_rd > MAGNITUDE(tip->eto_C) ) {
+		bu_log("rt_eto_export: semi-minor axis cannot be longer than semi-major axis!\n");
+		return(-1);
+	}
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*3], tip->eto_V, local2mm );
+	VSCALE( &vec[1*3], tip->eto_N, local2mm );
+	VSCALE( &vec[2*3], tip->eto_C, local2mm );
+	vec[3*3] = tip->eto_r * local2mm;
+	vec[3*3+1] = tip->eto_rd * local2mm;
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 11 );
+
+	return(0);
+}
+
+/*
  *			R T _ E T O _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1308,7 +1410,7 @@ CONST struct db_i		*dbip;
 int
 rt_eto_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {

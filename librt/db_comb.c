@@ -30,7 +30,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -52,21 +52,20 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 
 #include "./debug.h"
 
-RT_EXTERN( union tree *db_mkbool_tree , (struct rt_tree_array *rt_tree_array , int howfar ) );
-RT_EXTERN( union tree *db_mkgift_tree , (struct rt_tree_array *rt_tree_array , int howfar , struct db_tree_state *tsp ) );
-
 #define STAT_ROT	1
 #define STAT_XLATE	2
 #define STAT_PERSP	4
 #define STAT_SCALE	8
+
 /*
  *			M A T _ C A T E G O R I Z E
  *
  *  Describe with a bit vector the effects this matrix will have.
+XXX Should have different name prefix.
  */
-int
+static int
 mat_categorize( matp )
-CONST mat_t	matp;
+const mat_t	matp;
 {
 	int	status = 0;
 
@@ -96,8 +95,7 @@ CONST mat_t	matp;
  *  Return count of number of leaf nodes in this tree.
  */
 int
-db_tree_nleaves( tp )
-CONST union tree	*tp;
+db_tree_nleaves( const union tree *tp )
 {
 	if( tp == TREE_NULL )  return 0;
 
@@ -140,15 +138,26 @@ CONST union tree	*tp;
  *  Take a binary tree in "V4-ready" layout (non-unions pushed below unions,
  *  left-heavy), and flatten it into an array layout, ready for conversion
  *  back to the GIFT-inspired V4 database format.
+ *
+ *  This is done using the db_non_union_push() routine.
+ *
+ *  If argument 'free' is non-zero, then
+ *  the non-leaf nodes are freed along the way, to prevent memory leaks.
+ *  In this case, the caller's copy of 'tp' will be invalid upon return.
+ *
+ *  When invoked at the very top of the tree, the op argument must be OP_UNION.
  */
 struct rt_tree_array *
-db_flatten_tree( rt_tree_array, tp, op )
-struct rt_tree_array	*rt_tree_array;
-union tree		*tp;
-int			op;
+db_flatten_tree(
+	struct rt_tree_array	*rt_tree_array,
+	union tree		*tp,
+	int			op,
+	int			free,
+	struct resource		*resp)
 {
 
 	RT_CK_TREE(tp);
+	RT_CK_RESOURCE(resp);
 
 	switch( tp->tr_op )  {
 	case OP_DB_LEAF:
@@ -160,29 +169,36 @@ int			op;
 	case OP_INTERSECT:
 	case OP_SUBTRACT:
 		/* This node is known to be a binary op */
-		rt_tree_array = db_flatten_tree( rt_tree_array, tp->tr_b.tb_left, op );
-		rt_tree_array = db_flatten_tree( rt_tree_array, tp->tr_b.tb_right, tp->tr_op );
+		rt_tree_array = db_flatten_tree( rt_tree_array, tp->tr_b.tb_left, op, free, resp );
+		rt_tree_array = db_flatten_tree( rt_tree_array, tp->tr_b.tb_right, tp->tr_op, free, resp );
+		if(free)  {
+			/* The leaves have been stolen, free the binary op */
+			tp->tr_b.tb_left = TREE_NULL;
+			tp->tr_b.tb_right = TREE_NULL;
+			RT_FREE_TREE( tp, resp )
+		}
 		return rt_tree_array;
 
 	default:
 		bu_log("db_flatten_tree: bad op %d\n", tp->tr_op);
-		rt_bomb("db_flatten_tree\n");
+		bu_bomb("db_flatten_tree\n");
 	}
 
 	return( (struct rt_tree_array *)NULL ); /* for the compiler */
 }
 
 /*
- *			R T _ C O M B _ V 4 _ I M P O R T
+ *			R T _ C O M B _ I M P O R T 4
  *
  *  Import a combination record from a V4 database into internal form.
  */
 int
-rt_comb_v4_import( ip, ep, matrix, dbip )
-struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-CONST matp_t			matrix;		/* NULL if identity */
-CONST struct db_i		*dbip;
+rt_comb_import4(
+	struct rt_db_internal		*ip,
+	const struct bu_external	*ep,
+	const mat_t			matrix,		/* NULL if identity */
+	const struct db_i		*dbip,
+	struct resource			*resp)
 {
 	union record		*rp;
 	struct rt_tree_array	*rt_tree_array;
@@ -196,7 +212,7 @@ CONST struct db_i		*dbip;
 
 	if( rp[0].u_id != ID_COMB )
 	{
-		bu_log( "rt_comb_v4_import: Attempt to import a non-combination\n" );
+		bu_log( "rt_comb_import4: Attempt to import a non-combination\n" );
 		return( -1 );
 	}
 
@@ -212,8 +228,8 @@ CONST struct db_i		*dbip;
 	{
 		if( rp[j+1].u_id != ID_MEMB )
 		{
-			bu_free( (genptr_t)rt_tree_array , "rt_comb_v4_import: rt_tree_array" );
-			bu_log( "rt_comb_v4_import(): granule in external buffer is not ID_MEMB, id=%d\n", rp[j+1].u_id );
+			bu_free( (genptr_t)rt_tree_array , "rt_comb_import4: rt_tree_array" );
+			bu_log( "rt_comb_import4(): granule in external buffer is not ID_MEMB, id=%d\n", rp[j+1].u_id );
 			return( -1 );
 		}
 
@@ -226,7 +242,7 @@ CONST struct db_i		*dbip;
 				rt_tree_array[j].tl_op = OP_SUBTRACT;
 				break;
 			default:
-				bu_log("rt_comb_v4_import() unknown op=x%x, assuming UNION\n", rp[j+1].M.m_relation );
+				bu_log("rt_comb_import4() unknown op=x%x, assuming UNION\n", rp[j+1].M.m_relation );
 				/* Fall through */
 			case 'u':
 				rt_tree_array[j].tl_op = OP_UNION;
@@ -238,7 +254,7 @@ CONST struct db_i		*dbip;
 			mat_t			diskmat;
 			char			namebuf[NAMESIZE+2];
 
-			BU_GETUNION( tp, tree );
+			RT_GET_TREE( tp, resp );
 			rt_tree_array[j].tl_tree = tp;
 			tp->tr_l.magic = RT_TREE_MAGIC;
 			tp->tr_l.tl_op = OP_DB_LEAF;
@@ -285,14 +301,15 @@ CONST struct db_i		*dbip;
 		}
 	}
 	if( node_count )
-		tree = db_mkgift_tree( rt_tree_array, node_count, (struct db_tree_state *)NULL );
+		tree = db_mkgift_tree( rt_tree_array, node_count, &rt_uniresource );
 	else
 		tree = (union tree *)NULL;
 
 	RT_INIT_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_COMBINATION;
 	ip->idb_meth = &rt_functab[ID_COMBINATION];
-	comb = (struct rt_comb_internal *)bu_malloc( sizeof( struct rt_comb_internal ) , "rt_comb_v4_import: rt_comb_internal" );
+	comb = (struct rt_comb_internal *)bu_malloc( sizeof( struct rt_comb_internal ) , "rt_comb_import4: rt_comb_internal" );
 	ip->idb_ptr = (genptr_t)comb;
 	comb->magic = RT_COMB_MAGIC;
 	bu_vls_init( &comb->shader );
@@ -343,7 +360,8 @@ CONST struct db_i		*dbip;
 		comb->los = 0;
 	}
 
-	if( comb->rgb_valid = rp[0].c.c_override )  {
+	comb->rgb_valid = rp[0].c.c_override;
+	if ( comb->rgb_valid )  {
 		comb->rgb[0] = rp[0].c.c_rgb[0];
 		comb->rgb[1] = rp[0].c.c_rgb[1];
 		comb->rgb[2] = rp[0].c.c_rgb[2];
@@ -362,7 +380,7 @@ CONST struct db_i		*dbip;
 		/* convert to TCL format and place into comb->shader */
 		if( bu_shader_to_tcl_list( shader_str, &comb->shader ) )
 		{
-			bu_log( "rt_comb_v4_import: Error: Cannot convert following shader to TCL format:\n" );
+			bu_log( "rt_comb_import4: Error: Cannot convert following shader to TCL format:\n" );
 			bu_log( "\t%s\n", shader_str );
 			bu_vls_free( &comb->shader );
 			return -1;
@@ -382,14 +400,15 @@ CONST struct db_i		*dbip;
 }
 
 /*
- *			R T _ C O M B _ V 4 _ E X P O R T
+ *			R T _ C O M B _ E X P O R T 4
  */
 int
-rt_comb_v4_export( ep, ip, local2mm, dbip )
-struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
-double				local2mm;
-CONST struct db_i		*dbip;
+rt_comb_export4(
+	struct bu_external		*ep,
+	const struct rt_db_internal	*ip,
+	double				local2mm,
+	const struct db_i		*dbip,
+	struct resource			*resp)
 {
 	struct rt_comb_internal	*comb;
 	int			node_count;
@@ -402,15 +421,16 @@ CONST struct db_i		*dbip;
 	struct bu_vls		tmp_vls;
 
 	RT_CK_DB_INTERNAL( ip );
-	if( ip->idb_type != ID_COMBINATION ) bu_bomb("rt_comb_v4_export() type not ID_COMBINATION");
+	RT_CK_RESOURCE(resp);
+	if( ip->idb_type != ID_COMBINATION ) bu_bomb("rt_comb_export4() type not ID_COMBINATION");
 	comb = (struct rt_comb_internal *)ip->idb_ptr;
 	RT_CK_COMB(comb);
 
 	if( comb->tree && db_ck_v4gift_tree( comb->tree ) < 0 )  {
-		db_non_union_push( comb->tree );
+		db_non_union_push( comb->tree, resp );
 		if( db_ck_v4gift_tree( comb->tree ) < 0 )  {
 			/* Need to further modify tree */
-			bu_log("rt_comb_v4_export() Unfinished: need to V4-ify tree\n");
+			bu_log("rt_comb_export4() Unable to V4-ify tree, aborting.\n");
 			rt_pr_tree( comb->tree, 0 );
 			return -1;
 		}
@@ -422,9 +442,10 @@ CONST struct db_i		*dbip;
 		rt_tree_array = (struct rt_tree_array *)bu_calloc( node_count , sizeof( struct rt_tree_array ) , "rt_tree_array" );
 
 		/* Convert tree into array form */
-		actual_count = db_flatten_tree( rt_tree_array, comb->tree, OP_UNION ) - rt_tree_array;
-		if( actual_count > node_count )  bu_bomb("rt_comb_v4_export() array overflow!");
-		if( actual_count < node_count )  bu_log("WARNING rt_comb_v4_export() array underflow! %d < %d", actual_count, node_count);
+		actual_count = db_flatten_tree( rt_tree_array, comb->tree,
+			OP_UNION, 1, resp ) - rt_tree_array;
+		BU_ASSERT_LONG( actual_count, ==, node_count );
+		comb->tree = TREE_NULL;
 	} else {
 		rt_tree_array = (struct rt_tree_array *)NULL;
 		actual_count = 0;
@@ -440,7 +461,7 @@ CONST struct db_i		*dbip;
 	for( j = 0; j < node_count; j++ )  {
 		tp = rt_tree_array[j].tl_tree;
 		RT_CK_TREE(tp);
-		if( tp->tr_op != OP_DB_LEAF )  bu_bomb("rt_comb_v4_export() tree not OP_DB_LEAF");
+		if( tp->tr_op != OP_DB_LEAF )  bu_bomb("rt_comb_export4() tree not OP_DB_LEAF");
 
 		rp[j+1].u_id = ID_MEMB;
 		switch( rt_tree_array[j].tl_op )  {
@@ -454,7 +475,7 @@ CONST struct db_i		*dbip;
 			rp[j+1].M.m_relation = 'u';
 			break;
 		default:
-			bu_bomb("rt_comb_v4_export() corrupt rt_tree_array");
+			bu_bomb("rt_comb_export4() corrupt rt_tree_array");
 		}
 		strncpy( rp[j+1].M.m_instname, tp->tr_l.tl_name, NAMESIZE );
 		if( tp->tr_l.tl_mat )  {
@@ -462,6 +483,7 @@ CONST struct db_i		*dbip;
 		} else {
 			rt_dbmat_mat( rp[j+1].M.m_mat, bn_mat_identity );
 		}
+		db_free_tree( tp, resp );
 	}
 
 	/* Build the Combination record, on the front */
@@ -499,7 +521,8 @@ CONST struct db_i		*dbip;
 	/* convert TCL list format shader to keyword=value format */
 	if( bu_shader_to_key_eq( bu_vls_addr(&comb->shader), &tmp_vls ) )
 	{
-		bu_log( "rt_comb_v4_export: Cannot convert following shader string to keyword=value format:\n" );
+
+		bu_log( "rt_comb_export4: Cannot convert following shader string to keyword=value format:\n" );
 		bu_log( "\t%s\n", bu_vls_addr(&comb->shader) );
 		rp[0].c.c_matparm[0] = '\0';
 		rp[0].c.c_matname[0] = '\0';
@@ -515,24 +538,25 @@ CONST struct db_i		*dbip;
 				bu_log("WARNING: leading spaces on shader '%s' implies NULL shader\n",
 					bu_vls_addr(&tmp_vls) );
 			}
-                        if( len >= sizeof(rp[0].c.c_matname) )  {
-                                bu_log("ERROR:  Shader name '%s' exceeds v4 database field, aborting.\n",
-                                        bu_vls_addr(&tmp_vls) );
-                                return -1;
-                        }
-                        if( strlen(endp+1) >= sizeof(rp[0].c.c_matparm) )  {
-                                bu_log("ERROR:  Shader parameters '%s' exceed v4 database field, aborting.\n",
-                                        endp+1);
-                                return -1;
-                        }
+
+			if( len >= sizeof(rp[0].c.c_matname) )  {
+				bu_log("ERROR:  Shader name '%s' exceeds v4 database field, aborting.\n",
+					bu_vls_addr(&tmp_vls) );
+				return -1;
+			}
+			if( strlen(endp+1) >= sizeof(rp[0].c.c_matparm) )  {
+				bu_log("ERROR:  Shader parameters '%s' exceed database field, aborting.\nUse \"dbupgrade\" to enable unlimited length strings.\n",
+					endp+1);
+				return -1;
+			}
 			strncpy( rp[0].c.c_matname, bu_vls_addr(&tmp_vls), len );
-			strncpy( rp[0].c.c_matparm, endp+1, 60 );
+			strncpy( rp[0].c.c_matparm, endp+1, sizeof(rp[0].c.c_matparm) );
 		} else {
-                        if( bu_vls_strlen(&tmp_vls) >= sizeof(rp[0].c.c_matname) )  {
-                                bu_log("ERROR:  Shader name '%s' exceeds v4 database field, aborting.\n",
-                                        bu_vls_addr(&tmp_vls) );
-                                return -1;
-                        }
+			if( bu_vls_strlen(&tmp_vls) >= sizeof(rp[0].c.c_matname) )  {
+				bu_log("ERROR:  Shader name '%s' exceeds v4 database field, aborting.\n",
+					bu_vls_addr(&tmp_vls) );
+				return -1;
+			}
 			strncpy( rp[0].c.c_matname, bu_vls_addr(&tmp_vls), sizeof(rp[0].c.c_matname) );
 			rp[0].c.c_matparm[0] = '\0';
 		}
@@ -548,20 +572,28 @@ CONST struct db_i		*dbip;
 
 /*
  *			D B _ T R E E _ F L A T T E N _ D E S C R I B E
+ *
+ *  Produce a GIFT-compatible listing, one "member" per line,
+ *  regardless of the structure of the tree we've been given.
  */
 void
-db_tree_flatten_describe( vls, tp, indented, lvl, mm2local )
-struct bu_vls		*vls;
-CONST union tree	*tp;
-int			indented;
-int			lvl;
-double			mm2local;
+db_tree_flatten_describe(
+	struct bu_vls		*vls,
+	const union tree	*tp,
+	int			indented,
+	int			lvl,
+	double			mm2local,
+	struct resource		*resp)
 {
 	int node_count;
 	struct rt_tree_array	*rt_tree_array;
-	
+	int i;
+	char op = OP_NOP;
+	int status;
+	union tree *ntp;
 
 	BU_CK_VLS(vls);
+	RT_CK_RESOURCE(resp);
 
 	if( !tp )
 	{
@@ -572,85 +604,101 @@ double			mm2local;
 	RT_CK_TREE(tp);
 
 	node_count = db_tree_nleaves( tp );
-	if( node_count > 0 )
-	{
-		int i;
-		char op;
-		int status;
-
-		rt_tree_array = (struct rt_tree_array *)bu_calloc( node_count , sizeof( struct rt_tree_array ) , "rt_tree_array" );
-#if 0
-		actual_count = db_flatten_tree( rt_tree_array, tp, OP_UNION ) - rt_tree_array;
-#else
-		(void)db_flatten_tree( rt_tree_array, tp, OP_UNION );
-#endif
-		for( i=0 ; i<node_count ; i++ )
-		{
-			switch (rt_tree_array[i].tl_op)
-			{
-				case OP_INTERSECT:
-					op = '+';
-					break;
-				case OP_SUBTRACT:
-					op = '-';
-					break;
-				case OP_UNION:
-					op = 'u';
-					break;
-				default:
-					bu_bomb("db_tree_flatten_describe() corrupt rt_tree_array");
-			}
-
-			status = mat_categorize( rt_tree_array[i].tl_tree->tr_l.tl_mat );
-			if( !indented )  bu_vls_spaces( vls, 2*lvl );
-			bu_vls_printf( vls, " %c %s", op, rt_tree_array[i].tl_tree->tr_l.tl_name );
-			if( status & STAT_ROT ) {
-				fastf_t	az, el;
-				bn_ae_vec( &az, &el, rt_tree_array[i].tl_tree->tr_l.tl_mat ?
-					rt_tree_array[i].tl_tree->tr_l.tl_mat : bn_mat_identity );
-				bu_vls_printf( vls, 
-					" az=%g, el=%g, ",
-					az, el );
-			}
-			if( status & STAT_XLATE ) {
-				bu_vls_printf( vls, " [%g,%g,%g]",
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[MDX]*mm2local,
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[MDY]*mm2local,
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[MDZ]*mm2local);
-			}
-			if( status & STAT_SCALE ) {
-				bu_vls_printf( vls, " scale %g",
-					1.0/rt_tree_array[i].tl_tree->tr_l.tl_mat[15] );
-			}
-			if( status & STAT_PERSP ) {
-				bu_vls_printf( vls, 
-					" Perspective=[%g,%g,%g]??",
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[12],
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[13],
-					rt_tree_array[i].tl_tree->tr_l.tl_mat[14] );
-			}
-			bu_vls_printf( vls, "\n" );
-		}
-
-		if( rt_tree_array ) bu_free( (genptr_t)rt_tree_array, "rt_tree_array" );
-	}
-	else
-	{
+	if( node_count <= 0 )  {
 		if( !indented )  bu_vls_spaces( vls, 2*lvl );
 		bu_vls_strcat( vls, "-empty-\n" );
+		return;
 	}
+
+	/*
+	 *  We're going to whack the heck out of the tree, but our
+	 *  argument is 'const'.  Before getting started, make a
+	 *  private copy just for us.
+	 */
+	ntp = db_dup_subtree( tp, resp );
+	RT_CK_TREE(ntp);
+
+	/* Convert to "v4 / GIFT style", so that the flatten makes sense. */
+	if( db_ck_v4gift_tree( ntp ) < 0 )
+		db_non_union_push( ntp, resp );
+	RT_CK_TREE(ntp);
+
+	node_count = db_tree_nleaves( ntp );
+	rt_tree_array = (struct rt_tree_array *)bu_calloc( node_count , sizeof( struct rt_tree_array ) , "rt_tree_array" );
+
+	/*
+	 * free=0 means that the tree won't have any leaf nodes freed.
+	 */
+	(void)db_flatten_tree( rt_tree_array, ntp, OP_UNION, 0, resp );
+
+	for( i=0 ; i<node_count ; i++ )
+	{
+		union tree	*itp = rt_tree_array[i].tl_tree;
+
+		RT_CK_TREE(itp);
+		BU_ASSERT_LONG( itp->tr_op, ==, OP_DB_LEAF );
+		BU_ASSERT_PTR( itp->tr_l.tl_name, !=, NULL );
+
+		switch (rt_tree_array[i].tl_op)
+		{
+			case OP_INTERSECT:
+				op = '+';
+				break;
+			case OP_SUBTRACT:
+				op = '-';
+				break;
+			case OP_UNION:
+				op = 'u';
+				break;
+			default:
+				bu_bomb("db_tree_flatten_describe() corrupt rt_tree_array");
+		}
+
+		status = mat_categorize( itp->tr_l.tl_mat );
+		if( !indented )  bu_vls_spaces( vls, 2*lvl );
+		bu_vls_printf( vls, " %c %s", op, itp->tr_l.tl_name );
+		if( status & STAT_ROT ) {
+			fastf_t	az, el;
+			bn_ae_vec( &az, &el, itp->tr_l.tl_mat ?
+				itp->tr_l.tl_mat : bn_mat_identity );
+			bu_vls_printf( vls, 
+				" az=%g, el=%g, ",
+				az, el );
+		}
+		if( status & STAT_XLATE ) {
+			bu_vls_printf( vls, " [%g,%g,%g]",
+				itp->tr_l.tl_mat[MDX]*mm2local,
+				itp->tr_l.tl_mat[MDY]*mm2local,
+				itp->tr_l.tl_mat[MDZ]*mm2local);
+		}
+		if( status & STAT_SCALE ) {
+			bu_vls_printf( vls, " scale %g",
+				1.0/itp->tr_l.tl_mat[15] );
+		}
+		if( status & STAT_PERSP ) {
+			bu_vls_printf( vls, 
+				" Perspective=[%g,%g,%g]??",
+				itp->tr_l.tl_mat[12],
+				itp->tr_l.tl_mat[13],
+				itp->tr_l.tl_mat[14] );
+		}
+		bu_vls_printf( vls, "\n" );
+	}
+
+	if( rt_tree_array ) bu_free( (genptr_t)rt_tree_array, "rt_tree_array" );
+	db_free_tree( ntp, resp );
 }
 
 /*
  *			D B _ T R E E _ D E S C R I B E
  */
 void
-db_tree_describe( vls, tp, indented, lvl, mm2local )
-struct bu_vls		*vls;
-CONST union tree	*tp;
-int			indented;
-int			lvl;
-double			mm2local;
+db_tree_describe( 
+	struct bu_vls		*vls,
+	const union tree	*tp,
+	int			indented,
+	int			lvl,
+	double			mm2local)
 {
 	int	status;
 
@@ -751,13 +799,15 @@ unary:
  *			D B _ C O M B _ D E S C R I B E
  */
 void
-db_comb_describe(str, comb, verbose, mm2local)
-struct bu_vls	*str;
-CONST struct rt_comb_internal	*comb;
-int		verbose;
-double		mm2local;
+db_comb_describe(
+	struct bu_vls	*str,
+	const struct rt_comb_internal	*comb,
+	int		verbose,
+	double		mm2local,
+	struct resource	*resp)
 {
 	RT_CK_COMB(comb);
+	RT_CK_RESOURCE(resp);
 
 	if( comb->region_flag ) {
 		bu_vls_printf( str,
@@ -798,8 +848,7 @@ double		mm2local;
 
 	if( comb->tree )  {
 		if( verbose )  {
-			db_tree_flatten_describe( str, comb->tree, 0, 1, mm2local );
-/*			db_tree_describe( str, comb->tree, 0, 1, mm2local ); */
+			db_tree_flatten_describe( str, comb->tree, 0, 1, mm2local, resp );
 		} else {
 			rt_pr_tree_vls( str, comb->tree );
 		}
@@ -808,53 +857,23 @@ double		mm2local;
 	}
 }
 
-/*==================== BEGIN table.c rt_functab interface ========== */
-
-/*
- *			R T _ C O M B _ I M P O R T
- */
-int
-rt_comb_import(ip, ep, mat, dbip)
-struct rt_db_internal	*ip;
-CONST struct bu_external *ep;
-CONST mat_t		mat;
-CONST struct db_i	*dbip;
-{
-	/* XXX Switch out to right routine, based on database version */
-	return rt_comb_v4_import( ip, ep, mat, dbip );
-}
-
-/*
- *			R T _ C O M B _ E X P O R T
- */
-int
-rt_comb_export(ep, ip, local2mm, dbip)
-struct bu_external	*ep;
-CONST struct rt_db_internal *ip;
-double			local2mm;
-CONST struct db_i	*dbip;
-{
-	/* XXX Switch out to right routine, based on database version */
-	return rt_comb_v4_export( ep, ip, local2mm, dbip );
-}
-
 /*
  *			R T _ C O M B _ I F R E E
  *
  *  Free the storage associated with the rt_db_internal version of this combination.
  */
 void
-rt_comb_ifree( ip )
-struct rt_db_internal	*ip;
+rt_comb_ifree( struct rt_db_internal *ip, struct resource *resp )
 {
 	register struct rt_comb_internal	*comb;
 
 	RT_CK_DB_INTERNAL(ip);
+	RT_CK_RESOURCE(resp);
 	comb = (struct rt_comb_internal *)ip->idb_ptr;
 	RT_CK_COMB(comb);
 
 	/* If tree hasn't been stolen, release it */
-	if(comb->tree) db_free_tree( comb->tree );
+	if(comb->tree) db_free_tree( comb->tree, resp );
 	comb->tree = NULL;
 
 	bu_vls_free( &comb->shader );
@@ -867,21 +886,27 @@ struct rt_db_internal	*ip;
 
 /*
  *			R T _ C O M B _ D E S C R I B E
+ *
+ *  rt_functab[ID_COMBINATION].ft_describe() method
  */
 int
-rt_comb_describe(str, ip, verbose, mm2local)
-struct bu_vls	*str;
-CONST struct rt_db_internal *ip;
-int		verbose;
-double		mm2local;
+rt_comb_describe(
+	struct bu_vls	*str,
+	const struct rt_db_internal *ip,
+	int		verbose,
+	double		mm2local,
+	struct resource	*resp,
+	struct db_i *db_i)
 {
-	CONST struct rt_comb_internal	*comb;
+	const struct rt_comb_internal	*comb;
 
 	RT_CK_DB_INTERNAL(ip);
+	RT_CK_RESOURCE(resp);
+
 	comb = (struct rt_comb_internal *)ip->idb_ptr;
 	RT_CK_COMB(comb);
 
-	db_comb_describe( str, comb, verbose, mm2local );
+	db_comb_describe( str, comb, verbose, mm2local, resp );
 	return 0;
 }
 
@@ -890,36 +915,19 @@ double		mm2local;
 /*
  *			D B _ W R A P _ V 4 _ E X T E R N A L
  *
- *  Wraps the v4 object body in "ip" into a v4 wrapper in "op".
- *  db_free_external(ip) will be performed.
- *  op and ip must not point at the same bu_external structure.
- *
  *  As the v4 database does not really have the notion of "wrapping",
- *  this function primarily writes the object name into the
- *  proper place (a standard location in all granules),
- *  and (maybe) checks/sets the u_id field.
+ *  this function writes the object name into the
+ *  proper place (a standard location in all granules).
  */
-int
-db_wrap_v4_external( op, ip, dp )
-struct bu_external	*op;
-struct bu_external	*ip;
-CONST struct directory	*dp;
+void
+db_wrap_v4_external( struct bu_external *op, const char *name )
 {
-	union record *rec;
+	union record	*rec;
 
-	BU_CK_EXTERNAL(ip);
-	RT_CK_DIR(dp);
-
-	if( op != ip )  {
-		*op = *ip;		/* struct copy */
-		ip->ext_buf = NULL;
-		ip->ext_nbytes = 0;
-	}
+	BU_CK_EXTERNAL(op);
 
 	rec = (union record *)op->ext_buf;
-	NAMEMOVE( dp->d_namep, rec->s.s_name );
-
-	return 0;
+	NAMEMOVE( name, rec->s.s_name );
 }
 
 /* Some export support routines */
@@ -936,9 +944,9 @@ CONST struct directory	*dp;
  *	 0	OK
  */
 int
-db_ck_left_heavy_tree( tp, no_unions )
-CONST union tree	*tp;
-int			no_unions;
+db_ck_left_heavy_tree(
+	const union tree	*tp,
+	int			no_unions)
 {
 	RT_CK_TREE(tp);
 	switch( tp->tr_op )  {
@@ -980,8 +988,7 @@ int			no_unions;
  *	 0	OK
  */
 int
-db_ck_v4gift_tree( tp )
-CONST union tree	*tp;
+db_ck_v4gift_tree( const union tree *tp )
 {
 	RT_CK_TREE(tp);
 	switch( tp->tr_op )  {
@@ -1016,10 +1023,11 @@ CONST union tree	*tp;
  *  Elements which are already TREE_NULL are ignored.
  *  Returns a pointer to the top of the tree.
  */
-HIDDEN union tree *
-db_mkbool_tree( rt_tree_array, howfar )
-struct rt_tree_array *rt_tree_array;
-int		howfar;
+union tree *
+db_mkbool_tree( 
+	struct rt_tree_array *rt_tree_array,
+	int		howfar,
+	struct resource	*resp)
 {
 	register struct rt_tree_array *tlp;
 	register int		i;
@@ -1027,6 +1035,8 @@ int		howfar;
 	register union tree	*xtp;
 	register union tree	*curtree;
 	register int		inuse;
+
+	RT_CK_RESOURCE(resp);
 
 	if( howfar <= 0 )
 		return(TREE_NULL);
@@ -1050,7 +1060,7 @@ int		howfar;
 
 	if( first_tlp->tl_op != OP_UNION )  {
 		first_tlp->tl_op = OP_UNION;	/* Fix it */
-		if( rt_g.debug & DEBUG_TREEWALK )  {
+		if( RT_G_DEBUG & DEBUG_TREEWALK )  {
 			bu_log("db_mkbool_tree() WARNING: non-union (%c) first operation ignored\n",
 				first_tlp->tl_op );
 		}
@@ -1063,7 +1073,7 @@ int		howfar;
 		if( tlp->tl_tree == TREE_NULL )
 			continue;
 
-		BU_GETUNION( xtp, tree );
+		RT_GET_TREE( xtp, resp );
 		xtp->magic = RT_TREE_MAGIC;
 		xtp->tr_b.tb_left = curtree;
 		xtp->tr_b.tb_right = tlp->tl_tree;
@@ -1078,17 +1088,19 @@ int		howfar;
 /*
  *			D B _ M K G I F T _ T R E E
  */
-HIDDEN union tree *
-db_mkgift_tree( trees, subtreecount, tsp )
-struct rt_tree_array	*trees;
-int			subtreecount;
-struct db_tree_state	*tsp;
+union tree *
+db_mkgift_tree(
+	struct rt_tree_array	*trees,
+	int			subtreecount,
+	struct resource		*resp)
 {
 	register struct rt_tree_array *tstart;
 	register struct rt_tree_array *tnext;
 	union tree		*curtree;
 	int	i;
 	int	j;
+
+	RT_CK_RESOURCE(resp);
 
 	/*
 	 * This is how GIFT interpreted equations, so it is duplicated here.
@@ -1107,14 +1119,14 @@ struct db_tree_state	*tsp;
 			continue;
 		if( (j = tnext-tstart) <= 0 )
 			continue;
-		curtree = db_mkbool_tree( tstart, j );
+		curtree = db_mkbool_tree( tstart, j, resp );
 		/* db_mkbool_tree() has side effect of zapping tree array,
 		 * so build new first node in array.
 		 */
 		tstart->tl_op = OP_UNION;
 		tstart->tl_tree = curtree;
 
-		if(rt_g.debug&DEBUG_TREEWALK)  {
+		if(RT_G_DEBUG&DEBUG_TREEWALK)  {
 			bu_log("db_mkgift_tree() intermediate term:\n");
 			rt_pr_tree(tstart->tl_tree, 0);
 		}
@@ -1123,84 +1135,10 @@ struct db_tree_state	*tsp;
 		tstart = tnext;
 	}
 
-final:
-	curtree = db_mkbool_tree( trees, subtreecount );
-	if(rt_g.debug&DEBUG_TREEWALK)  {
+	curtree = db_mkbool_tree( trees, subtreecount, resp );
+	if(RT_G_DEBUG&DEBUG_TREEWALK)  {
 		bu_log("db_mkgift_tree() returns:\n");
 		rt_pr_tree(curtree, 0);
 	}
 	return( curtree );
-}
-
-/* ------------------------------------------------------------ */
-/* Preliminary V5 wrap/unwrap support */
-/* in-memory form of the standardized object 'wrapper' */
-/* Object's name is stashed in directory, not in internal wrapper */
-struct db_wrapper {
-	long	magic;
-	
-};
-
-/*
- *			D B _ W R A P _ V 5 _ E X T E R N A L
- */
-int
-db_wrap_v5_external( op, ip, dp, wp )
-struct bu_external		*op;
-struct bu_external		*ip;
-CONST struct directory		*dp;
-CONST struct db_wrapper		*wp;
-{
-
-	/* First, build up compressible portion of wrapper (header),
-	 * if more than just object body
-	 */
-
-	/* Second, compress compressible portion */
-
-	/* Third, add non-compressible portion of wrapper (header) */
-
-	return( 0 );
-}
-
-/*
- *			R T _ V 5 _ E X P O R T
- */
-int
-rt_v5_export( ep, ip, local2mm, dp, wp, dbip )
-struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
-double				local2mm;
-CONST struct directory		*dp;
-CONST struct db_wrapper		*wp;
-CONST struct db_i		*dbip;
-{
-	struct bu_external	temp;
-	int			ret;
-
-	RT_CK_DB_INTERNAL(ip);
-	RT_CK_DIR(dp);
-
-	/* XXX need v5 versions.  For testing, use v4 in object body. */
-
-	/* Convert Object Body to external form */
-	if( ip->idb_type == ID_COMBINATION )  {
-		ret = rt_comb_v4_export( &temp, ip, local2mm, dbip );
-	} else {
-		ret = rt_functab[ip->idb_type].ft_export( &temp, ip, local2mm, dbip );
-	}
-	if( ret < 0 )  {
-		bu_log("rt_v5_export(%s): ft_export error %d\n",
-			dp->d_namep, ret );
-		return ret;
-	}
-
-	if( (ret = db_wrap_v5_external( ep, &temp, dp, wp )) < 0 )  {
-		bu_log("rt_v5_export(%s): db_wrap_v5_external error %d\n",
-			dp->d_namep, ret );
-		return ret;
-	}
-	/* "temp" has been freed by db_wrap_v4_external() */
-	return 0;
-
 }

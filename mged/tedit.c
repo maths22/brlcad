@@ -21,7 +21,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -49,7 +49,6 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #define V3BASE2LOCAL( _pt )	(_pt)[X]*base2local , (_pt)[Y]*base2local , (_pt)[Z]*base2local
 #define V4BASE2LOCAL( _pt )	(_pt)[X]*base2local , (_pt)[Y]*base2local , (_pt)[Z]*base2local , (_pt)[W]*base2local
 
-extern struct bu_external	es_ext;
 extern struct rt_db_internal	es_int;
 extern struct rt_db_internal	es_int_orig;
 
@@ -82,12 +81,16 @@ char **argv;
 	}
 
 	/* Only do this if in solid edit state */
-	if( not_state( ST_S_EDIT, "Solid Text Edit" ) )
+	if( not_state( ST_S_EDIT, "Primitive Text Edit" ) )
 	  return TCL_ERROR;
 
 	strcpy(tmpfil, tmpfil_init);
+#if 0
 	(void)mktemp(tmpfil);
 	i=creat(tmpfil, 0600);
+#else
+	i = mkstemp(tmpfil);
+#endif
 	if( i < 0 )
 	{
 	  perror(tmpfil);
@@ -750,45 +753,17 @@ readsolid()
 	return( ret_val );
 }
 
-/* Run $EDITOR on temp file */
-editit( file )
-char *file;
+/* Run $EDITOR on temp file 
+ * 
+ * BUGS -- right now we only check at compile time whether or not to pop up an
+ *         X window to display into (for editors that do not open their own
+ *         window like vi or jove).  If we have X support, we automatically use
+ *         xterm (regardless of whether the user is running mged in console
+ *         mode!)
+ */
+int
+editit(const char *file)
 {
-#if 0
-#ifdef BSD
-	register pid, xpid;
-	int stat, omask;
-
-#define	mask(s)	(1<<((s)-1))
-	omask = sigblock(mask(SIGINT)|mask(SIGQUIT)|mask(SIGHUP));
-
-	if ((pid = fork()) < 0) {
-		perror("fork");
-		return (0);
-	}
-	if (pid == 0) {
-		register char *ed;
-
-		sigsetmask(omask);
-		if ((ed = getenv("EDITOR")) == (char *)0)
-			ed = DEFEDITOR;
-
-		bu_log("Invoking %s...\n", ed);
-#if 0
-		(void)execlp(ed, ed, file, 0);
-#else
-		(void)execlp("xterm", "xterm", "-e", ed, file, (char *)0);
-#endif
-		perror(ed);
-		exit(1);
-	}
-	while ((xpid = wait(&stat)) >= 0)
-		if (xpid == pid)
-			break;
-	sigsetmask(omask);
-	return (!stat);
-#endif
-#else
 	register int pid, xpid;
 	register char *ed;
 	int stat;
@@ -808,19 +783,34 @@ char *file;
 		register int i;
 		/* Don't call bu_log() here in the child! */
 
+		/* XXX do not want to close all io if we are in console mode
+		 * and the editor needs to use stdout...
+		 */
+#if defined(DM_X) || defined(DM_OGL)
+		/* close all stdout/stderr (XXX except do not close 0==stdin) */
+		for( i=1; i < 20; i++ )
+			(void)close(i);
+#else
+		/* leave stdin/out/err alone */
 		for( i=3; i < 20; i++ )
 			(void)close(i);
+#endif
 
 		(void)signal( SIGINT, SIG_DFL );
 		(void)signal( SIGQUIT, SIG_DFL );
-#if 0
-		(void)execlp(ed, ed, file, 0);
-#else
+
+		/* if we have x support, we pop open the editor in an xterm.
+		 * otherwise, we use whatever the user gave as EDITOR
+		 */
+#if defined(DM_X) || defined(DM_OGL)
 		(void)execlp("xterm", "xterm", "-e", ed, file, (char *)0);
+#else
+		(void)execlp(ed, ed, file, 0);
 #endif
 		perror(ed);
 		exit(1);
 	}
+
 
 	while ((xpid = wait(&stat)) >= 0)
 		if (xpid == pid)
@@ -828,6 +818,6 @@ char *file;
 
 	(void)signal(SIGINT, s2);
 	(void)signal(SIGQUIT, s3);
-#endif
+
 	return (!stat);
 }

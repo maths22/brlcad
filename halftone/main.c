@@ -1,5 +1,5 @@
 #ifndef lint
-static char rcsid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 #include "conf.h"
 
@@ -56,6 +56,17 @@ static char rcsid[] = "$Header$";
  *	Christopher T. Johnson	- 90/03/21
  *
  * $Log$
+ * Revision 11.4  2000/08/24 23:09:00  mike
+ *
+ * lint
+ *
+ * Revision 11.3  2000/08/24 23:07:42  mike
+ *
+ * lint
+ *
+ * Revision 11.2  1996/12/13  14:33:46  jra
+ * pix_common_file_size is now bn_common_file_size.
+ *
  * Revision 11.1  1995/01/04  10:21:51  mike
  * Release_4.4
  *
@@ -118,6 +129,14 @@ int Surpent=0;		/* use serpentine scan lines */
 int Levels=1;		/* Number of levels-1 */
 int Debug=0;
 struct msr_unif *RandomFlag=0;	/* Use random numbers ? */
+
+void cubic_init(int n, int *x, int *y);
+void tonescale(unsigned char *map, float Slope, float B, int (*eqptr)() );
+int sharpen(unsigned char *buf, int size, int num, FILE *file, unsigned char *Map);
+int tone_floyd(int pix, int x, int y, int nx, int ny, int new);
+int tone_folly(int pix, int x, int y, int nx, int ny, int new);
+int tone_simple(int pix, int x, int y, int nx, int ny, int new);
+int tone_classic(int pix, int x, int y, int nx, int ny, int new);
 
 static char usage[] = "\
 Usage: halftone [ -h -R -S -a] [-D Debug Level]\n\
@@ -273,6 +292,8 @@ char **argv;
 		(void) fprintf(stderr,"halftone: excess argument(s) ignored.\n");
 	}
 }
+
+int
 main(argc,argv)
 int argc;
 char **argv;
@@ -367,4 +388,5 @@ char **argv;
 		}
 		fwrite(Out,1,width,stdout);
 	}
+	return 0;
 }

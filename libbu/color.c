@@ -19,7 +19,7 @@
  *	This software is Copyright (C) 1997 by the United States Army
  *	in all countries except the USA.  All rights reserved.
  */
-static char libbu_color_RCSid[] = "@(#)$Header$ (BRL)";
+static const char libbu_color_RCSid[] = "@(#)$Header$ (BRL)";
 
 #include "conf.h"
 
@@ -211,7 +211,7 @@ unsigned char	*rgb;
     {
 	if (strlen(++str) != 6)
 	    return 0;
-	num = sscanf(str, "%02x%02x%02x", &r, &g, &b);
+	num = sscanf(str, "%02x%02x%02x", (unsigned int *)&r, (unsigned int *)&g, (unsigned int *)&b);
 #if 0
 	bu_log("# notation: I read %d of %d, %d, %d\n", num, r, g, b);
 #endif

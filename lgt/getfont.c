@@ -8,7 +8,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 /* 
 	getfont.c - Load a new font by reading in the header and directory.
@@ -36,7 +36,7 @@ struct dispatch	dir[256];	/* Directory for character font.	*/
 int		width = 0,	/* Size of current character.		*/
 		height = 0;
 
-
+int
 get_Font( fontname )
 char *fontname;
 	{	FILE		*newff;

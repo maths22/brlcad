@@ -52,16 +52,18 @@
  */
 static char *
 match( n, v )
-CONST char *n;
-CONST char *v;
+const char *n;
+const char *v;
 {
     for ( ; *n != '\0' && *n != '=' && *n == *v; n++, v++ )
 	;
     if (*n == '\0' || *n == '=')
+    {
 	if ( *v == '\0' )
 	    return( (char *) v);
 	else if ( *v == '=' )
 	    return( (char *) ++v);
+    }
 
     return NULL;
 }
@@ -82,10 +84,10 @@ CONST char *v;
  */
 char *
 rle_getcom( name, the_hdr )
-CONST char *name;
+const char *name;
 rle_hdr *the_hdr;
 {
-    CONST char ** cp;
+    const char ** cp;
     char * v;
 
     if ( the_hdr->comments == NULL )

@@ -60,6 +60,7 @@ static const char RCSid[] = "@(#)$Header$ (ARL)";
 #include "conf.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <ctype.h>
 #include <signal.h>
@@ -95,7 +96,7 @@ static const char RCSid[] = "@(#)$Header$ (ARL)";
 #include "../libfb/pkgtypes.h"
 
 /* These symbols are provided by libfb/server.c */
-extern CONST struct pkg_switch fb_server_pkg_switch[];
+extern const struct pkg_switch fb_server_pkg_switch[];
 extern FBIO	*fb_server_fbp;
 extern fd_set	*fb_server_select_list;			/* master copy */
 extern int	*fb_server_max_fd;
@@ -274,7 +275,7 @@ int argc; char **argv;
 
 	/* No disk files on remote machine */
 	_fb_disk_enable = 0;
-	bzero((void *)clients, sizeof(struct pkg_conn *) * MAX_CLIENTS);
+	memset((void *)clients, 0, sizeof(struct pkg_conn *) * MAX_CLIENTS);
 
 	(void)signal( SIGPIPE, SIG_IGN );
 	(void)signal( SIGALRM, sigalarm );
@@ -477,14 +478,15 @@ int	fd;
 #if defined(SO_KEEPALIVE)
 	if( setsockopt( fd, SOL_SOCKET, SO_KEEPALIVE, (char *)&on, sizeof(on)) < 0 ) {
 #if		defined(BSD) && !defined(CRAY2)
-		syslog( LOG_WARNING, "setsockopt (SO_KEEPALIVE): %m" );
+		syslog( LOG_WARNING, "setsockopt (SO_KEEPALIVE): %s", strerror(errno) );
 #		endif
 	}
 #endif
 #if defined(SO_RCVBUF)
 	/* try to set our buffers up larger */
 	{
-		int	m, n;
+		int	m = 0;
+		int	n = 0;
 		int	val;
 		int	size;
 
@@ -538,7 +540,7 @@ char *str;
  *  it serves to highlight the the grossness of the varargs package
  *  requiring the size of a parameter to be known at compile time.
  */
-#if __STDC__
+#if defined(HAVE_STDARG_H)
 void
 fb_log( char *fmt, ... )
 {
@@ -568,8 +570,10 @@ fb_log( char *fmt, ... )
 		fflush(stderr);
 	}
 }
-#else
+
 /* VARARGS */
+#elif !defined(HAVE_STDARG_H) && defined(HAVE_VARARGS_H)
+
 void
 fb_log( va_alist )
 va_dcl
@@ -686,4 +690,8 @@ va_dcl
 		fflush(stderr);
 	}
 }
-#endif /* !__STDC__ */
+#else
+
+#error /* no stdarg and no vararg */
+
+#endif /* !have_stdarg_h */

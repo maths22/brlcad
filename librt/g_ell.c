@@ -21,12 +21,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSell[] = "@(#)$Header$ (BRL)";
+static const char RCSell[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -40,12 +43,13 @@ static char RCSell[] = "@(#)$Header$ (BRL)";
 RT_EXTERN(int rt_sph_prep, (struct soltab *stp, struct rt_db_internal *ip,
 	struct rt_i *rtip));
 
-CONST struct bu_structparse rt_ell_parse[] = {
+const struct bu_structparse rt_ell_parse[] = {
     { "%f", 3, "V", offsetof(struct rt_ell_internal, v[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "A", offsetof(struct rt_ell_internal, a[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "B", offsetof(struct rt_ell_internal, b[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "C", offsetof(struct rt_ell_internal, c[X]), BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+ };
 
 static void  nmg_sphere_face_snurb();
 
@@ -244,8 +248,8 @@ struct rt_i		*rtip;
 	VMOVE( ell->ell_Bu, Bu );
 	VMOVE( ell->ell_Cu, Cu );
 
-	bn_mat_idn( ell->ell_SoR );
-	bn_mat_idn( R );
+	MAT_IDN( ell->ell_SoR );
+	MAT_IDN( R );
 
 	/* Compute R and Rinv matrices */
 	VMOVE( &R[0], Au );
@@ -254,7 +258,7 @@ struct rt_i		*rtip;
 	bn_mat_trn( Rinv, R );			/* inv of rot mat is trn */
 
 	/* Compute SoS (Affine transformation) */
-	bn_mat_idn( SS );
+	MAT_IDN( SS );
 	SS[ 0] = ell->ell_invsq[0];
 	SS[ 5] = ell->ell_invsq[1];
 	SS[10] = ell->ell_invsq[2];
@@ -315,7 +319,7 @@ struct rt_i		*rtip;
  */
 void
 rt_ell_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
 	register struct ell_specific *ell =
 		(struct ell_specific *)stp->st_specific;
@@ -579,10 +583,10 @@ rt_ell_class()
  */
 #define ELLOUT(n)	ov+(n-1)*3
 void
-rt_ell_16pts( ov, V, A, B )
-register fastf_t *ov;
-register fastf_t *V;
-fastf_t *A, *B;
+rt_ell_16pts(register fastf_t *ov,
+	     register fastf_t *V,
+	     fastf_t *A,
+	     fastf_t *B)
 {
 	static fastf_t c, d, e, f,g,h;
 
@@ -623,8 +627,8 @@ int
 rt_ell_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	register int		i;
 	struct rt_ell_internal	*eip;
@@ -747,8 +751,8 @@ rt_ell_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	LOCAL mat_t	R;
 	LOCAL mat_t	S;
@@ -824,7 +828,7 @@ CONST struct bn_tol	*tol;
 	}
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VMOVE( &R[0], Au );
 	VMOVE( &R[4], Bu );
 	VMOVE( &R[8], Cu );
@@ -832,7 +836,7 @@ CONST struct bn_tol	*tol;
 
 	/* Compute S and invS matrices */
 	/* invS is just 1/diagonal elements */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = invAlen;
 	S[ 5] = invBlen;
 	S[10] = invClen;
@@ -1121,9 +1125,9 @@ fail:
 int
 rt_ell_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	struct rt_ell_internal	*eip;
 	union record		*rp;
@@ -1137,7 +1141,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_ELL;
 	ip->idb_meth = &rt_functab[ID_ELL];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_ell_internal), "rt_ell_internal");
@@ -1162,9 +1167,9 @@ CONST struct db_i		*dbip;
 int
 rt_ell_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_ell_internal	*tip;
 	union record		*rec;
@@ -1174,7 +1179,7 @@ CONST struct db_i		*dbip;
 	tip = (struct rt_ell_internal *)ip->idb_ptr;
 	RT_ELL_CK_MAGIC(tip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "ell external");
 	rec = (union record *)ep->ext_buf;
@@ -1192,6 +1197,88 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ E L L _ I M P O R T 5
+ *
+ *  Import an ellipsoid/sphere from the database format to
+ *  the internal structure.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_ell_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_ell_internal	*eip;
+	fastf_t			vec[ELEMENTS_PER_VECT*4];
+
+	RT_CK_DB_INTERNAL( ip );
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * ELEMENTS_PER_VECT*4 );
+
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_ELL;
+	ip->idb_meth = &rt_functab[ID_ELL];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_ell_internal), "rt_ell_internal");
+
+	eip = (struct rt_ell_internal *)ip->idb_ptr;
+	eip->magic = RT_ELL_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, ELEMENTS_PER_VECT*4 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( eip->v, mat, &vec[0*ELEMENTS_PER_VECT] );
+	MAT4X3VEC( eip->a, mat, &vec[1*ELEMENTS_PER_VECT] );
+	MAT4X3VEC( eip->b, mat, &vec[2*ELEMENTS_PER_VECT] );
+	MAT4X3VEC( eip->c, mat, &vec[3*ELEMENTS_PER_VECT] );
+
+	return 0;		/* OK */
+}
+
+/*
+ *			R T _ E L L _ E X P O R T 5
+ *
+ *  The external format is:
+ *	V point
+ *	A vector
+ *	B vector
+ *	C vector
+ */
+int
+rt_ell_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_ell_internal	*eip;
+	fastf_t			vec[ELEMENTS_PER_VECT*4];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_ELL && ip->idb_type != ID_SPH )  return(-1);
+	eip = (struct rt_ell_internal *)ip->idb_ptr;
+	RT_ELL_CK_MAGIC(eip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * ELEMENTS_PER_VECT*4;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "ell external");
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*ELEMENTS_PER_VECT], eip->v, local2mm );
+	VSCALE( &vec[1*ELEMENTS_PER_VECT], eip->a, local2mm );
+	VSCALE( &vec[2*ELEMENTS_PER_VECT], eip->b, local2mm );
+	VSCALE( &vec[3*ELEMENTS_PER_VECT], eip->c, local2mm );
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, ELEMENTS_PER_VECT*4 );
+
+	return 0;
+}
+
+/*
  *			R T _ E L L _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1201,7 +1288,7 @@ CONST struct db_i		*dbip;
 int
 rt_ell_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -1281,7 +1368,7 @@ struct rt_db_internal	*ip;
  *  In order to orient loop CCW, need to start with 0,1-->0,0 transition
  *  at the south pole.
  */
-static CONST fastf_t rt_ell_uvw[5*3] = {
+static const fastf_t rt_ell_uvw[5*ELEMENTS_PER_VECT] = {
 	0, 1, 0,
 	0, 0, 0,
 	1, 0, 0,
@@ -1297,7 +1384,7 @@ rt_ell_tnurb( r, m, ip, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct bn_tol		*tol;
+const struct bn_tol		*tol;
 {
 	LOCAL mat_t	R;
 	LOCAL mat_t	S;
@@ -1372,7 +1459,7 @@ CONST struct bn_tol		*tol;
 	}
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VMOVE( &R[0], Au );
 	VMOVE( &R[4], Bu );
 	VMOVE( &R[8], Cu );
@@ -1380,7 +1467,7 @@ CONST struct bn_tol		*tol;
 
 	/* Compute S and invS matrices */
 	/* invS is just 1/diagonal elements */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = invAlen;
 	S[ 5] = invBlen;
 	S[10] = invClen;
@@ -1399,7 +1486,7 @@ CONST struct bn_tol		*tol;
 	if( Clen > radius )
 		radius = Clen;
 
-	bn_mat_idn( xlate );
+	MAT_IDN( xlate );
 	MAT_DELTAS_VEC( xlate, eip->v );
 	bn_mat_mul( unit2model, xlate, invRinvS );
 
@@ -1436,8 +1523,8 @@ CONST struct bn_tol		*tol;
 
 	/* Loop always has Counter-Clockwise orientation (CCW) */
 	for( i=0; i < 4; i++ )  {
-		nmg_vertexuse_a_cnurb( eu->vu_p, &rt_ell_uvw[i*3] );
-		nmg_vertexuse_a_cnurb( eu->eumate_p->vu_p, &rt_ell_uvw[(i+1)*3] );
+		nmg_vertexuse_a_cnurb( eu->vu_p, &rt_ell_uvw[i*ELEMENTS_PER_VECT] );
+		nmg_vertexuse_a_cnurb( eu->eumate_p->vu_p, &rt_ell_uvw[(i+1)*ELEMENTS_PER_VECT] );
 		eu = BU_LIST_NEXT( edgeuse, &eu->l );
 	}
 
@@ -1482,7 +1569,7 @@ VPRINT("surf(u,v)", param);
 static void
 nmg_sphere_face_snurb( fu, m )
 struct faceuse	*fu;
-CONST matp_t	m;
+const matp_t	m;
 {
 	struct face_g_snurb	*fg;
 	FAST fastf_t root2_2;

@@ -5,16 +5,22 @@
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 
-#define air_MAGIC 0x41697200	/* "Air" */
+#define AIR_MAGIC 0x41697200	/* "Air" */
 struct air_specific {
 	long	magic;
 	double	d_p_mm;	/* density per unit millimeter (specified in m)*/
@@ -22,10 +28,10 @@ struct air_specific {
 	double	delta;	/* only used in emist */
 	char	*name;	/* name of "ground" object for emist_terrain_render */
 };
-#define CK_air_SP(_p) BU_CKMAG(_p, air_MAGIC, "air_specific")
+#define CK_AIR_SP(_p) BU_CKMAG(_p, AIR_MAGIC, "air_specific")
 
 static struct air_specific air_defaults = {
-	air_MAGIC,
+	AIR_MAGIC,
 	.1,		/* d_p_mm */	
 	.01,		/* scale */
 	0.0,		/* delta */
@@ -70,17 +76,17 @@ struct mfuncs air_mfuncs[] = {
 };
 static void 
 dpm_hook(sdp, name, base, value)
-register CONST struct bu_structparse	*sdp;	/* structure description */
-register CONST char			*name;	/* struct member name */
+register const struct bu_structparse	*sdp;	/* structure description */
+register const char			*name;	/* struct member name */
 char					*base;	/* begining of structure */
-CONST char				*value;	/* string containing value */
+const char				*value;	/* string containing value */
 {
 #define meters_to_millimeters 0.001
 	struct air_specific *air_sp = (struct air_specific *)base;
 	
 	air_sp->d_p_mm *= meters_to_millimeters;
 }
-/*	A I R _ S E T U P
+/*	A I R _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -123,7 +129,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	A I R _ P R I N T
  */
 HIDDEN void
@@ -146,7 +152,7 @@ char *cp;
 	bu_free( cp, "air_specific" );
 }
 
-/*
+/*
  *	A I R T E S T _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c)
@@ -166,7 +172,7 @@ char	*dp;
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
-	CK_air_SP(air_sp);
+	CK_AIR_SP(air_sp);
 
 	if (rdebug&RDEBUG_SHADE) {
 		bu_struct_print( "air_specific", air_parse, (char *)air_sp );
@@ -178,7 +184,7 @@ char	*dp;
 
 	return(1);
 }
-/*
+/*
  *	A I R _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c)
@@ -205,7 +211,7 @@ char	*dp;
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
-	CK_air_SP(air_sp);
+	CK_AIR_SP(air_sp);
 
 	if (rdebug&RDEBUG_SHADE) {
 		bu_struct_print( "air_specific", air_parse, (char *)air_sp );
@@ -269,7 +275,7 @@ register struct application *ap;
 	return 0;
 }
 
-/*
+/*
  *	T M I S T _ R E N D E R
  *
  * Use height above named terrain object
@@ -298,7 +304,7 @@ char	*dp;
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
-	CK_air_SP(air_sp);
+	CK_AIR_SP(air_sp);
 
 	/* Get entry point */
 	if (pp->pt_inhit->hit_dist < 0.0) {
@@ -351,7 +357,7 @@ char	*dp;
 
 	return(1);
 }
-/*
+/*
  *	E M I S T _ R E N D E R
  *
  *
@@ -387,7 +393,7 @@ char	*dp;
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
-	CK_air_SP(air_sp);
+	CK_AIR_SP(air_sp);
 
 	/* compute hit point & length of ray */
 	if (pp->pt_inhit->hit_dist < 0.0) {
@@ -426,7 +432,7 @@ char	*dp;
 
 	return(1);
 }
-/*
+/*
  *	F B M _ E M I S T _ R E N D E R
  *
  *
@@ -454,15 +460,19 @@ struct partition	*pp;
 struct shadework	*swp;
 char	*dp;
 {
+#ifndef NO_MAGIC_CHECKING
 	register struct air_specific *air_sp =
-		(struct air_specific *)dp;
+	   (struct air_specific *)dp;
+#endif
 	point_t in_pt, out_pt;
 	vect_t dist_v;
 	double dist, delta;
 
+#ifndef NO_MAGIC_CHECKING
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
-	CK_air_SP(air_sp);
+	CK_AIR_SP(air_sp);
+#endif
 
 	/* compute hit point & length of ray */
 	if (pp->pt_inhit->hit_dist < 0.0) {

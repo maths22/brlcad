@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -54,6 +54,7 @@ Usage: pix-ps [-e] [-c|-l] [-L] [-h]\n\
         [-s input_squaresize] [-w input_width] [-n input_height]\n\
         [-S inches_square] [-W inches_width] [-N inches_height] [file.pix]\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -126,6 +127,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;

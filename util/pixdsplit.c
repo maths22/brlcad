@@ -20,7 +20,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include <stdio.h>
@@ -30,8 +30,10 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include <fcntl.h>
 #include <math.h>
 #include "machine.h"
+#include "externs.h"
+#include "bu.h"
 #include "vmath.h"
-#include "raytrace.h"
+#include "bn.h"
 
 extern int errno;
 
@@ -45,11 +47,8 @@ void print_usage ()
 	"[-c file.pix] [-d file.d] [-# n.m] [file.pixd]");
 }
 
-main (argc, argv)
-
-int	argc;
-char	*argv[];
-
+int
+main (int argc, char *argv[])
 {
     unsigned char	*inbuf;		/* Buffer */
     unsigned char	*cbuf;		/*    "   */
@@ -73,8 +72,8 @@ char	*argv[];
     int			pwidth;		/* bytes/pixel, total */
     int			num;
     int			infd;		/* File descriptor */
-    int			cfd;		/*   "       "     */
-    int			dfd;		/*   "       "     */
+    int			cfd = -1;		/*   "       "     */
+    int			dfd = -1;		/*   "       "     */
 
     extern int	optind;			/* index from getopt(3C) */
     extern char	*optarg;		/* argument from getopt(3C) */
@@ -218,4 +217,5 @@ char	*argv[];
 	perror("pixdsplit");
 	exit (1);
     }
+    return 0;
 }

@@ -21,12 +21,13 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #ifdef USE_STRING_H
 #include <string.h>
@@ -55,6 +56,7 @@ double	val[256];		/* arguments to operations */
 unsigned short iobuf[BUFLEN];		/* input buffer */
 int mapbuf[65536];		/* translation buffer/lookup table */
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -196,5 +198,6 @@ char **argv;
 			progname,
 			clip_high, clip_low );
 	}
-	return(0);
+
+	return 0;
 }

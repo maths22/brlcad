@@ -6,7 +6,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -61,6 +61,7 @@ STATIC int	intr_sig();
 #endif
 STATIC void	init_Lgts();
 void		exit_Neatly();
+int		key_Frame();
 
 STATIC int
 substr( str, pattern )
@@ -74,6 +75,7 @@ char	*str, *pattern;
 	}
 
 /*	m a i n ( )							*/
+int
 main( argc, argv )
 char	*argv[];
 {	register int	i;
@@ -82,6 +84,11 @@ char	*argv[];
 #endif
 	beginptr = (char *) sbrk(0);
 
+	bu_log( "\n\nThis program is deprecated and will not be supported in future releases\n" );
+	bu_log( "\tPlease use \"rtedge\" instead\n" );
+	bu_log( "\tPlease notify \"cad@arl.army.mil\" if you need enhancements to \"rtedge\"\n" );
+	bu_log( "\nPress \"Enter\" to continue\n\n" );
+	(void)getchar();
 	npsw = bu_avail_cpus();
 	if( npsw > MAX_PSW )
 		npsw = MAX_PSW;

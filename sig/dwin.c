@@ -6,6 +6,12 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include <stdio.h>
 #include <math.h>
 
@@ -34,13 +40,15 @@ int	window = 0;
 int	hamming = 0;
 int	bias = 0;
 int	bartlett = 0;
-int	endwin = 0;
+static int	endwin = 0;
 int	midwin = 0;
 
 void	fill_buffer();
 void	seek_sample();
 void	biaswin();
 void	bartwin();
+void	hamwin();
+void	coswin();
 
 static char usage[] = "\
 Usage: dwin [options] [width (1024)] [step (width)] [start]\n\
@@ -52,7 +60,7 @@ Usage: dwin [options] [width (1024)] [step (width)] [start]\n\
   -m  start first sample at middle of buffer\n\
 ";
 
-main( argc, argv )
+int main( argc, argv )
 int argc;
 char **argv;
 {
@@ -165,6 +173,8 @@ char **argv;
 		xform_start += step;
 		xform_end = xform_start + L-1;
 	}
+
+	return 0;
 }
 
 /*

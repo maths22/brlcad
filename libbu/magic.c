@@ -22,7 +22,7 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSmagic[] = "@(#)$Header$ (BRL)";
+static const char RCSmagic[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -50,7 +50,7 @@ static char RCSmagic[] = "@(#)$Header$ (BRL)";
  *  This is called by the macro BU_CK_MAGIC() to provide a "hint"
  *  as to what sort of pointer error might have been made.
  */
-CONST char *
+const char *
 bu_identify_magic( magic )
 register long	magic;
 {
@@ -69,22 +69,26 @@ register long	magic;
 	/*
 	 *  bu.h
 	 */
-	case BU_VLS_MAGIC:
-		return "bu_vls";
-	case BU_PTBL_MAGIC:
-		return "bu_ptbl";
-	case BU_BITV_MAGIC:
-		return "bu_bitv";
 	case BU_LIST_HEAD_MAGIC:
 		return "bu_list";
+	case BU_BITV_MAGIC:
+		return "bu_bitv";
 	case BU_HIST_MAGIC:
 		return "bu_hist";
+	case BU_PTBL_MAGIC:
+		return "bu_ptbl";
 	case BU_MAPPED_FILE_MAGIC:
 		return "bu_mapped_file";
+	case BU_AVS_MAGIC:
+		return "bu_attribute_value_set";
+	case BU_VLS_MAGIC:
+		return "bu_vls";
 	case BU_EXTERNAL_MAGIC:
 		return "bu_external";
+	case BU_COLOR_MAGIC:
+		return "bu_color";
 	case BU_RB_TREE_MAGIC:
-		return "red-black tree";
+		return "bu_rb_tree";
 
 	/*
 	 *  bn.h
@@ -159,37 +163,37 @@ register long	magic;
 	case RT_DB_INTERNAL_MAGIC:
 		return("rt_db_internal");
 	case RT_RAY_MAGIC:
-		return "rt xray";
+		return "librt xray";
 	case RT_HIT_MAGIC:
-		return "rt hit";
+		return "librt hit";
 	case RT_SEG_MAGIC:
-		return("rt seg");
+		return("librt seg");
 	case RT_SOLTAB_MAGIC:
-		return("rt soltab");
+		return("librt soltab");
 	case RT_REGION_MAGIC:
-		return("rt region");
+		return("librt region");
 	case PT_MAGIC:
-		return("rt partition");
-	case PT_HD_MAGIC:
-		return "rt partition list head";
+		return("librt partition");
 	case DBI_MAGIC:
-		return("rt db_i");
+		return("librt db_i");
 	case RT_DIR_MAGIC:
-		return "(librt)directory";
+		return "librt directory";
 	case DB_FULL_PATH_MAGIC:
-		return "db_full_path";
+		return "librt db_full_path";
 	case RT_CTS_MAGIC:
-		return "combined_tree_state";
+		return "librt combined_tree_state";
 	case RT_TREE_MAGIC:
-		return "rt union tree";
+		return "librt union tree";
+	case RT_WDB_MAGIC:
+		return "rt_wdb";
 	case ANIMATE_MAGIC:
-		return("rt animate");
+		return("librt animate");
 	case RESOURCE_MAGIC:
-		return("rt resource");
+		return("librt resource");
 	case PIXEL_EXT_MAGIC:
-		return "rt pixel_ext";
+		return "librt pixel_ext";
 	case RT_AP_MAGIC:
-		return "rt application";
+		return "librt application";
 	case RTI_MAGIC:
 		return("rt_i");
 	case RT_FUNCTAB_MAGIC:

@@ -7,7 +7,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 /*
 	Originally extracted from SCCS archive:
@@ -27,10 +27,15 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <strings.h>
 #endif
 
-#ifndef CRAY
+#ifdef HAVE_TERMCAP_H
+#  include <termcap.h>
+#endif
+#ifdef __ppc__
+#  include <curses.h>
+#endif
+
 #include <sys/ioctl.h>
 #define _winsize winsize	/* For compat with _ioctl.h. */
-#endif
 
 #define TBUFSIZ		1024
 #define MAX_TERM_LEN	80
@@ -109,6 +114,7 @@ int		ClrStandout(), ClrEOL(), ClrText(),
 	appropriate diagnostic.
 	Use 'fp' as output stream.
  */
+int
 InitTermCap( fp )
 FILE	*fp;
 	{	char	*term; /* Name of terminal from environment ($TERM).*/
@@ -143,7 +149,7 @@ FILE	*fp;
 	LoadTP();
 	LoadTCS();
 
-	tputs( TI, 1, PutChr );	/* Initialize terminal.			*/
+	tputs( TI, 1, (void *)PutChr );	/* Initialize terminal.			*/
 	return	1;		/* All is well.				*/
 	}
 
@@ -203,7 +209,7 @@ HmCursor()
 	{
 	if( HO != NULL )
 		{
-		tputs( HO, 1, PutChr );
+		tputs( HO, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -218,7 +224,7 @@ ScrollUp()
 	{
 	if( SF != NULL )
 		{
-		tputs( SF, 1, PutChr );
+		tputs( SF, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -233,7 +239,7 @@ ScrollDn()
 	{
 	if( SR != NULL )
 		{
-		tputs( SR, 1, PutChr );
+		tputs( SR, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -248,7 +254,7 @@ DeleteLn()
 	{
 	if( DL != NULL )
 		{
-		tputs( DL, 1, PutChr );
+		tputs( DL, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -265,7 +271,7 @@ int	x, y;
 	--x; --y; /* Tgoto() adds 1 to each coordinate!?		*/
 	if( CM != NULL )
 		{
-		tputs( tgoto( CM, x, y ), 1, PutChr );
+		tputs( tgoto( CM, x, y ), 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -280,7 +286,7 @@ ClrEOL()
 	{
 	if( CE != NULL )
 		{
-		tputs( CE, 1, PutChr );
+		tputs( CE, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -295,7 +301,7 @@ ClrText()
 	{
 	if( CL != NULL )
 		{
-		tputs( CL, LI, PutChr );
+		tputs( CL, LI, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -311,7 +317,7 @@ int	top, btm;
 	{
 	if( CS != NULL )
 		{
-		tputs( tgoto( CS, btm-1, top-1 ), 1, PutChr );
+		tputs( tgoto( CS, btm-1, top-1 ), 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -326,7 +332,7 @@ ResetScrlReg()
 	{
 	if( CS != NULL )
 		{
-		tputs( tgoto( CS, LI-1, 0 ), 1, PutChr );
+		tputs( tgoto( CS, LI-1, 0 ), 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -341,7 +347,7 @@ ClrStandout()
 	{
 	if( SE != NULL )
 		{
-		tputs( SE, 1, PutChr );
+		tputs( SE, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -356,7 +362,7 @@ SetStandout()
 	{
 	if( SO != NULL )
 		{
-		tputs( SO, 1, PutChr );
+		tputs( SO, 1, (void *)PutChr );
 		return	1;
 		}
 	else
@@ -364,6 +370,7 @@ SetStandout()
 	}
 
 /*	P u t C h r ( )							*/
+int
 PutChr( c )
 char	c;
 	{

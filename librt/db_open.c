@@ -21,12 +21,13 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <unistd.h>
 #include <fcntl.h>
 #ifdef USE_STRING_H
 #include <string.h>
@@ -71,13 +72,13 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 struct db_i *
 db_open( name, mode )
-CONST char	*name;
-CONST char	*mode;
+const char	*name;
+const char	*mode;
 {
 	register struct db_i	*dbip = DBI_NULL;
 	register int		i;
 
-	if(rt_g.debug&DEBUG_DB) bu_log("db_open(%s, %s)\n", name, mode );
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_open(%s, %s)\n", name, mode );
 
 	if( mode[0] == 'r' && mode[1] == '\0' )  {
 		struct bu_mapped_file	*mfp;
@@ -90,7 +91,7 @@ CONST char	*mode;
 			dbip = (struct db_i *)mfp->apbuf;
 			RT_CK_DBI(dbip);
 			dbip->dbi_uses++;
-			if(rt_g.debug&DEBUG_DB)
+			if(RT_G_DEBUG&DEBUG_DB)
 				bu_log("db_open(%s) dbip=x%x: reused previously mapped file\n", name, dbip);
 			return dbip;
 		}
@@ -153,14 +154,17 @@ CONST char	*mode;
 		dbip->dbi_filepath = argv;
 	}
 
+	/* determine version */
+	dbip->dbi_version = db_get_version( dbip );
+
 	bu_ptbl_init( &dbip->dbi_clients, 128, "dbi_clients[]" );
 	dbip->dbi_magic = DBI_MAGIC;		/* Now it's valid */
 
-	if(rt_g.debug&DEBUG_DB)
+	if(RT_G_DEBUG&DEBUG_DB)
 		bu_log("db_open(%s) dbip=x%x\n", dbip->dbi_filename, dbip);
 	return dbip;
 fail:
-	if(rt_g.debug&DEBUG_DB)
+	if(RT_G_DEBUG&DEBUG_DB)
 		bu_log("db_open(%s) FAILED\n", name);
 	if(dbip) bu_free( (char *)dbip, "struct db_i" );
 	return DBI_NULL;
@@ -169,9 +173,12 @@ fail:
 /*
  *			D B _ C R E A T E
  *
- *  Create a new database containing just an IDENT record,
- *  regardless of whether it previously existed or not,
+ *  Create a new database containing just a header record,
+ *  regardless of whether the database previously existed or not,
  *  and open it for reading and writing.
+ *
+ *  New in BRL-CAD Release 6.0 is that this routine also calls
+ *  db_dirbuild(), so the caller shouldn't.
  *
  *
  *  Returns:
@@ -179,37 +186,41 @@ fail:
  *	db_i *		success
  */
 struct db_i *
-db_create( name )
-CONST char *name;
+db_create( const char *name, int version )
 {
 	FILE	*fp;
 	struct db_i	*dbip;
 
-	if(rt_g.debug&DEBUG_DB) bu_log("db_create(%s, %s)\n", name );
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_create(%s, %d)\n", name, version );
 
 	if( (fp = fopen( name, "w" )) == NULL )  {
 		perror(name);
 		return(DBI_NULL);
 	}
 
-#if 0
-	/* Create a v5 database */
-	if( db5_fwrite_ident( fp, "Untitled v5 BRL-CAD Database", 1.0 ) < 0 )  {
-		(void)fclose(fp);
-		return DBI_NULL;
+	switch( version )  {
+	default:
+	case 5:
+		/* Create a v5 database */
+		if( db5_fwrite_ident(fp,"Untitled BRL-CAD Database",1.0)<0){
+			(void)fclose(fp);
+			return DBI_NULL;
+		}
+		break;
+	case 4:
+		/* Create a v4 database */
+		if(db_fwrite_ident(fp,"Untitled BRL-CAD Database",1.0)<0) {
+			(void)fclose(fp);
+			return DBI_NULL;
+		}
+		break;
 	}
-#else
-	/* Create a v4 database */
-	if( db_fwrite_ident( fp, "Untitled v4 BRL-CAD Database", 1.0 ) < 0 )  {
-		(void)fclose(fp);
-		return DBI_NULL;
-	}
-#endif
 
 	(void)fclose(fp);
 
 	if( (dbip = db_open( name, "r+w" ) ) == DBI_NULL )
 		return DBI_NULL;
+
 
 	/* Do a quick scan to determine version, find _GLOBAL, etc. */
 	if( db_dirbuild( dbip ) < 0 )
@@ -246,7 +257,7 @@ register struct db_i	*dbip;
 	register struct directory *dp, *nextdp;
 
 	RT_CK_DBI(dbip);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_close(%s) x%x uses=%d\n",
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_close(%s) x%x uses=%d\n",
 		dbip->dbi_filename, dbip, dbip->dbi_uses );
 
 	if( (--dbip->dbi_uses) > 0 )  {
@@ -296,9 +307,13 @@ register struct db_i	*dbip;
 		for( dp = dbip->dbi_Head[i]; dp != DIR_NULL; )  {
 			RT_CK_DIR(dp);
 			nextdp = dp->d_forw;
-			bu_free( dp->d_namep, "d_namep" );
-			dp->d_namep = (char *)NULL;
-			bu_free( (char *)dp, "dir");
+			RT_DIR_FREE_NAMEP(dp);	/* frees d_namep */
+
+			/* Put 'dp' back on the freelist */
+			dp->d_forw = rt_uniresource.re_directory_hd;
+			rt_uniresource.re_directory_hd = dp;
+			dp->d_forw = NULL;
+
 			dp = nextdp;
 		}
 		dbip->dbi_Head[i] = DIR_NULL;	/* sanity*/
@@ -335,16 +350,17 @@ struct db_i	*dbip;		/* input */
 	for( i=0; i < RT_DBNHASH; i++ )  {
 		for( dp = dbip->dbi_Head[i]; dp != DIR_NULL; dp = dp->d_forw )  {
 			RT_CK_DIR(dp);
+/* XXX Need to go to internal form, if database versions don't match */
 			if( db_get_external( &ext, dp, dbip ) < 0 )  {
 				bu_log("db_dump() read failed on %s, skipping\n", dp->d_namep );
 				continue;
 			}
-			if( wdb_export_external( wdbp, &ext, dp->d_namep, dp->d_flags ) < 0 )  {
+			if( wdb_export_external( wdbp, &ext, dp->d_namep, dp->d_flags, dp->d_minor_type ) < 0 )  {
 				bu_log("db_dump() write failed on %s, aborting\n", dp->d_namep);
-				db_free_external( &ext );
+				bu_free_external( &ext );
 				return -1;
 			}
-			db_free_external( &ext );
+			bu_free_external( &ext );
 		}
 	}
 	return 0;

@@ -6,7 +6,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 /*
 	Originally extracted from SCCS archive:
@@ -209,7 +209,7 @@ int		level;
 		return	OCTREE_NULL;
 	return	newp;
 	}
-
+int
 append_PtList( pt, ptlist )
 fastf_t	*pt;
 PtList	*ptlist;
@@ -315,7 +315,7 @@ int	level;
 		);
 	for( ptp = parentp->o_points->c_next; ptp != PTLIST_NULL; ptp = ptp->c_next )
 		{
-		if( rt_g.debug )
+		if( RT_G_DEBUG )
 			bu_log( "\t%8.3f,%8.3f,%8.3f\n",
 				ptp->c_point[X],
 				ptp->c_point[Y],
@@ -434,7 +434,7 @@ int			level;
 	/* No more octants at this level.				*/
 	return;
 	}
-
+int
 ir_shootray_octree( ap )
 struct application	*ap;
 	{	vect_t	inv_dir;	/* Inverses of ap->a_ray.r_dir	*/

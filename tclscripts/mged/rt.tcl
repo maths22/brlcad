@@ -99,33 +99,33 @@ MGED's framebuffers." } }
 
     menu $top.menubar.obj -title "Objects" -tearoff 0
     $top.menubar.obj add radiobutton -value one -variable rt_control($id,omode)\
-	    -label "one" -underline 0\
+	    -label "One" -underline 0\
 	    -command "rt_set_mouse_behavior $id"
     hoc_register_menu_data "Objects" "one" "Objects - one"\
 	    { { summary "Raytrace only the selected object. Note - this will
 change the mouse behavior of the source window to
 \"o\" (i.e. raytrace object)." } }
     $top.menubar.obj add radiobutton -value several -variable rt_control($id,omode)\
-	    -label "several" -underline 0\
+	    -label "Several" -underline 0\
 	    -command "rt_set_mouse_behavior $id"
     hoc_register_menu_data "Objects" "several" "Objects - several"\
 	    { { summary "Add the selected object to the list of objects to be
 raytraced. Note - this will change the mouse behavior
 of the source window to \"o\" (i.e. pick raytrace objects)." } }
     $top.menubar.obj add radiobutton -value all -variable rt_control($id,omode)\
-	    -label "all" -underline 0\
+	    -label "All" -underline 0\
 	    -command "rt_set_mouse_behavior $id"
     hoc_register_menu_data "Objects" "all" "Objects - all"\
 	    { { summary "Raytrace all displayed objects. Note - this will
 change the mouse behavior of the source window to
 \"d\" (i.e. the default mouse behavior)." } }
     $top.menubar.obj add separator
-    $top.menubar.obj add command -label "edit list"\
+    $top.menubar.obj add command -label "Edit List"\
 	    -command "rt_olist_edit $id"
     hoc_register_menu_data "Objects" "edit list" "Edit List"\
 	    { { summary "Pop up a tool to edit the list
 of objects to be raytraced." } }
-    $top.menubar.obj add command -label "clear list"\
+    $top.menubar.obj add command -label "Clear List"\
 	    -command "rt_olist_clear $id"
     hoc_register_menu_data "Objects" "clear list" "Clear List"\
 	    { { summary "Clear the object list and the contents
@@ -140,7 +140,7 @@ using the pathname of any pane. The panes associated with this
 instance of the GUI may also be specified with keywords. For
 example, ul, \"upper left\" and \"Upper Left\" all specify the
 upper left pane." } }
-    label $top.srcL -text "Source" -anchor e
+    label $top.srcL -text "Source" -anchor e -padx 0 -pady 0
     hoc_register_data $top.srcL "Source" $hoc_data
     entry $top.srcE -relief flat -width 12 -textvar rt_control($id,raw_src)
     hoc_register_data $top.srcE "Source" $hoc_data
@@ -194,7 +194,7 @@ upper left pane. The destination can also be a file or an external
 framebuffer. To specify an external framebuffer the user might
 enter fbhost:0 to send the output to the framebuffer running on
 the machine fbhost and listening on port 0." } }
-    label $top.destL -text "Destination" -anchor e
+    label $top.destL -text "Destination" -anchor e -padx 0 -pady 0
     hoc_register_data $top.destL "Destination" $hoc_data
     entry $top.destE -relief flat -width 12 -textvar rt_control($id,raw_dest)
     hoc_register_data $top.destE "Destination" $hoc_data
@@ -253,7 +253,7 @@ to the window wherein the object is selected. To
 prevent the destination from changing while selecting
 objects, check the fixed button." } }
 
-    label $top.sizeL -text "Size" -anchor e
+    label $top.sizeL -text "Size" -anchor e -padx 0 -pady 0
     hoc_register_data $top.sizeL "Size"\
 	    { { summary "Indicates the size of the image.
 This defaults to the size of the active pane." } }
@@ -295,7 +295,7 @@ same size as the active pane." } }
     hoc_register_menu_data "Size" 1024 "Size - 1024x1024"\
 	    { { summary "Set the image size to 1024x1024." } }
 
-    label $top.colorL -text "Background Color" -anchor e
+    label $top.colorL -text "Background Color" -anchor e -padx 0 -pady 0
     hoc_register_data $top.colorL "Background Color"\
 	    { { summary "This refers to the background color
 used for raytracing. This is also the color
@@ -306,36 +306,34 @@ that is used when clearing the framebuffer." } }
     color_entry_build $top color rt_control($id,color)\
 	    "color_entry_chooser $id $top color \"Background Color\"\
 	    rt_control $id,color"\
-	    12 $rt_control($id,color)
+	    12 $rt_control($id,color) rt
 
     button $top.advancedB -relief raised -text "Advanced Settings..."\
-	    -command "do_Advanced_Settings $id"
+	    -command "do_Advanced_Settings $id" \
+	    -padx 0.5m -pady 0.5m
     hoc_register_data $top.advancedB "Advanced Settings"\
 	    { { summary "Pop up another GUI for advanced settings." } }
-    button $top.okB -relief raised -text "Ok"\
-	    -command "rt_ok $id $top"
-    hoc_register_data $top.okB "Raytrace"\
-	    { { summary "Begin raytracing the view of the source pane.
-The results of the raytrace will go to the place
-specified by the destination. Afterwards, dismiss
-the raytrace control panel." } }
     button $top.raytraceB -relief raised -text "Raytrace" \
-	    -command "do_Raytrace $id"
+	    -command "do_Raytrace $id" \
+	    -padx 0.5m -pady 0.5m
     hoc_register_data $top.raytraceB "Raytrace"\
 	    { { summary "Begin raytracing the view of the source pane.
 The results of the raytrace will go to the place
 specified by the destination." } }
     button $top.clearB -relief raised -text "fbclear" \
-	    -command "do_fbclear $id"
+	    -command "do_fbclear $id" \
+	    -padx 0.5m -pady 0.5m
     hoc_register_data $top.clearB "Clear the Framebuffer"\
 	    { { summary "Clear the framebuffer specified by the
 destination to the background color." } }
     button $top.abortB -relief raised -text "Abort" \
-	    -command "rt_abort"
+	    -command "rtabort" \
+	    -padx 0.5m -pady 0.5m
     hoc_register_data $top.abortB "Abort Raytrace"\
 	    { { summary "Abort all raytraces initiated by MGED." } }
     button $top.dismissB -relief raised -text "Dismiss" \
-	    -command "rt_dismiss $id"
+	    -command "rt_dismiss $id" \
+	    -padx 0.5m -pady 0.5m
     hoc_register_data $top.dismissB "Dismiss"\
 	    { { summary "Dismiss/close the raytrace control panel." } }
 
@@ -351,12 +349,12 @@ destination to the background color." } }
     grid columnconfigure $top.sizeF 0 -weight 1
     grid rowconfigure $top.sizeF 0 -weight 1
 
-    grid $top.srcL $top.srcF -pady 1 -sticky nsew -in $top.gridF1
-    grid $top.destL $top.destF -pady 1 -sticky nsew -in $top.gridF1
-    grid $top.sizeL $top.sizeF -pady 1 -sticky nsew -in $top.gridF1
-    grid $top.colorL $top.colorF -pady 1 -sticky nsew -in $top.gridF1
-    grid $top.advancedB - -pady 1 -sticky ns -in $top.gridF1
-    grid columnconfigure $top.gridF1 1 -weight 1
+    grid $top.srcL $top.srcF - - - -pady 1 -sticky nsew -in $top.gridF1
+    grid $top.destL $top.destF - - - -pady 1 -sticky nsew -in $top.gridF1
+    grid $top.sizeL $top.sizeF - - - -pady 1 -sticky nsew -in $top.gridF1
+    grid $top.colorL $top.colorF - - - -pady 1 -sticky nsew -in $top.gridF1
+    grid $top.raytraceB $top.abortB $top.clearB x $top.advancedB -sticky "ew" -in $top.gridF1
+    grid columnconfigure $top.gridF1 3 -weight 1
     grid rowconfigure $top.gridF1 0 -weight 1
     grid rowconfigure $top.gridF1 1 -weight 1
     grid rowconfigure $top.gridF1 2 -weight 1
@@ -366,9 +364,7 @@ destination to the background color." } }
     grid columnconfigure $top.gridF2 0 -weight 1
     grid rowconfigure $top.gridF2 0 -weight 1
 
-    grid $top.okB $top.raytraceB $top.abortB x $top.clearB x $top.dismissB -sticky "nsew" -in $top.gridF3
-    grid columnconfigure $top.gridF3 3 -weight 1
-    grid columnconfigure $top.gridF3 5 -weight 1
+    grid $top.dismissB -sticky "ns" -in $top.gridF3
 
     grid $top.gridF2 -padx 4 -pady 4 -sticky nsew
     grid $top.gridF3 -padx 4 -pady 4 -sticky nsew
@@ -434,7 +430,7 @@ proc do_Raytrace { id } {
 	set aspect 1
     }
 
-    if {$rt_control($id,color) != ""} {
+    if {[winfo exists $rt_control($id,top).colorMB] && $rt_control($id,color) != ""} {
 	set rgb [getRGBorReset $rt_control($id,top).colorMB rt_control($id,color) $rt_control($id,color)]
 	append rt_cmd " -C[lindex $rgb 0]/[lindex $rgb 1]/[lindex $rgb 2]"
     }

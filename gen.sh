@@ -37,7 +37,12 @@ NFS=1
 # Label number for this CAD Release,
 # RCS main Revision number, and date.
 #RELEASE=M.N;	RCS_REVISION=X;		REL=DATE=dd-mmm-yy
-RELEASE=5.2;	RCS_REVISION=13;	REL_DATE=7-Oct-00	# 5.2
+RELEASE=6.01;	RCS_REVISION=17;	REL_DATE=2-July-02	# 6.0.1
+#RELEASE=6.0;	RCS_REVISION=16;	REL_DATE=22-March-02	# 6.0
+#RELEASE=5.4;	RCS_REVISION=15;	REL_DATE=18-Jul-01	# internal
+#RELEASE=5.3;	RCS_REVISION=14;	REL_DATE=5-Mar-01	# 5.3
+#RELEASE=5.2;	RCS_REVISION=13;	REL_DATE=21-Aug-00	# 5.2
+#RELEASE=5.1;	RCS_REVISION=13;	REL_DATE=Today		# beyond 5.1
 #RELEASE=5.0;	RCS_REVISION=12;	REL_DATE=15-Sept-99	# 5.0 production
 #RELEASE=4.6;	RCS_REVISION=11;	REL_DATE=7-Jul-99	# 5.0beta
 #RELEASE=4.5;	RCS_REVISION=11;	REL_DATE=14-Feb-98	# 4.5 production
@@ -171,7 +176,8 @@ CDIRS="sh cake cakeaux html"
 # db depends on conv, conv depends on libwdb, libwdb depends on librt
 BDIRS="bench \
 	libsysv \
-	libbu libbn \
+	libbu \
+	libbn \
 	libwdb \
 	libpkg \
 	libfb \
@@ -190,7 +196,6 @@ BDIRS="bench \
 	conv \
 	db \
 	rt \
-	anim \
 	mged \
 	remrt \
 	libcursor \
@@ -212,6 +217,7 @@ BDIRS="bench \
 	sig \
 	tab \
 	tools \
+	anim \
 	off \
 	halftone \
 	nirt \
@@ -221,12 +227,17 @@ BDIRS="bench \
 	burst \
 	gtools \
 	bwish \
+	btclsh \
 "			# This ends the list.
 
-TSDIRS=". mged nirt pl-dm lib util"
+#
+# Cakefiles to execute in tclscripts.
+#
+TSDIRS=". mged nirt pl-dm lib util rtwizard/examples/PictureTypeA rtwizard/examples/PictureTypeB rtwizard/examples/PictureTypeC rtwizard/examples/PictureTypeD rtwizard/examples/PictureTypeE rtwizard/examples/PictureTypeF rtwizard/lib rtwizard"
+
 HTML_DIRS="html/manuals html/manuals/shaders html/manuals/Anim_Tutorial html/manuals/libdm html/manuals/mged html/manuals/mged/animmate html/manuals/librt html/manuals/libbu html/manuals/cadwidgets html/ReleaseNotes html/ReleaseNotes/Rel5.0 html/ReleaseNotes/Rel5.0/Summary"
 INSTALL_ONLY_DIRS="sample_applications $HTML_DIRS"
-PROE_DIRS=". sun4_solaris sgi_elf2 text text/fullhelp text/menus"
+PROE_DIRS=". sgi_mips4 text resource"
 
 # If there is no TCP networking, eliminate network-only directories.
 if test "${HAS_TCP}" = "0"
@@ -258,7 +269,11 @@ case "${MACHINE}" in
 		BDIRS=`echo ${BDIRS} | \
 			sed -e 's/libz//' -e 's/libpng//'`
 		;;
-	m4i65)
+	pmac)
+		BDIRS=`echo ${BDIRS} | \
+			sed -e 's/libz//'`
+		;;
+	7d|m4i65)
 		# Be sure to look in /usr/lib64, not /usr/lib!
 		BDIRS=`echo ${BDIRS} | \
 		    sed -e 's/libz//' `
@@ -346,10 +361,35 @@ benchmark)
 #  clobber	clean + noprod
 #  lint
 #  ls		ls -al of all subdirectories
+#
+#  If operations are enclosed in sub-shells "(...)",
+#  then on newer systems, ^C will only terminate the sub-shell
 all)
 	for dir in ${BDIRS}; do
 		echo -------------------------------- ${DIRPRE}${dir}${DIRSUF};
-		( cd ${DIRPRE}${dir}${DIRSUF} && cake -k ${SILENT} )
+		if test ! -d ${DIRPRE}${dir}${DIRSUF}
+		then	continue;
+		fi
+		cd ${DIRPRE}${dir}${DIRSUF}
+		cake -k ${SILENT}
+		cd ..
+	done;;
+
+# Just like "all", but will use the "fast.sh" scripts when available.
+fast)
+	for dir in ${BDIRS}; do
+		echo -------------------------------- ${DIRPRE}${dir}${DIRSUF};
+		if test ! -d ${DIRPRE}${dir}${DIRSUF}
+		then	continue;
+		fi
+		cd ${DIRPRE}${dir}${DIRSUF}
+		if test -f ../${dir}/fast.sh
+		then
+			../${dir}/fast.sh ${SILENT}
+		else
+			cake -k ${SILENT}
+		fi
+		cd ..
 	done;;
 
 clean|noprod|clobber|lint)
@@ -454,7 +494,7 @@ mkdir|relink)
 	then	lnarg="-s"
 	else	lnarg=""
 	fi
-	for dir in ${BDIRS}; do
+	for dir in ${BDIRS} ; do
 		if test -d ${DIRPRE}${dir}${DIRSUF}
 		then
 			rm -f ${DIRPRE}${dir}${DIRSUF}/Cakefile
@@ -500,9 +540,10 @@ TAGS)
 
 etags)
 	/bin/rm -f etags;
-	for dir in ${BDIRS}; do
+	for dir in ${BDIRS} pro-engineer; do
 		echo -------------------------------- ${dir};
-		etags -a -o etags ${dir}/*.c
+#		etags -a -o etags ${dir}/*.c
+		find ${dir} -name \*.c -exec etags -a -o etags {} \;
 	done;;
 shell)
 	for dir in ${BDIRS}; do
@@ -517,6 +558,7 @@ command)
 	done;;
 
 rcs-lock)
+	echo "rcs-lock is deprecated"
 	rcs -l ${TOP_FILES}
 	rcs -u ${TOP_FILES}
 	for dir in ${ADIRS} ${BDIRS}; do
@@ -527,6 +569,7 @@ rcs-lock)
 	done;;
 
 checkin)
+	echo "checkin is deprecated"
 	echo " RCS_Revision ${RCS_REVISION}"
 	REL_NODOT=`echo ${RELEASE}|tr . _`
 	CI_ARGS="-f -r${RCS_REVISION} -sRel${REL_NODOT} -mRelease_${RELEASE}"
@@ -560,6 +603,15 @@ dist)
 		echo "/usr/gnu/bin/tar is broken under IRIX"
 		exit
 	fi
+
+	if test $# -eq 0
+	then
+	    echo "You must specify a cvs tag option (like -r rel-6-0)"
+	    exit
+	else
+		CVS_ARGS=$*
+	fi
+
 #	if this is a tty, get the encryption key
 	if tty -s
 	then
@@ -586,16 +638,10 @@ dist)
 		export CVSROOT
 	fi
 
-#	create the args for the "cvs export"
-	if test $# -eq 0
-	then
-		CVS_ARGS="-D now"
-	else
-		CVS_ARGS=$*
-	fi
-
 #	get the distribution
 	cvs export -d ${DISTDIR} ${CVS_ARGS} brlcad
+	/bin/rm -f ${DISTDIR}/bench/pixcmp
+	/bin/rm -f ${DISTDIR}/bench/pixcmp.o
 
 #	fix "gen.sh" to set NFS=0
 	sed -e 's/^NFS=1/NFS=0/' < ${DISTDIR}/gen.sh > ${DISTDIR}/tmp
@@ -603,8 +649,7 @@ dist)
 
 #	fix "Cakefile.defs" to production values
 	sed -e '/^#define[ 	]*NFS/d' < ${DISTDIR}/Cakefile.defs > ${DISTDIR}/tmp
-	sed -e '/PRODUCTION/s/0/1/' < ${DISTDIR}/tmp > ${DISTDIR}/Cakefile.defs
-	rm -f ${DISTDIR}/tmp
+	mv ${DISTDIR}/tmp ${DISTDIR}/Cakefile.defs
 
 	if test `grep '^#define[ 	]*NFS' ${DISTDIR}/Cakefile.defs|wc -l` -eq 0
 	then 	echo "Shipping non-NFS version of Cakefile.defs (this is good)";
@@ -625,12 +670,12 @@ dist)
 	grep PRODUCTION ${DISTDIR}/Cakefile.defs
 	echo
 
-	echo "Formatting the INSTALL.TXT file"
+#	echo "Formatting the INSTALL.TXT file"
 	rm -f ${DISTDIR}/INSTALL.ps
-	gtbl ${DISTDIR}/doc/install.doc | groff  > ${DISTDIR}/INSTALL.ps
+#	gtbl ${DISTDIR}/doc/install.doc | groff  > ${DISTDIR}/INSTALL.ps
 
-	echo "Preparing the 'bench' directory"
-	(cd ${DISTDIR}/bench; cake clobber; cake install)
+#	echo "Preparing the 'bench' directory"
+#	(cd ${DISTDIR}/bench; cake clobber; cake install)
 	echo "End of BRL-CAD Release $RELEASE archive, `date`" > ${DISTDIR}/zzzEND
 	(cd ${DISTDIR}; du -a > Contents)
 
@@ -764,26 +809,29 @@ EndOfFile
 	#
 	#  The "png" package includes both libpng and libz
 	#
+	#  Note that the FreeBSD pkg system does not properly handle symbolic links
+	#    so "brlcad/lib/iwidgets" must be created and detroyed using @exec and @unexec
 	#########################################
 
 cat > contents << EOF
 @name brlcad-$RELEASE
-@pkgdep png-1.0.3
-@cwd /usr
+@pkgdep png-1.2.1
 @cwd /usr
 @owner bin
 @group bin
+@unexec /bin/rm -f %D/brlcad/lib/iwidgets
 EOF
 
 
-find /usr/brlcad \! -type d -print | sed 's,/usr/,,' >> contents
+find /usr/brlcad \! -type d -print | sed 's,/usr/,,' | grep -v 'iwidgets$' >> contents
 
 cat >> contents << EOF
 @exec /usr/bin/env OBJFORMAT=elf /sbin/ldconfig -m /usr/brlcad/lib
+@exec /bin/ln -s %D/brlcad/lib/iwidgets3.0.1 %D/brlcad/lib/iwidgets
 @unexec /usr/bin/env OBJFORMAT=elf /sbin/ldconfig -R
 EOF
 
-find /usr/brlcad -type d -print | sort -r | sed "s,/usr/,@dirrm ," >> contents
+find -d /usr/brlcad -type d -print | sed "s,/usr/,@dirrm ," >> contents
 
 	##############################
 	#
@@ -806,12 +854,12 @@ Summary:  BRL-CAD(tm) Solid Modeling System with ray-tracer and geometry editor
 Name: brlcad
 Version: ${RELEASE}
 Release: ${REV}
-Copyright:  Copyright 2000 by U.S.Army in all countires except the USA.  See distribution restrictions in your license agreement or ftp.arl.mil:/pub/brl-cad/agreement
+Copyright:  Copyright 2002 by U.S.Army in all countires except the USA.  See distribution restrictions in your license agreement or ftp.arl.mil:/pub/brl-cad/agreement
 Group: Applications/Graphics
 Source:  http://ftp.arl.mil:/brl-cad/Downloads/Rel${RELEASE}/
 URL:  http://ftp.arl.mil/brlcad/
 Vendor: The U. S. Army Research Laboratory, Aberdeen Proving Ground, MD  USA  21005-5068
-Packager: Mike Muuss <Mike@arl.mil>
+Packager: John Anderson <jra@arl.army.mil>
 %description
 The BRL-CAD(tm) Package is a powerful Constructive Solid Geometry (CSG)
 solid modeling system.  BRL-CAD includes an interactive geometry
@@ -820,7 +868,7 @@ a generic framebuffer library, a network-distributed image-processing
 and signal-processing capability, and a large collection of related
 tools and utilities.
 
-This version was compiled on RedHat Linux 6.2
+This version was compiled on RedHat Linux 7.2
 
 %prep
         exit 0
@@ -860,10 +908,10 @@ editor, a ray tracing library, two ray-tracing based lighting models, \
 a generic framebuffer library, a network-distributed image-processing \
 and signal-processing capability, and a large collection of related \
 tools and utilities. \
-Copyright 2000 by U.S.Army in all countires except the USA.  See distribution restrictions in your license agreement or ftp.arl.mil:/pub/brl-cad/agreement
+Copyright 2002 by U.S.Army in all countires except the USA.  See distribution restrictions in your license agreement or ftp.arl.mil:/pub/brl-cad/agreement
 VENDOR=The U. S. Army Research Laboratory, Aberdeen Proving Ground, MD  USA  21005-5068
-HOTLINE=http://ftp.arl.mil/brlcad/
-EMAIL=acst@arl.mil
+HOTLINE=http://ftp.arl.army.mil/brlcad/
+EMAIL=acst@arl.army.mil
 EOF
 	echo "i pkginfo=./pkginfo" >> ./prototype
 	pkgproto /usr/brlcad/.=/usr/brlcad >> ./prototype
@@ -878,6 +926,8 @@ EOF
 	;;
 
 # For SGI IRIX, use the "swpkg" GUI tool.
+	# it appears that you must be root for this to work
+	# cd /tmp
 	# swpkg -nofork
 	# Critical note: Product Name may *not* have a "-" in it!
 	# DON'T SAY "BRL-CAD"!!!
@@ -905,14 +955,14 @@ EOF
 	# In "File Browser", click on "html", control-left-click on "man".
 	# click "> Add" (watch the manual stuff go by)
 	# Select 5th tab, "Build Product"
-	# Change "Distribution Directory" to "/var/tmp"
+	# Change "Distribution Directory" to "/var/tmp" (cannot be cwd)
 	# Check off "Verbose" checkbox
 	# Click on "Build All"
 	# Click OK on "save spec"
 	# Click OK on "Save Idb"
 	# Watch files scroll by in uppermost scrolling window
 	# When done, select menu "File > Exit"
-	# Four files should have been created.  Bundle them up with:
+	# Four files should have been created in "/var/tmp".  Bundle them up with:
 	# tar cvf brlcad51.tardist brlcad brlcad.idb brlcad.man brlcad.sw
 	# gzip -9 < brlcad51.tardist > brlcad51.tardist.gz
 	# crypt xyzzy < brlcad51.tardist.gz > brlcad51.tardist.gz.crypt

@@ -25,7 +25,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -51,8 +51,9 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "externs.h"
 #include "./mged_solid.h"
 #include "./mged_dm.h"
+#include "./cmd.h"
 
-BU_EXTERN( void nmg_invert_shell , ( struct shell *s , CONST struct bn_tol *tol ) );
+BU_EXTERN( void nmg_invert_shell , ( struct shell *s , const struct bn_tol *tol ) );
 
 extern struct rt_db_internal	es_int;	/* from edsol.c */
 extern struct bn_tol		mged_tol;	/* from ged.c */
@@ -166,7 +167,7 @@ char **argv;
 
 	CHECK_DBI_NULL;
 
-	if(argc < 1 || MAXARGS < argc){
+	if(argc < 1){
 	  struct bu_vls vls;
 
 	  bu_vls_init(&vls);
@@ -191,13 +192,13 @@ char **argv;
 	  /* solid edit mode */
 	  /* apply es_mat editing to parameters */
 	  transform_editing_solid( &intern, es_mat, &es_int, 0 );
-	  outdp = illump->s_path[illump->s_last];
+	  outdp = LAST_SOLID(illump);
 
-	  Tcl_AppendResult(interp, "You are in Prim Edit mode, using edited primitive as outside primitive: ", (char *)NULL);
-	  for(i=0; i <= illump->s_last; i++) {
-	    Tcl_AppendResult(interp, "/", illump->s_path[i]->d_namep, (char *)NULL);
+	  if( argc < arg+1 ) {
+		  Tcl_AppendResult(interp, "You are in Prim Edit mode, using edited primitive as outside primitive: ", (char *)NULL);
+		  add_solid_path_to_result( interp, illump );
+		  Tcl_AppendResult(interp, "\n", (char *)NULL);
 	  }
-	  Tcl_AppendResult(interp, "\n", (char *)NULL);
 	}  else if( state == ST_O_EDIT ) {
 	  /* object edit mode */
 	  if( illump->s_Eflag ) {
@@ -210,13 +211,12 @@ char **argv;
 	  /* apply es_mat and modelchanges editing to parameters */
 	  bn_mat_mul(newmat, modelchanges, es_mat);
 	  transform_editing_solid( &intern, newmat, &es_int, 0 );
-	  outdp = illump->s_path[illump->s_last];
-
-	  Tcl_AppendResult(interp, "You are in Object Edit mode, using key solid as outside solid: ", (char *)NULL);
-	  for(i=0; i <= illump->s_last; i++) {
-	    Tcl_AppendResult(interp, "/", illump->s_path[i]->d_namep, (char *)NULL);
+	  outdp = LAST_SOLID(illump);
+	  if( argc < arg+1 ) {
+		  Tcl_AppendResult(interp, "You are in Object Edit mode, using key solid as outside solid: ", (char *)NULL);
+		  add_solid_path_to_result( interp, illump );
+		  Tcl_AppendResult(interp, "\n", (char *)NULL);
 	  }
-	  Tcl_AppendResult(interp, "\n", (char *)NULL);
 	} else {
 	  /* Not doing any editing....ask for outside solid */
 	  if( argc < arg+1 ) {
@@ -231,7 +231,7 @@ char **argv;
 	  }
 	  ++arg;
 
-	  if( rt_db_get_internal( &intern, outdp, dbip, bn_mat_identity ) < 0 ) {
+	  if( rt_db_get_internal( &intern, outdp, dbip, bn_mat_identity, &rt_uniresource ) < 0 ) {
 	    (void)signal( SIGINT, SIG_IGN );
 	    TCL_READ_ERR_return;
 	  }
@@ -239,7 +239,7 @@ char **argv;
 
 	if( intern.idb_type == ID_ARB8 )  {
 	  /* find the comgeom arb type, & reorganize */
-	  int uvec[8],svec[8];
+	  int uvec[8],svec[11];
 
 	  if( rt_arb_get_cgtype( &cgtype , intern.idb_ptr, &mged_tol , uvec , svec ) == 0 ) {
 	    Tcl_AppendResult(interp, outdp->d_namep, ": BAD ARB\n", (char *)NULL);
@@ -273,11 +273,11 @@ char **argv;
 	  status = TCL_ERROR;
 	  goto end;
 	}
-	if( (int)strlen(argv[arg]) >= NAMESIZE )  {
+	if( dbip->dbi_version < 5 && (int)strlen(argv[arg]) >= NAMESIZE )  {
 	  struct bu_vls tmp_vls;
 
 	  bu_vls_init(&tmp_vls);
-	  bu_vls_printf(&tmp_vls, "Names are limited to %d characters\n", NAMESIZE-1);
+	  bu_vls_printf(&tmp_vls, "Database version 4 names are limited to %d characters\n", NAMESIZE-1);
 	  Tcl_AppendResult(interp, bu_vls_addr(&tmp_vls), (char *)NULL);
 	  bu_vls_free(&tmp_vls);
 	  status = TCL_ERROR;
@@ -522,11 +522,11 @@ char **argv;
 	(void)signal( SIGINT, SIG_IGN);
  
 	/* Add to in-core directory */
-	if( (dp = db_diradd( dbip,  newname, -1, 0, DIR_SOLID, NULL )) == DIR_NULL )  {
+	if( (dp = db_diradd( dbip,  newname, -1, 0, DIR_SOLID, (genptr_t)&intern.idb_type )) == DIR_NULL )  {
 	  (void)signal( SIGINT, SIG_IGN );
 	  TCL_ALLOC_ERR_return;
 	}
-	if( rt_db_put_internal( dp, dbip, &intern ) < 0 ) {
+	if( rt_db_put_internal( dp, dbip, &intern, &rt_uniresource ) < 0 ) {
 	  (void)signal( SIGINT, SIG_IGN );
 	  TCL_WRITE_ERR_return;
 	}
@@ -537,7 +537,7 @@ char **argv;
 		arglist[0] = "e";
 		arglist[1] = newname;
 		arglist[2] = NULL;
-		return f_edit(clientData, interp, 2, arglist );
+		return cmd_draw(clientData, interp, 2, arglist );
 	}
 end:
 	(void)signal( SIGINT, SIG_IGN );
@@ -548,12 +548,12 @@ end:
 
 /* finds inside arbs */
 int
-arbin(ip, thick, nface, cgtype, planes)
-struct rt_db_internal	*ip;
-fastf_t	thick[6];
-int	nface;
-int	cgtype;		/* # of points, 4..8 */
-plane_t	planes[6];
+arbin(
+	struct rt_db_internal	*ip,
+	fastf_t	thick[6],
+	int	nface,
+	int	cgtype,		/* # of points, 4..8 */
+	plane_t	planes[6])
 {
 	struct rt_arb_internal	*arb = (struct rt_arb_internal *)ip->idb_ptr;
 	point_t		center_pt;
@@ -583,7 +583,7 @@ plane_t	planes[6];
 
 	/* find the new vertices by intersecting the new face planes */
 	for(i=0; i<num_pts; i++) {
-	  if( rt_arb_3face_intersect( arb->pt[i], planes, cgtype, i*3 ) < 0 )  {
+	  if( rt_arb_3face_intersect( arb->pt[i], (const plane_t *)planes, cgtype, i*3 ) < 0 )  {
 	    Tcl_AppendResult(interp, "cannot find inside arb\n", (char *)NULL);
 	    return(1);
 	  }
@@ -696,10 +696,11 @@ plane_t	planes[6];
 	{
 		struct model *m;
 		struct nmgregion *r;
-		struct shell *s;
+		struct shell *s = NULL;
 		struct faceuse *fu;
 		struct rt_tess_tol ttol;
 		struct bu_ptbl vert_tab;
+		struct rt_bot_internal  *bot;
 
 		ttol.magic = RT_TESS_TOL_MAGIC;
 		ttol.abs = mged_abs_tol;
@@ -713,7 +714,7 @@ plane_t	planes[6];
 		if( rt_functab[ip->idb_type].ft_tessellate( &r , m , ip , &ttol , &mged_tol ) )
 		{
 		  Tcl_AppendResult(interp, "Cannot tessellate arb7\n", (char *)NULL);
-		  rt_functab[ip->idb_type].ft_ifree( ip );
+		  rt_db_free_internal( ip, &rt_uniresource );
 		  return( 1 );
 		}
 
@@ -793,12 +794,17 @@ plane_t	planes[6];
 		nmg_extrude_cleanup( s , 0 , &mged_tol );
 
 		/* free old ip pointer */
-		rt_db_free_internal( ip );
+		rt_db_free_internal( ip, &rt_uniresource );
+
+		/* convert the NMG to a BOT */
+		bot = (struct rt_bot_internal *)nmg_bot( s, &mged_tol );
+		nmg_km( m );
 
 		/* put new solid in "ip" */
-		ip->idb_type = ID_NMG;
-		ip->idb_meth = &rt_functab[ID_NMG];
-		ip->idb_ptr = (genptr_t)m;
+		ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+		ip->idb_type = ID_BOT;
+		ip->idb_meth = &rt_functab[ID_BOT];
+		ip->idb_ptr = (genptr_t)bot;
 	}
 
 	return(0);
@@ -811,9 +817,7 @@ plane_t	planes[6];
  * thick[2] is thickness for side
  */
 int
-tgcin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[6];
+tgcin(struct rt_db_internal *ip, fastf_t thick[6])
 {
 	struct rt_tgc_internal	*tgc = (struct rt_tgc_internal *)ip->idb_ptr;
 	vect_t norm;		/* unit vector normal to base */
@@ -1096,9 +1100,7 @@ fastf_t	thick[6];
 
 /* finds inside of torus */
 int
-torin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t			thick[6];
+torin(struct rt_db_internal *ip, fastf_t thick[6] )
 {
 	struct rt_tor_internal	*tor = (struct rt_tor_internal *)ip->idb_ptr;
 
@@ -1124,9 +1126,7 @@ fastf_t			thick[6];
 
 /* finds inside ellg */
 int
-ellgin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[6];
+ellgin(struct rt_db_internal *ip, fastf_t thick[6])
 {
 	struct rt_ell_internal	*ell = (struct rt_ell_internal *)ip->idb_ptr;
 	int i, j, k, order[3];
@@ -1177,9 +1177,7 @@ fastf_t	thick[6];
 
 /* find inside of particle solid */
 int
-partin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	*thick;
+partin(struct rt_db_internal *ip, fastf_t *thick )
 {
 	struct rt_part_internal	*part = (struct rt_part_internal *)ip->idb_ptr;
 
@@ -1196,9 +1194,7 @@ fastf_t	*thick;
 
 /* finds inside of rpc, not quite right - r needs to be smaller */
 int
-rpcin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[4];
+rpcin(struct rt_db_internal *ip, fastf_t thick[4])
 {
 	struct rt_rpc_internal	*rpc = (struct rt_rpc_internal *)ip->idb_ptr;
 	fastf_t			b;
@@ -1237,9 +1233,7 @@ fastf_t	thick[4];
 
 /* XXX finds inside of rhc, not quite right */
 int
-rhcin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[4];
+rhcin(struct rt_db_internal *ip, fastf_t thick[4])
 {
 	struct rt_rhc_internal	*rhc = (struct rt_rhc_internal *)ip->idb_ptr;
 	vect_t			Bn, Hn, Bu, Hu, Ru;
@@ -1267,9 +1261,7 @@ fastf_t	thick[4];
 
 /* finds inside of epa, not quite right */
 int
-epain(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[2];
+epain(struct rt_db_internal *ip, fastf_t thick[2])
 {
 	struct rt_epa_internal	*epa = (struct rt_epa_internal *)ip->idb_ptr;
 	vect_t			Hu;
@@ -1289,9 +1281,7 @@ fastf_t	thick[2];
 
 /* finds inside of ehy, not quite right, */
 int
-ehyin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[2];
+ehyin(struct rt_db_internal *ip, fastf_t thick[2])
 {
 	struct rt_ehy_internal	*ehy = (struct rt_ehy_internal *)ip->idb_ptr;
 	vect_t			Hu;
@@ -1311,9 +1301,7 @@ fastf_t	thick[2];
 
 /* finds inside of eto */
 int
-etoin(ip, thick)
-struct rt_db_internal	*ip;
-fastf_t	thick[1];
+etoin(struct rt_db_internal *ip, fastf_t thick[1])
 {
 	fastf_t			c;
 	struct rt_eto_internal	*eto = (struct rt_eto_internal *)ip->idb_ptr;
@@ -1329,9 +1317,7 @@ fastf_t	thick[1];
 
 /* find inside for NMG */
 int
-nmgin( ip , thick )
-struct rt_db_internal	*ip;
-fastf_t thick;
+nmgin( struct rt_db_internal *ip, fastf_t thick )
 {
 	struct model *m;
 	struct nmgregion *r;

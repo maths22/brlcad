@@ -3,6 +3,15 @@
  *
  *      This program generages a chain-link fence.  Every parameter of
  *      the fence may be adjusted.  Default values are held in fence.h
+ *      Be wary of long fences...  
+ *
+ *      Note: It would be much more optimal for there to be a fence
+ *      object type (or a mesh object type) so that memory usage is 
+ *      minimized.  I.e. instead of creating a thousand little
+ *      translations, rotations, and copies of basic primitives for a
+ *      short 5 foot fence, we would just store the height, width, 
+ *      and mesh parameters (angle of twists in xyz, vertical separation,
+ *      horizontal separation, and depth).
  *
  *  Author -
  *      Christopher Sean Morrison
@@ -23,10 +32,6 @@
  ***********************************************************************/
 
 #include "./fence.h"
-
-#ifndef M_PI
-#define M_PI            3.14159265358979323846
-#endif
 
 /* command-line options are described in the parseArguments function
  */
@@ -117,12 +122,18 @@ void argumentHelp(fp, progname, message)
      char *progname;
      char *message;
 {
-  if (message) (void) fputs(strcat(message, "\n"), fp);
+
+  fflush(stdout);
+  if (message) {
+    fprintf(fp, "%s\n", message);
+  }
+  fflush(stdout);
 
   fprintf(fp, "Usage Format: \n%s %s\n\n", progname, \
 	   "-[ivdonuhHlLrRjatTbBcCfpmwseEgGxXzZ]" \
 	  );
   fprintf(fp, "\t-[ivd]\n\t\tspecifies interactive, verbose, and/or debug modes\n");
+  fprintf(fp, "\t-[IVD]\n\t\ttoggles interactive, verbose, and/or debug modes\n");
   fprintf(fp, "\t-o filename\n\t\tspecifies the name of the file to output to\n");
   fprintf(fp, "\t-n 'string'\n\t\tthe 'string' name of the csg database\n");
   fprintf(fp, "\t-u 'units'\n\t\tthe units of the data in the csg database\n");
@@ -133,8 +144,8 @@ void argumentHelp(fp, progname, message)
   fprintf(fp, "\t-a angle\n\t\tthe primary angle of the wire 'zig-zagging'\n");
   fprintf(fp, "\t-j distance\n\t\tthe maximum spacing between the poles\n");
   fprintf(fp, "\t-[tT] 'material'\n\t\tthe material of the fence (t) or \n\t\tthe material of all generated regions (T)\n");
-  fprintf(fp, "\n-[bB] 'parameters'\n\t\tthe parameter string for the fence material(b)\n\t\tor of all region materials (B)\n");
-  fprintf(fp, "\n-[cC] 'rval gval bval'\b\t\tthe RGB color of the fence (c)\n\t\tor of all region materials (C)\n\t\t(0 <= vlaues <= 255)\n"); 
+  fprintf(fp, "\t-[bB] 'parameters'\n\t\tthe parameter string for the fence material(b)\n\t\tor of all region materials (B)\n");
+  fprintf(fp, "\t-[cC] 'rval gval bval'\b\t\tthe RGB color of the fence (c)\n\t\tor of all region materials (C)\n\t\t(0 <= values <= 255)\n"); 
   fprintf(fp, "\t-f fencename\n\t\tthe base name of the fence objects in the database\n");
   fprintf(fp, "\t-p polename\n\t\tthe base name of the pole objects in the database\n");
   fprintf(fp, "\t-m meshname\n\t\tthe base name of the mesh objects in the database\n");
@@ -144,7 +155,9 @@ void argumentHelp(fp, progname, message)
   fprintf(fp, "\t-[gG] [fpm]\n\t\tspecifies which parts of the fence object(s) to generate\n\t\t'g' specifies to generate the object(s)\n\t\t'G' specifies to do the opposite of the default(s)\n");
   fprintf(fp, "\t-[xX]\n\t\tdisplays some command-line parameter examples\n");
   fprintf(fp, "\t-[zZ]\n\t\tdisplays the default settings\n");
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
+
+  fflush(stdout);
 
   return;
 }
@@ -165,7 +178,7 @@ void argumentExamples(fp, progname)
 	   "-o", outputFilename, \
 	   "-e", "f" \
 	  );
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
 
   fprintf(fp, "Full Interactive-Mode Example: \n%s %s %s %s %s %s\n", 
 	   progname, \
@@ -173,7 +186,7 @@ void argumentExamples(fp, progname)
 	   "-o", outputFilename, \
 	   "-e", "fpmw" \
 	  );
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
 
   fprintf(fp, "Simple Parameter-Specified Example: \n%s %s %s %s %.1f %s %.1f\n", 
 	   progname, \
@@ -181,7 +194,7 @@ void argumentExamples(fp, progname)
 	   "-H", MAGNITUDE(fenceHeight), \
 	   "-L", MAGNITUDE(fenceWidth) \
 	  );
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
 
   fprintf(fp, "Extended Parameter-Specified Example: \n%s %s %s %s %s %s %s %s '%.1f %.1f %.1f' %s '%.1f %.1f %.1f' %s %.1f %s %.1f %s %.1f %s %.1f %s '%d %d %d' %s %s\n", 
 	   progname, \
@@ -197,7 +210,7 @@ void argumentExamples(fp, progname)
 	   "-c", fenceMaterialColor[0], fenceMaterialColor[1], fenceMaterialColor[2], \
 	   "-e", "fpm" \
 	  );
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
 
   return;
 }
@@ -236,7 +249,7 @@ void defaultSettings(fp)
   fprintf(fp, "\t\t\t\tMaterial[%s] \n\t\t\t\tMaterial Parameters[%s] \n\t\t\t\tMaterial Color[%d %d %d]\n\n", wireMaterial, wireMaterialParams, wireMaterialColor[0], wireMaterialColor[1], wireMaterialColor[2]);
   fprintf(fp, "\tCombination Names: \n");
   fprintf(fp, "\t\tFence: [%s] \n\t\tPoles: [%s] \n\t\tMesh: [%s] \n\t\tWires: [%s] \n\t\tSegments: [%s] \n\n", fenceName, poleName, meshName, wireName, segmentName);
-  putc((int)'\n', fp);
+  fprintf(fp, "\n");
   fprintf(fp, "No action performed.\n");
 }
 
@@ -255,12 +268,21 @@ int parseArguments(argc, argv)
   double d=0.0;
   char *progname;
   int color[3];
-  progname = calloc(64,sizeof(char));
 
-  if ((progname = strrchr(*argv, '/')))
-    progname++;
-  else
-    progname = *argv;
+  if ((progname = (char *) calloc(DEFAULT_MAXNAMELENGTH,sizeof(char))) == NULL) {
+    if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "parseArguments:(char *)progname calloc FAILED\n");
+    exit(1);
+  }
+
+  fflush(stdout);
+
+  if (argc > 1) {
+    strncpy(progname, argv[0], (strlen(argv[0])>DEFAULT_MAXNAMELENGTH?DEFAULT_MAXNAMELENGTH:strlen(argv[0])));
+  }
+  else {
+    strncpy(progname, "fence\0", 6);
+  }
+  fflush(stdout);
 
   opterr = 0;
 
@@ -455,7 +477,7 @@ int parseArguments(argc, argv)
       break;
 
     case 'c' :
-      if ((sscanf(optarg, "%u %u %u", &color[0], &color[1], &color[2]))!=3) {
+      if ((sscanf(optarg, "%u %u %u", (unsigned int *)&color[0], (unsigned int *)&color[1], (unsigned int *)&color[2]))!=3) {
 	(void)argumentHelp(DEFAULT_VERBOSE_OUTPUT, progname, "Invalid number of parameters for material color: need r, g, b values"); 
 	exit(1);
       }
@@ -468,7 +490,7 @@ int parseArguments(argc, argv)
       fenceMaterialColor[2] = (unsigned char)color[2];
       break;
     case 'C' :
-      if ((sscanf(optarg, "%u %u %u", &color[0], &color[1], &color[2]))!=3) {
+      if ((sscanf(optarg, "%u %u %u", (unsigned int *)&color[0], (unsigned int *)&color[1], (unsigned int *)&color[2]))!=3) {
 	(void)argumentHelp(DEFAULT_VERBOSE_OUTPUT, progname, "Invalid number of parameters for material color: need r, g, b values"); 
 	exit(1);
       }
@@ -610,16 +632,20 @@ int parseArguments(argc, argv)
       break;
 
     case '?' :
+  fflush(stdout);
       (void)argumentHelp(DEFAULT_VERBOSE_OUTPUT, progname, "Command-line argument assistance");
       exit(1);
       break;
 
     default  : /*shouldn't be reached since getopt throws a ? for args not found*/
+  fflush(stdout);
       (void)argumentHelp(DEFAULT_VERBOSE_OUTPUT, progname, "Illegal command-line argument");
       exit(1);
       break;
     }
   }
+  fflush(stdout);
+
   return(optind);
 }
 
@@ -698,7 +724,7 @@ char *getPrePostName(prefix, base, suffix)
  * as necessary to actually generate the fence.
  *************************************************************/
 int generateFence_s(fp, fencename, startposition, endposition)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *fencename;
      point_t startposition;
      point_t endposition;
@@ -713,7 +739,7 @@ int generateFence_s(fp, fencename, startposition, endposition)
 }
 
 int generateFence(fp, fencename, startposition, heightvector, widthvector)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *fencename;
      point_t startposition;
      vect_t heightvector;
@@ -734,8 +760,7 @@ int generateFence(fp, fencename, startposition, heightvector, widthvector)
   VMOVE(fenceWidth, widthvector);
   
   if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "\nBeginning fence [%s] generation...\n", fencename);
-  
-  
+
   if ((mk_id_units(fp, id, units))==0) {
     if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generateFence:id[%s], units[%s]\n", id, units);
     if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "\"%s\" (units==\"%s\")\n", id, units);
@@ -754,7 +779,7 @@ int generateFence(fp, fencename, startposition, heightvector, widthvector)
     if ((poleerrors=generatePoles_s(fp, poleName))==0){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...Pole generated\n");
       
-      if ((mk_addmember(poleName, &fencemembers, WMOP_UNION))!=NULL){
+      if ((mk_addmember(poleName, &fencemembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building fence...poles added...\n");
       } 
       else {
@@ -762,7 +787,7 @@ int generateFence(fp, fencename, startposition, heightvector, widthvector)
 	if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generateFence:mk_addmember poleName[%s] FAILED\n", poleName);
 	errors++;
       }
-      if ((mk_addmember(poleName, &fenceregionmembers, WMOP_UNION))!=NULL){
+      if ((mk_addmember(poleName, &fenceregionmembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building fence region...poles added...\n");
       } 
       else {
@@ -782,14 +807,14 @@ int generateFence(fp, fencename, startposition, heightvector, widthvector)
     if ((mesherrors+=generateMesh_s(fp, meshName))==0) {
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...Mesh generated\n");
       
-      if ((mk_addmember(meshName, &fencemembers, WMOP_UNION))!=NULL){
+      if ((mk_addmember(meshName, &fencemembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building fence...mesh added...\n");
       } 
       else {
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building fence...ERROR adding mesh to fence combination\n");
 	if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generateFence:mk_addmember meshName[%s] FAILED\n", meshName);
       }
-      if ((mk_addmember(meshName, &fenceregionmembers, WMOP_UNION))!=NULL){
+      if ((mk_addmember(meshName, &fenceregionmembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building fence region...mesh added...\n");
       }
       else {
@@ -834,7 +859,7 @@ int generateFence(fp, fencename, startposition, heightvector, widthvector)
  * poles for the scene
  ********************************/
 int generatePoles_s(fp, polename)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *polename;
 {
   vect_t polevector;
@@ -847,7 +872,7 @@ int generatePoles_s(fp, polename)
 }
 
 int generatePoles(fp, polename, startposition, heightvector, widthvector, radius)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *polename;
      point_t startposition;
      vect_t heightvector;
@@ -894,14 +919,14 @@ int generatePoles(fp, polename, startposition, heightvector, widthvector, radius
       errors++;
     }
     
-    if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &polemembers, WMOP_UNION))!=NULL){
+    if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &polemembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding pole [%d] to pole list\n", count);
     }
     else {
       if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generatePoles:mk_addmember count[%d] FAILED\n", count);
       errors++;
     }
-    if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &poleregionmembers, WMOP_UNION))!=NULL){
+    if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &poleregionmembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding pole [%d] to pole region list\n", count);
     }
     else {
@@ -925,14 +950,14 @@ int generatePoles(fp, polename, startposition, heightvector, widthvector, radius
     errors++;
   }
   
-  if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &polemembers, WMOP_UNION))!=NULL){
+  if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &polemembers.l, NULL, WMOP_UNION))!=NULL){
     if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding pole [%d] to pole list\n", count);
   }
   else {
     if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generatePoles:mk_addmember count[%d] FAILED\n", count);
     errors++;
   }
-  if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &poleregionmembers, WMOP_UNION))!=NULL){
+  if ((mk_addmember(getName(polename, count, DEFAULT_POLEBASICPARAM), &poleregionmembers.l, NULL, WMOP_UNION))!=NULL){
     if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding pole [%d] to pole region list\n", count);
   }
   else {
@@ -966,7 +991,7 @@ int generatePoles(fp, polename, startposition, heightvector, widthvector, radius
  * gets attached to the poles (if given).
  *******************************/
 int generateMesh_s(fp, meshname)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *meshname;
 {
   point_t meshstartposition;
@@ -987,7 +1012,7 @@ int generateMesh_s(fp, meshname)
 }
 
 int generateMesh(fp, meshname, startposition, heightvector, widthvector)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *meshname;
      point_t startposition;
      vect_t heightvector;
@@ -1046,7 +1071,7 @@ int generateMesh(fp, meshname, startposition, heightvector, widthvector)
     
     for (count=0, step=0.0; step <= width; step += (double) MAGNITUDE(incrementvector), count++) {
       
-      if ((matrixextractor=mk_addmember(wireName, &meshmembers, WMOP_UNION))!=NULL){
+      if ((matrixextractor=mk_addmember(wireName, &meshmembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building mesh combination: wire [%d] of [%d]\n", count+1, count2);
       } 
       else {
@@ -1057,7 +1082,7 @@ int generateMesh(fp, meshname, startposition, heightvector, widthvector)
       matrixextractor->wm_mat[7]  = dy;
       matrixextractor->wm_mat[11] = dz;
 
-      if ((matrixextractor=mk_addmember(wireName, &meshregionmembers, WMOP_UNION))!=NULL){
+      if ((matrixextractor=mk_addmember(wireName, &meshregionmembers.l, NULL, WMOP_UNION))!=NULL){
 	if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building mesh region: wire [%d] of [%d]\n", count+1, count2);
       } 
       else {
@@ -1111,7 +1136,7 @@ int generateMesh(fp, meshname, startposition, heightvector, widthvector)
  *****************************************/
 
 int generateWire_s(fp, wirename, position)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *wirename;
      point_t position;
 {
@@ -1127,7 +1152,7 @@ int generateWire_s(fp, wirename, position)
 }
 
 int generateWire(fp, wirename, position, fenceheightvector, fencewidthvector, radius, angle, segmentlength)
-     FILE *fp;
+     struct rt_wdb *fp;
      char *wirename;
      point_t position;
      vect_t fenceheightvector;
@@ -1181,14 +1206,14 @@ int generateWire(fp, wirename, position, fenceheightvector, fencewidthvector, ra
     if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generateWire:createWire:errors[%d]\n", errors);
   }
   for (count=0; count < DEFAULT_MESHPIECECOUNT; count++){
-    if ((mk_addmember(getName(segmentName, count, DEFAULT_WIREBASICPARAM), &basicmeshmembers, WMOP_UNION))!=NULL){
+    if ((mk_addmember(getName(segmentName, count, DEFAULT_WIREBASICPARAM), &basicmeshmembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding basic mesh segment component [%d] of [%d]\n", count, DEFAULT_MESHPIECECOUNT-1);
     }
     else {
       if (debug) fprintf(DEFAULT_DEBUG_OUTPUT, "generateWire:mk_addmember count[%d] FAILED\n", count);
       errors++;
     }
-    if ((mk_addmember(getName(segmentName, count, DEFAULT_WIREBASICPARAM), &basicmeshregionmembers, WMOP_UNION))!=NULL){
+    if ((mk_addmember(getName(segmentName, count, DEFAULT_WIREBASICPARAM), &basicmeshregionmembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...adding basic mesh segment region component [%d] of [%d]\n", count, DEFAULT_MESHPIECECOUNT-1);
     }
     else {
@@ -1221,7 +1246,7 @@ int generateWire(fp, wirename, position, fenceheightvector, fencewidthvector, ra
   
   for (count=0, dx=0, dy=0, dz=0, step=0.0; step <= height; step += (double) MAGNITUDE(incrementvector), count++) {
     
-    if ((matrixextractor=mk_addmember(segmentName, &wiremembers, WMOP_UNION))!=NULL){
+    if ((matrixextractor=mk_addmember(segmentName, &wiremembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building base wire combination: piece [%d] of [%d]\n", count+1, count2);
     }
     else {
@@ -1232,7 +1257,7 @@ int generateWire(fp, wirename, position, fenceheightvector, fencewidthvector, ra
     matrixextractor->wm_mat[7]  = dy;
     matrixextractor->wm_mat[11] = dz;
 
-    if ((matrixextractor=mk_addmember(segmentName, &wireregionmembers, WMOP_UNION))!=NULL){
+    if ((matrixextractor=mk_addmember(segmentName, &wireregionmembers.l, NULL, WMOP_UNION))!=NULL){
       if (verbose) fprintf(DEFAULT_VERBOSE_OUTPUT, "...building base wire region: piece [%d] of [%d]\n", count+1, count2);
     }
     else {
@@ -1281,7 +1306,7 @@ int generateWire(fp, wirename, position, fenceheightvector, fencewidthvector, ra
  *
  ***************************************************************************************************************/
 int createWire(fp, segmentname, heightvector, widthvector, radius, angle, segmentlength, segmentdepthseparation) 
-     FILE *fp;
+     struct rt_wdb *fp;
      char *segmentname;
      vect_t heightvector;
      vect_t widthvector;
@@ -1898,7 +1923,7 @@ int main(argc, argv)
      int argc;
      char **argv;
 {
-  FILE *fp;
+  struct rt_wdb *fp;
   int errors;
 
   int len = 0;
@@ -1909,8 +1934,8 @@ int main(argc, argv)
 
   (void) parseArguments(argc, argv);
   
-  if ((fp=fopen(outputFilename, "w"))==NULL) {
-    perror("Unable to open output database file");
+  if ((fp=wdb_fopen(outputFilename))==NULL) {
+    perror(outputFilename);
     exit(2);
   }
   else {

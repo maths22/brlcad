@@ -21,7 +21,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -125,6 +125,7 @@ static char *usage="Usage: tankill-g [-v] [-p] [-k] [-t tolerance] [-x lvl] [-X 
 	-x lvl -> sets the librt debug flag to lvl\n\
 	-X lvl -> sets the NMG debug flag to lvl\n";
 
+int
 main( argc , argv )
 int argc;
 char *argv[];
@@ -150,8 +151,9 @@ char *argv[];
 	struct comp_idents *ptr;
 	char name[NAMESIZE+1];
 	char *input_file;				/* input file name */
+	char *output_file = "tankill.g";
 	FILE *in_fp;					/* input file pointer */
-	FILE *out_fp;					/* output file pointer */
+	struct rt_wdb *out_fp;				/* output file pointer */
 	int polysolids;					/* flag indicating polysolid output */
 	int group_len[100];
 	int all_len=0;
@@ -166,7 +168,6 @@ char *argv[];
         tol.para = 1 - tol.perp;
 
 	in_fp = stdin;
-	out_fp = stdout;
 	polysolids = 0;
 	input_file = (char *)NULL;
 	id_root = (struct comp_idents *)NULL;
@@ -181,12 +182,12 @@ char *argv[];
 				verbose = 1;
 				break;
 			case 'x':
-				sscanf( optarg, "%x", &rt_g.debug );
-				bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+				sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
+				bu_printb( "librt RT_G_DEBUG", RT_G_DEBUG, DEBUG_FORMAT );
 				bu_log("\n");
 				break;
 			case 'X':
-				sscanf( optarg, "%x", &rt_g.NMG_debug );
+				sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 				bu_printb( "librt rt_g.NMG_debug", rt_g.NMG_debug, NMG_DEBUG_FORMAT );
 				bu_log("\n");
 				break;
@@ -211,12 +212,7 @@ char *argv[];
 				strcpy( input_file , optarg );
 				break;
 			case 'o': /* output file name */
-				if( (out_fp = fopen( optarg , "w" )) == NULL )
-				{
-					fprintf( stderr , "Cannot open %s\n" , optarg );
-					perror( "tankill-g" );
-					rt_bomb( "Cannot open output file\n" );
-				}
+				output_file = optarg;
 				break;
 			default:
 				rt_bomb( usage );
@@ -224,6 +220,12 @@ char *argv[];
 		}
 	}
 
+	if( (out_fp = wdb_fopen( output_file )) == NULL )
+	{
+		perror( output_file );
+		fprintf( stderr , "tankill-g: Cannot open %s\n" , output_file );
+		rt_bomb( "Cannot open output file\n" );
+	}
 
 	/* use the input file name as the title (if available) */
 	if( input_file == (char *)NULL )
@@ -423,7 +425,7 @@ char *argv[];
 		{
 			/* recreate the name of each solid */
 			sprintf( name , "s.%d.%d" , ptr->ident , i+1 );
-			(void)mk_addmember( name , &reg_head , WMOP_UNION );
+			(void)mk_addmember( name , &reg_head.l , NULL, WMOP_UNION );
 		}
 
 		/* make the region name */
@@ -472,7 +474,7 @@ char *argv[];
 				/* make the region name */
 				sprintf( name , "r.%d" , ptr->ident );
 
-				(void)mk_addmember( name , &reg_head , WMOP_UNION );
+				(void)mk_addmember( name , &reg_head.l , NULL, WMOP_UNION );
 				group_len[i]++;
 			}
 			ptr = ptr->next;
@@ -512,7 +514,7 @@ char *argv[];
 
 				/* make group name */
 				sprintf( name , "%02dXX_codes" , k );
-				(void)mk_addmember( name , &reg_head , WMOP_UNION );
+				(void)mk_addmember( name , &reg_head.l , NULL, WMOP_UNION );
 			}
 		}
 		if( do_group )
@@ -552,7 +554,7 @@ char *argv[];
 			/* make the group */
 			sprintf( name , "%dXXX_codes" , i );
 
-			if( mk_addmember( name , &reg_head , WMOP_UNION ) == WMEMBER_NULL )
+			if( mk_addmember( name , &reg_head.l , NULL, WMOP_UNION ) == WMEMBER_NULL )
 				bu_log( "mk_admember failed for %s\n" , name );
 			all_len++;
 		}
@@ -565,5 +567,6 @@ char *argv[];
 		    (char *)NULL, (char *)NULL, (unsigned char *)NULL, 0 ) )
 			rt_bomb( "tankill: Error in freeing region memory" );
 	}
+	wdb_close( out_fp );
 	return 0;
 }

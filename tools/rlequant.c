@@ -56,7 +56,7 @@ typedef enum { NORMAL=0, INIT_HIST, USE_HIST, PROCESS_HIST, OUTPUT } state_t;
 static void mem_alloc(), read_input(), copy_hdr();
 static void setup_output(), write_output(), free_mem();
 
-static CONST char *MY_NAME = "rlequant";
+static const char *MY_NAME = "rlequant";
 
 /*****************************************************************
  * TAG( main )
@@ -100,7 +100,7 @@ static CONST char *MY_NAME = "rlequant";
  * Algorithm:
  * 	Read image, call colorquant, write image with new colormap.
  */
-void
+int
 main( argc, argv )
 int argc;
 char **argv;
@@ -117,7 +117,7 @@ char **argv;
     int		fflag = 0;
     int		dflag = 0;
     int		rle_cnt, rle_err, width, height, shift;
-    int		colors;
+    int		colors = -1;
     long	entries;
     FILE       *outfile = stdout;
     rle_hdr in_hdr, out_hdr;	/* Headers for input and output files. */

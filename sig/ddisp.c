@@ -5,6 +5,14 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include "machine.h"
 #include "fb.h"
@@ -29,7 +37,7 @@ void	disp_bars();
 static char usage[] = "\
 Usage: ddisp [-v -b -p -c -h] [width (512)]\n";
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -81,6 +89,8 @@ char	**argv;
 			sleep( pause_time );
 	}
 	fb_close(fbp);
+
+	return 0;
 }
 
 void

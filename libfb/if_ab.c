@@ -18,20 +18,33 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <unistd.h>
 #include <errno.h>
 #include <math.h>
 #include <time.h>
+#include <fcntl.h>
+
+#ifdef BSD
+#  define __BSDbackup BSD
+#  undef BSD
+#endif
 
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+
+#ifdef __BSDbackup
+#  undef BSD
+#  define BSD __BSDbackup
+#endif
 
 #ifdef USE_STRING_H
 #include <string.h>
@@ -49,6 +62,7 @@ static int	ab_get_reply();
 static int	ab_mread();
 static void	ab_yuv_to_rgb();
 static void	ab_rgb_to_yuv();
+static int	ab_yuvio(int, char *, char *, int, int, int);
 
 _LOCAL_ int	ab_open(),
 		ab_close(),
@@ -524,11 +538,11 @@ _LOCAL_ int
 ab_write( ifp, x, y, pixelp, count )
 register FBIO	*ifp;
 int		x, y;
-CONST unsigned char	*pixelp;
+const unsigned char	*pixelp;
 int		count;
 {
 	register short		scan_count;	/* # pix on this scanline */
-	register CONST unsigned char	*cp;
+	register const unsigned char	*cp;
 	int			ret;
 	int			xoff, yoff;
 
@@ -696,6 +710,7 @@ FBIO	*ifp;
  *	-1	error
  *	len	successful count
  */
+int
 ab_yuvio( output, host, buf, len, frame, to_network )
 int	output;		/* 0=read(input), 1=write(output) */
 char	*host;
@@ -881,7 +896,7 @@ int	to_network;
 		*cp++ = '\0';
 		/* buffer will contain old permission, size, old name */
 		src_size = 0;
-		if( sscanf( xmit_buf, "C%o %d", &perm, &src_size ) != 2 )  {
+		if( sscanf( xmit_buf, "C%o %d", (unsigned int *)&perm, &src_size ) != 2 )  {
 			fb_log("sscanf error\n");
 			goto err;
 		}

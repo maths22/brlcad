@@ -20,7 +20,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -29,6 +29,10 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "externs.h"		/* For getopt() */
 #include "fb.h"
+#include "libtermio.h"
+
+int pars_Argv();
+int doKeyPad();
 
 /* Zoom rate and limits */
 #define MinZoom		(1)
@@ -54,6 +58,7 @@ static char usage[] = "\
 Usage: fbzoom [-hT] [-F framebuffer]\n\
 	[-{sS} squarescrsize] [-{wW} scr_width] [-{nN} scr_height]\n";
 
+int
 main(argc, argv )
 int argc;
 char **argv;
@@ -163,6 +168,7 @@ RETURN	Exit\r\n";
 
 #define ctl(x)	(x&037)
 
+int
 doKeyPad()
 { 
 	register int ch;

@@ -54,7 +54,7 @@ Convinst()
 		pointer = (pointer - 1)/2;
 		if( pointer < 0 || pointer >= totentities )
 		{
-			bu_log( "Solid instance D%07d (%s) does not point to a legal solid\n",
+			bu_log( "Primitive instance D%07d (%s) does not point to a legal primitive\n",
 				dir[i]->direct , dir[i]->name );
 			continue;
 		}
@@ -88,7 +88,7 @@ Convinst()
 			struct wmember head;
 
 			BU_LIST_INIT( &head.l );
-			(void)mk_addmember( dir[pointer]->name , &head , WMOP_INTERSECT );
+			(void)mk_addmember( dir[pointer]->name , &head.l , NULL, WMOP_INTERSECT );
 
 			/* Make the object */
 			if( dir[i]->colorp != 0 )
@@ -137,7 +137,7 @@ Convinst()
 				   these matrices need to be combined */
 
 				rot = (mat_t *)bu_malloc( sizeof( mat_t ), "Convinst: rot" );
-				Matmult( *(dir[i]->rot) , dir[pointer]->rot , rot );
+				Matmult( *(dir[i]->rot) , *(dir[pointer]->rot) , *rot );
 				dir[i]->rot = rot;
 			}
 		}

@@ -21,7 +21,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -69,6 +69,7 @@ Usage: png-fb [-H -h -i -c -v -z -1] [-m #lines] [-F framebuffer]\n\
 	[-x file_xoff] [-y file_yoff] [-X scr_xoff] [-Y scr_yoff]\n\
 	[-S squarescrsize] [-W scr_width] [-N scr_height] [file.png]\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -157,6 +158,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
+int
 main(argc, argv)
 int argc;
 char **argv;
@@ -367,7 +369,7 @@ char **argv;
 
 	if( multiple_lines )  {
 		/* Bottom to top with multi-line reads & writes */
-		int	height;
+		int	height=file_height;
 		for( y = scr_yoff; y < scr_yoff + yout; y += multiple_lines )  {
 			/* Don't over-write */
 			if( y + height > scr_yoff + yout )

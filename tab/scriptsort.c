@@ -15,13 +15,18 @@
  *
  */
 #ifndef lint
-static char RCSid[] = "$Id$";
+static const char RCSid[] = "$Id$";
 #endif
 #undef DEBUG 
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
 #include "externs.h"
@@ -49,6 +54,8 @@ struct  frame {
 struct bu_list head = {MAGIC, &head, &head};
 struct frame globals;
 
+extern int yylex();
+
 extern int optind;
 extern char *optarg;
 int get_args();
@@ -60,7 +67,7 @@ int suppress_shell;	/* suppress shell script for each frame */
 int frame_offset;	/* offset added to frame numbers */
 
 void squirtframes();
-void sf();
+static void sf();
 
 void addtext(fp, tp)
 struct frame *fp;
@@ -261,6 +268,7 @@ void merge()
 /* 
  *			M A I N
  */
+int
 main(argc, argv)
 int argc;
 char **argv;
@@ -356,7 +364,7 @@ int base;
 	}
 }
 
-void
+static void
 sf(start, skip)
 int start;
 int skip;

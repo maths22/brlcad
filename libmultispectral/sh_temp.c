@@ -21,7 +21,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -33,7 +33,7 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
 extern struct region	env_region;		/* import from view.c */
 
@@ -238,7 +238,7 @@ temp_setup( rp, matparm, dpp, mfp, rtip )
 register struct region	*rp;
 struct bu_vls		*matparm;
 char			**dpp;
-CONST struct mfuncs	*mfp;
+const struct mfuncs	*mfp;
 struct rt_i             *rtip;  /* New since 4.4 release */
 {
 	register struct temp_specific *tp;

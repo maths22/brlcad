@@ -23,7 +23,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -117,6 +117,8 @@ char	*argv[];
 	tol.perp = 1e-5;
 	tol.para = 1 - tol.perp;
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	the_model = nmg_mm();
 	BU_LIST_INIT( &rt_g.rtg_vlfree );	/* for vlist macros */
 
@@ -145,7 +147,7 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'D':
 			tol.dist = atof(optarg);
@@ -153,7 +155,7 @@ char	*argv[];
 			rt_pr_tol( &tol );
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			break;
 		case 'e':		/* Error file name. */
@@ -205,8 +207,7 @@ char	*argv[];
 		perror(argv[0]);
 		exit(1);
 	}
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
-
+	db_dirbuild( dbip );
 
 	BN_CK_TOL(tree_state.ts_tol);
 	RT_CK_TESS_TOL(tree_state.ts_ttol);
@@ -240,7 +241,7 @@ char	*argv[];
 	fprintf(fp,"               ");
 
 	/* Walk indicated tree(s).  Each region will be output separately */
-	(void) db_walk_tree(dbip, argc-1, (CONST char **)(argv+1),
+	(void) db_walk_tree(dbip, argc-1, (const char **)(argv+1),
 		1,			/* ncpu */
 		&tree_state,
 		0,			/* take all regions */
@@ -273,7 +274,7 @@ char	*argv[];
 
 	/* Release dynamic storage */
 	nmg_km(the_model);
-	bn_vlist_cleanup();
+	rt_vlist_cleanup();
 	db_close(dbip);
 
 #if MEMORY_LEAK_CHECKING
@@ -503,7 +504,6 @@ struct db_full_path	*pathp;
 union tree		*curtree;
 genptr_t		client_data;
 {
-	extern FILE		*fp_fig;
 	union tree		*ret_tree;
 	struct bu_list		vhead;
 	struct nmgregion	*r;
@@ -516,7 +516,7 @@ genptr_t		client_data;
 
 	BU_LIST_INIT(&vhead);
 
-	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+	if (RT_G_DEBUG&DEBUG_TREEWALK || verbose) {
 		char	*sofar = db_path_to_string(pathp);
 		bu_log("\ndo_region_end(%d %d%%) %s\n",
 			regions_tried,
@@ -567,7 +567,7 @@ genptr_t		client_data;
 	}
 	printf("Attempting to process region %s\n",db_path_to_string( pathp ));
 	fflush(stdout);
-	ret_tree = nmg_booltree_evaluate( curtree, tsp->ts_tol );	/* librt/nmg_bool.c */
+	ret_tree = nmg_booltree_evaluate( curtree, tsp->ts_tol, &rt_uniresource );	/* librt/nmg_bool.c */
 
 	if( ret_tree )
 		r = ret_tree->tr_d.td_r;
@@ -682,7 +682,7 @@ out:
 		regions_tried, regions_converted, regions_written, npercent,tpercent);
 	}
 
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 	BU_GETUNION(curtree, tree);
 	curtree->magic = RT_TREE_MAGIC;

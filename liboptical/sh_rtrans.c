@@ -22,20 +22,26 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 #define RTRANS_MAGIC 0x4a6f686e
 struct rtrans_specific {
 	long	magic;
@@ -71,7 +77,7 @@ struct mfuncs rtrans_mfuncs[] = {
 };
 
 
-/*	R T R A N S _ S E T U P
+/*	R T R A N S _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -106,7 +112,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	R T R A N S _ P R I N T
  */
 HIDDEN void
@@ -127,7 +133,7 @@ char *cp;
 	bu_free( cp, "rtrans_specific" );
 }
 
-/*
+/*
  *	R T R A N S _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c)

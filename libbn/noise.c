@@ -27,7 +27,7 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -261,7 +261,7 @@ bn_noise_init()
  */
 double
 bn_noise_perlin(point)
-CONST point_t point;
+const point_t point;
 {
 	register int	jx, jy, jz;
 	int ix, iy, iz;	/* lower integer lattice point */
@@ -341,7 +341,7 @@ CONST point_t point;
  */
 void
 bn_noise_vec(point, result)
-CONST point_t point;
+const point_t point;
 point_t result;
 {
 	register int	jx, jy, jz;
@@ -758,7 +758,7 @@ double offset;
 	struct fbm_spec		*ep;
 	double			result, weight, signal, *spec_wgts;
 	point_t			pt;
-	int			i, oct;
+	int			i;
 	
 	/* The first order of business is to see if we have pre-computed
 	 * the spectral weights table for these parameters in a previous
@@ -808,8 +808,7 @@ double offset;
 
 /***********************************************************************
  *
- *
- *
+ *	From "Texturing and Modeling, A Procedural Approach" 2nd ed
  *
  */
 
@@ -821,11 +820,11 @@ double lacunarity;
 double octaves;
 double offset;
 {
-	double 			frequency;
+	double 			frequency = 1.0;
 	struct fbm_spec		*ep;
 	double			result, weight, signal, *spec_wgts;
 	point_t			pt;
-	int			i, oct;
+	int			i;
 	
 	/* The first order of business is to see if we have pre-computed
 	 * the spectral weights table for these parameters in a previous

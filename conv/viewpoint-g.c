@@ -61,15 +61,17 @@ struct viewpoint_verts
 static char *tok_sep=" ";		/* seperator used in input files */
 static char *usage="viewpoint-g [-t tol] -c coord_file_name -e elements_file_name -o output_file_name";
 
+int
 main( argc , argv )
 int argc;
 char *argv[];
 {
 	register int c;
 	FILE *coords,*elems;		/* input file pointers */
-	FILE *out_fp;			/* output file pointers */
+	struct rt_wdb *out_fp;		/* output file pointers */
+	char *output_file = "viewpoint.g";
 	char *base_name;		/* title and top level group name */
-	char *coords_name;		/* input coordinates file name */
+	char *coords_name=(char *)NULL;	/* input coordinates file name */
 	char *elems_name;		/* input elements file name */
 	float x,y,z,nx,ny,nz;		/* vertex and normal coords */
 	char *ptr1,*ptr2;
@@ -97,7 +99,6 @@ char *argv[];
         tol.perp = 1e-6;
         tol.para = 1 - tol.perp;
 
-	out_fp = stdout;
 	coords = NULL;
 	elems = NULL;
 
@@ -134,17 +135,18 @@ char *argv[];
 				}
 				break;
 			case 'o': /* output file name */
-				if( (out_fp = fopen( optarg , "w" )) == NULL )
-				{
-					bu_log( "Cannot open %s\n" , optarg );
-					perror( "tankill-g" );
-					rt_bomb( "Cannot open output file\n" );
-				}
+				output_file = optarg;
 				break;
 			default:
 				rt_bomb( usage );
 				break;
 		}
+	}
+	if( (out_fp = wdb_fopen( output_file )) == NULL )
+	{
+		perror( output_file );
+		bu_log( "tankill-g: Cannot open %s\n" , output_file );
+		rt_bomb( "Cannot open output file\n" );
 	}
 
 	/* Must have some input */
@@ -152,6 +154,11 @@ char *argv[];
 		rt_bomb( usage );
 
 	/* build a title for the BRLCAD database */
+	if ( !coords_name ) {
+		bu_log("%s:%d no coords_name set\n", __FILE__, __LINE__);
+		bu_bomb("croak\n");
+	}
+
 	ptr1 = strrchr( coords_name , '/' );
 	if( ptr1 == NULL )
 		ptr1 = coords_name;
@@ -431,7 +438,7 @@ char *argv[];
 	BU_LIST_INIT( &reg_head.l );
 	for( i=0 ; i<BU_PTBL_END( &names ) ; i++ )
 	{
-		if( mk_addmember( (char *)BU_PTBL_GET( &names , i ) , &reg_head , WMOP_UNION ) == WMEMBER_NULL )
+		if( mk_addmember( (char *)BU_PTBL_GET( &names , i ) , &reg_head.l , NULL, WMOP_UNION ) == WMEMBER_NULL )
 		{
 			bu_log( "Cannot make top level group\n" );
 			exit( 1 );

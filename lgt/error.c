@@ -6,7 +6,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 /*
  *			E R R O R
@@ -52,7 +52,7 @@ jmp_buf		bu_jmpbuf;		/* for BU_SETJMP() */
 
 void
 bu_bomb(str)
-CONST char *str;
+const char *str;
 	{
 	bu_log( "%s (librt.a) : Fatal error, aborting!\n", str );
 	(void) fflush( stdout );

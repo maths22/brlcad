@@ -21,7 +21,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -37,14 +37,22 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <sys/time.h>
 #include <time.h>
 
-#include "tk.h"
+#ifdef DM_X
+#  include "tk.h"
+#else
+#  include "tcl.h"
+#endif
+
+#include "tclInt.h"
+#include "itcl.h"
 
 #include "machine.h"
+#include "externs.h"
 #include "bu.h"
 #include "vmath.h"
-#include "raytrace.h"
+#include "bn.h"
 #include "rtgeom.h"
-#include "externs.h"
+#include "raytrace.h"
 #include "./ged.h"
 #include "./cmd.h"
 #include "./mged_solid.h"
@@ -53,22 +61,63 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 #include "./mgedtcl.h"
 
+int bv_zoomin(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_zoomout(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_rate_toggle(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_top(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_bottom(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_right(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_left(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_front(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_rear(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_vrestore(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_vsave(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_adcursor(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_reset(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_45_45(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int bv_35_25(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_illuminate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_illuminate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_scale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_x(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_y(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_xy(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_rotate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_accept(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_reject(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_edit(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_rotate(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_trans(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_s_scale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_xscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_yscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+int be_o_zscale(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+
 void mged_setup(), cmd_setup(), mged_compat();
 void mged_print_result();
 void mged_global_variable_setup();
 int f_bot_fuse(), f_bot_condense(), f_bot_face_fuse();
+extern int f_hide(), f_unhide();
 
-#if !defined( HAVE_UNISTD_H )
+
+#ifndef HAVE_UNISTD_H
 extern void sync();
 #endif
+extern void update_grids();			/* in grid.c */
+extern void set_localunit_TclVar();		/* in chgmodel.c */
 extern void init_qray();			/* in qray.c */
 extern int gui_setup();				/* in attach.c */
 extern int mged_default_dlist;			/* in attach.c */
 extern int classic_mged;			/* in ged.c */
 extern int bot_vertex_fuse(), bot_condense();
-
 struct cmd_list head_cmd_list;
 struct cmd_list *curr_cmd_list;
+
+extern void mged_view_obj_callback();
+
+extern int db_warn;	/* defined in ged.c */
+extern int db_upgrade;	/* defined in ged.c */
+extern int db_version;	/* defined in ged.c */
 
 int glob_compat_mode = 1;
 int output_as_return = 1;
@@ -77,255 +126,347 @@ int mged_cmd();
 struct bu_vls tcl_output_hook;
 
 Tcl_Interp *interp = NULL;
+
+#ifdef DM_X
 Tk_Window tkwin;
+#endif
 
 struct cmdtab {
 	char *ct_name;
 	int (*ct_func)();
 };
 
+#if 1
+int f_test_bomb_hook(ClientData clientData, Tcl_Interp *interp, int argc, char **argv);
+#endif
+
 static struct cmdtab cmdtab[] = {
-	"%", f_comm,
-	"3ptarb", f_3ptarb,
-	"adc", f_adc,
-	"ae", f_aetview,
-	"aip", f_aip,
-	"analyze", f_analyze,
-	"arb", f_arbdef,
-	"arced", f_arced,
-	"area", f_area,
-	"arot", f_arot,
-	"attach", f_attach,
-	"autoview", f_autoview,
-	"B", f_blast,
-	"bev", f_bev,
-	"bot_face_fuse", f_bot_face_fuse,
-	"bot_vertex_fuse", f_bot_fuse,
-	"bot_condense", f_bot_condense,
-	"c", f_comb_std,
-	"cat", f_cat,
-	"center", f_center,
-	"cmd_win", cmd_cmd_win,
-	"color", f_color,
-	"comb", f_comb,
-	"comb_color", f_comb_color,
-	"copyeval", f_copyeval,
-	"copymat", f_copymat,
-	"cp", f_copy,
-	"cpi", f_copy_inv,
-	"d", f_erase,
-	"dall", f_erase_all,
-	"db_glob", cmd_mged_glob,
-	"dbconcat", f_concat,
-	"dbfind", f_find,
-	"debugbu", f_debugbu,
-	"debugdir", f_debugdir,
-	"debuglib", f_debuglib,
-	"debugmem", f_debugmem,
-	"debugnmg", f_debugnmg,
-	"decompose", f_decompose,
-	"delay", f_delay,
-	"dm", f_dm,
-	"draw", f_edit,
-	"dup", f_dup,
-	"E", f_evedit,
-	"e", f_edit,
-	"eac", f_eac,
-	"echo", cmd_echo,
-	"edcodes", f_edcodes,
-	"edcolor", f_edcolor,
-	"edcomb", f_edcomb,
-	"edgedir", f_edgedir,
-	"edmater", f_edmater,
-	"erase", f_erase,
-	"erase_all", f_erase_all,
-	"ev", f_ev,
-	"eqn", f_eqn,
-	"exit", f_quit,
-	"extrude", f_extrude,
-	"expand", cmd_expand,
-	"eye_pt", f_eye_pt,
-	"e_muves", f_e_muves,
-	"facedef", f_facedef,
-	"facetize", f_facetize,
-	"fracture", f_fracture,
-	"g", f_group,
-	"get_comb", cmd_get_comb,
-	"get_dbip", cmd_get_ptr,
-	"get_dm_list", f_get_dm_list,
-	"get_more_default", cmd_get_more_default,
-	"get_sed", f_get_sedit,
-	"get_sed_menus", f_get_sedit_menus,
-	"get_solid_keypoint", f_get_solid_keypoint,
-	"grid2model_lu", f_grid2model_lu,
-	"grid2view_lu", f_grid2view_lu,
+#if 1
+	{"test_bomb_hook", f_test_bomb_hook},
+#endif
+	{"%", f_comm},
+	{"35,25",	bv_35_25},
+	{"3ptarb", f_3ptarb},
+	{"45,45",	bv_45_45},
+	{"accept",	be_accept},
+	{"adc", f_adc},
+	{"adjust",	cmd_adjust},
+	{"ae", cmd_aetview},
+	{"aip", f_aip},
+	{"analyze", f_analyze},
+	{"arb", f_arbdef},
+	{"arced", f_arced},
+	{"area", f_area},
+	{"arot", cmd_arot},
+#ifdef DM_X
+	{"attach", f_attach},
+#endif
+	{"attr",	cmd_attr},
+	{"autoview", cmd_autoview},
+	{"B", cmd_blast},
+	{"bev", f_bev},
+#if 0
+	{"import_body", cmd_import_body},
+	{"export_body", cmd_export_body},
+#endif
+	{"dbbinary", f_binary},
+	{"bot_face_fuse", f_bot_face_fuse},
+	{"bot_face_sort", cmd_bot_face_sort},
+	{"bot_vertex_fuse", f_bot_fuse},
+	{"bot_condense", f_bot_condense},
+	{"bot_decimate", cmd_bot_decimate},
+	{"bottom",	bv_bottom},
+	{"c", cmd_comb_std},
+	{"cat", cmd_cat},
+	{"center", cmd_center},
+	{"cmd_win", cmd_cmd_win},
+	{"color", cmd_color},
+	{"comb", cmd_comb},
+	{"comb_color", f_comb_color},
+	{"copyeval", cmd_copyeval},
+	{"copymat", f_copymat},
+	{"cp", cmd_copy},
+	{"cpi", f_copy_inv},
+	{"d", cmd_erase},
+	{"dall", cmd_erase_all},
+	{"db_glob", cmd_mged_glob},
+	{"dbconcat", cmd_concat},
+	{"dbfind", cmd_find},
+	{"dbversion", cmd_dbversion},
+	{"dbip",	cmd_dbip},
+	{"dump",	cmd_dump},
+	{"debugbu", f_debugbu},
+	{"debugdir", f_debugdir},
+	{"debuglib", f_debuglib},
+	{"debugmem", f_debugmem},
+	{"debugnmg", f_debugnmg},
+	{"decompose", f_decompose},
+	{"delay", f_delay},
+#ifdef DM_X
+	{"dm", f_dm},
+#endif
+	{"draw", cmd_draw},
+	{"dup", cmd_dup},
+#ifdef DM_X
+	{"E", cmd_E},
+#endif
+	{"e", cmd_draw},
+	{"eac", f_eac},
+	{"echo", cmd_echo},
+	{"edcodes", f_edcodes},
+	{"edcolor", f_edcolor},
+	{"edcomb", f_edcomb},
+	{"edgedir", f_edgedir},
+	{"edmater", f_edmater},
+	{"em", cmd_emuves},
+	{"erase", cmd_erase},
+	{"erase_all", cmd_erase_all},
+#ifdef DM_X
+	{"ev", cmd_ev},
+#endif
+	{"eqn", f_eqn},
+	{"exit", f_quit},
+	{"extrude", f_extrude},
+	{"expand", cmd_expand},
+	{"eye_pt", cmd_eye_pt},
+	{"e_muves", f_e_muves},
+	{"facedef", f_facedef},
+	{"facetize", f_facetize},
+	{"form",	cmd_form},
+	{"fracture", f_fracture},
+	{"front",	bv_front},
+	{"g", cmd_group},
+	{"get",		cmd_get},
+	{"get_autoview", cmd_get_autoview},
+	{"get_comb", cmd_get_comb},
+	{"get_dbip", cmd_get_ptr},
+	{"get_dm_list", f_get_dm_list},
+	{"get_more_default", cmd_get_more_default},
+	{"get_sed", f_get_sedit},
+	{"get_sed_menus", f_get_sedit_menus},
+	{"get_solid_keypoint", f_get_solid_keypoint},
+	{"grid2model_lu", f_grid2model_lu},
+	{"grid2view_lu", f_grid2view_lu},
 #ifdef HIDELINE
-	"H", f_hideline,
+	{"H", f_hideline},
 #endif
-	"history", f_history,
-	"hist", cmd_hist,
-	"i", f_instance,
-	"idents", f_tables,
-	"ill", f_ill,
-	"in", f_in,
-	"inside", f_inside,
-	"item", f_itemair,
-	"joint", f_joint,
-	"journal", f_journal,
-	"keep", f_keep,
-	"keypoint", f_keypoint,
-	"kill", f_kill,
-	"killall", f_killall,
-	"killtree", f_killtree,
-	"knob", f_knob,
-	"l", cmd_list,
-	"l_muves", f_l_muves,
-	"labelvert", f_labelvert,
-	"listeval", f_pathsum,
-	"loadtk", cmd_tk,
-	"lookat", f_lookat,
-	"ls", dir_print,
-	"M", f_mouse,
-	"make", f_make,
-	"make_bb", f_make_bb,
-	"make_name", f_make_name,
-	"mater", f_mater,
-	"matpick", f_matpick,
-	"memprint", f_memprint,
-	"mged_update", f_update,
-	"mged_wait", f_wait,
-	"mirface", f_mirface,
-	"mirror", f_mirror,
-	"mmenu_get", cmd_mmenu_get,
-	"mmenu_set", cmd_nop,
-	"model2grid_lu", f_model2grid_lu,
-	"model2view", f_model2view,
-	"model2view_lu", f_model2view_lu,
-	"mrot", f_mrot,
-	"mv", f_name,
-	"mvall", f_mvall,
-	"nirt", f_nirt,
-	"nmg_collapse", f_edge_collapse,
-	"nmg_simplify", f_nmg_simplify,
-	"oed", cmd_oed,
-	"oed_apply", f_oedit_apply,
-	"oed_reset", f_oedit_reset,
-	"opendb", f_opendb,
-	"orientation", f_orientation,
-	"orot", f_rot_obj,
-	"oscale", f_sc_obj,
-	"output_hook", cmd_output_hook,
-	"overlay", f_overlay,
-	"p", f_param,
-	"pathlist", cmd_pathlist,
-	"paths", f_pathsum,
-	"permute", f_permute,
-	"plot", f_plot,
-	"pl", f_pl,
-	"polybinout", f_polybinout,
-	"pov", f_pov,
-	"prcolor", f_prcolor,
-	"prefix", f_prefix,
-	"press", f_press,
-	"preview", f_preview,
-	"ps", f_ps,
-	"push", f_push,
-	"put_comb", cmd_put_comb,
-	"put_sed", f_put_sedit,
-	"putmat", f_putmat,
-	"q", f_quit,
-	"qray", f_qray,
-	"query_ray", f_nirt,
-	"quit", f_quit,
-	"qorot", f_qorot,
-	"qvrot", f_qvrot,
-	"r", f_region,
-	"rcodes", f_rcodes,
-	"read_muves", f_read_muves,
-	"red", f_red,
-	"redraw_vlist", cmd_redraw_vlist,
-	"refresh", f_refresh,
-	"regdebug", f_regdebug,
-	"regdef", f_regdef,
-	"regions", f_tables,
-	"release", f_release,
-	"rfarb", f_rfarb,
-	"rm", f_rm,
-	"rmater", f_rmater,
-	"rmats", f_rmats,
-	"rot", f_rot,
-	"rotobj", f_rot_obj,
-	"rrt", f_rrt,
-	"rset", f_rset,
-	"rt", f_rt,
-	"rt_abort", cmd_rt_abort,
-	"rtcheck", f_rtcheck,
+	{"hide", cmd_hide },
+	{"history", f_history},
+	{"hist", cmd_hist},
+	{"i", cmd_instance},
+	{"idents", f_tables},
+	{"ill", f_ill},
+	{"in", f_in},
+	{"inside", f_inside},
+	{"item", f_itemair},
+	{"joint", f_joint},
+	{"journal", f_journal},
+	{"keep", cmd_keep},
+	{"keypoint", f_keypoint},
+	{"kill", cmd_kill},
+	{"killall", cmd_killall},
+	{"killtree", cmd_killtree},
+	{"knob", f_knob},
+	{"l", cmd_list},
+	{"lt", cmd_lt},
+	{"l_muves", f_l_muves},
+	{"labelvert", f_labelvert},
+	{"left",		bv_left},
+	{"listeval", cmd_pathsum},
+	{"lm", cmd_lm},
+#ifdef DM_X
+	{"loadtk", cmd_tk},
+#endif
+	{"lookat", cmd_lookat},
+	{"ls", cmd_ls},
+	{"M", f_mouse},
+	{"make", f_make},
+	{"make_bb", cmd_make_bb},
+	{"make_name", cmd_make_name},
+	{"match",	cmd_match},
+	{"mater", f_mater},
+	{"matpick", f_matpick},
+	{"memprint", f_memprint},
+#ifdef DM_X
+	{"mged_update", f_update},
+	{"mged_wait", f_wait},
+#endif
+	{"mirface", f_mirface},
+	{"mirror", f_mirror},
+#ifdef DM_X
+	{"mmenu_get", cmd_mmenu_get},
+	{"mmenu_set", cmd_nop},
+#endif
+	{"model2grid_lu", f_model2grid_lu},
+	{"model2view", f_model2view},
+	{"model2view_lu", f_model2view_lu},
+	{"mrot", cmd_mrot},
+	{"mv", cmd_name},
+	{"mvall", cmd_mvall},
+	{"nirt", f_nirt},
+	{"nmg_collapse", cmd_nmg_collapse},
+	{"nmg_simplify", cmd_nmg_simplify},
+	{"o_rotate",		be_o_rotate},
+	{"o_scale",	be_o_scale},
+	{"oed", cmd_oed},
+	{"oed_apply", f_oedit_apply},
+	{"oed_reset", f_oedit_reset},
+#ifdef DM_X
+	{"oill",		be_o_illuminate},
+#endif
+	{"opendb", f_opendb},
+	{"orientation", cmd_orientation},
+	{"orot", f_rot_obj},
+	{"oscale", f_sc_obj},
+	{"output_hook", cmd_output_hook},
+	{"overlay", cmd_overlay},
+	{"ox",		be_o_x},
+	{"oxy",		be_o_xy},
+	{"oxscale",	be_o_xscale},
+	{"oy",		be_o_y},
+	{"oyscale",	be_o_yscale},
+	{"ozscale",	be_o_zscale},
+	{"p", f_param},
+	{"pathlist", cmd_pathlist},
+	{"paths", cmd_pathsum},
+	{"permute", f_permute},
+	{"plot", f_plot},
+	{"pl", f_pl},
+	{"polybinout", f_polybinout},
+	{"pov", cmd_pov},
+	{"prcolor", cmd_prcolor},
+	{"prefix", f_prefix},
+	{"press", f_press},
+	{"preview", f_preview},
+	{"ps", f_ps},
+	{"push", cmd_push},
+	{"put",		cmd_put},
+	{"put_comb", cmd_put_comb},
+	{"put_sed", f_put_sedit},
+	{"putmat", f_putmat},
+	{"q", f_quit},
+	{"qray", f_qray},
+	{"query_ray", f_nirt},
+	{"quit", f_quit},
+	{"qorot", f_qorot},
+	{"qvrot", f_qvrot},
+	{"r", cmd_region},
+	{"rate",		bv_rate_toggle},
+	{"rcodes", f_rcodes},
+	{"read_muves", f_read_muves},
+	{"rear",	bv_rear},
+	{"red", f_red},
+	{"redraw_vlist", cmd_redraw_vlist},
+#ifdef DM_X
+	{"refresh", f_refresh},
+#endif
+	{"regdebug", f_regdebug},
+	{"regdef", f_regdef},
+	{"regions", f_tables},
+	{"reject",	be_reject},
+	{"release", f_release},
+	{"solid_report", cmd_solid_report},
+	{"reset",	bv_reset},
+	{"restore",	bv_vrestore},
+	{"right",	bv_right},
+	{"rfarb", f_rfarb},
+	{"rm", cmd_remove},
+	{"rmater", f_rmater},
+	{"rmats", f_rmats},
+	{"rot", cmd_rot},
+	{"rotobj", f_rot_obj},
+	{"rrt", f_rrt},
+	{"rset", f_rset},
+	{"rt", cmd_rt},
+	{"rtabort", cmd_rtabort},
+	{"rtcheck", cmd_rtcheck},
+	{"rtedge", cmd_rt},
+	{"rt_gettrees", cmd_rt_gettrees},
+	{"save",		bv_vsave},
 #if 0
-	"savedit", f_savedit,
+	{"savedit", f_savedit},
 #endif
-	"savekey", f_savekey,
-	"saveview", f_saveview,
-	"sca", f_sca,
-	"sed", f_sed,
-	"sed_apply", f_sedit_apply,
-	"sed_reset", f_sedit_reset,
-	"set_more_default", cmd_set_more_default,
-	"setview", f_setview,
-	"shader", f_shader,
-	"share", f_share,
-	"shells", f_shells,
-	"showmats", f_showmats,
-	"size", f_size,
-	"solids", f_tables,
-	"solids_on_ray", cmd_solids_on_ray,
-	"status", f_status,
-	"stuff_str", cmd_stuff_str,
-	"summary", f_summary,
-	"sv", f_slewview,
-	"svb", f_svbase,
-	"sync", f_sync,
-	"t", dir_print,
-	"ted", f_tedit,
-	"tie", f_tie,
-	"title", f_title,
-	"tol", f_tol,
-	"tops", f_tops,
-	"tra", f_tra,
-	"track", f_amtrack,
-	"translate", f_tr_obj,
-	"tree", f_tree,
-	"t_muves", f_t_muves,
-	"units", f_units,
-	"vars", f_set,
-	"vdraw", cmd_vdraw,
-	"view", f_view,
-	"view_ring", f_view_ring,
-	"viewget", cmd_viewget,
-	"viewset", cmd_viewset,
-	"view2grid_lu", f_view2grid_lu,
-	"view2model", f_view2model,
-	"view2model_vec", f_view2model_vec,
-	"view2model_lu", f_view2model_lu,
-	"vnirt", f_vnirt,
-	"vquery_ray", f_vnirt,
-	"vrmgr", f_vrmgr,
-	"vrot", f_vrot,
+	{"savekey", f_savekey},
+	{"saveview", f_saveview},
+	{"sca", cmd_sca},
+	{"sed", f_sed},
+	{"sedit",	be_s_edit},
+	{"sed_apply", f_sedit_apply},
+	{"sed_reset", f_sedit_reset},
+	{"set_more_default", cmd_set_more_default},
+	{"setview", cmd_setview},
+	{"shader", f_shader},
+	{"share", f_share},
+#if USE_SURVICE_MODS
+	{"shaded_mode", cmd_shaded_mode},
+#endif
+	{"shells", cmd_shells},
+	{"showmats", cmd_showmats},
+	{"sill",		be_s_illuminate},
+	{"size", cmd_size},
+	{"solid_report", cmd_solid_report},
+	{"solids", f_tables},
+	{"solids_on_ray", cmd_solids_on_ray},
+	{"srot",		be_s_rotate},
+	{"sscale",	be_s_scale},
+	{"status", f_status},
+	{"stuff_str", cmd_stuff_str},
+	{"summary", cmd_summary},
+	{"sv", f_slewview},
+	{"svb", f_svbase},
+	{"sync", f_sync},
+	{"sxy",		be_s_trans},
+	{"t", cmd_ls},
+	{"ted", f_tedit},
+	{"tie", f_tie},
+	{"title", cmd_title},
+	{"tol", cmd_tol},
+	{"top",		bv_top},
+	{"tops", cmd_tops},
+	{"tra", cmd_tra},
+	{"track", f_amtrack},
+	{"translate", f_tr_obj},
+	{"tree", cmd_tree},
+	{"t_muves", f_t_muves},
+	{"unhide", cmd_unhide},
+	{"units", cmd_units},
+	{"vars", f_set},
+	{"vdraw", cmd_vdraw},
+	{"view", f_view},
+	{"view_ring", f_view_ring},
 #if 0
-	"vrot_center", f_vrot_center,
+	{"viewget", cmd_viewget},
+	{"viewset", cmd_viewset},
 #endif
-	"wcodes", f_wcodes,
-	"whatid", f_whatid,
-	"whichair", f_which,
-	"whichid", f_which,
-	"which_shader", f_which_shader,
-	"who", cmd_who,
-	"winset", f_winset,
-	"wmater", f_wmater,
-	"x", f_debug,
-	"xpush", f_xpush,
-	"Z", f_zap,
-	"zoom", f_zoom,
-	0, 0
+	{"viewsize", cmd_size},		/* alias "size" for saveview scripts */
+	{"view2grid_lu", f_view2grid_lu},
+	{"view2model", f_view2model},
+	{"view2model_vec", f_view2model_vec},
+	{"view2model_lu", f_view2model_lu},
+	{"vnirt", f_vnirt},
+	{"vquery_ray", f_vnirt},
+#if 0
+	{"vrmgr", f_vrmgr},
+#endif
+	{"vrot", cmd_vrot},
+#if 0
+	{"vrot_center", f_vrot_center},
+#endif
+	{"wcodes", f_wcodes},
+	{"whatid", cmd_whatid},
+	{"whichair", cmd_which},
+	{"whichid", cmd_which},
+	{"which_shader", f_which_shader},
+	{"who", cmd_who},
+	{"winset", f_winset},
+	{"wmater", f_wmater},
+	{"x", cmd_solid_report},
+	{"xpush", cmd_xpush},
+	{"Z", cmd_zap},
+	{"zoom", cmd_zoom},
+	{"zoomin",	bv_zoomin},
+	{"zoomout",	bv_zoomout},
+	{0, 0}
 };
 
 
@@ -378,99 +519,6 @@ stop_catching_output(vp)
 	bu_log_delete_hook(output_catch, (genptr_t)vp);
 }
 
-#if 0
-/*
- *	T C L _ A P P I N I T
- *
- *	Called by the Tcl/Tk libraries for initialization.
- *	Unncessary in our case; cmd_setup does all the work.
- */
-
-
-int
-Tcl_AppInit(interp)
-	Tcl_Interp *interp;		/* Interpreter for application. */
-{
-	return TCL_OK;
-}
-
-/*			C M D _ W R A P P E R
- *
- * Translates between MGED's "CMD_OK/BAD/MORE" result codes to ones that
- * Tcl can understand.
- */
-
-int
-cmd_wrapper(clientData, interp, argc, argv)
-	ClientData clientData;
-	Tcl_Interp *interp;
-	int argc;
-	char **argv;
-{
-	int status;
-	size_t len;
-	struct bu_vls result;
-	int catch_output;
-
-	argv[0] = ((struct funtab *)clientData)->ft_name;
-
-	/* We now leave the world of Tcl where everything prints its results
-	   in the interp->result field.  Here, stuff gets printed with the
-	   bu_log command; hence, we must catch such output and stuff it into
-	   the result string.  Do this *only* if "output_as_return" global
-	   variable is set.  Make a local copy of this variable in case it's
-	   changed by our command. */
-
-	catch_output = output_as_return;
-    
-	bu_vls_init(&result);
-
-	if (catch_output)
-		start_catching_output(&result);
-	status = mged_cmd(argc, argv, funtab);
-	if (catch_output)
-		stop_catching_output(&result);
-
-	/* Remove any trailing newlines. */
-
-	if (catch_output) {
-		len = bu_vls_strlen(&result);
-		while (len > 0 && bu_vls_addr(&result)[len-1] == '\n')
-			bu_vls_trunc(&result, --len);
-	}
-    
-	switch (status) {
-	case CMD_OK:
-		if (catch_output)
-			Tcl_SetResult(interp, bu_vls_addr(&result), TCL_VOLATILE);
-		status = TCL_OK;
-		break;
-	case CMD_BAD:
-		if (catch_output)
-			Tcl_SetResult(interp, bu_vls_addr(&result), TCL_VOLATILE);
-		status = TCL_ERROR;
-		break;
-	case CMD_MORE:
-		Tcl_SetResult(interp, MORE_ARGS_STR, TCL_STATIC);
-		if (catch_output) {
-			Tcl_AppendResult(interp, bu_vls_addr(&result), (char *)NULL);
-		}
-		status = TCL_ERROR;
-		break;
-	default:
-		Tcl_SetResult(interp, "error executing mged routine::", TCL_STATIC);
-		if (catch_output) {
-			Tcl_AppendResult(interp, bu_vls_addr(&result), (char *)NULL);
-		}
-		status = TCL_ERROR;
-		break;
-	}
-    
-	bu_vls_free(&result);
-	return status;
-}
-#endif
-
 /*
  *                            G U I _ O U T P U T
  *
@@ -485,6 +533,7 @@ gui_output(clientData, str)
 	genptr_t str;
 {
 	Tcl_DString tclcommand;
+	Tcl_Obj *save_result;
 	static int level = 0;
 
 	if (level > 50) {
@@ -498,9 +547,13 @@ gui_output(clientData, str)
 	(void)Tcl_DStringAppendElement(&tclcommand, bu_vls_addr(&tcl_output_hook));
 	(void)Tcl_DStringAppendElement(&tclcommand, str);
 
+	save_result = Tcl_GetObjResult(interp);
+	Tcl_IncrRefCount(save_result);
 	++level;
 	Tcl_Eval((Tcl_Interp *)clientData, Tcl_DStringValue(&tclcommand));
 	--level;
+	Tcl_SetObjResult(interp, save_result);
+	Tcl_DecrRefCount(save_result);
 
 	Tcl_DStringFree(&tclcommand);
 	return strlen(str);
@@ -538,7 +591,7 @@ cmd_tk(clientData, interp, argc, argv)
 		status = gui_setup(argv[1]);
 
 	return status;
-}    
+}
 
 /*
  *   C M D _ O U T P U T _ H O O K
@@ -573,7 +626,7 @@ cmd_output_hook(clientData, interp, argc, argv)
 		return TCL_OK;
 
 	/* Make sure the command exists before putting in the hook! */
-    
+	/* Note - the parameters to proc could be wrong and/or the proc could still disappear later */
 	bu_vls_init(&infocommand);
 	bu_vls_strcat(&infocommand, "info commands ");
 	bu_vls_strcat(&infocommand, argv[1]);
@@ -670,6 +723,28 @@ mged_setup()
 		       "::itcl::*", /* allowOverwrite */ 1) != TCL_OK)
 	  bu_log("Tcl_Import error %s\n", interp->result);
 
+	/* Initialize libbu */
+	Bu_Init(interp);
+
+	/* Initialize libbn */
+	Bn_Init(interp);
+
+	/* Initialize librt (includes database, drawable geometry and view objects) */
+	if (Rt_Init(interp) == TCL_ERROR) {
+		bu_log("Rt_Init error %s\n", interp->result);
+	}
+
+	/* initialize MGED's drawable geometry object */
+	dgop = dgo_open_cmd("mged", wdbp);
+
+	view_state->vs_vop = vo_open_cmd("");
+	view_state->vs_vop->vo_callback = mged_view_obj_callback;
+	view_state->vs_vop->vo_clientData = view_state;
+	view_state->vs_vop->vo_scale = 500;
+	view_state->vs_vop->vo_size = 2.0 * view_state->vs_vop->vo_scale;
+	view_state->vs_vop->vo_invSize = 1.0 / view_state->vs_vop->vo_size;
+	MAT_DELTAS_GET_NEG(view_state->vs_orig_pos, view_state->vs_vop->vo_center);
+
 	/* register commands */
 	cmd_setup();
 
@@ -751,15 +826,18 @@ cmd_setup()
 		    TCL_LINK_BOOLEAN);
 
 	/* Provide Tcl interfaces to the fundamental BRL-CAD libraries */
-	bu_tcl_setup( interp );
+	Bu_Init(interp);
 	bn_tcl_setup( interp );
 	Rt_Init(interp);
 
+#ifdef DM_X
 	tkwin = NULL;
+#endif
 
 	bu_vls_free(&temp);
 }
 
+int
 cmd_cmd_win(clientData, interp, argc, argv)
 	ClientData clientData;
 	Tcl_Interp *interp;
@@ -1007,7 +1085,7 @@ cmd_mged_glob(clientData, interp, argc, argv)
 {
 	struct bu_vls dest, src;
 
-	if(argc != 2){
+	if (argc != 2) {
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
@@ -1020,7 +1098,7 @@ cmd_mged_glob(clientData, interp, argc, argv)
 	bu_vls_init(&src);
 	bu_vls_init(&dest);
 	bu_vls_strcpy(&src, argv[1]);
-	mged_compat(&dest, &src, 1);
+	mged_compat(&dest, &src, 0);
 	Tcl_AppendResult(interp, bu_vls_addr(&dest), (char *)NULL);
 	bu_vls_free(&src);
 	bu_vls_free(&dest);
@@ -1182,9 +1260,7 @@ mged_compat( dest, src, use_first )
  */
 
 int
-cmdline(vp, record)
-	struct bu_vls *vp;
-	int record;
+cmdline( struct bu_vls *vp, int record )
 {
 	int	status;
 	struct bu_vls globbed;
@@ -1242,6 +1318,7 @@ cmdline(vp, record)
 			}
 
 
+#ifdef DM_X
 			/* A user typed this command so let everybody see, then record
 			   it in the history. */
 			if (record && tkwin != NULL) {
@@ -1250,6 +1327,7 @@ cmdline(vp, record)
 				Tcl_Eval(interp, bu_vls_addr(&tmp_vls));
 				Tcl_SetResult(interp, "", TCL_STATIC);
 			}
+#endif
 
 			if(record)
 				history_record(&save_vp, &start, &finish, CMD_OK);
@@ -1311,8 +1389,7 @@ cmdline(vp, record)
 
 
 void
-mged_print_result(status)
-	int status;
+mged_print_result(int status)
 {
 	int len;
 	extern void pr_prompt();
@@ -1366,10 +1443,10 @@ mged_print_result(status)
  */
 
 int
-mged_cmd(argc, argv, in_functions)
-	int argc;
-	char **argv;
-	struct funtab in_functions[];
+mged_cmd(
+	int argc,
+	char **argv,
+	struct funtab in_functions[])
 {
 	register struct funtab *ftp;
 	struct funtab *functions;
@@ -1466,11 +1543,11 @@ f_comm(clientData, interp, argc, argv)
 /* Format: q	*/
 
 int
-f_quit(clientData, interp, argc, argv )
-	ClientData clientData;
-	Tcl_Interp *interp;
-	int	argc;
-	char	**argv;
+f_quit(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv)
 {
 	if(argc < 1 || 1 < argc){
 		struct bu_vls vls;
@@ -1487,6 +1564,7 @@ f_quit(clientData, interp, argc, argv )
 
 	quit();			/* Exiting time */
 	/* NOTREACHED */
+	return TCL_OK;
 }
 
 /* wrapper for sync() */
@@ -1602,78 +1680,16 @@ f_fhelp2( argc, argv, functions)
 	return helpcomm( argc, argv, functions );
 }
 
-/* Hook for displays with no buttons */
 int
-f_press(clientData, interp, argc, argv )
+cmd_summary(clientData, interp, argc, argv )
 	ClientData clientData;
 	Tcl_Interp *interp;
 	int	argc;
 	char	**argv;
 {
-	register int i;
+	CHECK_DBI_NULL;
 
-	if(argc < 2 || MAXARGS < argc){
-		struct bu_vls vls;
-
-		bu_vls_init(&vls);
-		bu_vls_printf(&vls, "help press");
-		Tcl_Eval(interp, bu_vls_addr(&vls));
-		bu_vls_free(&vls);
-		return TCL_ERROR;
-	}
-
-	for( i = 1; i < argc; i++ )
-		press( argv[i] );
-
-	return TCL_OK;
-}
-
-int
-f_summary(clientData, interp, argc, argv )
-	ClientData clientData;
-	Tcl_Interp *interp;
-	int	argc;
-	char	**argv;
-{
-	register char *cp;
-	int flags = 0;
-	int bad;
-
-	if(argc < 1 || 2 < argc){
-		struct bu_vls vls;
-
-		bu_vls_init(&vls);
-		bu_vls_printf(&vls, "help summary");
-		Tcl_Eval(interp, bu_vls_addr(&vls));
-		bu_vls_free(&vls);
-		return TCL_ERROR;
-	}
-
-	bad = 0;
-	if( argc <= 1 )  {
-		dir_summary(0);
-		return TCL_OK;
-	}
-	cp = argv[1];
-	while( *cp )  switch( *cp++ )  {
-	case 's':
-		flags |= DIR_SOLID;
-		break;
-	case 'r':
-		flags |= DIR_REGION;
-		break;
-	case 'g':
-		flags |= DIR_COMB;
-		break;
-	default:
-		Tcl_AppendResult(interp, "summary:  S R or G are only valid parmaters\n",
-				 (char *)NULL);
-		bad = 1;
-		break;
-	}
-
-	dir_summary(flags);
-	return bad ? TCL_ERROR : TCL_OK;
+	return wdb_summary_cmd(wdbp, interp, argc, argv);
 }
 
 /*
@@ -1691,7 +1707,7 @@ cmd_echo(clientData, interp, argc, argv)
 {
 	register int i;
 
-	if(argc < 1 || MAXARGS < argc){
+	if(argc < 1){
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
@@ -1894,17 +1910,17 @@ f_tie(clientData, interp, argc, argv)
 
 int
 f_ps(clientData, interp, argc, argv)
-	ClientData clientData;
-	Tcl_Interp *interp;
-	int argc;
-	char *argv[];
+     ClientData clientData;
+     Tcl_Interp *interp;
+     int argc;
+     char *argv[];
 {
 	int status;
 	char *av[2];
 	struct dm_list *dml;
 	struct _view_state *vsp;
 
-	if(argc < 2 || MAXARGS < argc){
+	if (argc < 2) {
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
@@ -1920,8 +1936,6 @@ f_ps(clientData, interp, argc, argv)
 		return TCL_ERROR;
 
 	vsp = view_state;  /* save state info pointer */
-	view_state = dml->dml_view_state;  /* use dml's state info */
-	*mged_variables = *dml->dml_mged_variables; /* struct copy */
 
 	bu_free((genptr_t)menu_state,"f_ps: menu_state");
 	menu_state = dml->dml_menu_state;
@@ -1960,7 +1974,7 @@ f_pl(clientData, interp, argc, argv)
 	struct dm_list *dml;
 	struct _view_state *vsp;
 
-	if(argc < 2 || MAXARGS < argc){
+	if(argc < 2){
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
@@ -2053,6 +2067,13 @@ Tcl_Interp *interp;
 	bu_vls_init(&vls);
 	bu_vls_strcpy(&vls, "mged_default(dlist)");
 	Tcl_LinkVar(interp, bu_vls_addr(&vls), (char *)&mged_default_dlist, TCL_LINK_INT);
+	bu_vls_strcpy(&vls, "mged_default(db_warn)");
+	Tcl_LinkVar(interp, bu_vls_addr(&vls), (char *)&db_warn, TCL_LINK_INT);
+	bu_vls_strcpy(&vls, "mged_default(db_upgrade)");
+	Tcl_LinkVar(interp, bu_vls_addr(&vls), (char *)&db_upgrade, TCL_LINK_INT);
+	bu_vls_strcpy(&vls, "mged_default(db_version)");
+	Tcl_LinkVar(interp, bu_vls_addr(&vls), (char *)&db_version, TCL_LINK_INT);
+
 	bu_vls_strcpy(&vls, "edit_class");
 	Tcl_LinkVar(interp, bu_vls_addr(&vls), (char *)&es_edclass, TCL_LINK_INT);
 	bu_vls_strcpy(&vls, "edit_solid_flag");
@@ -2086,7 +2107,7 @@ f_bot_face_fuse( clientData, interp, argc, argv)
 	if( (old_dp = db_lookup( dbip, argv[2], LOOKUP_NOISY )) == DIR_NULL )
 		return TCL_ERROR;
 
-	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity ) < 0 )
+	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity, &rt_uniresource ) < 0 )
 	{
 	  Tcl_AppendResult(interp, "rt_db_get_internal() error\n", (char *)NULL);
 	  return TCL_ERROR;
@@ -2101,17 +2122,17 @@ f_bot_face_fuse( clientData, interp, argc, argv)
 	bot = (struct rt_bot_internal *)intern.idb_ptr;
 	RT_BOT_CK_MAGIC( bot );
 
-	(void) bot_face_fuse( bot );
+	(void) rt_bot_face_fuse( bot );
 
-	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, NULL)) == DIR_NULL )
+	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, (genptr_t)&intern.idb_type)) == DIR_NULL )
 	{
 		Tcl_AppendResult(interp, "Cannot add ", argv[1], " to directory\n", (char *)NULL );
 		return TCL_ERROR;
 	}
 
-	if( rt_db_put_internal( new_dp, dbip, &intern ) < 0 )
+	if( rt_db_put_internal( new_dp, dbip, &intern, &rt_uniresource ) < 0 )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		TCL_WRITE_ERR_return;
 	}
 	return TCL_OK;
@@ -2140,7 +2161,7 @@ f_bot_fuse(clientData, interp, argc, argv)
 	if( (old_dp = db_lookup( dbip, argv[2], LOOKUP_NOISY )) == DIR_NULL )
 		return TCL_ERROR;
 
-	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity ) < 0 )
+	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity, &rt_uniresource ) < 0 )
 	{
 	  Tcl_AppendResult(interp, "rt_db_get_internal() error\n", (char *)NULL);
 	  return TCL_ERROR;
@@ -2155,19 +2176,19 @@ f_bot_fuse(clientData, interp, argc, argv)
 	bot = (struct rt_bot_internal *)intern.idb_ptr;
 	RT_BOT_CK_MAGIC( bot );
 
-	count1 = bot_vertex_fuse( bot );
+	count1 = rt_bot_vertex_fuse( bot );
 	if( count1 )
-		(void)bot_condense( bot );
+		(void)rt_bot_condense( bot );
 
-	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, NULL)) == DIR_NULL )
+	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, (genptr_t)&intern.idb_type)) == DIR_NULL )
 	{
 		Tcl_AppendResult(interp, "Cannot add ", argv[1], " to directory\n", (char *)NULL );
 		return TCL_ERROR;
 	}
 
-	if( rt_db_put_internal( new_dp, dbip, &intern ) < 0 )
+	if( rt_db_put_internal( new_dp, dbip, &intern, &rt_uniresource ) < 0 )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		TCL_WRITE_ERR_return;
 	}
 	return TCL_OK;
@@ -2197,7 +2218,7 @@ f_bot_condense(clientData, interp, argc, argv)
 	if( (old_dp = db_lookup( dbip, argv[2], LOOKUP_NOISY )) == DIR_NULL )
 		return TCL_ERROR;
 
-	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity ) < 0 )
+	if( rt_db_get_internal( &intern, old_dp, dbip, bn_mat_identity, &rt_uniresource ) < 0 )
 	{
 	  Tcl_AppendResult(interp, "rt_db_get_internal() error\n", (char *)NULL);
 	  return TCL_ERROR;
@@ -2212,20 +2233,1208 @@ f_bot_condense(clientData, interp, argc, argv)
 	bot = (struct rt_bot_internal *)intern.idb_ptr;
 	RT_BOT_CK_MAGIC( bot );
 
-	count2 = bot_condense( bot );
+	count2 = rt_bot_condense( bot );
 	sprintf( count_str, "%d", count2 );
 	Tcl_AppendResult(interp, count_str, " dead vertices eliminated\n", (char *)NULL );
 
-	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, NULL)) == DIR_NULL )
+	if( (new_dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, (genptr_t)&intern.idb_type)) == DIR_NULL )
 	{
 		Tcl_AppendResult(interp, "Cannot add ", argv[1], " to directory\n", (char *)NULL );
 		return TCL_ERROR;
 	}
 
-	if( rt_db_put_internal( new_dp, dbip, &intern ) < 0 )
+	if( rt_db_put_internal( new_dp, dbip, &intern, &rt_uniresource ) < 0 )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		TCL_WRITE_ERR_return;
 	}
 	return TCL_OK;
 }
+
+#if 1
+int
+f_test_bomb_hook(clientData, interp, argc, argv)
+	ClientData clientData;
+	Tcl_Interp *interp;
+	int     argc;
+	char    **argv;
+{
+	bu_bomb("\nTesting MGED's bomb hook!\n");
+
+	/* This is never reached */
+	return TCL_OK;
+}
+#endif
+
+int
+cmd_adjust(ClientData	clientData,
+	   Tcl_Interp	*interp,
+	   int		argc,
+	   char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_adjust_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_attr(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_attr_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_dbip(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_dbip_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_dump(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_dump_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_form(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_form_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_get(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_get_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_match(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_match_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_put(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_put_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_rt_gettrees(ClientData	clientData,
+		Tcl_Interp	*interp,
+		int		argc,
+		char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_rt_gettrees_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_dbversion(ClientData	clientData,
+	      Tcl_Interp	*interp,
+	      int		argc,
+	      char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_version_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *		    C M D _ C O M B _ S T D
+ *
+ *	Input a combination in standard set-theoetic notation
+ *
+ *	Syntax: c [-gr] comb_name [boolean_expr]
+ */
+int
+cmd_comb_std(ClientData	clientData,
+	     Tcl_Interp	*interp,
+	     int	argc,
+	     char	**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_comb_std_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_nmg_collapse( clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	char *av[3];
+
+	CHECK_DBI_NULL;
+
+	if (wdb_nmg_collapse_cmd(wdbp, interp, argc, argv) == TCL_ERROR)
+		return TCL_ERROR;
+
+	av[0] = "e";
+	av[1] = argv[2];
+	av[2] = NULL;
+
+	return cmd_draw(clientData, interp, 2, av);
+}
+
+/*			F _ M A K E _ N A M E
+ *
+ * Generate an identifier that is guaranteed not to be the name
+ * of any object currently in the database.
+ *
+ */
+int
+cmd_make_name(ClientData	clientData,
+	      Tcl_Interp	*interp,
+	      int		argc,
+	      char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_make_name_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_shells(clientData, interp, argc, argv )
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_shells_cmd(wdbp, interp, argc, argv);
+}
+
+/*  	F _ P A T H S U M :   does the following
+ *		1.  produces path for purposes of matching
+ *      	2.  gives all paths matching the input path OR
+ *		3.  gives a summary of all paths matching the input path
+ *		    including the final parameters of the solids at the bottom
+ *		    of the matching paths
+ */
+int
+cmd_pathsum(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int	argc;
+char	**argv;
+{
+	int	ret;
+
+	CHECK_DBI_NULL;
+
+	if (argc < 2) {
+		/* get the path */
+		Tcl_AppendResult(interp, MORE_ARGS_STR,
+				 "Enter the path: ", (char *)NULL);
+		return TCL_ERROR;
+	}
+
+#if 0
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);  /* allow interupts */
+        else
+		return TCL_OK;
+#endif
+
+	ret = wdb_pathsum_cmd(wdbp, interp, argc, argv);
+
+#if 0
+	(void)signal( SIGINT, SIG_IGN );
+#endif
+	return ret;
+}
+
+/*   	F _ C O P Y E V A L : copys an evaluated solid
+ */
+
+int
+cmd_copyeval(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	int ret;
+
+	CHECK_DBI_NULL;
+
+	if (argc < 3) {
+		Tcl_AppendResult(interp, MORE_ARGS_STR,
+				 "Enter new_solid_name and full path to old_solid\n",
+				 (char *)NULL);
+		return TCL_ERROR;
+	}
+
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);  /* allow interupts */
+        else
+		return TCL_OK;
+
+	ret = wdb_copyeval_cmd(wdbp, interp, argc, argv);
+
+	(void)signal( SIGINT, SIG_IGN );
+	return ret;
+}
+
+
+/*			F _ P U S H
+ *
+ * The push command is used to move matrices from combinations 
+ * down to the solids. At some point, it is worth while thinking
+ * about adding a limit to have the push go only N levels down.
+ *
+ * the -d flag turns on the treewalker debugging output.
+ * the -P flag allows for multi-processor tree walking (not useful)
+ * the -l flag is there to select levels even if it does not currently work.
+ */
+int
+cmd_push(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_push_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_hide(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_hide_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_unhide(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_unhide_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_xpush(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_xpush_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_showmats(clientData, interp, argc, argv )
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_showmats_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_nmg_simplify(clientData, interp, argc, argv )
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char *argv[];
+{
+	CHECK_DBI_NULL;
+
+	return wdb_nmg_simplify_cmd(wdbp, interp, argc, argv);
+}
+
+/*			F _ M A K E _ B B
+ *
+ *	Build an RPP bounding box for the list of objects and/or paths passed to this routine
+ */
+
+int
+cmd_make_bb(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_make_bb_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_whatid(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_whatid_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *      C M D _ W H I C H
+ *
+ *	Finds all regions with given region ids or air codes.
+ */
+int
+cmd_which(clientData, interp, argc, argv)
+     ClientData clientData;
+     Tcl_Interp *interp;
+     int	argc;
+     char	**argv;
+{
+	int		ret;
+
+	CHECK_DBI_NULL;
+
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);  /* allow interupts */
+        else
+		return TCL_OK;
+
+	ret = wdb_which_cmd(wdbp, interp, argc, argv);
+
+	(void)signal(SIGINT, SIG_IGN);
+	return ret;
+}
+
+/*
+ *  			C M D _ T O P S
+ *  
+ *  Find all top level objects.
+ *  TODO:  Perhaps print all objects, sorted by use count, as an option?
+ */
+int
+cmd_tops(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int	argc;
+char	**argv;
+{
+	int		ret;
+
+	CHECK_DBI_NULL;
+
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);  /* allow interupts */
+        else
+		return TCL_OK;
+
+	ret = wdb_tops_cmd(wdbp, interp, argc, argv);
+
+	(void)signal(SIGINT, SIG_IGN);
+	return ret;
+}
+
+/*
+ *			C M D _ T R E E
+ *
+ *	Print out a list of all members and submembers of an object.
+ */
+int
+cmd_tree(ClientData	clientData,
+       Tcl_Interp	*interp,
+       int		argc,
+       char		**argv)
+{
+	int		ret;
+
+	CHECK_DBI_NULL;
+
+#if 0
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);  /* allow interupts */
+	else
+		return TCL_OK;
+#endif
+
+	/*
+	 * The tree command is wrapped by tclscripts/tree.tcl and calls this
+	 * routine with the name _mged_tree. So, we put back the original name.
+	 */ 
+	argv[0] = "tree";
+	ret = wdb_tree_cmd(wdbp, interp, argc, argv);
+
+#if 0
+	(void)signal(SIGINT, SIG_IGN);
+#endif
+	return ret;
+}
+
+/*	C M D _ M V A L L
+ *
+ *	rename all occurences of an object
+ *	format:	mvall oldname newname
+ *
+ */
+int
+cmd_mvall(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_move_all_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *
+ *			C M D _ D U P
+ *
+ *  Check for duplicate names in preparation for cat'ing of files
+ *
+ *  Usage:  dup file.g [prefix]
+ *  becomes: db dup file.g [prefix]
+ */
+int
+cmd_dup(clientData, interp, argc, argv )
+     ClientData clientData;
+     Tcl_Interp *interp;
+     int	argc;
+     char	**argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_dup_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *			C M D _ C O N C A T
+ *
+ *  Concatenate another GED file into the current file.
+ *  Interrupts are not permitted during this function.
+ *
+ *  Usage:  dbconcat file.g [prefix]
+ *  becomes: db concat file.g prefix
+ *
+ *  NOTE:  If a prefix is not given on the command line,
+ *  then the users insist that they be prompted for the prefix,
+ *  to prevent inadvertently sucking in a non-prefixed file.
+ *  Slash ("/") specifies no prefix.
+ */
+int
+cmd_concat(clientData, interp, argc, argv)
+     ClientData clientData;
+     Tcl_Interp *interp;
+     int	argc;
+     char	**argv;
+{
+	CHECK_DBI_NULL;
+
+	/* get any prefix */
+	if (argc < 2) {
+		Tcl_AppendResult(interp, MORE_ARGS_STR,
+				 "concat: Enter database: ",
+				 (char *)NULL);
+		return TCL_ERROR;
+	}
+
+	if (argc < 3) {
+		Tcl_AppendResult(interp, MORE_ARGS_STR,
+				 "concat: Enter prefix string or / for no prefix: ",
+				 (char *)NULL);
+		return TCL_ERROR;
+	}
+
+	/* replace dbconcat with concat */
+	argv[0] = "concat";
+
+	return wdb_concat_cmd(wdbp, interp, argc, argv);
+}
+
+/* Rename an object */
+/* Format: mv oldname newname	*/
+int
+cmd_name(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_move_cmd(wdbp, interp, argc, argv);
+}
+
+/* add solids to a region or create the region */
+/* and then add solids */
+/* Format: r regionname opr1 sol1 opr2 sol2 ... oprn soln */
+int
+cmd_region(ClientData	clientData,
+	   Tcl_Interp	*interp,
+	   int		argc,
+	   char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_region_cmd(wdbp, interp, argc, argv);
+}
+
+/* Delete members of a combination */
+/* Format: rm comb memb1 memb2 .... membn	*/
+int
+cmd_remove(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int	argc;
+char	**argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_remove_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *			C M D _ U N I T S
+ *
+ * Change the local units of the description.
+ * Base unit is fixed in mm, so this just changes the current local unit
+ * that the user works in.
+ */
+int
+cmd_units(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	register struct dm_list *dmlp;
+	int		ret;
+	fastf_t		sf;
+
+	CHECK_DBI_NULL;
+
+	sf = dbip->dbi_base2local;
+	ret = wdb_units_cmd(wdbp, interp, argc, argv);
+
+ 	set_localunit_TclVar();
+	sf = dbip->dbi_base2local / sf;
+	update_grids(sf);
+	update_views = 1;
+
+	FOR_ALL_DISPLAYS(dmlp, &head_dm_list.l) {
+		dmlp->dml_view_state->vs_vop->vo_local2base = dbip->dbi_local2base;
+		dmlp->dml_view_state->vs_vop->vo_base2local = dbip->dbi_base2local;
+	}
+
+	return ret;
+}
+
+/*
+ *	Change the current title of the description
+ */
+int
+cmd_title(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	int	ret;
+
+	CHECK_DBI_NULL;
+
+	ret = wdb_title_cmd(wdbp, interp, argc, argv);
+	view_state->vs_flag = 1;
+
+	return ret;
+}
+
+/*
+ *  			C M D _ P R C O L O R
+ */
+int
+cmd_prcolor(ClientData	clientData,
+	    Tcl_Interp	*interp,
+	    int		argc,
+	    char	**argv)
+{
+	return wdb_prcolor_cmd(wdbp, interp, argc, argv);
+}
+
+/* List object information, briefly */
+/* Format: cat object	*/
+int
+cmd_cat(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	int ret;
+
+	CHECK_DBI_NULL;
+
+#if 0
+	if (setjmp(jmp_env) == 0)
+		(void)signal(SIGINT, sig3);	/* allow interupts */
+	else
+		return TCL_OK;
+#endif
+
+	ret = wdb_cat_cmd(wdbp, interp, argc, argv);
+
+#if 0
+	(void)signal(SIGINT, SIG_IGN);
+#endif
+	return ret;
+}
+
+/*
+ *  			C M D _ C O L O R
+ *  
+ *  Add a color table entry.
+ */
+int
+cmd_color(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	int ret;
+
+	CHECK_DBI_NULL;
+
+	ret = wdb_color_cmd(wdbp, interp, argc, argv);
+	color_soltab();
+
+	return ret;
+}
+
+/*
+ *			C M D _ C O M B
+ *
+ *  Create or add to the end of a combination, with one or more solids,
+ *  with explicitly specified operations.
+ *
+ *  Format: comb comb_name sol1 opr2 sol2 ... oprN solN
+ */
+int
+cmd_comb(clientData, interp, argc, argv)
+ClientData clientData;
+Tcl_Interp *interp;
+int	argc;
+char	**argv;
+{
+	CHECK_DBI_NULL;
+
+	return wdb_comb_cmd(wdbp, interp, argc, argv);
+}
+
+/* Copy an object */
+/* Format: cp oldname newname	*/
+int
+cmd_copy(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	int ret;
+	char *av[3];
+
+	CHECK_DBI_NULL;
+
+	if ((ret = wdb_copy_cmd(wdbp, interp, argc, argv)) != TCL_OK)
+		return ret;
+
+	av[0] = "e";
+	av[1] = argv[2]; /* depends on solid name being in argv[2] */
+	av[2] = NULL;
+
+	/* draw the new object */
+	return cmd_draw(clientData, interp, 2, av);
+}
+
+/*
+ *                C M D _ E X P A N D
+ *
+ * Performs wildcard expansion (matched to the database elements)
+ * on its given arguments.  The result is returned in interp->result.
+ */
+int
+cmd_expand( clientData, interp, argc, argv )
+ClientData clientData;
+Tcl_Interp *interp;
+int argc;
+char **argv;
+{
+    CHECK_DBI_NULL;
+
+    return wdb_expand_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *			C M D _ L S
+ *
+ * This routine lists the names of all the objects accessible
+ * in the object file.
+ */
+int
+cmd_ls(ClientData	clientData,
+       Tcl_Interp	*interp,
+       int		argc,
+       char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_ls_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *  			C M D _ F I N D
+ *  
+ *  Find all references to the named objects.
+ */
+int
+cmd_find(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_find_cmd(wdbp, interp, argc, argv);
+}
+
+/* Grouping command */
+/* Format: g groupname object1 object2 .... objectn	*/
+int
+cmd_group(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_group_cmd(wdbp, interp, argc, argv);
+}
+
+/* Create an instance of something */
+/* Format: i object combname [op]	*/
+int
+cmd_instance(ClientData	clientData,
+	     Tcl_Interp *interp,
+	     int	argc,
+	     char	**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_instance_cmd(wdbp, interp, argc, argv);
+}
+
+int
+cmd_keep(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_keep_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *			C M D _ L I S T
+ *
+ *  List object information, verbose, in GIFT-compatible format.
+ *  Format: l object
+ */
+int
+cmd_list(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	int recurse=0;
+
+	CHECK_DBI_NULL;
+
+	if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'r' && argv[1][2] == '\0')
+		recurse = 1;
+
+	/*
+	 * Here we have no usable arguments,
+	 * so we better be in an edit state.
+	 */
+	if ((argc == 1 || (argc == 2 && recurse)) && illump != SOLID_NULL) {
+		struct bu_vls	vls;
+		int		ret;
+		int		ac;
+		char		*av[4];
+
+		bu_vls_init(&vls);
+
+		if (state == ST_S_EDIT)
+			db_path_to_vls( &vls, &illump->s_fullpath );
+		else if (state == ST_O_EDIT) {
+			register int	i;
+			for( i=0; i < ipathpos; i++ ) {
+				bu_vls_printf(&vls, "/%s",
+					      DB_FULL_PATH_GET(&illump->s_fullpath,i)->d_namep );
+			}
+		} else
+			return TCL_ERROR;
+
+		if (recurse) {
+			av[0] = "l";
+			av[1] = "-r";
+			av[2] = bu_vls_addr(&vls);
+			av[3] = (char *)NULL;
+			ac = 3;
+		} else {
+			av[0] = "l";
+			av[1] = bu_vls_addr(&vls);
+			av[2] = (char *)NULL;
+			ac = 2;
+		}
+		ret = wdb_list_cmd(wdbp, interp, ac, av);
+		bu_vls_free(&vls);
+		return ret;
+	} else {
+		return wdb_list_cmd(wdbp, interp, argc, argv);
+	}
+}
+
+/*
+ *			C M D _ L M
+ *
+ *	List regions based on values of their MUVES_Component attribute
+ */
+int
+cmd_lm(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	struct bu_attribute_value_set avs;
+	struct bu_vls vls;
+	struct bu_ptbl *tbl;
+	struct directory *dp;
+	int i;
+	int last_opt=0;
+	int new_arg_count=1;
+	int new_argc;
+	int ret;
+	char **new_argv;
+
+	bu_vls_init( &vls );
+	bu_vls_strcat( &vls, argv[0] );
+	for( i=1 ; i<argc ; i++ ) {
+		if( *argv[i] == '-' ) {
+			bu_vls_putc( &vls, ' ' );
+			bu_vls_strcat( &vls, argv[i] );
+			last_opt = i;
+			new_arg_count++;
+		} else {
+			break;
+		}
+	}
+
+	bu_avs_init( &avs, argc - last_opt, "cmd_lm avs" );
+	for( i=last_opt+1 ; i<argc ; i++ ) {
+		bu_avs_add_nonunique( &avs, "MUVES_Component", argv[i] );
+	}
+
+	tbl = db_lookup_by_attr( dbip, DIR_REGION, &avs, 2 );
+	if( !tbl ) {
+		/* Error!!! */
+		Tcl_AppendResult( interp, "Error: db_lookup_by_attr() failed!!\n", (char *)NULL );
+		bu_vls_free( &vls );
+		bu_avs_free( &avs );
+		return TCL_ERROR;
+	}
+
+	if( BU_PTBL_LEN( tbl ) == 0 ) {
+		/* no matches */
+		bu_vls_free( &vls );
+		bu_avs_free( &avs );
+		bu_ptbl_free( tbl );
+		bu_free( (char *)tbl, "cmd_lm ptbl" );
+		return TCL_OK;
+	}
+
+	for( i=0 ; i<BU_PTBL_LEN( tbl ) ; i++ ) {
+		dp = (struct directory *)BU_PTBL_GET( tbl, i );
+		bu_vls_putc( &vls, ' ' );
+		bu_vls_strcat( &vls, dp->d_namep );
+		new_arg_count++;
+	}
+
+	bu_ptbl_free( tbl );
+	bu_free( (char *)tbl, "cmd_lm ptbl" );
+
+	/* create a new argc and argv to pass to the cmd_ls routine */
+	new_argv = (char **)bu_calloc( new_arg_count + 1, sizeof( char *), "cmd_lm new_argv" );
+	new_argc = bu_argv_from_string( new_argv, new_arg_count+1, bu_vls_addr( &vls ) );
+
+	ret = cmd_ls( clientData, interp, new_argc, new_argv );
+
+	bu_vls_free( &vls );
+	bu_free( (char *)new_argv, "cmd_lm new_argv" );
+
+	return( ret );
+}
+
+
+/*
+ *			C M D _ L T
+ *
+ *  List object information in a tcl list. The
+ *  tcl list is a list of {op obj} pairs.
+ */
+int
+cmd_lt(ClientData	clientData,
+       Tcl_Interp	*interp,
+       int		argc,
+       char		**argv)
+{
+	return wdb_lt_cmd(wdbp, interp, argc, argv);
+}
+
+/*
+ *			F _ T O L
+ *
+ *  "tol"	displays current settings
+ *  "tol abs #"	sets absolute tolerance.  # > 0.0
+ *  "tol rel #"	sets relative tolerance.  0.0 < # < 1.0
+ *  "tol norm #" sets normal tolerance, in degrees.
+ *  "tol dist #" sets calculational distance tolerance
+ *  "tol perp #" sets calculational normal tolerance.
+ */
+int
+cmd_tol(ClientData	clientData,
+	Tcl_Interp	*interp,
+	int		argc,
+	char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return wdb_tol_cmd(wdbp, interp, argc, argv);
+}
+
+/* defined in chgview.c */
+extern int edit_com();
+
+/* ZAP the display -- then edit anew */
+/* Format: B object	*/
+int
+cmd_blast(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	char *av[2];
+
+	av[0] = "Z";
+	av[1] = (char *)0;
+
+	if (cmd_zap(clientData, interp, 1, av) == TCL_ERROR)
+		return TCL_ERROR;
+
+	return edit_com(argc, argv, 1, 1);
+}
+
+/* Edit something (add to visible display) */
+/* Format: e object	*/
+int
+cmd_draw(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	return edit_com(argc, argv, 1, 1);
+}
+
+extern int emuves_com( int argc, char **argv );	/* from chgview.c */
+
+/* Add regions with attribute MUVES_Component haveing the specified values */
+/* Format: em value [value value ...]	*/
+int
+cmd_emuves(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
+{
+	return emuves_com(argc, argv);
+}
+
+/* Format: ev objects	*/
+int
+cmd_ev(ClientData	clientData,
+       Tcl_Interp *interp,
+       int	argc,
+       char	**argv)
+{
+	return edit_com(argc, argv, 3, 1);
+}
+
+/*
+ *			C M D _ V D R A W
+ */
+int
+cmd_vdraw(ClientData	clientData,
+	  Tcl_Interp	*interp,
+	  int		argc,
+	  char		**argv)
+{
+	CHECK_DBI_NULL;
+
+	return dgo_vdraw_cmd(dgop, interp, argc, argv);
+}
+
+/*
+ *			C M D _ E
+ *
+ *  The "Big E" command.
+ *  Evaluated Edit something (add to visible display)
+ *  Usage: E object(s)
+ */
+int
+cmd_E(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char	**argv)
+{
+	int	initial_blank_screen;
+	register struct dm_list *dmlp;
+	register struct dm_list *save_dmlp;
+	register struct cmd_list *save_cmd_list;
+	int ret;
+
+	CHECK_DBI_NULL;
+	initial_blank_screen = BU_LIST_IS_EMPTY(&dgop->dgo_headSolid);
+
+	if ((ret = dgo_E_cmd(dgop, interp, argc, argv)) != TCL_OK)
+		return ret;
+
+	update_views = 1;
+
+	save_dmlp = curr_dm_list;
+	save_cmd_list = curr_cmd_list;
+	FOR_ALL_DISPLAYS(dmlp, &head_dm_list.l){
+		curr_dm_list = dmlp;
+		if (curr_dm_list->dml_tie)
+			curr_cmd_list = curr_dm_list->dml_tie;
+		else
+			curr_cmd_list = &head_cmd_list;
+
+		/* If we went from blank screen to non-blank, resize */
+		if (mged_variables->mv_autosize  && initial_blank_screen &&
+		    BU_LIST_NON_EMPTY(&dgop->dgo_headSolid)) {
+			struct view_ring *vrp;
+
+			size_reset();
+			new_mats();
+			(void)mged_svbase();
+
+			for (BU_LIST_FOR(vrp, view_ring, &view_state->vs_headView.l))
+				vrp->vr_scale = view_state->vs_vop->vo_scale;
+		}
+	}
+
+	curr_dm_list = save_dmlp;
+	curr_cmd_list = save_cmd_list;
+
+	return TCL_OK;
+}
+
+int
+cmd_bot_face_sort( ClientData	clientData,
+	Tcl_Interp	*interp,
+	int     	argc,
+	char    	**argv)
+{
+	CHECK_DBI_NULL;
+	return wdb_bot_face_sort_cmd( wdbp, interp, argc, argv );
+}
+
+int
+cmd_bot_decimate( ClientData	clientData,
+	Tcl_Interp	*interp,
+	int     	argc,
+	char    	**argv)
+{
+	CHECK_DBI_NULL;
+	return wdb_bot_decimate_cmd( wdbp, interp, argc, argv );
+}
+
+#if USE_SURVICE_MODS
+int
+cmd_shaded_mode(ClientData	clientData,
+		Tcl_Interp	*interp,
+		int     	argc,
+		char    	**argv)
+{
+	/* check to see if we have -a or -auto */
+	if (argc == 3 && 
+	    argv[1][0] == '-' &&
+	    argv[1][1] == 'a') {
+	  struct bu_vls vls;
+
+	  /* set zbuffer, zclip and lighting for all */
+	  bu_vls_init(&vls);
+	  bu_vls_printf(&vls, "mged_shaded_mode_helper %s", argv[2]);
+	  Tcl_Eval(interp, bu_vls_addr(&vls));
+	  bu_vls_free(&vls);
+
+	  /* skip past -a */
+	  --argc;
+	  ++argv;
+	}
+
+	return dgo_shaded_mode_cmd(dgop, interp, argc, argv);
+}
+#endif

@@ -21,7 +21,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -48,9 +48,9 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
  */
 void
 rt_bomb(s)
-CONST char *s;
+const char *s;
 {
-	if(rt_g.debug || rt_g.NMG_debug )
+	if(RT_G_DEBUG || rt_g.NMG_debug )
 		bu_debug |= BU_DEBUG_COREDUMP;
 	bu_bomb(s);
 }

@@ -20,7 +20,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSvol[] = "@(#)$Header$ (BRL)";
+static const char RCSvol[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -28,6 +28,7 @@ static char RCSvol[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+#include <string.h>
 #include "machine.h"
 #include "vmath.h"
 #include "db.h"
@@ -50,7 +51,7 @@ struct rt_vol_specific {
 
 #define VOL_O(m)	offsetof(struct rt_vol_internal, m)
 
-CONST struct bu_structparse rt_vol_parse[] = {
+const struct bu_structparse rt_vol_parse[] = {
 #if CRAY && !__STDC__
 	{"%s",	RT_VOL_NAME_LEN, "file",	1,		BU_STRUCTPARSE_FUNC_NULL },
 #else
@@ -162,14 +163,14 @@ struct seg		*seghead;
 	if( ! rt_in_rpp(rp, invdir, P, volp->vol_large ) )
 		return	0;	/* MISS */
 	VJOIN1( P, rp->r_pt, rp->r_min, rp->r_dir );	/* P is hit point */
-if(rt_g.debug&DEBUG_VOL)VPRINT("vol_large", volp->vol_large);
-if(rt_g.debug&DEBUG_VOL)VPRINT("vol_origin", volp->vol_origin);
-if(rt_g.debug&DEBUG_VOL)VPRINT("r_pt", rp->r_pt);
-if(rt_g.debug&DEBUG_VOL)VPRINT("P", P);
-if(rt_g.debug&DEBUG_VOL)VPRINT("cellsize", volp->vol_i.cellsize);
+if(RT_G_DEBUG&DEBUG_VOL)VPRINT("vol_large", volp->vol_large);
+if(RT_G_DEBUG&DEBUG_VOL)VPRINT("vol_origin", volp->vol_origin);
+if(RT_G_DEBUG&DEBUG_VOL)VPRINT("r_pt", rp->r_pt);
+if(RT_G_DEBUG&DEBUG_VOL)VPRINT("P", P);
+if(RT_G_DEBUG&DEBUG_VOL)VPRINT("cellsize", volp->vol_i.cellsize);
 	t0 = rp->r_min;
 	tmax = rp->r_max;
-if(rt_g.debug&DEBUG_VOL)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r_max);
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r_max);
 
 	/* find grid cell where ray first hits ideal space bounding RPP */
 	igrid[X] = (P[X] - volp->vol_origin[X]) / volp->vol_i.cellsize[X];
@@ -190,7 +191,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("[shoot: r_min=%g, r_max=%g]\n", rp->r_min, rp->r
 	} else if( igrid[Z] >= volp->vol_i.zdim ) {
 		igrid[Z] = volp->vol_i.zdim-1;
 	}
-if(rt_g.debug&DEBUG_VOL)bu_log("igrid=(%d, %d, %d)\n", igrid[X], igrid[Y], igrid[Z]);
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("igrid=(%d, %d, %d)\n", igrid[X], igrid[Y], igrid[Z]);
 
 	/* X setup */
 	if( rp->r_dir[X] == 0.0 )  {
@@ -227,9 +228,9 @@ if(rt_g.debug&DEBUG_VOL)bu_log("igrid=(%d, %d, %d)\n", igrid[X], igrid[Y], igrid
 	}
 
 	/* The delta[] elements *must* be positive, as t must increase */
-if(rt_g.debug&DEBUG_VOL)bu_log("t[X] = %g, delta[X] = %g\n", t[X], delta[X] );
-if(rt_g.debug&DEBUG_VOL)bu_log("t[Y] = %g, delta[Y] = %g\n", t[Y], delta[Y] );
-if(rt_g.debug&DEBUG_VOL)bu_log("t[Z] = %g, delta[Z] = %g\n", t[Z], delta[Z] );
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("t[X] = %g, delta[X] = %g\n", t[X], delta[X] );
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("t[Y] = %g, delta[Y] = %g\n", t[Y], delta[Y] );
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("t[Z] = %g, delta[Z] = %g\n", t[Z], delta[Z] );
 
 	/* Find face of entry into first cell -- max initial t value */
 	if( t[X] >= t[Y] )  {
@@ -243,7 +244,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("t[Z] = %g, delta[Z] = %g\n", t[Z], delta[Z] );
 		in_axis = Z;
 		t0 = t[Z];
 	}
-if(rt_g.debug&DEBUG_VOL)bu_log("Entry axis is %s, t0=%g\n", in_axis==X ? "X" : (in_axis==Y?"Y":"Z"), t0);
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("Entry axis is %s, t0=%g\n", in_axis==X ? "X" : (in_axis==Y?"Y":"Z"), t0);
 
 	/* Advance to next exits */
 	t[X] += delta[X];
@@ -263,7 +264,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("Entry axis is %s, t0=%g\n", in_axis==X ? "X" : (
 		bu_log("*** advancing t[Z]\n");
 		t[Z] += delta[Z];
 	}
-if(rt_g.debug&DEBUG_VOL) VPRINT("Exit t[]", t);
+if(RT_G_DEBUG&DEBUG_VOL) VPRINT("Exit t[]", t);
 
 	inside = 0;
 
@@ -292,10 +293,10 @@ if(rt_g.debug&DEBUG_VOL) VPRINT("Exit t[]", t);
 
 		/* Ray passes through cell igrid[XY] from t0 to t1 */
 		val = VOL( &volp->vol_i, igrid[X], igrid[Y], igrid[Z] );
-if(rt_g.debug&DEBUG_VOL)bu_log("igrid [%d %d %d] from %g to %g, val=%d\n",
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("igrid [%d %d %d] from %g to %g, val=%d\n",
 			igrid[X], igrid[Y], igrid[Z],
 			t0, t1, val );
-if(rt_g.debug&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
+if(RT_G_DEBUG&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
 			out_axis==X ? "X" : (out_axis==Y?"Y":"Z"),
 			t[X], t[Y], t[Z] );
 
@@ -321,7 +322,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
 						(-rt_vol_normtab[in_axis]);
 				}
 				BU_LIST_INSERT( &(seghead->l), &(segp->l) );
-				if(rt_g.debug&DEBUG_VOL) bu_log("START t=%g, surfno=%d\n",
+				if(RT_G_DEBUG&DEBUG_VOL) bu_log("START t=%g, surfno=%d\n",
 					t0, segp->seg_in.hit_surfno);
 			} else {
 				/* Do nothing, marching through void */
@@ -348,7 +349,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
 					tail->seg_out.hit_surfno =
 						rt_vol_normtab[in_axis];
 				}
-				if(rt_g.debug&DEBUG_VOL) bu_log("END t=%g, surfno=%d\n",
+				if(RT_G_DEBUG&DEBUG_VOL) bu_log("END t=%g, surfno=%d\n",
 					t0, tail->seg_out.hit_surfno );
 			}
 		}
@@ -379,7 +380,7 @@ if(rt_g.debug&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
 			/* go right, exit norm goes right */
 			tail->seg_out.hit_surfno = rt_vol_normtab[in_axis];
 		}
-		if(rt_g.debug&DEBUG_VOL) bu_log("closed END t=%g, surfno=%d\n",
+		if(RT_G_DEBUG&DEBUG_VOL) bu_log("closed END t=%g, surfno=%d\n",
 			tmax, tail->seg_out.hit_surfno );
 	}
 
@@ -398,9 +399,9 @@ if(rt_g.debug&DEBUG_VOL)bu_log("Exit axis is %s, t[]=(%g, %g, %g)\n",
 int
 rt_vol_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-CONST mat_t			mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+const mat_t			mat;
+const struct db_i		*dbip;
 {
 	union record	*rp;
 	register struct rt_vol_internal *vip;
@@ -419,7 +420,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_VOL;
 	ip->idb_meth = &rt_functab[ID_VOL];
 	ip->idb_ptr = bu_calloc(1, sizeof(struct rt_vol_internal), "rt_vol_internal");
@@ -427,7 +429,7 @@ CONST struct db_i		*dbip;
 	vip->magic = RT_VOL_INTERNAL_MAGIC;
 
 	/* Establish defaults */
-	bn_mat_idn( vip->mat );
+	MAT_IDN( vip->mat );
 	vip->lo = 0;
 	vip->hi = 255;
 
@@ -453,7 +455,7 @@ CONST struct db_i		*dbip;
 
 	/* Apply any modeling transforms to get final matrix */
 	bn_mat_mul( tmat, mat, vip->mat );
-	bn_mat_copy( vip->mat, tmat );
+	MAT_COPY( vip->mat, tmat );
 
 	/* Get bit map from .bw(5) file */
 	nbytes = (vip->xdim+VOL_XWIDEN*2)*
@@ -499,9 +501,9 @@ CONST struct db_i		*dbip;
 int
 rt_vol_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_vol_internal	*vip;
 	struct rt_vol_internal	vol;	/* scaled version */
@@ -517,7 +519,7 @@ CONST struct db_i		*dbip;
 	/* Apply scale factor */
 	vol.mat[15] /= local2mm;
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record)*DB_SS_NGRAN;
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "vol external");
 	rec = (union record *)ep->ext_buf;
@@ -534,6 +536,142 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ V O L _ I M P O R T 5
+ *
+ *  Read in the information from the string solid record.
+ *  Then, as a service to the application, read in the bitmap
+ *  and set up some of the associated internal variables.
+ */
+int
+rt_vol_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+const mat_t			mat;
+const struct db_i		*dbip;
+{
+	register struct rt_vol_internal *vip;
+	struct bu_vls	str;
+	FILE		*fp;
+	int		nbytes;
+	register int	y;
+	register int	z;
+	mat_t		tmat;
+	int		ret;
+
+	BU_CK_EXTERNAL( ep );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_VOL;
+	ip->idb_meth = &rt_functab[ID_VOL];
+	ip->idb_ptr = bu_calloc(1, sizeof(struct rt_vol_internal), "rt_vol_internal");
+	vip = (struct rt_vol_internal *)ip->idb_ptr;
+	vip->magic = RT_VOL_INTERNAL_MAGIC;
+
+	/* Establish defaults */
+	MAT_IDN( vip->mat );
+	vip->lo = 0;
+	vip->hi = 255;
+
+	/* Default VOL cell size in ideal coordinates is one unit/cell */
+	VSETALL( vip->cellsize, 1 );
+
+	bu_vls_init( &str );
+	bu_vls_strncpy( &str, ep->ext_buf, ep->ext_nbytes );
+	if( bu_struct_parse( &str, rt_vol_parse, (char *)vip ) < 0 )  {
+		bu_vls_free( &str );
+		return -2;
+	}
+	bu_vls_free( &str );
+
+	/* Check for reasonable values */
+	if( vip->file[0] == '\0' || vip->xdim < 1 ||
+	    vip->ydim < 1 || vip->zdim < 1 || vip->mat[15] <= 0.0 ||
+	    vip->lo < 0 || vip->hi > 255 )  {
+	    	bu_struct_print("Unreasonable VOL parameters", rt_vol_parse,
+			(char *)vip );
+	    	return(-1);
+	}
+
+	/* Apply any modeling transforms to get final matrix */
+	bn_mat_mul( tmat, mat, vip->mat );
+	MAT_COPY( vip->mat, tmat );
+
+	/* Get bit map from .bw(5) file */
+	nbytes = (vip->xdim+VOL_XWIDEN*2)*
+		(vip->ydim+VOL_YWIDEN*2)*
+		(vip->zdim+VOL_ZWIDEN*2);
+	vip->map = (unsigned char *)bu_calloc( 1, nbytes, "vol_import bitmap" );
+
+	bu_semaphore_acquire( BU_SEM_SYSCALL );		/* lock */
+	if( (fp = fopen(vip->file, "r")) == NULL )  {
+		perror(vip->file);
+		bu_semaphore_release( BU_SEM_SYSCALL );		/* unlock */
+		return(-1);
+	}
+	bu_semaphore_release( BU_SEM_SYSCALL );		/* unlock */
+
+	/* Because of in-memory padding, read each scanline separately */
+	for( z=0; z < vip->zdim; z++ )  {
+		for( y=0; y < vip->ydim; y++ )  {
+			bu_semaphore_acquire( BU_SEM_SYSCALL );		/* lock */
+			ret = fread( &VOL(vip, 0, y, z), vip->xdim, 1, fp ); /* res_syscall */
+			bu_semaphore_release( BU_SEM_SYSCALL );		/* unlock */
+			if( ret < 1 )  {
+				bu_log("rt_vol_import(%s): Unable to read whole VOL, y=%d, z=%d\n",
+					vip->file, y, z);
+				bu_semaphore_acquire( BU_SEM_SYSCALL );		/* lock */
+				fclose(fp);
+				bu_semaphore_release( BU_SEM_SYSCALL );		/* unlock */
+				return -1;
+			}
+		}
+	}
+	bu_semaphore_acquire( BU_SEM_SYSCALL );		/* lock */
+	fclose(fp);
+	bu_semaphore_release( BU_SEM_SYSCALL );		/* unlock */
+	return( 0 );
+}
+
+/*
+ *			R T _ V O L _ E X P O R T 5
+ *
+ *  The name will be added by the caller.
+ */
+int
+rt_vol_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_vol_internal	*vip;
+	struct rt_vol_internal	vol;	/* scaled version */
+	struct bu_vls		str;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_VOL )  return(-1);
+	vip = (struct rt_vol_internal *)ip->idb_ptr;
+	RT_VOL_CK_MAGIC(vip);
+	vol = *vip;			/* struct copy */
+
+	/* Apply scale factor */
+	vol.mat[15] /= local2mm;
+
+	BU_CK_EXTERNAL(ep);
+
+	bu_vls_init( &str );
+	bu_vls_struct_print( &str, rt_vol_parse, (char *)&vol );
+	ep->ext_nbytes = bu_vls_strlen( &str );
+	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "vol external");
+
+	strcpy( ep->ext_buf, bu_vls_addr(&str) );
+	bu_vls_free( &str );
+
+	return(0);
+}
+
+/*
  *			R T _ V O L _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -543,7 +681,7 @@ CONST struct db_i		*dbip;
 int
 rt_vol_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -672,9 +810,9 @@ struct rt_i		*rtip;
  */
 void
 rt_vol_print( stp )
-register CONST struct soltab	*stp;
+register const struct soltab	*stp;
 {
-	register CONST struct rt_vol_specific *volp =
+	register const struct rt_vol_specific *volp =
 		(struct rt_vol_specific *)stp->st_specific;
 
 	bu_log("vol file = %s\n", volp->vol_i.file );
@@ -798,8 +936,8 @@ int
 rt_vol_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	register struct rt_vol_internal *vip;
 	register short	x,y,z;
@@ -931,8 +1069,8 @@ rt_vol_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	struct rt_vol_internal	*vip;
 	register int	x,y,z;

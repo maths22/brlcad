@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -42,18 +42,19 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 int
 mk_arbn( filep, name, neqn, eqn )
-FILE	*filep;
-char	*name;
+struct rt_wdb	*filep;
+const char	*name;
 int	neqn;
 plane_t	*eqn;
 {
-	struct rt_arbn_internal	arbn;
+	struct rt_arbn_internal	*arbn;
 
 	if( neqn <= 0 )  return(-1);
 
-	arbn.magic = RT_ARBN_INTERNAL_MAGIC;
-	arbn.neqn = neqn;
-	arbn.eqn = eqn;
+	BU_GETSTRUCT( arbn, rt_arbn_internal );
+	arbn->magic = RT_ARBN_INTERNAL_MAGIC;
+	arbn->neqn = neqn;
+	arbn->eqn = eqn;
 
-	return mk_export_fwrite( filep, name, (genptr_t)&arbn, ID_ARBN );
+	return wdb_export( filep, name, (genptr_t)arbn, ID_ARBN, mk_conv2mm );
 }

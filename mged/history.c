@@ -69,10 +69,11 @@ void history_journalize();
  */
 
 void
-history_record(cmdp, start, finish, status)
-struct bu_vls *cmdp;
-struct timeval *start, *finish;
-int status;   /* Either CMD_OK or CMD_BAD */
+history_record(
+	struct bu_vls *cmdp,
+	struct timeval *start,
+	struct timeval *finish,
+	int status)			   /* Either CMD_OK or CMD_BAD */
 {
     struct mged_hist *new_hist;
 
@@ -128,7 +129,7 @@ struct mged_hist *hptr;
     lasthptr = BU_LIST_PREV(mged_hist, &(hptr->l));
 
     if (journal_delay && timediff(&tvdiff, &(lasthptr->mh_finish), &(hptr->mh_start)) >= 0)
-	fprintf(journalfp, "delay %d %ld\n", tvdiff.tv_sec, tvdiff.tv_usec);
+	fprintf(journalfp, "delay %ld %ld\n", (long)tvdiff.tv_sec, (long)tvdiff.tv_usec);
 
     if (hptr->mh_status == CMD_BAD)
 	fprintf(journalfp, "# ");
@@ -448,7 +449,7 @@ char **argv;
 }
 
 void
-history_setup()
+history_setup(void)
 {
     BU_LIST_INIT(&(mged_hist_head.l));
     curr_cmd_list->cl_cur_hist = &mged_hist_head;

@@ -22,7 +22,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "";
+static const char RCSid[] = "";
 #endif
 
 #include "conf.h"
@@ -39,7 +39,7 @@ static char RCSid[] = "";
 
 extern void mged_vls_struct_parse(); /* defined in vparse.c */
 extern point_t e_axes_pos;  /* from edsol.c */
-extern vect_t curr_e_axes_pos;  /* from edsol.c */
+extern point_t curr_e_axes_pos;  /* from edsol.c */
 
 void draw_grid();
 void snap_to_grid();
@@ -86,11 +86,16 @@ set_grid_draw()
 {
   struct dm_list *dlp;
 
+  if (dbip == DBI_NULL) {
+	  grid_state->gr_draw = 0;
+	  return;
+  }
+
   grid_set_dirty_flag();
 
   /* This gets done at most one time. */
   if(grid_auto_size && grid_state->gr_draw){
-    fastf_t res = VIEWSIZE*base2local / 64.0;
+    fastf_t res = view_state->vs_vop->vo_size*base2local / 64.0;
 
     grid_state->gr_res_h = res;
     grid_state->gr_res_v = res;
@@ -132,14 +137,15 @@ draw_grid()
 	fastf_t 		inv_grid_res_v;
 	fastf_t 		inv_aspect;
 
-	if (NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
+	if (dbip == DBI_NULL ||
+	    NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
 	    NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
 		return;
 
 	inv_grid_res_h= 1.0 / grid_state->gr_res_h;
 	inv_grid_res_v= 1.0 / grid_state->gr_res_v;
 
-	sf = view_state->vs_Viewscale*base2local;
+	sf = view_state->vs_vop->vo_scale*base2local;
 	inv_sf = 1.0 / sf;
 	inv_aspect = 1.0 / dmp->dm_aspect; 
 
@@ -164,7 +170,7 @@ draw_grid()
 	
 
 	VSCALE(model_grid_anchor, grid_state->gr_anchor, local2base);
-	MAT4X3PNT(view_grid_anchor, view_state->vs_model2view, model_grid_anchor);
+	MAT4X3PNT(view_grid_anchor, view_state->vs_vop->vo_model2view, model_grid_anchor);
 	VSCALE(view_grid_anchor_local, view_grid_anchor, sf);
 
 	VSET(view_lleft_corner, -1.0, -inv_aspect, 0.0);
@@ -213,9 +219,9 @@ draw_grid()
 }
 
 void
-snap_to_grid(mx, my)
-fastf_t *mx;		/* input and return values */
-fastf_t *my;		/* input and return values */
+snap_to_grid(
+	fastf_t *mx,		/* input and return values */
+	fastf_t *my)		/* input and return values */
 {
   register int nh, nv;		/* whole grid units */
   point_t view_pt;
@@ -226,18 +232,19 @@ fastf_t *my;		/* input and return values */
   register fastf_t sf;
   register fastf_t inv_sf;
 
-  if(NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
-     NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
+  if (dbip == DBI_NULL ||
+      NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
+      NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
     return;
 
-  sf = view_state->vs_Viewscale*base2local;
+  sf = view_state->vs_vop->vo_scale*base2local;
   inv_sf = 1 / sf;
 
   VSET(view_pt, *mx, *my, 0.0);
   VSCALE(view_pt, view_pt, sf);  /* view_pt now in local units */
 
   VSCALE(model_grid_anchor, grid_state->gr_anchor, local2base);
-  MAT4X3PNT(view_grid_anchor, view_state->vs_model2view, model_grid_anchor);
+  MAT4X3PNT(view_grid_anchor, view_state->vs_vop->vo_model2view, model_grid_anchor);
   VSCALE(view_grid_anchor, view_grid_anchor, sf);  /* view_grid_anchor now in local units */
 
   grid_units_h = (view_grid_anchor[X] - view_pt[X]) / grid_state->gr_res_h;
@@ -273,14 +280,22 @@ snap_keypoint_to_grid()
   point_t model_pt;
   struct bu_vls cmd;
 
+  if (dbip == DBI_NULL)
+	  return;
+
+  if (state != ST_S_EDIT && state != ST_O_EDIT) {
+	  bu_log("snap_keypoint_to_grid: must be in an edit state\n");
+	  return;
+  }
+
   if (state == ST_S_EDIT) {
-	  MAT4X3PNT(view_pt, view_state->vs_model2view, curr_e_axes_pos);
+	  MAT4X3PNT(view_pt, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
   } else {
 	  MAT4X3PNT(model_pt, modelchanges, e_axes_pos);
-	  MAT4X3PNT(view_pt, view_state->vs_model2view, model_pt);
+	  MAT4X3PNT(view_pt, view_state->vs_vop->vo_model2view, model_pt);
   }
   snap_to_grid(&view_pt[X], &view_pt[Y]);
-  MAT4X3PNT(model_pt, view_state->vs_view2model, view_pt);
+  MAT4X3PNT(model_pt, view_state->vs_vop->vo_view2model, view_pt);
   VSCALE(model_pt, model_pt, base2local);
 
   bu_vls_init(&cmd);
@@ -299,21 +314,24 @@ snap_keypoint_to_grid()
 void
 snap_view_center_to_grid()
 {
-  point_t view_pt, model_pt;
+	point_t view_pt, model_pt;
 
-  MAT_DELTAS_GET_NEG(model_pt, view_state->vs_toViewcenter);
-  MAT4X3PNT(view_pt, view_state->vs_model2view, model_pt);
-  snap_to_grid(&view_pt[X], &view_pt[Y]);
-  MAT4X3PNT(model_pt, view_state->vs_view2model, view_pt);
+	if (dbip == DBI_NULL)
+		return;
 
-  MAT_DELTAS_VEC_NEG(view_state->vs_toViewcenter, model_pt);
-  new_mats();
+	MAT_DELTAS_GET_NEG(model_pt, view_state->vs_vop->vo_center);
+	MAT4X3PNT(view_pt, view_state->vs_vop->vo_model2view, model_pt);
+	snap_to_grid(&view_pt[X], &view_pt[Y]);
+	MAT4X3PNT(model_pt, view_state->vs_vop->vo_view2model, view_pt);
 
-  VSCALE(model_pt, model_pt, base2local);
+	MAT_DELTAS_VEC_NEG(view_state->vs_vop->vo_center, model_pt);
+	new_mats();
 
-  /* save new center in local units */
-  VMOVE(dml_work_pt, model_pt);
-  dml_mouse_dx = dml_mouse_dy = 0;
+	VSCALE(model_pt, model_pt, base2local);
+
+	/* save new center in local units */
+	VMOVE(dml_work_pt, model_pt);
+	dml_mouse_dx = dml_mouse_dy = 0;
 }
 
 /*
@@ -321,18 +339,18 @@ snap_view_center_to_grid()
  * Return values in the +-2.0 range that have been snapped to the nearest grid distance.
  */
 void
-round_to_grid(view_dx, view_dy)
-fastf_t *view_dx, *view_dy;
+round_to_grid(fastf_t *view_dx, fastf_t *view_dy)
 {
   fastf_t grid_units_h, grid_units_v;
   fastf_t sf, inv_sf;
   int nh, nv;
 
-  if(NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
-     NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
+  if (dbip == DBI_NULL ||
+      NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
+      NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
     return;
 
-  sf = view_state->vs_Viewscale*base2local;
+  sf = view_state->vs_vop->vo_scale*base2local;
   inv_sf = 1 / sf;
 
   /* convert mouse distance to grid units */
@@ -362,28 +380,28 @@ fastf_t *view_dx, *view_dy;
 }
 
 void
-snap_view_to_grid(view_dx, view_dy)
-fastf_t view_dx, view_dy;
+snap_view_to_grid(fastf_t view_dx, fastf_t view_dy)
 {
   point_t model_pt, view_pt;
   point_t vcenter, diff;
 
-  if(NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
-     NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
+  if (dbip == DBI_NULL ||
+      NEAR_ZERO(grid_state->gr_res_h, (fastf_t)SMALL_FASTF) ||
+      NEAR_ZERO(grid_state->gr_res_v, (fastf_t)SMALL_FASTF))
     return;
 
   round_to_grid(&view_dx, &view_dy);
 
   VSET(view_pt, view_dx, view_dy, 0.0);
-  MAT4X3PNT(model_pt, view_state->vs_view2model, view_pt);
 
-  MAT_DELTAS_GET_NEG(vcenter, view_state->vs_toViewcenter);
+  MAT4X3PNT(model_pt, view_state->vs_vop->vo_view2model, view_pt);
+  MAT_DELTAS_GET_NEG(vcenter, view_state->vs_vop->vo_center);
   VSUB2(diff, model_pt, vcenter);
   VSCALE(diff, diff, base2local);
   VSUB2(model_pt, dml_work_pt, diff);
 
   VSCALE(model_pt, model_pt, local2base);
-  MAT_DELTAS_VEC_NEG(view_state->vs_toViewcenter, model_pt);
+  MAT_DELTAS_VEC_NEG(view_state->vs_vop->vo_center, model_pt);
   new_mats();
 }
 
@@ -435,7 +453,7 @@ char    **argv;
   }
 
   mged_vls_struct_parse(&vls, "Grid", grid_vparse,
-			(CONST char *)grid_state, argc, argv);
+			(const char *)grid_state, argc, argv);
   Tcl_AppendResult(interp, bu_vls_addr(&vls), (char *)NULL);
   bu_vls_free(&vls);
 

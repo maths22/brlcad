@@ -47,32 +47,29 @@ static const char RCSid[] = "$Header$";
 #include "plot3.h"
 #include "../librt/debug.h"
 
-#define		NAMESIZE	16	/* from db.h */
-
 #define		LINELEN		128	/* Length of char array for input line */
 
 #define		REGION_LIST_BLOCK	256	/* initial length of array of region ids to process */
 
 static char	line[LINELEN+1];		/* Space for input line */
 static FILE	*fdin;			/* Input FASTGEN4 file pointer */
-static FILE	*fdout;			/* Output BRL-CAD file pointer */
+static struct rt_wdb *fdout;		/* Output BRL-CAD file pointer */
 static FILE	*fd_plot=NULL;		/* file for plot output */
 static FILE	*fd_muves=NULL;		/* file for MUVES data, output CHGCOMP and CBACKING data */
 static int	grid_size;		/* Number of points that will fit in current grid_pts array */
 static int	max_grid_no=0;		/* Maximum grid number used */
-static int	mode=0;			/* Plate mode (1) or volume mode (2), of current component  */
+static int	mode=0;			/* Plate mode (1) or volume mode (2), of current component */
 static int	group_id=(-1);		/* Group identification number from SECTION card */
 static int	comp_id=(-1);		/* Component identification number from SECTION card */
 static int	region_id=0;		/* Region id number (group id no X 1000 + component id no) */
 static char	field[9];		/* Space for storing one field from an input line */
 static char	vehicle[17];		/* Title for BRLCAD model from VEHICLE card */
-static char	name_name[NAMESIZE+1];	/* Component name built from $NAME card */
 static int	name_count;		/* Count of number of times this name_name has been used */
 static int	pass;			/* Pass number (0 -> only make names, 1-> do geometry ) */
 static int	bot=0;			/* Flag: >0 -> There are BOT's in current component */
 static int	warnings=0;		/* Flag: >0 -> Print warning messages */
 static int	debug=0;		/* Debug flag */
-static int	rt_debug=0;		/* rt_g.debug */
+static int	rt_debug=0;		/* RT_G_DEBUG */
 static int	quiet=0;		/* flag to not blather */
 static int	comp_count=0;		/* Count of components in FASTGEN4 file */
 static int	do_skips=0;		/* flag indicating that not all components will be processed */
@@ -83,6 +80,7 @@ static struct wmember  group_head[11];	/* Lists of regions for groups */
 static struct wmember  hole_head;	/* List of regions used as holes (not solid parts of model) */
 static struct bu_ptbl stack;		/* Stack for traversing name_tree */
 static struct bu_ptbl stack2;		/* Stack for traversing name_tree */
+static fastf_t	min_radius;		/* minimum radius for TGC solids */
 
 static int		*faces=NULL;	/* one triplet per face indexing three grid points */
 static fastf_t		*thickness;	/* thickness of each face */
@@ -97,7 +95,7 @@ static int	int_list_length=0;	/* Length of int_list array */
 
 static char	*usage="Usage:\n\tfast4-g [-dwq] [-c component_list] [-m muves_file] [-o plot_file] [-b BU_DEBUG_FLAG] [-x RT_DEBUG_FLAG] fastgen4_bulk_data_file output.g\n\
 	d - print debugging info\n\
-	q - quiet mode (don't say anyhing except error messages)\n\
+	q - quiet mode (don't say anyhing except error messages\n\
 	w - print warnings about creating default names\n\
 	c - process only the listed region ids, may be a list (3001,4082,5347) or a range (2314-3527)\n\
 	m - create a MUVES input file containing CHGCOMP and CBACKING elements\n\
@@ -130,13 +128,48 @@ static char	*usage="Usage:\n\tfast4-g [-dwq] [-c component_list] [-m muves_file]
 #define		COMPSPLT	'h'
 
 void make_region_name();
-void make_solid_name();
+char * make_solid_name();
 
+#if USE_SURVICE_MODS
+unsigned char *get_fast4_color();
+
+struct fast4_color {
+  struct bu_list l;
+  short low;
+  short high;
+  unsigned char rgb[3];
+};
+
+struct fast4_color HeadColor;
+
+/* convenient macro for building regions */
+#define		MK_REGION( fp , headp , name , r_id, rgb ) \
+			{\
+				if( mode == 1 ) {\
+					if( !quiet )\
+						bu_log( "Making region: %s (PLATE)\n", name ); \
+					mk_fastgen_region( fp , name , &((headp)->l) , 'P' ,\
+						(char *)NULL, (char *)NULL, rgb, r_id, 0, 0, 0, 0 ); \
+				}\
+				else if( mode == 2 ) {\
+					if( !quiet ) \
+						bu_log( "Making region: %s (VOLUME)\n", name ); \
+					mk_fastgen_region( fp , name , &((headp)->l) , 'V' ,\
+						(char *)NULL, (char *)NULL, rgb, r_id, 0, 0, 0, 0 ); \
+				}\
+				else\
+				{\
+					bu_log( "Illegal mode (%d), while trying to make region (%s)\n",\
+						mode, name );\
+					bu_log( "\tRegion not made!!!!!\n");\
+				}\
+			}
+#else
 /* convenient macro for building regions */
 #define		MK_REGION( fp , headp , name , r_id ) \
 			{\
 				if( mode == 1 ) {\
-					if( !quiet ) \
+					if( !quiet )\
 						bu_log( "Making region: %s (PLATE)\n", name ); \
 					mk_fastgen_region( fp , name , &((headp)->l) , 'P' ,\
 						(char *)NULL, (char *)NULL, (unsigned char *)NULL, r_id, 0, 0, 0, 0 ); \
@@ -154,6 +187,7 @@ void make_solid_name();
 					bu_log( "\tRegion not made!!!!!\n");\
 				}\
 			}
+#endif
 
 #define	PUSH( ptr )	bu_ptbl_ins( &stack , (long *)ptr )
 #define POP( structure , ptr )	{ if( BU_PTBL_END( &stack ) == 0 ) \
@@ -216,7 +250,7 @@ struct name_tree
 	int mode;		/* PLATE_MODE or VOLUME_MODE */
 	int inner;		/* 0 => this is a base/group name for a FASTGEN element */
 	int in_comp_group;	/* > 0 -> region already in a component group */
-	char name[NAMESIZE+1];
+	char *name;
 	struct name_tree *nleft,*nright,*rleft,*rright;
 } *name_root;
 
@@ -285,7 +319,7 @@ add_to_holes( name, reg_id )
 char *name;
 int reg_id;
 {
-	if( mk_addmember( name , &hole_head , WMOP_UNION ) == (struct wmember *)NULL )
+	if( mk_addmember( name , &hole_head.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 		bu_log( "add_to_holes: mk_addmember failed for region %s\n" , name );
 }
 
@@ -371,7 +405,7 @@ int in;
 	int_list[int_list_count] = in;
 	int_list_count++;
 
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in insert_int\n" );
 }
 
@@ -428,7 +462,7 @@ int group_id;
 					if( debug )
 						bu_log( "\tSubtracting %s\n", ptr->name );
 
-					if( mk_addmember( ptr->name , head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+					if( mk_addmember( ptr->name , &(head->l), NULL , WMOP_SUBTRACT ) == (struct wmember *)NULL )
 						rt_bomb( "Subtract_holes: mk_addmember failed\n" );
 
 					ptr = ptr->rright;
@@ -440,7 +474,7 @@ int group_id;
 		}
 		hole_ptr = hole_ptr->next;
 	}
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in subtract_holes\n" );
 }
 
@@ -450,7 +484,6 @@ do_compsplt()
 	int gr, co, gr1,  co1;
 	fastf_t z;
 	struct compsplt *splt;
-	char name[NAMESIZE+1];
 
 	strncpy( field, &line[8], 8 );
 	gr = atoi( field );
@@ -484,7 +517,7 @@ do_compsplt()
 	splt->ident_to_split = gr * 1000 + co;
 	splt->new_ident = gr1 * 1000 + co1;
 	splt->z = z;
-	make_region_name( name, gr1, co1 );
+	make_region_name( gr1, co1 );
 }
 
 void
@@ -719,7 +752,7 @@ char *name;
 			*root = (struct name_tree *)NULL;
 		}
 		bu_free( (char *)ptr , "Delete_name: ptr" );
-		if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+		if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 			bu_log( "ERROR: bu_mem_barriercheck failed in Delete_name\n" );
 		return;
 	}
@@ -830,7 +863,7 @@ char *name;
 			parent->rleft = ptr->rleft;
 	}
 	bu_free( (char *)ptr , "Delete_name: ptr" );
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in Delete_name\n" );
 	Check_names();
 }
@@ -856,7 +889,7 @@ int inner;
 
 	new_ptr = (struct name_tree *)bu_malloc( sizeof( struct name_tree ) , "Insert_name: new_ptr" );
 
-	strncpy( new_ptr->name , name , NAMESIZE+1 );
+	new_ptr->name = bu_strdup( name );
 	new_ptr->nleft = (struct name_tree *)NULL;
 	new_ptr->nright = (struct name_tree *)NULL;
 	new_ptr->rleft = (struct name_tree *)NULL;
@@ -872,7 +905,7 @@ int inner;
 		return;
 	}
 
-	diff = strncmp( name , ptr->name , NAMESIZE );
+	diff = strcmp( name , ptr->name );
 	if( diff > 0 )
 	{
 		if( ptr->nright )
@@ -891,7 +924,7 @@ int inner;
 		}
 		ptr->nleft = new_ptr;
 	}
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in Insert_name\n" );
 }
 
@@ -932,14 +965,14 @@ int reg_id;
 	new_ptr->mode = mode;
 	new_ptr->inner = -1;
 	new_ptr->in_comp_group = 0;
-	strncpy( new_ptr->name , name , NAMESIZE+1 );
+	new_ptr->name = bu_strdup( name );
 	new_ptr->magic = NAME_TREE_MAGIC;
 
 	if( !name_root )
 		name_root = new_ptr;
 	else
 	{
-		diff = strncmp( name , nptr_model->name , NAMESIZE );
+		diff = strcmp( name , nptr_model->name );
 
 		if( diff > 0 )
 		{
@@ -983,7 +1016,7 @@ int reg_id;
 		}
 	}
 	Check_names();
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in Insert_region_name\n" );
 }
 
@@ -1009,38 +1042,31 @@ int c_id;
 		return( (char *)NULL );
 }
 
-void
+char *
 make_unique_name( name )
 char *name;
 {
-	char append[10];
-	int append_len;
-	int len;
+	struct bu_vls vls;
 	int found;
 
 	/* make a unique name from what we got off the $NAME card */
 
-	len = strlen( name );
-
 	(void)Search_names( name_root , name , &found );
+	if( !found )
+		return( bu_strdup( name ) );
+
+	bu_vls_init( &vls );
+
 	while( found )
 	{
-		sprintf( append , "_%d" , name_count );
-		name_count++;
-		append_len = strlen( append );
-
-		if( len + append_len < NAMESIZE )
-			strcat( name , append );
-		else
-		{
-			strcpy( &name[NAMESIZE-append_len] , append );
-			name[NAMESIZE] = '\0';
-		}
-
-		(void)Search_names( name_root , name , &found );
+		bu_vls_trunc( &vls, 0 );
+		bu_vls_printf( &vls, "%s_%d", name, name_count );
+		(void)Search_names( name_root , bu_vls_addr( &vls ) , &found );
 	}
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in make_unique_name\n" );
+
+	return( bu_vls_strgrab( &vls ) );
 }
 
 void
@@ -1055,7 +1081,7 @@ int reg_id;
 		return;
 	}
 
-	if( mk_addmember( name , &group_head[group_id] , WMOP_UNION ) == (struct wmember *)NULL )
+	if( mk_addmember( name , &group_head[group_id].l, NULL ,WMOP_UNION ) == (struct wmember *)NULL )
 		bu_log( "add_to_series: mk_addmember failed for region %s\n" , name );
 }
 
@@ -1064,9 +1090,8 @@ make_comp_group()
 {
 	struct wmember g_head;
 	struct name_tree *ptr;
-	char name[NAMESIZE+1];
 
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in make_comp_group\n" );
 
 	BU_LIST_INIT( &g_head.l );
@@ -1087,7 +1112,7 @@ make_comp_group()
 
 		if(ptr->region_id == region_id && !ptr->inner && !ptr->in_comp_group )
 		{
-			if( mk_addmember( ptr->name , &g_head , WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( ptr->name , &g_head.l , NULL , WMOP_UNION ) == (struct wmember *)NULL )
 			{
 				bu_log( "make_comp_group: Could not add %s to group for ident %d\n" , ptr->name , ptr->region_id );
 				break;
@@ -1099,14 +1124,15 @@ make_comp_group()
 
 	if( BU_LIST_NON_EMPTY( &g_head.l ) )
 	{
-		char *tmp_name;
+		char *name;
+		struct bu_vls vls;
 
-		if( (tmp_name=find_region_name( group_id , comp_id , 0 )) )
-			strcpy( name , tmp_name );
-		else
+		if( !(name=find_region_name( group_id , comp_id )) )
 		{
-			sprintf( name , "comp_%d" , region_id );
-			make_unique_name( name );
+			bu_vls_init( &vls );
+			bu_vls_printf( &vls , "comp_%d" , region_id );
+			name = make_unique_name( bu_vls_addr( &vls ) );
+			bu_vls_free( &vls );
 			if( warnings )
 				bu_log( "Creating default name (%s) for group %d component %d\n",
 						name , group_id , comp_id );
@@ -1118,6 +1144,8 @@ make_comp_group()
 			add_to_series( name , region_id );
 		else
 			add_to_holes( name, region_id );
+
+		bu_free( (char *)name, "str_dupped name" );
 	}
 }
 
@@ -1145,7 +1173,7 @@ Add_stragglers_to_groups()
 		if( !ptr->in_comp_group && ptr->region_id > 0 && !is_a_hole( ptr->region_id ) )
 		{
 			/* add this component to a series */
-			(void)mk_addmember( ptr->name, &group_head[ptr->region_id/1000], WMOP_UNION );
+			(void)mk_addmember( ptr->name, &group_head[ptr->region_id/1000].l, NULL, WMOP_UNION );
 			ptr->in_comp_group = 1;
 		}
 
@@ -1168,7 +1196,7 @@ do_groups()
 
 	for( group_no=0 ; group_no < 11 ; group_no++ )
 	{
-		char name[NAMESIZE+1];
+		char name[20];
 
 		if( BU_LIST_IS_EMPTY( &group_head[group_no].l ) )
 			continue;
@@ -1176,7 +1204,7 @@ do_groups()
 		sprintf( name , "%dxxx_series" , group_no );
 		mk_lfcomb( fdout , name , &group_head[group_no] , 0 );
 
-		if( mk_addmember( name , &head_all , WMOP_UNION ) == (struct wmember *)NULL )
+		if( mk_addmember( name , &head_all.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 			bu_log( "do_groups: mk_addmember failed to add %s to group all\n" , name );
 	}
 
@@ -1193,7 +1221,6 @@ do_name()
 	int i,j;
 	int g_id;
 	int c_id;
-	int len;
 	char comp_name[25];
 	char tmp_name[25];
 
@@ -1254,30 +1281,23 @@ do_name()
 	}
 	tmp_name[++j] = '\0';
 
-	len = strlen( tmp_name );
-	if( len <= NAMESIZE )
-		strncpy( name_name , tmp_name , NAMESIZE );
-	else
-		strncpy( name_name , &tmp_name[len-NAMESIZE] , NAMESIZE );
-	name_name[NAMESIZE] = '\0';
-
 	/* reserve this name for group name */
-	make_unique_name( name_name );
-	Insert_region_name( name_name , region_id , 0 );
+	make_unique_name( tmp_name );
+	Insert_region_name( tmp_name , region_id );
 
 	name_count = 0;
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed in do_name\n" );
 }
 
 void
-make_region_name( name , g_id , c_id )
-char *name;
+make_region_name( g_id , c_id )
 int g_id;
 int c_id;
 {
 	int r_id;
 	char *tmp_name;
+	char *name;
 
 	r_id = g_id * 1000 + c_id;
 
@@ -1286,25 +1306,19 @@ int c_id;
 
 	tmp_name = find_region_name( g_id , c_id );
 	if( tmp_name )
-	{
-		strncpy( name , tmp_name , NAMESIZE+1 );
 		return;
-	}
 
 	/* create a new name */
-	if( name_name[0] )
-		strncpy( name , name_name , NAMESIZE+1 );
-	else
-		sprintf( name , "comp_%04d.r" , r_id );
+	name = (char *)bu_malloc( 12, "make_region_name" );
+	sprintf( name , "comp_%04d.r" , r_id );
 
 	make_unique_name( name );
 
 	Insert_region_name( name , r_id );
 }
 
-void
-get_solid_name( name , type , element_id , c_id , g_id , inner )
-char *name;
+char *
+get_solid_name( type , element_id , c_id , g_id , inner )
 char type;
 int element_id;
 int c_id;
@@ -1312,24 +1326,31 @@ int g_id;
 int inner;
 {
 	int reg_id;
+	struct bu_vls vls;
 
 	reg_id = g_id * 1000 + c_id;
 
-	sprintf( name , "%d.%d.%c%d" , reg_id , element_id , type , inner );
+	bu_vls_init( &vls );
+	bu_vls_printf( &vls , "%d.%d.%c%d" , reg_id , element_id , type , inner );
+
+	return( bu_vls_strgrab( &vls ) );
 }
 
-void
-make_solid_name( name , type , element_id , c_id , g_id , inner )
-char *name;
+char *
+make_solid_name( type , element_id , c_id , g_id , inner )
 char type;
 int element_id;
 int c_id;
 int g_id;
 int inner;
 {
-	get_solid_name( name , type , element_id , c_id , g_id , inner );
+	char *name;
+
+	name = get_solid_name( type , element_id , c_id , g_id , inner );
 
 	Insert_name( &name_root , name, inner );
+
+	return( name );
 }
 
 void
@@ -1341,7 +1362,7 @@ do_grid()
 	if( !pass )	/* not doing geometry yet */
 		return;
 
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed at start of do_grid\n" );
 
 	strncpy( field , &line[8] , 8 );
@@ -1372,7 +1393,7 @@ do_grid()
 
 	if( grid_no > max_grid_no )
 		max_grid_no = grid_no;
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 		bu_log( "ERROR: bu_mem_barriercheck failed at end of do_grid\n" );
 }
 
@@ -1384,12 +1405,12 @@ do_sphere()
 	fastf_t thick;
 	fastf_t radius;
 	fastf_t inner_radius;
-	char name[NAMESIZE+1];
+	char *name;
 	struct wmember sphere_group;
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		return;
 	}
 
@@ -1422,21 +1443,23 @@ do_sphere()
 
 	if( mode == VOLUME_MODE )
 	{
-		make_solid_name( name , CSPHERE , element_id , comp_id , group_id , 0 );
+		name = make_solid_name( CSPHERE , element_id , comp_id , group_id , 0 );
 		mk_sph( fdout , name , grid_pts[center_pt] , radius );
+		bu_free( name, "solid_name" );
 	}
 	else if( mode == PLATE_MODE )
 	{
-		make_solid_name( name , CSPHERE , element_id , comp_id , group_id , 1 );
+		name = make_solid_name( CSPHERE , element_id , comp_id , group_id , 1 );
 		mk_sph( fdout , name , grid_pts[center_pt] , radius );
 
 		BU_LIST_INIT( &sphere_group.l );
 
-		if( mk_addmember( name ,  &sphere_group , WMOP_UNION ) == (struct wmember *)NULL )
+		if( mk_addmember( name ,  &sphere_group.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 		{
 			bu_log( "do_sphere: Error in adding %s to sphere group\n" , name );
 			rt_bomb( "do_sphere" );
 		}
+		bu_free( name, "solid_name" );
 
 		inner_radius = radius - thick;
 		if( thick > 0.0 && inner_radius <= 0.0 )
@@ -1446,17 +1469,19 @@ do_sphere()
 			return;
 		}
 
-		make_solid_name( name , CSPHERE , element_id , comp_id , group_id , 2 );
+		name = make_solid_name( CSPHERE , element_id , comp_id , group_id , 2 );
 		mk_sph( fdout , name , grid_pts[center_pt] , inner_radius );
 
-		if( mk_addmember( name , &sphere_group , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+		if( mk_addmember( name , &sphere_group.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 		{
 			bu_log( "do_sphere: Error in subtracting %s from sphere region\n" , name );
 			rt_bomb( "do_sphere" );
 		}
+		bu_free( name, "solid_name" );
 
-		make_solid_name( name , CSPHERE , element_id , comp_id , group_id , 0 );
-		mk_lcomb( fdout, name, &sphere_group, 0, NULL, NULL, NULL, 0);
+		name = make_solid_name( CSPHERE , element_id , comp_id , group_id , 0 );
+		mk_comb( fdout, name, &sphere_group.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1 );
+		bu_free( name, "solid_name" );
 	}
 }
 
@@ -1478,14 +1503,14 @@ do_cline()
 	fastf_t thick;
 	fastf_t radius;
 	vect_t height;
-	char name[NAMESIZE+1];
+	char *name;
 
 	if( debug )
 		bu_log( "do_cline: %s\n" , line );
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		return;
 	}
 
@@ -1525,8 +1550,9 @@ do_cline()
 
 	VSUB2( height , grid_pts[pt2] , grid_pts[pt1] );
 
-	make_solid_name( name , CLINE , element_id , comp_id , group_id , 0 );
+	name = make_solid_name( CLINE , element_id , comp_id , group_id , 0 );
 	mk_cline( fdout , name , grid_pts[pt1] , height , radius, thick );
+	bu_free( name, "solid_name" );
 }
 
 void
@@ -1539,9 +1565,9 @@ do_ccone1()
 	int end1,end2;
 	vect_t height;
 	fastf_t r1,r2;
-	char outer_name[NAMESIZE+1];
-	char inner_name[NAMESIZE+1];
-	char name[NAMESIZE+1];
+	char *outer_name;
+	char *inner_name;
+	char *name;
 	struct wmember r_head;
 
 	strncpy( field , &line[8] , 8 );
@@ -1549,7 +1575,7 @@ do_ccone1()
 
 	if( !pass )
 	{
-		make_region_name( outer_name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		if( !getline() )
 		{
 			bu_log( "Unexpected EOF while reading continuation card for CCONE1\n" );
@@ -1622,7 +1648,7 @@ do_ccone1()
 			return;
 		}
 
-		if( r1-thick <= SQRT_SMALL_FASTF && r2-thick <= SQRT_SMALL_FASTF )
+		if( r1-thick < min_radius && r2-thick < min_radius )
 		{
 			bu_log( "ERROR: Plate mode CCONE1 has too large thickness (%f)\n" , thick/25.4 );
 			bu_log( "\tgroup_id = %d, comp_id = %d, element_id = %d\n",
@@ -1642,17 +1668,18 @@ do_ccone1()
 	}
 
 	/* BRL_CAD doesn't allow zero radius, so use a very small radius */
-	if( r1 < SQRT_SMALL_FASTF )
-		r1 = SQRT_SMALL_FASTF;
-	if( r2 < SQRT_SMALL_FASTF )
-		r2 = SQRT_SMALL_FASTF;
+	if( r1 < min_radius )
+		r1 = min_radius;
+	if( r2 < min_radius )
+		r2 = min_radius;
 
 	VSUB2( height , grid_pts[pt2] , grid_pts[pt1] );
 
 	if( mode == VOLUME_MODE )
 	{
-		make_solid_name( outer_name , CCONE1 , element_id , comp_id , group_id , 0 );
+		outer_name = make_solid_name( CCONE1 , element_id , comp_id , group_id , 0 );
 		mk_trc_h( fdout , outer_name , grid_pts[pt1] , height , r1 , r2 );
+		bu_free( outer_name, "solid_name" );
 	}
 	else if( mode == PLATE_MODE )
 	{
@@ -1669,12 +1696,13 @@ do_ccone1()
 		vect_t height_dir;
 
 		/* make outside TGC */
-		make_solid_name( outer_name , CCONE1 , element_id , comp_id , group_id , 1 );
+		outer_name = make_solid_name( CCONE1 , element_id , comp_id , group_id , 1 );
 		mk_trc_h( fdout , outer_name , grid_pts[pt1] , height , r1 , r2 );
 
 		BU_LIST_INIT( &r_head.l );
-		if( mk_addmember( outer_name , &r_head , WMOP_UNION ) == (struct wmember *)NULL )
+		if( mk_addmember( outer_name , &r_head.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 			rt_bomb( "CCONE1: mk_addmember failed\n" );
+		bu_free( outer_name, "solid_name" );
 
 		length = MAGNITUDE( height );
 		VSCALE( height_dir , height , 1.0/length );
@@ -1700,11 +1728,11 @@ do_ccone1()
 			fastf_t dist_to_new_base;
 
 			dist_to_new_base = inner_r1 * length/(r1 - r2 );
-			inner_r1 = SQRT_SMALL_FASTF;
+			inner_r1 = min_radius;
 			VJOIN1( base , base , dist_to_new_base , height_dir );
 		}
-		else if( inner_r1 < SQRT_SMALL_FASTF )
-			inner_r1 = SQRT_SMALL_FASTF;
+		else if( inner_r1 < min_radius )
+			inner_r1 = min_radius;
 
 		if( end2 == END_OPEN )
 		{
@@ -1724,14 +1752,14 @@ do_ccone1()
 			fastf_t dist_to_new_top;
 
 			dist_to_new_top = inner_r2 * length/(r2 - r1 );
-			inner_r2 = SQRT_SMALL_FASTF;
+			inner_r2 = min_radius;
 			VJOIN1( top , top , -dist_to_new_top , height_dir );
 		}
-		else if( inner_r2 < SQRT_SMALL_FASTF )
-			inner_r2 = SQRT_SMALL_FASTF;
+		else if( inner_r2 < min_radius )
+			inner_r2 = min_radius;
 
 		VSUB2( inner_height , top , base );
-		if( VDOT( inner_height , height ) < 0.0 )
+		if( VDOT( inner_height , height ) <= 0.0 )
 		{
 			bu_log( "ERROR: CCONE1 height (%f) too small for thickness (%f)\n" , length/25.4 , thick/25.4 );
 			bu_log( "\tgroup_id = %d, comp_id = %d, element_id = %d\n",
@@ -1742,15 +1770,17 @@ do_ccone1()
 		{
 			/* make inner tgc */
 
-			make_solid_name( inner_name , CCONE1 , element_id , comp_id , group_id , 2 );
+			inner_name = make_solid_name( CCONE1 , element_id , comp_id , group_id , 2 );
 			mk_trc_h( fdout , inner_name , base , inner_height , inner_r1 , inner_r2 );
 
-			if( mk_addmember( inner_name , &r_head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+			if( mk_addmember( inner_name , &r_head.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 				rt_bomb( "CCONE1: mk_addmember failed\n" );
+			bu_free( inner_name, "solid_name" );
 		}
 
-		make_solid_name( name , CCONE1 , element_id , comp_id , group_id , 0 );
-		mk_lcomb( fdout, name, &r_head, 0, NULL, NULL, NULL, 0);
+		name = make_solid_name( CCONE1 , element_id , comp_id , group_id , 0 );
+		mk_comb( fdout, name, &r_head.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1 );
+		bu_free( name, "solid_name" );
 	}
 
 }
@@ -1763,7 +1793,7 @@ do_ccone2()
 	int c1,c2;
 	fastf_t ro1,ro2,ri1,ri2;
 	vect_t height;
-	char name[NAMESIZE+1];
+	char *name;
 	struct wmember r_head;
 
 	strncpy( field , &line[8] , 8 );
@@ -1771,7 +1801,7 @@ do_ccone2()
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		if( !getline() )
 		{
 			bu_log( "Unexpected EOF while reading continuation card for CCONE2\n" );
@@ -1837,11 +1867,11 @@ do_ccone2()
 		return;
 	}
 
-	if( ro1 < SQRT_SMALL_FASTF )
-		ro1 = SQRT_SMALL_FASTF;
+	if( ro1 < min_radius )
+		ro1 = min_radius;
 
-	if( ro2 < SQRT_SMALL_FASTF )
-		ro2 = SQRT_SMALL_FASTF;
+	if( ro2 < min_radius )
+		ro2 = min_radius;
 
 	BU_LIST_INIT( &r_head.l );
 
@@ -1849,31 +1879,35 @@ do_ccone2()
 
 	if( ri1 <= 0.0 && ri2 <= 0.0 )
 	{
-		make_solid_name( name , CCONE2 , element_id , comp_id , group_id , 0 );
+		name = make_solid_name( CCONE2 , element_id , comp_id , group_id , 0 );
 		mk_trc_h( fdout , name , grid_pts[pt1] , height , ro1 , ro2 );
+		bu_free( name, "solid_name" );
 	}
 	else
 	{
-		make_solid_name( name , CCONE2 , element_id , comp_id , group_id , 1 );
+		name = make_solid_name( CCONE2 , element_id , comp_id , group_id , 1 );
 		mk_trc_h( fdout , name , grid_pts[pt1] , height , ro1 , ro2 );
 
-		if( mk_addmember( name , &r_head , WMOP_UNION ) == (struct wmember *)NULL )
+		if( mk_addmember( name , &r_head.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 			rt_bomb( "mk_addmember failed!\n" );
+		bu_free( name, "solid_name" );
 
-		if( ri1 < SQRT_SMALL_FASTF )
-			ri1 = SQRT_SMALL_FASTF;
+		if( ri1 < min_radius )
+			ri1 = min_radius;
 
-		if( ri2 < SQRT_SMALL_FASTF )
-			ri2 = SQRT_SMALL_FASTF;
+		if( ri2 < min_radius )
+			ri2 = min_radius;
 
-		make_solid_name( name , CCONE2 , element_id , comp_id , group_id , 2 );
+		name = make_solid_name( CCONE2 , element_id , comp_id , group_id , 2 );
 		mk_trc_h( fdout , name , grid_pts[pt1] , height , ri1 , ri2 );
 
-		if( mk_addmember( name , &r_head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+		if( mk_addmember( name , &r_head.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 			rt_bomb( "mk_addmember failed!\n" );
+		bu_free( name, "solid_name" );
 
-		make_solid_name( name , CCONE2 , element_id , comp_id , group_id , 0 );
-		mk_lcomb( fdout, name, &r_head, 0, NULL, NULL, NULL, 0);
+		name = make_solid_name( CCONE2 , element_id , comp_id , group_id , 0 );
+		mk_comb( fdout, name, &r_head.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1 );
+		bu_free( name, "solid_name" );
 	}
 }
 
@@ -1882,7 +1916,7 @@ do_ccone3()
 {
 	int element_id;
 	int pt1, pt2, pt3, pt4, i;
-	char name[NAMESIZE+1];
+	char *name;
 	fastf_t ro[4], ri[4], len03, len01, len12, len23;
 	vect_t diff, diff2, diff3, diff4;
 	struct wmember r_head;
@@ -1892,7 +1926,7 @@ do_ccone3()
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		if( !getline() )
 		{
 			bu_log( "Unexpected EOF while reading continuation card for CCONE3\n" );
@@ -2021,10 +2055,10 @@ do_ccone3()
 
 	for( i=0 ; i<4 ; i++ )
 	{
-		if( ro[i] < SQRT_SMALL_FASTF )
-			ro[i] = SQRT_SMALL_FASTF;
-		if( ri[i] < SQRT_SMALL_FASTF )
-			ri[i] = SQRT_SMALL_FASTF;
+		if( ro[i] < min_radius )
+			ro[i] = min_radius;
+		if( ri[i] < min_radius )
+			ri[i] = min_radius;
 	}
 
 	BU_LIST_INIT( &r_head.l );
@@ -2034,20 +2068,22 @@ do_ccone3()
 		VSUB2( diff, grid_pts[pt2], grid_pts[pt1] );
 
 		/* make first cone */
-		if( ro[0] != SQRT_SMALL_FASTF || ro[1] != SQRT_SMALL_FASTF )
+		if( ro[0] != min_radius || ro[1] != min_radius )
 		{
-			make_solid_name( name, CCONE3, element_id, comp_id, group_id, 1 );
+			name = make_solid_name( CCONE3, element_id, comp_id, group_id, 1 );
 			mk_trc_h( fdout, name, grid_pts[pt1], diff, ro[0], ro[1] );
-			if( mk_addmember( name , &r_head , WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( name , &r_head.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_bomb( "mk_addmember failed!\n" );
+			bu_free( name, "solid_name" );
 
 			/* and the inner cone */
-			if( ri[0] != SQRT_SMALL_FASTF || ri[1] != SQRT_SMALL_FASTF )
+			if( ri[0] != min_radius || ri[1] != min_radius )
 			{
-				make_solid_name( name, CCONE3, element_id, comp_id, group_id, 11 );
+				name = make_solid_name( CCONE3, element_id, comp_id, group_id, 11 );
 				mk_trc_h( fdout, name, grid_pts[pt1], diff, ri[0], ri[1] );
-				if( mk_addmember( name , &r_head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( name , &r_head.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_bomb( "mk_addmember failed!\n" );
+				bu_free( name, "solid_name" );
 			}
 		}
 	}
@@ -2057,20 +2093,22 @@ do_ccone3()
 		VSUB2( diff, grid_pts[pt3], grid_pts[pt2] );
 
 		/* make second cone */
-		if( ro[1] != SQRT_SMALL_FASTF || ro[2] != SQRT_SMALL_FASTF )
+		if( ro[1] != min_radius || ro[2] != min_radius )
 		{
-			make_solid_name( name, CCONE3, element_id, comp_id, group_id, 2 );
+			name = make_solid_name( CCONE3, element_id, comp_id, group_id, 2 );
 			mk_trc_h( fdout, name, grid_pts[pt2], diff, ro[1], ro[2] );
-			if( mk_addmember( name , &r_head , WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( name , &r_head.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_bomb( "mk_addmember failed!\n" );
+			bu_free( name, "solid_name" );
 
 			/* and the inner cone */
-			if( ri[1] != SQRT_SMALL_FASTF || ri[2] != SQRT_SMALL_FASTF )
+			if( ri[1] != min_radius || ri[2] != min_radius )
 			{
-				make_solid_name( name, CCONE3, element_id, comp_id, group_id, 22 );
+				name = make_solid_name( CCONE3, element_id, comp_id, group_id, 22 );
 				mk_trc_h( fdout, name, grid_pts[pt2], diff, ri[1], ri[2] );
-				if( mk_addmember( name , &r_head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( name , &r_head.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_bomb( "mk_addmember failed!\n" );
+				bu_free( name, "solid_name" );
 			}
 		}
 	}
@@ -2080,26 +2118,29 @@ do_ccone3()
 		VSUB2( diff, grid_pts[pt4], grid_pts[pt3] );
 
 		/* make third cone */
-		if( ro[2] != SQRT_SMALL_FASTF || ro[3] != SQRT_SMALL_FASTF )
+		if( ro[2] != min_radius || ro[3] != min_radius )
 		{
-			make_solid_name( name, CCONE3, element_id, comp_id, group_id, 3 );
+			name = make_solid_name( CCONE3, element_id, comp_id, group_id, 3 );
 			mk_trc_h( fdout, name, grid_pts[pt3], diff, ro[2], ro[3] );
-			if( mk_addmember( name , &r_head , WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( name , &r_head.l , NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_bomb( "mk_addmember failed!\n" );
+			bu_free( name, "solid_name" );
 
 			/* and the inner cone */
-			if( ri[2] != SQRT_SMALL_FASTF || ri[3] != SQRT_SMALL_FASTF )
+			if( ri[2] != min_radius || ri[3] != min_radius )
 			{
-				make_solid_name( name, CCONE3, element_id, comp_id, group_id, 33 );
+				name = make_solid_name( CCONE3, element_id, comp_id, group_id, 33 );
 				mk_trc_h( fdout, name, grid_pts[pt3], diff, ri[2], ri[3] );
-				if( mk_addmember( name , &r_head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( name , &r_head.l , NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_bomb( "mk_addmember failed!\n" );
+				bu_free( name, "solid_name" );
 			}
 		}
 	}
 
-	make_solid_name( name , CCONE3 , element_id , comp_id , group_id , 0 );
-	mk_lcomb( fdout, name, &r_head, 0, NULL, NULL, NULL, 0);
+	name = make_solid_name( CCONE3 , element_id , comp_id , group_id , 0 );
+	mk_comb( fdout, name, &r_head.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1 );
+	bu_free( name, "solid_name" );
 }
 
 void
@@ -2125,7 +2166,7 @@ Add_holes( int type, int gr, int comp, struct hole_list *ptr )
 		{
 			/* add holes for this region to the list of regions to process */
 			hptr = ptr;
-			if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+			if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 				bu_log( "ERROR: bu_mem_barriercheck failed in Add_hole\n" );
 			while( hptr )
 			{
@@ -2133,11 +2174,11 @@ Add_holes( int type, int gr, int comp, struct hole_list *ptr )
 				{
 					region_list_len += REGION_LIST_BLOCK;
 					region_list = (int *)bu_realloc( (char *)region_list, region_list_len*sizeof( int ), "region_list" );
-					if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+					if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 						bu_log( "ERROR: bu_mem_barriercheck failed in Add_hole (after realloc)\n" );
 				}
 				region_list[do_skips++] = 1000*hptr->group + hptr->component;
-				if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
+				if( RT_G_DEBUG&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
 					bu_log( "ERROR: bu_mem_barriercheck failed in Add_hole (after adding %d\n)\n", 1000*hptr->group + hptr->component );
 				hptr = hptr->next;
 			}
@@ -2520,14 +2561,14 @@ make_bot_object()
 	int num_vertices;
 	struct bu_bitv *bv=NULL;
 	int bot_mode;
-	char name[NAMESIZE+1];
+	char *name;
 	int element_id=bot;
 	int count;
 	struct rt_bot_internal bot_ip;
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id , element_id , BOT );
+		make_region_name( group_id , comp_id );
 		return;
 	}
 
@@ -2579,17 +2620,18 @@ make_bot_object()
 	bot_ip.orientation = RT_BOT_UNORIENTED;
 	bot_ip.error_mode = 0;
 
-	count = bot_vertex_fuse( &bot_ip );
+	count = rt_bot_vertex_fuse( &bot_ip );
 	if( count )
-		(void)bot_condense( &bot_ip );
+		(void)rt_bot_condense( &bot_ip );
 
-	count = bot_face_fuse( &bot_ip );
+	count = rt_bot_face_fuse( &bot_ip );
 	if( count )
 		bu_log( "WARNING: %d duplicate faces eliminated from group %d component %d\n", count, group_id, comp_id );
 
-	make_solid_name( name , BOT , element_id , comp_id , group_id , 0 );
+	name = make_solid_name( BOT , element_id , comp_id , group_id , 0 );
 	mk_bot( fdout, name, bot_mode, RT_BOT_UNORIENTED, 0, bot_ip.num_vertices, bot_ip.num_faces, bot_ip.vertices,
 		bot_ip.faces, bot_ip.thickness, bot_ip.face_mode );
+	bu_free( name, "solid_name" );
 
 	if( mode == PLATE_MODE )
 	{
@@ -2611,13 +2653,13 @@ skip_section()
 	if( getline() )
 	{
 		while( line[0] && strncmp( line, "SECTION" , 7 ) &&
-		strncmp( line, "HOLE", 4 ) &&
-		strncmp( line, "WALL", 4 ) &&
-		strncmp( line, "VEHICLE", 7 ) )
+				strncmp( line, "HOLE", 4 ) &&
+				strncmp( line, "WALL", 4 ) &&
+				strncmp( line, "VEHICLE", 7 ) )
 		{
 			section_start = ftell( fdin );
 			if( !getline() )
-		break;
+				break;
 		}
 	}
 	/* seek to start of the section */
@@ -2631,11 +2673,11 @@ void
 do_section( final )
 int final;
 {
+	int found;
+	struct name_tree *nm_ptr;
 
 	if( debug )
 		bu_log( "do_section(%d): %s\n", final , line );
-
-	name_name[0] = '\0';
 
 	if( pass )	/* doing geometry */
 	{
@@ -2651,16 +2693,11 @@ int final;
 	}
 	else if( bot )
 	{
-		char	name[NAMESIZE+1];
-
-		make_region_name( name , group_id , comp_id , bot , NMG );
+		make_region_name( group_id , comp_id );
 	}
 
 	if( !final )
 	{
-		int found;
-		struct name_tree *nm_ptr;
-
 		strncpy( field , &line[8] , 8 );
 		group_id = atoi( field );
 
@@ -2698,9 +2735,6 @@ int final;
 					group_id, comp_id );
 			}
 		}
-		else
-			name_name[0] = '\0';
-
 	}
 
 	bot = 0;
@@ -2820,14 +2854,14 @@ do_hex2()
 	int i;
 	int cont1,cont2;
 	point_t points[8];
-	char name[NAMESIZE+1];
+	char *name;
 
 	strncpy( field , &line[8] , 8 );
 	element_id = atoi( field );
 
 	if( !pass )
 	{
-		make_region_name( name , group_id , comp_id );
+		make_region_name( group_id , comp_id );
 		if( !getline() )
 		{
 			bu_log( "Unexpected EOF while reading continuation card for CHEX2\n" );
@@ -2875,8 +2909,10 @@ do_hex2()
 	for( i=0 ; i<8 ; i++ )
 		VMOVE( points[i] , grid_pts[pts[i]] );
 
-	make_solid_name( name , CHEX2 , element_id , comp_id , group_id , 0 );
+	name = make_solid_name( CHEX2 , element_id , comp_id , group_id , 0 );
 	mk_arb8( fdout , name , &points[0][X] );
+	bu_free( name, "solid_name" );
+
 }
 
 void
@@ -3071,7 +3107,7 @@ genptr_t	ptr;
 	if( !(dp->d_flags & DIR_REGION) )
 		return;
 
-	if( rt_db_get_internal( &internal, dp, dbip, NULL ) < 0 )
+	if( rt_db_get_internal( &internal, dp, dbip, NULL, &rt_uniresource ) < 0 )
 	{
 		bu_log( "Failed to get internal representation of %s\n", dp->d_namep );
 		bu_bomb( "rt_db_get_internal() Failed!!!\n" );
@@ -3107,7 +3143,7 @@ genptr_t	ptr;
 		return;
 	}
 
-	if( rt_db_get_internal( &internal2, dp2, dbip, NULL ) < 0 )
+	if( rt_db_get_internal( &internal2, dp2, dbip, NULL, &rt_uniresource ) < 0 )
 	{
 		bu_log( "Failed to get internal representation of %s\n", dp2->d_namep );
 		bu_bomb( "rt_db_get_internal() Failed!!!\n" );
@@ -3129,7 +3165,7 @@ genptr_t	ptr;
 	/* move the second tree into the first */
 	tree2 = comb2->tree;
 	comb->tree = tree2;
-	if( rt_db_put_internal( dp, dbip, &internal ) < 0 )
+	if( rt_db_put_internal( dp, dbip, &internal, &rt_uniresource ) < 0 )
 	{
 		bu_log( "Failed to write region %s\n", dp->d_namep );
 		bu_bomb( "rt_db_put_internal() failed!!!\n" );
@@ -3139,7 +3175,7 @@ genptr_t	ptr;
 	db_delete( dbip, dp2 );
 	db_dirdelete( dbip, dp2 );
 
-	db_free_tree( tree);
+	db_free_tree( tree , &rt_uniresource);
 
 }
 
@@ -3176,7 +3212,7 @@ char *output_file;
 	if( debug )
 		bu_log( "Calling db_functree\n" );
 
-	db_functree( dbip, dp, fix_regions, 0, NULL );
+	db_functree( dbip, dp, fix_regions, 0, &rt_uniresource, NULL );
 
 	if( debug )
 		bu_log( "Post-processing complete\n" );
@@ -3283,7 +3319,7 @@ void make_regions()
 
 			if( ptr2->region_id == -ptr1->region_id && ptr2->inner == 0 )
 			{
-				if( mk_addmember( ptr2->name, &solids, WMOP_UNION ) == (struct wmember *)NULL )
+				if( mk_addmember( ptr2->name, &solids.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 					bu_log( "make_regions: mk_addmember failed to add %s to %s\n", ptr1->name, ptr2->name );
 			}
 
@@ -3294,7 +3330,7 @@ void make_regions()
 			goto cont1;
 
 		sprintf( solids_name, "solids_%d", ptr1->region_id );
-		if( mk_lcomb( fdout, solids_name, &solids, 0, NULL, NULL, NULL, 0) )
+		if( mk_comb( fdout, solids_name, &solids.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1) )
 			bu_log("Failed to make combination of solids (%s)!!!!\n\tRegion %s is in ERROR!!!\n",
 				solids_name, ptr1->name );
 
@@ -3302,7 +3338,7 @@ void make_regions()
 		if( is_a_hole( ptr1->region_id ) )
 		{
 			/* just add it to the "holes" group */
-			if( mk_addmember( solids_name, &holes, WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( solids_name, &holes.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to holes group\n", ptr1->name );
 			goto cont1;
 		}
@@ -3336,58 +3372,74 @@ void make_regions()
 
 			/* intersect halfspace with current region */
 			BU_LIST_INIT( &region.l );
-			if( mk_addmember( solids_name, &region, WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( solids_name, &region.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to %s\n", solids_name, ptr1->name );
 
-			if( mk_addmember( splt_name, &region, WMOP_INTERSECT ) == (struct wmember *)NULL )
+			if( mk_addmember( splt_name, &region.l, NULL, WMOP_INTERSECT ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to %s\n", splt_name, ptr1->name );
 
 			while( lptr )
 			{
 				sprintf( hole_name, "solids_%d", (lptr->group * 1000 + lptr->component) );
-				if( mk_addmember( hole_name, &region, WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( hole_name, &region.l, NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_log( "make_regions: mk_addmember failed to add %s to %s\n", hole_name, ptr1->name );
 				lptr = lptr->next;
 			}
+#if USE_SURVICE_MODS
+			MK_REGION( fdout, &region, ptr1->name, ptr1->region_id, get_fast4_color(ptr1->region_id) )
+#else
 			MK_REGION( fdout, &region, ptr1->name, ptr1->region_id )
+#endif
 
 			/* create new region by subtracting halfspace */
 			BU_LIST_INIT( &region.l );
-			if( mk_addmember( solids_name, &region, WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( solids_name, &region.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to %s\n", solids_name, ptr1->name );
 
-			if( mk_addmember( splt_name, &region, WMOP_SUBTRACT ) == (struct wmember *)NULL )
+			if( mk_addmember( splt_name, &region.l, NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to %s\n", splt_name, ptr1->name );
 
 			while( lptr )
 			{
 				sprintf( hole_name, "solids_%d", (lptr->group * 1000 + lptr->component) );
-				if( mk_addmember( hole_name, &region, WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( hole_name, &region.l, NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_log( "make_regions: mk_addmember failed to add %s to %s\n", hole_name, ptr1->name );
 				lptr = lptr->next;
 			}
 			ptr2 = Search_ident( name_root, splt->new_ident, &found );
 			if( found ) {
+#if USE_SURVICE_MODS
+				MK_REGION( fdout, &region, ptr2->name, splt->new_ident, get_fast4_color(splt->new_ident) )
+#else
 				MK_REGION( fdout, &region, ptr2->name, splt->new_ident )
+#endif
 			} else {
 				sprintf( reg_name, "comp_%d.r", splt->new_ident );
+#if USE_SURVICE_MODS
+				MK_REGION( fdout, &region, reg_name, splt->new_ident, get_fast4_color(splt->new_ident) )
+#else
 				MK_REGION( fdout, &region, reg_name, splt->new_ident )
+#endif
 			}
 		}
 		else
 		{
 			BU_LIST_INIT( &region.l );
-			if( mk_addmember( solids_name, &region, WMOP_UNION ) == (struct wmember *)NULL )
+			if( mk_addmember( solids_name, &region.l, NULL, WMOP_UNION ) == (struct wmember *)NULL )
 				bu_log( "make_regions: mk_addmember failed to add %s to %s\n", solids_name, ptr1->name );
 
 			while( lptr )
 			{
 				sprintf( hole_name, "solids_%d", (lptr->group * 1000 + lptr->component) );
-				if( mk_addmember( hole_name, &region, WMOP_SUBTRACT ) == (struct wmember *)NULL )
+				if( mk_addmember( hole_name, &region.l, NULL, WMOP_SUBTRACT ) == (struct wmember *)NULL )
 					bu_log( "make_regions: mk_addmember failed to add %s to %s\n", hole_name, ptr1->name );
 				lptr = lptr->next;
 			}
+#if USE_SURVICE_MODS
+			MK_REGION( fdout, &region, ptr1->name, ptr1->region_id, get_fast4_color(ptr1->region_id) )
+#else
 			MK_REGION( fdout, &region, ptr1->name, ptr1->region_id )
+#endif
 		}
 cont1:
 		ptr1 = ptr1->rright;
@@ -3396,10 +3448,62 @@ cont1:
 	if( BU_LIST_NON_EMPTY( &holes.l ) )
 	{
 		/* build a "holes" group */
-		if( mk_lcomb( fdout, "holes", &holes, 0, NULL, NULL, NULL, 0 ))
+		if( mk_comb( fdout, "holes", &holes.l, 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 1) )
 			bu_log("Failed to make holes group!!!!\n" );
 	}
 }
+
+#if USE_SURVICE_MODS
+#define COLOR_LINE_LEN 256
+
+void read_fast4_colors(char *color_file) {
+  FILE *fp;
+  char line[COLOR_LINE_LEN];
+  int low, high;
+  int r, g, b;
+  struct fast4_color *color;
+
+  if ((fp = fopen(color_file, "r")) == (FILE *)NULL) {
+    bu_log("Cannot open color file (%s)\n", color_file);
+    return;
+  }
+
+  while (fgets(line, COLOR_LINE_LEN, fp) != NULL) {
+    if (sscanf(line, "%d %d %d %d %d", &low, &high, &r, &g, &b) != 5)
+      continue;
+
+    /* skip invalid colors */
+    if (r < 0 || 255 < r ||
+	g < 0 || 255 < g ||
+	b < 0 || 255 < b)
+      continue;
+
+    /* skip bad region id ranges */
+    if (high < low)
+      continue;
+
+    BU_GETSTRUCT(color, fast4_color);
+    color->low = low;
+    color->high = high;
+    color->rgb[0] = r;
+    color->rgb[1] = g;
+    color->rgb[2] = b;
+    BU_LIST_APPEND(&HeadColor.l, &color->l);
+  }
+}
+
+unsigned char *
+get_fast4_color(int r_id) {
+  struct fast4_color *fcp;
+
+  for (BU_LIST_FOR(fcp, fast4_color, &HeadColor.l)) {
+    if (fcp->low <= r_id && r_id <= fcp->high)
+      return fcp->rgb;
+  }
+
+  return (unsigned char *)NULL;
+}
+#endif
 
 int
 main( argc , argv )
@@ -3408,10 +3512,12 @@ char *argv[];
 {
 	int i;
 	int c;
-	char *output_file;
 	char *plot_file=NULL;
+#if USE_SURVICE_MODS
+	char *color_file=NULL;
+#endif
 
-	while( (c=getopt( argc , argv , "qm:o:c:dwx:b:X:" ) ) != EOF )
+	while( (c=getopt( argc , argv , "qm:o:c:dwx:b:X:C:" ) ) != EOF )
 	{
 		switch( c )
 		{
@@ -3439,12 +3545,17 @@ char *argv[];
 				warnings = 1;
 				break;
 			case 'x':
-				sscanf( optarg, "%x", &rt_debug );
+				sscanf( optarg, "%x", (unsigned int *)&rt_debug );
 				bu_debug = rt_debug;
 				break;
 			case 'b':
-				sscanf( optarg, "%x", &bu_debug );
+				sscanf( optarg, "%x", (unsigned int *)&bu_debug );
 				break;
+#if USE_SURVICE_MODS
+			case 'C':
+				color_file = optarg;
+				break;
+#endif
 			default:
 				bu_log( "Unrecognzed option (%c)\n", c );
 				rt_bomb( usage );
@@ -3455,10 +3566,12 @@ char *argv[];
 	if( bu_debug & BU_DEBUG_MEM_CHECK )
 		bu_log( "doing memory checking\n" );
 
-	if( argc-optind != 2 )
-		bu_bomb( usage );
+	if( argc-optind != 2 ) {
+		bu_log( usage );
+		exit( 1 );
+	}
 
-	rt_init_resource( &rt_uniresource, 0 );
+	rt_init_resource( &rt_uniresource, 0, NULL );
 
 	if( (fdin=fopen( argv[optind] , "r" )) == (FILE *)NULL )
 	{
@@ -3467,13 +3580,12 @@ char *argv[];
 		exit( 1 );
 	}
 
-	if( (fdout=fopen( argv[optind+1], "w" )) == NULL )
+	if( (fdout=wdb_fopen( argv[optind+1] )) == NULL )
 	{
 		bu_log( "Cannot open file for output (%s)\n" , argv[optind+1] );
 		perror( "fast4-g" );
 		exit( 1 );
 	}
-	output_file = argv[optind+1];
 
 	if( plot_file )
 	{
@@ -3495,6 +3607,12 @@ char *argv[];
 		bu_log("\n");
 	}
 
+#if USE_SURVICE_MODS
+	BU_LIST_INIT(&HeadColor.l);
+	if (color_file)
+	  read_fast4_colors(color_file);
+#endif
+
 	grid_size = GRID_BLOCK;
 	grid_pts = (point_t *)bu_malloc( grid_size * sizeof( point_t ) , "fast4-g: grid_pts" );
 
@@ -3506,7 +3624,8 @@ char *argv[];
 
 	compsplt_root = (struct compsplt *)NULL;
 
-	name_name[0] = '\0';
+	min_radius = 2.0 * sqrt( SQRT_SMALL_FASTF );
+
 	name_count = 0;
 
 	vehicle[0] = '\0';
@@ -3554,7 +3673,7 @@ char *argv[];
 	if( debug )
 		List_holes();
 
-	fclose( fdout );
+	wdb_close( fdout );
 
 	if( !quiet )
 		bu_log( "%d components converted\n", comp_count );

@@ -237,9 +237,9 @@ GUI interactions that affect panes."}}
 
     incr row
     frame $top.csF$row
-    button $top.okB -relief raised -text "Ok"\
+    button $top.okB -relief raised -text "OK"\
 	    -command "color_scheme_ok $id $top"
-    hoc_register_data $top.okB "Ok"\
+    hoc_register_data $top.okB "OK"\
 	    {{summary "Apply the colors and dismiss the
 \"Color Schemes\" control panel."}}
     button $top.applyB -relief raised -text "Apply"\
@@ -316,12 +316,12 @@ proc color_scheme_build_entries { id top container map row entry_width } {
 	set ce_a [color_entry_build $top $key_a $colorvar_a\
 		"color_entry_chooser $id $top $key_a \"Active $name Color\" \
 		mged_color_scheme $id,$key_a"\
-		$entry_width [rset cs $key_a]]
+		$entry_width [rset cs $key_a] not_rt]
 
 	set ce_ia [color_entry_build $top $key_ia $colorvar_ia\
 		"color_entry_chooser $id $top $key_ia \"Inactive $name Color\" \
 		mged_color_scheme $id,$key_ia"\
-		$entry_width [rset cs $key_ia]]
+		$entry_width [rset cs $key_ia] not_rt]
 
 	grid $top.$key\L -row $ce_row -column 0 -sticky "e" -in $container -padx 2 -pady 2
 	grid $ce_a -row $ce_row -column 1 -sticky "nsew" -in $container -padx 2 -pady 2

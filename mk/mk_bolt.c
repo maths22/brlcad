@@ -25,6 +25,7 @@
 #include "vmath.h"
 #include "externs.h"
 #include "db.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 #ifdef M_PI
@@ -40,7 +41,7 @@ int argc;
 char *argv[];
 
 {
-   FILE *fpw;			/*  File to be written to.  */
+   struct rt_wdb *fpw;		/*  File to be written to.  */
    char filemged[26];		/*  Mged file create.  */
    double hd,hh;		/*  Diameter & height of bolt head.  */
    double wd,wh;		/*  Diameter & height of washer.  */
@@ -283,7 +284,7 @@ char *argv[];
    (void)fflush(stdout);
 
    /*  Open mged file for writing to.  */
-   fpw = fopen(filemged,"w");
+   fpw = wdb_fopen(filemged);
 
    /*  Write ident record.  */
    mk_id(fpw,"bolts");
@@ -387,20 +388,20 @@ char *argv[];
 
    /*  Create region for first half of bolt head.  */
    solnam[7] = '1';
-   (void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+   (void)mk_addmember(solnam,&comb.l,NULL, WMOP_INTERSECT);
    solnam[7] = '2';
-   (void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+   (void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
    /*  Subtract washer if it exists.  */
    if( (iopt == 2) || (iopt == 3) )
    {
 	solnam[7] = '3';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
    }
    /*  Subtract stem if it exists.  */
    if( (iopt == 3) || (iopt == 4) )
    {
 	solnam[7] = '3';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
    }
    regnam[6] = 97 + i;
    regnam[7] = '1';
@@ -408,18 +409,18 @@ char *argv[];
 
    /*  Create region for second half of bolt head.  */
    solnam[7] = '2';
-   (void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+   (void)mk_addmember(solnam,&comb.l,NULL, WMOP_INTERSECT);
    /*  Subtract washer if it exists.  */
    if( (iopt == 2) || (iopt == 3) )
    {
 	solnam[7] = '3';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
    }
    /*  Subtract stem if it exists.  */
    if( (iopt == 3) || (iopt == 4) )
    {
 	solnam[7] = '4';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
    }
    regnam[7] = '2';
    mk_lfcomb(fpw,regnam,&comb,1);
@@ -428,12 +429,12 @@ char *argv[];
    if( (iopt == 2) || (iopt == 3) )
    {
 	solnam[7] = '3';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_INTERSECT);
 	/*  Subtract bolt stem if it exists.  */
 	if(iopt == 3)
 	{
 	   solnam[7] = '4';
-	   (void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	   (void)mk_addmember(solnam,&comb.l,NULL, WMOP_SUBTRACT);
 	}
 	regnam[7] = '3';
 	mk_lfcomb(fpw,regnam,&comb,1);
@@ -443,7 +444,7 @@ char *argv[];
    if( (iopt == 3) || (iopt == 4) )
    {
 	solnam[7] = '4';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l,NULL, WMOP_INTERSECT);
 	regnam[7] = '4';
 	mk_lfcomb(fpw,regnam,&comb,1);
    }
@@ -453,20 +454,20 @@ char *argv[];
    BU_LIST_INIT(&comb1.l);
    /*  Add both bolt head regions to the list.  */
    regnam[7] = '1';
-   (void)mk_addmember(regnam,&comb1,WMOP_UNION);
+   (void)mk_addmember(regnam,&comb1.l,NULL, WMOP_UNION);
    regnam[7] = '2';
-   (void)mk_addmember(regnam,&comb1,WMOP_UNION);
+   (void)mk_addmember(regnam,&comb1.l,NULL, WMOP_UNION);
    /*  Add washer region if necessary.  */
    if( (iopt == 2) || (iopt == 3) )
    {
 	regnam[7] = '3';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l,NULL, WMOP_UNION);
    }
    /*  Add bolt stem region if necessary.  */
    if( (iopt == 3) || (iopt == 4) )
    {
 	regnam[7] = '4';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l,NULL, WMOP_UNION);
    }
    /*  Actually create the group.  */
    grpnam[4] = 97 + i;
@@ -475,6 +476,6 @@ char *argv[];
    }							/*  END # 20  */
 
    /*  Close mged file.  */
-   (void)fclose(fpw);
+   wdb_close(fpw);
    return 0;
 }

@@ -2,6 +2,7 @@ class Sketch_editor {
 	inherit itk::Toplevel
 
 	private variable sketch_name
+        private variable sketch_path
 	private variable V
 	private variable A
 	private variable B
@@ -24,11 +25,13 @@ class Sketch_editor {
 	private variable curr_seg ""
 	private variable save_entry
 	private variable angle
+	private variable bezier_indices ""
 	common pi2 [expr {4.0 * asin( 1.0 )}]
 	common rad2deg  [expr {360.0 / $pi2}]
 
 	constructor { args } {
-		if { [llength $args] == 0 } {
+	    set num_args [llength $args]
+		if { $num_args == 0 } {
 			set sketch_name ""
 			set sketch_info {}
 			set SL {}
@@ -42,10 +45,25 @@ class Sketch_editor {
 			set B(1) 1.0
 			set B(2) 0.0
 			$this configure -title "Sketch Editor: Untitled"
-		    } elseif { [llength $args] == 1 } {
+		    } elseif { $num_args == 1 } {
 			# get the tcl version of the sketch
-			set sketch_path [split [string trim $args] "/"]
-			set sketch_name [lindex $sketch_path [expr [llength $sketch_path] - 1]]
+			set sketch_path $args
+			set path [split [string trim $args] "/"]
+			set sketch_name [lindex $path [expr [llength $path] - 1]]
+			if { [catch {db get $sketch_name} sketch_info] } {
+				tk_messageBox -icon error -title "Cannot Get Sketch" -type ok \
+					-message $sketch_info
+				destroy $itk_component(hull)
+				return
+			}
+			if { [lindex $sketch_info 0] != "sketch" } {
+				tk_messageBox -icon error -type ok -title "$name is not a sketch" -message "$name is not a sketch"
+				destroy $itk_component(hull)
+				return
+			}
+		    } elseif { $num_args == 2 } {
+			set sketch_name [lindex $args 0]
+			set sketch_path [lindex $args 1]
 			if { [catch {db get $sketch_name} sketch_info] } {
 				tk_messageBox -icon error -title "Cannot Get Sketch" -type ok \
 					-message $sketch_info
@@ -100,9 +118,11 @@ class Sketch_editor {
 		button $create_frame.create_line -text "Create Line" -command [code $this create_line]
 		button $create_frame.create_circle -text "Create Circle" -command [code $this create_circle]
 		button $create_frame.create_arc -text "Create Arc" -command [code $this create_arc]
+		button $create_frame.create_bezier -text "Create Bezier" -command [code $this create_bezier]
 		grid $create_frame.create_line -row 0 -column 0 -sticky n
 		grid $create_frame.create_circle -row 1 -column 0 -sticky n
 		grid $create_frame.create_arc -row 3 -column 0 -sticky n
+		grid $create_frame.create_bezier -row 4 -column 0 -sticky n
 
 		set debug_frame [$itk_component(controls).notebook add -label "Debug"]
 
@@ -188,7 +208,7 @@ class Sketch_editor {
 		grid $itk_component(coords).radius -row 1 -column 1 -sticky w
 
 		itk_component add status_line {
-			label $itk_interior.stat -height 3 -text ""
+			label $itk_interior.stat -height 4 -text ""
 		}
 		bind $itk_component(canvas) <Configure> [code $this draw_segs]
 		bind $itk_component(canvas) <Motion> [code $this show_coords %x %y]
@@ -213,7 +233,7 @@ class Sketch_editor {
 		create_segments
 
 		draw_segs
-		update
+		update idletasks
 		set canv_height [winfo height $itk_component(canvas)]
 		set canv_width [winfo width $itk_component(canvas)]
 		set min_max [$itk_component(canvas) bbox all]
@@ -266,7 +286,7 @@ class Sketch_editor {
 			return
 		}
 			
-		set dir_list [$item get_tangent_at_vertex $vertex]
+		set dir_list [$item get_tangent_at_vertex $common_vertex]
 		set dir(0) [lindex $dir_list 0]
 		set dir(1) [lindex $dir_list 1]
 
@@ -305,8 +325,36 @@ class Sketch_editor {
 			set dir(0) [expr { -$dir(0) } ]
 			set dir(1) [expr { -$dir(1) } ]
 		}
-		set center(0) [expr { [lindex $v1 0] + $new_radius * $dir(0) } ]
-		set center(1) [expr { [lindex $v1 1] + $new_radius * $dir(1) } ]
+		set vcom [lindex $VL $common_vertex]
+
+		# calculate arc centers in both directions
+		set centera(0) [expr { [lindex $vcom 0] + $new_radius * $dir(0) } ]
+		set centera(1) [expr { [lindex $vcom 1] + $new_radius * $dir(1) } ]
+		set centerb(0) [expr { [lindex $vcom 0] - $new_radius * $dir(0) } ]
+		set centerb(1) [expr { [lindex $vcom 1] - $new_radius * $dir(1) } ]
+
+		# choose the one that is the correct distance from the other vertex
+		if { $vcom == $v1 } {
+		    set vother $v2
+		} else {
+		    set vother $v1
+		}
+		set diff2(0) [expr { $centera(0) - [lindex $vother 0] } ]
+		set diff2(1) [expr { $centera(1) - [lindex $vother 1] } ]
+		set dista [expr { abs( sqrt( $diff2(0) * $diff2(0) + $diff2(1) * $diff2(1)) - $new_radius)}]
+
+		set diff2(0) [expr { $centerb(0) - [lindex $vother 0] } ]
+		set diff2(1) [expr { $centerb(1) - [lindex $vother 1] } ]
+		set distb [expr { abs( sqrt( $diff2(0) * $diff2(0) + $diff2(1) * $diff2(1)) - $new_radius)}]
+
+		if { $dista < $distb } {
+		    set center(0) $centera(0)
+		    set center(1) $centera(1)
+		} else {
+		    set center(0) $centerb(0)
+		    set center(1) $centerb(1)
+		}
+
 		set diff2(0) [expr { $center(0) - [lindex $v2 0] } ]
 		set diff2(1) [expr { $center(1) - [lindex $v2 1] } ]
 		set cross [cross2d diff2 diff]
@@ -491,17 +539,24 @@ class Sketch_editor {
 			set seg [lrange $seg 1 end]
 			switch $type {
 				line {
-					lappend segments ::Sketch_editor::[Sketch_line #auto $this $itk_component(canvas) $seg]
+				    lappend segments ::Sketch_editor::[Sketch_line #auto $this $itk_component(canvas) $seg]
 				}
 				carc {
-					set index [lsearch -exact $seg R]
-					incr index
-					set tmp_radius [lindex $seg $index]
-					if { $tmp_radius > 0.0 } {
-						set tmp_radius [expr {$tolocal * $tmp_radius}]
-						set seg [lreplace $seg $index $index $tmp_radius]
-					}
-					lappend segments ::Sketch_editor::[Sketch_carc #auto $this $itk_component(canvas) $seg]
+				    set index [lsearch -exact $seg R]
+				    incr index
+				    set tmp_radius [lindex $seg $index]
+				    if { $tmp_radius > 0.0 } {
+					set tmp_radius [expr {$tolocal * $tmp_radius}]
+					set seg [lreplace $seg $index $index $tmp_radius]
+				    }
+				    lappend segments ::Sketch_editor::[Sketch_carc #auto $this $itk_component(canvas) $seg]
+				}
+				bezier {
+				    lappend segments ::Sketch_editor::[Sketch_bezier #auto $this $itk_component(canvas) $seg]
+				}
+				default {
+				    tk_messageBox -type ok -icon warning -title "Unrecognized segment type" \
+					    -message "Curve segments of type '$type' are not yet handled"
 				}
 			}
 		}
@@ -599,6 +654,7 @@ class Sketch_editor {
 	method do_save {} {
 		set obj_name [$save_entry get]
 		write_sketch_to_db $obj_name [check_name $obj_name]
+	        draw $sketch_path
 	}
 
 	method do_scale { scale_factor } {
@@ -609,14 +665,14 @@ class Sketch_editor {
 	}
 
 	method describe {} {
-		puts stderr "Sketch: $sketch_name"
-		puts stderr "Scale Factor = $myscale"
-		puts stderr "conversion factors: to local = $tolocal to base = $tobase"
-		puts stderr "V = ($V(0), $V(1), $V(2)), A = ($A(0), $A(1), $A(2)), B = ($B(0), $B(1), $B(2))"
-		puts stderr "Vertex List:"
+		puts "Sketch: $sketch_name"
+		puts "Scale Factor = $myscale"
+		puts "conversion factors: to local = $tolocal to base = $tobase"
+		puts "V = ($V(0), $V(1), $V(2)), A = ($A(0), $A(1), $A(2)), B = ($B(0), $B(1), $B(2))"
+		puts "Vertex List:"
 		set index 0
 		foreach vertex $VL {
-			puts stderr "\tvertex #$index = ($vertex)"
+			puts "\tvertex #$index = ($vertex)"
 			incr index
 		}
 		foreach seg $segments {
@@ -927,8 +983,118 @@ class Sketch_editor {
 		return 0
 	}
 
+	method create_bezier {} {
+	    set bezier_indices ""
+	    $itk_component(status_line) configure -text "Click mouse button 1 to set Bezier start point\n\
+		    or click mouse button 3 to select an existing vertex as the start point\n\
+		    or enter start point coordinates in entry windows"
+	    bind $itk_component(canvas) <ButtonRelease-1> [code $this start_bezier 1 %x %y]
+	    bind $itk_component(canvas) <ButtonRelease-3> [code $this start_bezier_pick %x %y]
+	    bind $itk_component(coords).x <Return> [code $this start_bezier 0 0 0]
+	    bind $itk_component(coords).y <Return> [code $this start_bezier 0 0 0]
+	}
+
+	method start_bezier { coord_type x y } {
+	    if { $coord_type == 1 } {
+		# screen coordinates
+		show_coords $x $y
+		set sx [expr {[$itk_component(canvas) canvasx $x] / $myscale}]
+		set sy [expr {-[$itk_component(canvas) canvasy $y] / $myscale}]
+	    } elseif { $coord_type == 0 } {
+		# model coordinates
+		set sx $x_coord
+		set sy $y_coord
+	    }
+	    if { $coord_type != 2 } {
+		# use index numbers
+		set bezier_indices [llength $VL]
+		lappend VL "$sx $sy"
+		draw_verts
+	    }
+
+	    lappend bezier_indices $bezier_indices
+	    set new_seg [Sketch_bezier #auto $this $itk_component(canvas) \
+		    "D [expr [llength $bezier_indices] - 1] P [list $bezier_indices]"]
+	    lappend segments ::Sketch_editor::$new_seg
+	    set needs_saving 1
+	    draw_segs
+
+	    # setup to pick next bezier point
+	    $itk_component(status_line) configure -text "Click mouse button 1 to set next Bezier point\n\
+		    or click mouse button 3 to select an existing vertex as the next point\n\
+		    or enter next point coordinates in entry windows\n\
+		    or click mouse button 2 to finish"
+	    bind $itk_component(canvas) <ButtonRelease-1> [code $this next_bezier $new_seg 1 %x %y]
+	    bind $itk_component(canvas) <ButtonRelease-3> [code $this next_bezier_pick $new_seg %x %y]
+	    bind $itk_component(canvas) <ButtonRelease-2> [code $this end_bezier $new_seg]
+	    bind $itk_component(coords).x <Return> [code $this next_bezier $new_seg 0 0 0]
+	    bind $itk_component(coords).y <Return> [code $this next_bezier $new_seg 0 0 0]
+	}
+
+	method start_bezier_pick { x y } {
+	    set index [pick_vertex $x $y]
+	    if { $index == -1 } return
+	    set bezier_indices $index
+	    start_bezier 2 0 0
+	}
+
+	method next_bezier { segment coord_type x y} {
+	    if { $coord_type == 1 } {
+		# screen coordinates
+		show_coords $x $y
+		set sx [expr {[$itk_component(canvas) canvasx $x] / $myscale}]
+		set sy [expr {-[$itk_component(canvas) canvasy $y] / $myscale}]
+	    } elseif { $coord_type == 0 } {
+		# model coordinates
+		set sx $x_coord
+		set sy $y_coord
+	    }
+	    if { $coord_type != 2 } {
+		# use index numbers
+		if { [llength $bezier_indices] == 2 && [lindex $bezier_indices 0] == [lindex $bezier_indices 1] } {
+		    set bezier_indices [lrange $bezier_indices 0 0]
+		}
+		lappend bezier_indices [llength $VL]
+		lappend VL "$sx $sy"
+		draw_verts
+	    }
+	    $itk_component(canvas) delete ::Sketch_editor::$segment
+	    ::Sketch_editor::$segment set_vars D [expr [llength $bezier_indices] - 1] P $bezier_indices
+	    draw_segs
+	}
+
+	method next_bezier_pick { segment x y } {
+	    set index [pick_vertex $x $y]
+	    if { $index == -1 } return
+	    if { [llength $bezier_indices] == 2 && [lindex $bezier_indices 0] == [lindex $bezier_indices 1] } {
+		set bezier_indices [lrange $bezier_indices 0 0]
+	    }
+	    lappend bezier_indices $index
+	    next_bezier $segment 2 0 0
+	}
+
+	method end_bezier { segment } {
+	    bind $itk_component(canvas) <ButtonRelease-1> {}
+	    bind $itk_component(canvas) <ButtonRelease-3> {}
+	    bind $itk_component(canvas) <ButtonRelease-2> {}
+	    bind $itk_component(coords).x <Return> {}
+	    bind $itk_component(coords).y <Return> {}
+
+	    if { [llength $bezier_indices] < 2 } {
+		tk_messageBox -icon error -type ok -title "Not enough points" \
+			-message "A Bezier curve must have at least two points"
+		set bezier_indices ""
+		return
+	    }
+
+	    $itk_component(canvas) delete ::Sketch_editor::$segment
+	    ::Sketch_editor::$segment set_vars D [expr [llength $bezier_indices] - 1] P $bezier_indices
+	    set needs_saving 1
+	    draw_segs
+	}
+
 	method create_arc {} {
-		# setup tp pick arc start point
+		# setup to pick arc start point
 		set index1 -1
 		set index2 -1
 		$itk_component(status_line) configure -text "Click mouse button 1 to set arc start point\n\
@@ -1293,16 +1459,17 @@ class Sketch_editor {
 		set new_seg [Sketch_line #auto $this $itk_component(canvas) "S $index1 E $index2"]
 		lappend segments ::Sketch_editor::$new_seg
 		set needs_saving 1
+		draw_verts
 		draw_segs
 		$itk_component(status_line) configure -text "Click and hold mouse button 1 to adjust end point\n\
 			or click mouse button 3 to select an existing vertex to set the endpoint\n\
 			or enter end point cordinates in the entry windows"
 		bind $itk_component(canvas) <B1-Motion> [code $this continue_line $new_seg 0 1 %x %y]
-		bind $itk_component(canvas) <ButtonPress-1> [code $this continue_line $new_seg 0 1 %x %y]
+		bind $itk_component(canvas) <ButtonPress-1> [code $this continue_line $new_seg 2 1 %x %y]
 		bind $itk_component(canvas) <ButtonRelease-1> [code $this continue_line $new_seg 1 1 %x %y]
 		bind $itk_component(canvas) <ButtonRelease-3> [code $this continue_line_pick $new_seg %x %y]
-		bind $itk_component(coords).x <Return> [code $this continue_line $new_seg 1 0 0 0]
-		bind $itk_component(coords).y <Return> [code $this continue_line $new_seg 1 0 0 0]
+		bind $itk_component(coords).x <Return> [code $this continue_line $new_seg 2 0 0 0]
+		bind $itk_component(coords).y <Return> [code $this continue_line $new_seg 2 0 0 0]
 	}
 
 	method continue_line_pick { seg x y } {
@@ -1327,13 +1494,19 @@ class Sketch_editor {
 			set ey $y_coord
 		}
 
+		if { $state == 2 } {
+		    set index2 [llength $VL]
+		    lappend VL "$ex $ey"
+		    ::Sketch_editor::$segment set_vars E $index2
+		}
+
 		if { $coord_type != 2 } {
 			set VL [lreplace $VL $index2 $index2 "$ex $ey"]
 		}
 		$itk_component(canvas) delete ::Sketch_editor::$segment
 		$segment draw ""
 		$itk_component(canvas) configure -scrollregion [$itk_component(canvas) bbox all]
-		if { $state } {
+		if { $state == 1 } {
 			bind $itk_component(canvas) <ButtonPress-1> {}
 			bind $itk_component(canvas) <B1-Motion> {}
 			bind $itk_component(canvas) <ButtonRelease-1> {}
@@ -1341,8 +1514,8 @@ class Sketch_editor {
 			bind $itk_component(coords).x <Return> {}
 			bind $itk_component(coords).y <Return> {}
 			$itk_component(status_line) configure -text ""
-			draw_verts
 		}
+		draw_verts
 	}
 
 	method get_tangent_at_vertex { index exclude } {
@@ -1682,6 +1855,99 @@ class Sketch_carc {
 			}
 		} 
 	}
+}
+
+class Sketch_bezier {
+    private variable canv
+    private variable editor
+    private variable num_points
+    private variable index_list
+
+    constructor { sketch_editor canvas seg } {
+	set editor $sketch_editor
+	set canv $canvas
+	eval "set_vars $seg"
+    }
+
+    method set_vars { args } {
+	foreach { key value } $args {
+	    switch $key {
+		D { set num_points [expr $value + 1] }
+		P { set index_list $value }
+	    }
+	}
+    }
+
+    method get_verts {} {
+	return $index_list
+    }
+
+    method tag_verts { atag } {
+	foreach index $index_list {
+	    $canv addtag $atag withtag p$index
+	}
+    }
+
+    method fix_vertex_reference { deleted_verts } {
+	foreach del $deleted_verts {
+	    for { set index 0 } { $index < $num_points } { incr index } {
+		set vert [lindex $index_list $index]
+		if { $vert > $del } {
+		    set index_list [lreplace $index_list $index $index [expr $vert - 1]]
+		}
+	    }
+	}
+    }
+
+    method is_vertex_used { index } {
+	if { [lsearch -exact $index_list $index] != -1 } {
+	    return 1
+	} else {
+	    return 0
+	}
+    }
+
+    method get_tangent_at_vertex { index } {
+	return "0 0"
+    }
+
+    method highlight {} {
+	$canv itemconfigure $this -fill red
+	$canv addtag selected withtag $this
+    }
+
+    method unhighlight {} {
+	$canv itemconfigure $this -fill black
+	$canv dtag $this selected
+    }
+
+    method draw { atag } {
+	set myscale [$editor get_scale]
+	set vlist [$editor get_vlist]
+	set coords ""
+	foreach index $index_list {
+	    set pt [lindex $vlist $index]
+	    lappend coords [expr {$myscale * [lindex $pt 0]}] [expr {-$myscale * [lindex $pt 1]}] 
+	}
+	if {[lsearch -exact $atag selected ] != -1} {
+	    $canv create bezier $coords -fill red -tags [concat $this segs $atag]
+	} else {
+	    $canv create bezier $coords -tags [concat $this segs $atag]
+	}
+    }
+
+    method describe {} {
+	set vlist [$editor get_vlist]
+	set coords ""
+	foreach index $index_list {
+	    lappend coords [lindex $vlist $index]
+	}
+	puts "bezier with $num_points vertices: $coords"
+    }
+
+    method serialize { tobase } {
+	return "{bezier D [expr $num_points - 1] P [list $index_list]}"
+    }
 }
 
 class Sketch_line {

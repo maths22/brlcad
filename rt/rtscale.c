@@ -39,22 +39,26 @@
 *	All rights reserved.
 */
 #ifndef lint
-static char RCSscale[] = "@(#)$Header$ (BRL)";
+static const char RCSscale[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "bu.h"
 #include "vmath.h"
 #include "bn.h"
-#include "wdb.h"
 #include "raytrace.h"
+#include "wdb.h"
 #include "plot3.h"
 
-#define NAMELEN 40
 #define BUFF_LEN 256
 #define FALSE 0
 #define TRUE 1
@@ -88,7 +92,7 @@ int		SEEN_DESCRIPT=0;	/* flag for descriptive string */
  *  Main exists to coordinate the actions of the three parts of this program.
  *  It also processes its own arguments (argc and argv).
  */
-
+int
 main(argc, argv)
 int	argc;
 char	**argv;
@@ -105,8 +109,8 @@ char	**argv;
 	int		ret;			/* function return code */
 	fastf_t		m_len;			/* scale length in model size */
 
-	bn_mat_idn(view2model);			/* makes an identity matrix */
-	bn_mat_idn(model2view);
+	MAT_IDN(view2model);			/* makes an identity matrix */
+	MAT_IDN(model2view);
 
 	/* Check to see that the correct format is given, else print
 	 * usage message.
@@ -334,7 +338,7 @@ char	*descript;
 	 * MAT_DELTAS to 0, and set the scale to 1.
 	 */
 
-	bn_mat_copy(v2symbol, v2mod);
+	MAT_COPY(v2symbol, v2mod);
 	MAT_DELTAS(v2symbol, 0, 0, 0);
 	v2symbol[15] = 1;
 

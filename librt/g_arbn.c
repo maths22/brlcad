@@ -18,13 +18,18 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSarbn[] = "@(#)$Header$ (BRL)";
+static const char RCSarbn[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
+#include <ctype.h>
+#include "tcl.h"
 #include "machine.h"
 #include "vmath.h"
 #include "nmg.h"
@@ -33,7 +38,7 @@ static char RCSarbn[] = "@(#)$Header$ (BRL)";
 #include "rtgeom.h"
 #include "./debug.h"
 
-RT_EXTERN(void rt_arbn_print, (CONST struct soltab *stp) );
+RT_EXTERN(void rt_arbn_print, (const struct soltab *stp) );
 RT_EXTERN(void rt_arbn_ifree, (struct rt_db_internal *ip) );
 
 /*
@@ -56,7 +61,7 @@ struct rt_i		*rtip;
 	int		j;
 	int		k;
 	int		*used = (int *)0;	/* plane eqn use count */
-	CONST struct bn_tol	*tol = &rtip->rti_tol;
+	const struct bn_tol	*tol = &rtip->rti_tol;
 
 	RT_CK_DB_INTERNAL( ip );
 	aip = (struct rt_arbn_internal *)ip->idb_ptr;
@@ -142,7 +147,7 @@ struct rt_i		*rtip;
  */
 void
 rt_arbn_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
 }
 
@@ -334,8 +339,8 @@ int
 rt_arbn_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	register struct rt_arbn_internal	*aip;
 	register int	i;
@@ -440,7 +445,7 @@ static void
 Sort_edges( edges , edge_count , aip )
 struct arbn_edges *edges;
 int *edge_count;
-CONST struct rt_arbn_internal   *aip;
+const struct rt_arbn_internal   *aip;
 {
 	int face;
 
@@ -518,8 +523,8 @@ rt_arbn_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	LOCAL struct rt_arbn_internal	*aip;
 	struct shell		*s;
@@ -794,9 +799,9 @@ fail:
 int
 rt_arbn_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	union record		*rp;
 	struct rt_arbn_internal	*aip;
@@ -809,7 +814,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_ARBN;
 	ip->idb_meth = &rt_functab[ID_ARBN];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_arbn_internal), "rt_arbn_internal");
@@ -836,6 +842,7 @@ CONST struct db_i		*dbip;
 		MAT4X3PNT( pt, mat, orig_pt );
 
 		/* Measure new distance from origin to new point */
+		VUNITIZE( norm );
 		VMOVE( aip->eqn[i], norm );
 		aip->eqn[i][3] = VDOT( pt, norm );
 	}
@@ -849,9 +856,9 @@ CONST struct db_i		*dbip;
 int
 rt_arbn_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_arbn_internal	*aip;
 	union record		*rec;
@@ -874,7 +881,7 @@ CONST struct db_i		*dbip;
 	ngrans = (aip->neqn * 8 * 4 + sizeof(union record)-1 ) /
 		sizeof(union record);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = (ngrans + 1) * sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "arbn external");
 	rec = (union record *)ep->ext_buf;
@@ -902,6 +909,123 @@ CONST struct db_i		*dbip;
 
 
 /*
+ *			R T _ A R B N _ I M P O R T 5
+ *
+ *  Convert from "network" doubles to machine specific.
+ *  Transform
+ */
+int
+rt_arbn_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_arbn_internal	*aip;
+	register int		i;
+	unsigned long		neqn;
+	int			double_count;
+	int			byte_count;
+
+	BU_CK_EXTERNAL( ep );
+
+	neqn = bu_glong((unsigned char *)ep->ext_buf);
+	double_count = neqn * ELEMENTS_PER_PLANE;
+	byte_count = double_count * SIZEOF_NETWORK_DOUBLE;
+
+	BU_ASSERT_LONG(ep->ext_nbytes, ==, 4+ byte_count);
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_ARBN;
+	ip->idb_meth = &rt_functab[ID_ARBN];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_arbn_internal), "rt_arbn_internal");
+
+	aip = (struct rt_arbn_internal *)ip->idb_ptr;
+	aip->magic = RT_ARBN_INTERNAL_MAGIC;
+	aip->neqn = neqn;
+	if (aip->neqn <= 0)  return(-1);
+	aip->eqn = (plane_t *)bu_malloc(byte_count, "arbn plane eqn[]");
+
+	ntohd((unsigned char *)aip->eqn, (unsigned char *)ep->ext_buf + 4, double_count);
+
+	/* Transform by the matrix, if we have one that is not the identity */
+#	include "noalias.h"
+	if( mat && !bn_mat_is_identity( mat ) ) {
+		for (i=0; i < aip->neqn; i++) {
+			point_t	orig_pt;
+			point_t	pt;
+			vect_t	norm;
+
+			/* Pick a point on the original halfspace */
+			VSCALE( orig_pt, aip->eqn[i], aip->eqn[i][3] );
+
+			/* Transform the point, and the normal */
+			MAT4X3VEC( norm, mat, aip->eqn[i] );
+			MAT4X3PNT( pt, mat, orig_pt );
+
+			/* Measure new distance from origin to new point */
+			VUNITIZE( norm );
+			VMOVE( aip->eqn[i], norm );
+			aip->eqn[i][3] = VDOT( pt, norm );
+		}
+	}
+
+	return(0);
+}
+
+/*
+ *			R T _ A R B N _ E X P O R T 5
+ */
+int
+rt_arbn_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_arbn_internal	*aip;
+	register int		i;
+	fastf_t			*vec;
+	register fastf_t	*sp;
+	int			double_count;
+	int			byte_count;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_ARBN )  return(-1);
+	aip = (struct rt_arbn_internal *)ip->idb_ptr;
+	RT_ARBN_CK_MAGIC(aip);
+
+	if( aip->neqn <= 0 )  return(-1);
+
+	double_count = aip->neqn * ELEMENTS_PER_PLANE;
+	byte_count = double_count * SIZEOF_NETWORK_DOUBLE;
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = 4 + byte_count;
+	ep->ext_buf = (genptr_t)bu_malloc(ep->ext_nbytes, "arbn external");
+
+	(void)bu_plong((unsigned char *)ep->ext_buf, aip->neqn);
+
+	/* Take the data from the caller, and scale it, into vec */
+	sp = vec = (double *)bu_malloc(byte_count, "arbn temp");
+	for (i=0; i<aip->neqn; i++) {
+		/* Normal is unscaled, should have unit length; d is scaled */
+		*sp++ = aip->eqn[i][X];
+		*sp++ = aip->eqn[i][Y];
+		*sp++ = aip->eqn[i][Z];
+		*sp++ = aip->eqn[i][3] * local2mm;
+	}
+
+	/* Convert from internal (host) to database (network) format */
+	htond((unsigned char *)ep->ext_buf + 4, (unsigned char *)vec, double_count);
+
+	bu_free((char *)vec, "arbn temp");
+	return(0);			/* OK */
+}
+
+
+/*
  *			R T _ A R B N _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -911,7 +1035,7 @@ CONST struct db_i		*dbip;
 int
 rt_arbn_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -954,8 +1078,207 @@ struct rt_db_internal	*ip;
 	aip = (struct rt_arbn_internal *)ip->idb_ptr;
 	RT_ARBN_CK_MAGIC(aip);
 
-	bu_free( (char *)aip->eqn, "rt_arbn_internal eqn[]");
+	if( aip->neqn > 0 )
+		bu_free( (char *)aip->eqn, "rt_arbn_internal eqn[]");
 	bu_free( (char *)aip, "rt_arbn_internal" );
 
 	ip->idb_ptr = (genptr_t)0;	/* sanity */
+}
+
+/*
+ * 		R T _ A R B N _ T C L G E T
+ *
+ *	Routine to format the parameters of an ARBN primitive for "db get"
+ *
+ *	Legal requested parameters include:
+ *		"N" - number of equations
+ *		"P" - list of all the planes
+ *		"P#" - the specified plane number (0 based)
+ *		no arguments returns everything
+ */
+
+int
+rt_arbn_tclget( interp, intern, attr )
+Tcl_Interp			*interp;
+const struct rt_db_internal	*intern;
+const char			*attr;
+{
+	register struct rt_arbn_internal *arbn=(struct rt_arbn_internal *)intern->idb_ptr;
+	Tcl_DString	ds;
+	struct bu_vls	vls;
+	int		i;
+
+	RT_ARBN_CK_MAGIC( arbn );
+
+	Tcl_DStringInit( &ds );
+	bu_vls_init( &vls );
+
+	if( attr == (char *)NULL ) {
+		bu_vls_strcpy( &vls, "arbn" );
+		bu_vls_printf( &vls, " N %d", arbn->neqn );
+		for( i=0 ; i<arbn->neqn ; i++ ) {
+			bu_vls_printf( &vls, " P%d {%.25g %.25g %.25g %.25g}", i,
+				       V4ARGS( arbn->eqn[i] ) );
+		}
+	}
+	else if( !strcmp( attr, "N" ) )
+		bu_vls_printf( &vls, "%d", arbn->neqn );
+	else if( !strcmp( attr, "P" ) ) {
+		for( i=0 ; i<arbn->neqn ; i++ ) {
+			bu_vls_printf( &vls, " P%d {%.25g %.25g %.25g %.25g}", i,
+				       V4ARGS( arbn->eqn[i] ) );
+		}
+	}
+	else if( attr[0] == 'P' ) {
+		if( isdigit( attr[1] ) == 0 ) {
+			Tcl_SetResult( interp, "ERROR: Illegal plane number\n",
+				       TCL_STATIC );
+			bu_vls_free( &vls );
+			return( TCL_ERROR );
+		}
+
+		i = atoi( &attr[1] );
+		if( i >= arbn->neqn || i < 0 ) {
+			Tcl_SetResult( interp, "ERROR: Illegal plane number\n",
+				       TCL_STATIC );
+			bu_vls_free( &vls );
+			return( TCL_ERROR );
+		}
+
+		bu_vls_printf( &vls, "%.25g %.25g %.25g %.25g", V4ARGS( arbn->eqn[i] ) );
+	}
+	else {
+		Tcl_SetResult( interp,"ERROR: Unknown attribute, choices are N, P, or P#\n",
+		TCL_STATIC );
+		bu_vls_free( &vls );
+		return( TCL_ERROR );       
+	}
+
+	Tcl_DStringAppend( &ds, bu_vls_addr( &vls ), -1 );
+	Tcl_DStringResult( interp, &ds );
+	Tcl_DStringFree( &ds );
+	bu_vls_free( &vls );
+	return( TCL_OK );
+}
+
+/*
+ *		R T _ A R B N _ T C L A D J U S T
+ *
+ *	Routine to modify an arbn via the "db adjust" command
+ *
+ *	Legal parameters are:
+ *		"N" - adjust the number of planes (new ones will be zeroed)
+ *		"P" - adjust the entire list of planes
+ *		"P#" - adjust a specific plane (0 based)
+ *		"P+" - add a new plane to the list of planes
+ */
+
+int
+rt_arbn_tcladjust( interp, intern, argc, argv )
+Tcl_Interp		*interp;
+struct rt_db_internal	*intern;
+int			argc;
+char			**argv;
+{
+	struct rt_arbn_internal *arbn;
+	unsigned char		*c;
+	int			len;
+	int			i, j;
+	fastf_t			*new_planes;
+	fastf_t			*array;
+
+	RT_CK_DB_INTERNAL( intern );
+
+	arbn = (struct rt_arbn_internal *)intern->idb_ptr;
+	RT_ARBN_CK_MAGIC( arbn );
+
+	while( argc >= 2 ) {
+		if( !strcmp( argv[0], "N" ) ) {
+			i = atoi( argv[1] );
+			if( i == arbn->neqn )
+				goto cont;
+			if( i > 0 ) {
+				arbn->eqn = (plane_t *)bu_realloc( arbn->eqn,
+						   i * sizeof( plane_t ),
+								   "arbn->eqn");
+				for( j=arbn->neqn ; j<i ; j++ ) {
+					VSETALLN( arbn->eqn[j], 0.0, 4 );
+				}
+				arbn->neqn = i;
+			} else {
+				Tcl_SetResult( interp,
+				       "ERROR: number of planes must be greater than 0\n",
+					TCL_STATIC );
+			}
+		}
+		else if( !strcmp( argv[0], "P" ) ) {
+			/* eliminate all the '{' and '}' chars */
+			c = (unsigned char *)argv[1];
+			while( *c != '\0' ) {
+				if( *c == '{' || *c == '}' )
+					*c = ' ';
+				c++;
+			}
+			len = 0;
+			(void)tcl_list_to_fastf_array( interp, argv[1], &new_planes, &len );
+
+			if( len%4 ) {
+				Tcl_SetResult( interp,
+				       "ERROR: Incorrect number of plane coefficients\n",
+					TCL_STATIC );
+				if( len )
+					bu_free( (char *)new_planes, "new_planes" );
+				return( TCL_ERROR );
+			}
+			if( arbn->eqn )
+				bu_free( (char *)arbn->eqn, "arbn->eqn" );
+			arbn->eqn = (plane_t *)new_planes;
+			arbn->neqn = len / 4;
+			for( i=0 ; i<arbn->neqn ; i++ )
+				VUNITIZE( arbn->eqn[i] );
+		}
+		else if( argv[0][0] == 'P' ) {
+			if( argv[0][1] == '+' ) {
+				i = arbn->neqn;
+				arbn->neqn++;
+				arbn->eqn = (plane_t *)bu_realloc( arbn->eqn,
+							 (arbn->neqn) * sizeof( plane_t ),
+							 "arbn->eqn" );
+			}
+			else if( isdigit( argv[0][1] ) ) {
+				i = atoi( &argv[0][1] );
+			} else {
+				Tcl_SetResult( interp,
+				   "ERROR: illegal argument, choices are P, P#, P+, or N\n",
+				   TCL_STATIC );
+				return( TCL_ERROR );
+			}
+			if( i < 0 || i >= arbn->neqn ) {
+				Tcl_SetResult( interp,
+					       "ERROR: plane number out of range\n",
+					       TCL_STATIC );
+				return( TCL_ERROR );
+			}
+			len = 4;
+			array = (fastf_t *)&arbn->eqn[i];
+			if( tcl_list_to_fastf_array( interp, argv[1],
+							  &array, &len ) != 4 ) {
+				Tcl_SetResult( interp,
+				    "ERROR: incorrect number of coefficients for a plane\n",
+				    TCL_STATIC );
+				return( TCL_ERROR );
+			}
+			VUNITIZE( arbn->eqn[i] );
+		}
+		else {
+			Tcl_SetResult( interp,
+			      "ERROR: illegal argument, choices are P, P#, P+, or N\n",
+			      TCL_STATIC );
+			return( TCL_ERROR );
+		}
+	cont:
+		argc -= 2;
+		argv += 2;
+	}
+	return( TCL_OK );
 }

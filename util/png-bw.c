@@ -20,12 +20,17 @@
 
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "externs.h"
@@ -40,6 +45,7 @@ static int verbose=0;
 
 static char *usage="Usage:\n\t%s [-v] [-ntsc -crt -R[#] -G[#] -B[#]] [png_input_file] > bw_output_file\n";
 
+int
 main( argc, argv )
 int argc;
 char *argv[];
@@ -158,7 +164,7 @@ char *argv[];
 
 	color_type = png_get_color_type( png_p, info_p );
 
-	if( color_type != PNG_COLOR_TYPE_GRAY &
+	if( color_type != PNG_COLOR_TYPE_GRAY &&
 	    color_type != PNG_COLOR_TYPE_GRAY_ALPHA )
 	{
 		bu_log( "Warning: color image being converted to B/W!!!\n" );
@@ -333,5 +339,5 @@ char *argv[];
 			bu_log( "Last modified: %d/%d/%d %d:%d:%d\n", mod_time->month, mod_time->day,
 				mod_time->year, mod_time->hour, mod_time->minute, mod_time->second );
 	}
-
+	return 0;
 }

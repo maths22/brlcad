@@ -34,6 +34,12 @@ proc build_edit_menu_all { type } {
     set win [winset]
     set id [get_player_id_dm $win]
 
+    if {[opendb] == ""} {
+	cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) "No database." \
+		"No database has been opened!" info 0 OK
+	return
+    }
+
     if {[info exists mged_gui($id,edit_menu)] && \
 	    [winfo exists $mged_gui($id,edit_menu)]} {
 	destroy $mged_gui($id,edit_menu)
@@ -90,7 +96,7 @@ proc ray_build_edit_menu { type x y } {
 		_mged_press sill
 		_mged_ill -i 1 [lindex $paths 0]
 	    } elseif {[llength $paths] > 1} {
-		build_solid_menu s $id $paths
+		build_solid_menu s1 $id $paths
 	    }
 	}
 	o {
@@ -145,7 +151,7 @@ proc build_solid_menu { type id paths } {
 	    "set item \[get_listbox_entry %W %x %y\];\
 	    solid_illum \$item"
     bind_listbox $top "<ButtonPress-1>" \
-	    "doubleClickHack %W %x %y %t $id $type junkpath"
+	    "lbdcHack %W %x %y %t $id $type junkpath"
     bind_listbox $top "<ButtonRelease-1>" \
 	    "%W selection clear 0 end; _mged_press reject"
 }
@@ -179,65 +185,7 @@ proc build_matrix_menu { id path } {
 	    "set path_pos \[%W index @%x,%y\];\
 	    matrix_illum $path \$path_pos"
     bind_listbox $top "<ButtonPress-1>" \
-	    "doubleClickHack %W %x %y %t $id m $path"
+	    "lbdcHack %W %x %y %t $id m1 $path"
     bind_listbox $top "<ButtonRelease-1>" \
 	    "%W selection clear 0 end; _mged_press reject"
-}
-
-proc doubleClickHack {w x y t id type path} {
-    global mged_gui
-    global mged_default
-
-    switch $type {
-	s -
-	o {
-	    set item [get_listbox_entry $w $x $y]
-	}
-	m {
-	    set item [$w index @$x,$y]
-	}
-    }
-
-    if {$mged_gui($id,lastButtonPress) == 0 ||
-        $mged_gui($id,lastItem) != $item ||
-        [expr {abs($mged_gui($id,lastButtonPress) - $t) > $mged_default(doubleClickTol)}]} {
-
-	switch $type {
-	    s -
-	    o {
-		solid_illum $item
-	    }
-	    m {
-		matrix_illum $path $item
-	    }
-	}
-    } else {
-	switch $type {
-	    s {
-		set sol_data [db get $item]
-		set sol_type [lindex $sol_data 0]
-		if { $sol_type == "sketch" } {
-		    Sketch_editor .#auto $item
-		} else {
-		    _mged_sed -i 1 $item
-		}
-		bind $w <ButtonRelease-1> \
-			"destroy [winfo parent $w]; break"
-	    }
-	    o {
-		bind $w <ButtonRelease-1> \
-			"destroy [winfo parent $w]; build_matrix_menu $id $item; break"
-	    }
-	    m {
-		_mged_press oill
-		_mged_ill -i 1 $path
-		_mged_matpick $item
-		bind $w <ButtonRelease-1> \
-			"destroy [winfo parent $w]; break"
-	    }
-	}
-    }
-
-    set mged_gui($id,lastButtonPress) $t
-    set mged_gui($id,lastItem) $item
 }

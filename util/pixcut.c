@@ -19,14 +19,23 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$";
+static const char RCSid[] = "@(#)$Header$";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
+#include "bu.h"
+#include "vmath.h"
+#include "bn.h"
+
 #include "externs.h"		/* For getopt and malloc */
 
 static int	org_width = 512;	/* Default file sizes 512x512 */
@@ -73,6 +82,7 @@ char * s;
 	bak[2] = blue;
 }
 
+int
 get_args( argc, argv)
 register int argc;
 register char **argv;
@@ -158,6 +168,7 @@ register char **argv;
 }
 
 			
+int
 main(argc, argv)
 int argc; char **argv;
 {

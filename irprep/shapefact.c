@@ -48,7 +48,7 @@
 /*		hit another region.  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -85,7 +85,7 @@ extern int overlap();	/*  User supplied overlap function.  */
 /*  Define structure to hold all information needed.  */
 struct table
 {
-   CONST char *name;	/*  Region name.  */
+   const char *name;	/*  Region name.  */
    int regnum;		/*  Region number that matches firpass &  */
 			/*  secpass.  */
    int numchar;		/*  Number of char each region name has.  */
@@ -100,6 +100,15 @@ struct table
 struct table info[MAXREG];
 double nummiss;		/*  Number of misses.  */
 
+
+#ifndef HAVE_DRAND48
+/* simulate drand48() --  using 31-bit random() -- assumed to exist */
+double drand48() {
+  extern long random();
+  return (double)random() / 2147483648.0; /* range [0,1) */
+}
+#endif
+
 int main(argc,argv)
 
 int argc;
@@ -112,7 +121,7 @@ char **argv;
    char idbuf[32];	/*  Contains database name.  */
    struct region *pr;	/*  Used in finding region names.  */
    double rho,phi,theta;/*  Spherical coordinates for starting point.  */
-   double areabs;	/*  Area of bounding sphere (mm**2).  */
+   double areabs=0.0;	/*  Area of bounding sphere (mm**2).  */
    int ians;		/*  Answer of question.  */
    double strtpt[3];	/*  Starting point of ray.  */
    double strtdir[3];	/*  Starting direction.  */
@@ -218,7 +227,11 @@ char **argv;
 #ifdef MSRMAXTBL
    	msr = msr_unif_init(seed, 0);
 #else
+#  ifndef HAVE_DRAND48
+	(void) srandom(seed);
+#  else
 	(void) srand48(seed);
+#  endif
 #endif
    	rt_log("seed initialized\n");
 
@@ -763,6 +776,7 @@ char **argv;
 /*		Hit, miss, and overlap functions.                            */
 /*****************************************************************************/
 
+int
 hit(ap_p,PartHeadp)
 /*  User supplied hit function.  */
 register struct application *ap_p;
@@ -773,7 +787,7 @@ struct partition *PartHeadp;
    register struct partition *pp;
    register struct hit *hitp;
    register struct soltab *stp;
-   int icur;			/*  Current region hit.  */
+   int icur=0;			/*  Current region hit.  */
    int iprev;			/*  Previous region hit.  */
    int iair;			/*  Type of air or region came from,  */
 				/*  0=>region, 1=>exterior air, 2=>crew  */
@@ -986,7 +1000,7 @@ struct partition *PartHeadp;
    }
 }						/*  END # 0H  */
 
-
+int
 miss()
 /*  User supplied miss function.  */
 {
@@ -1000,7 +1014,7 @@ miss()
    return(1);
 }
 
-
+int
 overlap()
 /*  User supplied overlap function.  */
 {

@@ -13,11 +13,24 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include "machine.h"
 
 #define	MAXM	4096
+
+void	rfft256();
+void	rfft();
+void	irfft256();
+void	irfft();
 
 double	savebuffer[MAXM-1];
 double	xbuf[2*MAXM];
@@ -29,7 +42,7 @@ static char usage[] = "\
 Usage: dconv filter < doubles > doubles\n\
  XXX Warning: kernal size must be 2^i - 1\n";
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -108,6 +121,8 @@ M += 1;
 
 		fwrite( &xbuf[M-1], sizeof(*xbuf), L, stdout );
 	}
+
+	return 0;
 }
 
 /*

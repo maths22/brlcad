@@ -5,7 +5,7 @@
 			Maryland 21005-5066
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 /*
  *			E R R O R
@@ -21,6 +21,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 
 #include <stdio.h>
+#include <signal.h>
 #include "./Sc.h"
 #include "./extern.h"
 

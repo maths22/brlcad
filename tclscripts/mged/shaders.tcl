@@ -269,7 +269,7 @@ proc do_camo {  shade_var id } {
 	color_entry_build $shader_params($id,window).fr.c1_e color shader_params($id,c1)\
 		"color_entry_chooser $id $shader_params($id,window).fr.c1_e color \"Color #1\"\
 		 shader_params $id,c1"\
-		12 $shader_params($id,c1)
+		12 $shader_params($id,c1) not_rt
 	hoc_register_data $shader_params($id,window).fr.c1 "Color #1" {
 		{summary "The 'camo' shader creates a pseudo-random tri-color camouflage pattern\n\
 			on the object using a fractal noise pattern. This is a procedural shader\n\
@@ -285,7 +285,7 @@ proc do_camo {  shade_var id } {
 	color_entry_build $shader_params($id,window).fr.c2_e color shader_params($id,c2)\
 		"color_entry_chooser $id $shader_params($id,window).fr.c2_e color \"Background Color\"\
 		 shader_params $id,c2"\
-		12 $shader_params($id,c2)
+		12 $shader_params($id,c2) not_rt
 	hoc_register_data $shader_params($id,window).fr.c2 "Background Color" {
 		{summary "The 'camo' shader creates a pseudo-random tri-color camouflage pattern\n\
 			on the object using a fractal noise pattern. This is a procedural shader\n\
@@ -301,7 +301,7 @@ proc do_camo {  shade_var id } {
 	color_entry_build $shader_params($id,window).fr.c3_e color shader_params($id,c3)\
 		"color_entry_chooser $id $shader_params($id,window).fr.c3_e color \"Color #2\"\
 		 shader_params $id,c3"\
-		12 $shader_params($id,c3)
+		12 $shader_params($id,c3) not_rt
 	hoc_register_data $shader_params($id,window).fr.c3 "Color #2" {
 		{summary "The 'camo' shader creates a pseudo-random tri-color camouflage pattern\n\
 			on the object using a fractal noise pattern. This is a procedural shader\n\
@@ -1508,9 +1508,6 @@ proc set_texture_values { shader_str id } {
 	}
 }
 
-
-
-
 set light_data {
 	e	fraction	f	1.0	"fraction of total light contributed"		"0..1" 		0 0 \
 	e	angle		a	180	"angle of light cone"				"0..180" 	1 0 \
@@ -1729,15 +1726,6 @@ proc do_light_icon { id } {
 
 
 ######################################################################
-
-
-
-
-
-
-
-
-
 
 
 proc do_bump_apply { shade_var id } {

@@ -23,32 +23,45 @@
  *	in all countries except the USA.  All rights reserved.
  */
 
-#include "tk.h"
+#include "conf.h"
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#ifdef DM_X
+#  include "tk.h"
+#else
+#  include "tcl.h"
+#endif
 
 #include "machine.h"
 #include "bu.h"
 
+/* defined in ged.c */
+extern void refresh();
+extern int event_check();
+
 extern Tk_Window tkwin;
 
 void
-mged_update(non_blocking)
-int non_blocking;
+mged_update(int	non_blocking)
 {
-  if(non_blocking >= 0)
-    event_check(non_blocking);
-  refresh();
+	if (non_blocking >= 0)
+		event_check(non_blocking);
+	refresh();
 }
 
 int
-f_update(clientData, interp, argc, argv)
-	ClientData clientData;
-	Tcl_Interp *interp;
-	int     argc;
-	char    **argv;
+f_update(ClientData	clientData,
+	 Tcl_Interp	*interp,
+	 int		argc,
+	 char		**argv)
 {
 	int non_blocking;
 
-	if(argc != 2 || sscanf(argv[1], "%d", &non_blocking) != 1){
+	if (argc != 2 || sscanf(argv[1], "%d", &non_blocking) != 1) {
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
@@ -69,12 +82,11 @@ f_update(clientData, interp, argc, argv)
  * the f_wait() procedure.
  */
 static char *
-WaitVariableProc(clientData, interp, name1, name2, flags)
-     ClientData clientData;	/* Pointer to integer to set to 1. */
-     Tcl_Interp *interp;		/* Interpreter containing variable. */
-     char *name1;		/* Name of variable. */
-     char *name2;		/* Second part of variable name. */
-     int flags;			/* Information about what happened. */
+WaitVariableProc(ClientData	clientData,	/* Pointer to integer to set to 1. */
+		 Tcl_Interp	*interp,	/* Interpreter containing variable. */
+		 char		*name1,		/* Name of variable. */
+		 char		*name2,		/* Second part of variable name. */
+		 int		flags)		/* Information about what happened. */
 {
 	int *donePtr = (int *) clientData;
 
@@ -88,9 +100,8 @@ WaitVariableProc(clientData, interp, name1, name2, flags)
  * the f_wait() procedure.
  */
 static void
-WaitVisibilityProc(clientData, eventPtr)
-     ClientData clientData;	/* Pointer to integer to set to 1. */
-     XEvent *eventPtr;		/* Information about event (not used). */
+WaitVisibilityProc(ClientData	clientData,	/* Pointer to integer to set to 1. */
+		   XEvent	*eventPtr)	/* Information about event (not used). */
 {
 	int *donePtr = (int *) clientData;
 
@@ -107,9 +118,8 @@ WaitVisibilityProc(clientData, eventPtr)
  * the f_wait() procedure.
  */
 static void
-WaitWindowProc(clientData, eventPtr)
-     ClientData clientData;	/* Pointer to integer to set to 1. */
-     XEvent *eventPtr;		/* Information about event. */
+WaitWindowProc(ClientData	clientData,	/* Pointer to integer to set to 1. */
+	       XEvent		*eventPtr)	/* Information about event. */
 {
 	int *donePtr = (int *) clientData;
 
@@ -124,12 +134,10 @@ WaitWindowProc(clientData, eventPtr)
  * would get refreshed.
  */
 int
-f_wait(clientData, interp, argc, argv)
-     ClientData clientData;	/* Main window associated with
-				 * interpreter. */
-     Tcl_Interp *interp;	/* Current interpreter. */
-     int argc;			/* Number of arguments. */
-     char **argv;		/* Argument strings. */
+f_wait(ClientData	clientData,	/* Main window associated with interpreter. */
+       Tcl_Interp	*interp,	/* Current interpreter. */
+       int		argc,		/* Number of arguments. */
+       char		**argv)		/* Argument strings. */
 {
 #if 0
 	Tk_Window tkwin = (Tk_Window) clientData;

@@ -44,7 +44,7 @@ typedef FILE	*FILPTR;
  *    -a		Uses first input file as alpha channel.
  */
 
-void
+int
 main(argc, argv)
 int  argc;
 char *argv[];
@@ -138,5 +138,6 @@ char *argv[];
 	    fread( outrow[i], 1, xsize, inpfil[i+aflag] );
 	rle_putrow( outrow, xsize, &rle_dflt_hdr );
     }
+    return 0;
 }
 

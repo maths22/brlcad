@@ -18,18 +18,23 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <math.h>
 #include "machine.h"
-#include "db.h"
 #include "vmath.h"
-#include "rtlist.h"
+#include "bu.h"
 #include "nurb.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 mat_t	identity;
@@ -37,6 +42,7 @@ double	degtorad = 0.0174532925199433;
 double	inches2mm = 25.4;
 
 void	build_spline(), read_pos(), build_cyl(), xfinddir();
+int	read_frame( FILE *fp );
 
 #define N_CIRCLE_KNOTS	12
 fastf_t	circle_knots[N_CIRCLE_KNOTS] = {
@@ -99,6 +105,9 @@ double	delta_t = 0.02;		/* ms/step */
 FILE	*pos_fp;
 double	cur_time;
 
+struct rt_wdb	*outfp;
+
+int
 main(argc, argv)
 char	**argv;
 {
@@ -117,17 +126,18 @@ char	**argv;
 	BU_LIST_INIT( &ghead.l );
 	rt_uniresource.re_magic = RESOURCE_MAGIC;
 
+	outfp = wdb_fopen("tube.g");
 	if( (pos_fp = fopen( "pos.dat", "r" )) == NULL )
 		perror( "pos.dat" );	/* Just warn */
 
-	mk_id( stdout, "Procedural Gun Tube with Projectile" );
+	mk_id( outfp, "Procedural Gun Tube with Projectile" );
 
 	VSET( normal, 0, -1, 0 );
-	mk_half( stdout, "cut", normal, 0.0 );
+	mk_half( outfp, "cut", normal, 0.0 );
 	VSET( normal, 0, 1, 0 );
-	mk_half( stdout, "bg.s", normal, -1000.0 );
-	(void)mk_addmember( "bg.s", &head, WMOP_UNION );	/* temp use of "head" */
-	mk_lcomb( stdout, "bg.r", &head, 1,
+	mk_half( outfp, "bg.s", normal, -1000.0 );
+	(void)mk_addmember( "bg.s", &head.l, NULL, WMOP_UNION );	/* temp use of "head" */
+	mk_lcomb( outfp, "bg.r", &head, 1,
 		"texture", "file=movie128bw.pix w=128",
 		(unsigned char *)0, 0 );
 
@@ -172,16 +182,16 @@ char	**argv;
 #define build_spline build_cyl
 		sprintf( name, "tube%do", frame);
 		build_spline( name, nsamples, oradius );
-		(void)mk_addmember( name, &head, WMOP_UNION );
+		(void)mk_addmember( name, &head.l, NULL, WMOP_UNION );
 
 		sprintf( name, "tube%di", frame);
 		build_spline( name, nsamples, iradius );
-		mk_addmember( name, &head, WMOP_SUBTRACT );
+		mk_addmember( name, &head.l, NULL, WMOP_SUBTRACT );
 
-		mk_addmember( "cut", &head, WMOP_SUBTRACT );
+		mk_addmember( "cut", &head.l, NULL, WMOP_SUBTRACT );
 
 		sprintf( name, "tube%d", frame);
-		mk_lcomb( stdout, name, &head, 1,
+		mk_lcomb( outfp, name, &head, 1,
 			"plastic", "",
 			(unsigned char *)0, 0 );
 
@@ -189,8 +199,8 @@ char	**argv;
 		 *  The origin of the ammo is expected to be the center
 		 *  of the rearmost plate.
 		 */
-		mk_addmember( name, &ghead, WMOP_UNION );
-		matp = mk_addmember( "ke", &ghead, WMOP_UNION )->wm_mat;
+		mk_addmember( name, &ghead.l, NULL, WMOP_UNION );
+		matp = mk_addmember( "ke", &ghead.l, NULL, WMOP_UNION )->wm_mat;
 
 		VSET( from, 0, -1, 0 );
 		VSET( to, 1, 0, 0 );		/* to X axis */
@@ -201,21 +211,22 @@ char	**argv;
 		xfinddir( to, projectile_pos + 480.0/2, offset );
 		bn_mat_fromto( rot2, from, to );
 
-		bn_mat_idn( xlate );
+		MAT_IDN( xlate );
 		MAT_DELTAS( xlate, offset[X], offset[Y], offset[Z] );
 		bn_mat_mul( rot3, rot2, rot1 );
 		bn_mat_mul( matp, xlate, rot3 );
 
-		(void)mk_addmember( "light.r", &ghead, WMOP_UNION );
-		(void)mk_addmember( "bg.r", &ghead, WMOP_UNION );
+		(void)mk_addmember( "light.r", &ghead.l, NULL, WMOP_UNION );
+		(void)mk_addmember( "bg.r", &ghead.l, NULL, WMOP_UNION );
 
 		sprintf( gname, "g%d", frame);
-		mk_lcomb( stdout, gname, &ghead, 0,
+		mk_lcomb( outfp, gname, &ghead, 0,
 			(char *)0, "", (unsigned char *)0, 0 );
 
 		fprintf( stderr, "%d, ", frame );  fflush(stderr);
 	}
-	fflush(stdout); fflush(stderr);
+	wdb_close(outfp);
+	fflush(stderr);
 	system("cat ke.g");	/* XXX need library routine */
 	exit(0);
 }
@@ -306,16 +317,20 @@ double	radius;
 		*meshp++ = sample[npts-1][Z];
 		*meshp++ = 1;
 	}
+
+	{
+		struct face_g_snurb *surfp[2];
+		surfp[0] = bp;
+		surfp[1] = NULL;
+		mk_bspline( outfp, name, surfp );
+	}
 		
-	mk_bsolid( stdout, name, 1, 0.1 );
-	mk_bsurf( stdout, bp );
 	rt_nurb_free_snurb( bp, &rt_uniresource );
 }
 
 /* Returns -1 if done, 0 if something to draw */
 int
-read_frame(fp)
-FILE	*fp;
+read_frame( FILE *fp )
 {
 	char	buf[256];
 	int	i;
@@ -461,10 +476,10 @@ double	radius;
 		VSET( b, 0, 0, radius );
 
 		sprintf( name, "%s%d", cname, i );
-		mk_tgc( stdout, name, v, h, a, b, a, b );
-		(void)mk_addmember( name, &head, WMOP_UNION );
+		mk_tgc( outfp, name, v, h, a, b, a, b );
+		(void)mk_addmember( name, &head.l, NULL, WMOP_UNION );
 	}
-	mk_lfcomb( stdout, cname, &head, 0 );
+	mk_lfcomb( outfp, cname, &head, 0 );
 }
 
 /*

@@ -37,12 +37,17 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
+
+#include "conf.h"
 
 #include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+
+#include "machine.h"
+#include "externs.h"
 
 #define		DEG2RAD		0.01745329	/* Convert degrees to radians */
 #define		OPT_STRING	"a:c:e:ipr?"	/* For getopt(3) */
@@ -51,6 +56,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 void	PrintUsage();
 void	GetCoord();
 
+int
 main (argc, argv)
 
 int     argc;

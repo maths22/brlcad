@@ -22,7 +22,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -53,8 +53,8 @@ static int	NMG_debug;		/* saved arg of -X, for longjmp handling */
 static int	verbose;
 /* static int	ncpu = 1; */		/* Number of processors */
 static int	nmg_count=0;		/* Count of nmgregions written to output */
-static char	*out_file = NULL;	/* Output filename */
-static FILE	*fp_out;		/* Output file pointer */
+static char	*out_file = "nmg.g";	/* Output filename */
+static struct rt_wdb		*fp_out; /* Output file pointer */
 static struct db_i		*dbip;
 static struct rt_tess_tol	ttol;
 static struct bn_tol		tol;
@@ -78,7 +78,6 @@ struct db_full_path	*pathp;
 union tree		*curtree;
 genptr_t		client_data;
 {
-	extern FILE		*fp_fig;
 	struct nmgregion	*r;
 	struct bu_list		vhead;
 	union tree		*ret_tree;
@@ -86,7 +85,7 @@ genptr_t		client_data;
 	struct bu_vls		shader_params;
 	char nmg_name[16];
 	unsigned char rgb[3];
-	unsigned char *color;
+	unsigned char *color = (unsigned char *)NULL;
 	char *shader;
 	char *matparm;
 	struct wmember headp;
@@ -97,7 +96,7 @@ genptr_t		client_data;
 
 	BU_LIST_INIT(&vhead);
 
-	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+	if (RT_G_DEBUG&DEBUG_TREEWALK || verbose) {
 		sofar = db_path_to_string(pathp);
 		bu_log("\ndo_region_end(%d %d%%) %s\n",
 			regions_tried,
@@ -129,7 +128,7 @@ genptr_t		client_data;
 		nmg_isect2d_final_cleanup();
 
 		/* Release the tree memory & input regions */
-		db_free_tree(curtree);		/* Does an nmg_kr() */
+		db_free_tree(curtree, &rt_uniresource);	/* Does an nmg_kr() */
 
 		/* Get rid of (m)any other intermediate structures */
 		if( (*tsp->ts_m)->magic == NMG_MODEL_MAGIC )
@@ -145,7 +144,7 @@ genptr_t		client_data;
 		*tsp->ts_m = nmg_mm();
 		goto out;
 	}
-	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol);	/* librt/nmg_bool.c */
+	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol, &rt_uniresource);	/* librt/nmg_bool.c */
 
 	BU_UNSETJUMP;		/* Relinquish the protection */
 	if( ret_tree )
@@ -207,10 +206,6 @@ genptr_t		client_data;
 			mk_nmg( fp_out , nmg_name , r->m_p );
 		}
 
-		/* NMG region is no longer necessary */
-		if( !empty_model )
-			nmg_kr(r);
-
 		/* Now make a normal brlcad region */
 		if( tsp->ts_mater.ma_color_valid )
 		{
@@ -223,7 +218,7 @@ genptr_t		client_data;
 			color = (unsigned char *)NULL;
 
 		BU_LIST_INIT( &headp.l );
-		(void)mk_addmember( nmg_name , &headp , WMOP_UNION );
+		(void)mk_addmember( nmg_name , &headp.l , NULL, WMOP_UNION );
 		if( mk_lrcomb( fp_out,
 		    pathp->fp_names[pathp->fp_len-1]->d_namep, &headp, 1,
 		    shader, bu_vls_addr( &shader_params ), color,
@@ -254,11 +249,11 @@ genptr_t		client_data;
 	 *  A return of TREE_NULL from this routine signals an error,
 	 *  so we need to cons up an OP_NOP node to return.
 	 */
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 out:
 
-	if( rt_g.debug&DEBUG_MEM_FULL )
+	if( RT_G_DEBUG&DEBUG_MEM_FULL )
 		bu_prmem( "At end of do_region_end()" );
 
 	BU_GETUNION(curtree, tree);
@@ -306,7 +301,7 @@ genptr_t	ptr;
 
 		name = (&(dp->d_namep));
 
-		(void) db_walk_tree( dbip, 1, (CONST char **)name,
+		(void) db_walk_tree( dbip, 1, (const char **)name,
 			1,
 			&tree_state,
 			0,
@@ -322,7 +317,7 @@ genptr_t	ptr;
 
 	/* have a combination that is not a region */
 
-	if( rt_db_get_internal( &intern, dp, dbip, (fastf_t *)NULL ) < 0 )
+	if( rt_db_get_internal( &intern, dp, dbip, (fastf_t *)NULL, &rt_uniresource ) < 0 )
 	{
 		bu_log( "Cannot get internal form of combination (%s)\n", dp->d_namep );
 		return;
@@ -335,7 +330,7 @@ genptr_t	ptr;
 
 	if( comb->tree && db_ck_v4gift_tree( comb->tree ) < 0 )
 	{
-		db_non_union_push( comb->tree );
+		db_non_union_push( comb->tree, &rt_uniresource );
 		if( db_ck_v4gift_tree( comb->tree ) < 0 )
 		{
 			bu_log( "Cannot flatten tree (%s) for editing\n", dp->d_namep );
@@ -347,9 +342,9 @@ genptr_t	ptr;
 	{
 		tree_list = (struct rt_tree_array *)bu_calloc( node_count,
 			sizeof( struct rt_tree_array ), "tree list" );
-		actual_count = (struct rt_tree_array *)db_flatten_tree( tree_list, comb->tree, OP_UNION ) - tree_list;
-		if( actual_count > node_count )  bu_bomb("csg_comb_func() array overflow!");
-		if( actual_count < node_count )  bu_log("WARNING csg_comb_func() array underflow! %d < %d", actual_count, node_count);
+		actual_count = (struct rt_tree_array *)db_flatten_tree( tree_list,
+			comb->tree, OP_UNION, 0, &rt_uniresource ) - tree_list;
+		BU_ASSERT_LONG( actual_count, ==, node_count );
 	}
 	else
 	{
@@ -361,7 +356,7 @@ genptr_t	ptr;
 	{
 		bu_log( "Warning: empty combination (%s)\n" , dp->d_namep );
 		dp->d_uses = 0;
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern , &rt_uniresource);
 		return;
 	}
 
@@ -385,12 +380,12 @@ genptr_t	ptr;
 			default:
 				bu_log( "Unrecognized Boolean operator in combination (%s)\n", dp->d_namep );
 				bu_free( (char *)tree_list, "tree_list" );
-				rt_db_free_internal( &intern );
+				rt_db_free_internal( &intern , &rt_uniresource);
 				return;
 		}
-		wm = mk_addmember( tree_list[i].tl_tree->tr_l.tl_name , &headp , op );
+		wm = mk_addmember( tree_list[i].tl_tree->tr_l.tl_name , &headp.l, NULL , op );
 		if( tree_list[i].tl_tree->tr_l.tl_mat )
-			bn_mat_copy( wm->wm_mat, tree_list[i].tl_tree->tr_l.tl_mat );
+			MAT_COPY( wm->wm_mat, tree_list[i].tl_tree->tr_l.tl_mat );
 	}
 
 	if( comb->rgb_valid  )
@@ -431,7 +426,6 @@ int	argc;
 char	*argv[];
 {
 	int		i;
-	CONST char	*units;
 	register int	c;
 	double		percent;
 
@@ -454,6 +448,8 @@ char	*argv[];
 	tol.dist_sq = tol.dist * tol.dist;
 	tol.perp = 1e-6;
 	tol.para = 1 - tol.perp;
+
+	rt_init_resource( &rt_uniresource, 0, NULL );
 
 	/* Get command line arguments. */
 	while ((c = getopt(argc, argv, "t:a:n:o:r:vx:P:X:")) != EOF) {
@@ -483,12 +479,12 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
-			bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
+			bu_printb( "librt RT_G_DEBUG", RT_G_DEBUG, DEBUG_FORMAT );
 			bu_log("\n");
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			bu_printb( "librt rt_g.NMG_debug", rt_g.NMG_debug, NMG_DEBUG_FORMAT );
 			bu_log("\n");
@@ -512,26 +508,18 @@ char	*argv[];
 		perror(argv[0]);
 		exit(1);
 	}
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
-	if( out_file == NULL )
-		fp_out = stdout;
-	else
+	if ((fp_out = wdb_fopen( out_file )) == NULL)
 	{
-		if ((fp_out = fopen( out_file , "w")) == NULL)
-		{
-			bu_log( "Cannot open %s\n" , out_file );
-			perror( argv[0] );
-			return 2;
-		}
+		perror( out_file );
+		bu_log( "g-nng: Cannot open %s\n" , out_file );
+		return 2;
 	}
 
 	optind++;
 
-	if( units=rt_units_string( dbip->dbi_local2base ) )
-		mk_id_units( fp_out , dbip->dbi_title , units );
-	else
-		mk_id( fp_out , dbip->dbi_title );
+	mk_id_editunits( fp_out , dbip->dbi_title , dbip->dbi_local2base );
 
 	/* Walk the trees outputting regions and combinations */
 	for( i=optind ; i<argc ; i++ )
@@ -544,10 +532,10 @@ char	*argv[];
 			bu_log( "WARNING!!! Could not find %s, skipping\n", argv[i] );
 			continue;
 		}
-		db_functree( dbip , dp , csg_comb_func , 0 , NULL );
+		db_functree( dbip , dp , csg_comb_func , 0 , &rt_uniresource , NULL );
 	}
 
-	bn_vlist_cleanup();
+	rt_vlist_cleanup();
 	db_close(dbip);
 
 #if MEMORY_LEAK_CHECKING
@@ -561,6 +549,7 @@ char	*argv[];
 	printf( "Tried %d regions, %d converted successfully.  %g%%\n",
 		regions_tried, regions_converted, percent );
 
+	wdb_close(fp_out);
 	return 0;
 }
 

@@ -35,9 +35,14 @@ proc make_dsp { id top } {
 		return
 	}
 
-	set ret [catch {_mged_in $mged_gui($id,solid_name) dsp $mged_gui($id,dsp_file_name) $mged_gui($id,dsp_file_width) $mged_gui($id,dsp_file_length) $mged_gui($id,dsp_smooth) $mged_gui($id,dsp_cell_size) $mged_gui($id,dsp_elev_size)} result]
+	set command {_mged_in $mged_gui($id,solid_name) dsp f \
+		$mged_gui($id,dsp_file_name) $mged_gui($id,dsp_file_width) \
+		$mged_gui($id,dsp_file_length) $mged_gui($id,dsp_smooth) ad \
+		$mged_gui($id,dsp_cell_size) $mged_gui($id,dsp_elev_size)}
+
+	set ret [catch $command result]
 	if { $ret != 0 } {
-		cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) "ERROR creaing DSP" $reslult "" 0 OK
+		cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) "ERROR creaing DSP" $result "" 0 OK
 	}
 
 	catch {_mged_sed $mged_gui($id,solid_name)}
@@ -45,7 +50,14 @@ proc make_dsp { id top } {
     }
 
 proc dsp_create { id } {
-	global mged_gui
+    global mged_gui
+    global tkPriv
+
+    if {[opendb] == ""} {
+	cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) "No database." \
+		"No database has been opened!" info 0 OK
+	return
+    }
 
 	set top .$id.make_dsp
 

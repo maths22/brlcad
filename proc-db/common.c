@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -24,42 +24,43 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <math.h>
 #include "machine.h"
-#include "db.h"
 #include "vmath.h"
+#include "raytrace.h"
 #include "wdb.h"
 
+extern struct rt_wdb	*outfp;
 
 struct colors {
 	char		*name;
 	unsigned char	c_pixel[3];
 }colortab[] = {
-	"black",	20,20,20,
-	"blue",		0,0,255,
-	"brown",	200,130,0,
-	"cyan",		0,255,200,
-	"flesh",	255,200,160,
-	"gray",		120,120,120,
-	"green",	0,255,0,
-	"lime", 	200,255,0,
-	"magenta",	255,0,255,
-	"olive",	220,190,0,
-	"orange",	255,100,0,
-	"pink",		255,200,200,
-	"red",		255,0,0,
-	"rose",		255,0,175,
-	"rust",		200,100,0,
-	"silver",	237,237,237,
-	"sky",		0,255,255,
-	"violet",	200,0,255,
-	"white",	255,255,255,
-	"yellow",	255,200,0
+	{"black",	{20,20,20}},
+	{"blue",	{0,0,255}},
+	{"brown",	{200,130,0}},
+	{"cyan",	{0,255,200}},
+	{"flesh",	{255,200,160}},
+	{"gray",	{120,120,120}},
+	{"green",	{0,255,0}},
+	{"lime", 	{200,255,0}},
+	{"magenta",	{255,0,255}},
+	{"olive",	{220,190,0}},
+	{"orange",	{255,100,0}},
+	{"pink",	{255,200,200}},
+	{"red",		{255,0,0}},
+	{"rose",	{255,0,175}},
+	{"rust",	{200,100,0}},
+	{"silver",	{237,237,237}},
+	{"sky",		{0,255,255}},
+	{"violet",	{200,0,255}},
+	{"white",	{255,255,255}},
+	{"yellow",	{255,200,0}},
+	{"",		{0,0,0}}
 };
 int	ncolors = sizeof(colortab)/sizeof(struct colors);
 int	curcolor = 0;
 
 void
-get_rgb( rgb )
-register unsigned char	*rgb;
+get_rgb( unsigned char *rgb )
 {
 	register struct colors *cp;
 	if( ++curcolor >= ncolors )  curcolor = 0;
@@ -96,7 +97,7 @@ struct wmember	*headp;
 
 	sprintf( nbuf, "%s.s", name );
 	VSETALL( center, 0 );
-	mk_sph( stdout, nbuf, center, r );
+	mk_sph( outfp, nbuf, center, r );
 
 	/*
 	 * Need to rotate from 0,0,-1 to vect "dir",
@@ -104,11 +105,10 @@ struct wmember	*headp;
 	 */
 	VSET( from, 0, 0, -1 );
 	bn_mat_fromto( rot, from, dir );
-	bn_mat_idn( xlate );
+	MAT_IDN( xlate );
 	MAT_DELTAS( xlate, pos[X], pos[Y], pos[Z] );
 	bn_mat_mul( both, xlate, rot );
 
-	mk_comb( stdout, name, 1, 1, "light", "shadows=1", rgb, 0 );
-	mk_memb( stdout, nbuf, both, UNION );
-	(void)mk_addmember( name, headp, WMOP_UNION );
+	mk_region1( outfp, name, nbuf, "light", "shadows=1", rgb );
+	(void)mk_addmember( name, &(headp->l), NULL, WMOP_UNION );
 }

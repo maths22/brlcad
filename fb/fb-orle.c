@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Id$ (BRL)";
+static const char RCSid[] = "@(#)$Id$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -52,6 +52,7 @@ static char	*fb_file = (char *)NULL;
 extern void	cmap_crunch();
 
 /*	m a i n ( )							*/
+int
 main( argc, argv )
 int	argc;
 char	*argv[];

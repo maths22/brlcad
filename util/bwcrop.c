@@ -26,7 +26,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -57,6 +57,7 @@ Usage: bwcrop in.bw out.bw (I prompt!)\n\
    or  bwcrop in.bw out.bw inwidth outwidth outheight\n\
         ulx uly urx ury lrx lry llx lly\n";
 
+int
 main(argc, argv)
 int argc; char **argv;
 {

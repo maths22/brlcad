@@ -16,12 +16,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSanim[] = "@(#)$Header$ (BRL)";
+static const char RCSanim[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -56,12 +59,12 @@ int	root;
 	RT_CK_ANIMATE(anp);
 	anp->an_forw = ANIM_NULL;
 	if( root )  {
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("db_add_anim(x%x) root\n", anp);
 		headp = &(dbip->dbi_anroot);
 	} else {
 		dp = DB_FULL_PATH_CUR_DIR(&anp->an_path);
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("db_add_anim(x%x) arc %s\n", anp,
 				dp->d_namep);
 		headp = &(dp->d_animate);
@@ -104,53 +107,53 @@ struct mater_info	*materp;
 {
 	mat_t	temp;
 
-	if( rt_g.debug&DEBUG_ANIM )
+	if( RT_G_DEBUG&DEBUG_ANIM )
 		bu_log("db_do_anim(x%x) ", anp);
-	if( rt_g.debug&DEBUG_ANIM && !materp )  bu_log("(null materp) ");
+	if( RT_G_DEBUG&DEBUG_ANIM && !materp )  bu_log("(null materp) ");
 	RT_CK_ANIMATE(anp);
 	switch( anp->an_type )  {
 	case RT_AN_MATRIX:
-		if( rt_g.debug&DEBUG_ANIM )  {
+		if( RT_G_DEBUG&DEBUG_ANIM )  {
 			int	op = anp->an_u.anu_m.anm_op;
 			if( op < 0 )  op = 0;
 			bu_log("matrix, op=%s (%d)\n",
 				db_anim_matrix_strings[op], op);
-			if( rt_g.debug&DEBUG_ANIM_FULL )  {
+			if( RT_G_DEBUG&DEBUG_ANIM_FULL )  {
 				bn_mat_print("on original arc", arc);
 				bn_mat_print("on original stack", stack);
 			}
 		}
 		switch( anp->an_u.anu_m.anm_op )  {
 		case ANM_RSTACK:
-			bn_mat_copy( stack, anp->an_u.anu_m.anm_mat );
+			MAT_COPY( stack, anp->an_u.anu_m.anm_mat );
 			break;
 		case ANM_RARC:
-			bn_mat_copy( arc, anp->an_u.anu_m.anm_mat );
+			MAT_COPY( arc, anp->an_u.anu_m.anm_mat );
 			break;
 		case ANM_RBOTH:
-			bn_mat_copy( stack, anp->an_u.anu_m.anm_mat );
-			bn_mat_idn( arc );
+			MAT_COPY( stack, anp->an_u.anu_m.anm_mat );
+			MAT_IDN( arc );
 			break;
 		case ANM_LMUL:
 			/* arc = DELTA * arc */
 			bn_mat_mul( temp, anp->an_u.anu_m.anm_mat, arc );
-			bn_mat_copy( arc, temp );
+			MAT_COPY( arc, temp );
 			break;
 		case ANM_RMUL:
 			/* arc = arc * DELTA */
 			bn_mat_mul( temp, arc, anp->an_u.anu_m.anm_mat );
-			bn_mat_copy( arc, temp );
+			MAT_COPY( arc, temp );
 			break;
 		default:
 			return(-1);		/* BAD */
 		}
-		if( rt_g.debug&DEBUG_ANIM_FULL )  {
+		if( RT_G_DEBUG&DEBUG_ANIM_FULL )  {
 			bn_mat_print("arc result", arc);
 			bn_mat_print("stack result", stack);
 		}
 		break;
 	case RT_AN_MATERIAL:
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("property\n");
 		/*
 		 * if the caller does not care about property, a null
@@ -179,7 +182,7 @@ struct mater_info	*materp;
 			bu_log("Unknown anp_op=%d\n", anp->an_u.anu_p.anp_op);
 		break;
 	case RT_AN_COLOR:
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("color\n");
 		/*
 		 * if the caller does not care about property, a null
@@ -200,7 +203,7 @@ struct mater_info	*materp;
 		    (((float)anp->an_u.anu_c.anc_rgb[2])+0.5)*bn_inv255;
 		break;
 	case RT_AN_TEMPERATURE:
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("temperature = %g\n", anp->an_u.anu_t);
 		if (!materp)  {
 			char *sofar = db_path_to_string(&anp->an_path);
@@ -211,7 +214,7 @@ struct mater_info	*materp;
 		materp->ma_temperature = anp->an_u.anu_t;
 		break;
 	default:
-		if( rt_g.debug&DEBUG_ANIM )
+		if( RT_G_DEBUG&DEBUG_ANIM )
 			bu_log("unknown op\n");
 		/* Print something here? */
 		return(-1);			/* BAD */
@@ -225,8 +228,7 @@ struct mater_info	*materp;
  *  Free one animation structure
  */
 void
-db_free_1anim( anp )
-struct animate		*anp;
+db_free_1anim( struct animate *anp )
 {
 	RT_CK_ANIMATE( anp );
 
@@ -294,7 +296,7 @@ struct animate	*
 db_parse_1anim( dbip, argc, argv )
 struct db_i	*dbip;
 int		argc;
-CONST char	**argv;
+const char	**argv;
 {
 	struct db_tree_state	ts;
 	struct animate		*anp;
@@ -303,7 +305,7 @@ CONST char	**argv;
 	BU_GETSTRUCT( anp, animate );
 	anp->magic = ANIMATE_MAGIC;
 
-	db_init_db_tree_state( &ts, dbip );
+	db_init_db_tree_state( &ts, dbip, &rt_uniresource );
 	db_full_path_init( &anp->an_path );
 	if( db_follow_path_for_state( &ts, &(anp->an_path), argv[1], LOOKUP_NOISY ) < 0 )
 		goto bad;
@@ -333,7 +335,7 @@ CONST char	**argv;
 		    			argv[3], argc );
 		    		goto bad;
 		    	}
-		    	bn_mat_idn( anp->an_u.anu_m.anm_mat );
+		    	MAT_IDN( anp->an_u.anu_m.anm_mat );
 		    	MAT_DELTAS( anp->an_u.anu_m.anm_mat,
 		    		atof( argv[5+0] ),
 		    		atof( argv[5+1] ),
@@ -344,7 +346,7 @@ CONST char	**argv;
 		    			argv[3], argc );
 		    		goto bad;
 		    	}
-		    	bn_mat_idn( anp->an_u.anu_m.anm_mat );
+		    	MAT_IDN( anp->an_u.anu_m.anm_mat );
 			bn_mat_angles( anp->an_u.anu_m.anm_mat,
 		    		atof( argv[5+0] ),
 		    		atof( argv[5+1] ),
@@ -362,7 +364,7 @@ CONST char	**argv;
 		    			argv[3] );
 				goto bad;
 			}
-		    	bn_mat_idn( anp->an_u.anu_m.anm_mat );
+		    	MAT_IDN( anp->an_u.anu_m.anm_mat );
 			anp->an_u.anu_m.anm_mat[15] = 1/scale;
 		} else if( strcmp( argv[4], "scale_about" ) == 0 )  {
 			point_t	pt;
@@ -433,11 +435,9 @@ bad:
  *  Experimental.
  *  Not the best name for this.
  */
-int
-db_parse_anim( dbip, argc, argv )
-struct db_i	*dbip;
-int		argc;
-CONST char		**argv;
+int db_parse_anim(struct db_i	*dbip,
+		int		argc,
+		const char	**argv)
 {
 	struct animate		*anp;
 	int	at_root = 0;
@@ -467,7 +467,7 @@ struct animate *anp;
 	RT_CK_ANIMATE(anp);
 
 	thepath  = db_path_to_string(&(anp->an_path));
-	if ( rt_g.debug&DEBUG_ANIM) {
+	if ( RT_G_DEBUG&DEBUG_ANIM) {
 		bu_log("db_write_anim: Writing %s\n", thepath);
 	}
 

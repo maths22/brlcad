@@ -20,6 +20,7 @@
 #include "machine.h"
 #include "db.h"
 #include "vmath.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 #ifdef M_PI
@@ -35,7 +36,7 @@ int argc;
 char *argv[];
 
 {							/*  START # 1  */
-   FILE *fpw;			/*  File to be written to.  */
+   struct rt_wdb *fpw;		/*  File to be written to.  */
    char filemged[26];		/*  Mged file create.  */
    double hgt,wid,dpt;		/*  Height, width, & depth of handle.  */
    double rds;			/*  Radius of the corner of window.  */
@@ -175,7 +176,7 @@ char *argv[];
    (void)fflush(stdout);
 
    /*  Open mged file.  */
-   fpw = fopen(filemged,"w");
+   fpw = wdb_fopen(filemged);
 
    /*  Write ident record.  */
    mk_id(fpw,"windows");
@@ -263,50 +264,50 @@ char *argv[];
 	BU_LIST_INIT(&comb.l);
 
 	solnam[6] = '1';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	solnam[6] = '2';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	regnam[5] = 97 + i;
 	regnam[6] = '1';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	regnam[6] = '2';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
 	solnam[6] = '3';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	solnam[6] = '1';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	solnam[6] = '2';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	regnam[6] = '3';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
 	solnam[6] = '4';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	solnam[6] = '1';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	solnam[6] = '2';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	regnam[6] = '4';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
 	solnam[6] = '5';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	solnam[6] = '1';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	solnam[6] = '2';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	regnam[6] = '5';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
 	solnam[6] = '6';
-	(void)mk_addmember(solnam,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_INTERSECT);
 	solnam[6] = '1';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	solnam[6] = '2';
-	(void)mk_addmember(solnam,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solnam,&comb.l, NULL, WMOP_SUBTRACT);
 	regnam[6] = '6';
 	mk_lfcomb(fpw,regnam,&comb,1);
 
@@ -316,24 +317,24 @@ char *argv[];
 	BU_LIST_INIT(&comb1.l);
 
 	regnam[6] = '1';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 	regnam[6] = '2';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 	regnam[6] = '3';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 	regnam[6] = '4';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 	regnam[6] = '5';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 	regnam[6] = '6';
-	(void)mk_addmember(regnam,&comb1,WMOP_UNION);
+	(void)mk_addmember(regnam,&comb1.l, NULL, WMOP_UNION);
 
 	grpnam[3] = 97 + i;
 	mk_lfcomb(fpw,grpnam,&comb1,0);
    }							/*  START # 2  */
 
    /*  Close file.  */
-   (void)fclose(fpw);
+   wdb_close(fpw);
 
    return 0;
 }							/*  END # 1  */

@@ -41,7 +41,7 @@
  *	Public Domain, Distribution Unlimited
  */
 #ifndef lint
-static char libbu_htond_RCSid[] = "@(#)$Header$ (BRL)";
+static const char libbu_htond_RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -49,6 +49,9 @@ static char libbu_htond_RCSid[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "bu.h"
 
+#ifdef HAVE_MEMORY_H
+#  include <memory.h>
+#endif
 #include <stdio.h>
 
 #define	OUT_IEEE_ZERO	{ \
@@ -81,7 +84,7 @@ static char libbu_htond_RCSid[] = "@(#)$Header$ (BRL)";
 void
 htond( out, in, count )
 register unsigned char	*out;
-register CONST unsigned char	*in;
+register const unsigned char	*in;
 int			count;
 {
 #if	defined(NATURAL_IEEE)
@@ -90,10 +93,10 @@ int			count;
 	 *  IEEE format internally, using big-endian order.
 	 *  These are the lucky ones.
 	 */
-#	if BSD
-		bcopy( in, out, count*8 );
-#	else
+#	ifdef HAVE_MEMORY_H
 		memcpy( out, in, count*8 );
+#	else
+		bcopy( in, out, count*8 );
 #	endif
 	return;
 #	define	HTOND	yes1
@@ -110,8 +113,9 @@ int			count;
 		*out++ = in[2];
 		*out++ = in[1];
 		*out++ = in[0];
-		in += 8;
+		in += SIZEOF_NETWORK_DOUBLE;
 	}
+	return;
 #	define	HTOND	yes2
 
 	/* Now, for the machine-specific stuff. */
@@ -405,7 +409,7 @@ ibm_normalized:
 void
 ntohd( out, in, count )
 register unsigned char	*out;
-register CONST unsigned char	*in;
+register const unsigned char	*in;
 int			count;
 {
 #ifdef NATURAL_IEEE
@@ -414,12 +418,12 @@ int			count;
 	 *  IEEE format internally, using big-endian order.
 	 *  These are the lucky ones.
 	 */
-	if( sizeof(double) != 8 )
-		fprintf(stderr, "ntohd:  sizeof(double) != 8\n");
-#	if BSD
-		bcopy( in, out, count*8 );
+	if( sizeof(double) != SIZEOF_NETWORK_DOUBLE )
+		bu_bomb("ntohd:  sizeof(double) != SIZEOF_NETWORK_DOUBLE\n");
+#	ifdef HAVE_MEMORY_H
+		memcpy( out, in, count*SIZEOF_NETWORK_DOUBLE );
 #	else
-		memcpy( out, in, count*8 );
+		bcopy( in, out, count*SIZEOF_NETWORK_DOUBLE );
 #	endif
 	return;
 #	define	NTOHD	yes1
@@ -436,8 +440,9 @@ int			count;
 		*out++ = in[2];
 		*out++ = in[1];
 		*out++ = in[0];
-		in += 8;
+		in += SIZEOF_NETWORK_DOUBLE;
 	}
+	return;
 #	define	NTOHD	yes2
 #endif
 #if	defined(sgi) && !defined(mips)

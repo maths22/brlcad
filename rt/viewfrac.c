@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSview[] = "@(#)$Header$ (BRL)";
+static const char RCSview[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -26,7 +26,7 @@ static char RCSview[] = "@(#)$Header$ (BRL)";
 #include "vmath.h"
 #include "raytrace.h"
 #include "./ext.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 
 double	cell_depth;
 int	depth;
@@ -73,6 +73,7 @@ int	raymiss();
  *  Called by main() at the start of a run.
  *  Returns 1 if framebuffer should be opened, else 0.
  */
+int
 view_init( ap, file, obj, minus_o )
 register struct application *ap;
 char	*file;

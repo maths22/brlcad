@@ -1,12 +1,23 @@
 /* double to ascii */
+#include "conf.h"
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 int	nflag = 0;
 
 static char usage[] = "\
 Usage: d-a [-n] < doubles > ascii\n";
 
-main( argc, argv )
+int main( argc, argv )
 int argc; char **argv;
 {
 	double	d;
@@ -35,5 +46,6 @@ int argc; char **argv;
 			printf( "%9g\n", d );
 		}
 	}
+	return 0;
 }
 

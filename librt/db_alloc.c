@@ -3,8 +3,6 @@
  *
  * Functions -
  *	db_alloc	Find a contiguous block of database storage
- *	db_grow		Increase size of existing database entry
- *	db_trunc	Decrease size of existing entry, from it's end
  *	db_delete	Delete storage associated w/entry, zap records
  *	db_zapper	Zap region of file into ID_FREE records
  *	db_flags_internal	Construct flags word
@@ -24,7 +22,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -63,7 +61,7 @@ int		count;
 
 	RT_CK_DBI(dbip);
 	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_alloc(%s) x%x, x%x, count=%d\n",
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_alloc(%s) x%x, x%x, count=%d\n",
 		dp->d_namep, dbip, dp, count );
 	if( count <= 0 )  {
 		bu_log("db_alloc(0)\n");
@@ -113,127 +111,6 @@ int		count;
 }
 
 /*
- *  			D B _ G R O W
- *  
- *  Increase the database size of an object by "count",
- *  by duplicating in a new area if necessary.
- *  XXX deprecated.  Only used by mged/mover.c
- *
- *  Returns:
- *	-1	on error
- *	0	on success
- */
-int
-db_grow( dbip, dp, count )
-struct db_i	*dbip;
-register struct directory *dp;
-int		count;
-{
-	register int	i;
-	union record	rec;
-	union record	*rp;
-	struct directory olddir;
-	int		extra_start;
-	int		old_len;
-
-	RT_CK_DBI(dbip);
-	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_grow(%s) x%x, x%x, count=%d\n",
-		dp->d_namep, dbip, dp, count );
-	if( dp->d_flags & RT_DIR_INMEM )  bu_bomb("db_grow() called on RT_DIR_INMEM object\n");
-
-	if( dbip->dbi_read_only )  {
-		bu_log("db_grow on READ-ONLY file\n");
-		return(-1);
-	}
-
-	if( count <= 0 )  {
-		bu_log("db_grow(%d)\n", count );
-		return(-1);
-	}
-
-	/* Easy case -- see if at end-of-file */
-	old_len = dp->d_len;
-	extra_start = dp->d_addr + dp->d_len * sizeof(union record);
-	if( extra_start == dbip->dbi_eof )  {
-		dbip->dbi_eof += count * sizeof(union record);
-		dbip->dbi_nrec += count;
-		dp->d_len += count;
-		return( db_zapper( dbip, dp, old_len ) );
-
-	}
-
-	/* Try to extend into free space immediately following current obj */
-	if( rt_memget( &(dbip->dbi_freep), (unsigned)count, (unsigned long)(dp->d_addr/sizeof(union record)) ) == 0L )
-		goto hard;
-
-	dp->d_len += count;
-	/* Check to see if granules are all really availible (sanity check) */
-	for( i=old_len; i < dp->d_len; i++ )  {
-		if( db_get( dbip, dp, &rec, i, 1 ) < 0 ||
-		     rec.u_id != ID_FREE )  {
-			bu_log("db_grow:  FREE record wasn't?! (id%d)\n",
-				rec.u_id);
-		     	dp->d_len -= count;
-			goto hard;
-		}
-	}
-	return( db_zapper( dbip, dp, old_len ) );
-
-hard:
-	/*
-	 *  Duplicate the records into a new area that is large enough.
-	 */
-	olddir = *dp;				/* struct copy */
-
-	if( (rp = db_getmrec( dbip, dp )) == (union record *)0 )
-		return(-1);
-	db_alloc( dbip, dp, dp->d_len + count );	/* fixes addr & len */
-	db_put( dbip, dp, rp, 0, old_len );
-	bu_free( (char *)rp, "db_grow temp records");
-
-	/* Release space that original copy consumed */
-	db_delete( dbip, &olddir );
-	return(0);
-}
-
-/*
- *  			D B _ T R U N C
- *  
- *  Remove "count" granules from the indicated database entry.
- *  Stomp on them with ID_FREE's.
- *  Add them to the freelist.
- */
-int
-db_trunc( dbip, dp, count )
-struct db_i		*dbip;
-register struct directory *dp;
-int			 count;
-{
-	register int i;
-
-	RT_CK_DBI(dbip);
-	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_trunc(%s) x%x, x%x, count=%d\n",
-		dp->d_namep, dbip, dp, count );
-
-	if( dp->d_flags & RT_DIR_INMEM )  {
-		/* Decrease d_len, but don't bother with bu_realloc() */
-		dp->d_len -= count;
-		return 0;
-	}
-	if( dbip->dbi_read_only )  {
-		bu_log("db_trunc on READ-ONLY file\n");
-		return(-1);
-	}
-	i = db_zapper( dbip, dp, dp->d_len - count );
-	rt_memfree( &(dbip->dbi_freep), (unsigned)count,
-		(dp->d_addr/(sizeof(union record)))+dp->d_len-count );
-	dp->d_len -= count;
-	return(i);
-}
-
-/*
  *			D B _ D E L R E C
  *
  *  Delete a specific record from database entry
@@ -248,7 +125,7 @@ int			recnum;
 
 	RT_CK_DBI(dbip);
 	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_delrec(%s) x%x, x%x, recnum=%d\n",
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_delrec(%s) x%x, x%x, recnum=%d\n",
 		dp->d_namep, dbip, dp, recnum );
 
 	bu_log("ERROR db_delrec() is no longer supported.  Use combination import/export routines.\n");
@@ -259,18 +136,19 @@ int			recnum;
  *  			D B _ D E L E T E
  *  
  *  Delete the indicated database record(s).
- *  Mark all records with ID_FREE.
+ *  Arrange to write "free storage" database markers in it's place,
+ *  positively erasing what had been there before.
  */
 int
 db_delete( dbip, dp )
 struct db_i	*dbip;
 struct directory *dp;
 {
-	register int i;
+	register int i = -1;
 
 	RT_CK_DBI(dbip);
 	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_delete(%s) x%x, x%x\n",
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_delete(%s) x%x, x%x\n",
 		dp->d_namep, dbip, dp );
 
 	if( dp->d_flags & RT_DIR_INMEM )  {
@@ -280,14 +158,21 @@ struct directory *dp;
 		return 0;
 	}
 
-	i = db_zapper( dbip, dp, 0 );
-
-	rt_memfree( &(dbip->dbi_freep), (unsigned)dp->d_len,
-		dp->d_addr/(sizeof(union record)) );
+	if( dbip->dbi_version == 4 )  {
+		i = db_zapper( dbip, dp, 0 );
+		rt_memfree( &(dbip->dbi_freep), (unsigned)dp->d_len,
+			dp->d_addr/(sizeof(union record)) );
+	} else if( dbip->dbi_version == 5 )  {
+		i = db5_write_free( dbip, dp, dp->d_len );
+		rt_memfree( &(dbip->dbi_freep), dp->d_len,
+			dp->d_addr );
+	} else {
+		bu_bomb("db_delete() unsupported database version\n");
+	}
 
 	dp->d_len = 0;
 	dp->d_addr = -1;
-	return(i);
+	return i;
 }
 
 /*
@@ -313,13 +198,15 @@ int		start;
 
 	RT_CK_DBI(dbip);
 	RT_CK_DIR(dp);
-	if(rt_g.debug&DEBUG_DB) bu_log("db_zapper(%s) x%x, x%x, start=%d\n",
+	if(RT_G_DEBUG&DEBUG_DB) bu_log("db_zapper(%s) x%x, x%x, start=%d\n",
 		dp->d_namep, dbip, dp, start );
 
 	if( dp->d_flags & RT_DIR_INMEM )  bu_bomb("db_zapper() called on RT_DIR_INMEM object\n");
 
 	if( dbip->dbi_read_only )
 		return(-1);
+
+	BU_ASSERT_LONG( dbip->dbi_version, ==, 4 );
 
 	if( (todo = dp->d_len - start) == 0 )
 		return(0);		/* OK -- trivial */
@@ -344,9 +231,9 @@ int		start;
  */
 int
 db_flags_internal( intern )
-CONST struct rt_db_internal	*intern;
+const struct rt_db_internal	*intern;
 {
-	CONST struct rt_comb_internal	*comb;
+	const struct rt_comb_internal	*comb;
 
 	RT_CK_DB_INTERNAL(intern);
 

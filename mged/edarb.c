@@ -24,7 +24,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -48,10 +48,10 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "./ged.h"
 #include "./mged_solid.h"
 #include "./mged_dm.h"
+#include "./cmd.h"
 
 void	ext4to6(),old_ext4to6();
 
-extern struct bu_external	es_ext;
 extern struct rt_db_internal	es_int;
 extern struct rt_db_internal	es_int_orig;
 extern struct bn_tol		mged_tol;		/* from ged.c */
@@ -203,8 +203,7 @@ static short earb4[5][18] = {
 
 
 int
-editarb( pos_model )
-vect_t pos_model;
+editarb( vect_t pos_model )
 {
 	static int pt1, pt2, bp1, bp2, newp, p1, p2, p3;
 	short *edptr;		/* pointer to arb edit array */
@@ -355,7 +354,7 @@ bu_log("REdo plane %d with points %d %d %d\n",newp+1,p1+1,p2+1,p3+1);
 /*
 bu_log("intersect: type=%d   point = %d\n",es_type,p1+1);
 */
-		if( rt_arb_3face_intersect( arb->pt[p1], es_peqn, es_type, p1*3 ))
+		if( rt_arb_3face_intersect( arb->pt[p1], (const plane_t *)es_peqn, es_type, p1*3 ))
 			goto err;
 	}
 
@@ -414,15 +413,6 @@ err:
 	return(1);		/* BAD */
 }
 
-/* planes to define ARB vertices */
-CONST int rt_arb_planes[5][24] = {
-	{0,1,3, 0,1,2, 0,2,3, 0,1,3, 1,2,3, 1,2,3, 1,2,3, 1,2,3},	/* ARB4 */
-	{0,1,4, 0,1,2, 0,2,3, 0,3,4, 1,2,4, 1,2,4, 1,2,4, 1,2,4},	/* ARB5 */
-	{0,2,3, 0,1,3, 0,1,4, 0,2,4, 1,2,3, 1,2,3, 1,2,4, 1,2,4},	/* ARB6 */
-	{0,2,4, 0,3,4, 0,3,5, 0,2,5, 1,4,5, 1,3,4, 1,3,5, 1,2,4},	/* ARB7 */
-	{0,2,4, 0,3,4, 0,3,5, 0,2,5, 1,2,4, 1,3,4, 1,3,5, 1,2,5},	/* ARB8 */
-};
-
 /*  MV_EDGE:
  *	Moves an arb edge (end1,end2) with bounding
  *	planes bp1 and bp2 through point "thru".
@@ -433,10 +423,10 @@ CONST int rt_arb_planes[5][24] = {
  *	the other faces to make sure that they are always "inside".
  */
 int
-mv_edge(thru, bp1, bp2, end1, end2, dir)
-vect_t thru;
-int bp1, bp2, end1, end2;
-vect_t	dir;
+mv_edge(
+	vect_t thru,
+	int bp1, int bp2, int end1, int end2,
+	const vect_t	dir)
 {
 	struct rt_arb_internal *arb;
 	fastf_t	t1, t2;
@@ -678,7 +668,7 @@ char	**argv;
 {
 	register struct directory *dp;
 	struct rt_db_internal	internal;
-	struct rt_arb_internal	arb;
+	struct rt_arb_internal	*arb;
 	int i, j;
 	fastf_t rota, fb;
 	vect_t norm1,norm2,norm3;
@@ -707,14 +697,16 @@ char	**argv;
 	/* get fallback angle */
 	fb = atof( argv[3] ) * degtorad;
 
+	BU_GETSTRUCT( arb, rt_arb_internal );
 	RT_INIT_DB_INTERNAL( &internal );
+	internal.idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	internal.idb_type = ID_ARB8;
 	internal.idb_meth = &rt_functab[ID_ARB8];
-	internal.idb_ptr = (genptr_t)&arb;
-	arb.magic = RT_ARB_INTERNAL_MAGIC;
+	internal.idb_ptr = (genptr_t)arb;
+	arb->magic = RT_ARB_INTERNAL_MAGIC;
 
 	/* put vertex of new solid at center of screen */
-	VSET( arb.pt[0] , -view_state->vs_toViewcenter[MDX] , -view_state->vs_toViewcenter[MDY] , -view_state->vs_toViewcenter[MDZ] );
+	VSET(arb->pt[0], -view_state->vs_vop->vo_center[MDX], -view_state->vs_vop->vo_center[MDY], -view_state->vs_vop->vo_center[MDZ]);
 
 	/* calculate normal vector defined by rot,fb */
 	norm1[0] = cos(fb) * cos(rota);
@@ -736,24 +728,25 @@ char	**argv;
 	/* the 20x20 faces are in rot,fb plane */
 	VUNITIZE( norm2 );
 	VUNITIZE( norm3 );
-	VJOIN1( arb.pt[1] , arb.pt[0] , 508.0 , norm2 );
-	VJOIN1( arb.pt[3] , arb.pt[0] , -508.0 , norm3 );
-	VJOIN2( arb.pt[2] , arb.pt[0] , 508.0 , norm2 , -508.0 , norm3 );
+	VJOIN1( arb->pt[1] , arb->pt[0] , 508.0 , norm2 );
+	VJOIN1( arb->pt[3] , arb->pt[0] , -508.0 , norm3 );
+	VJOIN2( arb->pt[2] , arb->pt[0] , 508.0 , norm2 , -508.0 , norm3 );
 	for( i=0 ; i<4 ; i++ )
-		VJOIN1( arb.pt[i+4] , arb.pt[i] , -50.8 , norm1 );
+		VJOIN1( arb->pt[i+4] , arb->pt[i] , -50.8 , norm1 );
 
 	/* no interrupts */
 	(void)signal( SIGINT, SIG_IGN );
 
-	if( (dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, NULL)) == DIR_NULL )
+	if( (dp=db_diradd( dbip, argv[1], -1L, 0, DIR_SOLID, (genptr_t)&internal.idb_type)) == DIR_NULL )
 	{
+		rt_db_free_internal( &internal, &rt_uniresource );
 		Tcl_AppendResult(interp, "Cannot add ", argv[1], " to directory\n", (char *)NULL );
 		return TCL_ERROR;
 	}
 
-	if( rt_db_put_internal( dp, dbip, &internal ) < 0 )
+	if( rt_db_put_internal( dp, dbip, &internal, &rt_uniresource ) < 0 )
 	{
-		rt_db_free_internal( &internal );
+		rt_db_free_internal( &internal, &rt_uniresource );
 		TCL_WRITE_ERR_return;
 	}
 
@@ -765,7 +758,7 @@ char	**argv;
 	  av[2] = NULL;
 
 	  /* draw the "made" solid */
-	  return f_edit( clientData, interp, 2, av );
+	  return cmd_draw( clientData, interp, 2, av );
 	}
 }
 
@@ -1360,73 +1353,4 @@ char	**argv;
     view_state->vs_flag = 1;
 
     return TCL_OK;
-}
-
-/* --- General ARB8 utility routines --- */
-
-/*
- *			R T _ A R B _ C A L C _ P O I N T S
- *
- * Takes the planes[] array and intersects the planes to find the vertices
- * of a GENARB8.  The vertices are stored into arb->pt[].
- * This is an analog of rt_arb_calc_planes().
- */
-int
-rt_arb_calc_points( arb, cgtype, planes, tol )
-struct rt_arb_internal	*arb;
-int		cgtype;
-plane_t		planes[6];
-CONST struct bn_tol	*tol;
-{
-	int	i;
-	point_t	pt[8];
-
-	RT_ARB_CK_MAGIC(arb);
-
-	/* find new points for entire solid */
-	for(i=0; i<8; i++){
-		if( rt_arb_3face_intersect( pt[i], planes, cgtype, i*3 ) < 0 )  {
-		  struct bu_vls tmp_vls;
-
-		  bu_vls_init(&tmp_vls);
-		  bu_vls_printf(&tmp_vls, "rt_arb_calc_points: Intersection of planes fails %d\n", i);
-		  Tcl_AppendResult(interp, bu_vls_addr(&tmp_vls), (char *)NULL);
-		  bu_vls_free(&tmp_vls);
-		  return -1;			/* FAIL */
-		}
-	}
-
-	/* Move new points to arb */
-	for( i=0; i<8; i++ )  {
-		VMOVE( arb->pt[i], pt[i] );
-	}
-	return 0;					/* success */
-}
-
-/*
- *			R T _ A R B _ 3 F A C E _ I N T E R S E C T
- *
- *	Finds the intersection point of three faces of an ARB.
- *
- *  Returns -
- *	  0	success
- *	 -1	failure
- */
-int
-rt_arb_3face_intersect( point, planes, type, loc )
-point_t			point;
-plane_t			planes[6];
-int			type;		/* 4..8 */
-int			loc;
-{
-	int	j;
-	int	i1, i2, i3;
-
-	j = type - 4;
-
-	i1 = rt_arb_planes[j][loc];
-	i2 = rt_arb_planes[j][loc+1];
-	i3 = rt_arb_planes[j][loc+2];
-
-	return bn_mkpoint_3planes( point, planes[i1], planes[i2], planes[i3] );
 }

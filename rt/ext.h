@@ -38,6 +38,7 @@ extern int		sub_xmin;		/* lower left of sub rectangle */
 extern int		sub_ymin;
 extern int		sub_xmax;		/* upper right of sub rectangle */
 extern int		sub_ymax;
+extern int              transpose_grid;         /* reverse the order of grid traversal */
 
 /***** variables from main.c *****/
 extern FILE		*outfp;			/* optional output file */
@@ -54,7 +55,7 @@ extern int		save_overlaps;		/* flag for setting rti_save_overlaps */
 /***** variables shared with worker() ******/
 extern int		stereo;			/* stereo viewing */
 extern int		hypersample;		/* number of extra rays to fire */
-extern int		jitter;			/* jitter (bit vector) */
+extern unsigned int	jitter;			/* jitter (bit vector) */
 #define JITTER_CELL	0x1			/* jitter position of ray in each cell */
 #define JITTER_FRAME	0x2			/* jitter position of entire frame */
 extern fastf_t		rt_perspective;		/* presp (degrees X) 0 => ortho */

@@ -6,7 +6,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -27,7 +27,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 FBIO	*fbiop = FBIO_NULL;    /* Framebuffer interface ptr.	*/
 
 /* Initialization for root of IR data base octree.			*/
-PtList	ir_ptlist = { 0.0, 0.0, 0.0, PTLIST_NULL };
+PtList	ir_ptlist = { {0.0, 0.0, 0.0}, PTLIST_NULL };
 Octree	ir_octree =
 	{ 0, ABSOLUTE_ZERO, &ir_ptlist, TRIE_NULL, OCTREE_NULL, OCTREE_NULL };
 

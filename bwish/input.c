@@ -40,9 +40,17 @@
 #include "conf.h"
 #include "tcl.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <ctype.h>
+
 #include "machine.h"
 #include "externs.h"
 #include "bu.h"
+#include "libtermio.h"
 
 #define CTRL_A      1
 #define CTRL_B      2
@@ -59,13 +67,23 @@
 #define ESC         27
 #define BACKSPACE   '\b'
 #define DELETE      127
+#ifdef BWISH
 #define PROMPT "\rbwish> "
+#else
+#define PROMPT "\rbtclsh> "
+#endif
 
 #define SPACES "                                                                                                                                                                                                                                                                                                           "
 
-extern void quit();
+/* defined in tcl.c */
+extern void Cad_Exit();
+
+/* defined in cmd.c */
 extern struct bu_vls *history_prev();
 extern struct bu_vls *history_next();
+extern void history_record();
+
+/* defined in main.c */
 extern Tcl_Interp *interp;
 
 HIDDEN void inputHandler();
@@ -115,7 +133,7 @@ inputHandler(clientData, mask)
 	count = read((int)fd, (void *)buf, 4096);
 
 	if (count <= 0 && feof(stdin))
-		quit(0);
+		Cad_Exit(TCL_OK);
 
 	/* Process everything in buf */
 	for (index = 0, ch = buf[index]; index < count; ch = buf[++index])

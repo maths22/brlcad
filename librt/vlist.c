@@ -18,19 +18,21 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include "machine.h"
 #include "externs.h"
 #include "vmath.h"
 #include "bu.h"
 #include "bn.h"
 #include "raytrace.h"
+#include "plot3.h"
 
 /************************************************************************
  *									*
@@ -42,9 +44,9 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  *			B N _ V L B L O C K _ I N I T
  */
 struct bn_vlblock *
-bn_vlblock_init( free_vlist_hd, max_ent )
-struct bu_list	*free_vlist_hd;		/* where to get/put free vlists */
-int		max_ent;
+bn_vlblock_init(
+	struct bu_list	*free_vlist_hd,		/* where to get/put free vlists */
+	int		max_ent)
 {
 	struct bn_vlblock *vbp;
 	int	i;
@@ -73,6 +75,9 @@ int		max_ent;
 	return(vbp);
 }
 
+/*
+ *			R T _ V L B L O C K _ I N I T
+ */
 struct bn_vlblock *
 rt_vlblock_init()
 {
@@ -176,7 +181,7 @@ int	r, g, b;
  *			Generic BN_VLIST routines			*
  *									*
  ************************************************************************/
-CONST char *rt_vlist_cmd_descriptions[] = {
+const char *rt_vlist_cmd_descriptions[] = {
 	"line move ",
 	"line draw ",
 	"poly start",
@@ -197,8 +202,7 @@ CONST char *rt_vlist_cmd_descriptions[] = {
  *	npts	Number of point/command sets in use.
  */
 int
-rt_ck_vlist( vhead )
-CONST struct bu_list	*vhead;
+rt_ck_vlist( const struct bu_list *vhead )
 {
 	register struct bn_vlist	*vp;
 	int			npts = 0;
@@ -248,9 +252,7 @@ CONST struct bu_list	*vhead;
  *  densely packed than the source.
  */
 void
-rt_vlist_copy( dest, src )
-struct bu_list	*dest;
-CONST struct bu_list	*src;
+rt_vlist_copy( struct bu_list *dest, const struct bu_list *src )
 {
 	struct bn_vlist	*vp;
 
@@ -272,8 +274,7 @@ CONST struct bu_list	*src;
  *  Now, give those structures back to bu_free().
  */
 void
-bn_vlist_cleanup(hd)
-struct bu_list	*hd;
+bn_vlist_cleanup( struct bu_list *hd )
 {
 	register struct bn_vlist	*vp;
 
@@ -297,12 +298,12 @@ rt_vlist_cleanup()
 }
 
 /*
+ *			B N _ V L I S T _ R P P
+ *
+ *  Given an RPP, draw the outline of it into the vlist.
  */
 void
-bn_vlist_rpp(hd, minn, maxx)
-struct bu_list	*hd;
-CONST point_t	minn;
-CONST point_t	maxx;
+bn_vlist_rpp( struct bu_list *hd, const point_t minn, const point_t maxx )
 {
 	point_t	p;
 
@@ -370,7 +371,7 @@ void
 rt_vlist_export( vls, hp, name )
 struct bu_vls	*vls;
 struct bu_list	*hp;
-CONST char	*name;
+const char	*name;
 {
 	register struct bn_vlist	*vp;
 	int		nelem;
@@ -431,10 +432,10 @@ void
 rt_vlist_import( hp, namevls, buf )
 struct bu_list	*hp;
 struct bu_vls	*namevls;
-CONST unsigned char	*buf;
+const unsigned char	*buf;
 {
-	register CONST unsigned char	*bp;
-	CONST unsigned char		*pp;		/* point pointer */
+	register const unsigned char	*bp;
+	const unsigned char		*pp;		/* point pointer */
 	int		nelem;
 	int		namelen;
 	int		i;
@@ -476,7 +477,7 @@ CONST unsigned char	*buf;
 void
 rt_plot_vlblock( fp, vbp )
 FILE			*fp;
-CONST struct bn_vlblock	*vbp;
+const struct bn_vlblock	*vbp;
 {
 	int	i;
 
@@ -503,14 +504,14 @@ CONST struct bn_vlblock	*vbp;
 void
 rt_vlist_to_uplot( fp, vhead )
 FILE			*fp;
-CONST struct bu_list	*vhead;
+const struct bu_list	*vhead;
 {
 	register struct bn_vlist	*vp;
 
 	for( BU_LIST_FOR( vp, bn_vlist, vhead ) )  {
 		register int		i;
 		register int		nused = vp->nused;
-		register CONST int	*cmd = vp->cmd;
+		register const int	*cmd = vp->cmd;
 		register point_t	 *pt = vp->pt;
 
 		for( i = 0; i < nused; i++,cmd++,pt++ )  {
@@ -547,51 +548,51 @@ struct uplot {
 	int	narg;		/* number or args */
 	char	desc[14];	/* description */
 };
-static CONST struct uplot rt_uplot_error = { 0, 0, "error" };
-static CONST struct uplot rt_uplot_letters[] = {
-/*A*/	{ 0, 0, 0 },
-/*B*/	{ 0, 0, 0 },
+static const struct uplot rt_uplot_error = { 0, 0, "error" };
+static const struct uplot rt_uplot_letters[] = {
+/*A*/	{ 0, 0, "" },
+/*B*/	{ 0, 0, "" },
 /*C*/	{ TCHAR, 3, "color" },
-/*D*/	{ 0, 0, 0 },
-/*E*/	{ 0, 0, 0 },
+/*D*/	{ 0, 0, "" },
+/*E*/	{ 0, 0, "" },
 /*F*/	{ TNONE, 0, "flush" },
-/*G*/	{ 0, 0, 0 },
-/*H*/	{ 0, 0, 0 },
-/*I*/	{ 0, 0, 0 },
-/*J*/	{ 0, 0, 0 },
-/*K*/	{ 0, 0, 0 },
+/*G*/	{ 0, 0, "" },
+/*H*/	{ 0, 0, "" },
+/*I*/	{ 0, 0, "" },
+/*J*/	{ 0, 0, "" },
+/*K*/	{ 0, 0, "" },
 /*L*/	{ TSHORT, 6, "3line" },
 /*M*/	{ TSHORT, 3, "3move" },
 /*N*/	{ TSHORT, 3, "3cont" },
 /*O*/	{ TIEEE, 3, "d_3move" },
 /*P*/	{ TSHORT, 3, "3point" },
 /*Q*/	{ TIEEE, 3, "d_3cont" },
-/*R*/	{ 0, 0, 0 },
+/*R*/	{ 0, 0, "" },
 /*S*/	{ TSHORT, 6, "3space" },
-/*T*/	{ 0, 0, 0 },
-/*U*/	{ 0, 0, 0 },
+/*T*/	{ 0, 0, "" },
+/*U*/	{ 0, 0, "" },
 /*V*/	{ TIEEE, 6, "d_3line" },
 /*W*/	{ TIEEE, 6, "d_3space" },
 /*X*/	{ TIEEE, 3, "d_3point" },
-/*Y*/	{ 0, 0, 0 },
-/*Z*/	{ 0, 0, 0 },
-/*[*/	{ 0, 0, 0 },
-/*\*/	{ 0, 0, 0 },
-/*]*/	{ 0, 0, 0 },
-/*^*/	{ 0, 0, 0 },
-/*_*/	{ 0, 0, 0 },
-/*`*/	{ 0, 0, 0 },
+/*Y*/	{ 0, 0, "" },
+/*Z*/	{ 0, 0, "" },
+/*[*/	{ 0, 0, "" },
+/*\*/	{ 0, 0, "" },
+/*]*/	{ 0, 0, "" },
+/*^*/	{ 0, 0, "" },
+/*_*/	{ 0, 0, "" },
+/*`*/	{ 0, 0, "" },
 /*a*/	{ TSHORT, 6, "arc" },
-/*b*/	{ 0, 0, 0 },
+/*b*/	{ 0, 0, "" },
 /*c*/	{ TSHORT, 3, "circle" },
-/*d*/	{ 0, 0, 0 },
+/*d*/	{ 0, 0, "" },
 /*e*/	{ TNONE, 0, "erase" },
 /*f*/	{ TSTRING, 1, "linmod" },
-/*g*/	{ 0, 0, 0 },
-/*h*/	{ 0, 0, 0 },
+/*g*/	{ 0, 0, "" },
+/*h*/	{ 0, 0, "" },
 /*i*/	{ TIEEE, 3, "d_circle" },
-/*j*/	{ 0, 0, 0 },
-/*k*/	{ 0, 0, 0 },
+/*j*/	{ 0, 0, "" },
+/*k*/	{ 0, 0, "" },
 /*l*/	{ TSHORT, 4, "line" },
 /*m*/	{ TSHORT, 2, "move" },
 /*n*/	{ TSHORT, 2, "cont" },
@@ -601,12 +602,12 @@ static CONST struct uplot rt_uplot_letters[] = {
 /*r*/	{ TIEEE, 6, "d_arc" },
 /*s*/	{ TSHORT, 4, "space" },
 /*t*/	{ TSTRING, 1, "label" },
-/*u*/	{ 0, 0, 0 },
+/*u*/	{ 0, 0, "" },
 /*v*/	{ TIEEE, 4, "d_line" },
 /*w*/	{ TIEEE, 4, "d_space" },
 /*x*/	{ TIEEE, 2, "d_point" },
-/*y*/	{ 0, 0, 0 },
-/*z*/	{ 0, 0, 0 }
+/*y*/	{ 0, 0, "" },
+/*z*/	{ 0, 0, "" }
 };
 
 /*
@@ -631,7 +632,7 @@ FILE	*fp;
 static void
 rt_uplot_get_args( fp, up, carg, arg )
 FILE			*fp;
-CONST struct uplot	*up;
+const struct uplot	*up;
 char			*carg;
 fastf_t			*arg;
 {
@@ -677,7 +678,7 @@ register int		c;		/* the value to process */
 double			char_size;
 {
 	mat_t			mat;
-	CONST struct uplot	*up;
+	const struct uplot	*up;
 	char			carg[256];
 	fastf_t			arg[6];
 	vect_t			a,b;
@@ -791,7 +792,7 @@ double			char_size;
 		break;
 	case 't':
 		/* Text string */
-		bn_mat_idn(mat);
+		MAT_IDN(mat);
 		if( BU_LIST_NON_EMPTY( *vhead ) )  {
 			struct bn_vlist *vlp;
 			/* Use coordinates of last op */

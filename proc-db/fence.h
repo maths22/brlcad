@@ -36,12 +36,10 @@
 #endif
 
 #include "machine.h"
-/*#include "bu.h"
- */
+#include "bu.h"
 #include "vmath.h"
-/*#include "bn.h"
- */
-#include "db.h"
+#include "bn.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 /* these variables control the "behavior" of this program's output
@@ -67,7 +65,7 @@
 
 /* this is the name of the default output file name
  */
-#define DEFAULT_OUTPUTFILENAME "untitled.csg"
+#define DEFAULT_OUTPUTFILENAME "fence.g"
 
 /* this is the default measuring units for the database file
  */
@@ -212,10 +210,24 @@
  */
 #define DEFAULT_MAXNAMELENGTH 64
 
-/* this macro does the standard conversion of an angle to a radian
- * value.  the value of pi defined in M_PI is pulled from math.h
+/* use a high precision value for pi if it is available, otherwise
+ * use the standard value (if available).  last resort, use mine
  */
-#define RADIAN(x) (((x)*M_PI)/180.0)
+#ifdef M_PIl
+#define _PI M_PIl
+#else
+#ifdef M_PI
+#define _PI M_PI
+#else
+#define _PI            3.14159265358979323846
+#endif
+#endif
+
+/* this macro does the standard conversion of an angle to a radian
+ * value.  the value of pi defined in _PI is pulled from math.h if
+ * available
+ */
+#define RADIAN(x) (((x)*_PI)/180.0)
 
 /*****************/
 
@@ -232,19 +244,19 @@ BU_EXTERN(void printMatrix, (FILE *fp, char *n, mat_t m));
 BU_EXTERN(char *getName, (char *base, int id, char *suffix));
 BU_EXTERN(char *getPrePostName, (char *prefix, char *base, char *suffix));
 
-BU_EXTERN(int generateFence_s, (FILE *fp, char *fencename, point_t startpostion, point_t endposition));
-BU_EXTERN(int generateFence, (FILE *fp, char *fencename, point_t startpostion, vect_t heightvector, vect_t widthvector));
+BU_EXTERN(int generateFence_s, (struct rt_wdb *fp, char *fencename, point_t startpostion, point_t endposition));
+BU_EXTERN(int generateFence, (struct rt_wdb *fp, char *fencename, point_t startpostion, vect_t heightvector, vect_t widthvector));
 
-BU_EXTERN(int generatePoles_s, (FILE *fp, char *polename));
-BU_EXTERN(int generatePoles, (FILE *fp, char *polename, point_t startposition, vect_t heightvector, vect_t widthvector, double radius));
+BU_EXTERN(int generatePoles_s, (struct rt_wdb *fp, char *polename));
+BU_EXTERN(int generatePoles, (struct rt_wdb *fp, char *polename, point_t startposition, vect_t heightvector, vect_t widthvector, double radius));
 
-BU_EXTERN(int generateMesh_s, (FILE *fp, char *meshname));
-BU_EXTERN(int generateMesh, (FILE *fp, char *meshname, point_t startposition, vect_t heightvector, vect_t widthvector));
+BU_EXTERN(int generateMesh_s, (struct rt_wdb *fp, char *meshname));
+BU_EXTERN(int generateMesh, (struct rt_wdb *fp, char *meshname, point_t startposition, vect_t heightvector, vect_t widthvector));
 
-BU_EXTERN(int generateWire_s, (FILE *fp, char *wirename, point_t position));
-BU_EXTERN(int generateWire, (FILE *fp, char *wirename, point_t position, vect_t heightvector, vect_t widthvector, double radius, double angle, double wiresegmentlength));
+BU_EXTERN(int generateWire_s, (struct rt_wdb *fp, char *wirename, point_t position));
+BU_EXTERN(int generateWire, (struct rt_wdb *fp, char *wirename, point_t position, vect_t heightvector, vect_t widthvector, double radius, double angle, double wiresegmentlength));
 
-BU_EXTERN(int createWire, (FILE *fp, char *segmentname, vect_t heightvector, vect_t widthvector, double radius, double angle, double segmentlength, double segmentdepthseparation));
+BU_EXTERN(int createWire, (struct rt_wdb *fp, char *segmentname, vect_t heightvector, vect_t widthvector, double radius, double angle, double segmentlength, double segmentdepthseparation));
 
 
 #ifdef __cplusplus

@@ -10,6 +10,21 @@
  * Right now, this include file has predetermined answers for every define.
  * Someday, it will be automatically generated.
  *
+ *	PRODUCTION
+ *		When defined with -D build option, this will enable mods to
+ *		parts of code that are gratuitous in a production 
+ *		environment.  For example, magic number checking is removed
+ *		as well as other macros that bu_bomb on a fatal error.  Note
+ *		that this option should not be used if remote debugging is
+ *		potentially desired.
+ *		
+ *		If defined, other flags are defined to do specific
+ *		optimizations.
+ *		
+ *		Another note, this assumes a bug-free build and should not
+ *		be set unless bug-free confidence is high.
+ *		
+ *
  *	USE_PROTOTYPES -
  *		When defined, this compiler will accept ANSI-C function
  *		prototypes, even if it isn't a full ANSI compiler.
@@ -46,6 +61,8 @@
  *
  *	HAVE_POSIX_REGEXEC	POSIX regexec(), regcomp(), regfree(), regerror(), and regex.h
  *
+ *	USE_REGCOMP             Use system regcomp() and regexec()
+ *
  *	HAVE_STRCHR		Usually for folks who have strings.h
  *
  *	HAVE_VFORK		BSD, non-SYSV systems.
@@ -56,7 +73,7 @@
  *
  *	HAVE_SHELL_ESCAPE	Typically UNIX-only functions.
  *	HAVE_UNIX_IO
- *	HAVE_SBRK		Set if unistd.h declares sbrk().
+ *	HAVE_SBRK_DECL		Set if unistd.h declares sbrk().
  *	HAVE_UNIX_DOMAIN_SOCKETS
  *
  *	HAVE_UNISTD_H		Set if unistd.h exists
@@ -87,6 +104,19 @@
 #	define HAVE_SYS_MMAN_H	1
 #	define HAVE_GETHOSTNAME	1
 #	define HAVE_TERMIOS_H	1
+#endif
+
+#if defined(_WIN32) && defined(_MSC_VER) && defined(_M_IX86)
+#	define USE_PROTOTYPES 1
+#	define HAVE_STRING_H 1
+#	define HAVE_STDLIB_H 1
+#	define HAVE_STDARG_H 1
+#	define HAVE_VARARGS_H 1
+#	define HAVE_DRAND48 1
+#	define HAVE_GETHOSTNAME 1
+#	define HAVE_GETOPT 1
+#	define HAVE_STRCHR 1
+#	define HAVE_UNIX_IO 1
 #endif
 
 #if defined(sgi) || defined(__sgi) || defined(IRIX)
@@ -124,6 +154,7 @@
 #	define HAVE_SBRK_DECL		1
 #	define HAVE_REGEX_DECL		1
 #	define HAVE_POSIX_REGEXEC	1
+#	define USE_REGCOMP		1
 #	define HAVE_DLOPEN		1
 #endif
 
@@ -143,7 +174,7 @@
 #	define HAVE_MEMORY_H	1				/* XXX */
 #endif
 
-#if defined(sun) && !defined(SUNOS)
+#if defined(sun) || defined(SUNOS)
 	/* SunOS 4.X on Sun-3 or Sun-4 */
 #	define HAVE_STDLIB_H	1
 #	define HAVE_UNISTD_H	1
@@ -151,12 +182,14 @@
 #	define HAVE_LIMITS_H	1
 #endif
 
-#if SUNOS >= 52
-#	define HAVE_STDLIB_H	1
-#	define HAVE_UNISTD_H	1
-#	define HAVE_XOSDEFS_H	1
-#	define HAVE_SYS_MMAN_H	1
+#if SUNOS > 55
+#	define USE_PROTOTYPES   1	
 #	define HAVE_SBRK_DECL	1
+/* #	define HAVE_GETOPT_DECL	1 -- is not available if __STDC__ */
+#	define HAVE_MEMORY_H	1
+#	define HAVE_LIMITS_H	1
+#	define USE_STRING_H	1
+#	undef _KERNEL  /* make sure the kernel calls are not used */
 #endif
 
 #if defined(WIN32)
@@ -172,7 +205,7 @@
 #	define HAVE_STDLIB_H	1
 #	define HAVE_STDARG_H	1
 #	define HAVE_STRING_H	1
-#	define bzero(str,n)		memset( str, '\0', n )
+#	define bzero(str,n)		memset( str, 0, n )
 #	define bcopy(from,to,count)	memcpy( to, from, count )
 #endif
 
@@ -191,7 +224,6 @@
 #	define HAVE_UNIX_DOMAIN_SOCKETS	1
 #	define HAVE_SHELL_ESCAPE	1
 #	define HAVE_UNIX_IO		1
-#	define	HAVE_SBRK	1
 #	define	HAVE_SBRK_DECL	1
 #	define HAVE_SYS_SOCKET_H	1
 #	define	HAVE_SYS_ERRLIST_DECL	1
@@ -202,11 +234,13 @@
 #	define HAVE_STDLIB_H	1
 #	define HAVE_UNISTD_H	1
 #	define HAVE_TERMIOS_H	1
+#	define HAVE_TERMCAP_H	1
 #	define HAVE_IOCTL_COMPAT_H 1
 #	define HAVE_SYS_MMAN_H	1
 #       define HAVE_FLOAT_H     1
 #       define HAVE_LIMITS_H    1
 #	define HAVE_BZERO	1
+#	define HAVE_DLOPEN	1
 #	if 0 && (__FreeBSD_cc_version >= 400000 )
 /*	Only FreeBSD 4.0 and above have multi-CPU support */
 #		define HAS_POSIX_THREADS 1
@@ -243,6 +277,7 @@
 #	define HAVE_XOSDEFS_H	1
 #	define HAVE_SYS_ERRLIST_DECL	1
 #	define HAVE_POSIX_REGEXEC	1
+#	define USE_REGCOMP	1
 #	define HAVE_UNISTD_H	1
 #	define HAVE_STDLIB_H	1
 #	define HAVE_GETOPT_H	1
@@ -253,22 +288,24 @@
 #	define HAVE_VFORK	1
 #	define HAVE_VPRINTF	1
 #	define HAVE_WRITEV	1
-#	define HAVE_SBRK	1
+#	define HAVE_SBRK_DECL	1
 #	define HAVE_DLOPEN	1
 #	define HAVE_UNIX_DOMAIN_SOCKETS 1
 #	define HAVE_SHELL_ESCAPE	1
 #	define HAVE_UNIX_IO	1
 #	define HAVE_DRAND48	1
 #	define HAVE_TERMIOS_H	1
+#	define HAVE_TERMCAP_H	1
 #	define HAVE_SYS_MMAN_H	1
 #	define HAVE_LIMITS_H	1
-#	define HAVE_BZERO	1
+/*#	define HAVE_BZERO	1 -- faster to use memcpy */
 #	define TK_READ_DATA_PENDING(f)	((f)->_IO_read_ptr != (f)->_IO_read_end)
+
 #endif
 
 #if defined(__NetBSD__)
 #	define USE_PROTOTYPES	1
-#	define USE_STRING_H	1
+#	define HAVE_STRING_H	1
 #	define HAVE_STDLIB_H	1
 #	define HAVE_STDARG_H	1
 #	define HAVE_UNISTD_H	1
@@ -281,6 +318,40 @@
 #	define HAVE_SBRK_DECL		1
 #	define HAVE_IOCTL_COMPAT_H	1
 #	define HAVE_BZERO	1
+#endif
+
+#if defined(__ppc__)
+#       define USE_PROTOTYPES   1
+#       define USE_REGCOMP      1
+#       define USE_STRING_H     1
+#       define HAS_POSIX_THREADS        1
+#       define HAVE_BZERO       1
+#	define HAVE_FLOAT	1
+#	define HAVE_GETHOSTNAME	1
+#       define HAVE_GETOPT      1
+#       define HAVE_GETOPT_DECL 1
+#       define HAVE_IOCTL_COMPAT_H      1
+#	define HAVE_LIMITS_H	1
+#	define HAVE_MEMORY_H	1
+#       define HAVE_POSIX_REGEXEC       1
+#       define HAVE_REGEX	1
+#       define HAVE_REGEX_DECL  1
+#       define HAVE_SBRK	1
+#       define HAVE_SBRK_DECL   1
+#       define HAVE_SHELL_ESCAPE	1
+#	define HAVE_STRCHR	1
+#       define HAVE_STDLIB_H    1
+#       define HAVE_STDARG_H    1
+#       define HAVE_SYS_ERRLIST_DECL    1
+#       define HAVE_SYS_MMAN_H  1
+#       define HAVE_SYS_SOCKET_H	1
+#	define HAVE_TERMIOS_H	1
+#       define HAVE_UNISTD_H    1
+#       define HAVE_UNIX_DOMAIN_SOCKETS 1
+#       define HAVE_UNIX_IO             1
+#       define HAVE_VFORK                       1
+#       define HAVE_VPRINTF             1
+#       define HAVE_WRITEV              1
 #endif
 
 #if defined(__STDC__)
@@ -313,7 +384,7 @@
 #	define USE_STRING_H	1
 #endif
 
-#if !defined(__convex__) && !defined(__bsdi__)
+#if !defined(__convex__) && !defined(__bsdi__) && !defined(__ppc__)
 #	define HAVE_DRAND48	1
 #endif
 
@@ -351,7 +422,13 @@
 #if defined(__bsdi__)
 #	define USE_REGCOMP 1	/* This is the POSIX way */
 #else
+/*
+ * XXX This hack was put in to prevent both USE_REGCOMP and USE_SYSV_RE
+ * being defined at the same time.
+ */
+#if !defined(USE_REGCOMP)
 #	define USE_SYSV_RE 1
+#endif
 #endif
 
 #if !defined(SYSV)
@@ -374,7 +451,7 @@
 		defined(SUNOS) || defined(linux)
 #	define HAVE_SHELL_ESCAPE	1
 #	define HAVE_UNIX_IO		1
-#	define HAVE_SBRK		1
+#	define HAVE_SBRK_DECL		1
 #endif
 
 #if defined(BSD) && !defined(sgi)
@@ -416,7 +493,8 @@
         (defined(__sgi) && defined(__mips)) || \
         defined(pyr) || defined(apollo) || defined(aux) || \
         defined(_AIX) || defined(NeXT) || defined(convex) || \
-	defined(hpux) || defined(__hppa) || defined(__convex__)
+	defined(hpux) || defined(__hppa) || defined(__convex__) || \
+	defined(__ppc__)
 
         /*  These systems already operate in
          *  IEEE format internally, using big-endian order.
@@ -424,9 +502,8 @@
 #       define  NATURAL_IEEE    yes
 #endif
 
-#if defined(n16) || defined(i386) || defined(i860) || \
-	defined(__i386) || \
-	defined(__stardent) || defined(__alpha)
+#if defined(i386) || defined(__i386) || defined(__alpha) \
+    || defined(n16) || defined(i860) ||defined(__stardent) 
 
         /* These systems operate in IEEE format, using little-endian order */
 #       define  REVERSED_IEEE   yes
@@ -451,7 +528,11 @@
 	/* For the duration of <sys/types.h>, set this, to get u_short
 	 * etc, defined properly.
 	 */
-#	define	_KERNEL	1
+        /* This is no longer needed/recommended with the newer sun libs 
+	 */
+#	if SUNOS <= 55
+#		define	_KERNEL	1
+#	endif
 #endif
 
 #ifndef CPP_ONLY
@@ -459,12 +540,49 @@
 #endif
 
 #if SUNOS >= 52
-#	undef	_KERNEL
+#	if SUNOS <= 55
+#		undef	_KERNEL
+#	endif
 #endif
 
 #if !defined(TK_FILE_COUNT) && !defined(TK_FILE_GPTR) && !defined(TK_FILE_READ_PTR) && !defined(TK_READ_DATA_PENDING)
 # define TK_FILE_COUNT _cnt
 #endif
+
+/*
+ * This section is intended to allow for a compile that trims off all non-critical
+ * runtime actions in order to give performance a boost.  The PRODUCTION flag should
+ * normally be passed in during compilation (e.g. -DPRODUCTION=1) on the command line, 
+ * though it could be hard-coded as desired here for any given platform.
+ * 
+ * Any combination of the different optimizations listed below may individually be 
+ * optionally turned off by commenting out the unwanted defines.
+ *
+ * NO_BOMBING_MACROS
+ *	turns off many macros in h/bu.h and h/bn.h that check a condition (such as a
+ *	magic number) and bu_bomb on failure.  note that turning this flag on will
+ *	remove the debug capability to catch fatal runtime erros (bugs) and exit
+ *	gracefully.
+ * NO_MAGIC_CHECKING
+ *	turns off allocation of (some) variables and calls to check magic numbers.
+ *	note that this will hinder memory corrupting bug detection.
+ * NO_BADRAY_CHECKING
+ *	is a risky optimization to turn off checking in librt/shoot.c for bad rays 
+ *	passed in to the expensive shootray() routine.
+ * NO_DEBUG_CHECKING
+ * 	is an optimization that replaces instances of rt_g.debug in if statements 
+ *	where checking for a debug level occurs (in order to output a debug message)
+ * 	with the integer constant 0.  note that turning this flag on will remove the
+ *	capability to output debug messages and commands that take a debug-level args
+ *	will not output as expected.  see h/raytrace.h for the implementation details.
+ ****************/
+#ifdef PRODUCTION
+#  define NO_BOMBING_MACROS	1	/* Don't do anything for macros that only bomb on a fatal error */
+#  define NO_MAGIC_CHECKING	1	/* Don't perform magic number checking */
+#  define NO_BADRAY_CHECKING	1	/* Don't check for divide by zero in rt (shoot.c/shootray())*/
+#  define NO_DEBUG_CHECKING	1	/* Don't use the rt_g.debug facilities */
+#endif
+
 
 #endif /* CONF_H */
 

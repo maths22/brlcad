@@ -8,6 +8,14 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include "machine.h"
@@ -27,10 +35,13 @@ int	ascii_output = 0;
 int	normalize_output = 0;
 
 double	cbfilter[27];
+void	cbweights();
 double	cbsum;
 void	fftdisp();
 void	fftmag2();
 void	fftphase();
+void	rfft();
+void	LintoLog();
 
 char usage[] = "\
 Usage: dfft [options] [width (1024)] < doubles > 512logmags\n\
@@ -42,7 +53,7 @@ Usage: dfft [options] [width (1024)] < doubles > 512logmags\n\
   -A     ascii output\n\
 ";
 
-main( argc, argv )
+int main( argc, argv )
 int argc;
 char **argv;
 {
@@ -107,6 +118,8 @@ char **argv;
 		else
 			fftdisp(data, L);
 	}
+
+	return 0;
 }
 
 void

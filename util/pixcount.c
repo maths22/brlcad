@@ -15,7 +15,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -40,10 +40,11 @@ struct pixel
  *	Global variables
  */
 int		pixel_size = 3;		/* Bytes/pixel */
+FILE		*outfp = NULL;		/* output file */
 
 static char usage[] = "\
 Usage: 'pixcount [-# bytes_per_pixel]\n\
-		 [infile.pix [outfile.pix]]'\n";
+		 [infile.pix [outfile]]'\n";
 #define OPT_STRING	"#:?"
 
 static void print_usage ()
@@ -105,8 +106,8 @@ int	depth;
     BU_CKMAG(pp, PIXEL_MAGIC, "pixel");
 
     for (i = 0; i < pixel_size; ++i)
-	printf("%3d ", pp -> p_color[i]);
-    printf(" %d\n", pp -> p_count);
+	fprintf(outfp, "%3d ", pp -> p_color[i]);
+    fprintf(outfp, " %d\n", pp -> p_count);
 }
 
 /*
@@ -191,6 +192,7 @@ char	*color;
     return (pp);
 }
 
+int
 main (argc, argv)
 
 int	argc;
@@ -202,7 +204,6 @@ char	*argv[];
     char		*outf_name;	/*  "   "  output   "   */
     unsigned char	*buf;		/* the current input pixel */
     FILE		*infp = NULL;	/* input stream */
-    FILE		*outfp = NULL;	/* output   "   */
     int			ch;		/* current char in command line */
     struct pixel	*pp;
 
@@ -300,4 +301,6 @@ char	*argv[];
     bu_free((genptr_t) buf, "pixel buffer");
 
     bu_rb_walk1(palette, print_pixel, INORDER);
+
+    return 0;
 }

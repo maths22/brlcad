@@ -15,12 +15,17 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Id$ (BRL)";
+static const char RCSid[] = "@(#)$Id$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
 #include "externs.h"			/* For getopt and malloc and getenv */
@@ -142,6 +147,7 @@ register char	**argv;
 /*
  *			M A I N
  */
+int
 main( argc, argv)
 int argc;
 char ** argv;

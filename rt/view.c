@@ -32,12 +32,13 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSview[] = "@(#)$Header$ (BRL)";
+static const char RCSview[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 
 #ifdef HAVE_UNIX_IO
@@ -54,8 +55,9 @@ static char RCSview[] = "@(#)$Header$ (BRL)";
 #include "shadefuncs.h"
 #include "shadework.h"
 #include "./ext.h"
-#include "./rdebug.h"
-#include "./light.h"
+#include "rtprivate.h"
+#include "light.h"
+#include "plot3.h"
 
 int		use_air = 0;		/* Handling of air in librt */
 
@@ -85,6 +87,12 @@ extern int	max_bounces;		/* from refract.c */
 extern int	max_ireflect;		/* from refract.c */
 extern int	curframe;		/* from main.c */
 extern fastf_t	frame_delta_t;		/* from main.c */
+
+extern int viewshade(struct application *ap,
+		     register const struct partition *pp,
+		     register struct shadework *swp);
+
+
 
 struct region	env_region;		/* environment map region */
 
@@ -119,11 +127,25 @@ static struct scanline {
 	char	*sl_buf;		/* ptr to buffer for scanline */
 } *scanline;
 
-static int	pwidth;			/* Width of each pixel (in bytes) */
+static short int	pwidth;			/* Width of each pixel (in bytes) */
 
 struct mfuncs *mfHead = MF_NULL;	/* Head of list of shaders */
 
 fastf_t	gamma_corr = 0.0;			/* gamma correction if !0 */
+
+/* The default a_onehit = -1 requires at least one non-air hit,
+ * (stop at first surface) and stops ray/geometry intersection after that.
+ * Set to 0 to turn off first hit optimization, with -c 'set a_onehit=0'
+ */
+int a_onehit = -1;
+
+/*
+ * Overlay
+ *
+ * If in overlay mode, and writeing to a framebuffer, 
+ * only write non-background pixels.
+ */
+static int overlay = 0;
 
 /* Viewing module specific "set" variables */
 struct bu_structparse view_parse[] = {
@@ -131,7 +153,10 @@ struct bu_structparse view_parse[] = {
 	{"%f",	1, "gamma",	bu_byteoffset(gamma_corr),		BU_STRUCTPARSE_FUNC_NULL },
 	{"%d",	1, "bounces",	bu_byteoffset(max_bounces),		BU_STRUCTPARSE_FUNC_NULL },
 	{"%d",	1, "ireflect",	bu_byteoffset(max_ireflect),		BU_STRUCTPARSE_FUNC_NULL },
+	{"%d",	1, "a_onehit",	bu_byteoffset(a_onehit),		BU_STRUCTPARSE_FUNC_NULL },
 	{"%f", ELEMENTS_PER_VECT, "background",bu_byteoffset(background[0]),	BU_STRUCTPARSE_FUNC_NULL },
+	{"%d", 1, "overlay",	bu_byteoffset(overlay),		BU_STRUCTPARSE_FUNC_NULL },
+	{"%d", 1, "ov", bu_byteoffset(overlay),	BU_STRUCTPARSE_FUNC_NULL },
 #endif
 	{"",	0, (char *)0,	0,				BU_STRUCTPARSE_FUNC_NULL }
 };
@@ -255,17 +280,23 @@ register struct application *ap;
 		{
 			RGBpixel	p;
 			int		npix;
+
 			p[0] = r ;
 			p[1] = g ;
 			p[2] = b ;
 
 			if( outfp != NULL )  {
+				bu_semaphore_acquire( BU_SEM_SYSCALL );
+				if( fseek( outfp, (ap->a_y*width*pwidth) + (ap->a_x*pwidth), 0 ) != 0 )
+					fprintf(stderr, "fseek error\n");
 				if( fwrite( p, 3, 1, outfp ) != 1 )
 					rt_bomb("pixel fwrite error");
 				if( rpt_dist &&
 				    ( fwrite( dist, 8, 1, outfp ) != 1 ))
 					rt_bomb("pixel fwrite error");
+				bu_semaphore_release( BU_SEM_SYSCALL);
 			}
+
 			if( fbp != FBIO_NULL )  {
 				/* Framebuffer output */
 				bu_semaphore_acquire( BU_SEM_SYSCALL );
@@ -494,8 +525,8 @@ register struct application *ap;
 /*
  *			V I E W _ E N D
  */
-view_end(ap)
-struct application *ap;
+void
+view_end(struct application *ap)
 {
 	if( fullfloat_mode )  {
 		struct floatpixel	*tmp;
@@ -509,7 +540,6 @@ struct application *ap;
 	}
 
 	if( scanline )  free_scanlines();
-	return(0);		/* OK */
 }
 
 /*
@@ -545,7 +575,7 @@ struct rt_i	*rtip;
 			{
 				struct region *r = BU_LIST_NEXT( region, &regp->l );
 				/* zap reg_udata? beware of light structs */
-				rt_del_regtree( rtip, regp );
+				rt_del_regtree( rtip, regp, &rt_uniresource );
 				regp = r;
 				continue;
 			}
@@ -568,9 +598,7 @@ struct rt_i	*rtip;
  *
  *  Called before rt_clean() in do.c
  */
-void
-view_cleanup(rtip)
-struct rt_i	*rtip;
+void view_cleanup(struct rt_i	*rtip)
 {
 	register struct region	*regp;
 
@@ -594,7 +622,7 @@ struct rt_i	*rtip;
  *  Background texture mapping could be done here.
  *  For now, return a pleasant dark blue.
  */
-static hit_nothing( ap )
+static int hit_nothing( ap )
 register struct application *ap;
 {
 	if( rdebug&RDEBUG_MISSPLOT )  {
@@ -603,8 +631,10 @@ register struct application *ap;
 		/* XXX length should be 1 model diameter */
 		VJOIN1( out, ap->a_ray.r_pt,
 			10000, ap->a_ray.r_dir );	/* to imply direction */
+		bu_semaphore_acquire( BU_SEM_SYSCALL );
 		pl_color( stdout, 190, 0, 0 );
 		pdv_3line( stdout, ap->a_ray.r_pt, out );
+		bu_semaphore_release( BU_SEM_SYSCALL );
 	}
 
 	if( env_region.reg_mfuncs )  {
@@ -614,7 +644,7 @@ register struct application *ap;
 			struct shadework sw;
 		} u;
 
-		bzero( (char *)&u, sizeof(u) );
+		memset( (char *)&u, 0, sizeof(u) );
 		/* Make "miss" hit the environment map */
 		/* Build up the fakery */
 		u.part.pt_magic = PT_MAGIC;
@@ -691,7 +721,7 @@ struct seg *finished_segs;
 		 * of code attempts to spot this behavior and skip over the glass sliver.
 		 * Any sliver less than 0.05mm thick will be skipped (0.05 is a SWAG).
 		 */
-		if( pp->pt_regionp == ap->a_uptr &&
+		if( (genptr_t)pp->pt_regionp == ap->a_uptr &&
 			pp->pt_forw != PartHeadp &&
 			pp->pt_outhit->hit_dist - pp->pt_inhit->hit_dist < 0.05 )
 				pp = pp->pt_forw;
@@ -802,11 +832,13 @@ struct seg *finished_segs;
 			VJOIN1( inhit, ap->a_ray.r_pt,
 				hitp->hit_dist, ap->a_ray.r_dir );
 			if( rdebug&RDEBUG_RAYPLOT )  {
+				bu_semaphore_acquire( BU_SEM_SYSCALL );
 				pl_color( stdout, i, 0, i );
 				pdv_3line( stdout, ap->a_ray.r_pt, inhit );
+				bu_semaphore_release( BU_SEM_SYSCALL );
 			}
 			bu_log("From ray start to inhit (purple):\n \
-vdraw o oray;vdraw p c %2.2x%2.2x%2.2x;vdraw w n 0 %g %g %g;vdraw w n 1 %g %g %g;vdraw s\n",
+vdraw open oray;vdraw params c %2.2x%2.2x%2.2x;vdraw write n 0 %g %g %g;vdraw write n 1 %g %g %g;vdraw send\n",
 				i, 0, i,
 				V3ARGS(ap->a_ray.r_pt),
 				V3ARGS(inhit) );
@@ -817,17 +849,19 @@ vdraw o oray;vdraw p c %2.2x%2.2x%2.2x;vdraw w n 0 %g %g %g;vdraw w n 1 %g %g %g
 				ap->a_ray.r_pt, out,
 				ap->a_ray.r_dir );
 			if( rdebug&RDEBUG_RAYPLOT )  {
+				bu_semaphore_acquire( BU_SEM_SYSCALL );
 				pl_color( stdout, i, i, i );
 				pdv_3line( stdout, inhit, outhit );
+				bu_semaphore_release( BU_SEM_SYSCALL );
 			}
 			bu_log("From inhit to outhit (grey):\n \
-vdraw o iray;vdraw p c %2.2x%2.2x%2.2x;vdraw w n 0 %g %g %g;vdraw w n 1 %g %g %g;vdraw s\n",
+vdraw open iray;vdraw params c %2.2x%2.2x%2.2x;vdraw write n 0 %g %g %g;vdraw write n 1 %g %g %g;vdraw send\n",
 				i, i, i,
 				V3ARGS(inhit), V3ARGS(outhit) );
 		}
 	}
 
-	bzero( (char *)&sw, sizeof(sw) );
+	memset( (char *)&sw, 0, sizeof(sw) );
 	sw.sw_transmit = sw.sw_reflect = 0.0;
 	sw.sw_refrac_index = 1.0;
 	sw.sw_extinction = 0;
@@ -867,10 +901,9 @@ out:
  *
  *  a_hit() routine for simple lighting model.
  */
-viewit( ap, PartHeadp, segHeadp )
-register struct application *ap;
-struct partition *PartHeadp;
-struct seg	*segHeadp;
+int viewit(register struct application *ap,
+	   struct partition *PartHeadp,
+	   struct seg	*segHeadp)
 {
 	register struct partition *pp;
 	register struct hit *hitp;
@@ -990,9 +1023,11 @@ free_scanlines()
  *
  *  Called once, early on in RT setup, before view size is set.
  */
+int
 view_init( ap, file, obj, minus_o )
 register struct application *ap;
 char *file, *obj;
+int minus_o;
 {
 	extern char	liboptical_version[];
 
@@ -1031,7 +1066,7 @@ reproject_splat( ix, iy, ip, new_view_pt )
 int	ix;
 int	iy;
 register struct floatpixel	*ip;
-CONST point_t			new_view_pt;
+const point_t			new_view_pt;
 {
 	register struct floatpixel	*op;
 	int	count = 1;
@@ -1182,11 +1217,13 @@ char	*framename;
 	ap->a_refrac_index = 1.0;	/* RI_AIR -- might be water? */
 	ap->a_cumlen = 0.0;
 	ap->a_miss = hit_nothing;
+	bu_log( "rpt_overlap = %d\n", rpt_overlap );
 	if (rpt_overlap)
 		ap->a_logoverlap = ((void (*)())0);
 	else
 		ap->a_logoverlap = rt_silent_logoverlap;
-	ap->a_onehit = -1;		/* Require at least one non-air hit */
+	ap->a_onehit = a_onehit;
+
 	if (rpt_dist)
 		pwidth = 3+8;
 	else
@@ -1349,7 +1386,7 @@ bu_log("mallocing curr_float_frame\n");
 			scanline[yy].sl_buf = bu_calloc( width,
 				sizeof(RGBpixel), 
 				"sl_buf scanline buffer (for continuation scanline)");
-			if( fseek( outfp, yy*width*3L, 0 ) != 0 )
+			if( fseek( outfp, yy*width*pwidth, 0 ) != 0 )
 		    		bu_log("fseek error\n");
 		    	/* Read the fractional scanline */
 			got = fread( scanline[yy].sl_buf, sizeof(RGBpixel),
@@ -1394,12 +1431,12 @@ bu_log("mallocing curr_float_frame\n");
 	default:
 		rt_bomb("bad lighting model #");
 	}
-	ap->a_rt_i->rti_nlights = light_init();
+	ap->a_rt_i->rti_nlights = light_init(ap);
 
 	/* Create integer version of background color */
-	inonbackground[0] = ibackground[0] = background[0] * 255;
-	inonbackground[1] = ibackground[1] = background[1] * 255;
-	inonbackground[2] = ibackground[2] = background[2] * 255;
+	inonbackground[0] = ibackground[0] = background[0] * 255.0 + 0.5;
+	inonbackground[1] = ibackground[1] = background[1] * 255.0 + 0.5;
+	inonbackground[2] = ibackground[2] = background[2] * 255.0 + 0.5;
 
 	/*
 	 * If a non-background pixel comes out the same color as the
@@ -1426,5 +1463,5 @@ bu_log("mallocing curr_float_frame\n");
  */
 void application_init ()
 {
-    rpt_overlap = 1;
+  /*    rpt_overlap = 1; */
 }

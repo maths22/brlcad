@@ -18,11 +18,16 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "tk.h"
-#include <X11/Xutil.h>
-#include <X11/extensions/XI.h>
-#include <X11/extensions/XInput.h>
-#include <X11/keysym.h>
+#ifdef DM_X
+#  include "tk.h"
+#  include <X11/Xutil.h>
+#  include <X11/extensions/XI.h>
+#  include <X11/extensions/XInput.h>
+#  include <X11/keysym.h>
+#else
+#  include "tcl.h"
+#endif
+
 #if IR_KNOBS
 #include <gl/device.h>
 #endif
@@ -44,10 +49,12 @@ extern void rect_image2view();
 extern void rb_set_dirty_flag();
 
 static void motion_event_handler();
+#if IR_KNOBS
 static void dials_event_handler();
-static void buttons_event_handler();
+#endif
 
-#ifdef IR_BUTTONS
+#if IR_BUTTONS
+static void buttons_event_handler();
 /*
  * Map SGI Button numbers to MGED button functions.
  * The layout of this table is suggestive of the actual button box layout.
@@ -84,7 +91,9 @@ static char	*kn2_knobs[] = {
 };
 #endif
 
+#if IR_BUTTONS || IR_KNOBS
 static int button0 = 0;
+#endif
 
 int
 doEvent(clientData, eventPtr)
@@ -94,7 +103,7 @@ XEvent *eventPtr;
   register struct dm_list *save_dm_list;
   int status;
 
-  if(eventPtr->type == DestroyNotify)
+  if(eventPtr->type == DestroyNotify || (unsigned long)eventPtr->xany.window == 0)
     return TCL_OK;
 
   save_dm_list = curr_dm_list;
@@ -171,6 +180,7 @@ XEvent *eventPtr;
   return status;
 }
 
+#if IR_BUTTONS || IR_KNOBS
 static void
 set_knob_offset()
 {
@@ -179,13 +189,16 @@ set_knob_offset()
   for(i = 0; i < 8; ++i)
     dml_knobs[i] = 0;
 }
+#endif
 
+#if IR_BUTTONS || IR_KNOBS
 static void
 common_dbtext(str)
 char *str;
 {
   bu_log("common_dbtext: You pressed Help key and '%s'\n", str);
 }
+#endif
 
 static void
 motion_event_handler(xmotion)
@@ -198,6 +211,9 @@ XMotionEvent *xmotion;
   fastf_t f;
   fastf_t fx, fy;
   fastf_t td;
+
+  if (dbip == DBI_NULL)
+	  return;
 
   bu_vls_init(&cmd);
 
@@ -320,8 +336,8 @@ XMotionEvent *xmotion;
 	  view_pt[Z] = 0.0;
 	  round_to_grid(&view_pt[X], &view_pt[Y]);
 
-	  MAT4X3PNT(model_pt, view_state->vs_view2model, view_pt);
-	  MAT_DELTAS_GET_NEG(vcenter, view_state->vs_toViewcenter);
+	  MAT4X3PNT(model_pt, view_state->vs_vop->vo_view2model, view_pt);
+	  MAT_DELTAS_GET_NEG(vcenter, view_state->vs_vop->vo_center);
 	  VSUB2(diff, model_pt, vcenter);
 	  VSCALE(diff, diff, base2local);
 	  VADD2(model_pt, dml_work_pt, diff);
@@ -331,7 +347,7 @@ XMotionEvent *xmotion;
 		  bu_vls_printf(&cmd, "translate %lf %lf %lf", model_pt[X], model_pt[Y], model_pt[Z]);
 	}else
 	  bu_vls_printf(&cmd, "knob -i aX %lf aY %lf\n",
-			fx*view_state->vs_Viewscale*base2local, fy*view_state->vs_Viewscale*base2local);
+			fx*view_state->vs_vop->vo_scale*base2local, fy*view_state->vs_vop->vo_scale*base2local);
       }else{
 	if(mged_variables->mv_rateknobs)      /* otherwise, drag to translate the view */
 	  bu_vls_printf( &cmd, "knob -i -v X %lf Y %lf\n", fx, fy );
@@ -348,7 +364,7 @@ XMotionEvent *xmotion;
 	    goto handled;
 	  }else
 	    bu_vls_printf( &cmd, "knob -i -v aX %lf aY %lf\n",
-			   fx*view_state->vs_Viewscale*base2local, fy*view_state->vs_Viewscale*base2local );
+			   fx*view_state->vs_vop->vo_scale*base2local, fy*view_state->vs_vop->vo_scale*base2local );
 	}
       }
 
@@ -402,15 +418,15 @@ XMotionEvent *xmotion;
       if(grid_state->gr_snap)
 	snap_to_grid(&view_pt[X], &view_pt[Y]);
 
-      MAT4X3PNT(model_pt, view_state->vs_view2model, view_pt);
+      MAT4X3PNT(model_pt, view_state->vs_vop->vo_view2model, view_pt);
       VSCALE(model_pt, model_pt, base2local);
       bu_vls_printf(&cmd, "adc xyz %lf %lf %lf\n", model_pt[X], model_pt[Y], model_pt[Z]);
     }
 
     break;
   case AMM_ADC_DIST:
-    fx = (dm_Xx2Normal(dmp, mx) * GED_MAX - adc_state->adc_dv_x) * view_state->vs_Viewscale * base2local * INV_GED;
-    fy = (dm_Xy2Normal(dmp, my, 1) * GED_MAX - adc_state->adc_dv_y) * view_state->vs_Viewscale * base2local * INV_GED;
+    fx = (dm_Xx2Normal(dmp, mx) * GED_MAX - adc_state->adc_dv_x) * view_state->vs_vop->vo_scale * base2local * INV_GED;
+    fy = (dm_Xy2Normal(dmp, my, 1) * GED_MAX - adc_state->adc_dv_y) * view_state->vs_vop->vo_scale * base2local * INV_GED;
     td = sqrt(fx * fx + fy * fy);
     bu_vls_printf(&cmd, "adc dst %lf\n", td);
 
@@ -511,7 +527,7 @@ XMotionEvent *xmotion;
     if(mged_variables->mv_rateknobs)
       bu_vls_printf( &cmd, "knob -i X %f\n", f);
     else
-      bu_vls_printf( &cmd, "knob -i aX %f\n", f*view_state->vs_Viewscale*base2local);
+      bu_vls_printf( &cmd, "knob -i aX %f\n", f*view_state->vs_vop->vo_scale*base2local);
 
     break;
   case AMM_CON_TRAN_Y:
@@ -535,7 +551,7 @@ XMotionEvent *xmotion;
     if(mged_variables->mv_rateknobs)
       bu_vls_printf( &cmd, "knob -i Y %f\n", f);
     else
-      bu_vls_printf( &cmd, "knob -i aY %f\n", f*view_state->vs_Viewscale*base2local);
+      bu_vls_printf( &cmd, "knob -i aY %f\n", f*view_state->vs_vop->vo_scale*base2local);
 
     break;
   case AMM_CON_TRAN_Z:
@@ -559,7 +575,7 @@ XMotionEvent *xmotion;
     if(mged_variables->mv_rateknobs)
       bu_vls_printf( &cmd, "knob -i Z %f\n", f);
     else
-      bu_vls_printf( &cmd, "knob -i aZ %f\n", f*view_state->vs_Viewscale*base2local);
+      bu_vls_printf( &cmd, "knob -i aZ %f\n", f*view_state->vs_vop->vo_scale*base2local);
 
     break;
   case AMM_CON_SCALE_X:
@@ -707,6 +723,9 @@ XDeviceMotionEvent *dmep;
   int save_edflag = -1;
   int setting;
   fastf_t f;
+
+  if (dbip == DBI_NULL)
+	  return;
 
   if(button0){
     common_dbtext((adc_state->adc_draw ? kn1_knobs:kn2_knobs)[dmep->first_axis]);
@@ -986,7 +1005,7 @@ XDeviceMotionEvent *dmep;
 	    dmep->axis_data[0] - knob_values[dmep->first_axis];
 
 	setting = dm_limit(dml_knobs[dmep->first_axis]);
-	bu_vls_printf(&cmd, "knob aZ %f\n", setting / 512.0 * view_state->vs_Viewscale * base2local);
+	bu_vls_printf(&cmd, "knob aZ %f\n", setting / 512.0 * view_state->vs_vop->vo_scale * base2local);
       }
     }
     break;
@@ -1165,7 +1184,7 @@ XDeviceMotionEvent *dmep;
 	  dmep->axis_data[0] - knob_values[dmep->first_axis];
 
       setting = dm_limit(dml_knobs[dmep->first_axis]);
-      bu_vls_printf(&cmd, "knob aY %f\n", setting / 512.0 * view_state->vs_Viewscale * base2local);
+      bu_vls_printf(&cmd, "knob aY %f\n", setting / 512.0 * view_state->vs_vop->vo_scale * base2local);
     }
     break;
   case DIAL6:
@@ -1341,7 +1360,7 @@ XDeviceMotionEvent *dmep;
 	  dmep->axis_data[0] - knob_values[dmep->first_axis];
 
       setting = dm_limit(dml_knobs[dmep->first_axis]);
-      bu_vls_printf(&cmd, "knob aX %f\n", setting / 512.0 * view_state->vs_Viewscale * base2local);
+      bu_vls_printf(&cmd, "knob aX %f\n", setting / 512.0 * view_state->vs_vop->vo_scale * base2local);
     }
     break;
   default:

@@ -136,12 +136,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSepa[] = "@(#)$Header$ (BRL)";
+static const char RCSepa[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -163,13 +166,14 @@ struct epa_specific {
 	mat_t	epa_invRoS;	/* invRot(Scale(vect)) */
 };
 
-CONST struct bu_structparse rt_epa_parse[] = {
+const struct bu_structparse rt_epa_parse[] = {
     { "%f", 3, "V",   offsetof(struct rt_epa_internal, epa_V[X]),  BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "H",   offsetof(struct rt_epa_internal, epa_H[X]),  BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "A",   offsetof(struct rt_epa_internal, epa_Au[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_1", offsetof(struct rt_epa_internal, epa_r1),    BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_2", offsetof(struct rt_epa_internal, epa_r2),    BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+};
 
 /*
  *  			R T _ E P A _ P R E P
@@ -194,7 +198,9 @@ struct rt_i		*rtip;
 {
 	struct rt_epa_internal		*xip;
 	register struct epa_specific	*epa;
-	CONST struct bn_tol		*tol = &rtip->rti_tol;
+#ifndef NO_MAGIC_CHECKING
+	const struct bn_tol		*tol = &rtip->rti_tol;
+#endif
 	LOCAL fastf_t	magsq_h;
 	LOCAL fastf_t	mag_a, mag_h;
 	LOCAL fastf_t	f, r1, r2;
@@ -202,8 +208,10 @@ struct rt_i		*rtip;
 	LOCAL mat_t	Rinv;
 	LOCAL mat_t	S;
 
+#ifndef NO_MAGIC_CHECKING
 	RT_CK_DB_INTERNAL(ip);
 	BN_CK_TOL(tol);
+#endif
 	xip = (struct rt_epa_internal *)ip->idb_ptr;
 	RT_EPA_CK_MAGIC(xip);
 
@@ -247,14 +255,14 @@ struct rt_i		*rtip;
 	VMOVE( epa->epa_V, xip->epa_V );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], epa->epa_Bunit );
 	VMOVE(    &R[4], epa->epa_Aunit );
 	VREVERSE( &R[8], epa->epa_Hunit );
 	bn_mat_trn( Rinv, R );			/* inv of rot mat is trn */
 
 	/* Compute S */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = 1.0/r2;
 	S[ 5] = 1.0/r1;
 	S[10] = 1.0/mag_h;
@@ -287,9 +295,9 @@ struct rt_i		*rtip;
  */
 void
 rt_epa_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct epa_specific *epa =
+	register const struct epa_specific *epa =
 		(struct epa_specific *)stp->st_specific;
 
 	VPRINT("V", epa->epa_V);
@@ -521,7 +529,7 @@ struct soltab		*stp;
 		/* get the saved away scale factor */
 		scale = - hitp->hit_vpriv[X];
 
-		bn_mat_idn( M1 );
+		MAT_IDN( M1 );
 		M1[10] = 0;	/* M1[3,3] = 0 */
 		/* M1 = invR * S * M1 * S * R */
 		bn_mat_mul( M2, epa->epa_invRoS, M1);
@@ -630,8 +638,8 @@ int
 rt_epa_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		dtol, f, mag_a, mag_h, ntol, r1, r2;
 	fastf_t		**ellipses, theta_new, theta_prev, rt_ell_ang();
@@ -644,7 +652,10 @@ CONST struct bn_tol	*tol;
 	struct rt_pt_node	*pos_a, *pos_b, *pts_a, *pts_b, *rt_ptalloc();
 	vect_t		A, Au, B, Bu, Hu, V, Work;
 	
+#ifndef NO_MAGIC_CHECKING
 	RT_CK_DB_INTERNAL(ip);
+#endif
+
 	xip = (struct rt_epa_internal *)ip->idb_ptr;
 	RT_EPA_CK_MAGIC(xip);
 
@@ -677,7 +688,7 @@ CONST struct bn_tol	*tol;
 	VCROSS(   Bu, Au, Hu );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Bu );
 	VMOVE(    &R[4], Au );
 	VREVERSE( &R[8], Hu );
@@ -929,8 +940,8 @@ int			sides;
 void
 rt_ell( ov, V, A, B, sides )
 register fastf_t	*ov;
-register CONST fastf_t	*V;
-CONST fastf_t		*A, *B;
+register const fastf_t	*V;
+const fastf_t		*A, *B;
 int			sides;
 {
 	fastf_t	ang, theta, x, y;
@@ -1003,8 +1014,8 @@ rt_epa_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		dtol, f, mag_a, mag_h, ntol, r1, r2;
 	fastf_t		**ellipses, **normals, theta_new, theta_prev;
@@ -1017,7 +1028,7 @@ CONST struct bn_tol	*tol;
 	point_t		p1;
 	struct rt_pt_node	*pos_a, *pos_b, *pts_a, *pts_b, *rt_ptalloc();
 	struct shell	*s;
-	struct faceuse	**outfaceuses;
+	struct faceuse	**outfaceuses = NULL;
 	struct vertex	*vertp[3];
 	struct vertex	***vells = (struct vertex ***)NULL;
 	vect_t		A, Au, B, Bu, Hu, V;
@@ -1063,7 +1074,7 @@ CONST struct bn_tol	*tol;
 	VSCALE( B_orig , Bu , xip->epa_r2 );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Bu );
 	VMOVE(    &R[4], Au );
 	VREVERSE( &R[8], Hu );
@@ -1150,8 +1161,11 @@ CONST struct bn_tol	*tol;
 		/* free mem for old approximation of parabola */
 		pos_b = pts_b;
 		while ( pos_b ) {
+			struct rt_pt_node *tmp;
+
+			tmp = pos_b->next;
 			bu_free( (char *)pos_b, "rt_pt_node" );
-			pos_b = pos_b->next;
+			pos_b = tmp;
 		}
 		/* construct parabola along semi-major axis of epa
 		 * using same z coords as parab along semi-minor axis
@@ -1213,8 +1227,9 @@ CONST struct bn_tol	*tol;
 		} else if (theta_new < theta_prev) {
 			nseg *= 2;
 			pts_dbl[i] = 1;
-		} else
+		} else {
 			pts_dbl[i] = 0;
+		}
 		theta_prev = theta_new;
 
 		ellipses[i] = (fastf_t *)bu_malloc(3*(nseg+1)*sizeof(fastf_t),
@@ -1461,9 +1476,9 @@ fail:
 int
 rt_epa_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	LOCAL struct rt_epa_internal	*xip;
 	union record			*rp;
@@ -1476,7 +1491,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_EPA;
 	ip->idb_meth = &rt_functab[ID_EPA];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_epa_internal), "rt_epa_internal");
@@ -1509,9 +1525,9 @@ CONST struct db_i		*dbip;
 int
 rt_epa_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_epa_internal	*xip;
 	union record		*epa;
@@ -1522,7 +1538,7 @@ CONST struct db_i		*dbip;
 	xip = (struct rt_epa_internal *)ip->idb_ptr;
 	RT_EPA_CK_MAGIC(xip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "epa external");
 	epa = (union record *)ep->ext_buf;
@@ -1565,6 +1581,118 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ E P A _ I M P O R T 5
+ *
+ *  Import an EPA from the database format to the internal format.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_epa_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	LOCAL struct rt_epa_internal	*xip;
+	fastf_t				vec[11];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 11 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_EPA;
+	ip->idb_meth = &rt_functab[ID_EPA];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_epa_internal), "rt_epa_internal");
+
+	xip = (struct rt_epa_internal *)ip->idb_ptr;
+	xip->epa_magic = RT_EPA_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 11 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( xip->epa_V, mat, &vec[0*3] );
+	MAT4X3VEC( xip->epa_H, mat, &vec[1*3] );
+	MAT4X3VEC( xip->epa_Au, mat, &vec[2*3] );
+	VUNITIZE( xip->epa_Au );
+	xip->epa_r1 = vec[3*3] / mat[15];
+	xip->epa_r2 = vec[3*3+1] / mat[15];
+
+	if( xip->epa_r1 < SMALL_FASTF || xip->epa_r2 < SMALL_FASTF )
+	{
+		bu_log( "rt_epa_import: r1 or r2 are zero\n" );
+		bu_free( (char *)ip->idb_ptr , "rt_epa_import: ip->idb_ptr" );
+		return( -1 );
+	}
+
+	return(0);			/* OK */
+}
+
+/*
+ *			R T _ E P A _ E X P O R T 5
+ *
+ *  The name is added by the caller, in the usual place.
+ */
+int
+rt_epa_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_epa_internal	*xip;
+	fastf_t			vec[11];
+	fastf_t			mag_h;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_EPA )  return(-1);
+	xip = (struct rt_epa_internal *)ip->idb_ptr;
+	RT_EPA_CK_MAGIC(xip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 11;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "epa external");
+
+	if (!NEAR_ZERO( MAGNITUDE(xip->epa_Au) - 1., RT_LEN_TOL)) {
+		bu_log("rt_epa_export: Au not a unit vector!\n");
+		return(-1);
+	}
+
+	mag_h = MAGNITUDE(xip->epa_H);
+	
+	if ( mag_h < RT_LEN_TOL
+		|| xip->epa_r1 < RT_LEN_TOL
+		|| xip->epa_r2 < RT_LEN_TOL) {
+		bu_log("rt_epa_export: not all dimensions positive!\n");
+		return(-1);
+	}
+	
+	if ( !NEAR_ZERO( VDOT(xip->epa_Au, xip->epa_H)/mag_h, RT_DOT_TOL) ) {
+		bu_log("rt_epa_export: Au and H are not perpendicular!\n");
+		return(-1);
+	}
+	
+	if (xip->epa_r2 > xip->epa_r1) {
+		bu_log("rt_epa_export: semi-minor axis cannot be longer than semi-major axis!\n");
+		return(-1);
+	}
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*3], xip->epa_V, local2mm );
+	VSCALE( &vec[1*3], xip->epa_H, local2mm );
+	VMOVE( &vec[2*3], xip->epa_Au ); /* don't scale a unit vector */
+	vec[3*3] = xip->epa_r1 * local2mm;
+	vec[3*3+1] = xip->epa_r2 * local2mm;
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 11 );
+
+	return(0);
+}
+
+/*
  *			R T _ E P A _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1574,7 +1702,7 @@ CONST struct db_i		*dbip;
 int
 rt_epa_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {

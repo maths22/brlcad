@@ -15,13 +15,46 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char libbu_list_RCSid[] = "@(#)$Header$ (ARL)";
+static const char libbu_list_RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 #include <stdio.h>
 #include "machine.h"
 #include "bu.h"
+
+#include <assert.h>
+
+/*
+ *			B U _ L I S T _ N E W
+ *
+ *	Creates and initializes a bu_list head structure
+ */
+struct bu_list *
+bu_list_new()
+{
+	struct bu_list *new;
+
+	BU_GETSTRUCT( new, bu_list );
+	BU_LIST_INIT( new );
+
+	return( new );
+}
+
+/*
+ *			B U _ L I S T _ P O P
+ *
+ *	Returns the results of BU_LIST_POP
+ */
+struct bu_list *
+bu_list_pop( struct bu_list *hp )
+{
+	struct bu_list *p;
+
+	BU_LIST_POP( bu_list, hp, p );
+
+	return( p );
+}
 
 /*
  *			B U _ L I S T _ L E N
@@ -30,10 +63,10 @@ static char libbu_list_RCSid[] = "@(#)$Header$ (ARL)";
  */
 int
 bu_list_len( hd )
-register CONST struct bu_list	*hd;
+register const struct bu_list	*hd;
 {
 	register int			count = 0;
-	register CONST struct bu_list	*ep;
+	register const struct bu_list	*ep;
 
 	for( BU_LIST_FOR( ep, bu_list, hd ) )  {
 		count++;
@@ -146,10 +179,10 @@ struct bu_list	*headp;
  */
 void
 bu_ck_list( hd, str )
-CONST struct bu_list	*hd;
-CONST char		*str;
+const struct bu_list	*hd;
+const char		*str;
 {
-	register CONST struct bu_list	*cur;
+	register const struct bu_list	*cur;
 	int	head_count = 0;
 
 	cur = hd;
@@ -192,54 +225,68 @@ CONST char		*str;
  */
 void
 bu_ck_list_magic( hd, str, magic )
-CONST struct bu_list	*hd;
-CONST char		*str;
-CONST long		magic;
+const struct bu_list	*hd;
+const char		*str;
+const long		magic;
 {
-	register CONST struct bu_list	*cur;
+	register const struct bu_list	*cur;
 	int	head_count = 0;
+	int	item = 0;
 
 	cur = hd;
 	do  {
 		if( cur->magic == BU_LIST_HEAD_MAGIC )  {
 			head_count++;
 		} else if( cur->magic != magic ) {
-			bu_log("nmg_ck_list(%s) cur magic=(%s)x%x, cur->forw magic=(%s)x%x, hd magic=(%s)x%x\n",
+			bu_log("bu_ck_list(%s) cur magic=(%s)x%x, cur->forw magic=(%s)x%x, hd magic=(%s)x%x, item=%d\n",
 				str, bu_identify_magic(cur->magic), cur->magic,
 				bu_identify_magic(cur->forw->magic), cur->forw->magic,
-				bu_identify_magic(hd->magic), hd->magic);
-			bu_bomb("nmg_ck_list_magic() cur->magic\n");
+				bu_identify_magic(hd->magic), hd->magic,
+				item);
+			bu_bomb("bu_ck_list_magic() cur->magic\n");
 		}
 
 		if( !cur->forw )  {
-			bu_log("nmg_ck_list_magic(%s) cur=x%x, cur->forw=x%x, hd=x%x\n",
-				str, cur, cur->forw, hd );
-			bu_bomb("nmg_ck_list_magic() forw\n");
+			bu_log("bu_ck_list_magic(%s) cur=x%x, cur->forw=x%x, hd=x%x, item=%d\n",
+				str, cur, cur->forw, hd, item );
+			bu_bomb("bu_ck_list_magic() forw NULL\n");
 		}
 		if( cur->forw->back != cur )  {
-			bu_log("nmg_ck_list_magic(%s) cur=x%x, cur->forw=x%x, cur->forw->back=x%x, hd=x%x\n",
-				str, cur, cur->forw, cur->forw->back, hd );
+			bu_log("bu_ck_list_magic(%s) cur=x%x, cur->forw=x%x, cur->forw->back=x%x, hd=x%x, item=%d\n",
+				str, cur, cur->forw, cur->forw->back, hd, item );
 			bu_log(" cur=%s, cur->forw=%s, cur->forw->back=%s\n",
 				bu_identify_magic(cur->magic),
 				bu_identify_magic(cur->forw->magic),
 				bu_identify_magic(cur->forw->back->magic) );
-			bu_bomb("nmg_ck_list_magic() forw->back\n");
+			bu_bomb("bu_ck_list_magic() cur->forw->back != cur\n");
 		}
 		if( !cur->back )  {
-			bu_log("nmg_ck_list_magic(%s) cur=x%x, cur->back=x%x, hd=x%x\n",
-				str, cur, cur->back, hd );
-			bu_bomb("nmg_ck_list_magic() back\n");
+			bu_log("bu_ck_list_magic(%s) cur=x%x, cur->back=x%x, hd=x%x, item=%d\n",
+				str, cur, cur->back, hd, item );
+			bu_bomb("bu_ck_list_magic() back NULL\n");
 		}
 		if( cur->back->forw != cur )  {
-			bu_log("nmg_ck_list_magic(%s) cur=x%x, cur->back=x%x, cur->back->forw=x%x, hd=x%x\n",
-				str, cur, cur->back, cur->back->forw, hd );
-			bu_bomb("nmg_ck_list_magic() back->forw\n");
+			bu_log("bu_ck_list_magic(%s) cur=x%x, cur->back=x%x, cur->back->forw=x%x, hd=x%x, item=%d\n",
+				str, cur, cur->back, cur->back->forw, hd, item );
+			bu_bomb("bu_ck_list_magic() cur->back->forw != cur\n");
 		}
 		cur = cur->forw;
+		item++;
 	} while( cur != hd );
 
 	if( head_count != 1 )  {
-		bu_log("nmg_ck_list_magic(%s) head_count = %d, hd=x%x\n", str, head_count, hd);
-		bu_bomb("nmg_ck_list_magic() headless!\n");
+		bu_log("bu_ck_list_magic(%s) head_count = %d, hd=x%x, items=%d\n", str, head_count, hd, item);
+		bu_bomb("bu_ck_list_magic() headless!\n");
 	}
+}
+
+struct bu_list *
+bu_list_dequeue_next( struct bu_list *hp, struct bu_list *p )
+{
+	struct bu_list *p2;
+
+	p2 = BU_LIST_NEXT( bu_list, p );
+	BU_LIST_DEQUEUE( p2 );
+
+	return( p2 );
 }

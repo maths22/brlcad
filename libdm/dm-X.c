@@ -31,7 +31,7 @@ static const char RCSid[] = "@(#)$Header$ (BRL)";
 #include "tk.h"
 #include <X11/Xutil.h>
 
-#define USE_DIALS_AND_BUTTONS 0
+#define USE_DIALS_AND_BUTTONS 1
 
 #ifdef HAVE_XOSDEFS_H
 #include <X11/Xfuncproto.h>
@@ -139,6 +139,45 @@ fastf_t min_short = (fastf_t)SHRT_MIN;
 fastf_t max_short = (fastf_t)SHRT_MAX;
 
 extern int vectorThreshold;	/* defined in libdm/tcl.c */ 
+
+static void 
+get_color(Display *dpy, Colormap cmap, XColor *color)
+{
+	Status st;
+	XColor rgb;
+#define CSCK   0xf800
+
+	rgb = *color;
+
+	st = XAllocColor(dpy, cmap, color);
+	switch (st) {
+	case 1: 
+		if ( (color->red & CSCK) != (rgb.red & CSCK) ||
+		     (color->green & CSCK) != (rgb.green & CSCK) ||
+		     (color->blue & CSCK) != (rgb.blue & CSCK) ) {
+			bu_log("\nlooking for fg    (%3d,%3d,%3d) %04x,%04x,%04x got \n                  (%3d,%3d,%3d) %04x,%04x,%04x\n",
+			       (rgb.red >> 8), (rgb.green >> 8), (rgb.blue >> 8),
+			       rgb.red, rgb.green, rgb.blue,
+
+			       (color->red >> 8), (color->green >> 8), (color->blue >> 8),
+			       color->red, color->green, color->blue);
+		}
+		break;
+	case BadColor:
+		bu_log("XAllocColor failed (BadColor) for (%3d,%3d,%3d) %04x,%04x,%04x\n", 
+		       (rgb.red >> 8), (rgb.green >> 8), (rgb.blue >> 8),
+		       rgb.red, rgb.green, rgb.blue);
+		break;
+
+	default:
+		bu_log("XAllocColor error for (%3d,%3d,%3d) %04x,%04x,%04x\n", 
+		       (rgb.red >> 8), (rgb.green >> 8), (rgb.blue >> 8),
+		       rgb.red, rgb.green, rgb.blue);
+		break;
+	}
+#undef CSCK
+
+}
 
 /*
  *			X _ O P E N
@@ -334,17 +373,20 @@ X_open(interp, argc, argv)
   if(((struct x_vars *)dmp->dm_vars.priv_vars)->is_trueColor){
     XColor fg, bg;
 
-    fg.red = 255 << 8;
+    fg.red = 65535;
     fg.green = fg.blue = 0;
-    XAllocColor(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
-		((struct dm_xvars *)dmp->dm_vars.pub_vars)->cmap,
-		&fg);
+
+    get_color(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
+	      ((struct dm_xvars *)dmp->dm_vars.pub_vars)->cmap,
+	      &fg);
+
     ((struct x_vars *)dmp->dm_vars.priv_vars)->fg = fg.pixel;
 
     bg.red = bg.green = bg.blue = 0;
-    XAllocColor(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
+    get_color(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
 		((struct dm_xvars *)dmp->dm_vars.pub_vars)->cmap,
 		&bg);
+
     ((struct x_vars *)dmp->dm_vars.priv_vars)->bg = bg.pixel;
   }else{
     dm_allocate_color_cube( ((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
@@ -443,7 +485,7 @@ Skip_dials:
 			 ((struct x_vars *)dmp->dm_vars.priv_vars)->bg);
   Tk_MapWindow(((struct dm_xvars *)dmp->dm_vars.pub_vars)->xtkwin);
 
-  bn_mat_idn(((struct x_vars *)dmp->dm_vars.priv_vars)->xmat);
+  MAT_IDN(((struct x_vars *)dmp->dm_vars.priv_vars)->xmat);
 
   return dmp;
 }
@@ -575,7 +617,7 @@ int which_eye;
 #endif
   }
 
-  bn_mat_copy(((struct x_vars *)dmp->dm_vars.priv_vars)->xmat, mat);
+  MAT_COPY(((struct x_vars *)dmp->dm_vars.priv_vars)->xmat, mat);
   return TCL_OK;
 }
 
@@ -944,9 +986,10 @@ int strict;
     color.red = r << 8;
     color.green = g << 8;
     color.blue = b << 8;
-    XAllocColor(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
+    get_color(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
 		((struct dm_xvars *)dmp->dm_vars.pub_vars)->cmap,
-		&color);
+	      &color);
+
     gcv.foreground = color.pixel;
   }else
     gcv.foreground = dm_get_pixel(r, g, b,
@@ -976,14 +1019,17 @@ unsigned char r, g, b;
   dmp->dm_bg[2] = b;
 
   if(((struct x_vars *)dmp->dm_vars.priv_vars)->is_trueColor){
+
     XColor color;
 
     color.red = r << 8;
     color.green = g << 8;
     color.blue = b << 8;
-    XAllocColor(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
+
+    get_color(((struct dm_xvars *)dmp->dm_vars.pub_vars)->dpy,
 		((struct dm_xvars *)dmp->dm_vars.pub_vars)->cmap,
 		&color);
+
     ((struct x_vars *)dmp->dm_vars.priv_vars)->bg = color.pixel;
   } else
     ((struct x_vars *)dmp->dm_vars.priv_vars)->bg =

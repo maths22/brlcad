@@ -535,7 +535,7 @@ else
 fi
 
 
-# RCS: @(#) $Id: configure,v 1.1.1.1.2.1 2000-12-08 21:03:00 bparker Exp $
+# RCS: @(#) $Id: configure,v 1.2 2000-12-08 21:03:22 bparker Exp $
 
 TCL_VERSION=8.3
 TCL_MAJOR_VERSION=8

@@ -5,7 +5,7 @@
 			Maryland 21005-5066
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #ifndef DEBUG
@@ -20,12 +20,16 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include <signal.h>
 
 #include "conf.h"
 #include "./vecmath.h"
 #include "machine.h"
+#include "bu.h"
 #include "vmath.h"
+#include "bn.h"
 #include "raytrace.h"
+#include "libtermio.h"
 
 #include "./Sc.h"
 #include "./ascii.h"
@@ -136,7 +140,7 @@ int	mode;
 		static int      lastlen = -1;
 		register int    len;
 		static char	buf[LNBUFSZ] = { 0 };
-		register char	*p;
+		register char	*p='\0';
 	if( ! tty )
 		return	false;
 	switch( mode )
@@ -485,7 +489,7 @@ unsigned rayno;		/* ray number for this burst point */
 		azim = atan2( cosyr, cosxr );
 	sinelev = Dot( gridver, raydir );
 	if(	fprintf( outfp,
-			"%c % 8.3f % 8.3f % 6u\n",
+			"%c %8.3f %8.3f %6u\n",
 			PB_RAY_HEADER,
 			azim,   /* ray azimuth angle WRT shotline (radians). */
 			sinelev, /* sine of ray elevation angle WRT shotline. */
@@ -937,7 +941,7 @@ void
 prntTitle( title )
 char	*title;
 	{
-	if( ! tty || rt_g.debug )
+	if( ! tty || RT_G_DEBUG )
 		brst_log( "%s\n", title == NULL ? "(null)" : title );
 	}
 

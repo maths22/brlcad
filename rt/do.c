@@ -17,17 +17,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrt[] = "@(#)$Header$ (BRL)";
+static const char RCSrt[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <ctype.h>
 #include <math.h>
 #ifdef HAVE_UNIX_IO
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <fcntl.h>
 #endif
 
 #include "machine.h"
@@ -35,7 +37,7 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "fb.h"
 #include "externs.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "../librt/debug.h"
 
 extern int	rdebug;			/* RT program debugging (not library) */
@@ -77,7 +79,6 @@ extern int	pix_start;		/* pixel to start at */
 extern int	pix_end;		/* pixel to end at */
 extern int	nobjs;			/* Number of cmd-line treetops */
 extern char	**objtab;		/* array of treetop strings */
-extern char	*beginptr;		/* sbrk() at start of program */
 extern int	matflag;		/* read matrix from stdin */
 extern int	desiredframe;		/* frame to start at */
 extern int	finalframe;		/* frame to halt at */
@@ -92,11 +93,13 @@ extern int	max_bounces;		/* max reflection/recursion level */
 extern int	max_ireflect;		/* max internal reflection level */
 /***** end variables shared with refract.c *****/
 
+
 /***** variables shared with viewg3.c *****/
-struct bu_vls	ray_data_file;	/* file name for ray data output */
+struct bu_vls   ray_data_file;  /* file name for ray data output */
 /***** end variables shared with viewg3.c *****/
 
 /***** variables shared with g_cline.c ******/
+
 extern fastf_t rt_cline_radius;
 /***** end variables shared with g_cline.c ******/
 
@@ -104,6 +107,38 @@ extern fastf_t rt_cline_radius;
 void		def_tree();
 void		do_ae();
 void		res_pr();
+void		memory_summary(void);
+
+/*
+ *			O L D _ F R A M E
+ *
+ *  Acquire particulars about a frame, in the old format.
+ *  Returns -1 if unable to acquire info, 0 if successful.
+ */
+int
+old_frame( fp )
+FILE *fp;
+{
+	register int i;
+	char number[128];
+
+	/* Visible part is from -1 to +1 in view space */
+	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
+	viewsize = atof(number);
+	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
+	eye_model[X] = atof(number);
+	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
+	eye_model[Y] = atof(number);
+	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
+	eye_model[Z] = atof(number);
+	for( i=0; i < 16; i++ )  {
+		if( fscanf( fp, "%s", number ) != 1 )
+			return(-1);
+		Viewrotscale[i] = atof(number);
+	}
+	return(0);		/* OK */
+}
+
 
 /*
  *			O L D _ W A Y
@@ -155,44 +190,13 @@ FILE *fp;
 	return(1);			/* old way, all done */
 }
 
-/*
- *			O L D _ F R A M E
- *
- *  Acquire particulars about a frame, in the old format.
- *  Returns -1 if unable to acquire info, 0 if successful.
- */
-int
-old_frame( fp )
-FILE *fp;
-{
-	register int i;
-	char number[128];
-
-	/* Visible part is from -1 to +1 in view space */
-	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
-	viewsize = atof(number);
-	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
-	eye_model[X] = atof(number);
-	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
-	eye_model[Y] = atof(number);
-	if( fscanf( fp, "%s", number ) != 1 )  return(-1);
-	eye_model[Z] = atof(number);
-	for( i=0; i < 16; i++ )  {
-		if( fscanf( fp, "%s", number ) != 1 )
-			return(-1);
-		Viewrotscale[i] = atof(number);
-	}
-	return(0);		/* OK */
-}
 
 /*
  *			C M _ S T A R T
  *
  *  Process "start" command in new format input stream
  */
-cm_start( argc, argv )
-int	argc;
-char	**argv;
+int cm_start( int argc, char **argv)
 {
 	char	*buf;
 	int	frame;
@@ -226,17 +230,13 @@ char	**argv;
 	return(-1);		/* EOF */
 }
 
-cm_vsize( argc, argv )
-int	argc;
-char	**argv;
+int cm_vsize( int argc, char **argv)
 {
 	viewsize = atof( argv[1] );
 	return(0);
 }
 
-cm_eyept( argc, argv )
-int	argc;
-char	**argv;
+int cm_eyept(int argc, char **argv)
 {
 	register int i;
 
@@ -245,9 +245,7 @@ char	**argv;
 	return(0);
 }
 
-cm_lookat_pt( argc, argv )
-int	argc;
-char	**argv;
+int cm_lookat_pt(int argc, char **argv)
 {
 	point_t	pt;
 	vect_t	dir;
@@ -270,9 +268,7 @@ char	**argv;
 	return(0);
 }
 
-cm_vrot( argc, argv )
-int	argc;
-char	**argv;
+int cm_vrot( int argc, char **argv)
 {
 	register int i;
 
@@ -281,9 +277,7 @@ char	**argv;
 	return(0);
 }
 
-cm_orientation( argc, argv )
-int	argc;
-char	**argv;
+int cm_orientation(int argc, char **argv)
 {
 	register int	i;
 	quat_t		quat;
@@ -294,9 +288,7 @@ char	**argv;
 	return(0);
 }
 
-cm_end( argc, argv )
-int	argc;
-char	**argv;
+int cm_end(int argc, char **argv)
 {
 	struct rt_i *rtip = ap.a_rt_i;
 
@@ -312,9 +304,7 @@ char	**argv;
 	return(0);
 }
 
-cm_tree( argc, argv )
-int		argc;
-CONST char	**argv;
+int cm_tree( int argc, const char **argv)
 {
 	register struct rt_i *rtip = ap.a_rt_i;
 	struct bu_vls	times;
@@ -336,9 +326,7 @@ CONST char	**argv;
 	return(0);
 }
 
-cm_multiview( argc, argv )
-int	argc;
-char	**argv;
+int cm_multiview( int argc, char **argv)
 {
 	register struct rt_i *rtip = ap.a_rt_i;
 	int i;
@@ -370,9 +358,7 @@ char	**argv;
  *
  *  Usage:  anim <path> <type> args
  */
-cm_anim( argc, argv )
-int	argc;
-char	**argv;
+int cm_anim(int argc, const char **argv)
 {
 
 	if( db_parse_anim( ap.a_rt_i->rti_dbip, argc, argv ) < 0 )  {
@@ -387,9 +373,7 @@ char	**argv;
  *
  *  Clean out results of last rt_prep(), and start anew.
  */
-cm_clean( argc, argv )
-int	argc;
-char	**argv;
+int cm_clean(int argc, char **argv)
 {
 	/* Allow lighting model to clean up (e.g. lights, materials, etc) */
 	view_cleanup( ap.a_rt_i );
@@ -408,10 +392,7 @@ char	**argv;
  *  Intended for memory debugging, to help chase down memory "leaks".
  *  This terminates the program, as there is no longer a database.
  */
-int
-cm_closedb( argc, argv )
-int	argc;
-char	**argv;
+int cm_closedb(int argc, char **argv)
 {
 	db_close( ap.a_rt_i->rti_dbip );
 	ap.a_rt_i->rti_dbip = DBI_NULL;
@@ -430,6 +411,7 @@ extern struct bu_structparse view_parse[];
 
 /* from librt/g_bot.c */
 extern int rt_bot_minpieces;
+extern int rt_bot_tri_per_piece;
 
 /*
  *  Generic settable parameters.
@@ -464,6 +446,7 @@ struct bu_structparse set_parse[] = {
 	{"%f",	1, "perspective", byteoffset(rt_perspective),	BU_STRUCTPARSE_FUNC_NULL },
 	{"%f",	1, "angle",	byteoffset(rt_perspective),	BU_STRUCTPARSE_FUNC_NULL },
 	{"%d",  1, "rt_bot_minpieces", byteoffset(rt_bot_minpieces),BU_STRUCTPARSE_FUNC_NULL },
+	{"%d",  1, "rt_bot_tri_per_piece", byteoffset(rt_bot_tri_per_piece),BU_STRUCTPARSE_FUNC_NULL },
 	{"%f",  1, "rt_cline_radius", byteoffset(rt_cline_radius),BU_STRUCTPARSE_FUNC_NULL },
 	{"%S",  1, "ray_data_file", byteoffset(ray_data_file),BU_STRUCTPARSE_FUNC_NULL },
 	{"i", byteoffset(view_parse[0]),"View_Module-Specific Parameters", 0, BU_STRUCTPARSE_FUNC_NULL },
@@ -476,9 +459,7 @@ struct bu_structparse set_parse[] = {
  *
  *  Allow variable values to be set or examined.
  */
-cm_set( argc, argv )
-int	argc;
-char	**argv;
+int cm_set(int argc, char **argv)
 {
 	struct bu_vls	str;
 
@@ -500,9 +481,7 @@ char	**argv;
 /* 
  *			C M _ A E
  */
-cm_ae( argc, argv )
-int	argc;
-char	**argv;
+int cm_ae( int argc, char **argv)
 {
 	azimuth = atof(argv[1]);	/* set elevation and azimuth */
 	elevation = atof(argv[2]);
@@ -515,9 +494,7 @@ char	**argv;
 /*
  *			C M _ O P T
  */
-cm_opt( argc, argv )
-int	argc;
-char	**argv;
+int cm_opt(int argc, char **argv)
 {
 	if( get_args( argc, argv ) <= 0 )
 		return(-1);
@@ -536,28 +513,18 @@ register struct rt_i	*rtip;
 {
 	struct bu_vls	times;
 
-	if( rtip->rti_magic != RTI_MAGIC )  {
-		bu_log("rtip=x%x, rti_magic=x%x s/b x%x\n", rtip,
-			rtip->rti_magic, RTI_MAGIC );
-		rt_bomb("def_tree:  bad rtip\n");
-	}
+	RT_CK_RTI(rtip);
 
 	bu_vls_init( &times );
 	rt_prep_timer();
-	if( rt_gettrees(rtip, nobjs, (CONST char **)objtab, npsw) < 0 )
+	if( rt_gettrees(rtip, nobjs, (const char **)objtab, npsw) < 0 )
 		bu_log("rt_gettrees(%s) FAILED\n", objtab[0]);
 	(void)rt_get_timer( &times, NULL );
 
 	if (rt_verbosity & VERBOSE_STATS)
 		bu_log("GETTREE: %s\n", bu_vls_addr(&times));
 	bu_vls_free( &times );
-
-#ifdef HAVE_SBRK
-	if (rt_verbosity & VERBOSE_STATS)
-		bu_log("Additional dynamic memory used=%ld. bytes\n",
-			(long)((char *)sbrk(0)-beginptr) );
-	beginptr = (char *) sbrk(0);
-#endif
+	memory_summary();
 }
 
 /*
@@ -586,12 +553,7 @@ struct rt_i	*rtip;
 			bu_log( "PREP: %s\n", bu_vls_addr(&times) );
 		bu_vls_free( &times );
 	}
-#ifdef HAVE_SBRK
-	if (rt_verbosity & VERBOSE_STATS)
-		bu_log("Additional dynamic memory used=%ld. bytes\n",
-			(long)((char *)sbrk(0)-beginptr) );
-	beginptr = (char *) sbrk(0);
-#endif
+	memory_summary();
 	if (rt_verbosity & VERBOSE_STATS)  {
 		bu_log("%s: %d nu, %d cut, %d box (%d empty)\n",
 			rtip->rti_space_partition == RT_PART_NUGRID ?
@@ -613,6 +575,7 @@ rt_pr_cut_info( rtip, "main" );
  *
  *  Returns -1 on error, 0 if OK.
  */
+int
 do_frame( framenumber )
 int framenumber;
 {
@@ -637,10 +600,18 @@ int framenumber;
 	if (rt_verbosity & VERBOSE_VIEWDETAIL)
 		bu_log("Tree: %d solids in %d regions\n",
 			rtip->nsolids, rtip->nregions );
+
+	if (Query_one_pixel) {
+		query_rdebug = rdebug;
+		query_debug = RT_G_DEBUG;
+		rt_g.debug = rdebug = 0;
+	}
+
 	if( rtip->nsolids <= 0 )  {
 		bu_log("rt ERROR: No solids\n");
 		exit(3);
 	}
+
 	if (rt_verbosity & VERBOSE_VIEWDETAIL)
 		bu_log("Model: X(%g,%g), Y(%g,%g), Z(%g,%g)\n",
 			rtip->mdl_min[X], rtip->mdl_max[X],
@@ -680,7 +651,7 @@ int framenumber;
 			bn_mat_print("model2view", model2view);
 			quat_quat2mat( rotscale, quat );
 			rotscale[15] = 0.5 * viewsize;
-			bn_mat_idn( xlate );
+			MAT_IDN( xlate );
 			MAT_DELTAS( xlate, -eye_model[X], -eye_model[Y], -eye_model[Z] );
 			bn_mat_mul( new, rotscale, xlate );
 			bn_mat_print("reconstructed m2v", new);
@@ -852,7 +823,7 @@ int framenumber;
 	if( incr_mode )  {
 		for( incr_level = 1; incr_level <= incr_nlevel; incr_level++ )  {
 			if( incr_level > 1 )
-				view_2init( &ap );
+				view_2init( &ap, framename );
 			do_run( 0, (1<<incr_level)*(1<<incr_level)-1 );
 		}
 	} else {
@@ -886,7 +857,16 @@ int framenumber;
 	 */
 #if !defined(alliant)
 	if( npsw > 1 )  {
-		nutime = utime / npsw;			/* compensate */
+		int avail_cpus;
+		int ncpus;
+
+		avail_cpus = bu_avail_cpus();
+		if( npsw > avail_cpus ) {
+			ncpus = avail_cpus;
+		} else {
+			ncpus = npsw;
+		}
+		nutime = utime / ncpus;			/* compensate */
 	} else
 #endif
 		nutime = utime;
@@ -897,12 +877,7 @@ int framenumber;
 	if (rt_verbosity & VERBOSE_STATS)
 		bu_log("SHOT: %s\n", bu_vls_addr( &times ) );
 	bu_vls_free( &times );
-#ifdef HAVE_SBRK
-	if (rt_verbosity & VERBOSE_STATS)
-		bu_log("Additional dynamic memory used=%ld. bytes\n",
-			(long)((char *)sbrk(0)-beginptr) );
-	beginptr = (char *) sbrk(0);
-#endif
+	memory_summary();
 	if (rt_verbosity & VERBOSE_STATS) {
 		bu_log("%ld solid/ray intersections: %ld hits + %ld miss\n",
 			rtip->nshots, rtip->nhits, rtip->nmiss );
@@ -1006,11 +981,11 @@ double azim, elev;
 	rtip->mdl_max[Y] = ceil( rtip->mdl_max[Y] );
 	rtip->mdl_max[Z] = ceil( rtip->mdl_max[Z] );
 
-	bn_mat_idn( Viewrotscale );
+	MAT_IDN( Viewrotscale );
 	bn_mat_angles( Viewrotscale, 270.0+elev, 0.0, 270.0-azim );
 
 	/* Look at the center of the model */
-	bn_mat_idn( toEye );
+	MAT_IDN( toEye );
 	toEye[MDX] = -(rtip->mdl_max[X]+rtip->mdl_min[X])/2;
 	toEye[MDY] = -(rtip->mdl_max[Y]+rtip->mdl_min[Y])/2;
 	toEye[MDZ] = -(rtip->mdl_max[Z]+rtip->mdl_min[Z])/2;
@@ -1068,36 +1043,36 @@ res_pr()
  */
 
 struct command_tab rt_cmdtab[] = {
-	"start", "frame number", "start a new frame",
-		cm_start,	2, 2,
-	"viewsize", "size in mm", "set view size",
-		cm_vsize,	2, 2,
-	"eye_pt", "xyz of eye", "set eye point",
-		cm_eyept,	4, 4,
-	"lookat_pt", "x y z [yflip]", "set eye look direction, in X-Y plane",
-		cm_lookat_pt,	4, 5,
-	"viewrot", "4x4 matrix", "set view direction from matrix",
-		cm_vrot,	17,17,
-	"orientation", "quaturnion", "set view direction from quaturnion",
-		cm_orientation,	5, 5,
-	"end", 	"", "end of frame setup, begin raytrace",
-		cm_end,		1, 1,
-	"multiview", "", "produce stock set of views",
-		cm_multiview,	1, 1,
-	"anim", 	"path type args", "specify articulation animation",
-		cm_anim,	4, 999,
-	"tree", 	"treetop(s)", "specify alternate list of tree tops",
-		cm_tree,	1, 999,
-	"clean", "", "clean articulation from previous frame",
-		cm_clean,	1, 1,
-	"_closedb", "", "Close .g database, (for memory debugging)",
-		cm_closedb,	1, 1,
-	"set", 	"", "show or set parameters",
-		cm_set,		1, 999,
-	"ae", "azim elev", "specify view as azim and elev, in degrees",
-		cm_ae,		3, 3,
-	"opt", "-flags", "set flags, like on command line",
-		cm_opt,		2, 999,
-	(char *)0, (char *)0, (char *)0,
-		0,		0, 0	/* END */
+	{"start", "frame number", "start a new frame",
+		cm_start,	2, 2},
+	{"viewsize", "size in mm", "set view size",
+		cm_vsize,	2, 2},
+	{"eye_pt", "xyz of eye", "set eye point",
+		cm_eyept,	4, 4},
+	{"lookat_pt", "x y z [yflip]", "set eye look direction, in X-Y plane",
+		cm_lookat_pt,	4, 5},
+	{"viewrot", "4x4 matrix", "set view direction from matrix",
+		cm_vrot,	17,17},
+	{"orientation", "quaturnion", "set view direction from quaturnion",
+		cm_orientation,	5, 5},
+	{"end", 	"", "end of frame setup, begin raytrace",
+		cm_end,		1, 1},
+	{"multiview", "", "produce stock set of views",
+		cm_multiview,	1, 1},
+	{"anim", 	"path type args", "specify articulation animation",
+		cm_anim,	4, 999},
+	{"tree", 	"treetop(s)", "specify alternate list of tree tops",
+		cm_tree,	1, 999},
+	{"clean", "", "clean articulation from previous frame",
+		cm_clean,	1, 1},
+	{"_closedb", "", "Close .g database, (for memory debugging)",
+		cm_closedb,	1, 1},
+	{"set", 	"", "show or set parameters",
+		cm_set,		1, 999},
+	{"ae", "azim elev", "specify view as azim and elev, in degrees",
+		cm_ae,		3, 3},
+	{"opt", "-flags", "set flags, like on command line",
+		cm_opt,		2, 999},
+	{(char *)0, (char *)0, (char *)0,
+	        0,		0, 0	/* END */}
 };

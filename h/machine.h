@@ -25,7 +25,7 @@
  *
  *  General Symbols and Types Defined -
  *
- *	CONST -
+ *	CONST  - deprecated - (use const)
  *		A portable way of indicating that the ANSI C "const"
  *		keyword is desired, when compiling on an ANSI compiler.
  *
@@ -37,7 +37,7 @@
  *		pointers to data bytes, so a declaration of "char *"
  *		isn't generic enough.
  *
- *	SIGNED -
+ *	SIGNED - deprecated - (use signed)
  *		A portable way of declaring a signed variable, since
  *		the "signed" keyword is not known in K&R compilers.  e.g.:
  *			register SIGNED int twoway;
@@ -204,6 +204,11 @@
  *  Choose for maximum speed      *
  *				  *
  **********************************/
+
+#if defined(_WIN32) && defined(_MSC_VER) && defined(_M_IX86)
+#define const const
+#endif
+
 
 #ifdef HEP
 /********************************
@@ -389,9 +394,9 @@ typedef long	bitv_t;		/* largest integer type */
 #else
 #define BITV_SHIFT	5	/* log2( bits_wide(bitv_t) ) */
 #endif
-#define CONST	const
+#define const	const
 
-#define MAX_PSW		256
+#define MAX_PSW		1024
 #define DEFAULT_PSW	MAX_PSW
 #define PARALLEL	1
 
@@ -406,7 +411,7 @@ typedef long	bitv_t;		/* largest integer type */
  ********************************/
 #if __STDC__
 #define const	/**/		/* Does not support const keyword */
-#define CONST	/**/		/* Does not support const keyword */
+#define const	/**/		/* Does not support const keyword */
 #endif
 
 typedef double	fastf_t;	/* double|float, "Fastest" float type */
@@ -420,6 +425,7 @@ typedef long	bitv_t;		/* largest integer type */
 #define MALLOC_NOT_MP_SAFE 1
 
 #endif
+
 
 #ifdef n16
 /********************************
@@ -448,7 +454,7 @@ typedef long	bitv_t;		/* largest integer type */
  *				*
  ********************************/
 /* icc compiler gets confused on const typedefs */
-#define	CONST	/**/
+#define	const	/**/
 #define	const	/**/
 #define MALLOC_NOT_MP_SAFE 1
 #endif
@@ -490,13 +496,77 @@ typedef long	bitv_t;		/* largest integer type */
 #define BITV_SHIFT	5	/* log2( bits_wide(bitv_t) ) */
 
 #define const   /**/            /* Does not support const keyword */
-#define CONST   /**/            /* Does not support const keyword */
+#define const   /**/            /* Does not support const keyword */
 
 #define MAX_PSW		1	/* only one processor, max */
 #define DEFAULT_PSW	1
 #define MALLOC_NOT_MP_SAFE 1
 
 #endif
+
+#ifdef __ppc__
+/********************************
+ *                              *
+ *      Macintosh PowerPC       *
+ *                              *
+ ********************************/
+#define IEEE_FLOAT      1       /* Uses IEEE style floating point */
+typedef double  fastf_t;        /* double|float, "Fastest" float type */
+#define LOCAL   auto            /* static|auto, for serial|parallel cpu */
+#define FAST    register        /* LOCAL|register, for fastest floats */
+typedef long    bitv_t;         /* could use long long */
+#define BITV_SHIFT      5       /* log2( bits_wide(bitv_t) ) */
+
+#define MAX_PSW         4       /* Unused, I actually pull from posix */
+#define DEFAULT_PSW     2       /* Using 2 allows rt to use both cpus
+				 * on a dual box without the user spec'ing
+				 * -P 2. Does not adversely affect usage
+				 * on 1 cpu box because bu_avail_cpus will
+				 * return 1. */
+			        
+#define PARALLEL        1
+/* #define MALLOC_NOT_MP_SAFE 1 -- not confirmed */
+#endif
+
+#ifdef linux
+/********************************
+ *                              *
+ *        Linux on IA32         *
+ *                              *
+ ********************************/
+#define IEEE_FLOAT      1      /* Uses IEEE style floating point */
+#define BITV_SHIFT      5      /* log2( bits_wide(bitv_t) ) */
+
+typedef double fastf_t;       /* double|float, "Fastest" float type */
+typedef long bitv_t;          /* could use long long */
+
+/*
+ * Note that by default a Linux installation supports parallel using
+ * pthreads. For a 1 cpu installation, toggle these blocks
+ */
+# if 1 /* multi-cpu linux build */
+
+# define LOCAL auto             /* static|auto, for serial|parallel cpu */
+# define FAST register          /* LOCAL|register, for fastest floats */
+# define MAX_PSW         4
+# define DEFAULT_PSW     2      /* Using 2 allows rt to use both cpus
+				 * on a dual box without the user spec'ing
+				 * -P 2. Does not adversely affect usage
+				 * on 1 cpu box because bu_avail_cpus will
+				 * return 1. */
+# define PARALLEL        1
+# define HAS_POSIX_THREADS 1    /* formerly in conf.h */
+# define MALLOC_NOT_MP_SAFE 1   /* uncertain, but this is safer for now */
+
+# else  /* 1 CPU Linux build */
+
+# define LOCAL static		/* static|auto, for serial|parallel cpu */
+# define FAST LOCAL		/* LOCAL|register, for fastest floats */
+# define MAX_PSW        1	/* only one processor, max */
+# define DEFAULT_PSW	1
+
+# endif
+#endif /* linux */
 
 #ifndef LOCAL
 /********************************
@@ -571,34 +641,34 @@ typedef long	bitv_t;		/* largest integer type */
 #  define GENPTR_NULL	((genptr_t)0)
 #endif
 
-/* A portable way of handling the ANSI C const keyword: use CONST */
-#if !defined(CONST)
-# if __STDC__
-#	define	CONST	const
-# else
-#	define	CONST	/**/
-# endif
+/* A portable way of handling pre-ANSI C: remove const keyword */
+#if !defined(__STDC__)
+#  define	const	/**/
 #endif
+#if defined(CONST)
+#  undef  CONST
+#endif
+#define CONST deprecated
 
 /* Even in C++ not all compilers know the "bool" keyword yet */
 #if !defined(BOOL_T)
 # define BOOL_T	int
 #endif
 
-/* A portable way of dealing with pre-ANSI C.  Assume signed variables */
-#if !defined(SIGNED)
-# if __STDC__
-#	define SIGNED	signed
-# else
-#	define SIGNED	/**/
-# endif
+/* A portable way of handling pre-ANSI C: remove signed keyword */
+#if !defined(__STDC__)
+#  define	signed	/**/
 #endif
+#if defined(SIGNED)
+#  undef SIGNED
+#endif
+#define SIGNED deprecated
 
 /*
  *  Some very common BSD --> SYSV conversion aids
  */
 #if defined(SYSV) && !defined(bzero) && !defined(HAVE_BZERO)
-#	define bzero(str,n)		memset( str, '\0', n )
+#	define bzero(str,n)		memset( str, 0, n )
 #	define bcopy(from,to,count)	memcpy( to, from, count )
 #endif
 

@@ -58,15 +58,15 @@
  *	[None]
  */
 
-void
+int
 main( argc, argv )
 int argc;
 char **argv;
 {
-    register CONST char * cp, * slashp;
+    register const char * cp, * slashp;
     int num = 1, oflag = 0, digits = 3;
     int rle_err, ynext, y;
-    CONST char * infname = NULL, * format = "%s%0*d.rle";
+    const char * infname = NULL, * format = "%s%0*d.rle";
     char * prefix = "";
     char filebuf[BUFSIZ];
     rle_hdr in_hdr, out_hdr;

@@ -17,7 +17,7 @@
 	NMG TNURBS	*/
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "./iges_struct.h"
@@ -822,7 +822,7 @@ struct faceuse *fu;
 	struct edgeuse *eu;
 	struct vertexuse *vu;
 	fastf_t *knots;
-	fastf_t u,v;
+	fastf_t u=0,v=0;
 	fastf_t *ctl_points;
 	int edge_no=0;
 	int pt_type;
@@ -849,7 +849,7 @@ struct faceuse *fu;
 	/* assign vertex geometry */
 	for( BU_LIST_FOR( eu, edgeuse, &lu->down_hd ) )
 	{
-		int u_index,v_index;
+		int u_index=0,v_index=0;
 
 		NMG_CK_EDGEUSE( eu );
 		vu = eu->vu_p;
@@ -976,7 +976,7 @@ struct shell *s;
 	int entity_type;
 	int surf_de;
 	int has_outer_boundary,inner_loop_count,outer_loop;
-	int *inner_loop;
+	int *inner_loop=NULL;
 	int i;
 	int lu_uv_orient;
 
@@ -1486,7 +1486,7 @@ Convtrimsurfs()
 
 	bu_log( "\n\nConverting Trimmed Surface entities:\n" );
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 	m = nmg_mm();
@@ -1497,7 +1497,7 @@ Convtrimsurfs()
 	{
 		if( dir[i]->type == 144 )
 		{
-			if( rt_g.debug & DEBUG_MEM_FULL )
+			if( RT_G_DEBUG & DEBUG_MEM_FULL )
 				bu_mem_barriercheck();
 
 			totsurfs++;
@@ -1507,7 +1507,7 @@ Convtrimsurfs()
 				nmg_face_bb( fu->f_p , &tol );
 				convsurf++;
 			}
-			if( rt_g.debug & DEBUG_MEM_FULL )
+			if( RT_G_DEBUG & DEBUG_MEM_FULL )
 				bu_mem_barriercheck();
 
 		}
@@ -1563,7 +1563,7 @@ Convtrimsurfs()
 
 	bu_log( "Converted %d Trimmed Sufaces successfully out of %d total Trimmed Sufaces\n" , convsurf , totsurfs );
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 	if( convsurf )
@@ -1575,13 +1575,13 @@ Convtrimsurfs()
 		else
 			mk_nmg( fdout , "Trimmed_surf" , m );
 	}
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 
 	nmg_km( m );
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 }

@@ -6,6 +6,7 @@
 
 #include <signal.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <math.h>
 #ifdef USE_STRING_H
 #include <string.h>
@@ -197,7 +198,7 @@ char    *argv[];
 			if( !(dp->d_flags & DIR_REGION) )
 				continue;
 
-			if( rt_db_get_internal( &intern, dp, dbip, (fastf_t *)NULL ) < 0 )
+			if( rt_db_get_internal( &intern, dp, dbip, (fastf_t *)NULL, &rt_uniresource ) < 0 )
 			{
 				(void)signal( SIGINT, SIG_IGN );
 				TCL_READ_ERR_return;
@@ -207,7 +208,7 @@ char    *argv[];
 			regions[reg_count].dp = dp;
 			regions[reg_count].region_id = comb->region_id;
 
-			rt_db_free_internal( &intern );
+			rt_db_free_internal( &intern, &rt_uniresource );
 			reg_count++;
 		}
 	}
@@ -355,7 +356,7 @@ char    *argv[];
 		char *ptr;
 		char *c;
 		int is_constant=1;
-		int is_def;
+		int is_def = 0;
 		int i;
 		int in_subscript;
 		char *equal_sign=(char *)NULL;

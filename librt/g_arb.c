@@ -37,13 +37,18 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSarb[] = "@(#)$Header$ (BRL)";
+static const char RCSarb[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
 #include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "bu.h"
 #include "vmath.h"
@@ -103,18 +108,18 @@ struct arb_info {
 	char	*ai_title;
 	int	ai_sub[4];
 };
-static CONST struct arb_info rt_arb_info[6] = {
-	{ "1234", 3, 2, 1, 0 },		/* "bottom" face */
-	{ "8765", 4, 5, 6, 7 },		/* "top" face */
-	{ "1485", 4, 7, 3, 0 },
-	{ "2673", 2, 6, 5, 1 },
-	{ "1562", 1, 5, 4, 0 },
-	{ "4378", 7, 6, 2, 3 }
+static const struct arb_info rt_arb_info[6] = {
+	{ "1234", {3, 2, 1, 0} },		/* "bottom" face */
+	{ "8765", {4, 5, 6, 7} },		/* "top" face */
+	{ "1485", {4, 7, 3, 0} },
+	{ "2673", {2, 6, 5, 1} },
+	{ "1562", {1, 5, 4, 0} },
+	{ "4378", {7, 6, 2, 3} }
 };
 
 RT_EXTERN(void rt_arb_ifree, (struct rt_db_internal *) );
 
-CONST struct bu_structparse rt_arb_parse[] = {
+const struct bu_structparse rt_arb_parse[] = {
     { "%f", 3, "V1", offsetof(struct rt_arb_internal, pt[0][X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "V2", offsetof(struct rt_arb_internal, pt[1][X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "V3", offsetof(struct rt_arb_internal, pt[2][X]), BU_STRUCTPARSE_FUNC_NULL },
@@ -123,7 +128,8 @@ CONST struct bu_structparse rt_arb_parse[] = {
     { "%f", 3, "V6", offsetof(struct rt_arb_internal, pt[5][X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "V7", offsetof(struct rt_arb_internal, pt[6][X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "V8", offsetof(struct rt_arb_internal, pt[7][X]), BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+};
 
 /*  rt_arb_get_cgtype(), rt_arb_std_type(), and rt_arb_centroid() 
  *  stolen from mged/arbs.c */
@@ -148,12 +154,12 @@ CONST struct bu_structparse rt_arb_parse[] = {
  *			Entries [0] and [1] are special
  */
 int
-rt_arb_get_cgtype( cgtype, arb, tol, uvec, svec )
-int			*cgtype;
-struct rt_arb_internal	*arb;
-CONST struct bn_tol	*tol;
-register int *uvec;	/* array of unique points */
-register int *svec;	/* array of like points */
+rt_arb_get_cgtype(
+	int			*cgtype,
+	struct rt_arb_internal	*arb,
+	const struct bn_tol	*tol,
+	register int *uvec,	/* array of unique points */
+	register int *svec)	/* array of like points */
 {
 	register int i,j;
 	int	numuvec, unique, done;
@@ -282,9 +288,7 @@ register int *svec;	/* array of like points */
  *	rt_arb_internal pt[] array reorganized into GIFT "standard" order.
  */
 int
-rt_arb_std_type( ip, tol )
-struct rt_db_internal	*ip;
-CONST struct bn_tol	*tol;
+rt_arb_std_type( const struct rt_db_internal *ip, const struct bn_tol *tol )
 {
 	struct rt_arb_internal	*arb;
 	int uvec[8], svec[11];
@@ -310,13 +314,9 @@ CONST struct bn_tol	*tol;
  *
  * Find the center point for the arb whose values are in the s array,
  * with the given number of verticies.  Return the point in center_pt.
- * WARNING: The s array is dbfloat_t's not fastf_t's.
  */
 void
-rt_arb_centroid( center_pt, arb, npoints )
-point_t			center_pt;
-struct rt_arb_internal	*arb;
-int			npoints;
+rt_arb_centroid( point_t center_pt, const struct rt_arb_internal *arb, int npoints )
 {
 	register int	j;
 	fastf_t		div;
@@ -348,10 +348,10 @@ int			npoints;
 HIDDEN int
 rt_arb_add_pt( point, title, pap, ptno, name )
 register pointp_t point;
-CONST char	*title;
+const char	*title;
 struct prep_arb	*pap;
 int		ptno;	/* current point # on face */
-CONST char	*name;
+const char	*name;
 {
 	LOCAL vect_t	work;
 	LOCAL vect_t	P_A;		/* new point minus A */
@@ -492,7 +492,7 @@ HIDDEN int
 rt_arb_mk_planes( pap, aip, name )
 register struct prep_arb	*pap;
 struct rt_arb_internal		*aip;
-CONST char			*name;
+const char			*name;
 {
 	LOCAL vect_t	sum;		/* Sum of all endpoints */
 	register int	i;
@@ -537,7 +537,7 @@ CONST char			*name;
 		equiv_pts[i] = i;
 	next_point: ;
 	}
-	if( rt_g.debug & DEBUG_ARB8 )  {
+	if( RT_G_DEBUG & DEBUG_ARB8 )  {
 		bu_log("arb(%s) equiv_pts[] = %d %d %d %d %d %d %d %d\n",
 			name,
 			equiv_pts[0], equiv_pts[1], equiv_pts[2], equiv_pts[3],
@@ -553,7 +553,7 @@ CONST char			*name;
 			int	pt_index;
 
 			pt_index = rt_arb_info[i].ai_sub[j];
-			if( rt_g.debug & DEBUG_ARB8 )  {
+			if( RT_G_DEBUG & DEBUG_ARB8 )  {
 				bu_log("face %d, j=%d, npts=%d, orig_vert=%d, vert=%d\n",
 					i, j, npts,
 					pt_index, equiv_pts[pt_index] );
@@ -729,7 +729,7 @@ struct rt_i		*rtip;
  */
 void
 rt_arb_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
 	register struct arb_specific *arbp =
 		(struct arb_specific *)stp->st_specific;
@@ -789,7 +789,7 @@ struct seg		*seghead;
 	out = INFINITY;
 	iplane = oplane = -1;
 
-	if (rt_g.debug & DEBUG_ARB8) {
+	if (RT_G_DEBUG & DEBUG_ARB8) {
 		bu_log("\n\n------------\n arb: ray point %g %g %g -> %g %g %g\n",
 			V3ARGS(rp->r_pt),
 			V3ARGS(rp->r_dir));
@@ -801,10 +801,12 @@ struct seg		*seghead;
 		FAST fastf_t	dxbdn;
 		FAST fastf_t	s;
 
+		/* XXX some of this math should be prep work 
+		 * (including computing dxbdn/dn ?) *$*/
 		dxbdn = VDOT( afp->peqn, rp->r_pt ) - afp->peqn[3];
 		dn = -VDOT( afp->peqn, rp->r_dir );
 
-	        if (rt_g.debug & DEBUG_ARB8) {
+	        if (RT_G_DEBUG & DEBUG_ARB8) {
 	        	HPRINT("arb: Plane Equation", afp->peqn);
 			bu_log("arb: dn=%g dxbdn=%g s=%g\n", dn, dxbdn, dxbdn/dn);
 	        }
@@ -1015,25 +1017,14 @@ register struct uvcoord *uvp;
 
 	if( arbp->arb_opt == (struct oface *)0 )  {
 		register int		ret = 0;
-		struct bu_external	ext;
 		struct rt_db_internal	intern;
 		struct rt_arb_internal	*aip;
 
-		BU_INIT_EXTERNAL(&ext);
-		if( db_get_external( &ext, stp->st_dp, ap->a_rt_i->rti_dbip ) < 0 )  {
-			bu_log("rt_arb_uv(%s) db_get_external failure\n",
+		if( rt_db_get_internal( &intern, stp->st_dp, ap->a_rt_i->rti_dbip, stp->st_matp, ap->a_resource ) < 0 )  {
+			bu_log("rt_arb_uv(%s) rt_db_get_internal failure\n",
 				stp->st_name);
 			return;
 		}
-		if( rt_arb_import( &intern, &ext,
-		    stp->st_matp ? stp->st_matp : bn_mat_identity,
-		    ap->a_rt_i->rti_dbip ) < 0 )  {
-			bu_log("rt_arb_uv(%s) database import error\n",
-				stp->st_name);
-			db_free_external( &ext );
-			return;
-		}
-		db_free_external( &ext );
 		RT_CK_DB_INTERNAL( &intern );
 		aip = (struct rt_arb_internal *)intern.idb_ptr;
 		RT_ARB_CK_MAGIC(aip);
@@ -1049,7 +1040,7 @@ register struct uvcoord *uvp;
 		}
 		bu_semaphore_release( RT_SEM_MODEL );
 
-		rt_arb_ifree( &intern );
+		rt_db_free_internal( &intern, ap->a_resource );
 
 		if( ret != 0 || arbp->arb_opt == (struct oface *)0 )  {
 			bu_log("rt_arb_uv(%s) dyanmic setup failure st_specific=x%x, optp=x%x\n",
@@ -1057,7 +1048,7 @@ register struct uvcoord *uvp;
 		    		stp->st_specific, arbp->arb_opt );
 			return;
 		}
-		if(rt_g.debug&DEBUG_SOLIDS)  rt_pr_soltab( stp );
+		if(RT_G_DEBUG&DEBUG_SOLIDS)  rt_pr_soltab( stp );
 	}
 
 	ofp = &arbp->arb_opt[hitp->hit_surfno];
@@ -1124,8 +1115,8 @@ int
 rt_arb_plot( vhead, ip, ttol, tol )
 struct bu_list			*vhead;
 struct rt_db_internal		 *ip;
-CONST struct rt_tess_tol	*ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol	*ttol;
+const struct bn_tol		*tol;
 {
 	struct rt_arb_internal	*aip;
 
@@ -1145,9 +1136,9 @@ CONST struct bn_tol		*tol;
  */
 int
 rt_arb_class( stp, min, max, tol )
-CONST struct soltab    *stp;
-CONST vect_t		min, max;
-CONST struct bn_tol    *tol;
+const struct soltab    *stp;
+const vect_t		min, max;
+const struct bn_tol    *tol;
 {
 	register struct arb_specific *arbp =
 		(struct arb_specific *)stp->st_specific;
@@ -1186,9 +1177,9 @@ CONST struct bn_tol    *tol;
 int
 rt_arb_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST  mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const  mat_t		mat;
+const struct db_i		*dbip;
 {
 	struct rt_arb_internal	*aip;
 	union record		*rp;
@@ -1204,7 +1195,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_ARB8;
 	ip->idb_meth = &rt_functab[ID_ARB8];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_arb_internal), "rt_arb_internal");
@@ -1233,9 +1225,9 @@ CONST struct db_i		*dbip;
 int
 rt_arb_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_arb_internal	*aip;
 	union record		*rec;
@@ -1246,7 +1238,7 @@ CONST struct db_i		*dbip;
 	aip = (struct rt_arb_internal *)ip->idb_ptr;
 	RT_ARB_CK_MAGIC(aip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "arb external");
 	rec = (union record *)ep->ext_buf;
@@ -1264,6 +1256,69 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ A R B _ I M P O R T 5
+ *
+ * Import an arb from the db5 format and convert to the internal structure.
+ * Code duplicated from rt_arb_import() with db5 help from g_ell.c
+ */
+int
+rt_arb_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_arb_internal *aip;
+	register int		i;
+	fastf_t			vec[3*8];
+
+	BU_CK_EXTERNAL( ep );
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 3*8);
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_ARB8;
+	ip->idb_meth = &rt_functab[ID_ARB8];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_arb_internal), "rt_arb_internal");
+
+	aip = (struct rt_arb_internal *)ip->idb_ptr;
+	aip->magic = RT_ARB_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 8*3);
+	for (i=0; i<8; i++) {
+		MAT4X3PNT( aip->pt[i], mat, &vec[i*3]);
+	}
+	return 0;	/* OK */
+}
+/*
+ *			R T _ A R B _ E X P O R T 5
+ */
+int
+rt_arb_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_arb_internal	*aip;
+	fastf_t			vec[3*8];
+	register int		i;
+
+	RT_CK_DB_INTERNAL(ip);
+	if (ip->idb_type != ID_ARB8) return -1;
+	aip = (struct rt_arb_internal *)ip->idb_ptr;
+	RT_ARB_CK_MAGIC(aip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 8 * 3;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "arb external");
+	for (i=0; i<8; i++) {
+		VSCALE( &vec[i*3], aip->pt[i], local2mm );
+	}
+	htond( ep->ext_buf, (unsigned char *)vec, 8*3);
+	return 0;
+}
+/*
  *			R T _ A R B _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1273,7 +1328,7 @@ CONST struct db_i		*dbip;
 int
 rt_arb_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -1417,8 +1472,8 @@ rt_arb_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol	*ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol	*ttol;
+const struct bn_tol		*tol;
 {
 	LOCAL struct rt_arb_internal	*aip;
 	struct shell		*s;
@@ -1462,7 +1517,7 @@ CONST struct bn_tol		*tol;
 			*vertpp++ = &verts[pa.pa_pindex[1][i]];
 			*vertpp++ = &verts[pa.pa_pindex[0][i]];
 		}
-		if( rt_g.debug & DEBUG_ARB8 )  {
+		if( RT_G_DEBUG & DEBUG_ARB8 )  {
 			bu_log("face %d, npts=%d, verts %d %d %d %d\n",
 				i, pa.pa_npts[i],
 				pa.pa_pindex[0][i], pa.pa_pindex[1][i],
@@ -1502,14 +1557,14 @@ CONST struct bn_tol		*tol;
 	return(0);
 }
 
-static CONST fastf_t rt_arb_uvw[5*3] = {
+static const fastf_t rt_arb_uvw[5*3] = {
 	0, 0, 0,
 	1, 0, 0,
 	1, 1, 0,
 	0, 1, 0,
 	0, 0, 0
 };
-static CONST int rt_arb_vert_index_scramble[4] = { 0, 1, 3, 2 };
+static const int rt_arb_vert_index_scramble[4] = { 0, 1, 3, 2 };
 
 /*
  *			R T _ A R B _ T N U R B
@@ -1531,7 +1586,7 @@ rt_arb_tnurb( r, m, ip, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	LOCAL struct rt_arb_internal	*aip;
 	struct shell		*s;
@@ -1577,7 +1632,7 @@ CONST struct bn_tol	*tol;
 			*vertpp++ = &verts[pa.pa_pindex[1][i]];
 			*vertpp++ = &verts[pa.pa_pindex[0][i]];
 		}
-		if( rt_g.debug & DEBUG_ARB8 )  {
+		if( RT_G_DEBUG & DEBUG_ARB8 )  {
 			bu_log("face %d, npts=%d, verts %d %d %d %d\n",
 				i, pa.pa_npts[i],
 				pa.pa_pindex[0][i], pa.pa_pindex[1][i],
@@ -1679,4 +1734,77 @@ CONST struct bn_tol	*tol;
 	/* Compute "geometry" for region and shell */
 	nmg_region_a( *r, tol );
 	return(0);
+}
+
+/* --- General ARB8 utility routines --- */
+
+/*
+ *			R T _ A R B _ C A L C _ P O I N T S
+ *
+ * Takes the planes[] array and intersects the planes to find the vertices
+ * of a GENARB8.  The vertices are stored into arb->pt[].
+ * This is an analog of rt_arb_calc_planes().
+ */
+int
+rt_arb_calc_points(
+	struct rt_arb_internal	*arb,		/* needs wdb.h */
+	int			cgtype,
+	const plane_t		planes[6],
+	const struct bn_tol	*tol)
+{
+	int	i;
+	point_t	pt[8];
+
+	RT_ARB_CK_MAGIC(arb);
+
+	/* find new points for entire solid */
+	for(i=0; i<8; i++){
+		if( rt_arb_3face_intersect( pt[i], planes, cgtype, i*3 ) < 0 )  {
+		  bu_log("rt_arb_calc_points: Intersection of planes fails %d\n", i);
+		  return -1;			/* FAIL */
+		}
+	}
+
+	/* Move new points to arb */
+	for( i=0; i<8; i++ )  {
+		VMOVE( arb->pt[i], pt[i] );
+	}
+	return 0;					/* success */
+}
+
+/* planes to define ARB vertices */
+const int rt_arb_planes[5][24] = {
+	{0,1,3, 0,1,2, 0,2,3, 0,1,3, 1,2,3, 1,2,3, 1,2,3, 1,2,3},	/* ARB4 */
+	{0,1,4, 0,1,2, 0,2,3, 0,3,4, 1,2,4, 1,2,4, 1,2,4, 1,2,4},	/* ARB5 */
+	{0,2,3, 0,1,3, 0,1,4, 0,2,4, 1,2,3, 1,2,3, 1,2,4, 1,2,4},	/* ARB6 */
+	{0,2,4, 0,3,4, 0,3,5, 0,2,5, 1,4,5, 1,3,4, 1,3,5, 1,2,4},	/* ARB7 */
+	{0,2,4, 0,3,4, 0,3,5, 0,2,5, 1,2,4, 1,3,4, 1,3,5, 1,2,5},	/* ARB8 */
+};
+
+/*
+ *			R T _ A R B _ 3 F A C E _ I N T E R S E C T
+ *
+ *	Finds the intersection point of three faces of an ARB.
+ *
+ *  Returns -
+ *	  0	success, value is in 'point'
+ *	 -1	failure
+ */
+int
+rt_arb_3face_intersect(
+	point_t			point,
+	const plane_t		planes[6],
+	int			type,		/* 4..8 */
+	int			loc)
+{
+	int	j;
+	int	i1, i2, i3;
+
+	j = type - 4;
+
+	i1 = rt_arb_planes[j][loc];
+	i2 = rt_arb_planes[j][loc+1];
+	i3 = rt_arb_planes[j][loc+2];
+
+	return bn_mkpoint_3planes( point, planes[i1], planes[i2], planes[i3] );
 }

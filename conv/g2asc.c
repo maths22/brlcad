@@ -21,23 +21,29 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
  
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <ctype.h>
 #include "machine.h"
 #include "vmath.h"
 #include "externs.h"
 #include "db.h"
-#include "wdb.h"
 #include "raytrace.h"
+#include "wdb.h"
 #include "rtgeom.h"
+#include "tcl.h"
 
 
-CONST mat_t	id_mat = {
+const mat_t	id_mat = {
 	1.0, 0.0, 0.0, 0.0,
 	0.0, 1.0, 0.0, 0.0,
 	0.0, 0.0, 1.0, 0.0,
@@ -67,22 +73,40 @@ Usage: g2asc < file.g > file.asc\n\
 
 FILE	*ifp;
 FILE	*ofp;
+char	*iname = "-";
 
+int
 main(argc, argv)
 char **argv;
 {
+	int i;
+
+	iname = "-";
 	ifp = stdin;
 	ofp = stdout;
 
+	bu_debug = BU_DEBUG_COREDUMP;
+
 #if 0
-	if( argc == 2 || argc == 4 )
+	if( argc > 1 && strcmp( argv[1], "-d" ) == 0 )  {
+		argc--; argv++;
 		debug = 1;
+	}
 #endif
 
 	if( argc >= 3 ) {
-		ifp = fopen(argv[1],"r");
-		if( !ifp )  perror(argv[1]);
-		ofp = fopen(argv[2],"w");
+		iname = argv[1];
+		if( strcmp(iname, "-") == 0 )  {
+			ifp = stdin;
+		} else {
+			ifp = fopen(iname,"r");
+		}
+		if( !ifp )  perror(iname);
+		if( strcmp(argv[2], "-") == 0 )  {
+			ofp = stdout;
+		} else {
+			ofp = fopen(argv[2],"w");
+		}
 		if( !ofp )  perror(argv[2]);
 		if (ifp == NULL || ofp == NULL) {
 			(void)fprintf(stderr, "g2asc: can't open files.");
@@ -94,10 +118,138 @@ char **argv;
 		exit(1);
 	}
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
+	/* First, determine what version database this is */
+	if( fread( (char *)&record, sizeof record, 1, ifp ) != 1 )  {
+		bu_log("g2asc(%s) ERROR, file too short to be BRL-CAD database\n",
+			iname);
+		exit(2);
+	}
+
+	if( db5_header_is_valid( (unsigned char *)&record ) )  {
+		Tcl_Interp	*interp;
+		struct db_i	*dbip;
+		struct directory *dp;
+
+		bu_log("Exporting Release 6 database\n" );
+		bu_log("  Note that the Release 6 binary format is machine independent.\n");
+		bu_log("  Converting to ASCII to move database to a different\n");
+		bu_log("  computer architecture is no longer necessary.\n");
+		interp = Tcl_CreateInterp();
+		/* This runs the init.tcl script */
+		if( Tcl_Init(interp) == TCL_ERROR )
+			bu_log("Tcl_Init error %s\n", interp->result);
+
+		if( (dbip = db_open( iname, "r" )) == NULL )  {
+			bu_log("Unable to db_open() file '%s', aborting\n", iname );
+			exit(4);
+		}
+		RT_CK_DBI(dbip);
+		db_dirbuild( dbip );
+		if( dbip->dbi_title[0] ) {
+			char *c;
+
+			fprintf( ofp, "title ");
+			c = dbip->dbi_title;
+			while( *c ) {
+				if( ispunct( *c ) ) {
+					putc( '\\', ofp );
+				}
+				putc( *c, ofp );
+				c++;
+			}
+                        putc( '\n', ofp );
+		}
+		fprintf( ofp, "units %s\n", bu_units_string( dbip->dbi_local2base ) );
+		FOR_ALL_DIRECTORY_START(dp, dbip)  {
+			struct rt_db_internal	intern;
+			struct bu_attribute_value_set *avs=NULL;
+
+			/* Skip GLOBAL object */
+			if( dp->d_major_type == 2 && dp->d_minor_type == 0 ) {
+				const char *value;
+				Tcl_Obj	*list, *obj;
+				int list_len;
+				struct bu_attribute_value_set g_avs;
+
+				/* get region colortable */
+				if( db5_get_attributes( dbip, &g_avs, dp ) ) {
+					bu_log( "Failed to get attributes of _GLOBAL!!\n" );
+					continue;
+				}
+				value = bu_avs_get( &g_avs, "regionid_colortable" );
+				if( !value )
+					continue;
+				list = Tcl_NewStringObj( value, -1);
+				if( Tcl_ListObjLength( interp, list, &list_len ) != TCL_OK ) {
+					bu_log( "Failed to get length of region color table!!\n" );
+					continue;
+				}
+				for( i=0 ; i<list_len ; i++ ) {
+					if( Tcl_ListObjIndex( interp, list, i, &obj ) != TCL_OK ) {
+						bu_log( "Cannot get entry %d from the color table!!\n",
+							i );
+						continue;
+					}
+					fprintf( ofp, "color %s\n",
+						 Tcl_GetStringFromObj(obj, NULL) );
+				}
+				bu_avs_free( &g_avs );
+				continue;
+			}
+
+			if( rt_db_get_internal( &intern, dp, dbip, NULL, &rt_uniresource ) < 0 )  {
+				bu_log("Unable to read '%s', skipping\n", dp->d_namep);
+				continue;
+			}
+			if( dp->d_flags & DIR_COMB ) {
+				if( intern.idb_meth->ft_tclget( interp, &intern, "tree" ) != TCL_OK )  {
+					rt_db_free_internal( &intern, &rt_uniresource );
+					bu_log("Unable to export '%s', skipping\n", dp->d_namep );
+					continue;
+				}
+				if( dp->d_flags & DIR_REGION ) {
+					fprintf( ofp, "put %s comb region yes tree {%s}\n",
+						 dp->d_namep,
+						 interp->result );
+				} else {
+					fprintf( ofp, "put %s comb region no tree {%s}\n",
+						 dp->d_namep,
+						 interp->result );
+				}
+			} else {
+				if( intern.idb_meth->ft_tclget( interp, &intern, NULL ) != TCL_OK )  {
+					rt_db_free_internal( &intern, &rt_uniresource );
+					bu_log("Unable to export '%s', skipping\n", dp->d_namep );
+					continue;
+				}
+				fprintf( ofp, "put %s %s\n",
+					 dp->d_namep,
+					 interp->result );
+			}
+			avs = &intern.idb_avs;
+			if( avs->magic == BU_AVS_MAGIC && avs->count > 0 ) {
+				int i;
+
+				fprintf( ofp, "attr set %s", dp->d_namep );
+				for( i=0 ; i<avs->count ; i++ ) {
+					fprintf( ofp, " %s {%s}", avs->avp[i].name, avs->avp[i].value );
+				}
+				fprintf( ofp, "\n" );
+			}
+			Tcl_ResetResult( interp );
+			rt_db_free_internal( &intern, &rt_uniresource );
+		} FOR_ALL_DIRECTORY_END;
+		return 0;
+	} else {
+		/* A record is already in the input buffer */
+		goto top;
+	}
+
 	/* Read database file */
-	while( fread( (char *)&record, sizeof record, 1, ifp ) == 1  &&
-	    !feof(ifp) )  {
 top:
+	do {
 		/* Check record type and skip deleted records */
 	    	switch( record.u_id )  {
 	    	case ID_FREE:
@@ -165,7 +317,8 @@ top:
 				record.u_id, record.u_id);
 	    		continue;
 		}
-	}
+	}  while( fread( (char *)&record, sizeof record, 1, ifp ) == 1  &&
+	    !feof(ifp) );
 	exit(0);
 }
 
@@ -234,7 +387,7 @@ nmg_dump()
 	/* output the structure counts */
 	for( j=0 ; j<26 ; j++ )
 		(void)fprintf(ofp,  " %ld" , struct_count[j] );
-	(void)putchar( '\n' );
+	(void)fputc( '\n', ofp );
 
 	/* dump the reminder in hex format */
 	for( i=0 ; i<granules ; i++ )
@@ -253,7 +406,7 @@ nmg_dump()
 		{
 			for( j=0 ; j<32 ; j++ )
 				fprintf(ofp,  "%02x" , (0xff & (*cp++)) );	 /* two hex digits per byte */
-			putchar( '\n' );
+			fputc( '\n', ofp );
 		}
 	}
 }
@@ -364,7 +517,8 @@ cline_dump()
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_cline_import( &intern, &ext, id_mat, DBI_NULL )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_CLINE].ft_import( &intern, &ext, id_mat, DBI_NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: cline import failure\n");
 		exit(-1);
 	}
@@ -379,7 +533,7 @@ cline_dump()
 	(void)fprintf(ofp, "%26.20e %26.20e", cli->radius, cli->thickness );
 	(void)fprintf(ofp, "\n");			/* Terminate w/ a newline */
 
-	rt_cline_ifree( &intern );
+	rt_db_free_internal( &intern, &rt_uniresource );
 	db_free_external( &ext );
 }
 
@@ -398,7 +552,8 @@ bot_dump()
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_bot_import( &intern, &ext, id_mat, DBI_NULL )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_BOT].ft_import( &intern, &ext, id_mat, DBI_NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: bot import failure\n");
 		exit(-1);
 	}
@@ -435,7 +590,7 @@ bot_dump()
 			fprintf(ofp,  "	%d: %d %d %d\n", i, V3ARGS( &bot->faces[i*3] ) );
 	}
 
-	rt_bot_ifree( &intern );
+	rt_db_free_internal( &intern, &rt_uniresource );
 	db_free_external( &ext );
 }
 
@@ -455,7 +610,8 @@ pipe_dump()	/* Print out Pipe record information */
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_pipe_import( &intern, &ext, id_mat )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_PIPE].ft_import( &intern, &ext, id_mat, NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: pipe import failure\n");
 		exit(-1);
 	}
@@ -469,7 +625,7 @@ pipe_dump()	/* Print out Pipe record information */
 
 	dump_pipe_segs(name, &pipe->pipe_segs_head);
 
-	rt_pipe_ifree( &intern );
+	rt_db_free_internal( &intern, &rt_uniresource );
 	db_free_external( &ext );
 }
 
@@ -506,7 +662,8 @@ particle_dump()
 	get_ext( &ext, 1 );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_part_import( &intern, &ext, id_mat )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_PARTICLE].ft_import( &intern, &ext, id_mat, NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: particle import failure\n");
 		exit(-1);
 	}
@@ -563,7 +720,8 @@ arbn_dump()
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_arbn_import( &intern, &ext, id_mat )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_ARBN].ft_import( &intern, &ext, id_mat, NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: arbn import failure\n");
 		exit(-1);
 	}
@@ -578,7 +736,7 @@ arbn_dump()
 			arbn->eqn[i][Z], arbn->eqn[i][3]);
 	}
 
-	rt_arbn_ifree( &intern );
+	rt_db_free_internal( &intern, &rt_uniresource );
 	db_free_external( &ext );
 }
 
@@ -965,7 +1123,8 @@ extrdump()
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_extrude_import( &intern, &ext, id_mat, DBI_NULL )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_EXTRUDE].ft_import( &intern, &ext, id_mat, DBI_NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: extrusion import failure\n");
 		exit(-1);
 	}
@@ -999,7 +1158,8 @@ sketchdump()
 	get_ext( &ext, ngranules );
 
 	/* Hand off to librt's import() routine */
-	if( (rt_sketch_import( &intern, &ext, id_mat, DBI_NULL )) != 0 )  {
+	RT_INIT_DB_INTERNAL(&intern);
+	if( (rt_functab[ID_SKETCH].ft_import( &intern, &ext, id_mat, DBI_NULL, &rt_uniresource )) != 0 )  {
 		fprintf(stderr, "g2asc: sketch import failure\n");
 		exit( -1 );
 	}

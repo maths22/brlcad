@@ -7,7 +7,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -71,15 +71,9 @@ static struct termios	save_tio[FOPEN_MAX], curr_tio[FOPEN_MAX];
 
 #endif /* HAVE_TERMIOS_H */
 
+#include "libtermio.h"
+
 static int		fileStatus[FOPEN_MAX];
-int			reset_Fil_Stat();
-void			save_Tty(), reset_Tty();
-void			set_Cbreak(), clr_Cbreak();
-void			set_Raw(), clr_Raw();
-void			set_Echo(), clr_Echo();
-void			set_Tabs(), clr_Tabs();
-void			set_HUPCL();
-void			clr_CRNL();
 void			prnt_Tio();
 static void		copy_Tio();
 
@@ -400,6 +394,7 @@ int	fd;
 /*	s a v e _ F i l _ S t a t ( )
 	Save file status flags for 'fd'.
  */
+int
 save_Fil_Stat( fd )
 int	fd;
 	{
@@ -410,6 +405,7 @@ int	fd;
 	Restore file status flags for file desc. 'fd' to what they were the
 	last time saveFilStat(fd) was called.
  */
+int
 reset_Fil_Stat( fd )
 int	fd;
 	{
@@ -419,6 +415,7 @@ int	fd;
 /*	s e t _ O _ N D E L A Y ( )
 	Set non-blocking read on 'fd'.
  */
+int
 set_O_NDELAY( fd )
 int	fd;
 	{
@@ -497,10 +494,10 @@ struct termios	*tio_ptr;
 #endif
 #ifdef HAVE_TERMIOS_H
 
-	(void) fprintf( stderr, "\tc_iflag=0x%x\n\r", tio_ptr->c_iflag );
-	(void) fprintf( stderr, "\tc_oflag=0x%x\n\r", tio_ptr->c_oflag );
-	(void) fprintf( stderr, "\tc_cflag=0x%x\n\r", tio_ptr->c_cflag );
-	(void) fprintf( stderr, "\tc_lflag=0x%x\n\r", tio_ptr->c_lflag );
+	(void) fprintf( stderr, "\tc_iflag=0x%x\n\r", (unsigned int)tio_ptr->c_iflag );
+	(void) fprintf( stderr, "\tc_oflag=0x%x\n\r", (unsigned int)tio_ptr->c_oflag );
+	(void) fprintf( stderr, "\tc_cflag=0x%x\n\r", (unsigned int)tio_ptr->c_cflag );
+	(void) fprintf( stderr, "\tc_lflag=0x%x\n\r", (unsigned int)tio_ptr->c_lflag );
 	for( i = 0; i < NCCS; ++i )
 		{
 		(void) fprintf( stderr,

@@ -13,7 +13,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "./iges_struct.h"
@@ -28,7 +28,7 @@ Do_subfigs()
 	struct wmember head1;
 	struct wmember *wmem;
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 	BU_LIST_INIT( &head1.l );
@@ -39,7 +39,7 @@ Do_subfigs()
 		int subfigdef_index;
 		int no_of_members;
 		int *members;
-		char *name;
+		char *name=NULL;
 		struct wmember head2;
 		double mat_scale[3];
 		int non_unit;
@@ -47,7 +47,7 @@ Do_subfigs()
 		if( dir[i]->type != 408 )
 			continue;
 
-		if( rt_g.debug & DEBUG_MEM_FULL )
+		if( RT_G_DEBUG & DEBUG_MEM_FULL )
 			bu_mem_barriercheck();
 
 		if( dir[i]->param <= pstart )
@@ -100,7 +100,7 @@ Do_subfigs()
 		Readint( &j, "" );	/* ignore depth */
 		Readstrg( "");		/* ignore subfigure name */
 
-		wmem = mk_addmember( dir[subfigdef_index]->name, &head1, WMOP_UNION );
+		wmem = mk_addmember( dir[subfigdef_index]->name, &head1.l, NULL, WMOP_UNION );
 		non_unit = 0;
 		for( j=0 ; j<3 ; j++ )
 		{
@@ -227,7 +227,7 @@ Do_subfigs()
 
 			if( no_of_members > 1 )
 			{
-				wmem = mk_addmember( name, &head2, WMOP_UNION );
+				wmem = mk_addmember( name, &head2.l, NULL, WMOP_UNION );
 				bcopy( dir[index]->rot, wmem->wm_mat, sizeof( mat_t ) );
 			}
 		}
@@ -237,7 +237,7 @@ Do_subfigs()
 					(char *)NULL, (char *)NULL, (unsigned char *)NULL, 0 );
 	}
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 	if( BU_LIST_IS_EMPTY( &head1.l ) )
@@ -246,7 +246,7 @@ Do_subfigs()
 	(void) mk_lcomb( fdout, curr_file->obj_name, &head1, 0,
 			(char *)NULL, (char *)NULL, (unsigned char *)NULL, 0 );
 
-	if( rt_g.debug & DEBUG_MEM_FULL )
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )
 		bu_mem_barriercheck();
 
 }

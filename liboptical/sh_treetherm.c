@@ -13,7 +13,7 @@
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 #include "rtgeom.h"
 
 #define tthrm_MAGIC 0x7468726d	/* 'thrm' */
@@ -198,7 +198,7 @@ struct region *rp;
 }
 
 
-/*	T R E E T H E R M _ S E T U P
+/*	T R E E T H E R M _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -215,7 +215,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	register struct tthrm_specific	*tthrm_sp;
 	struct bu_mapped_file	*tt_file;
 	char			*tt_data;
-	long			cyl_tot;
+	long			cyl_tot = 0;
 	long			tseg;
 	float			*fp;
 	float			fv[4];
@@ -227,8 +227,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	static const double	inv_nodes = 1.0/8.0;
 	int			node;
 	int			i;
-	int			long_size;
-	int			computed_size;
+	int			long_size = 0;
 	int			file_size_long;
 	int			file_size_int;
 
@@ -428,7 +427,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	 *
 	 * Shading is done in "region coordinates":
 	 */
-	db_region_mat(tthrm_sp->tthrm_m_to_sh, rtip->rti_dbip, rp->reg_name);
+	db_region_mat(tthrm_sp->tthrm_m_to_sh, rtip->rti_dbip, rp->reg_name, &rt_uniresource);
 
 	if (rdebug&RDEBUG_SHADE) {
 		bu_log("min_temp: %17.14e  max_temp %17.14e temp_scale: %17.14e\n",
@@ -444,7 +443,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	T R E E T H E R M _ P R I N T
  */
 HIDDEN void
@@ -516,7 +515,7 @@ struct partition	*pp;
 	return atoi(solid_digits);
 }
 
-/*
+/*
  *	T R E E T H E R M _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c) once for each hit point

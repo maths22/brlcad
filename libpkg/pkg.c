@@ -54,7 +54,14 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <netinet/in.h>		/* for htons(), etc */
 #include <netdb.h>
 #include <netinet/tcp.h>	/* for TCP_NODELAY sockopt */
+#include <arpa/inet.h>		/* for inet_addr() */
 #undef LITTLE_ENDIAN		/* defined in netinet/{ip.h,tcp.h} */
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
 #include "externs.h"
@@ -107,6 +114,8 @@ static FILE	*pkg_debug;
 static void	pkg_ck_debug();
 static void	pkg_timestamp();
 static void	pkg_checkin();
+
+int pkg_inget(register struct pkg_conn *, char *, int);
 
 #define PKG_CK(p)	{if(p==PKC_NULL||p->pkc_magic!=PKG_MAGIC) {\
 			sprintf(errbuf,"%s: bad pointer x%lx line %d\n",__FILE__, (long)(p), __LINE__);\
@@ -717,7 +726,7 @@ register struct pkg_conn *pc;
 			return(-1);
 		}
 		sprintf(errbuf,"pkg_send of %d+%d, wrote %d\n",
-			sizeof(hdr), len, i);
+			(int)sizeof(hdr), len, i);
 		(pc->pkc_errlog)(errbuf);
 		return(i-sizeof(hdr));	/* amount of user data sent */
 	}
@@ -838,12 +847,13 @@ register struct pkg_conn *pc;
 			pkg_perror(pc->pkc_errlog, "pkg_2send: writev");
 			sprintf( errbuf,
 				"pkg_send2(type=%d, buf1=x%x, len1=%d, buf2=x%x, len2=%d, pc=x%x)\n",
-				 type, buf1, len1, buf2, len2, pc );
+				 type, (unsigned int)buf1, len1, 
+				 (unsigned int)buf2, len2, (unsigned int)pc );
 			(pc->pkc_errlog)(errbuf);
 			return(-1);
 		}
 		sprintf(errbuf,"pkg_2send of %d+%d+%d, wrote %d\n",
-			sizeof(hdr), len1, len2, i);
+			(int)sizeof(hdr), len1, len2, i);
 		(pc->pkc_errlog)(errbuf);
 		return(i-sizeof(hdr));	/* amount of user data sent */
 	}
@@ -1428,7 +1438,7 @@ char *buf;
 	 *  At message boundary, read new header.
 	 *  This will block until the new header arrives (feature).
 	 */
-	if( (i = pkg_inget( pc, &(pc->pkc_hdr),
+	if( (i = pkg_inget( pc, (char *)&(pc->pkc_hdr),
 	    sizeof(struct pkg_header) )) != sizeof(struct pkg_header) )  {
 		if(i > 0) {
 			sprintf(errbuf,"pkg_gethdr: header read of %d?\n", i);

@@ -27,12 +27,13 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <ctype.h>
 #include <math.h>
 #ifdef USE_STRING_H
 #include <string.h>
@@ -82,10 +83,7 @@ struct dbcmdstruct {
  *	{20 -13.5 20} at {10 .5 3}
  */
 int
-rt_tcl_parse_ray( interp, rp, argv )
-Tcl_Interp *interp;
-struct xray *rp;
-CONST char *CONST*argv;
+rt_tcl_parse_ray( Tcl_Interp *interp, struct xray *rp, const char *const*argv )
 {
 	if( bn_decode_vect( rp->r_pt,  argv[0] ) != 3 )  {
 		Tcl_AppendResult( interp,
@@ -128,11 +126,9 @@ CONST char *CONST*argv;
  *	type nugridnode
  */
 void
-rt_tcl_pr_cutter( interp, cutp )
-Tcl_Interp		*interp;
-CONST union cutter	*cutp;
+rt_tcl_pr_cutter( Tcl_Interp *interp, const union cutter *cutp )
 {
-	static CONST char xyz[4] = "XYZ";
+	static const char xyz[4] = "XYZ";
 	struct bu_vls	str;
 	int i;
 
@@ -204,15 +200,11 @@ CONST union cutter	*cutp;
  *	.rt cutter 7 {0 0 0} dir {0 0 -1}
  */
 int
-rt_tcl_cutter( clientData, interp, argc, argv )
-ClientData clientData;
-Tcl_Interp *interp;
-int argc;
-char **argv;
+rt_tcl_cutter( ClientData clientData, Tcl_Interp *interp, int argc, const char *const*argv )
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
-	CONST union cutter	*cutp;
+	const union cutter	*cutp;
 	int			n;
 
 	if( argc != 6 )  {
@@ -253,17 +245,12 @@ char **argv;
  *  give the user more precision.
  */
 void
-rt_tcl_pr_hit( interp, hitp, segp, rayp, flipflag )
-Tcl_Interp	*interp;
-struct hit	*hitp;
-struct seg	*segp;
-struct xray	*rayp;
-int		flipflag;
+rt_tcl_pr_hit( Tcl_Interp *interp, struct hit *hitp, const struct seg *segp, const struct xray	*rayp, int flipflag )
 {
 	struct bu_vls	str;
 	vect_t		norm;
 	struct soltab	*stp;
-	CONST struct directory	*dp;
+	const struct directory	*dp;
 	struct curvature crv;
 
 	RT_CK_SEG(segp);
@@ -301,10 +288,9 @@ int		flipflag;
  *			R T _ T C L _ A _ H I T
  */
 int
-rt_tcl_a_hit( ap, PartHeadp, segHeadp )
-struct application	*ap;
-struct partition	*PartHeadp;
-struct seg		*segHeadp;
+rt_tcl_a_hit( struct application *ap,
+	struct partition *PartHeadp,
+	struct seg *segHeadp )
 {
 	Tcl_Interp *interp = (Tcl_Interp *)ap->a_uptr;
 	register struct partition *pp;
@@ -333,8 +319,7 @@ struct seg		*segHeadp;
  *			R T _ T C L _ A _ M I S S
  */
 int
-rt_tcl_a_miss( ap )
-struct application	*ap;
+rt_tcl_a_miss( struct application *ap )
 {
 	return 0;
 }
@@ -367,7 +352,7 @@ rt_tcl_rt_shootray( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
@@ -406,7 +391,7 @@ rt_tcl_rt_onehit( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
@@ -443,7 +428,7 @@ rt_tcl_rt_no_bool( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
@@ -482,7 +467,7 @@ rt_tcl_rt_check( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
@@ -518,7 +503,7 @@ rt_tcl_rt_prep( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct application	*ap = (struct application *)clientData;
 	struct rt_i		*rtip;
@@ -579,13 +564,13 @@ char **argv;
 }
 
 static struct dbcmdstruct rt_tcl_rt_cmds[] = {
-	"shootray",	rt_tcl_rt_shootray,
-	"onehit",	rt_tcl_rt_onehit,
-	"no_bool",	rt_tcl_rt_no_bool,
-	"check",	rt_tcl_rt_check,
-	"prep",		rt_tcl_rt_prep,
-	"cutter",	rt_tcl_cutter,
-	(char *)0,	(int (*)())0
+	{"shootray",	rt_tcl_rt_shootray},
+	{"onehit",	rt_tcl_rt_onehit},
+	{"no_bool",	rt_tcl_rt_no_bool},
+	{"check",	rt_tcl_rt_check},
+	{"prep",	rt_tcl_rt_prep},
+	{"cutter",	rt_tcl_cutter},
+	{(char *)0,	(int (*)())0}
 };
 
 /*
@@ -608,7 +593,7 @@ rt_tcl_rt( clientData, interp, argc, argv )
 ClientData clientData;
 Tcl_Interp *interp;
 int argc;
-char **argv;
+const char *const*argv;
 {
 	struct dbcmdstruct	*dbcmd;
 
@@ -675,7 +660,7 @@ char **argv;
 void
 db_tcl_tree_describe( dsp, tp )
 Tcl_DString		*dsp;
-union tree		*tp;
+const union tree		*tp;
 {
 	if( !tp ) return;
 
@@ -749,9 +734,7 @@ union tree		*tp;
  *  the in-memory form of that tree.
  */
 union tree *
-db_tcl_tree_parse( interp, str )
-Tcl_Interp	*interp;
-char		*str;
+db_tcl_tree_parse( Tcl_Interp *interp, const char *str, struct resource *resp )
 {
 	int	argc;
 	char	**argv;
@@ -787,38 +770,51 @@ Tcl_AppendResult( interp, "\n\n", NULL);
 	switch( argv[0][0] )  {
 	case 'l':
 		/* Leaf node: {l name {mat}} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_l.magic = RT_TREE_MAGIC;
 		tp->tr_op = OP_DB_LEAF;
 		tp->tr_l.tl_name = bu_strdup( argv[1] );
+		/* If matrix not specified, NULL pointer ==> identity matrix */
+		tp->tr_l.tl_mat = NULL;
 		if( argc == 3 )  {
-			tp->tr_l.tl_mat = (matp_t)bu_malloc( sizeof(mat_t), "tl_mat");
-			if( bn_decode_mat( tp->tr_l.tl_mat, argv[2] ) != 16 )  {
+			mat_t	m;
+			/* decode also recognizes "I" notation for identity */
+			if( bn_decode_mat( m, argv[2] ) != 16 )  {
 				Tcl_AppendResult( interp, "db_tcl_tree_parse: unable to parse matrix '",
-					argv[2], "', using all-zeros", (char *)NULL );
-				bn_mat_zero( tp->tr_l.tl_mat );
+					argv[2], "', using identity", (char *)NULL );
+				break;
 			}
+			if( bn_mat_is_identity(m) )
+				break;
+			if( bn_mat_ck( "db_tcl_tree_parse", m ) )  {
+				Tcl_AppendResult( interp, "db_tcl_tree_parse: matrix '",
+					argv[2],
+					"', does not preserve axis perpendicularity, using identity", (char *)NULL );
+				break;
+			}
+			/* Finall, a good non-identity matrix, dup & save it */
+			tp->tr_l.tl_mat = bn_mat_dup(m);
 		}
 		break;
 
 	case 'u':
 		/* Binary: Union: {u {lhs} {rhs}} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_UNION;
 		goto binary;
 	case 'n':
 		/* Binary: Intersection */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_INTERSECT;
 		goto binary;
 	case '-':
 		/* Binary: Union */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_SUBTRACT;
 		goto binary;
 	case '^':
 		/* Binary: Xor */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_XOR;
 		goto binary;
 binary:
@@ -827,20 +823,20 @@ binary:
 			Tcl_AppendResult( interp, "db_tcl_tree_parse: binary operator ",
 				argv[0], " has insufficient operands in ",
 				str, (char *)NULL );
-			bu_free( (char *)tp, "union tree" );
+			RT_FREE_TREE( tp, resp );
 			tp = TREE_NULL;
 			goto out;
 		}
-		tp->tr_b.tb_left = db_tcl_tree_parse( interp, argv[1] );
+		tp->tr_b.tb_left = db_tcl_tree_parse( interp, argv[1], resp );
 		if( tp->tr_b.tb_left == TREE_NULL )  {
-			bu_free( (char *)tp, "union tree" );
+			RT_FREE_TREE( tp, resp );
 			tp = TREE_NULL;
 			goto out;
 		}
-		tp->tr_b.tb_right = db_tcl_tree_parse( interp, argv[2] );
+		tp->tr_b.tb_right = db_tcl_tree_parse( interp, argv[2], resp );
 		if( tp->tr_b.tb_left == TREE_NULL )  {
-			db_free_tree( tp->tr_b.tb_left );
-			bu_free( (char *)tp, "union tree" );
+			db_free_tree( tp->tr_b.tb_left, resp );
+			RT_FREE_TREE( tp, resp );
 			tp = TREE_NULL;
 			goto out;
 		}
@@ -848,17 +844,17 @@ binary:
 
 	case '!':
 		/* Unary: not {! {lhs}} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_NOT;
 		goto unary;
 	case 'G':
 		/* Unary: GUARD {G {lhs}} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_GUARD;
 		goto unary;
 	case 'X':
 		/* Unary: XNOP {X {lhs}} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_XNOP;
 		goto unary;
 unary:
@@ -871,7 +867,7 @@ unary:
 			tp = TREE_NULL;
 			goto out;
 		}
-		tp->tr_b.tb_left = db_tcl_tree_parse( interp, argv[1] );
+		tp->tr_b.tb_left = db_tcl_tree_parse( interp, argv[1], resp );
 		if( tp->tr_b.tb_left == TREE_NULL )  {
 			bu_free( (char *)tp, "union tree" );
 			tp = TREE_NULL;
@@ -881,7 +877,7 @@ unary:
 
 	case 'N':
 		/* NOP: no args.  {N} */
-		BU_GETUNION( tp, tree );
+		RT_GET_TREE( tp, resp );
 		tp->tr_b.tb_op = OP_XNOP;
 		tp->tr_b.magic = RT_TREE_MAGIC;
 		break;
@@ -905,10 +901,10 @@ out:
 int
 rt_comb_tclget( interp, intern, item )
 Tcl_Interp			*interp;
-CONST struct rt_db_internal	*intern;
-CONST char			*item;
+const struct rt_db_internal	*intern;
+const char			*item;
 {
-	CONST struct rt_comb_internal *comb;
+	const struct rt_comb_internal *comb;
 	char buf[128];
 	Tcl_DString	ds;
 
@@ -1048,14 +1044,15 @@ CONST char			*item;
  *  Example -
  *	rgb "1 2 3" ...
  *
- *  Invoked via rt_functab[].ft_tcladjust()
+ *  Invoked via rt_functab[ID_COMBINATION].ft_tcladjust()
  */
 int
-rt_comb_tcladjust( interp, intern, argc, argv )
-Tcl_Interp		*interp;
-struct rt_db_internal	*intern;
-int			argc;
-char			**argv;
+rt_comb_tcladjust(
+	Tcl_Interp		*interp,
+	struct rt_db_internal	*intern,
+	int			argc,
+	char			**argv,
+	struct resource		*resp )
 {
 	struct rt_comb_internal	       *comb;
 	char	buf[128];
@@ -1063,6 +1060,7 @@ char			**argv;
 	double	d;
 
 	RT_CK_DB_INTERNAL(intern);
+	RT_CK_RESOURCE(resp);
 	comb = (struct rt_comb_internal *)intern->idb_ptr;
 	RT_CK_COMB(comb);
 
@@ -1179,19 +1177,19 @@ char			**argv;
 
 			if( strcmp( argv[1], "none" ) == 0 )
 			{
-				db_free_tree( comb->tree );
+				db_free_tree( comb->tree, resp );
 				comb->tree = TREE_NULL;
 			}
 			else
 			{
-				new = db_tcl_tree_parse( interp, argv[1] );
+				new = db_tcl_tree_parse( interp, argv[1], resp );
 				if( new == TREE_NULL )  {
 					Tcl_AppendResult( interp, "db adjust tree: bad tree '",
 						argv[1], "'\n", (char *)NULL );
 					return TCL_ERROR;
 				}
 				if( comb->tree )
-					db_free_tree( comb->tree );
+					db_free_tree( comb->tree, resp );
 				comb->tree = new;
 			}
 		} else {
@@ -1234,7 +1232,7 @@ int
 rt_tcl_import_from_path( interp, ip, path, wdb )
 Tcl_Interp		*interp;
 struct rt_db_internal	*ip;
-CONST char		*path;
+const char		*path;
 struct rt_wdb		*wdb;
 {
 	struct db_i	*dbip;
@@ -1269,7 +1267,7 @@ struct rt_wdb		*wdb;
 		struct directory	*dp_curr;
 		int			ret;
 
-		db_init_db_tree_state( &ts, dbip );
+		db_init_db_tree_state( &ts, dbip, &rt_uniresource );
 		db_full_path_init(&old_path);
 		db_full_path_init(&new_path);
 
@@ -1280,7 +1278,7 @@ struct rt_wdb		*wdb;
 		}
 
 		dp_curr = DB_FULL_PATH_CUR_DIR( &new_path );
-		ret = db_follow_path( &ts, &old_path, &new_path, LOOKUP_NOISY );
+		ret = db_follow_path( &ts, &old_path, &new_path, LOOKUP_NOISY, 0 );
 		db_free_full_path( &old_path );
 		db_free_full_path( &new_path );
 
@@ -1334,11 +1332,11 @@ struct rt_wdb		*wdb;
 int
 rt_parsetab_tclget( interp, intern, attr )
 Tcl_Interp			*interp;
-CONST struct rt_db_internal	*intern;
-CONST char			*attr;
+const struct rt_db_internal	*intern;
+const char			*attr;
 {
-	register CONST struct bu_structparse	*sp = NULL;
-	register CONST struct rt_functab	*ftp;
+	register const struct bu_structparse	*sp = NULL;
+	register const struct rt_functab	*ftp;
 	int                     status;
 	Tcl_DString             ds;
 	struct bu_vls           str;
@@ -1395,7 +1393,7 @@ CONST char			*attr;
  */
 int
 rt_comb_tclform( ftp, interp )
-CONST struct rt_functab *ftp;
+const struct rt_functab *ftp;
 Tcl_Interp		*interp;
 {
 	RT_CK_FUNCTAB(ftp);
@@ -1415,12 +1413,13 @@ shader {%s} material {%s} inherit {%s} tree {%s}", (char *)NULL );
  */
 void
 rt_comb_make( ftp, intern, diameter )
-CONST struct rt_functab	*ftp;
+const struct rt_functab	*ftp;
 struct rt_db_internal	*intern;
 double			diameter;
 {
 	struct rt_comb_internal *comb;
 
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern->idb_type = ID_COMBINATION;
 	intern->idb_meth = &rt_functab[ID_COMBINATION];
 	intern->idb_ptr = bu_calloc( sizeof(struct rt_comb_internal), 1,
@@ -1451,11 +1450,12 @@ double			diameter;
  */
 void
 rt_generic_make( ftp, intern, diameter )
-CONST struct rt_functab	*ftp;
+const struct rt_functab	*ftp;
 struct rt_db_internal	*intern;
 double			diameter;
 {
 	intern->idb_type = ftp - rt_functab;
+	intern->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	BU_ASSERT(&rt_functab[intern->idb_type] == ftp);
 
 	intern->idb_meth = ftp;
@@ -1476,7 +1476,7 @@ struct rt_db_internal	*intern;
 int			argc;
 char			**argv;
 {
-	CONST struct rt_functab	*ftp;
+	const struct rt_functab	*ftp;
 
 	RT_CK_DB_INTERNAL(intern);
 	ftp = intern->idb_meth;
@@ -1497,10 +1497,12 @@ char			**argv;
  *			R T _ P A R S E T A B _ T C L F O R M
  *
  *  Invoked via rt_functab[].ft_tclform()
+ *  on solid types which are fully described by their bu_structparse table
+ *  in ft_parsetab.
  */
 int
 rt_parsetab_tclform( ftp, interp)
-CONST struct rt_functab	*ftp;
+const struct rt_functab	*ftp;
 Tcl_Interp		*interp;
 {
 	RT_CK_FUNCTAB(ftp);
@@ -1532,10 +1534,10 @@ Tcl_Interp		*interp;
  *  which exposes all of this power.
  */
 void
-rt_tcl_setup(interp)
-     Tcl_Interp *interp;
+rt_tcl_setup(Tcl_Interp *interp)
 {
 	extern int rt_bot_minpieces;	/* from g_bot.c */
+	extern int rt_bot_tri_per_piece;	/* from g_bot.c */
 
 	/* initialize database objects */
 	Wdb_Init(interp);
@@ -1548,6 +1550,9 @@ rt_tcl_setup(interp)
 
 	Tcl_SetVar(interp, "rt_version", (char *)rt_version+5, TCL_GLOBAL_ONLY);
 	Tcl_LinkVar(interp, "rt_bot_minpieces", (char *)&rt_bot_minpieces, TCL_LINK_INT);
+	
+	Tcl_LinkVar(interp, "rt_bot_tri_per_piece", 
+		    (char *)&rt_bot_tri_per_piece, TCL_LINK_INT);
 }
 
 
@@ -1560,8 +1565,7 @@ rt_tcl_setup(interp)
  *  "load /usr/brlcad/lib/librt.so"
  */
 int
-Rt_Init(interp)
-Tcl_Interp *interp;
+Rt_Init(Tcl_Interp *interp)
 {
 	char *version_number;
 
@@ -1575,6 +1579,7 @@ Tcl_Interp *interp;
 		/* initialize RT's global state */
 		BU_LIST_INIT(&rt_g.rtg_vlfree);
 		BU_LIST_INIT(&rt_g.rtg_headwdb.l);
+		rt_init_resource(&rt_uniresource, 0, NULL);
 	}
 
 	rt_tcl_setup(interp);
@@ -1598,9 +1603,7 @@ Tcl_Interp *interp;
  *  Take a db_full_path and append it to the TCL result string.
  */
 void
-db_full_path_appendresult( interp, pp )
-Tcl_Interp			*interp;
-CONST struct db_full_path	*pp;
+db_full_path_appendresult( Tcl_Interp *interp, const struct db_full_path *pp )
 {
 	register int i;
 
@@ -1611,6 +1614,15 @@ CONST struct db_full_path	*pp;
 	}
 }
 
+/*
+ *		T C L _ O B J _ T O _ I N T _ A R R A Y
+ *
+ *	Expects the Tcl_obj argument (list) to be a Tcl list and
+ *	extracts list elements, converts them to int, and stores
+ *	them in the passed in array. If the array_len argument is zero,
+ *	a new array of approriate length is allocated. The return value
+ *	is the number of elements converted.
+ */
 int
 tcl_obj_to_int_array( interp, list, array, array_len )
 Tcl_Interp *interp;
@@ -1620,13 +1632,12 @@ int *array_len;
 {
 	Tcl_Obj **obj_array;
 	int len, i;
-	int ret;
 
-	if( (ret=Tcl_ListObjGetElements( interp, list, &len, &obj_array )) != TCL_OK )
-		return( ret );
+	if( Tcl_ListObjGetElements( interp, list, &len, &obj_array ) != TCL_OK )
+		return( 0 );
 
 	if( len < 1 )
-		return( TCL_OK );
+		return( 0 );
 
 	if( *array_len < 1 )
 	{
@@ -1634,11 +1645,21 @@ int *array_len;
 		*array_len = len;
 	}
 
-	for( i=0 ; i<len && i<*array_len ; i++ )
+	for( i=0 ; i<len && i<*array_len ; i++ ) {
 		(*array)[i] = atoi( Tcl_GetStringFromObj( obj_array[i], NULL ) );
+		Tcl_DecrRefCount( obj_array[i] );
+	}
 
-	return( TCL_OK );
+	return( len < *array_len ? len : *array_len );
 }
+
+/*	T C L _ L I S T _ T O _ I N T _ A R R A Y
+ *
+ *	interface to above tcl_obj_to_int_array() routine. This routine
+ *	expects a character string instead of a Tcl_Obj.
+ *
+ *	Returns the number of elements converted.
+ */
 
 int
 tcl_list_to_int_array( interp, char_list, array, array_len )
@@ -1647,25 +1668,25 @@ char *char_list;
 int **array;
 int *array_len;
 {
-	Tcl_Obj *obj, *list;
+	Tcl_Obj *obj;
 	int ret;
 
 	obj = Tcl_NewStringObj( char_list, -1 );
-	list = Tcl_NewListObj( 0, NULL );
-	if( (ret=Tcl_ListObjAppendList( interp, list, obj )) != TCL_OK )
-	{
-		Tcl_DecrRefCount( list );
-		Tcl_DecrRefCount( obj );
-		return( ret );
-	}
 
-	ret = tcl_obj_to_int_array( interp, list, array, array_len );
-
-	Tcl_DecrRefCount( list );
-	Tcl_DecrRefCount( obj );
+	ret = tcl_obj_to_int_array( interp, obj, array, array_len );
 
 	return( ret );
 }
+
+/*
+ *		T C L _ O B J _ T O _ F A S T F _ A R R A Y
+ *
+ *	Expects the Tcl_obj argument (list) to be a Tcl list and
+ *	extracts list elements, converts them to fastf_t, and stores
+ *	them in the passed in array. If the array_len argument is zero,
+ *	a new array of approriate length is allocated. The return value
+ *	is the number of elements converted.
+ */
 
 int
 tcl_obj_to_fastf_array( interp, list, array, array_len )
@@ -1682,7 +1703,7 @@ int *array_len;
 		return( ret );
 
 	if( len < 1 )
-		return( TCL_OK );
+		return( 0 );
 
 	if( *array_len < 1 )
 	{
@@ -1690,11 +1711,21 @@ int *array_len;
 		*array_len = len;
 	}
 
-	for( i=0 ; i<len && i<*array_len ; i++ )
+	for( i=0 ; i<len && i<*array_len ; i++ ) {
 		(*array)[i] = atof( Tcl_GetStringFromObj( obj_array[i], NULL ) );
+		Tcl_DecrRefCount( obj_array[i] );
+	}
 
-	return( TCL_OK );
+	return( len < *array_len ? len : *array_len );
 }
+
+/*	T C L _ L I S T _ T O _ F A S T F _ A R R A Y
+ *
+ *	interface to above tcl_obj_to_fastf_array() routine. This routine
+ *	expects a character string instead of a Tcl_Obj.
+ *
+ *	Returns the number of elements converted.
+ */
 
 int
 tcl_list_to_fastf_array( interp, char_list, array, array_len )
@@ -1703,22 +1734,12 @@ char *char_list;
 fastf_t **array;
 int *array_len;
 {
-	Tcl_Obj *obj, *list;
+	Tcl_Obj *obj;
 	int ret;
 
 	obj = Tcl_NewStringObj( char_list, -1 );
-	list = Tcl_NewListObj( 0, NULL );
-	if( (ret=Tcl_ListObjAppendList( interp, list, obj )) != TCL_OK )
-	{
-		Tcl_DecrRefCount( list );
-		Tcl_DecrRefCount( obj );
-		return( ret );
-	}
 
-	ret = tcl_obj_to_fastf_array( interp, list, array, array_len );
-
-	Tcl_DecrRefCount( list );
-	Tcl_DecrRefCount( obj );
+	ret = tcl_obj_to_fastf_array( interp, obj, array, array_len );
 
 	return( ret );
 }

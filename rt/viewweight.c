@@ -24,12 +24,13 @@
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 
 #include "db.h"  /* Yes, I know I shouldn't be peeking, put I am only
 			looking to see what units we prefer... */
@@ -41,7 +42,7 @@ int	using_mlib = 0;		/* Material routines NOT used */
 
 /* Viewing module specific "set" variables */
 struct bu_structparse view_parse[] = {
-	"",	0, (char *)0,	0,	BU_STRUCTPARSE_FUNC_NULL
+	{"",	0, (char *)0,	0,	BU_STRUCTPARSE_FUNC_NULL}
 };
 
 char usage[] = "\
@@ -94,6 +95,7 @@ extern int	output_is_binary;	/* !0 means output is binary */
  *  Called at the start of a run.
  *  Returns 1 if framebuffer should be opened, else 0.
  */
+int
 view_init( ap, file, obj, minus_o )
 register struct application *ap;
 char *file, *obj;
@@ -194,7 +196,6 @@ struct application *ap;
 	time_t clock;
 	struct tm *locltime;
 	char *timeptr;
-	char *unitstr;
 
 	(void) time( &clock );
 	locltime = localtime( &clock );
@@ -289,7 +290,7 @@ struct application *ap;
 */
 		fastf_t *item_wt;
 		MAX_ITEM++;
-		item_wt = (fastf_t *) malloc( sizeof(fastf_t) * MAX_ITEM );
+		item_wt = (fastf_t *) malloc( sizeof(fastf_t) * (MAX_ITEM + 1) );
 		for( i=1; i<=MAX_ITEM; i++ )
 			item_wt[i] = -1.0;
 		fprintf(outfp,"Weight by item number (in %s):\n\n",units);

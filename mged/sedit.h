@@ -121,6 +121,8 @@
 #define ECMD_CLINE_MOVE_H	77	/* move end of height vector */
 #define	ECMD_CLINE_SCALE_R	78	/* scale radius */
 #define	ECMD_CLINE_SCALE_T	79	/* scale thickness */
+#define ECMD_TGC_MV_H_CD	80	/* move end of tgc, while scaling CD */
+#define ECMD_TGC_MV_H_V_AB	81	/* move vertex end of tgc, while scaling AB */
 
 #define SEDIT_ROTATE (state == ST_S_EDIT && \
 		      (es_edflag == SROT || \
@@ -165,7 +167,7 @@
 		     es_edflag == ECMD_NMG_EMOVE || \
 		     es_edflag == ECMD_NMG_ESPLIT || \
 		     es_edflag == ECMD_NMG_LEXTRU || \
-		     es_edflag == ECMD_PIPE_PT_MOVE) || \
+		     es_edflag == ECMD_PIPE_PT_MOVE || \
 		     es_edflag == ECMD_PIPE_SPLIT || \
 		     es_edflag == ECMD_PIPE_PT_ADD || \
 		     es_edflag == ECMD_PIPE_PT_INS || \
@@ -176,7 +178,7 @@
 		     es_edflag == ECMD_BOT_MOVEE || \
 		     es_edflag == ECMD_BOT_MOVET || \
 		     es_edflag == ECMD_CLINE_MOVE_H || \
-		     es_edflag == ECMD_EXTR_MOV_H )
+		     es_edflag == ECMD_EXTR_MOV_H ))
 #define OEDIT_TRAN (state == ST_O_EDIT && \
 		    (edobj == BE_O_X || \
 		     edobj == BE_O_Y || \

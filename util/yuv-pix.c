@@ -31,7 +31,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -40,6 +40,10 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 
 #include "machine.h"
 #include "externs.h"		/* For getopt, etc */
+
+#include "bu.h"
+#include "vmath.h"
+#include "bn.h"
 
 static char	*file_name;
 static int	infd;
@@ -57,6 +61,7 @@ static char usage[] = "\
 Usage: yuv-pix [-h] [-a]\n\
 	[-s squaresize] [-w file_width] [-n file_height] [file.yuv] > file.pix\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -117,6 +122,7 @@ register char **argv;
 /*
  *			M A I N
  */
+int
 main( argc, argv )
 int	argc;
 char	**argv;
@@ -215,7 +221,6 @@ int	n;
  *  U, V: -112 .. +112 range, offset by 128 [16 .. 240]
  */
 
-#define	VDOT(a,b)	(a[0]*b[0]+a[1]*b[1]+a[2]*b[2])
 #define	V5DOT(a,b)	(a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3]+a[4]*b[4])
 #define	floor(d)	(d>=0?(int)d:((int)d==d?d:(int)(d-1.0)))
 #define	CLIP(out,in)		{ register int t; \

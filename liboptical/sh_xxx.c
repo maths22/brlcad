@@ -14,6 +14,20 @@
  *			each shader name being built.
  *		edit the xxx_setup function to do shader-specific setup
  *		edit the xxx_render function to do the actual rendering
+ *
+ *  If you are building a dynamically loaded shader, compile this into a
+ *  shared library called "shadername.so".  If you have a number of shaders
+ *  for you are adding, you can create a single library called "shaders.so"
+ *  which contains all of your DSO shaders.
+ *
+ *  RT will look in the following locations for DSO shaders:
+ *		./
+ *		BRLCAD_ROOT/lib/
+ *		$LD_LIBRARY_PATH
+ *
+ *  If you are adding the shader to "rt" as a permanent shader, then the
+ *  following steps are necessary:
+ *
  *	3) Edit init.c to add extern for xxx_mfuncs and 
  *		a call to mlib_add_shader().
  *	4) Edit Cakefile to add shader file to "FILES" macro (without the .o)
@@ -21,6 +35,8 @@
  *		and use.
  *	6) Edit shaders.tcl and comb.tcl in the ../tclscripts/mged directory to
  *		add a new gui for this shader.
+ *
+ *
  */
 #include "conf.h"
 
@@ -31,8 +47,11 @@
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 #define xxx_MAGIC 0x1834    /* make this a unique number for each shader */
 #define CK_xxx_SP(_p) BU_CKMAG(_p, xxx_MAGIC, "xxx_specific")
 
@@ -52,7 +71,7 @@ struct xxx_specific {
 };
 
 /* The default values for the variables in the shader specific structure */
-CONST static
+const static
 struct xxx_specific xxx_defaults = {
 	xxx_MAGIC,
 	1.0,				/* xxx_val */
@@ -63,7 +82,7 @@ struct xxx_specific xxx_defaults = {
 	{	0.0, 0.0, 0.0, 0.0,	/* xxx_m_to_sh */
 		0.0, 0.0, 0.0, 0.0,
 		0.0, 0.0, 0.0, 0.0,
-		0.0, 0.0, 0.0, 0.0 }
+		0.0, 0.0, 0.0, 0.0 },
 	{	0.0, 0.0, 0.0, 0.0,	/* xxx_m_to_r */
 		0.0, 0.0, 0.0, 0.0,
 		0.0, 0.0, 0.0, 0.0,
@@ -116,11 +135,16 @@ struct mfuncs xxx_mfuncs[] = {
 };
 
 
-/*	X X X _ S E T U P
+/*	X X X _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
  *	Any shader-specific initialization should be done here.
+ * 
+ * 	Returns:
+ *	1	success
+ *	0	success, but delete region
+ *	-1	failure
  */
 HIDDEN int
 xxx_setup( rp, matparm, dpp, mfp, rtip)
@@ -172,7 +196,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	 * Alternatively, shading may be done in "region coordinates"
 	 * if desired:
 	 *
-*	db_region_mat(xxx_sp->xxx_m_to_r, rtip->rti_dbip, rp->reg_name);
+*	db_region_mat(xxx_sp->xxx_m_to_r, rtip->rti_dbip, rp->reg_name, &rt_uniresource);
 	 *
 	 */
 
@@ -184,7 +208,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	X X X _ P R I N T
  */
 HIDDEN void
@@ -205,7 +229,7 @@ char *cp;
 	bu_free( cp, "xxx_specific" );
 }
 
-/*
+/*
  *	X X X _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c) once for each hit point
@@ -236,13 +260,13 @@ char			*dp;	/* ptr to the shader-specific struct */
 	 * See the call to db_region_mat in xxx_setup().
 	MAT4X3PNT(pt, xxx_sp->xxx_m_to_sh, swp->sw_hit.hit_point);
 	MAT4X3PNT(pt, xxx_sp->xxx_m_to_r, swp->sw_hit.hit_point);
-	 */
 
 	if (rdebug&RDEBUG_SHADE) {
 		bu_log("xxx_render()  model:(%g %g %g) shader:(%g %g %g)\n", 
-		V3ARGS(swp->sw_hit.hit_point),
-		V3ARGS(pt) );
+			V3ARGS(swp->sw_hit.hit_point),
+			V3ARGS(pt) );
 	}
+	 */
 
 	/* XXX perform shading operations here */
 	VMOVE(swp->sw_color, pt);

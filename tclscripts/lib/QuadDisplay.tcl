@@ -41,13 +41,33 @@ class QuadDisplay {
     public method refreshall {}
 
     # methods for controlling the view object
-    public method aet {args}
+    public method ae {args}
+    public method arot {args}
     public method center {args}
+    public method coord {args}
+    public method eye {args}
+    public method eye_pos {args}
+    public method invSize {args}
+    public method keypoint {args}
+    public method lookat {args}
+    public method model2view {args}
+    public method mrot {args}
+    public method orientation {args}
+    public method pmat {args}
+    public method pmodel2view {args}
+    public method pov {args}
+    public method rmat {args}
     public method rot {args}
+    public method rotate_about {args}
+    public method sca {args}
+    public method setview {args}
     public method size {args}
     public method slew {args}
     public method tra {args}
-    public method zoom {sf}
+    public method view2model {args}
+    public method vrot {args}
+    public method vtra {args}
+    public method zoom {args}
 
     public method autoview {{gindex 0}}
     public method autoviewall {{gindex 0}}
@@ -65,10 +85,15 @@ class QuadDisplay {
     public method linestyle {args}
     public method linewidth {args}
     public method listen {args}
+    public method mouse_nirt {x y}
     public method perspective {args}
+    public method perspective_angle {args}
+    public method nirt {args}
+    public method qray {args}
     public method rt {args}
     public method rtabort {{gi 0}}
     public method rtcheck {args}
+    public method rtedge {args}
     public method zbuffer {args}
     public method zclip {args}
 
@@ -82,6 +107,10 @@ class QuadDisplay {
     public method detach_viewall {}
     public method detach_drawable {dg}
     public method detach_drawableall {dg}
+
+    public method lightall {args}
+    public method zbufferall {args}
+    public method zclipall {args}
 
     public method ? {}
     public method apropos {key}
@@ -200,16 +229,16 @@ body QuadDisplay::pane {args} {
 			$itk_component(upw) show urp
 		    }
 		    ll {
-			hide upper
+			iwidgets::Panedwindow::hide upper
 			$itk_component(upw) show urp
-			show lower
+			iwidgets::Panedwindow::show lower
 			$itk_component(lpw) show llp
 			$itk_component(lpw) hide lrp
 		    }
 		    lr {
-			hide upper
+			iwidgets::Panedwindow::hide upper
 			$itk_component(upw) show urp
-			show lower
+			iwidgets::Panedwindow::show lower
 			$itk_component(lpw) hide llp
 			$itk_component(lpw) show lrp
 		    }
@@ -222,16 +251,16 @@ body QuadDisplay::pane {args} {
 			$itk_component(upw) show ulp
 		    }
 		    ll {
-			hide upper
+			iwidgets::Panedwindow::hide upper
 			$itk_component(upw) show ulp
-			show lower
+			iwidgets::Panedwindow::show lower
 			$itk_component(lpw) show llp
 			$itk_component(lpw) hide lrp
 		    }
 		    lr {
-			hide upper
+			iwidgets::Panedwindow::hide upper
 			$itk_component(upw) show ulp
-			show lower
+			iwidgets::Panedwindow::show lower
 			$itk_component(lpw) hide llp
 			$itk_component(lpw) show lrp
 		    }
@@ -240,16 +269,16 @@ body QuadDisplay::pane {args} {
 	    ll {
 		switch $itk_option(-pane) {
 		    ul {
-			hide lower
+			iwidgets::Panedwindow::hide lower
 			$itk_component(lpw) show lrp
-			show upper
+			iwidgets::Panedwindow::show upper
 			$itk_component(upw) hide urp
 			$itk_component(upw) show ulp
 		    }
 		    ur {
-			hide lower
+			iwidgets::Panedwindow::hide lower
 			$itk_component(lpw) show lrp
-			show upper
+			iwidgets::Panedwindow::show upper
 			$itk_component(upw) hide ulp
 			$itk_component(upw) show urp
 		    }
@@ -262,16 +291,16 @@ body QuadDisplay::pane {args} {
 	    lr {
 		switch $itk_option(-pane) {
 		    ul {
-			hide lower
+			iwidgets::Panedwindow::hide lower
 			$itk_component(lpw) show llp
-			show upper
+			iwidgets::Panedwindow::show upper
 			$itk_component(upw) hide urp
 			$itk_component(upw) show ulp
 		    }
 		    ur {
-			hide lower
+			iwidgets::Panedwindow::hide lower
 			$itk_component(lpw) show llp
-			show upper
+			iwidgets::Panedwindow::show upper
 			$itk_component(upw) hide ulp
 			$itk_component(upw) show urp
 		    }
@@ -320,28 +349,108 @@ body QuadDisplay::refreshall {} {
     $itk_component(lr) refresh
 }
 
-body QuadDisplay::aet {args} {
-    eval $itk_component($itk_option(-pane)) aet $args
+body QuadDisplay::ae {args} {
+    eval $itk_component($itk_option(-pane)) ae $args
+}
+
+body QuadDisplay::arot {args} {
+    eval $itk_component($itk_option(-pane)) arot $args
 }
 
 body QuadDisplay::center {args} {
     eval $itk_component($itk_option(-pane)) center $args
 }
 
+body QuadDisplay::coord {args} {
+    eval $itk_component($itk_option(-pane)) coord $args
+}
+
+body QuadDisplay::eye {args} {
+    eval $itk_component($itk_option(-pane)) eye $args
+}
+
+body QuadDisplay::eye_pos {args} {
+    eval $itk_component($itk_option(-pane)) eye_pos $args
+}
+
+body QuadDisplay::invSize {args} {
+    eval $itk_component($itk_option(-pane)) invSize $args
+}
+
+body QuadDisplay::keypoint {args} {
+    eval $itk_component($itk_option(-pane)) keypoint $args
+}
+
+body QuadDisplay::lookat {args} {
+    eval $itk_component($itk_option(-pane)) lookat $args
+}
+
+body QuadDisplay::model2view {args} {
+    eval $itk_component($itk_option(-pane)) model2view $args
+}
+
+body QuadDisplay::mrot {args} {
+    eval $itk_component($itk_option(-pane)) mrot $args
+}
+
+body QuadDisplay::orientation {args} {
+    eval $itk_component($itk_option(-pane)) orientation $args
+}
+
+body QuadDisplay::pmat {args} {
+    eval $itk_component($itk_option(-pane)) pmat $args
+}
+
+body QuadDisplay::pmodel2view {args} {
+    eval $itk_component($itk_option(-pane)) pmodel2view $args
+}
+
+body QuadDisplay::pov {args} {
+    eval $itk_component($itk_option(-pane)) pov $args
+}
+
+body QuadDisplay::rmat {args} {
+    eval $itk_component($itk_option(-pane)) rmat $args
+}
+
 body QuadDisplay::rot {args} {
     eval $itk_component($itk_option(-pane)) rot $args
+}
+
+body QuadDisplay::rotate_about {args} {
+    eval $itk_component($itk_option(-pane)) rotate_about $args
 }
 
 body QuadDisplay::slew {args} {
     eval $itk_component($itk_option(-pane)) slew $args
 }
 
-body QuadDisplay::tra {args} {
-    eval $itk_component($itk_option(-pane)) tra $args
+body QuadDisplay::sca {args} {
+    eval $itk_component($itk_option(-pane)) sca $args
+}
+
+body QuadDisplay::setview {args} {
+    eval $itk_component($itk_option(-pane)) setview $args
 }
 
 body QuadDisplay::size {args} {
     eval $itk_component($itk_option(-pane)) size $args
+}
+
+body QuadDisplay::tra {args} {
+    eval $itk_component($itk_option(-pane)) tra $args
+}
+
+body QuadDisplay::view2model {args} {
+    eval $itk_component($itk_option(-pane)) view2model $args
+}
+
+body QuadDisplay::vrot {args} {
+    eval $itk_component($itk_option(-pane)) vrot $args
+}
+
+body QuadDisplay::vtra {args} {
+    eval $itk_component($itk_option(-pane)) vtra $args
 }
 
 body QuadDisplay::zoom {args} {
@@ -406,16 +515,41 @@ body QuadDisplay::zclip {args} {
     eval $itk_component($itk_option(-pane)) zclip $args
 }
 
+body QuadDisplay::zclipall {args} {
+    eval $itk_component(ul) zclip $args
+    eval $itk_component(ur) zclip $args
+    eval $itk_component(ll) zclip $args
+    eval $itk_component(lr) zclip $args
+}
+
 body QuadDisplay::zbuffer {args} {
     eval $itk_component($itk_option(-pane)) zbuffer $args
+}
+
+body QuadDisplay::zbufferall {args} {
+    eval $itk_component(ul) zbuffer $args
+    eval $itk_component(ur) zbuffer $args
+    eval $itk_component(ll) zbuffer $args
+    eval $itk_component(lr) zbuffer $args
 }
 
 body QuadDisplay::light {args} {
     eval $itk_component($itk_option(-pane)) light $args
 }
 
+body QuadDisplay::lightall {args} {
+    eval $itk_component(ul) light $args
+    eval $itk_component(ur) light $args
+    eval $itk_component(ll) light $args
+    eval $itk_component(lr) light $args
+}
+
 body QuadDisplay::perspective {args} {
     eval $itk_component($itk_option(-pane)) perspective $args
+}
+
+body QuadDisplay::perspective_angle {args} {
+    eval $itk_component($itk_option(-pane)) perspective_angle $args
 }
 
 body QuadDisplay::bg {args} {
@@ -435,6 +569,18 @@ body QuadDisplay::fb_observe {args} {
     eval $itk_component($itk_option(-pane)) fb_observe $args
 }
 
+body QuadDisplay::mouse_nirt {x y} {
+    eval $itk_component($itk_option(-pane)) mouse_nirt $x $y
+}
+
+body QuadDisplay::nirt {args} {
+    eval $itk_component($itk_option(-pane)) nirt $args
+}
+
+body QuadDisplay::qray {args} {
+    eval $itk_component($itk_option(-pane)) qray $args
+}
+
 body QuadDisplay::rt {args} {
     eval $itk_component($itk_option(-pane)) rt $args
 }
@@ -447,6 +593,10 @@ body QuadDisplay::rtcheck {args} {
     eval $itk_component($itk_option(-pane)) rtcheck $args
 }
 
+body QuadDisplay::rtedge {args} {
+    eval $itk_component($itk_option(-pane)) rtedge $args
+}
+
 body QuadDisplay::resetall {} {
     reset
     $itk_component(upw) reset
@@ -454,10 +604,10 @@ body QuadDisplay::resetall {} {
 }
 
 body QuadDisplay::default_views {} {
-    $itk_component(ul) aet 0 90 0
-    $itk_component(ur) aet 35 25 0
-    $itk_component(ll) aet 0 0 0
-    $itk_component(lr) aet 90 0 0
+    $itk_component(ul) ae 0 90 0
+    $itk_component(ur) ae 35 25 0
+    $itk_component(ll) ae 0 0 0
+    $itk_component(lr) ae 90 0 0
 }
 
 body QuadDisplay::attach_view {} {
@@ -511,19 +661,19 @@ body QuadDisplay::toggle_multi_pane {} {
 
 	switch $itk_option(-pane) {
 	    ul {
-		hide lower
+		iwidgets::Panedwindow::hide lower
 		$itk_component(upw) hide urp
 	    }
 	    ur {
-		hide lower
+		iwidgets::Panedwindow::hide lower
 		$itk_component(upw) hide ulp
 	    }
 	    ll {
-		hide upper
+		iwidgets::Panedwindow::hide upper
 		$itk_component(lpw) hide lrp
 	    }
 	    lr {
-		hide upper
+		iwidgets::Panedwindow::hide upper
 		$itk_component(lpw) hide llp
 	    }
 	}
@@ -533,19 +683,19 @@ body QuadDisplay::toggle_multi_pane {} {
 
 	switch $itk_option(-pane) {
 	    ul {
-		show lower
+		iwidgets::Panedwindow::show lower
 		$itk_component(upw) show urp
 	    }
 	    ur {
-		show lower
+		iwidgets::Panedwindow::show lower
 		$itk_component(upw) show ulp
 	    }
 	    ll {
-		show upper
+		iwidgets::Panedwindow::show upper
 		$itk_component(lpw) show lrp
 	    }
 	    lr {
-		show upper
+		iwidgets::Panedwindow::show upper
 		$itk_component(lpw) show llp
 	    }
 	}

@@ -18,12 +18,21 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <ctype.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include "machine.h"
+#include "externs.h"
 
 long bin[256];
 unsigned char new[256];
@@ -36,6 +45,7 @@ char usage[] = "Usage: bwhisteq [-v] file.bw > file.equalized\n";
 
 int	verbose = 0;
 
+int
 main( argc, argv )
 int argc; char **argv;
 {
@@ -112,4 +122,5 @@ int argc; char **argv;
 		}
 		fwrite( obuf, 1, n, stdout );
 	}
+	return 0;
 }

@@ -4,7 +4,7 @@
  *  This program generates a GED database from an
  *  ASCII GED data file.
  *
- *  Usage:  asc2g < file.asc > file.g
+ *  Usage:  asc2g file.asc file.g
  *  
  *  Authors -
  *  	Charles M Kennedy
@@ -22,7 +22,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -36,21 +36,28 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 #include <stdio.h>
 #include "machine.h"
+#include "externs.h"
 #include "vmath.h"
-#include "rtlist.h"
+#include "bu.h"
+#include "bn.h"
 #include "db.h"
 #include "nmg.h"
 #include "rtgeom.h"
 #include "raytrace.h"
 #include "wdb.h"
-#include "externs.h"
+#include "mater.h"
+
+
+extern void rt_dsp_ifree( struct rt_db_internal	*ip);
+extern void rt_ebm_ifree( struct rt_db_internal	*ip);
+extern void rt_vol_ifree( struct rt_db_internal	*ip);
 
 
 #define BUFSIZE			(8*1024)	/* input line buffer size */
 #define TYPELEN			10
 #define NAME_LEN			20
 
-void		identbld(), polyhbld(), polydbld(), pipebld(), particlebld();
+void		identbld(), polyhbld(), pipebld(), particlebld();
 void		solbld(), arbnbld(), clinebld(), botbld(), extrbld(), sktbld();
 int		combbld();
 void		membbld(), arsabld(), arsbbld();
@@ -61,46 +68,132 @@ void		strsolbld(), nmgbld();
 static union record	record;			/* GED database record */
 static char 		buf[BUFSIZE];		/* Record input buffer */
 char			name[NAMESIZE + 2];
-int 			debug;
 
 FILE	*ifp;
-FILE	*ofp;
+struct rt_wdb	*ofp;
+static int ars_ncurves=0;
+static int ars_ptspercurve=0;
+static int ars_curve=0;
+static int ars_pt=0;
+static char *ars_name;
+static fastf_t **ars_curves=NULL;
+static char *slave_name = "safe_interp";
+static char *db_name = "db";
 
 static char usage[] = "\
-Usage: asc2g < file.asc > file.g\n\
-   or  asc2g file.asc file.g\n\
+Usage: asc2g file.asc file.g\n\
  Convert an ASCII BRL-CAD database to binary form\n\
 ";
 
+char *aliases[] = {
+	"attr",
+	"color",
+	"put",
+	"title",
+	"units",
+	"find",
+	"dbfind",
+	"rm",
+	(char *)0
+};
+
+int
+incr_ars_pt()
+{
+	int ret=0;
+
+	ars_pt++;
+	if( ars_pt >= ars_ptspercurve )
+	{
+		ars_curve++;
+		ars_pt = 0;
+		ret = 1;
+	}
+
+	if( ars_curve >= ars_ncurves )
+		return( 2 );
+
+	return( ret );
+}
+
+/*
+ *			M A I N
+ */
+int
 main(argc, argv)
 int argc;
 char **argv;
 {
-	ifp = stdin;
-	ofp = stdout;
+	char c1[3];
 
-#if 0
-(void)fprintf(stderr, "About to call bu_log\n");
-bu_log("Hello cold cruel world!\n");
-(void)fprintf(stderr, "About to begin\n");
-#endif
+	bu_debug = BU_DEBUG_COREDUMP;
 
-	if( argc == 2 || argc == 4 )
-		debug = 1;
+	if( argc != 3 ) {
+		bu_log( "%s", usage );
+		exit( 1 );
+	}
 
-	if( argc >= 3 ) {
-		ifp = fopen(argv[1],"r");
-		if( !ifp )  perror(argv[1]);
-		ofp = fopen(argv[2],"w");
-		if( !ofp )  perror(argv[2]);
-		if (ifp == NULL || ofp == NULL) {
-			(void)fprintf(stderr, "asc2g: can't open files.");
+	ifp = fopen(argv[1],"r");
+	if( !ifp )  perror(argv[1]);
+	
+	ofp = wdb_fopen(argv[2]);
+	if( !ofp )  perror(argv[2]);
+	if (ifp == NULL || ofp == NULL) {
+		(void)fprintf(stderr, "asc2g: can't open files.");
+		exit(1);
+	}
+
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
+	if( fgets( c1, 6, ifp ) == NULL ) {
+		bu_bomb( "Unexpected EOF!!!\n" );
+	}
+
+	/* new style ascii database */
+	if (!strncmp(c1, "title", 5) || !strncmp(c1, "put ", 4) ) {
+		Tcl_Interp     *interp;
+		Tcl_Interp     *safe_interp;
+
+		/* this is a Tcl script */
+
+		rewind( ifp );
+		BU_LIST_INIT(&rt_g.rtg_headwdb.l);
+		interp = Tcl_CreateInterp();
+		if( wdb_init_obj( interp, ofp, db_name ) != TCL_OK ) {
+			bu_bomb( "Failed to initialize wdb_obj!!\n" );
+		}
+
+		/* Create the safe interpreter */
+		if ((safe_interp = Tcl_CreateSlave(interp, slave_name, 1)) == NULL) {
+			bu_log("Failed to create safe interpreter");
 			exit(1);
 		}
-	}
-	if (isatty(fileno(ofp))) {
-		(void)fprintf(stderr, usage);
-		exit(1);
+
+		/* Create aliases */
+		{
+			int	i;
+			int	ac = 1;
+			char	*av[2];
+
+			av[1] = (char *)0;
+			for (i = 0; aliases[i] != (char *)0; ++i) {
+				av[0] = aliases[i];
+				Tcl_CreateAlias(safe_interp, aliases[i], interp, db_name, ac, av);
+			}
+			/* add "dbfind" separately */
+			av[0] = "find";
+			Tcl_CreateAlias(safe_interp, "dbfind", interp, db_name, ac, av);
+		}
+
+		if( Tcl_EvalFile( safe_interp, argv[1] ) != TCL_OK ) {
+			bu_log( "Failed to process input file (%s)!!\n", argv[1] );
+			bu_log( "%s\n", Tcl_GetStringResult(safe_interp) );
+			exit( 1 );
+		}
+
+		exit( 0 );
+	} else {
+		rewind( ifp );
 	}
 
 	/* Read ASCII input file, each record on a line */
@@ -111,8 +204,6 @@ after_read:
 		(void)bzero( (char *)&record, sizeof(record) );
 
 		/* Check record type */
-		if( debug )
-			bu_log("rec %c\n", buf[0] );
 		switch( buf[0] )  {
 		case ID_SOLID:
 			solbld();
@@ -139,7 +230,7 @@ after_read:
 			continue;
 
 		case ID_P_DATA:
-			polydbld();
+			bu_log("Unattached POLY-solid P_DATA (Q) record, skipping\n");
 			continue;
 
 		case ID_IDENT:
@@ -200,50 +291,108 @@ after_read:
 			continue;
 		}
 	}
+
+	/* Now, at the end of the database, dump out the entire
+	 * region-id-based color table.
+	 */
+	mk_write_color_table( ofp );
+	wdb_close(ofp);
+
 	exit(0);
 }
 
 /*
  *			S T R S O L B L D
+ *
+ *  Input format is:
+ *	s type name args...\n
+ *
+ *  Individual processing is needed for each 'type' of solid,
+ *  to hand it off to the appropriate LIBWDB routine.
  */
 void
 strsolbld()
 {
-	register char *cp;
-	register char *np;
-	char keyword[10];
-	char name[NAME_LEN+1];
+    char	*type;
+    char	*name;
+    char	*args;
+    struct bu_vls	str;
 
-	cp = buf;
+    bu_vls_init(&str);
 
-	if( *cp != DBID_STRSOL )
-	{
-		bu_log( "asc2g: expecting STRSOL, found '%c' (0%o) (skipping)\n" , buf[0], buf[0] );
-		bu_log( "%s\n" , buf );
-		return;
+    (void)strtok( buf, " " );
+    /* skip stringsolid_id */
+    type = strtok( NULL, " " );
+    name = strtok( NULL, " " );
+    args = strtok( NULL, "\n" );
+
+    if( strcmp( type, "dsp" ) == 0 )  {
+	struct rt_dsp_internal *dsp;
+
+	BU_GETSTRUCT( dsp, rt_dsp_internal );
+	bu_vls_init( &dsp->dsp_name );
+	bu_vls_strcpy( &str, args );
+	if( bu_struct_parse( &str, rt_functab[ID_DSP].ft_parsetab, (char *)dsp ) < 0 )  {
+	    bu_log("strsolbld(%s): Unable to parse %s solid's args of '%s'\n",
+		   name, type, args);
+	    rt_dsp_ifree( (struct rt_db_internal *)dsp );
+	    goto out;
 	}
-
-	cp = nxt_spc( cp );
-	np = keyword;
-	while( *cp != ' ' )
-		*np++ = *cp++;
-	*np = '\0';
-
-	cp = nxt_spc( cp );
-	np = name;
-	while( *cp != ' ' )
-		*np++ = *cp++;
-	*np = '\0';
-
-	cp = nxt_spc( cp );
-
-	/* Zap the trailing newline */
-	cp[strlen(cp)-1] = '\0';
-
-	if( mk_strsol( ofp, name, keyword, cp ) )  {
-		bu_log("asc2g(%s) couldn't convert %s type solid\n",
-			name, keyword );
+	dsp->magic = RT_DSP_INTERNAL_MAGIC;
+	if( wdb_export( ofp, name, (genptr_t)dsp, ID_DSP, mk_conv2mm ) < 0 )  {
+	    bu_log("strsolbld(%s): Unable to export %s solid, args='%s'\n",
+		   name, type, args);
+	    goto out;
 	}
+	/* 'dsp' has already been freed by wdb_export() */
+    } else if ( strcmp(type, "ebm") == 0) {
+	struct rt_ebm_internal *ebm;
+
+	BU_GETSTRUCT( ebm, rt_ebm_internal );
+
+	MAT_IDN(ebm->mat);
+
+	bu_vls_strcpy( &str, args );
+	if (bu_struct_parse( &str, rt_functab[ID_EBM].ft_parsetab, (char *)ebm) < 0) {
+	    bu_log("strsolbld(%s): Unable to parse %s solid's args of '%s'\n",
+		   name, type, args);
+	    rt_ebm_ifree( (struct rt_db_internal *)ebm );
+	    return;
+	}
+	ebm->magic = RT_EBM_INTERNAL_MAGIC;
+	if (wdb_export(ofp, name, (genptr_t)ebm, ID_EBM, mk_conv2mm) < 0) {
+	    bu_log("strsolbld(%s): Unable to export %s solid, args='%s'\n",
+		   name, type, args);
+	    goto out;
+	}
+	/* 'ebm' has already been freed by wdb_export() */
+    } else if ( strcmp(type, "vol") == 0) {
+	struct rt_vol_internal *vol;
+
+	BU_GETSTRUCT( vol, rt_vol_internal );
+	MAT_IDN(vol->mat);
+
+	bu_vls_strcpy( &str, args );
+	if (bu_struct_parse( &str, rt_functab[ID_VOL].ft_parsetab, (char *)vol) < 0) {
+	    bu_log("strsolbld(%s): Unable to parse %s solid's args of '%s'\n",
+		   name, type, args);
+	    rt_vol_ifree( (struct rt_db_internal *)vol );
+	    return;
+	}
+	vol->magic = RT_VOL_INTERNAL_MAGIC;
+	if (wdb_export(ofp, name, (genptr_t)vol, ID_VOL, mk_conv2mm) < 0) {
+	    bu_log("strsolbld(%s): Unable to export %s solid, args='%s'\n",
+		   name, type, args);
+	    goto out;
+	}
+	/* 'vol' has already been freed by wdb_export() */
+    } else {
+	bu_log("strsolbld(%s): unable to convert '%s' type solid, skipping\n",
+	       name, type);
+    }
+
+ out:
+    bu_vls_free(&str);
 }
 
 #define LSEG 'L'
@@ -450,73 +599,101 @@ extrbld()
 	(void)mk_extrusion( ofp, name, sketch_name, V, h, u_vec, v_vec, keypoint );
 }
 
+/*
+ *			N M G B L D
+ *
+ *  For the time being, what we read in from the ascii form is
+ *  a hex dump of the on-disk form of NMG.
+ *  This is the same between v4 and v5.
+ *  Reassemble it in v5 binary form here,
+ *  then import it,
+ *  then re-export it.
+ *  This extra step is necessary because we don't know what version
+ *  database the output it, LIBWDB is only interested in writing
+ *  in-memory versions.
+ */
 void
 nmgbld()
 {
 	register char *cp;
-	int cp_i;
-	char *ptr;
-	char nmg_id;
-	int version;
-	char name[NAMESIZE+1];
-	long granules,struct_count[26];
-	int i;
-	long j;
+	int	version;
+	char	*name;
+	long	granules;
+	long	struct_count[26];
+	struct bu_external	ext;
+	struct rt_db_internal	intern;
+	int	j;
 
-	if( sizeof( union record )%32 )
-	{
-		bu_log( "asc2g: nmgbld() will only work with union records with size multipe of 32\n" );
-		exit( -1 );
+	/* First, process the header line */
+	cp = strtok( buf, " " );
+	/* This is nmg_id, unused here. */
+	cp = strtok( NULL, " " );
+	version = atoi(cp);
+	cp = strtok( NULL, " " );
+	name = bu_strdup( cp );
+	cp = strtok( NULL, " " );
+	granules = atol( cp );
+
+	/* Allocate storage for external v5 form of the body */
+	BU_INIT_EXTERNAL(&ext);
+	ext.ext_nbytes = SIZEOF_NETWORK_LONG + 26*SIZEOF_NETWORK_LONG + 128 * granules;
+	ext.ext_buf = bu_malloc( ext.ext_nbytes, "nmg ext_buf" );
+	bu_plong( ext.ext_buf, version );
+	BU_ASSERT_LONG( version, ==, 1 );	/* DISK_MODEL_VERSION */
+
+	/* Get next line of input with the 26 counts on it */
+	if( fgets( buf, BUFSIZE, ifp ) == (char *)0 )  {
+		bu_log( "Unexpected EOF while reading NMG %s data, line 2\n", name );
+		exit(-1);
 	}
 
-	cp = buf;
-	sscanf( buf , "%c %d %s %ld" , &nmg_id, &version, name, &granules );
-
-	if( fgets( buf, BUFSIZE, ifp ) == (char *)0 )
+	/* Second, process counts for each kind of structure */
+	cp = strtok( buf , " " );
+	for( j=0 ; j<26 ; j++ )
 	{
-		bu_log( "Unexpected EOF while reading NMG data\n" );
-		exit( -1 );
+		struct_count[j] = atol( cp );
+		bu_plong( ((unsigned char *)ext.ext_buf)+
+			SIZEOF_NETWORK_LONG*(j+1), struct_count[j] );
+		cp = strtok( (char *)NULL , " " );
 	}
 
-	ptr = strtok( buf , " " );
-	for( i=0 ; i<26 ; i++ )
-	{
-		struct_count[i] = atof( ptr );
-		ptr = strtok( (char *)NULL , " " );
-	}
+	/* Remaining lines have 32 bytes per line, in hex */
+	/* There are 4 lines to make up one granule */
+	cp = ((char *)ext.ext_buf) + (26+1)*SIZEOF_NETWORK_LONG;
+	for( j=0; j < granules * 4; j++ )  {
+		int k;
+		unsigned int cp_i;
 
-	record.nmg.N_id = nmg_id;
-	record.nmg.N_version = version;
-	strncpy( record.nmg.N_name , name , NAMESIZE );
-	bu_plong( record.nmg.N_count , granules );
-	for( i=0 ; i<26 ; i++ )
-		bu_plong( &record.nmg.N_structs[i*4] , struct_count[i] );
-
-	/* write out first record */
-	(void)fwrite( (char *)&record , sizeof( union record ) , 1 , ofp );
-
-	/* read and write the remaining granules */
-	for( j=0 ; j<granules ; j++ )
-	{
-		cp = (char *)&record;
-		for( i=0 ; i<sizeof( union record )/32 ; i++ )
+		if( fgets( buf, BUFSIZE, ifp ) == (char *)0 )
 		{
-			int k;
-
-			if( fgets( buf, BUFSIZE, ifp ) == (char *)0 )
-			{
-				bu_log( "Unexpected EOF while reading NMG data\n" );
-				exit( -1 );
-			}
-
-			for( k=0 ; k<32 ; k++ )
-			{
-				sscanf( &buf[k*2] , "%2x" , &cp_i );
-				*cp++ = cp_i;
-			}
+			bu_log( "Unexpected EOF while reading NMG %s data, hex line %d\n", name, j );
+			exit( -1 );
 		}
-		(void)fwrite( (char *)&record , sizeof( union record ) , 1 , ofp );
+
+		for( k=0 ; k<32 ; k++ )
+		{
+			sscanf( &buf[k*2] , "%2x" , &cp_i );
+			*cp++ = cp_i;
+		}
 	}
+
+	/* Next, import this disk record into memory */
+	RT_INIT_DB_INTERNAL(&intern);
+	if( rt_functab[ID_NMG].ft_import5( &intern, &ext, bn_mat_identity, ofp->dbip, &rt_uniresource, ID_NMG ) < 0 )  {
+		bu_log("ft_import5 failed on NMG %s\n", name );
+		exit( -1 );
+	}
+	bu_free_external(&ext);
+
+	/* Now we should have a good NMG in memory */
+	nmg_vmodel( (struct model *)intern.idb_ptr );
+
+	/* Finally, squirt it back out through LIBWDB */
+	mk_nmg( ofp, name, (struct model *)intern.idb_ptr );
+	/* mk_nmg() frees the intern.idp_ptr pointer */
+	RT_INIT_DB_INTERNAL(&intern);
+
+	bu_free( name, "nmg name" );
 }
 
 /*		S O L B L D
@@ -707,7 +884,7 @@ solbld()
 int
 combbld()
 {
-	struct wmember	head;
+	struct bu_list	head;
 	register char 	*cp;
 	register char 	*np;
 	int 		temp_nflag, temp_pflag;
@@ -725,7 +902,7 @@ combbld()
 	char		inherit;	/* Inheritance property */
 
 	/* Set all flags initially. */
-	BU_LIST_INIT( &head.l );
+	BU_LIST_INIT( &head );
 
 	override = 0;
 	temp_nflag = temp_pflag = 0;	/* indicators for optional fields */
@@ -815,14 +992,14 @@ combbld()
 		membbld( &head );
 	}
 
-	/* Spit them out, all at once */
-	if( mk_lrcomb(ofp, name, &head, is_reg,
+	/* Spit them out, all at once.  Use GIFT semantics. */
+	if( mk_comb(ofp, name, &head, is_reg,
 		temp_nflag ? matname : (char *)0,
 		temp_pflag ? matparm : (char *)0,
 		override ? (unsigned char *)rgb : (unsigned char *)0,
-		regionid, aircode, material, los, inherit) < 0 )  {
-			fprintf(stderr,"asc2g: mk_rcomb fail\n");
-			exit(1);
+		regionid, aircode, material, los, inherit, 0, 1) < 0 )  {
+			fprintf(stderr,"asc2g: mk_lrcomb fail\n");
+			abort();
 	}
 
 	if( buf[0] == '\0' )  return(0);
@@ -837,7 +1014,7 @@ combbld()
  */
 void
 membbld( headp )
-struct wmember	*headp;
+struct bu_list	*headp;
 {
 	register char 	*cp;
 	register char 	*np;
@@ -861,7 +1038,7 @@ struct wmember	*headp;
 
 	cp = nxt_spc( cp );
 
-	memb = mk_addmember( inst_name, headp, relation );
+	memb = mk_addmember( inst_name, headp, NULL, relation );
 
 	for( i = 0; i < 16; i++ )  {
 		memb->wm_mat[i] = atof( cp );
@@ -878,46 +1055,33 @@ struct wmember	*headp;
 void
 arsabld()
 {
-	register char *cp;
-	register char *np;
+	char *cp;
+	char *np;
+	int i;
 
+	if( ars_name )
+		bu_free( (char *)ars_name, "ars_name" );
 	cp = buf;
-	record.a.a_id = *cp++;
-	cp = nxt_spc( cp );		/* skip the space */
-
-	record.a.a_type = (char)atoi( cp );
+	cp = nxt_spc( cp );
 	cp = nxt_spc( cp );
 
-	np = record.a.a_name;
-	while( *cp != ' ' )  {
-		*np++ = *cp++;
+	np = cp;
+	while( *(++cp) != ' ' );
+	*cp++ = '\0';
+	ars_name = bu_strdup( np );
+	ars_ncurves = (short)atoi( cp );
+	cp = nxt_spc( cp );
+	ars_ptspercurve = (short)atoi( cp );
+
+	ars_curves = (fastf_t **)bu_calloc( (ars_ncurves+1), sizeof(fastf_t *), "ars_curves" );
+	for( i=0 ; i<ars_ncurves ; i++ )
+	{
+		ars_curves[i] = (fastf_t *)bu_calloc( ars_ptspercurve + 1,
+			sizeof( fastf_t ) * ELEMENTS_PER_VECT, "ars_curve" );
 	}
-	cp = nxt_spc( cp );
 
-	record.a.a_m = (short)atoi( cp );
-	cp = nxt_spc( cp );
-	record.a.a_n = (short)atoi( cp );
-	cp = nxt_spc( cp );
-	record.a.a_curlen = (short)atoi( cp );
-	cp = nxt_spc( cp );
-	record.a.a_totlen = (short)atoi( cp );
-	cp = nxt_spc( cp );
-
-	record.a.a_xmax = atof( cp );
-	cp = nxt_spc( cp );
-	record.a.a_xmin = atof( cp );
-	cp = nxt_spc( cp );
-	record.a.a_ymax = atof( cp );
-	cp = nxt_spc( cp );
-	record.a.a_ymin = atof( cp );
-	cp = nxt_spc( cp );
-	record.a.a_zmax = atof( cp );
-	cp = nxt_spc( cp );
-	record.a.a_zmin = atof( cp );
-
-	/* Write out the record */
-	(void)fwrite( (char *)&record, sizeof record, 1, ofp );
-
+	ars_pt = 0;
+	ars_curve = 0;
 }
 
 /*		A R S B L D
@@ -928,27 +1092,41 @@ arsabld()
 void
 arsbbld()
 {
-	register char *cp;
-	register int i;
+	char *cp;
+	int i;
+	int incr_ret;
 
 	cp = buf;
-	record.b.b_id = *cp++;
 	cp = nxt_spc( cp );		/* skip the space */
-
-	record.b.b_type = (char)atoi( cp );
 	cp = nxt_spc( cp );
-	record.b.b_n = (short)atoi( cp );
 	cp = nxt_spc( cp );
-	record.b.b_ngranule = (short)atoi( cp );
-
-	for( i = 0; i < 24; i++ )  {
+	for( i = 0; i < 8; i++ )  {
 		cp = nxt_spc( cp );
-		record.b.b_values[i] = atof( cp );
+		ars_curves[ars_curve][ars_pt*3] = atof( cp );
+		cp = nxt_spc( cp );
+		ars_curves[ars_curve][ars_pt*3 + 1] = atof( cp );
+		cp = nxt_spc( cp );
+		ars_curves[ars_curve][ars_pt*3 + 2] = atof( cp );
+		if( ars_curve > 0 || ars_pt > 0 )
+			VADD2( &ars_curves[ars_curve][ars_pt*3], &ars_curves[ars_curve][ars_pt*3], &ars_curves[0][0] )
+
+		incr_ret = incr_ars_pt();
+		if( incr_ret == 2 )
+		{
+			/* finished, write out the ARS solid */
+			if( mk_ars( ofp, ars_name, ars_ncurves, ars_ptspercurve, ars_curves ) )
+			{
+				bu_log( "Failed trying to make ARS (%s)\n", ars_name );
+				bu_bomb( "Failed trying to make ARS\n" );
+			}
+			return;
+		}
+		else if( incr_ret == 1 )
+		{
+			/* end of curve, ignore remainder of reocrd */
+			return;
+		}
 	}
-
-	/* Write out the record */
-	(void)fwrite( (char *)&record, sizeof record, 1, ofp );
-
 }
 
 
@@ -987,6 +1165,7 @@ identbld()
 	char		version[6];
 	char		title[72];
 	char		*unit_str = "none";
+	double		local2mm;
 
 	cp = buf;
 	cp++;				/* ident */
@@ -1014,9 +1193,10 @@ identbld()
 	zap_nl();
 	(void)strncpy( title, buf, sizeof(title)-1 );
 
+/* XXX Should use db_conversions() for this */
 	switch(units)  {
 	case ID_NO_UNIT:
-		unit_str = "none";
+		unit_str = "mm";
 		break;
 	case ID_MM_UNIT:
 		unit_str = "mm";
@@ -1046,11 +1226,17 @@ identbld()
 		unit_str = "mile";
 		break;
 	default:
-		fprintf(stderr,"asc2g: unknown units = %d\n", units);
+		fprintf(stderr,"asc2g: unknown v4 units code = %d\n", units);
 		exit(1);
 	}
+	local2mm = bu_units_conversion(unit_str);
+	if( local2mm <= 0 )  {
+		fprintf(stderr, "asc2g: unable to convert v4 units string '%s', got local2mm=%g\n",
+			unit_str, local2mm);
+		exit(3);
+	}
 
-	if( mk_id_units(ofp, title, unit_str) < 0 )  {
+	if( mk_id_editunits(ofp, title, local2mm) < 0 )  {
 		bu_log("asc2g: unable to write database ID\n");
 		exit(2);
 	}
@@ -1059,98 +1245,125 @@ identbld()
 
 /*		P O L Y H B L D
  *
- *  This routine builds the record headder for a polysolid.
+ *  Collect up all the information for a POLY-solid.
+ *  These are handled as BoT solids in v5, but we still have to read
+ *  the data in the old format, and then convert it.
+ *
+ *  The poly header line is followed by an unknown number of
+ *  poly data lines.
  */
 
 void
 polyhbld()
 {
+	char	*cp;
+	char	*name;
+	long	startpos;
+	long	nlines;
+	struct rt_pg_internal	*pg;
+	struct rt_db_internal	intern;
 
-	/* Headder for polysolid */
+	(void)strtok( buf, " " );	/* skip the ident character */
+	cp = strtok( NULL, " \n" );
+	name = bu_strdup(cp);
 
-	register char	*cp;
-	register char	*np;
-
-	cp = buf;
-	cp++;				/* ident */
-	cp = nxt_spc( cp );		/* skip the space */
-
-	np = name;
-	while( *cp != '\n' && *cp != '\0' )  {
-		*np++ = *cp++;
+	/* Count up the number of poly data lines which follow */
+	startpos = ftell(ifp);
+	for( nlines = 0; ; nlines++ )  {
+		if( fgets( buf, BUFSIZE, ifp ) == NULL )  break;
+		if( buf[0] != ID_P_DATA )  break;	/* 'Q' */
 	}
-	*np = '\0';
+	BU_ASSERT_LONG( nlines, >, 0 );
 
-	mk_polysolid(ofp, name);
-}
+	/* Allocate storage for the faces */
+	BU_GETSTRUCT( pg, rt_pg_internal );
+	pg->magic = RT_PG_INTERNAL_MAGIC;
+	pg->npoly = nlines;
+	pg->poly = (struct rt_pg_face_internal *)bu_calloc( pg->npoly,
+		sizeof(struct rt_pg_face_internal), "poly[]" );
+	pg->max_npts = 0;
 
-/*		P O L Y D B L D
- *
- * This routine builds a polydata record using libwdb.
- */
+	/* Return to first 'Q' record */
+	fseek( ifp, startpos, 0 );
 
-void
-polydbld()
-{
-	register char	*cp;
-	register int	i, j;
-	char		count;		/* number of vertices */
-	fastf_t		verts[5][3];	/* vertices for the polygon */
-	fastf_t		norms[5][3];	/* normals at each vertex */
+	for( nlines = 0; nlines < pg->npoly; nlines++ )  {
+		register struct rt_pg_face_internal	*fp = &pg->poly[nlines];
+		register int	i;
 
-	cp = buf;
-	cp++;				/* ident */
-	cp = nxt_spc( cp );		/* skip the space */
+		if( fgets( buf, BUFSIZE, ifp ) == NULL )  break;
+		if( buf[0] != ID_P_DATA )  bu_bomb("mis-count of Q records?\n");
 
-	count = (char)atoi( cp );
+		/* Input always has 5 points, even if all aren't significant */
+		fp->verts = (fastf_t *)bu_malloc( 5*3*sizeof(fastf_t), "verts[]" );
+		fp->norms = (fastf_t *)bu_malloc( 5*3*sizeof(fastf_t), "norms[]" );
 
-	for( i = 0; i < 5; i++ )  {
-		for( j = 0; j < 3; j++ )  {
+		cp = buf;
+		cp++;				/* ident */
+		cp = nxt_spc( cp );		/* skip the space */
+
+		fp->npts = (char)atoi( cp );
+		if( fp->npts > pg->max_npts )  pg->max_npts = fp->npts;
+
+		for( i = 0; i < 5*3; i++ )  {
 			cp = nxt_spc( cp );
-			verts[i][j] = atof( cp );
+			fp->verts[i] = atof( cp );
+		}
+
+		for( i = 0; i < 5*3; i++ )  {
+			cp = nxt_spc( cp );
+			fp->norms[i] = atof( cp );
 		}
 	}
 
-	for( i = 0; i < 5; i++ )  {
-		for( j = 0; j < 3; j++ )  {
-			cp = nxt_spc( cp );
-			norms[i][j] = atof( cp );
-		}
-	}
+	/* Convert the polysolid to a BoT */
+	RT_INIT_DB_INTERNAL(&intern);
+	intern.idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	intern.idb_type = ID_POLY;
+	intern.idb_meth = &rt_functab[ID_POLY];
+	intern.idb_ptr = pg;
+	if( rt_pg_to_bot( &intern, &ofp->wdb_tol, &rt_uniresource ) < 0 )
+		bu_bomb("rt_pg_to_bot() failed\n");
+	/* The polysolid is freed by the converter */
 
-	mk_poly(ofp, count, verts, norms);
+	/*
+	 * Since we already have an internal form, this is much simpler than
+	 * calling mk_bot().
+	 */
+	if( wdb_put_internal( ofp, name, &intern, mk_conv2mm ) < 0 )
+		bu_bomb("wdb_put_internal() failure on BoT from polysolid\n");
+	/* BoT internal has been freed */
 }
-
 
 /*		M A T E R B L D
  *
- * The need for this is being phased out. Leave alone.
+ *  Add information to the region-id based coloring table.
  */
 
 void
 materbld()
 {
-
 	register char *cp;
+	int	low, hi;
+	int	r,g,b;
 
 	cp = buf;
-	record.md.md_id = *cp++;
+	cp++;				/* skip ID_MATERIAL */
 	cp = nxt_spc( cp );		/* skip the space */
 
-	record.md.md_flags = (char)atoi( cp );
+	/* flags = (char)atoi( cp ); */
 	cp = nxt_spc( cp );
-	record.md.md_low = (short)atoi( cp );
+	low = (short)atoi( cp );
 	cp = nxt_spc( cp );
-	record.md.md_hi = (short)atoi( cp );
+	hi = (short)atoi( cp );
 	cp = nxt_spc( cp );
-	record.md.md_r = (unsigned char)atoi( cp);
+	r = (unsigned char)atoi( cp);
 	cp = nxt_spc( cp );
-	record.md.md_g = (unsigned char)atoi( cp);
+	g = (unsigned char)atoi( cp);
 	cp = nxt_spc( cp );
-	record.md.md_b = (unsigned char)atoi( cp);
+	b = (unsigned char)atoi( cp);
 
-	/* Write out the record */
-	(void)fwrite( (char *)&record, sizeof record, 1, ofp );
+	/* Put it on a linked list for output later */
+	rt_color_addrec( low, hi, r, g, b, -1L );
 }
 
 /*		B S P L B L D
@@ -1161,6 +1374,7 @@ materbld()
 void
 bsplbld()
 {
+#if 0
 	register char	*cp;
 	register char	*np;
 	short		nsurf;		/* number of surfaces */
@@ -1182,6 +1396,9 @@ bsplbld()
 	resolution = atof( cp );
 
 	mk_bsolid(ofp, name, nsurf, resolution);
+#else
+	bu_bomb("bsplbld() needs to be upgraded to v5\n");
+#endif
 }
 
 /* 		B S U R F B L D
@@ -1192,6 +1409,7 @@ bsplbld()
 void
 bsurfbld()
 {
+#if 0
 
 /* HELP! This involves mk_bsurf(filep, bp) where bp is a ptr to struct */
 
@@ -1289,6 +1507,9 @@ bsurfbld()
 
 	/* Free the control mesh memory */
 	(void)free( (char *)fp );
+#else
+	bu_bomb("bsrfbld() needs to be upgraded to v5\n");
+#endif
 }
 
 /*		C L I N E B L D
@@ -1451,7 +1672,7 @@ pipebld()
 	register char		*cp;
 	register char		*np;
 	struct wdb_pipept	*sp;
-	struct wdb_pipept	head;
+	struct bu_list		head;
 
 	/* Process the first buffer */
 
@@ -1468,7 +1689,7 @@ pipebld()
 
 	/* Read data lines and process */
 
-	BU_LIST_INIT( &head.l );
+	BU_LIST_INIT( &head );
 	fgets( buf, BUFSIZE, ifp);
 	while( strncmp (buf , "END_PIPE", 8 ) )
 	{
@@ -1491,7 +1712,7 @@ pipebld()
 		sp->pp_bendradius = bendradius;
 		VSET( sp->pp_coord, x, y, z );
 
-		BU_LIST_INSERT( &head.l, &sp->l);
+		BU_LIST_INSERT( &head, &sp->l);
 		fgets( buf, BUFSIZE, ifp);
 	}
 
@@ -1611,6 +1832,7 @@ register char *cp;
 	return( cp );
 }
 
+int
 ngran( nfloat )
 {
 	register int gran;

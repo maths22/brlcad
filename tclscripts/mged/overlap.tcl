@@ -14,8 +14,6 @@
 #	(10 elements per line) with the output sorted so that pairs of regions
 #	are kept together, and the "worst" overlap pairs come first.
 
-check_externs "vdraw db kill .inmem B mged_update opendb mat_inv mat_mul"
-
 #	return the index into the 'g_lint' output that is the start point
 #	of the last consectutive line that refers to the next region overlap pair
 #	The input is:
@@ -98,7 +96,7 @@ proc plot_overlaps { id } {
 	Z
 	draw -C 0/255/0 $obj1
 	draw -C 0/255/255 $obj2
-	vdraw show
+	vdraw send
 	mged_update 0
 }
 
@@ -140,25 +138,43 @@ proc next_overlap { id } {
 		set over_cont($id,r2_name) $obj2
 	}
 
-	set b1_disabled 0
-	set b2_disabled 0
-	if { [check_cycle $over_cont($id,r1_name) $over_cont($id,r2_name)] } {
+	set type1 [lindex [db get $over_cont($id,r1_name)] 0]
+	set type2 [lindex [db get $over_cont($id,r2_name)] 0]
+
+	if { $type1 != "comb" || $type2 != "comb" } {
+	    tk_messageBox -icon error -type ok -title "Primitive Overlap" -message \
+	    "This overlap involves primitives, not regions. This tool does not handle such overlaps"
+	    $over_cont($id,work_frame).b1 configure -state disabled
+	    set b1_disabled 1
+	    $over_cont($id,work_frame).b2 configure -state disabled
+	    set b2_disabled 1
+	    $over_cont($id,work_frame).b3 configure -state disabled
+	    $over_cont($id,work_frame).b4 configure -state disabled
+
+	} else {
+
+	    set b1_disabled 0
+	    set b2_disabled 0
+	    $over_cont($id,work_frame).b3 configure -state normal
+	    $over_cont($id,work_frame).b4 configure -state normal
+	    if { [check_cycle $over_cont($id,r1_name) $over_cont($id,r2_name)] } {
 		$over_cont($id,work_frame).b1 configure -state disabled
 		set b1_disabled 1
-	} else {
+	    } else {
 		$over_cont($id,work_frame).b1 configure -state normal
-	}
+	    }
 
-	if { [check_cycle $over_cont($id,r2_name) $over_cont($id,r1_name)] } {
+	    if { [check_cycle $over_cont($id,r2_name) $over_cont($id,r1_name)] } {
 		$over_cont($id,work_frame).b2 configure -state disabled
 		set b2_disabled 1
-	} else {
+	    } else {
 		$over_cont($id,work_frame).b2 configure -state normal
-	}
+	    }
 
-	if { $b1_disabled && $b2_disabled } {
+	    if { $b1_disabled && $b2_disabled } {
 		tk_messageBox -message "Cannot simply subtract one region from another here\n\
-		 without creating a reference cycle" -icon warning -type ok
+			without creating a reference cycle" -icon warning -type ok
+	    }
 	}
 	set over_cont($id,cur_ovr_index) [expr $over_cont($id,cur_ovr_index) + 7]
 	if { $over_cont($id,cur_ovr_index) >= $over_cont($id,length) } {
@@ -183,7 +199,6 @@ proc read_output { id } {
 		catch "exec rm /tmp/g_lint_error"
 		$over_cont($id,top).status configure -text "Processing output..."
 		update
-
 		set over_cont($id,length) [llength $over_cont($id,glint_ret)]
 		set over_cont($id,cur_ovr_index) 0
 		set over_cont($id,start) 0
@@ -384,7 +399,7 @@ proc over_quit { id } {
 		eval view eye $over_cont($id,eye)
 	}
 	catch [vdraw delete all]
-	vdraw show
+	vdraw send
 
 	if { $over_cont($id,ray) == "ray" && $over_cont($id,fd) > 0 } {
 		catch [exec kill -9 [lindex $over_cont($id,pid) 0]]
@@ -422,7 +437,19 @@ proc glint_setup { id } {
 # This is the top level entry point
 proc overlap_tool { id } {
     global over_cont comb_control localunit local2base
-    global tkPriv
+    global tkPriv tk_version
+
+    if { [info exists tk_version] == 0 } {
+	puts "Cannot run the overlap tool without Tk loaded"
+	return
+    }
+
+    set db [opendb]
+    if { [string length $db] == 0 } {
+	tk_messageBox -icon warning -type ok -title "No Database Open" -message \
+		"Cannot run the overlap tool without a database open"
+	return
+    }
 
 	set over_cont($id,top) .fovr_$id
 	if [winfo exists $over_cont($id,top)] {
@@ -489,7 +516,7 @@ proc overlap_tool { id } {
 		{summary "Enter a list of objects to be checked for overlapping regions\n\
 			This is normally a top level group."}
 	}
-	label $over_cont($id,top).ray_fr.ray -text "Ray Tracing Parameters:"
+	label $over_cont($id,top).ray_fr.ray -text "Raytracing Parameters:"
 	hoc_register_data $over_cont($id,top).ray_fr.ray "Ray Tracing Parameters" {
 		{summary "This is a list of parameters that will be passed to 'g_lint'\n\
 			to check the object list for overlapping regions."}

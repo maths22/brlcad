@@ -4,6 +4,14 @@
  * $Revision$
  *
  * $Log$
+ * Revision 11.6  2000/08/24 23:12:24  mike
+ *
+ * lint, RCSid
+ *
+ * Revision 11.5  1997/07/16  02:37:42  mike
+ * Modern tgetstr() requires null-terminated 2-char string;
+ * the third and subsequent characters are significant.
+ *
  * Revision 11.4  1997/07/16  02:31:25  mike
  * Changed from HAS_TERMIOS to HAVE_TERMIOS_H
  *
@@ -66,7 +74,7 @@
  *
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$";
+static const char RCSid[] = "@(#)$Header$";
 #endif
 
 /*
@@ -77,6 +85,7 @@ static char RCSid[] = "@(#)$Header$";
    Gets the termcap information and complains if there are not enough
    of the basic features on the particular terminal. */
 
+#include "conf.h"
 #include "./jove.h"
 
 #if HAVE_TERMIOS_H

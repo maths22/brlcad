@@ -15,7 +15,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSbundle[] = "@(#)$Header$ (BRL)";
+static const char RCSbundle[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -43,7 +43,7 @@ extern int	rt_find_nugrid();
 /*
  *			R T _ A D V A N C E _ T O _ N E X T _ C E L L
  */
-extern CONST union cutter *rt_advance_to_next_cell();
+extern const union cutter *rt_advance_to_next_cell();
 
 /*
  *			R T _ S H O O T R A Y _ B U N D L E
@@ -92,10 +92,10 @@ int			nrays;
 	auto struct partition	InitialPart;	/* Head of Initial Partitions */
 	auto struct partition	FinalPart;	/* Head of Final Partitions */
 	struct soltab		**stpp;
-	register CONST union cutter *cutp;
+	register const union cutter *cutp;
 	struct resource		*resp;
 	struct rt_i		*rtip;
-	CONST int		debug_shoot = rt_g.debug & DEBUG_SHOOT;
+	const int		debug_shoot = RT_G_DEBUG & DEBUG_SHOOT;
 
 	RT_AP_CHECK(ap);
 	if( ap->a_magic )  {
@@ -111,7 +111,7 @@ int			nrays;
 	if( ap->a_resource == RESOURCE_NULL )  {
 		ap->a_resource = &rt_uniresource;
 		rt_uniresource.re_magic = RESOURCE_MAGIC;
-		if(rt_g.debug)bu_log("rt_shootray_bundle:  defaulting a_resource to &rt_uniresource\n");
+		if(RT_G_DEBUG)bu_log("rt_shootray_bundle:  defaulting a_resource to &rt_uniresource\n");
 	}
 	ss.ap = ap;
 	rtip = ap->a_rt_i;
@@ -120,7 +120,7 @@ int			nrays;
 	RT_RESOURCE_CHECK(resp);
 	ss.resp = resp;
 
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS)) {
 		bu_log_indent_delta(2);
 		bu_log("\n**********shootray_bundle cpu=%d  %d,%d lvl=%d (%s)\n",
 			resp->re_cpu,
@@ -158,6 +158,8 @@ int			nrays;
 	ap->a_finished_segs_hdp = &finished_segs;
 
 	if( BU_LIST_UNINITIALIZED( &resp->re_parthead ) )  {
+		/* XXX This shouldn't happen any more */
+		bu_log("rt_shootray_bundle() resp=x%x uninitialized, fixing it\n", resp);
 		/*
 		 *  We've been handed a mostly un-initialized resource struct,
 		 *  with only a magic number and a cpu number filled in.
@@ -165,11 +167,10 @@ int			nrays;
 		 *  This is how application-provided resource structures
 		 *  are remembered for later cleanup by the library.
 		 */
-		rt_init_resource( resp, resp->re_cpu );
+		rt_init_resource( resp, resp->re_cpu, rtip );
 
-		bu_semaphore_acquire(RT_SEM_MODEL);
-		bu_ptbl_ins_unique( &rtip->rti_resources, (long *)resp );
-		bu_semaphore_release(RT_SEM_MODEL);
+		/* Ensure that this CPU's resource structure is registered */
+		BU_ASSERT_PTR( BU_PTBL_GET(&rtip->rti_resources, resp->re_cpu), !=, NULL );
 	}
 	if( BU_LIST_IS_EMPTY( &resp->re_solid_bitv ) )  {
 		solidbits = bu_bitv_new( rtip->nsolids );
@@ -191,7 +192,7 @@ int			nrays;
 	}
 
 	/* Verify that direction vector has unit length */
-	if(rt_g.debug) {
+	if(RT_G_DEBUG) {
 		FAST fastf_t f, diff;
 		f = MAGSQ(ap->a_ray.r_dir);
 		if( NEAR_ZERO(f, 0.0001) )  {
@@ -386,7 +387,7 @@ int			nrays;
 				break;			/* HIT */
 			}
 		}
-		if( rt_g.debug & DEBUG_ADVANCE )
+		if( RT_G_DEBUG & DEBUG_ADVANCE )
 			rt_plot_cell( cutp, &ss, &(waiting_segs.l), rtip);
 
 		/*
@@ -433,7 +434,7 @@ int			nrays;
 	 *  Weave any remaining segments into the partition list.
 	 */
 weave:
-	if( rt_g.debug&DEBUG_ADVANCE )
+	if( RT_G_DEBUG&DEBUG_ADVANCE )
 		bu_log( "rt_shootray_bundle: ray has left known space\n" );
 	
 	if( BU_LIST_NON_EMPTY( &(waiting_segs.l) ) )  {
@@ -443,7 +444,7 @@ weave:
 	/* finished_segs chain now has all segments hit by this ray */
 	if( BU_LIST_IS_EMPTY( &(finished_segs.l) ) )  {
 		ap->a_return = ap->a_miss( ap );
-		status = "MISS solids";
+		status = "MISS prims";
 		goto out;
 	}
 
@@ -489,7 +490,7 @@ hitit:
 	 *  finished_segs is only used by special hit routines
 	 *  which don't follow the traditional solid modeling paradigm.
 	 */
-	if(rt_g.debug&DEBUG_ALLHITS) rt_pr_partitions(rtip,&FinalPart,"Parition list passed to a_hit() routine");
+	if(RT_G_DEBUG&DEBUG_ALLHITS) rt_pr_partitions(rtip,&FinalPart,"Parition list passed to a_hit() routine");
 	ap->a_return = ap->a_hit( ap, &FinalPart, &finished_segs );
 	status = "HIT";
 
@@ -512,7 +513,7 @@ out:
 	resp->re_nshootray++;
 
 	/* Terminate any logging */
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS))  {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION|DEBUG_ALLHITS))  {
 		bu_log_indent_delta(-2);
 		bu_log("----------shootray_bundle cpu=%d  %d,%d lvl=%d (%s) %s ret=%d\n",
 			resp->re_cpu,

@@ -12,7 +12,7 @@
 */
 /*LINTLIBRARY*/
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #ifndef DEBUG
@@ -25,9 +25,12 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <string.h>
 #include <fcntl.h>
+#include <signal.h>
+
 #include "./Sc.h"
 #include "./Hm.h"
 #include "./Mm.h"
+#include "./extern.h"
 #define ErLog	brst_log
 #if __STDC__
 extern void	exit( int s );
@@ -842,8 +845,7 @@ HmInit( x, y, maxvis )
 int	x, y;
 int	maxvis;
 #endif
-	{	extern char	*getenv();
-		char		*term = getenv( "TERM" );
+	{
 	if(	(HmTtyFd = open( "/dev/tty", O_RDONLY )) == (-1)
 	    ||	(HmTtyFp = fdopen( HmTtyFd, "r" )) == NULL
 		)
@@ -1037,7 +1039,7 @@ HmMenu	*menup;			/* -> first HmItem in array.		*/
 	/* If generator function is provided, dynamically allocate the
 		menu items.
 	 */
-	if( dynamic = menup->item == (HmItem *) NULL )
+	if( (dynamic = (menup->item == (HmItem *) NULL) ))
 		{	register int	i;
 			register HmItem	*gitemp;
 			HmLList	llhead, **listp;

@@ -16,10 +16,12 @@
  *
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
+#include <stdio.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -27,6 +29,8 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "externs.h"		/* For getopt(), etc. */
 #include "bu.h"
+#include "vmath.h"
+#include "bn.h"
 
 #define	BELIEVE_NAME	0
 #define	BELIEVE_STAT	1
@@ -92,6 +96,7 @@ char	*buf;
     return (DFLT_PIXEL_SIZE);
 }
 
+int
 main (argc, argv)
 
 int argc;
@@ -155,7 +160,7 @@ char *argv[];
      *	If the user specified a file,
      *	determine its size
      */
-    if (nm_bytes == -1)
+    if (nm_bytes == -1) {
 	if ((how == BELIEVE_NAME)
 	 && bn_common_name_size(&width, &height, argument))
 	    goto done;
@@ -165,6 +170,7 @@ char *argv[];
 	    if (bytes_per_pixel == -1)
 		bytes_per_pixel = pixel_size(argument);
 	}
+    }
     if (bytes_per_pixel == -1)
 	bytes_per_pixel = DFLT_PIXEL_SIZE;
 

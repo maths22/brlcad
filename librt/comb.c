@@ -21,7 +21,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 
@@ -29,7 +29,6 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include <math.h>
 #include <string.h>
 #include "machine.h"
-#include "db.h"
 #include "externs.h"
 #include "bu.h"
 #include "vmath.h"
@@ -79,7 +78,7 @@ char *argv[];
 		exit( 1 );
 	}
 
-	bn_mat_idn( identity_mat );
+	MAT_IDN( identity_mat );
 	bu_vls_init( &file );
 
 	if( (dbip = db_open( argv[1] , "r" ) ) == NULL )
@@ -89,8 +88,10 @@ char *argv[];
 		exit( 1 );
 	}
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	/* Scan the database */
-	db_scan(dbip, (int (*)())db_diradd, 1);
+	db_dirbuild( dbip );
 
 	for( i=2 ; i<argc ; i++ )
 	{
@@ -99,12 +100,7 @@ char *argv[];
 		printf( "%s\n" , argv[i] );
 
 		dp = db_lookup( dbip , argv[i] , 1 );
-		if( db_get_external( &ep , dp , dbip ) )
-		{
-			bu_log( "db_get_external failed for %s\n" , argv[i] );
-			continue;
-		}
-		if( rt_comb_v4_import( &ip , &ep , NULL ) < 0 )  {
+		if( rt_db_get_internal( &ip, dp, dbip, NULL, &rt_uniresource ) < 0 )  {
 			bu_log("import of %s failed\n", dp->d_namep);
 			continue;
 		}
@@ -115,6 +111,7 @@ char *argv[];
 		if( ip.idb_type != ID_COMBINATION )
 		{
 			bu_log( "idb_type = %d\n" , ip.idb_type );
+			rt_db_free_internal( &ip, &rt_uniresource );
 			continue;
 		}
 
@@ -132,9 +129,11 @@ char *argv[];
 		);
 
 		/* John's way */
+		bu_log( "Pretty print:\n" );
 		Print_tree( comb->tree );
 
 		/* Standard way */
+		bu_log( "Standard print:\n" );
 		rt_pr_tree( comb->tree, 1 );
 
 		/* Compact way */
@@ -150,31 +149,8 @@ char *argv[];
 		if( db_ck_v4gift_tree( comb->tree ) < 0 )
 			bu_log("ERROR: db_ck_v4gift_tree is unhappy\n");
 
-		/* write original external form into a file */
-		bu_vls_printf( &file, "/tmp/%s.a", argv[i] );
-		if( (fp = fopen(bu_vls_addr(&file), "w")) != NULL )  {
-			fwrite( ep.ext_buf, ep.ext_nbytes, 1, fp );
-			fclose(fp);
-		}
-		db_free_external( &ep );
-		bu_vls_free( &file );
-
-		/* Convert internal back to external, and write both to files */
-		bu_vls_printf( &file, "/tmp/%s.b", argv[i] );
-		bu_mem_barriercheck();
-
-		rt_db_put_internal( dp, dbip, &ip );
-		bu_mem_barriercheck();
-
-		if( (fp = fopen(bu_vls_addr(&file), "w")) != NULL )  {
-			fwrite( ep.ext_buf, ep.ext_nbytes, 1, fp );
-			fclose(fp);
-		}
-		db_free_external( &ep );
-		bu_vls_free( &file );
-
 		/* Test the lumberjacks */
-		ip.idb_meth->ft_ifree( &ip );
+		rt_db_free_internal( &ip, &rt_uniresource );
 
 	}
 }

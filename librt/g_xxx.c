@@ -26,7 +26,8 @@
  *	Then:
  *	go to /cad/libwdb and create mk_xxx() routine
  *	go to /cad/conv and edit g2asc.c and asc2g.c to support the new solid
- *	go to /cad/librt and edit tcl.c to add the new solid to rt_solid_type_lookup[]
+ *	go to /cad/librt and edit tcl.c to add the new solid to 
+ *		rt_solid_type_lookup[]
  *		also add the interface table and to rt_id_solid() in table.c
  *	go to /cad/mged and create the edit support
  *
@@ -42,7 +43,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSxxx[] = "@(#)$Header$ (BRL)";
+static const char RCSxxx[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -98,7 +99,7 @@ struct rt_i		*rtip;
 {
 	struct rt_xxx_internal		*xxx_ip;
 	register struct xxx_specific	*xxx;
-	CONST struct bn_tol		*tol = &rtip->rti_tol;
+	const struct bn_tol		*tol = &rtip->rti_tol;
 
 	RT_CK_DB_INTERNAL(ip);
 	xxx_ip = (struct rt_xxx_internal *)ip->idb_ptr;
@@ -110,9 +111,9 @@ struct rt_i		*rtip;
  */
 void
 rt_xxx_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct xxx_specific *xxx =
+	register const struct xxx_specific *xxx =
 		(struct xxx_specific *)stp->st_specific;
 }
 
@@ -137,7 +138,7 @@ struct seg		*seghead;
 	register struct xxx_specific *xxx =
 		(struct xxx_specific *)stp->st_specific;
 	register struct seg *segp;
-	CONST struct bn_tol	*tol = &ap->a_rt_i->rti_tol;
+	const struct bn_tol	*tol = &ap->a_rt_i->rti_tol;
 
 	return(0);			/* MISS */
 }
@@ -234,9 +235,9 @@ register struct soltab *stp;
  */
 int
 rt_xxx_class( stp, min, max, tol )
-CONST struct soltab    *stp;
-CONST vect_t		min, max;
-CONST struct bn_tol    *tol;
+const struct soltab    *stp;
+const vect_t		min, max;
+const struct bn_tol    *tol;
 {
 	return RT_CLASSIFY_UNIMPLEMENTED;
 }
@@ -248,8 +249,8 @@ int
 rt_xxx_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	LOCAL struct rt_xxx_internal	*xxx_ip;
 
@@ -272,8 +273,8 @@ rt_xxx_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	LOCAL struct rt_xxx_internal	*xxx_ip;
 
@@ -293,9 +294,9 @@ CONST struct bn_tol	*tol;
 int
 rt_xxx_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	LOCAL struct rt_xxx_internal	*xxx_ip;
 	union record			*rp;
@@ -308,7 +309,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_XXX;
 	ip->idb_meth = &rt_functab[ID_XXX];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_xxx_internal), "rt_xxx_internal");
@@ -328,9 +330,9 @@ CONST struct db_i		*dbip;
 int
 rt_xxx_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_xxx_internal	*xxx_ip;
 	union record		*rec;
@@ -340,7 +342,7 @@ CONST struct db_i		*dbip;
 	xxx_ip = (struct rt_xxx_internal *)ip->idb_ptr;
 	RT_XXX_CK_MAGIC(xxx_ip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "xxx external");
 	rec = (union record *)ep->ext_buf;
@@ -365,6 +367,95 @@ CONST struct db_i		*dbip;
 	return(0);
 }
 
+
+
+/*
+ *			R T _ X X X _ I M P O R T 5
+ *
+ *  Import an XXX from the database format to the internal format.
+ *  Note that the data read will be in network order.  This means
+ *  Big-Endian integers and IEEE doubles for floating point.
+ *
+ *  Apply modeling transformations as well.
+ *
+ */
+int
+rt_xxx_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	LOCAL struct rt_xxx_internal	*xxx_ip;
+	fastf_t				vv[ELEMENTS_PER_VECT*1];
+
+	RT_CK_DB_INTERNAL(ip)
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 3*4 );
+
+	/* set up the internal structure */
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_XXX;
+	ip->idb_meth = &rt_functab[ID_XXX];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_xxx_internal), "rt_xxx_internal");
+	xxx_ip = (struct rt_xxx_internal *)ip->idb_ptr;
+	xxx_ip->magic = RT_XXX_INTERNAL_MAGIC;
+
+	/* Convert the data in ep->ext_buf into internal format.
+	 * Note the conversion from network data 
+	 * (Big Endian ints, IEEE double floating point) to host local data
+	 * representations.
+	 */
+	ntohd( (unsigned char *)&vv, (char *)ep->ext_buf, ELEMENTS_PER_VECT*1 );
+
+	/* Apply the modeling transformation */
+	MAT4X3PNT( xxx_ip->v, mat, vv );
+
+	return(0);			/* OK */
+}
+
+/*
+ *			R T _ X X X _ E X P O R T 5
+ *
+ *  Export an XXX from internal form to external format.
+ *  Note that this means converting all integers to Big-Endian format
+ *  and floating point data to IEEE double.
+ *
+ *  Apply the transformation to mm units as well.
+ */
+int
+rt_xxx_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_xxx_internal	*xxx_ip;
+	fastf_t			vec[ELEMENTS_PER_VECT];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_XXX )  return(-1);
+	xxx_ip = (struct rt_xxx_internal *)ip->idb_ptr;
+	RT_XXX_CK_MAGIC(xxx_ip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * ELEMENTS_PER_VECT;
+	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "xxx external");
+
+
+	/* Since libwdb users may want to operate in units other
+	 * than mm, we offer the opportunity to scale the solid
+	 * (to get it into mm) on the way out.
+	 */
+	VSCALE( vec, xxx_ip->v, local2mm );
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, ELEMENTS_PER_VECT*1 );
+
+	return 0;
+}
+
 /*
  *			R T _ X X X _ D E S C R I B E
  *
@@ -375,7 +466,7 @@ CONST struct db_i		*dbip;
 int
 rt_xxx_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {
@@ -424,7 +515,7 @@ struct rt_db_internal	*ip;
 int
 rt_xxx_xform( op, mat, ip, free )
 struct rt_db_internal	*op;
-CONST mat_t		mat;
+const mat_t		mat;
 struct rt_db_internal	*ip;
 int			free;
 {

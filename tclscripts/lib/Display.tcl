@@ -43,16 +43,20 @@ class Display {
     } {}
     destructor {}
 
-    public method update {obj}
+    public method mouse_nirt {_x _y {gi 0}}
+    public method nirt {args}
+    public method qray {args}
     public method refresh {}
     public method rt {args}
     public method rtabort {{gi 0}}
     public method rtcheck {args}
+    public method rtedge {args}
     public method autoview {{g_index 0}}
     public method attach_view {}
     public method attach_drawable {dg}
     public method detach_view {}
     public method detach_drawable {dg}
+    public method update {obj}
 
     # methods for maintaining the list of geometry objects
     public method add {glist}
@@ -60,12 +64,13 @@ class Display {
     public method remove {glist}
 
     # methods that override methods inherited from View
-    public method slew {x y}
+    public method slew {args}
+    public method perspective_angle {args}
 
     # methods that override methods inherited from Dm
+    public method perspective {args}
     public method fb_active {args}
     public method light {args}
-    public method perspective {args}
     public method zbuffer {args}
     public method zclip {args}
 
@@ -134,6 +139,63 @@ body Display::refresh {} {
     Dm::drawEnd
 }
 
+body Display::mouse_nirt {_x _y {gi 0}} {
+    set geo [lindex $geolist $gi]
+
+    if {$geo == ""} {
+	return "mouse_nirt: bad geometry index - $gi"
+    }
+
+    # transform X screen coordinates into normalized view coordinates
+    set nvx [expr ($_x * $invWidth - 0.5) * 2.0]
+    set nvy [expr (0.5 - $_y * $invHeight) * 2.0 * $invAspect]
+
+    # transform normalized view coordinates into model coordinates
+    set mc [mat4x3pnt [view2model] "$nvx $nvy 0"]
+
+    # finally, call nirt (backing out of geometry)
+    set v_obj [View::get_viewname]
+    eval $geo nirt $v_obj -b $mc
+}
+
+body Display::nirt {args} {
+    set len [llength $args]
+
+    if {$len > 1 && [lindex $args 0] == "-geo"} {
+	set index [lindex $args 1]
+	set args [lrange $args 2 end]
+	set geo [lindex $geolist $index]
+    } else {
+	set geo [lindex $geolist 0]
+    }
+
+    if {$geo == ""} {
+	return "nirt: bad geometry index"
+    }
+
+    set v_obj [View::get_viewname]
+
+    eval $geo nirt $v_obj $args
+}
+
+body Display::qray {args} {
+    set len [llength $args]
+
+    if {$len > 1 && [lindex $args 0] == "-geo"} {
+	set index [lindex $args 1]
+	set args [lrange $args 2 end]
+	set geo [lindex $geolist $index]
+    } else {
+	set geo [lindex $geolist 0]
+    }
+
+    if {$geo == ""} {
+	return "qray: bad geometry index"
+    }
+
+    eval $geo qray $args
+}
+
 body Display::rt {args} {
 #    if {$itk_option(-listen) < 0} {
 #	return "rt: not listening"
@@ -188,6 +250,25 @@ body Display::rtcheck {args} {
 
     set v_obj [View::get_viewname]
     eval $geo rtcheck $v_obj -F $itk_option(-listen) $args
+}
+
+body Display::rtedge {args} {
+    set len [llength $args]
+
+    if {$len > 1 && [lindex $args 0] == "-geo"} {
+	set index [lindex $args 1]
+	set args [lrange $args 2 end]
+	set geo [lindex $geolist $index]
+    } else {
+	set geo [lindex $geolist 0]
+    }
+
+    if {$geo == ""} {
+	return "rtedge: bad geometry index"
+    }
+
+    set v_obj [View::get_viewname]
+    eval $geo rtedge $v_obj -F $itk_option(-listen) -w $width -n $height -V $aspect $args
 }
 
 body Display::autoview {{g_index 0}} {
@@ -262,37 +343,53 @@ body Display::contents {} {
 }
 
 ########################### Public Methods That Override ###########################
-body Display::slew {x1 y1} {
-    set x2 [expr $width * 0.5]
-    set y2 [expr $height * 0.5]
-    set sf [expr 2.0 * $invWidth]
+body Display::slew {args} {
+    if {[llength $args] == 2} {
+	set x1 [lindex $args 0]
+	set y1 [lindex $args 1]
 
-    set _x [expr ($x1 - $x2) * $sf]
-    set _y [expr (-1.0 * $y1 + $y2) * $sf]
-	
-    View::slew $_x $_y
+	set x2 [expr $width * 0.5]
+	set y2 [expr $height * 0.5]
+	set sf [expr 2.0 * $invWidth]
+
+	set _x [expr ($x1 - $x2) * $sf]
+	set _y [expr ($y2 - $y1) * $sf]
+	View::slew $_x $_y
+    } else {
+	eval View::slew $args
+    }
 }
 
-body Display::zclip {args} {
-    eval Dm::zclip $args
-    refresh
-    return $itk_option(-zclip)
-}
+body Display::perspective_angle {args} {
+    if {$args == ""} {
+	# get perspective angle
+	return $perspective_angle
+    } else {
+	# set perspective angle
+	View::perspective $args
+    }
 
-body Display::zbuffer {args} {
-    eval Dm::zbuffer $args
-    refresh
-    return $itk_option(-zbuffer)
-}
+    if {$perspective_angle > 0} {
+	# turn perspective mode on
+	Dm::perspective 1
+    } else {
+	# turn perspective mode off
+	Dm::perspective 0
+    }
 
-body Display::light {args} {
-    eval Dm::light $args
     refresh
-    return $itk_option(-light)
+    return $perspective_angle
 }
 
 body Display::perspective {args} {
     eval Dm::perspective $args
+
+    if {$itk_option(-perspective)} {
+	View::perspective [lindex $perspective_angles $perspective_angle_index]
+    } else {
+	View::perspective -1
+    }
+
     refresh
     return $itk_option(-perspective)
 }
@@ -304,6 +401,24 @@ body Display::fb_active {args} {
 	eval Dm::fb_active $args
 	refresh
     }
+}
+
+body Display::light {args} {
+    eval Dm::light $args
+    refresh
+    return $itk_option(-light)
+}
+
+body Display::zbuffer {args} {
+    eval Dm::zbuffer $args
+    refresh
+    return $itk_option(-zbuffer)
+}
+
+body Display::zclip {args} {
+    eval Dm::zclip $args
+    refresh
+    return $itk_option(-zclip)
 }
 
 ########################### Protected Methods ###########################
@@ -327,6 +442,13 @@ body Display::toggle_light {} {
 
 body Display::toggle_perspective {} {
     Dm::toggle_perspective
+
+    if {$itk_option(-perspective)} {
+	View::perspective [lindex $perspective_angles $perspective_angle_index]
+    } else {
+	View::perspective -1
+    }
+
     refresh
     return $itk_option(-perspective)
 }
@@ -338,7 +460,9 @@ body Display::toggle_perspective_angle {} {
 	incr perspective_angle_index
     }
 
-    View::perspective [lindex $perspective_angles $perspective_angle_index]
+    if {$itk_option(-perspective)} {
+	View::perspective [lindex $perspective_angles $perspective_angle_index]
+    }
 }
 
 body Display::idle_mode {} {
@@ -389,8 +513,7 @@ body Display::constrain_tmode {coord _x _y} {
 body Display::handle_rotation {_x _y} {
     set dx [expr ($y - $_y) * $itk_option(-rscale)]
     set dy [expr ($x - $_x) * $itk_option(-rscale)]
-    rot "$dx $dy 0"
-    refresh
+    vrot $dx $dy 0
 
     #update instance variables x and y
     set x $_x
@@ -400,8 +523,7 @@ body Display::handle_rotation {_x _y} {
 body Display::handle_translation {_x _y} {
     set dx [expr ($x - $_x) * $invWidth * $View::size]
     set dy [expr ($_y - $y) * $invWidth * $View::size]
-    tra "$dx $dy 0"
-    refresh
+    vtra $dx $dy 0
 
     #update instance variables x and y
     set x $_x
@@ -419,7 +541,6 @@ body Display::handle_scale {_x _y} {
     }
 
     zoom $f
-    refresh
 
     #update instance variables x and y
     set x $_x
@@ -437,16 +558,15 @@ body Display::handle_constrain_rot {coord _x _y} {
     }
     switch $coord {
 	x {
-	    rot "$f 0 0"
+	    rot $f 0 0
 	}
 	y {
-	    rot "0 $f 0"
+	    rot 0 $f 0
 	}
 	z {
-	    rot "0 0 $f"
+	    rot 0 0 $f
 	}
     }
-    refresh
 
     #update instance variables x and y
     set x $_x
@@ -464,16 +584,15 @@ body Display::handle_constrain_tran {coord _x _y} {
     }
     switch $coord {
 	x {
-	    tra "$f 0 0"
+	    tra $f 0 0
 	}
 	y {
-	    tra "0 $f 0"
+	    tra 0 $f 0
 	}
 	z {
-	    tra "0 0 $f"
+	    tra 0 0 $f
 	}
     }
-    refresh
 
     #update instance variables x and y
     set x $_x
@@ -539,14 +658,14 @@ body Display::doBindings {} {
     bind $itk_component(dm) <Alt-Control-Shift-ButtonPress-3> "[code $this scale_mode %x %y]; break"
 
     # Key Bindings
-    bind $itk_component(dm) 3 "$this aet \"35 25 0\"; break"
-    bind $itk_component(dm) 4 "$this aet \"45 45 0\"; break"
-    bind $itk_component(dm) f "$this aet \"0 0 0\"; break"
-    bind $itk_component(dm) R "$this aet \"180 0 0\"; break"
-    bind $itk_component(dm) r "$this aet \"270 0 0\"; break"
-    bind $itk_component(dm) l "$this aet \"90 0 0\"; break"
-    bind $itk_component(dm) t "$this aet \"0 90 0\"; break"
-    bind $itk_component(dm) b "$this aet \"0 270 0\"; break"
+    bind $itk_component(dm) 3 "$this ae \"35 25 0\"; break"
+    bind $itk_component(dm) 4 "$this ae \"45 45 0\"; break"
+    bind $itk_component(dm) f "$this ae \"0 0 0\"; break"
+    bind $itk_component(dm) R "$this ae \"180 0 0\"; break"
+    bind $itk_component(dm) r "$this ae \"270 0 0\"; break"
+    bind $itk_component(dm) l "$this ae \"90 0 0\"; break"
+    bind $itk_component(dm) t "$this ae \"0 90 0\"; break"
+    bind $itk_component(dm) b "$this ae \"0 270 0\"; break"
     bind $itk_component(dm) <F2> "[code $this toggle_zclip]; break"
     bind $itk_component(dm) <F3> "[code $this toggle_perspective]; break"
     bind $itk_component(dm) <F4> "[code $this toggle_zbuffer]; break"

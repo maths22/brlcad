@@ -39,7 +39,7 @@ set M_SQRT2	1.41421356237309504880
 set M_SQRT1_2	0.70710678118654752440
 
 proc init_vmath {} {
-	# this routine does nothing except ensure that the abpve global variables get set
+        # this routine does nothing except ensure that the abpve global variables get set
 }
 
 proc near_zero { val epsilon } {
@@ -56,7 +56,7 @@ proc dist_pt_pt { a b } {
     return [magnitude [vsub2 $a $b]]
 }
 
-proc mat_deltas { m } {
+proc mat_deltas_get { m } {
     return [list [lindex $m 3] [lindex $m 7] [lindex $m 11]]
 }
 

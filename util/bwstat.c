@@ -26,10 +26,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <unistd.h>
 #include <math.h>
 
 #define	IBUFSIZE 1024		/* Max read size in pixels */
@@ -42,6 +51,7 @@ void	show_hist();
 
 static char *Usage = "usage: bwstat [-v] [file.bw]\n";
 
+int
 main( argc, argv )
 int argc;
 char **argv;
@@ -144,6 +154,8 @@ char **argv;
 
 	if( verbose )
 		show_hist( bin, sum );
+
+	return 0;
 }
 
 /*

@@ -5,7 +5,7 @@
 			Maryland 21005-5066
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #ifndef DEBUG
@@ -16,7 +16,6 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include <assert.h>
-
 #include <stdio.h>
 #include <signal.h>
 
@@ -133,8 +132,6 @@ int argc;
 char **argv;
 #endif
 	{	register int c;
-		extern int optind;
-		extern char *optarg;
 	/* Parse options.						*/
 	while( (c = getopt( argc, argv, "b" )) != EOF )
 		{

@@ -28,7 +28,7 @@
  *	earlier work by Beckmann, Torrance, and Cook).
  */
 #ifndef lint
-static char RCSbrdf[] = "@(#)$Header$ (BRL)";
+static const char RCSbrdf[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -41,9 +41,12 @@ static char RCSbrdf[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
-#include "../rt/light.h"
+#include "rtprivate.h"
+#include "light.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 /* from view.c */
 extern double AmbientIntensity;
 

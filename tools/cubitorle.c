@@ -36,7 +36,7 @@
 
 void read_cubi_hdr(), read_cubi_row(), read_cubi_chan(), bit_read();
 
-void
+int
 main(argc, argv)
 int	argc;
 char	*argv[];
@@ -85,7 +85,7 @@ char	*argv[];
 	read_cubi_row( cubifiles, rows );
 	rle_putrow( rows, xlen, &rle_dflt_hdr);
     }
-
+    return 0;
 }
 
 void

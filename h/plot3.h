@@ -22,9 +22,9 @@
 #include "vmath.h"
 #include "bn.h"
 
-#define	pl_mat_idn( _mat )		bn_mat_idn( _mat )
-#define pl_mat_zero( _mat )		bn_mat_zero( _mat )
-#define pl_mat_copy( _mat1, _mat2 )	bn_mat_copy( _mat1, _mat2 )
+#define	pl_mat_idn( _mat )		MAT_IDN( _mat )
+#define pl_mat_zero( _mat )		MAT_ZERO( _mat )
+#define pl_mat_copy( _mat1, _mat2 )	MAT_COPY( _mat1, _mat2 )
 
 /*
  *  The basic UNIX-plot routines.
@@ -67,12 +67,12 @@ BU_EXTERN(void pd_box, (FILE *plotfp, double x1, double y1, double x2, double y2
 
 /* Double 3-D both in vector and enumerated versions */
 #ifdef VMATH_H
-BU_EXTERN(void pdv_3space, (FILE *plotfp, CONST vect_t min, CONST vect_t max));
-BU_EXTERN(void pdv_3point, (FILE *plotfp, CONST vect_t pt));
-BU_EXTERN(void pdv_3move, (FILE *plotfp, CONST vect_t pt));
-BU_EXTERN(void pdv_3cont, (FILE *plotfp, CONST vect_t pt));
-BU_EXTERN(void pdv_3line, (FILE *plotfp, CONST vect_t a, CONST vect_t b));
-BU_EXTERN(void pdv_3box, (FILE *plotfp, CONST vect_t a, CONST vect_t b));
+BU_EXTERN(void pdv_3space, (FILE *plotfp, const vect_t min, const vect_t max));
+BU_EXTERN(void pdv_3point, (FILE *plotfp, const vect_t pt));
+BU_EXTERN(void pdv_3move, (FILE *plotfp, const vect_t pt));
+BU_EXTERN(void pdv_3cont, (FILE *plotfp, const vect_t pt));
+BU_EXTERN(void pdv_3line, (FILE *plotfp, const vect_t a, const vect_t b));
+BU_EXTERN(void pdv_3box, (FILE *plotfp, const vect_t a, const vect_t b));
 #endif /* VMATH_H */
 BU_EXTERN(void pd_3space, (FILE *plotfp, double x1, double y1, double z1, double x2, double y2, double z2));
 BU_EXTERN(void pd_3point, (FILE *plotfp, double x, double y, double z));
@@ -80,7 +80,7 @@ BU_EXTERN(void pd_3move, (FILE *plotfp, double x, double y, double z));
 BU_EXTERN(void pd_3cont, (FILE *plotfp, double x, double y, double z));
 BU_EXTERN(void pd_3line, (FILE *plotfp, double x1, double y1, double z1, double x2, double y2, double z2));
 BU_EXTERN(void pd_3box, (FILE *plotfp, double x1, double y1, double z1, double x2, double y2, double z2));
-BU_EXTERN(void pdv_3ray, (FILE *fp, CONST point_t pt, CONST vect_t dir, double t));
+BU_EXTERN(void pdv_3ray, (FILE *fp, const point_t pt, const vect_t dir, double t));
 
 /*
  *  The following routines are taken from the BRL TIG-PACK

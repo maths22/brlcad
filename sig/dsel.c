@@ -1,6 +1,8 @@
 /*
  *  select some number of doubles
  */
+#include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -15,7 +17,7 @@ Usage: dsel num\n\
 void	skip();
 void	keep();
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -51,6 +53,7 @@ char	**argv;
 			exit( 0 );
 		keep( nkeep );
 	}
+	return 0;
 }
 
 void

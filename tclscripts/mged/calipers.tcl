@@ -5,7 +5,7 @@
 #	Ensure that all commands that this script uses without defining
 #	are provided by the calling application
 #
-check_externs "_mged_viewget"
+check_externs "_mged_view"
 
 #	XXX	kludge for edit-test cycle
 
@@ -32,7 +32,7 @@ proc do_caliper_leg {leg} {
     global cal_leg_loc
 
     if {$landmarkmode == {View center}} {
-	set cal_leg_loc($leg) [_mged_viewget center]
+	set cal_leg_loc($leg) [_mged_view center]
     } elseif {$landmarkmode == {Model origin}} {
 	set cal_leg_loc($leg) {0 0 0}
     } else {
@@ -85,7 +85,7 @@ menubutton .cal.mbar.mode -text Mode -menu .cal.mbar.mode.menu
 	-variable landmarkmode
     .cal.mbar.mode.menu add radiobutton -label "Model origin" \
 	-variable landmarkmode
-    .cal.mbar.mode.menu add cascade -label "Solid parameter" \
+    .cal.mbar.mode.menu add cascade -label "Primitive parameters" \
 	-menu .cal.mbar.mode.menu.params
 	menu .cal.mbar.mode.menu.params
 	.cal.mbar.mode.menu.params add radiobutton -label V -variable landmarkmode
@@ -95,7 +95,7 @@ menubutton .cal.mbar.mode -text Mode -menu .cal.mbar.mode.menu
 	.cal.mbar.mode.menu.params add radiobutton -label D -variable landmarkmode
     .cal.mbar.mode.menu add radiobutton -label Keypoint -variable landmarkmode
     .cal.mbar.mode.menu add radiobutton -label History -variable landmarkmode
-    .cal.mbar.mode.menu entryconfigure {Solid parameter} -state disabled
+    .cal.mbar.mode.menu entryconfigure {Primitive parameters} -state disabled
     .cal.mbar.mode.menu entryconfigure Keypoint -state disabled
     .cal.mbar.mode.menu entryconfigure History -state disabled
 menubutton .cal.mbar.options -text Options -menu .cal.mbar.options.menu
@@ -132,8 +132,8 @@ pack .cal.distlabel .cal.distance -side left -in .cal.distline
 
 frame .cal.modeline
 label .cal.modelabel -text "Leg placement mode:"
-tk_optionMenu .cal.modemenu landmarkmode {View center} {Model origin} {Solid parameter} Keypoint History
-.cal.modemenu.menu entryconfigure {Solid parameter} -state disabled
+tk_optionMenu .cal.modemenu landmarkmode {View center} {Model origin} {Primitive parameters} Keypoint History
+.cal.modemenu.menu entryconfigure {Primitive parameters} -state disabled
 .cal.modemenu.menu entryconfigure Keypoint -state disabled
 .cal.modemenu.menu entryconfigure History -state disabled
 pack .cal.modelabel .cal.modemenu -side left -in .cal.modeline

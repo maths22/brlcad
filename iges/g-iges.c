@@ -23,8 +23,8 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
-static char RCSrev[] = "$Revision$";
+static const char RCSid[] = "$Header$";
+static const char RCSrev[] = "$Revision$";
 #endif
 
 #include "conf.h"
@@ -56,7 +56,14 @@ extern char	version[];
 #define SUFFIX_LEN	10	/* max size of suffix for 'part' files (-m option) */
 
 BU_EXTERN( union tree *do_nmg_region_end , (struct db_tree_state *tsp, struct db_full_path *pathp, union tree *curtree, genptr_t client_data));
-BU_EXTERN( void w_start_global , (FILE *fp_dir , FILE *fp_param , char *db_name , char *prog_name , char *output_file , char *id , char *version ));
+void w_start_global(
+	FILE *fp_dir,
+	FILE *fp_param,
+	const char *db_name,
+	const char *prog_name,
+	const char *output_file,
+	const char *id,
+	const char *version);
 BU_EXTERN( void w_terminate , (FILE *fp) );
 BU_EXTERN( void write_edge_list , (struct nmgregion *r , int vert_de , struct bu_ptbl *etab , struct bu_ptbl *vtab , FILE *fp_dir , FILE *fp_param ) );
 BU_EXTERN( void write_vertex_list , ( struct nmgregion *r , struct bu_ptbl *vtab , FILE *fp_dir , FILE *fp_param ) );
@@ -67,6 +74,10 @@ BU_EXTERN( void csg_comb_func , ( struct db_i *dbip , struct directory *dp , gen
 BU_EXTERN( void csg_leaf_func , ( struct db_i *dbip , struct directory *dp , genptr_t ptr ) );
 BU_EXTERN( void set_iges_tolerances , ( struct bn_tol *set_tol , struct rt_tess_tol *set_ttol ) );
 BU_EXTERN( void count_refs , ( struct db_i *dbip , struct directory *dp , genptr_t ptr ) );
+BU_EXTERN( int nmgregion_to_tsurf , ( char *name, struct nmgregion *r, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_solid_instance , ( int orig_de, mat_t mat, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( void get_props , ( struct iges_properties *props, struct rt_comb_internal *comb ) );
+BU_EXTERN( int comb_to_iges , ( struct rt_comb_internal *comb, int length, int dependent, struct iges_properties *props, int de_pointers[], FILE *fp_dir, FILE *fp_param ) );
 
 static char usage[] = "Usage: %s [-f|t|m] [-v] [-s] [-xX lvl] [-a abs_tol] [-r rel_tol] [-n norm_tol] [-d dist_tol] [-o output_file] brlcad_db.g object(s)\n\
 	options:\n\
@@ -114,6 +125,8 @@ BU_EXTERN( int sph_to_iges , ( struct rt_db_internal *ip , char *name , FILE *fp
 BU_EXTERN( int tor_to_iges , ( struct rt_db_internal *ip , char *name , FILE *fp_dir , FILE *fp_param ));
 BU_EXTERN( int tgc_to_iges , ( struct rt_db_internal *ip , char *name , FILE *fp_dir , FILE *fp_param ));
 BU_EXTERN( int nmg_to_iges , ( struct rt_db_internal *ip , char *name , FILE *fp_dir , FILE *fp_param ));
+BU_EXTERN( void iges_init , ( struct bn_tol *set_tol, struct rt_tess_tol *set_ttol, int set_verbose, struct db_i *dbip_set ) );
+BU_EXTERN( void Print_stats , ( FILE *fp ) );
 
 struct iges_functab
 {
@@ -121,37 +134,37 @@ struct iges_functab
 };
 
 struct iges_functab iges_write[ID_MAXIMUM+1]={
-	null_to_iges,	/* ID_NULL */
-	tor_to_iges, 	/* ID_TOR */
-	tgc_to_iges,	/* ID_TGC */
-	ell_to_iges,	/* ID_ELL */
-	arb_to_iges,	/* ID_ARB8 */
-	nmg_to_iges,	/* ID_ARS */
-	nmg_to_iges,	/* ID_HALF */
-	nmg_to_iges,	/* ID_REC */
-	nmg_to_iges,	/* ID_POLY */
-	nmg_to_iges,	/* ID_BSPLINE */
-	sph_to_iges,	/* ID_SPH */
-	nmg_to_iges,	/* ID_NMG */
-	null_to_iges,	/* ID_EBM */
-	null_to_iges,	/* ID_VOL */
-	nmg_to_iges,	/* ID_ARBN */
-	nmg_to_iges,	/* ID_PIPE */
-	null_to_iges,	/* ID_PARTICLE */
-	null_to_iges,	/* ID_RPC */
-	null_to_iges,	/* ID_RHC */
-	null_to_iges,	/* ID_EPA */
-	null_to_iges,	/* ID_EHY */
-	null_to_iges,	/* ID_ETO */
-	null_to_iges,	/* ID_GRIP */
-	null_to_iges,	/* ID_JOINT */
-	nmg_to_iges,	/* ID_HF */
-	nmg_to_iges,	/* ID_DSP */
-	null_to_iges,	/* ID_SKETCH */
-	nmg_to_iges,	/* ID_EXTRUDE */
-	null_to_iges,	/* ID_SUBMODEL */
-	nmg_to_iges,	/* ID_CLINE */
-	nmg_to_iges	/* ID_BOT */
+	{null_to_iges},	/* ID_NULL */
+	{tor_to_iges}, 	/* ID_TOR */
+	{tgc_to_iges},	/* ID_TGC */
+	{ell_to_iges},	/* ID_ELL */
+	{arb_to_iges},	/* ID_ARB8 */
+	{nmg_to_iges},	/* ID_ARS */
+	{nmg_to_iges},	/* ID_HALF */
+	{nmg_to_iges},	/* ID_REC */
+	{nmg_to_iges},	/* ID_POLY */
+	{nmg_to_iges},	/* ID_BSPLINE */
+	{sph_to_iges},	/* ID_SPH */
+	{nmg_to_iges},	/* ID_NMG */
+	{null_to_iges},	/* ID_EBM */
+	{null_to_iges},	/* ID_VOL */
+	{nmg_to_iges},	/* ID_ARBN */
+	{nmg_to_iges},	/* ID_PIPE */
+	{null_to_iges},	/* ID_PARTICLE */
+	{null_to_iges},	/* ID_RPC */
+	{null_to_iges},	/* ID_RHC */
+	{null_to_iges},	/* ID_EPA */
+	{null_to_iges},	/* ID_EHY */
+	{null_to_iges},	/* ID_ETO */
+	{null_to_iges},	/* ID_GRIP */
+	{null_to_iges},	/* ID_JOINT */
+	{nmg_to_iges},	/* ID_HF */
+	{nmg_to_iges},	/* ID_DSP */
+	{null_to_iges},	/* ID_SKETCH */
+	{nmg_to_iges},	/* ID_EXTRUDE */
+	{null_to_iges},	/* ID_SUBMODEL */
+	{nmg_to_iges},	/* ID_CLINE */
+	{nmg_to_iges}	/* ID_BOT */
 };
 
 static int	regions_tried = 0;
@@ -180,9 +193,9 @@ char	*argv[];
 	port_setlinebuf( stderr );
 
 	bu_log( "%s", version+5);
-	bu_log( "Please direct bug reports to <jra@brl.mil>\n\n" );
+	bu_log( "Please direct bug reports to <acst@arl.army.mil>\n\n" );
 
-	bn_mat_idn( identity_mat );
+	MAT_IDN( identity_mat );
 
 	tree_state = rt_initial_tree_state;	/* struct copy */
 	tree_state.ts_tol = &tol;
@@ -204,6 +217,8 @@ char	*argv[];
 
 	the_model = nmg_mm();
 	BU_LIST_INIT( &rt_g.rtg_vlfree );	/* for vlist macros */
+
+	rt_init_resource( &rt_uniresource, 0, NULL );
 
 	prog_name = argv[0];
 
@@ -249,10 +264,10 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			break;
 		default:
@@ -277,7 +292,7 @@ char	*argv[];
 	}
 
 	/* Scan the database */
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
 	if( !multi_file )
 	{
@@ -339,7 +354,7 @@ char	*argv[];
 		/* Walk indicated tree(s).  Each region will be output
 		 * as a single manifold solid BREP object */
 
-		ret = db_walk_tree(dbip, argc-1, (CONST char **)(argv+1),
+		ret = db_walk_tree(dbip, argc-1, (const char **)(argv+1),
 			ncpu,
 			&tree_state,
 			0,			/* take all regions */
@@ -356,7 +371,7 @@ char	*argv[];
 			for( i=1 ; i<argc ; i++ )
 			{
 				dp = db_lookup( dbip , argv[i] , 1 );
-				db_functree( dbip , dp , csg_comb_func , 0 , NULL );
+				db_functree( dbip , dp , csg_comb_func , 0 , &rt_uniresource , NULL );
 			}
 		}
 	}
@@ -369,7 +384,7 @@ char	*argv[];
 		for( i=1 ; i<argc ; i++ )
 		{
 			dp = db_lookup( dbip , argv[i] , 1 );
-			db_functree( dbip , dp , csg_comb_func , csg_leaf_func , NULL );
+			db_functree( dbip , dp , csg_comb_func , csg_leaf_func , &rt_uniresource , NULL );
 		}
 	}
 	else if( mode == TRIMMED_SURF_MODE )
@@ -377,7 +392,7 @@ char	*argv[];
 		/* Walk the indicated tree(s). Each region is output as a collection
 		 * of trimmed NURBS */
 
-		ret = db_walk_tree(dbip, argc-1, (CONST char **)(argv+1),
+		ret = db_walk_tree(dbip, argc-1, (const char **)(argv+1),
 			ncpu,
 			&tree_state,
 			0,			/* take all regions */
@@ -431,6 +446,8 @@ char	*argv[];
 		bu_log( "\t%d solids were not converted to IGES format\n" , solid_error );
 	if( comb_error )
 		bu_log( "\t%d combinations were not converted to IGES format\n" , comb_error );
+
+	return( 0 );
 }
 
 /*
@@ -460,7 +477,7 @@ genptr_t		client_data;
 
 	BU_LIST_INIT(&vhead);
 
-	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+	if (RT_G_DEBUG&DEBUG_TREEWALK || verbose) {
 		char	*sofar = db_path_to_string(pathp);
 		bu_log("\ndo_nmg_region_end(%d %d%%) %s\n",
 			regions_tried,
@@ -475,8 +492,14 @@ genptr_t		client_data;
 	regions_tried++;
 	/* Begin rt_bomb() protection */
 	if( BU_SETJUMP )  {
+		char *sofar;
+
 		/* Error, bail out */
 		BU_UNSETJUMP;		/* Relinquish the protection */
+
+		sofar = db_path_to_string(pathp);
+		bu_log( "FAILED: Cannot convert %s!!!\n", sofar );
+		bu_free( sofar, "path string" );
 
 		/* Sometimes the NMG library adds debugging bits when
 		 * it detects an internal error, before rt_bomb().
@@ -484,7 +507,7 @@ genptr_t		client_data;
 		rt_g.NMG_debug = NMG_debug;	/* restore mode */
 
 		/* Release the tree memory & input regions */
-		db_free_tree(curtree);		/* Does an nmg_kr() */
+		db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 		/* Get rid of (m)any other intermediate structures */
 		if( (*tsp->ts_m)->magic != -1L )
@@ -497,7 +520,7 @@ genptr_t		client_data;
 	if( verbose )
 		bu_log( "\ndoing boolean tree evaluate...\n" );
 	(void)nmg_model_fuse(*tsp->ts_m, tsp->ts_tol);
-	result = nmg_booltree_evaluate(curtree, tsp->ts_tol);	/* librt/nmg_bool.c */
+	result = nmg_booltree_evaluate(curtree, tsp->ts_tol, &rt_uniresource);	/* librt/nmg_bool.c */
 
 	if( result )
 		r = result->tr_d.td_r;
@@ -643,7 +666,7 @@ genptr_t		client_data;
 	 *  A return of TREE_NULL from this routine signals an error,
 	 *  so we need to cons up an OP_NOP node to return.
 	 */
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 out:
 	BU_GETUNION(curtree, tree);
@@ -747,7 +770,7 @@ genptr_t	ptr;
 		}
 	}
 
-	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL );
+	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL , &rt_uniresource);
 	if( id < 0 )
 		return;
 	if( id != ID_COMBINATION )
@@ -778,7 +801,7 @@ genptr_t	ptr;
 	{
 		bu_log( "Error in combination %s\n", dp->d_namep );
 	        bu_free( (char *)de_pointers , "csg_comb_func de_pointers" );
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern , &rt_uniresource);
 		return;
 	}
 
@@ -803,7 +826,7 @@ genptr_t	ptr;
 		bu_log( "g-iges: combination (%s) not written to iges file\n" , dp->d_namep );
 	}
 
-	rt_db_free_internal( &intern );
+	rt_db_free_internal( &intern , &rt_uniresource);
         bu_free( (char *)de_pointers , "csg_comb_func de_pointers" );
 
 }
@@ -814,9 +837,7 @@ struct db_i *dbip;
 struct directory *dp;
 genptr_t ptr;
 {
-	struct bu_external	ep;
 	struct rt_db_internal	ip;
-	int			id;
 
 	/* if this solid has already been output, don't do it again */
 	if( dp->d_uses < 0 )
@@ -824,16 +845,12 @@ genptr_t ptr;
 
 	if( verbose )
 		bu_log( "solid - %s\n" , dp->d_namep );
-	if( db_get_external( &ep , dp , dbip ) )
-		bu_log( "Error return from db_get_external for %s\n" , dp->d_namep );
 
-	id = rt_id_solid( &ep );
-
-	if( rt_functab[id].ft_import( &ip , &ep , identity_mat, dbip ) )
+	if( rt_db_get_internal( &ip, dp, dbip, (fastf_t *)NULL, &rt_uniresource ) < 0 )
 		bu_log( "Error in import" );
 
 	solid_is_brep = 0;
-	dp->d_uses = (-iges_write[id].do_iges_write( &ip , dp->d_namep , fp_dir , fp_param ));
+	dp->d_uses = (-iges_write[ip.idb_type].do_iges_write( &ip , dp->d_namep , fp_dir , fp_param ));
 
 	if( !dp->d_uses )
 	{
@@ -845,6 +862,8 @@ genptr_t ptr;
 		dp->d_nref = 1;
 	else
 		dp->d_nref = 0;
+
+	rt_db_free_internal( &ip, &rt_uniresource );
 }
 
 void
@@ -879,7 +898,7 @@ genptr_t ptr;
 	if( !(dp->d_flags & DIR_COMB) )
 		return;
 
-	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL );
+	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL , &rt_uniresource);
 	if( id < 0 )
 	{
 		bu_log( "Cannot get internal form of %s\n", dp->d_namep );

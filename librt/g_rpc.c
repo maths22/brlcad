@@ -147,12 +147,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrpc[] = "@(#)$Header$ (BRL)";
+static const char RCSrpc[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -173,12 +176,13 @@ struct rpc_specific {
 	mat_t	rpc_invRoS;	/* invRot(Scale(vect)) */
 };
 
-CONST struct bu_structparse rt_rpc_parse[] = {
+const struct bu_structparse rt_rpc_parse[] = {
     { "%f", 3, "V", offsetof(struct rt_rpc_internal, rpc_V[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "H", offsetof(struct rt_rpc_internal, rpc_H[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "B", offsetof(struct rt_rpc_internal, rpc_B[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r", offsetof(struct rt_rpc_internal, rpc_r),    BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+ };
 	    
 /*
  *  			R T _ R P C _ P R E P
@@ -203,7 +207,9 @@ struct rt_i		*rtip;
 {
 	struct rt_rpc_internal		*xip;
 	register struct rpc_specific	*rpc;
-	CONST struct bn_tol		*tol = &rtip->rti_tol;
+#ifndef NO_BOMBING_MACROS
+	const struct bn_tol		*tol = &rtip->rti_tol;  /* only used to check a if tolerance is valid */
+#endif
 	LOCAL fastf_t	magsq_b, magsq_h, magsq_r;
 	LOCAL fastf_t	mag_b, mag_h, mag_r;
 	LOCAL fastf_t	f;
@@ -256,7 +262,7 @@ struct rt_i		*rtip;
 	VMOVE( rpc->rpc_V, xip->rpc_V );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], rpc->rpc_Hunit );
 	VMOVE(    &R[4], rpc->rpc_Runit );
 	VREVERSE( &R[8], rpc->rpc_Bunit );
@@ -264,7 +270,7 @@ struct rt_i		*rtip;
 
 	/* Compute S */
 	VSET( invsq, 1.0/magsq_h, 1.0/magsq_r, 1.0/magsq_b );
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = sqrt( invsq[0] );
 	S[ 5] = sqrt( invsq[1] );
 	S[10] = sqrt( invsq[2] );
@@ -299,9 +305,9 @@ struct rt_i		*rtip;
  */
 void
 rt_rpc_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct rpc_specific *rpc =
+	register const struct rpc_specific *rpc =
 		(struct rpc_specific *)stp->st_specific;
 
 	VPRINT("V", rpc->rpc_V);
@@ -344,7 +350,7 @@ struct seg		*seghead;
 	LOCAL vect_t	xlated;		/* translated vector */
 	LOCAL struct hit hits[3];	/* 2 potential hit points */
 	register struct hit *hitp;	/* pointer to hit point */
-/*?????	CONST struct bn_tol	*tol = &rtip->rti_tol; ?????*/
+/*?????	const struct bn_tol	*tol = &rtip->rti_tol; ?????*/
 
 	hitp = &hits[0];
 
@@ -646,8 +652,8 @@ int
 rt_rpc_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	LOCAL struct rt_rpc_internal	*xip;
         fastf_t *front;
@@ -690,7 +696,7 @@ CONST struct bn_tol		*tol;
 	VCROSS(   Ru, Bu, Hu );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Hu );
 	VMOVE(    &R[4], Ru );
 	VREVERSE( &R[8], Bu );
@@ -919,8 +925,8 @@ rt_rpc_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	int		i, j, n;
 	fastf_t		b, *back, f, *front, h, rh;
@@ -971,7 +977,7 @@ CONST struct bn_tol	*tol;
 	VCROSS(   Ru, Bu, Hu );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Hu );
 	VMOVE(    &R[4], Ru );
 	VREVERSE( &R[8], Bu );
@@ -1199,9 +1205,9 @@ CONST struct bn_tol	*tol;
 int
 rt_rpc_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	LOCAL struct rt_rpc_internal	*xip;
 	union record			*rp;
@@ -1214,7 +1220,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_RPC;
 	ip->idb_meth = &rt_functab[ID_RPC];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_rpc_internal), "rt_rpc_internal");
@@ -1245,9 +1252,9 @@ CONST struct db_i		*dbip;
 int
 rt_rpc_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_rpc_internal	*xip;
 	union record		*rpc;
@@ -1258,7 +1265,7 @@ CONST struct db_i		*dbip;
 	xip = (struct rt_rpc_internal *)ip->idb_ptr;
 	RT_RPC_CK_MAGIC(xip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "rpc external");
 	rpc = (union record *)ep->ext_buf;
@@ -1290,6 +1297,105 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ R P C _ I M P O R T 5
+ *
+ *  Import an RPC from the database format to the internal format.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_rpc_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_rpc_internal	*xip;
+	fastf_t			vec[10];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 10 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_RPC;
+	ip->idb_meth = &rt_functab[ID_RPC];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_rpc_internal), "rt_rpc_internal");
+
+	xip = (struct rt_rpc_internal *)ip->idb_ptr;
+	xip->rpc_magic = RT_RPC_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 10 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( xip->rpc_V, mat, &vec[0*3] );
+	MAT4X3VEC( xip->rpc_H, mat, &vec[1*3] );
+	MAT4X3VEC( xip->rpc_B, mat, &vec[2*3] );
+	xip->rpc_r = vec[3*3] / mat[15];
+
+	if( xip->rpc_r < SMALL_FASTF )
+	{
+		bu_log( "rt_rpc_import: r is zero\n" );
+		bu_free( (char *)ip->idb_ptr , "rt_rpc_import: ip->idp_ptr" );
+		return( -1 );
+	}
+
+	return(0);			/* OK */
+}
+
+/*
+ *			R T _ R P C _ E X P O R T 5
+ *
+ *  The name is added by the caller, in the usual place.
+ */
+int
+rt_rpc_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_rpc_internal	*xip;
+	fastf_t			vec[10];
+	fastf_t			f,mag_b,mag_h;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_RPC )  return(-1);
+	xip = (struct rt_rpc_internal *)ip->idb_ptr;
+	RT_RPC_CK_MAGIC(xip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 10;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "rpc external");
+
+	mag_b = MAGNITUDE( xip->rpc_B );
+	mag_h = MAGNITUDE( xip->rpc_H );
+	
+	if( mag_b < RT_LEN_TOL || mag_h < RT_LEN_TOL || xip->rpc_r < RT_LEN_TOL) {
+		bu_log("rt_rpc_export: not all dimensions positive!\n");
+		return(-1);
+	}
+
+	f = VDOT(xip->rpc_B, xip->rpc_H) / (mag_b * mag_h );
+	if ( !NEAR_ZERO( f , RT_DOT_TOL) ) {
+		bu_log("rt_rpc_export: B and H are not perpendicular! (dot = %g)\n",f );
+		return(-1);
+	}
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*3], xip->rpc_V, local2mm );
+	VSCALE( &vec[1*3], xip->rpc_H, local2mm );
+	VSCALE( &vec[2*3], xip->rpc_B, local2mm );
+	vec[3*3] = xip->rpc_r * local2mm;
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 10 );
+
+	return(0);
+}
+
+/*
  *			R T _ R P C _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1299,7 +1405,7 @@ CONST struct db_i		*dbip;
 int
 rt_rpc_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {

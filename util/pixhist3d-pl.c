@@ -21,10 +21,17 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include <stdio.h>
+#include <unistd.h>
+#include "conf.h"
+#include "machine.h"
+#include "bu.h"
+#include "vmath.h"
+#include "bn.h"
+#include "plot3.h"
 
 FILE	*fp;
 
@@ -36,6 +43,7 @@ struct	pix_element {
 
 static char *Usage = "usage: pixhist3d-pl [file.pix] | plot\n";
 
+int
 main( argc, argv )
 int argc;
 char **argv;
@@ -78,4 +86,5 @@ char **argv;
 			}
 		}
 	}
+	return 0;
 }

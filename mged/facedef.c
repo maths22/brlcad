@@ -13,7 +13,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -86,7 +86,7 @@ char **argv;
 	plane_t		planes[6];
 	int status = TCL_OK;
 
-	if(argc < 2 || MAXARGS < argc){
+	if(argc < 2){
 	  struct bu_vls vls;
 
 	  bu_vls_init(&vls);
@@ -247,11 +247,11 @@ char **argv;
 	      goto end;
 	    }
 
-	    argv[5] = "v5";
+	    argv[5] = "Release 6";
 	    Tcl_AppendResult(interp, "Fixed point is vertex five.\n");
 	  }
-	  /* total # of args under this option */
-	  else if( argc < 8 && (argc > 5 ? argv[5][0] != 'v' : 1)) { 
+	  /* total # of as under this option */
+	  else if( argc < 8 && (argc > 5 ? argv[5][0] != 'R' : 1)) { 
 	    Tcl_AppendResult(interp, MORE_ARGS_STR, p_rotfb[argc-3], (char *)NULL);
 	    status = TCL_ERROR;
 	    goto end;
@@ -297,7 +297,7 @@ char **argv;
 	for(i=0; i<8; i++){
 		MAT4X3PNT( arbo->pt[i], es_invmat, arb->pt[i] );
 	}
-	rt_db_free_internal(&intern);
+	rt_db_free_internal(&intern, &rt_uniresource);
 
 	/* draw the new solid */
 	replot_editing_solid();
@@ -347,7 +347,7 @@ static int
 get_3pts( plane, argv, tol)
 plane_t		plane;
 char		*argv[];
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	int i;
 	point_t	a,b,c;
@@ -380,7 +380,7 @@ static void
 get_rotfb(plane, argv, arb)
 plane_t	plane;
 char	*argv[];
-CONST struct rt_arb_internal	*arb;
+const struct rt_arb_internal	*arb;
 {
 	fastf_t rota, fb;
 	short int i,temp;

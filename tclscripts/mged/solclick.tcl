@@ -41,7 +41,7 @@ proc solclick { } {
 
 #	toplevel $w -screen $mged_gui($id,screen)
 	toplevel $w
-	wm title $w "Solid edit"
+	wm title $w "Primitive edit"
 	set i 0
 	foreach solid $solids {
 	    button $w.s$i -text [lindex [split $solid /] end] \
@@ -49,7 +49,7 @@ proc solclick { } {
 	    pack $w.s$i -side top -fill x -expand yes
 	    incr i
 	}
-	button $w.s$i -text "CANCEL" -command "destroy $w"
+	button $w.s$i -text "Cancel" -command "destroy $w"
 	pack $w.s$i -side top -fill x -expand yes
     }
 }
@@ -60,7 +60,7 @@ proc init_solclick { id } {
 
     set w .metasolclick
     if [winfo exists $w] {
-	mged_dialog .solclick_dialog $mged_gui($id,screen) "In Use" "The solid click tool is in use by $solclick_user" info 0 OK
+	mged_dialog .solclick_dialog $mged_gui($id,screen) "In Use" "The primitive click tool is in use by $solclick_user" info 0 OK
 	return
     }
     
@@ -68,6 +68,6 @@ proc init_solclick { id } {
     set solclick_user $id
     toplevel $w -screen $mged_gui($id,screen)
     wm title $w "My 1st menu"
-    button $w.s0 -text "SOLID CLICK" -command "solclick"
+    button $w.s0 -text "PRIMITIVE CLICK" -command "solclick"
     pack $w.s0 -side top -fill x -fill y -expand yes
 }

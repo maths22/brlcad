@@ -26,12 +26,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include "machine.h"		/* BRLCAD specific machine data types */
-#include "db.h"			/* BRLCAD data base format */
+#include "externs.h"
+#include "bu.h"
 #include "vmath.h"		/* BRLCAD Vector macros */
 #include "nurb.h"		/* BRLCAD Spline data structures */
 #include "raytrace.h"
-#include "../librt/debug.h"	/* rt_g.debug flag settings */
-#include "externs.h"
+#include "wdb.h"
 
 fastf_t grid[10][10][3];
 
@@ -40,6 +40,20 @@ char *Usage = "This program ordinarily generates a database on stdout.\n\
 
 void interpolate_data();
 
+struct face_g_snurb *surfs[100];
+int nsurf = 0;
+
+struct rt_wdb *outfp;
+
+#ifndef HAVE_DRAND48
+/* simulate drand48() --  using 31-bit random() -- assumed to exist */
+double drand48() {
+  extern long random();
+  return (double)random() / 2147483648.0; /* range [0,1) */
+}
+#endif
+
+int
 main(argc, argv)
 int argc; char * argv[];
 {
@@ -49,10 +63,7 @@ int argc; char * argv[];
 	int	i,j;
 	fastf_t 	hscale;
 
-	if (isatty(fileno(stdout))) {
-		(void)fprintf(stderr, "%s: %s\n", *argv, Usage);
-		return(-1);
-	}
+	outfp = wdb_fopen("terrain.g");
 
 	hscale = 2.5;
 
@@ -76,8 +87,7 @@ int argc; char * argv[];
 	 * (so that it will be closed).
  	 */
 
-	mk_id( stdout, id_name);
-	mk_bsolid( stdout, nurb_name, 1, 1.0);
+	mk_id( outfp, id_name);
 
 	for( i = 0; i < 10; i++)
 		for( j = 0; j < 10; j++)
@@ -94,23 +104,27 @@ int argc; char * argv[];
 		}
 
 	interpolate_data();
-		
 
+	mk_bspline( outfp, nurb_name, surfs);
+		
+	return 0;
 }
+
 /* Interpoate the data using b-splines */
 void
 interpolate_data()
 {
-	struct face_g_snurb srf;
+	struct face_g_snurb *srf;
 	fastf_t * data;
 	fastf_t rt_nurb_par_edge();
 
 	data = &grid[0][0][0];
 
-	rt_nurb_sinterp( &srf, 4, data, 10, 10 );
-	rt_nurb_kvnorm( &srf.u );
-	rt_nurb_kvnorm( &srf.v );
+	BU_GETSTRUCT( srf, face_g_snurb );
 
-	mk_bsurf(stdout, &srf);
+	rt_nurb_sinterp( srf, 4, data, 10, 10 );
+	rt_nurb_kvnorm( &srf->u );
+	rt_nurb_kvnorm( &srf->v );
 
+	surfs[nsurf++] = srf;
 }

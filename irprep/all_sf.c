@@ -20,7 +20,7 @@
 /*	22 February 1993 - Original copy.  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -53,7 +53,7 @@ extern int overlap();   /*  User supplied overlap function.  */
 
 struct table
 {
-   CONST char *name;	/*  Region name.  */
+   const char *name;	/*  Region name.  */
    double lvrays;	/*  Number of rays that leave a region &  */
 			/*  hit air or nothing.  */
    double *intrays;	/*  Number of rays that leave a region &  */
@@ -65,6 +65,14 @@ struct table
 struct table *info;	/*  Structure that contains all info.  */
 
 FILE *fpw1;		/*  Allows file to be written to from all func.  */
+
+#ifndef HAVE_DRAND48
+/* simulate drand48() --  using 31-bit random() -- assumed to exist */
+double drand48() {
+  extern long random();
+  return (double)random() / 2147483648.0; /* range [0,1) */
+}
+#endif
 
 int main(argc,argv)
 
@@ -302,11 +310,15 @@ char **argv;
 	   (void)fflush(stdout);
 	   (void)scanf("%ld",&seed);
 	}
-#	ifdef MSRMAXTBL
+#ifdef MSRMAXTBL
 	   msr = msr_unif_init(seed,0);
-#	else
+#else
+#  ifndef HAVE_DRAND48
+	   (void)srandom(seed);
+#  else
 	   (void)srand48(seed);
-#	endif
+#  endif
+#endif
 	(void)printf("Seed initialized\n");
 	(void)fflush(stdout);
 
@@ -515,13 +527,14 @@ char **argv;
 	(void)fclose(fpw1);
 	(void)fclose(fpw2);
    }							/*  END # 100  */
+   return 0;
 }							/*  END # 99  */
 
 
 /***************************************************************************/
 /*		Hit, miss, & overlap functions.                            */
 /***************************************************************************/
-
+int
 hit(ap_p,PartHeadp)
 
 /*  User supplied hit function.  */
@@ -658,7 +671,7 @@ struct partition *PartHeadp;
 }							/*  END # 1000  */
 
 /***************************************************************************/
-
+int
 miss()
 
 /*  User supplied hit function.  */
@@ -669,7 +682,7 @@ miss()
 }							/*  END # 2000  */
 
 /***************************************************************************/
-
+int
 overlap()
 
 /*  User supplied overlap function.  */

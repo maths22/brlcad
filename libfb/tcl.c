@@ -68,19 +68,25 @@ extern int Fbo_Init();
 extern int ogl_open_existing();
 extern int ogl_close_existing();
 extern FBIO ogl_interface;
+extern void ogl_configureWindow();
+extern int ogl_refresh();
 #endif
 
+#ifdef IF_X
+extern void X24_configureWindow();
+extern int X24_refresh();
 extern int X24_open_existing();
 extern int X24_close_existing();
 extern FBIO X24_interface;
+#endif
 
 int fb_tcl_open_existing();
 int fb_tcl_close_existing();
 
 static struct bu_cmdtab cmdtab[] = {
-	"fb_open_existing",	 fb_tcl_open_existing,
-	"fb_close_existing",	 fb_tcl_close_existing,
-	(char *)0, (int (*)())0
+	{"fb_open_existing",	 fb_tcl_open_existing},
+	{"fb_close_existing",	 fb_tcl_close_existing},
+	{(char *)0, (int (*)())0}
 };
 
 int
@@ -110,6 +116,7 @@ fb_tcl_open_existing(clientData, interp, argc, argv)
      int argc;
      char **argv;
 {
+#ifdef IF_X
 	register FBIO *ifp;
 	char *X_name = "/dev/X";
 #ifdef IF_OGL
@@ -186,6 +193,7 @@ fb_tcl_open_existing(clientData, interp, argc, argv)
 	bu_vls_printf(&vls, "%lu", (unsigned long)ifp);
 	Tcl_AppendResult(interp, bu_vls_addr(&vls), (char *)NULL);
 	bu_vls_free(&vls);
+#endif /* IF_X */
 
 	return TCL_OK;
 }
@@ -197,8 +205,11 @@ fb_tcl_close_existing(clientData, interp, argc, argv)
      int argc;
      char **argv;
 {
+#ifdef IF_X
 	FBIO *ifp;
+#ifdef IF_OGL
 	char *ogl_name = "/dev/ogl";
+#endif
 	char *X_name = "/dev/X";
 	struct bu_vls vls;
 	int status;
@@ -252,6 +263,7 @@ fb_tcl_close_existing(clientData, interp, argc, argv)
 		free((void *)ifp->if_pbase);
 	free((void *)ifp->if_name);
 	free((void *)ifp);
+#endif /* IF_X */
 
 	return TCL_OK;
 }
@@ -261,6 +273,7 @@ fb_configureWindow(ifp, width, height)
      FBIO *ifp;
      int width, height;
 {
+#ifdef IF_X
 	const char *X_name = "/dev/X";
 #ifdef IF_OGL
 	const char *ogl_name = "/dev/ogl";
@@ -272,6 +285,7 @@ fb_configureWindow(ifp, width, height)
 	else if (!strncmp(ifp->if_name, ogl_name, strlen(ogl_name)))
 		ogl_configureWindow(ifp, width, height);
 #endif
+#endif /* IF_X */
 }
 
 int
@@ -280,6 +294,7 @@ fb_refresh(ifp, x, y, w, h)
      int x, y;
      int w, h;
 {
+#ifdef IF_X
 	char *X_name = "/dev/X";
 #ifdef IF_OGL
 	char *ogl_name = "/dev/ogl";
@@ -300,6 +315,7 @@ fb_refresh(ifp, x, y, w, h)
 
 	if(status < 0)
 		return TCL_ERROR;
+#endif /* IF_X */
 
 	return TCL_OK;
 }

@@ -85,7 +85,7 @@ char *argv[];
  double r[8];		/*  Temporary variable.  */
  int c;			/*  Variable to read a character.  */
  char tmpstrng[150];	/*  Temporary string variable.  */
- FILE *fpr;		/*  Used to read a file.  */
+ FILE *fpr=NULL;	/*  Used to read a file.  */
  FILE *fpw;		/*  Used to write a file.  */
  char filetmp[MAXFIL];	/*  Temperature file name.  */
  char filernn[MAXFIL];	/*  Region # & name file.  */
@@ -562,7 +562,7 @@ char *argv[];
 
 
 /****************************************************************************/
-
+int
 hit(ap_p,PartHeadp)
 
 /*  User supplied hit function.  */
@@ -590,7 +590,7 @@ struct partition *PartHeadp;
 }
 
 /****************************************************************************/
-
+int
 miss(ap_p)
 
 /*  User supplied miss function.  */
@@ -608,7 +608,7 @@ register struct application *ap_p;
 }
 
 /****************************************************************************/
-
+int
 overlap(ap_p,PartHeadp)
 
 /*  User supplied overlap function.  */

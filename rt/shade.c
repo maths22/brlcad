@@ -21,7 +21,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSview[] = "@(#)$Header$ (BRL)";
+static const char RCSview[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -35,11 +35,152 @@ static char RCSview[] = "@(#)$Header$ (BRL)";
 #include "shadefuncs.h"
 #include "shadework.h"
 #include "./ext.h"
-#include "./rdebug.h"
-#include "./light.h"
+#include "rtprivate.h"
+#include "light.h"
+#include "plot3.h"
 
-HIDDEN void	shade_inputs();
 
+
+/*
+ *			S H A D E _ I N P U T S
+ *
+ *  Compute the necessary fields in the shadework structure.
+ *
+ *  Note that only hit_dist is valid in pp_inhit.
+ *  Must calculate it if hit_norm is needed,
+ *  after which pt_inflip must be handled.
+ *  RT_HIT_UVCOORD() must have hit_point computed
+ *  in advance.
+ *
+ *  If MFI_LIGHT is not on, the presumption is that the sw_visible[]
+ *  array is not needed, or has been handled elsewhere.
+ */
+void
+shade_inputs( ap, pp, swp, want )
+struct application *ap;
+register const struct partition *pp;
+register struct shadework *swp;
+register int	want;
+{
+	register int	have;
+
+	RT_CK_RAY( swp->sw_hit.hit_rayp );
+
+	/* These calcuations all have MFI_HIT as a pre-requisite */
+	if( want & (MFI_NORMAL|MFI_LIGHT|MFI_UV) )
+		want |= MFI_HIT;
+
+	have = swp->sw_inputs;
+	want &= ~have;		/* we don't want what we already have */
+
+	if( want & MFI_HIT )  {
+		VJOIN1( swp->sw_hit.hit_point, ap->a_ray.r_pt,
+			swp->sw_hit.hit_dist, ap->a_ray.r_dir );
+		have |= MFI_HIT;
+	}
+
+	if( want & MFI_NORMAL )  {
+		if( pp->pt_inhit->hit_dist < 0.0 )  {
+			/* Eye inside solid, orthoview */
+			VREVERSE( swp->sw_hit.hit_normal, ap->a_ray.r_dir );
+		} else {
+			FAST fastf_t f;
+			/* Get surface normal for hit point */
+			/* Stupid SysV CPP needs this on one line */
+			RT_HIT_NORMAL( swp->sw_hit.hit_normal, &(swp->sw_hit), pp->pt_inseg->seg_stp, &(ap->a_ray), pp->pt_inflip );
+
+#ifdef never
+			if( swp->sw_hit.hit_normal[X] < -1.01 || swp->sw_hit.hit_normal[X] > 1.01 ||
+			    swp->sw_hit.hit_normal[Y] < -1.01 || swp->sw_hit.hit_normal[Y] > 1.01 ||
+			    swp->sw_hit.hit_normal[Z] < -1.01 || swp->sw_hit.hit_normal[Z] > 1.01 )  {
+			    	VPRINT("shade_inputs: N", swp->sw_hit.hit_normal);
+				VSET( swp->sw_color, 9, 9, 0 );	/* Yellow */
+				return;
+			}
+#endif
+			/* Check to make sure normals are OK */
+			f = VDOT(ap->a_ray.r_dir,swp->sw_hit.hit_normal);
+			if (f > 0.0 &&
+			    !BN_VECT_ARE_PERP(f, &(ap->a_rt_i->rti_tol))) {
+				bu_log("shade_inputs(%s) flip N xy=%d,%d %s surf=%d dot=%g\n",
+				       pp->pt_inseg->seg_stp->st_name,
+				       ap->a_x, ap->a_y,
+				       rt_functab[
+                                         pp->pt_inseg->seg_stp->st_id
+				       ].ft_name,
+				       swp->sw_hit.hit_surfno, f);
+				if( rdebug&RDEBUG_SHADE ) {
+					VPRINT("Dir ", ap->a_ray.r_dir);
+					VPRINT("Norm", swp->sw_hit.hit_normal);
+				}
+			}
+		}
+		if( rdebug&(RDEBUG_RAYPLOT|RDEBUG_SHADE) )  {
+			point_t		endpt;
+			fastf_t		f;
+			/* Plot the surface normal -- green/blue */
+			/* plotfp */
+			f = ap->a_rt_i->rti_radius * 0.02;
+			VJOIN1( endpt, swp->sw_hit.hit_point,
+				f, swp->sw_hit.hit_normal );
+			if(rdebug&RDEBUG_RAYPLOT)  {
+				bu_semaphore_acquire( BU_SEM_SYSCALL );
+				pl_color( stdout, 0, 255, 255 );
+				pdv_3line( stdout, swp->sw_hit.hit_point, endpt );
+				bu_semaphore_release( BU_SEM_SYSCALL );
+			}
+			bu_log("Surface normal for shader:\n\
+hit pt: %g %g %g end pt: %g %g %g\n",
+				V3ARGS(swp->sw_hit.hit_point),
+				V3ARGS(endpt) );
+
+		}
+		have |= MFI_NORMAL;
+	}
+	if( want & MFI_UV )  {
+		if( pp->pt_inhit->hit_dist < 0.0 )  {
+			/* Eye inside solid, orthoview */
+			swp->sw_uv.uv_u = swp->sw_uv.uv_v = 0.5;
+			swp->sw_uv.uv_du = swp->sw_uv.uv_dv = 0;
+		} else {
+			RT_HIT_UVCOORD(	ap, pp->pt_inseg->seg_stp,
+				&(swp->sw_hit), &(swp->sw_uv) );
+		}
+		if( swp->sw_uv.uv_u < 0 || swp->sw_uv.uv_u > 1 ||
+		    swp->sw_uv.uv_v < 0 || swp->sw_uv.uv_v > 1 )  {
+			bu_log("shade_inputs:  bad u,v=%e,%e du,dv=%g,%g seg=%s %s surf=%d. xy=%d,%d Making green.\n",
+				swp->sw_uv.uv_u, swp->sw_uv.uv_v,
+				swp->sw_uv.uv_du, swp->sw_uv.uv_dv,
+				pp->pt_inseg->seg_stp->st_name,
+		    		rt_functab[pp->pt_inseg->seg_stp->st_id].ft_name,
+		    		pp->pt_inhit->hit_surfno,
+				ap->a_x, ap->a_y );
+#if RT_MULTISPECTRAL
+		    	{
+		    		static const vect_t green = {0,9,0};
+				rt_spect_reflectance_rgb( swp->msw_color, green );
+		    	}
+#else
+			VSET( swp->sw_color, 0, 9, 0 );	/* Hyper-Green */
+#endif
+
+			return;
+		}
+		have |= MFI_UV;
+	}
+	/* NOTE:  Lee has changed the shaders to do light themselves now. */
+	/* This isn't where light visibility is determined any more. */
+	if( want & MFI_LIGHT )  {
+	light_obs(ap, swp, have);
+		have |= MFI_LIGHT;
+	}
+
+	/* Record which fields were filled in */
+	swp->sw_inputs = have;
+
+	if( (want & have) != want )
+		bu_log("shade_inputs:  unable to satisfy request for x%x\n", want);
+}
 
 /*
  *			V I E W S H A D E
@@ -57,12 +198,12 @@ HIDDEN void	shade_inputs();
 int
 viewshade( ap, pp, swp )
 struct application *ap;
-register CONST struct partition *pp;
+register const struct partition *pp;
 register struct shadework *swp;
 {
-	register CONST struct mfuncs *mfp;
-	register CONST struct region *rp;
-	register CONST struct light_specific *lp;
+	register const struct mfuncs *mfp;
+	register const struct region *rp;
+	register const struct light_specific *lp;
 	register int	want;
 
 	RT_AP_CHECK(ap);
@@ -163,151 +304,14 @@ register struct shadework *swp;
 
 
 /*
- *			S H A D E _ I N P U T S
- *
- *  Compute the necessary fields in the shadework structure.
- *
- *  Note that only hit_dist is valid in pp_inhit.
- *  Must calculate it if hit_norm is needed,
- *  after which pt_inflip must be handled.
- *  RT_HIT_UVCOORD() must have hit_point computed
- *  in advance.
- *
- *  If MFI_LIGHT is not on, the presumption is that the sw_visible[]
- *  array is not needed, or has been handled elsewhere.
- */
-HIDDEN void
-shade_inputs( ap, pp, swp, want )
-struct application *ap;
-register CONST struct partition *pp;
-register struct shadework *swp;
-register int	want;
-{
-	register int	have;
-
-	RT_CK_RAY( swp->sw_hit.hit_rayp );
-
-	/* These calcuations all have MFI_HIT as a pre-requisite */
-	if( want & (MFI_NORMAL|MFI_LIGHT|MFI_UV) )
-		want |= MFI_HIT;
-
-	have = swp->sw_inputs;
-	want &= ~have;		/* we don't want what we already have */
-
-	if( want & MFI_HIT )  {
-		VJOIN1( swp->sw_hit.hit_point, ap->a_ray.r_pt,
-			swp->sw_hit.hit_dist, ap->a_ray.r_dir );
-		have |= MFI_HIT;
-	}
-
-	if( want & MFI_NORMAL )  {
-		if( pp->pt_inhit->hit_dist < 0.0 )  {
-			/* Eye inside solid, orthoview */
-			VREVERSE( swp->sw_hit.hit_normal, ap->a_ray.r_dir );
-		} else {
-			FAST fastf_t f;
-			/* Get surface normal for hit point */
-			/* Stupid SysV CPP needs this on one line */
-			RT_HIT_NORMAL( swp->sw_hit.hit_normal, &(swp->sw_hit), pp->pt_inseg->seg_stp, &(ap->a_ray), pp->pt_inflip );
-
-#ifdef never
-			if( swp->sw_hit.hit_normal[X] < -1.01 || swp->sw_hit.hit_normal[X] > 1.01 ||
-			    swp->sw_hit.hit_normal[Y] < -1.01 || swp->sw_hit.hit_normal[Y] > 1.01 ||
-			    swp->sw_hit.hit_normal[Z] < -1.01 || swp->sw_hit.hit_normal[Z] > 1.01 )  {
-			    	VPRINT("shade_inputs: N", swp->sw_hit.hit_normal);
-				VSET( swp->sw_color, 9, 9, 0 );	/* Yellow */
-				return;
-			}
-#endif
-			/* Check to make sure normals are OK */
-			f = VDOT(ap->a_ray.r_dir,swp->sw_hit.hit_normal);
-			if (f > 0.0 &&
-			    !BN_VECT_ARE_PERP(f, &(ap->a_rt_i->rti_tol))) {
-				bu_log("shade_inputs(%s) flip N xy=%d,%d %s surf=%d dot=%g\n",
-				       pp->pt_inseg->seg_stp->st_name,
-				       ap->a_x, ap->a_y,
-				       rt_functab[
-                                         pp->pt_inseg->seg_stp->st_id
-				       ].ft_name,
-				       swp->sw_hit.hit_surfno, f);
-				if( rdebug&RDEBUG_SHADE ) {
-					VPRINT("Dir ", ap->a_ray.r_dir);
-					VPRINT("Norm", swp->sw_hit.hit_normal);
-				}
-			}
-		}
-		if( rdebug&(RDEBUG_RAYPLOT|RDEBUG_SHADE) )  {
-			point_t		endpt;
-			fastf_t		f;
-			/* Plot the surface normal -- green/blue */
-			/* plotfp */
-			if(rdebug&RDEBUG_RAYPLOT) pl_color( stdout, 0, 255, 255 );
-			f = ap->a_rt_i->rti_radius * 0.02;
-			VJOIN1( endpt, swp->sw_hit.hit_point,
-				f, swp->sw_hit.hit_normal );
-			if(rdebug&RDEBUG_RAYPLOT) pdv_3line( stdout, swp->sw_hit.hit_point, endpt );
-			bu_log("Surface normal for shader:\n\
-vdraw o norm;vdraw p c 00ffff;vdraw w n 0 %g %g %g;vdraw w n 1 %g %g %g;vdraw s\n",
-				V3ARGS(swp->sw_hit.hit_point),
-				V3ARGS(endpt) );
-
-		}
-		have |= MFI_NORMAL;
-	}
-	if( want & MFI_UV )  {
-		if( pp->pt_inhit->hit_dist < 0.0 )  {
-			/* Eye inside solid, orthoview */
-			swp->sw_uv.uv_u = swp->sw_uv.uv_v = 0.5;
-			swp->sw_uv.uv_du = swp->sw_uv.uv_dv = 0;
-		} else {
-			RT_HIT_UVCOORD(	ap, pp->pt_inseg->seg_stp,
-				&(swp->sw_hit), &(swp->sw_uv) );
-		}
-		if( swp->sw_uv.uv_u < 0 || swp->sw_uv.uv_u > 1 ||
-		    swp->sw_uv.uv_v < 0 || swp->sw_uv.uv_v > 1 )  {
-			bu_log("shade_inputs:  bad u,v=%e,%e du,dv=%g,%g seg=%s %s surf=%d. xy=%d,%d Making green.\n",
-				swp->sw_uv.uv_u, swp->sw_uv.uv_v,
-				swp->sw_uv.uv_du, swp->sw_uv.uv_dv,
-				pp->pt_inseg->seg_stp->st_name,
-		    		rt_functab[pp->pt_inseg->seg_stp->st_id].ft_name,
-		    		pp->pt_inhit->hit_surfno,
-				ap->a_x, ap->a_y );
-#if RT_MULTISPECTRAL
-		    	{
-		    		static CONST vect_t green = {0,9,0};
-				rt_spect_reflectance_rgb( swp->msw_color, green );
-		    	}
-#else
-			VSET( swp->sw_color, 0, 9, 0 );	/* Hyper-Green */
-#endif
-
-			return;
-		}
-		have |= MFI_UV;
-	}
-	/* NOTE:  Lee has changed the shaders to do light themselves now. */
-	/* This isn't where light visibility is determined any more. */
-	if( want & MFI_LIGHT )  {
-	light_obs(ap, swp, have);
-		have |= MFI_LIGHT;
-	}
-
-	/* Record which fields were filled in */
-	swp->sw_inputs = have;
-
-	if( (want & have) != want )
-		bu_log("shade_inputs:  unable to satisfy request for x%x\n", want);
-}
-
-/*
  *			P R _ S H A D E W O R K
  *
  *  Pretty print a shadework structure.
  */
 void
 pr_shadework( str, swp )
-CONST char *str;
-register CONST struct shadework *swp;
+const char *str;
+register const struct shadework *swp;
 {
 	int	i;
 

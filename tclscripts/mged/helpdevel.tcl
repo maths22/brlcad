@@ -4,11 +4,16 @@
 #
 #==============================================================================
 
+# This command causes helplib.tcl to get read in.
+helplib
+
+
 set mged_helpdevel_data(aip)		{{[fb]}	{advance illumination pointer or path position forward or backward}}
 set mged_helpdevel_data(cmd_win)	{{cmd}	{routine for maintaining command windows}}
 set mged_helpdevel_data(collaborate)	{{join id | quit id | show}	{routine for maintaining the collaborative session}}
 set mged_helpdevel_data(get_comb)	{{comb_name}	{get information about combination}}
 set mged_helpdevel_data(get_dm_list)	{{}	{returns a list of all display managers}}
+set mged_helpdevel_data(get_autoview)	{{}	{get view size and center such that all displayed solids would be in view}}
 set mged_helpdevel_data(get_sed)	{{[-c]}	{get the solid parameters for the solid currently
         being edited}}
 set mged_helpdevel_data(get_solid_keypoint) {{} {set the solid keypoint using the default rules}}
@@ -19,7 +24,7 @@ set mged_helpdevel_data(grid2view_lu)	{{gx gy}	{given a point in grid coordinate
         convert it to view coordinates (local units).}}
 set mged_helpdevel_data(gui_destroy)	{{id}	{destroy display/command window pair}}
 set mged_helpdevel_data(hist)	{{command}	{routine for maintaining command history}}
-set mged_helpdevel_data(make_name)	{{template | -s [num]}	{make an object name not occuring in the database}}
+set mged_helpdevel_data(make_name)	$helplib_data(wdb_make_name)
 set mged_helpdevel_data(mged_update)	{{non_blocking}	{handle outstanding events and refresh}}
 set mged_helpdevel_data(mged_wait)	{{}	{see tkwait}}
 set mged_helpdevel_data(mmenu_get)	{{[index]}	{get menu corresponding to index}}
@@ -50,8 +55,6 @@ set mged_helpdevel_data(view2model_vec)	{{vx vy vz}	{given a vector in view coor
         convert it to model coordinates.}}
 set mged_helpdevel_data(view2model_lu)	{{vx vy vz}	{given a point in view coordinates (local units),
         convert it to model coordinates (local units).}}
-set mged_helpdevel_data(viewget)	{{center|size|eye|ypr|quat|aet}	{Experimental - return high-precision view parameters.}}
-set mged_helpdevel_data(viewset)	{{center|eye|size|ypr|quat|aet}	{Experimental - set several view parameters at once.}}
 set mged_helpdevel_data(winset)		{{[pathname]}	{sets the current display manager to pathname}}
 
 proc helpdevel {args} {

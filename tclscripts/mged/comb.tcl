@@ -199,7 +199,7 @@ drawing an object" } }
     color_entry_build $top color comb_control($id,color)\
 	    "color_entry_chooser $id $top color \"Combination Color\"\
 	    comb_control $id,color"\
-	    12 $comb_control($id,color)
+	    12 $comb_control($id,color) not_rt
 
     label $top.shaderL -text "Shader" -anchor e
     set hoc_data { { summary "Use this to manually enter the shader
@@ -294,9 +294,9 @@ the form of the selected shader type." } }
 	-command "comb_shader_gui $id extern"
     hoc_register_menu_data "Shader" "extern" "Shader - extern" \
 	{ { summary "Use the extern shader (shader parameters in an external file)." } }
-    $top.shaderMB.m add command -label "Unknown" \
-	-command "comb_shader_gui $id unknown"
-    hoc_register_menu_data "Shader" "Unknown" "Shader - unknown" \
+    $top.shaderMB.m add command -label "unlisted" \
+	-command "comb_shader_gui $id unlisted"
+    hoc_register_menu_data "Shader" "unlisted" "Shader - unlisted" \
 	{ { summary "Apply a shader that this gui doesn't recognize." } }
 
     label $top.combL -text "Boolean Expression:" -anchor w
@@ -314,7 +314,8 @@ both objects. Note - an object can be a solid, region
 or group." } }
     hoc_register_data $top.combL "Boolean Expression" $hoc_data
     text $top.combT -relief sunken -bd 2 -width 40 -height 10\
-	    -yscrollcommand "$top.combS set" -setgrid true
+	    -yscrollcommand "$top.combS set" -setgrid true \
+	    -tab {3c}
     hoc_register_data $top.combT "Edit Boolean Expression" $hoc_data
     scrollbar $top.combS -relief flat -command "$top.combT yview"
 
@@ -343,9 +344,9 @@ no effect (i.e. the members of a region
 always take on the characteristics of the
 region)." } }
 
-    button $top.okB -relief raised -text "Ok"\
+    button $top.okB -relief raised -text "OK"\
 	    -command "comb_ok $id $top"
-    hoc_register_data $top.okB "Ok"\
+    hoc_register_data $top.okB "OK"\
 	    { { summary "Apply the data in the \"Combination Editor\"
 to the combination then close the
 \"Combination Editor\"." } }
@@ -512,6 +513,15 @@ proc comb_apply { id } {
 		    "" 0 OK 
 	}
 
+	set ret [catch {eval attr set $comb_control($id,name) $comb_control($id,attrs) } comb_error ]
+
+	if {$ret} {
+	    cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) \
+		    "comb_apply: Error"\
+		    $comb_error\
+		    "" 0 OK 
+	}
+
 	return $ret
     }
 
@@ -532,6 +542,15 @@ proc comb_apply { id } {
 		"" 0 OK 
     }
     
+    set ret [catch {eval attr set $comb_control($id,name) $comb_control($id,attrs) } comb_error ]
+
+    if {$ret} {
+	cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) \
+	    "comb_apply: Error"\
+	    $comb_error\
+	    "" 0 OK 
+    }
+
     return $ret
 }
 
@@ -559,6 +578,46 @@ proc comb_reset { id } {
 		"" 0 OK
 	return
     }
+
+    set result [catch {attr get $comb_control($id,name)} comb_attrs]
+    if { $result == 1 } {
+	cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen)\
+		"comb_reset: Error"\
+		$comb_attrs\
+		"" 0 OK
+	return
+    }
+
+    # eliminate attributes that might conflict with changes we make
+    set tmp_comb_attrs {}
+    set num_attrs [expr [llength $comb_attrs] / 2]
+    for { set i $num_attrs } { $i > 0 } { incr i -1 } {
+	set key [lindex $comb_attrs [expr ($i - 1) * 2]]
+	set keep 1
+	if { [string compare $key "region"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "region_id"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "material_id"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "los"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "aircode"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "rgb"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "oshader"] == 0 } {
+	    set keep 0
+	} elseif { [string compare $key "inherit"] == 0 } {
+	    set keep 0
+	}
+
+	if { $keep } {
+	    lappend tmp_comb_attrs $key [lindex $comb_attrs [expr {($i - 1) * 2 + 1}]]
+	}
+    }
+
+    set comb_control($id,attrs) $tmp_comb_attrs
 
     set comb_control($id,isRegion) [lindex $comb_defs 1]
 

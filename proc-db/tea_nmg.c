@@ -15,7 +15,7 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 /* Header files which are used for this example */
@@ -24,14 +24,13 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 
 #include <stdio.h>		/* Direct the output to stdout */
 #include "machine.h"		/* BRLCAD specific machine data types */
-#include "db.h"			/* BRLCAD data base format */
 #include "externs.h"
 #include "vmath.h"		/* BRLCAD Vector macros */
 #include "nmg.h"
 #include "nurb.h"		/* BRLCAD Spline data structures */
 #include "raytrace.h"
 #include "wdb.h"
-#include "../librt/debug.h"	/* rt_g.debug flag settings */
+#include "../librt/debug.h"	/* RT_G_DEBUG flag settings */
 
 #include "./tea.h"		/* IEEE Data Structures */
 #include "./ducks.h"		/* Teapot Vertex data */
@@ -49,6 +48,9 @@ static struct bn_tol tol;
 
 void dump_patch();
 
+struct rt_wdb *outfp;
+
+int
 main(argc, argv) 			/* really has no arguments */
 int argc; char *argv[];
 {
@@ -68,10 +70,7 @@ int argc; char *argv[];
 
 	BU_LIST_INIT( &rt_g.rtg_vlfree );
 
-	if (isatty(fileno(stdout))) {
-		(void)fprintf(stderr, "%s: %s\n", *argv, Usage);
-		return(-1);
-	}
+	outfp = wdb_fopen( "tea_nmg.g" );
 
 	rt_g.debug |= DEBUG_ALLRAYS;	/* Cause core dumps on rt_bomb(), but no extra messages */
 
@@ -85,7 +84,7 @@ int argc; char *argv[];
 		}
 	}
 
-	mk_id( stdout, id_name);
+	mk_id( outfp, id_name);
 
 	m = nmg_mm();
 	NMG_CK_MODEL( m );
@@ -107,8 +106,8 @@ int argc; char *argv[];
 	(void)nmg_model_fuse( m , &tol );
 
 	/* write NMG to output file */
-	(void)mk_nmg( stdout , tea_name , m );
-	fflush( stdout );
+	(void)mk_nmg( outfp , tea_name , m );
+	wdb_close(outfp);
 
 	/* Make a vlist drawing of the model */
 	BU_LIST_INIT( &vhead );
@@ -165,6 +164,7 @@ pt patch;
 
 		switch( i )
 		{
+			default:
 			case 0:
 				VSET( uvw , 0.0 , 0.0 , 0.0 );
 				k = 0;

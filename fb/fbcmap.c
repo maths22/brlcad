@@ -24,7 +24,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -35,6 +35,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "fb.h"
 
 void		usage();
+int		pars_Argv();
 
 static char	*framebuffer = NULL;
 static int	scr_width = 0;
@@ -63,6 +64,7 @@ static unsigned char	utah_cmap[256] = {
 	249,249,249,250,250,251,251,251,252,252,252,253,253,254,254,255
 };
 
+int
 main(argc, argv)
 char *argv[];
 {

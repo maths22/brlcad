@@ -1,6 +1,6 @@
 /*      IF.C            */
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 /*	INCLUDES	*/
@@ -26,6 +26,9 @@ overlap			*find_ovlp();
 void			del_ovlp();
 void			init_ovlp();
 
+extern int	rt_defoverlap( struct application *ap, struct partition *pp, struct region *reg1, struct region *reg2, struct partition *pheadp );
+	
+
 int if_hit(ap, part_head, finished_segs)
 struct application	*ap;
 struct partition 	*part_head;
@@ -42,9 +45,10 @@ struct seg		*finished_segs;
     point_t		onormal;
     struct bu_vls	claimant_list;	/* Names of the claiming regions */
     int			need_to_free = 0;	/* Clean up the bu_vls? */
-
     fastf_t		get_obliq();
-
+    struct bu_vls       *vls;
+    struct bu_vls       attr_vls;
+    struct bu_mro **attr_values;
 
     report(FMT_RAY);
     report(FMT_HEAD);
@@ -156,6 +160,22 @@ struct seg		*finished_segs;
 	    need_to_free = 1;
 	}
 
+	/* format up the attribute strings into a single string */
+	bu_vls_init(&attr_vls);
+	attr_values = part->pt_regionp->attr_values;
+	for (i=0 ; i < a_tab.attrib_use ; i++) {
+
+	    BU_CK_MRO(attr_values[i]);
+	    vls = &attr_values[i]->string_rep;
+
+	    if (bu_vls_strlen(vls) > 0) {
+		/* XXX only print attributes that actually were set */
+		bu_vls_printf(&attr_vls, "%s=%S ", a_tab.attrib[i], vls);
+	    }
+	}
+
+	ValTab[VTI_ATTRIBUTES].value.sval = bu_vls_addr(&attr_vls);
+
 	/* Do the printing for this partition */
 	report(FMT_PART);
 
@@ -202,6 +222,10 @@ struct seg		*finished_segs;
     	    ovp = ovp->forw;
     	}
     }
+
+    bu_vls_free(&attr_vls);
+
+
     return( HIT );
 }
 
@@ -224,11 +248,13 @@ int if_miss()
  *	Stolen by:	Paul Tanenbaum
  *	Date stolen:	29 March 1990
  */
-if_overlap( ap, pp, reg1, reg2 )
+int
+if_overlap( ap, pp, reg1, reg2, InputHdp )
 register struct application	*ap;
 register struct partition	*pp;
 struct region			*reg1;
 struct region			*reg2;
+struct partition		*InputHdp;
 
 {
     overlap	*new_ovlp;
@@ -253,9 +279,8 @@ struct region			*reg2;
     new_ovlp -> forw -> backw = new_ovlp;
     ovlp_list.forw = new_ovlp;
 
-    /* Match BRL-CAD 4.4's accidental behavior: take lower bit */
-    if( reg1->reg_bit < reg2->reg_bit )  return 1;
-    else return 2;
+    /* Match current BRL-CAD default behavior */
+    return( rt_defoverlap (ap, pp, reg1, reg2, InputHdp ) );
 }
 
 /*
@@ -383,6 +408,7 @@ void init_ovlp()
     ovlp_list.forw = ovlp_list.backw = &ovlp_list;
 }
 
+int
 if_boverlap( ap, pp, reg1, reg2 )
 register struct application     *ap;
 register struct partition       *pp;

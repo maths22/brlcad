@@ -22,6 +22,10 @@
  */
 
 #include "conf.h"
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
 #include "tcl.h"
 #include "machine.h"
 #include "externs.h"
@@ -32,10 +36,10 @@ static int bu_observer_detach_tcl();
 static int bu_observer_show_tcl();
 
 struct bu_cmdtab bu_observer_cmds[] = {
-	"attach",	bu_observer_attach_tcl,
-	"detach",	bu_observer_detach_tcl,
-	"show",		bu_observer_show_tcl,
-	(char *)0,	(int (*)())0
+	{"attach",	bu_observer_attach_tcl},
+	{"detach",	bu_observer_detach_tcl},
+	{"show",	bu_observer_show_tcl},
+	{(char *)0,	(int (*)())0}
 };
 
 /*

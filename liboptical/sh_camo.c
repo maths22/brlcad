@@ -15,13 +15,16 @@
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
 #if !defined(M_PI)
 #define M_PI            3.14159265358979323846
@@ -30,7 +33,8 @@
 #define SMOOTHSTEP(x)  ((x)*(x)*(3 - 2*(x)))
 
 #if RT_MULTISPECTRAL
-extern CONST struct bn_table	*spectrum;	/* from rttherm/viewtherm.c */
+#include "spectrum.h"
+extern const struct bn_table	*spectrum;	/* from rttherm/viewtherm.c */
 #endif
 
 #define camo_MAGIC 0x18364	/* XXX change this number for each shader */
@@ -57,10 +61,10 @@ struct camo_specific {
  */
 void
 camo_cvt_parse( sdp, name, base, value )
-register CONST struct bu_structparse	*sdp;	/* structure description */
-register CONST char			*name;	/* struct member name */
+register const struct bu_structparse	*sdp;	/* structure description */
+register const char			*name;	/* struct member name */
 char					*base;	/* begining of structure */
-CONST char				*value;	/* string containing value */
+const char				*value;	/* string containing value */
 {
 	double *p = (double *)(base+sdp->sp_offset);
 
@@ -162,10 +166,10 @@ struct mfuncs camo_mfuncs[] = {
  */
 void
 color_fix( sdp, name, base, value )
-register CONST struct bu_structparse	*sdp;	/* structure description */
-register CONST char			*name;	/* struct member name */
+register const struct bu_structparse	*sdp;	/* structure description */
+register const char			*name;	/* struct member name */
 char					*base;	/* begining of structure */
-CONST char				*value;	/* string containing value */
+const char				*value;	/* string containing value */
 {
 	register double *p = (double *)(base+sdp->sp_offset);
 	register int i;
@@ -189,7 +193,7 @@ CONST char				*value;	/* string containing value */
 
 
 
-/*	C A M O _ S E T U P
+/*	C A M O _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -224,10 +228,10 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	/* Optional:  get the matrix which maps model space into
 	 *  "region" or "shader" space
 	 */
-	db_region_mat(model_to_region, rtip->rti_dbip, rp->reg_name);
+	db_region_mat(model_to_region, rtip->rti_dbip, rp->reg_name, &rt_uniresource);
 
 	/* add the noise-space scaling */
-	bn_mat_idn(tmp);
+	MAT_IDN(tmp);
 	if (camo_sp->noise_size != 1.0) {
 		/* the user sets "noise_size" to the size of the biggest
 		 * noise-space blob in model coordinates
@@ -242,7 +246,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	bn_mat_mul(camo_sp->xform, tmp, model_to_region);
 
 	/* Add any translation within shader/region space */
-	bn_mat_idn(tmp);
+	MAT_IDN(tmp);
 	tmp[MDX] = camo_sp->noise_delta[0];
 	tmp[MDY] = camo_sp->noise_delta[1];
 	tmp[MDZ] = camo_sp->noise_delta[2];
@@ -278,7 +282,7 @@ char *cp;
 	bu_free( cp, "camo_specific" );
 }
 
-/*
+/*
  *	C A M O _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c)
@@ -295,6 +299,9 @@ char	*dp;
 		(struct camo_specific *)dp;
 	point_t pt;
 	double val;
+#if RT_MULTISPECTRAL
+	float fcolor[3];
+#endif
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
@@ -316,11 +323,14 @@ char	*dp;
 #if RT_MULTISPECTRAL
 	BN_CK_TABDATA(swp->msw_color);
 	if (val < camo_sp->t1) {
-		rt_spect_reflectance_rgb( swp->msw_color, camo_sp->c1 );
+		VMOVE(fcolor, camo_sp->c1 );
+		rt_spect_reflectance_rgb( swp->msw_color, fcolor);
 	} else if (val < camo_sp->t2 ) {
-		rt_spect_reflectance_rgb( swp->msw_color, camo_sp->c2 );
+		VMOVE(fcolor, camo_sp->c2 );
+		rt_spect_reflectance_rgb( swp->msw_color, fcolor);
 	} else {
-		rt_spect_reflectance_rgb( swp->msw_color, camo_sp->c3 );
+		VMOVE(fcolor, camo_sp->c3 );
+		rt_spect_reflectance_rgb( swp->msw_color, fcolor);
 	}
 #else
 	if (val < camo_sp->t1) {
@@ -334,7 +344,7 @@ char	*dp;
 
 	return(1);
 }
-/*	M A R B L E 2 _ S E T U P
+/*	M A R B L E 2 _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -369,10 +379,10 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	/* Optional:  get the matrix which maps model space into
 	 *  "region" or "shader" space
 	 */
-	db_region_mat(model_to_region, rtip->rti_dbip, rp->reg_name);
+	db_region_mat(model_to_region, rtip->rti_dbip, rp->reg_name, &rt_uniresource);
 
 	/* add the noise-space scaling */
-	bn_mat_idn(tmp);
+	MAT_IDN(tmp);
 	if (camo_sp->noise_size != 1.0) {
 		/* the user sets "noise_size" to the size of the biggest
 		 * noise-space blob in model coordinates
@@ -387,7 +397,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	bn_mat_mul(camo_sp->xform, tmp, model_to_region);
 
 	/* Add any translation within shader/region space */
-	bn_mat_idn(tmp);
+	MAT_IDN(tmp);
 	tmp[MDX] = camo_sp->noise_delta[0];
 	tmp[MDY] = camo_sp->noise_delta[1];
 	tmp[MDZ] = camo_sp->noise_delta[2];
@@ -404,7 +414,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 
 
 
-/*
+/*
  *	M A R B L E 2 _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c)
@@ -421,6 +431,9 @@ char	*dp;
 		(struct camo_specific *)dp;
 	point_t pt;
 	double val, inv_val;
+#ifdef RT_MULTISPECTRAL
+	float fcolor[3];
+#endif
 
 	RT_AP_CHECK(ap);
 	RT_CHECK_PT(pp);
@@ -454,7 +467,10 @@ char	*dp;
 
 		BN_CK_TABDATA(swp->msw_color);
 		BN_GET_TABDATA( tcolor, spectrum );
-		rt_spect_reflectance_rgb( tcolor, camo_sp->c2 );
+
+		VMOVE(fcolor, camo_sp->c2 );
+
+		rt_spect_reflectance_rgb( tcolor, fcolor );
 		bn_tabdata_blend2( swp->msw_color, val, swp->msw_color,
 			inv_val, tcolor );
 		bn_tabdata_free( tcolor );

@@ -24,7 +24,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -46,9 +46,9 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "vmath.h"
 #include "bn.h"
 #include "nmg.h"
+#include "rtgeom.h"
 #include "raytrace.h"
 #include "nurb.h"
-#include "rtgeom.h"
 #include "wdb.h"
 
 #include "./ged.h"
@@ -80,19 +80,18 @@ static void	init_sedit_vars(), init_oedit_vars(), init_oedit_guts();
 void pscale();
 void update_edit_absolute_tran();
 void set_e_axes_pos();
-vect_t e_axes_pos;
-vect_t curr_e_axes_pos;
+point_t e_axes_pos;
+point_t curr_e_axes_pos;
 short int fixv;		/* used in ECMD_ARB_ROTATE_FACE,f_eqn(): fixed vertex */
 
-MGED_EXTERN( struct wdb_pipept *find_pipept_nearest_pt, (CONST struct bu_list *pipe_hd, CONST point_t pt ) );
+MGED_EXTERN( struct wdb_pipept *find_pipept_nearest_pt, (const struct bu_list *pipe_hd, const point_t pt ) );
 MGED_EXTERN( void split_pipept, (struct bu_list *pipe_hd, struct wdb_pipept *ps, point_t pt ) );
 MGED_EXTERN( struct wdb_pipept *del_pipept, (struct wdb_pipept *ps ) );
-MGED_EXTERN( struct wdb_pipept *add_pipept, (struct rt_pipe_internal *pipe, struct wdb_pipept *pp, CONST point_t new_pt ) );
+MGED_EXTERN( struct wdb_pipept *add_pipept, (struct rt_pipe_internal *pipe, struct wdb_pipept *pp, const point_t new_pt ) );
 
 /* data for solid editing */
 int			sedraw;	/* apply solid editing changes */
 
-struct bu_external	es_ext;
 struct rt_db_internal	es_int;
 struct rt_db_internal	es_int_orig;
 
@@ -224,6 +223,9 @@ int	es_menu;		/* item selected from menu */
 #define MENU_CLINE_SCALE_R	108
 #define	MENU_CLINE_SCALE_T	109
 
+#define MENU_TGC_SCALE_H_CD	110
+#define	MENU_TGC_SCALE_H_V_AB	111
+
 extern int arb_faces[5][24];	/* from edarb.c */
 
 struct menu_item cline_menu[] = {
@@ -348,10 +350,12 @@ struct menu_item  tgc_menu[] = {
 	{ "TGC MENU", (void (*)())NULL, 0 },
 	{ "Set H",	tgc_ed, MENU_TGC_SCALE_H },
 	{ "Set H (move V)", tgc_ed, MENU_TGC_SCALE_H_V },
+	{ "Set H (adj C,D)",	tgc_ed, MENU_TGC_SCALE_H_CD },
+	{ "Set H (move V, adj A,B)", tgc_ed, MENU_TGC_SCALE_H_V_AB },
 	{ "Set A",	tgc_ed, MENU_TGC_SCALE_A },
 	{ "Set B",	tgc_ed, MENU_TGC_SCALE_B },
-	{ "Set c",	tgc_ed, MENU_TGC_SCALE_C },
-	{ "Set d",	tgc_ed, MENU_TGC_SCALE_D },
+	{ "Set C",	tgc_ed, MENU_TGC_SCALE_C },
+	{ "Set D",	tgc_ed, MENU_TGC_SCALE_D },
 	{ "Set A,B",	tgc_ed, MENU_TGC_SCALE_AB },
 	{ "Set C,D",	tgc_ed, MENU_TGC_SCALE_CD },
 	{ "Set A,B,C,D", tgc_ed, MENU_TGC_SCALE_ABCD },
@@ -604,7 +608,7 @@ struct menu_item ebm_menu[] = {
 
 struct menu_item dsp_menu[] = {
 	{"DSP MENU", (void (*)())NULL, 0 },
-	{"File Name", dsp_ed, MENU_DSP_FNAME },
+	{"Name", dsp_ed, MENU_DSP_FNAME },
 	{"Set X", dsp_ed, MENU_DSP_SCALE_X },
 	{"Set Y", dsp_ed, MENU_DSP_SCALE_Y },
 	{"Set ALT", dsp_ed, MENU_DSP_SCALE_ALT },
@@ -1382,7 +1386,7 @@ int arg;
 				return;
 			}
 
-			if( !lu | *lu->up.magic_p != NMG_SHELL_MAGIC )
+			if( !lu || *lu->up.magic_p != NMG_SHELL_MAGIC )
 			{
 				/* This should never happen */
 				bu_bomb( "Cannot find wire loop!!\n" );
@@ -2118,181 +2122,176 @@ set_e_axes_pos(both)
 int both;    /* if(!both) then set only curr_e_axes_pos, otherwise
 	      set e_axes_pos and curr_e_axes_pos */
 {
-  int	i;
-  register struct dm_list *dmlp;
+	int	i;
+	register struct dm_list *dmlp;
 
-  update_views = 1;
+	update_views = 1;
 #if 0
-  VMOVE(curr_e_axes_pos, es_keypoint);
+	VMOVE(curr_e_axes_pos, es_keypoint);
 #else
-  switch(es_int.idb_type){
-  case	ID_ARB8:
-  case	ID_ARBN:
-    if(state == ST_O_EDIT)
-      i = 0;
-    else
-      switch(es_edflag){
-      case	STRANS:
-	i = 0;
-	break;
-      case	EARB:
-	switch(es_type){
-	case	ARB5:
-	  i = earb5[es_menu][0];
-	  break;
-	case	ARB6:
-	  i = earb6[es_menu][0];
-	  break;
-	case	ARB7:
-	  i = earb7[es_menu][0];
-	  break;
-	case	ARB8:
-	  i = earb8[es_menu][0];
-	  break;
+	switch (es_int.idb_type) {
+	case	ID_ARB8:
+		if (state == ST_O_EDIT)
+			i = 0;
+		else
+			switch (es_edflag) {
+			case STRANS:
+				i = 0;
+				break;
+			case EARB:
+				switch (es_type) {
+				case ARB5:
+					i = earb5[es_menu][0];
+					break;
+				case ARB6:
+					i = earb6[es_menu][0];
+					break;
+				case ARB7:
+					i = earb7[es_menu][0];
+					break;
+				case ARB8:
+					i = earb8[es_menu][0];
+					break;
+				default:
+					i = 0;
+					break;
+				}
+				break;
+			case PTARB:
+				switch (es_type) {
+				case ARB4:
+					i = es_menu;	/* index for point 1,2,3 or 4 */
+					break;
+				case ARB5:
+				case ARB7:
+					i = 4;	/* index for point 5 */
+					break;
+				case ARB6:
+					i = es_menu;	/* index for point 5 or 6 */
+					break;
+				default:
+					i = 0;
+					break;
+				}
+				break;
+			case ECMD_ARB_MOVE_FACE:
+				switch (es_type) {
+				case ARB4:
+					i = arb_faces[0][es_menu * 4];
+					break;
+				case ARB5:
+					i = arb_faces[1][es_menu * 4];  		
+					break;
+				case ARB6:
+					i = arb_faces[2][es_menu * 4];  		
+					break;
+				case ARB7:
+					i = arb_faces[3][es_menu * 4];  		
+					break;
+				case ARB8:
+					i = arb_faces[4][es_menu * 4];  		
+					break;
+				default:
+					i = 0;
+					break;
+				}
+				break;
+			case ECMD_ARB_ROTATE_FACE:
+				i = fixv;
+				break;
+			default:
+				i = 0;
+				break;
+			}
+
+		MAT4X3PNT(curr_e_axes_pos, es_mat,
+			  ((struct rt_arb_internal *)es_int.idb_ptr)->pt[i]);
+		break;
+	case ID_TGC:
+	case ID_REC:
+		if (es_edflag == ECMD_TGC_MV_H ||
+		    es_edflag == ECMD_TGC_MV_HH) {
+			struct rt_tgc_internal  *tgc = (struct rt_tgc_internal *)es_int.idb_ptr;
+			point_t tgc_v;
+			vect_t tgc_h;
+
+			MAT4X3PNT(tgc_v, es_mat, tgc->v);
+			MAT4X3VEC(tgc_h, es_mat, tgc->h);
+			VADD2(curr_e_axes_pos, tgc_h, tgc_v);
+		} else
+			VMOVE(curr_e_axes_pos, es_keypoint)
+
+				break;
+	case ID_EXTRUDE:
+		if (es_edflag == ECMD_EXTR_MOV_H) {
+			struct rt_extrude_internal *extr = (struct rt_extrude_internal *)es_int.idb_ptr;
+			point_t extr_v;
+			vect_t extr_h;
+
+			RT_EXTRUDE_CK_MAGIC(extr);
+
+			MAT4X3PNT(extr_v, es_mat, extr->V);
+			MAT4X3VEC(extr_h, es_mat, extr->h);
+			VADD2(curr_e_axes_pos, extr_h, extr_v);
+		} else
+			VMOVE(curr_e_axes_pos, es_keypoint)
+
+				break;
+	case ID_CLINE:
+		if (es_edflag == ECMD_CLINE_MOVE_H) {
+			struct rt_cline_internal *cli = 
+				(struct rt_cline_internal *)es_int.idb_ptr;
+			point_t cli_v;
+			vect_t cli_h;
+
+			RT_CLINE_CK_MAGIC(cli);
+
+			MAT4X3PNT(cli_v, es_mat, cli->v);
+			MAT4X3VEC(cli_h, es_mat, cli->h);
+			VADD2(curr_e_axes_pos, cli_h, cli_v);
+		} else
+			VMOVE(curr_e_axes_pos, es_keypoint)
+				break;
 	default:
-	  i = 0;
-	  break;
+		VMOVE(curr_e_axes_pos, es_keypoint);
+		break;
 	}
-	break;
-      case	PTARB:
-	switch(es_type){
-	case    ARB4:
-	  i = es_menu;	/* index for point 1,2,3 or 4 */
-	  break;
-	case    ARB5:
-	case	ARB7:
-	  i = 4;	/* index for point 5 */
-	  break;
-	case    ARB6:
-	  i = es_menu;	/* index for point 5 or 6 */
-	  break;
-	default:
-	  i = 0;
-	  break;
-	}
-	break;
-      case ECMD_ARB_MOVE_FACE:
-	switch(es_type){
-	case	ARB4:
-	  i = arb_faces[0][es_menu * 4];
-	  break;
-	case	ARB5:
-	  i = arb_faces[1][es_menu * 4];  		
-	  break;
-	case	ARB6:
-	  i = arb_faces[2][es_menu * 4];  		
-	  break;
-	case	ARB7:
-	  i = arb_faces[3][es_menu * 4];  		
-	  break;
-	case	ARB8:
-	  i = arb_faces[4][es_menu * 4];  		
-	  break;
-	default:
-	  i = 0;
-	  break;
-	}
-	break;
-      case ECMD_ARB_ROTATE_FACE:
-	i = fixv;
-	break;
-      default:
-	i = 0;
-	break;
-      }
-
-    MAT4X3PNT(curr_e_axes_pos, es_mat,
-	      ((struct rt_arb_internal *)es_int.idb_ptr)->pt[i]);
-    break;
-  case ID_TGC:
-  case ID_REC:
-    if(es_edflag == ECMD_TGC_MV_H ||
-       es_edflag == ECMD_TGC_MV_HH){
-      struct rt_tgc_internal  *tgc = (struct rt_tgc_internal *)es_int.idb_ptr;
-      point_t tgc_v;
-      vect_t tgc_h;
-
-      MAT4X3PNT(tgc_v, es_mat, tgc->v);
-      MAT4X3VEC(tgc_h, es_mat, tgc->h);
-      VADD2(curr_e_axes_pos, tgc_h, tgc_v);
-    }else
-      VMOVE(curr_e_axes_pos, es_keypoint)
-
-    break;
-  case ID_EXTRUDE:
-  	if( es_edflag == ECMD_EXTR_MOV_H )
-  	{
-  		struct rt_extrude_internal *extr = (struct rt_extrude_internal *)es_int.idb_ptr;
-  		point_t extr_v;
-  		vect_t extr_h;
-
-  		RT_EXTRUDE_CK_MAGIC( extr );
-
-  		MAT4X3PNT(extr_v, es_mat, extr->V);
-  		MAT4X3VEC(extr_h, es_mat, extr->h);
-  		VADD2(curr_e_axes_pos, extr_h, extr_v);
-  	}
-  	else
-  		VMOVE(curr_e_axes_pos, es_keypoint)
-
-    break;
-  case ID_CLINE:
-  	if( es_edflag == ECMD_CLINE_MOVE_H )
-  	{
-  		struct rt_cline_internal *cli = 
-  			(struct rt_cline_internal *)es_int.idb_ptr;
-  		point_t cli_v;
-  		vect_t cli_h;
-
-  		RT_CLINE_CK_MAGIC( cli );
-
-  		MAT4X3PNT(cli_v, es_mat, cli->v);
-  		MAT4X3VEC(cli_h, es_mat, cli->h);
-  		VADD2(curr_e_axes_pos, cli_h, cli_v);
-  	}
-  	else
-  		VMOVE(curr_e_axes_pos, es_keypoint)
-    break;
-  default:
-    VMOVE(curr_e_axes_pos, es_keypoint);
-    break;
-  }
 #endif
 
-  if(both){
-    VMOVE(e_axes_pos, curr_e_axes_pos);
+	if (both) {
+		VMOVE(e_axes_pos, curr_e_axes_pos);
 
-    if(EDIT_ROTATE){
-      es_edclass = EDIT_CLASS_ROTATE;
-      VSETALL( edit_absolute_model_rotate, 0.0 );
-      VSETALL( edit_absolute_object_rotate, 0.0 );
-      VSETALL( edit_absolute_view_rotate, 0.0 );
-      VSETALL( last_edit_absolute_model_rotate, 0.0 );
-      VSETALL( last_edit_absolute_object_rotate, 0.0 );
-      VSETALL( last_edit_absolute_view_rotate, 0.0 );
-    }else if(EDIT_TRAN){
-      es_edclass = EDIT_CLASS_TRAN;
-      VSETALL( edit_absolute_model_tran, 0.0 );
-      VSETALL( edit_absolute_view_tran, 0.0 );
-      VSETALL( last_edit_absolute_model_tran, 0.0 );
-      VSETALL( last_edit_absolute_view_tran, 0.0 );
-    }else if(EDIT_SCALE){
-      es_edclass = EDIT_CLASS_SCALE;
+		if (EDIT_ROTATE) {
+			es_edclass = EDIT_CLASS_ROTATE;
+			VSETALL( edit_absolute_model_rotate, 0.0 );
+			VSETALL( edit_absolute_object_rotate, 0.0 );
+			VSETALL( edit_absolute_view_rotate, 0.0 );
+			VSETALL( last_edit_absolute_model_rotate, 0.0 );
+			VSETALL( last_edit_absolute_object_rotate, 0.0 );
+			VSETALL( last_edit_absolute_view_rotate, 0.0 );
+		} else if (EDIT_TRAN) {
+			es_edclass = EDIT_CLASS_TRAN;
+			VSETALL( edit_absolute_model_tran, 0.0 );
+			VSETALL( edit_absolute_view_tran, 0.0 );
+			VSETALL( last_edit_absolute_model_tran, 0.0 );
+			VSETALL( last_edit_absolute_view_tran, 0.0 );
+		} else if (EDIT_SCALE) {
+			es_edclass = EDIT_CLASS_SCALE;
 
-      if(SEDIT_SCALE){
-	edit_absolute_scale = 0.0;
-	acc_sc_sol = 1.0;
-      }
-    }else
-      es_edclass = EDIT_CLASS_NULL;
+			if (SEDIT_SCALE) {
+				edit_absolute_scale = 0.0;
+				acc_sc_sol = 1.0;
+			}
+		} else
+			es_edclass = EDIT_CLASS_NULL;
 
 #if 1
-    bn_mat_idn(acc_rot_sol);
+		MAT_IDN(acc_rot_sol);
 #endif
 
-    FOR_ALL_DISPLAYS(dmlp, &head_dm_list.l)
-      dmlp->dml_mged_variables->mv_transform = 'e';
-  }
+		FOR_ALL_DISPLAYS(dmlp, &head_dm_list.l)
+			dmlp->dml_mged_variables->mv_transform = 'e';
+	}
 }
 
 /*
@@ -2303,7 +2302,7 @@ int both;    /* if(!both) then set only curr_e_axes_pos, otherwise
  *  Solid editing is completed only via sedit_accept() / sedit_reject().
  */
 void
-init_sedit()
+init_sedit(void)
 {
 	register int		type;
 	int			id;
@@ -2320,23 +2319,17 @@ init_sedit()
 	  return;
 	}
 
-	/* Read solid description.  Save copy of original data */
-	BU_INIT_EXTERNAL(&es_ext);
-	if( db_get_external( &es_ext, illump->s_path[illump->s_last], dbip ) < 0 ){
-	  TCL_READ_ERR;
-	  return;
-	}
-
-	RT_INIT_DB_INTERNAL(&es_int);
-	id = rt_id_solid( &es_ext );
-	if( rt_functab[id].ft_import( &es_int, &es_ext, bn_mat_identity, dbip ) < 0 )  {
-	  Tcl_AppendResult(interp, "init_sedit(", illump->s_path[illump->s_last]->d_namep,
+	/* Read solid description into es_int */
+	if( rt_db_get_internal( &es_int, LAST_SOLID(illump),
+	  dbip, NULL, &rt_uniresource ) < 0 )  {
+	  Tcl_AppendResult(interp, "init_sedit(",
+	  		LAST_SOLID(illump)->d_namep,
 			   "):  solid import failure\n", (char *)NULL);
-	  if( es_int.idb_ptr )  rt_functab[id].ft_ifree( &es_int );
-	  db_free_external( &es_ext );
+	  rt_db_free_internal( &es_int, &rt_uniresource );
 	  return;				/* FAIL */
 	}
 	RT_CK_DB_INTERNAL( &es_int );
+	id = es_int.idb_type;
 
 	es_menu = 0;
 	if( id == ID_ARB8 )
@@ -2353,8 +2346,7 @@ init_sedit()
 		{
 		  Tcl_AppendResult(interp,"Cannot calculate plane equations for ARB8\n",
 				   (char *)NULL);
-		  db_free_external( &es_ext );
-		  rt_functab[id].ft_ifree( &es_int );
+		  rt_db_free_internal( &es_int, &rt_uniresource );
 		  return;
 		}
 	}
@@ -2372,7 +2364,7 @@ init_sedit()
 	}
 
 	/* Save aggregate path matrix */
-	pathHmat( illump, es_mat, illump->s_last-1 );
+	pathHmat( illump, es_mat, illump->s_fullpath.fp_len-2 );
 
 	/* get the inverse matrix */
 	bn_mat_inv( es_invmat, es_mat );
@@ -2403,7 +2395,8 @@ init_sedit()
 		struct bu_vls vls;
 
 		bu_vls_init(&vls);
-		bu_vls_printf(&vls, "begin_edit_callback");
+		bu_vls_strcpy(&vls, "begin_edit_callback ");
+		db_path_to_vls(&vls, &illump->s_fullpath);
 		(void)Tcl_Eval(interp, bu_vls_addr(&vls));
 		bu_vls_free(&vls);
 	}
@@ -2412,8 +2405,8 @@ init_sedit()
 static void
 init_sedit_vars()
 {
-	bn_mat_idn(acc_rot_sol);
-	bn_mat_idn(incr_change);
+	MAT_IDN(acc_rot_sol);
+	MAT_IDN(incr_change);
 
 	VSETALL(edit_absolute_model_rotate, 0.0);
 	VSETALL(edit_absolute_object_rotate, 0.0);
@@ -2444,14 +2437,15 @@ init_sedit_vars()
  *  making a change to es_int or es_mat.
  */
 void
-replot_editing_solid()
+replot_editing_solid(void)
 {
   mat_t mat;
   register struct solid *sp;
+  struct directory *illdp = LAST_SOLID(illump);
 
-  FOR_ALL_SOLIDS(sp, &HeadSolid.l) {
-    if(sp->s_path[sp->s_last]->d_addr == illump->s_path[illump->s_last]->d_addr){
-      pathHmat( sp, mat, sp->s_last-1 );
+  FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid) {
+    if(LAST_SOLID(sp) == illdp )  {
+      pathHmat( sp, mat, sp->s_fullpath.fp_len-2 );
       (void)replot_modified_solid( sp, &es_int, mat );
     }
   }
@@ -2462,14 +2456,14 @@ replot_editing_solid()
  *
  */
 void
-transform_editing_solid(os, mat, is, free)
-struct rt_db_internal	*os;		/* output solid */
-CONST mat_t		mat;
-struct rt_db_internal	*is;		/* input solid */
-int			free;
+transform_editing_solid(
+	struct rt_db_internal	*os,		/* output solid */
+	const mat_t		mat,
+	struct rt_db_internal	*is,		/* input solid */
+	int			free)
 {
 	RT_CK_DB_INTERNAL( is );
-	if( rt_functab[is->idb_type].ft_xform( os, mat, is, free, dbip ) < 0 )
+	if( rt_functab[is->idb_type].ft_xform( os, mat, is, free, dbip, &rt_uniresource ) < 0 )
 		bu_bomb("transform_editing_solid");
 }
 
@@ -2559,7 +2553,7 @@ get_rotation_vertex()
 {
   int i, j;
   int type, loc, valid;
-  int fixv;
+  int fixv = -1;
   struct bu_vls str;
   struct bu_vls cmd;
 
@@ -2658,7 +2652,7 @@ int idx;
 
 	RT_DSP_CK_MAGIC(dsp);
 
-	mat_idn(m);
+	MAT_IDN(m);
 
 	if (es_mvalid) {
 		bu_log("es_mvalid %g %g %g\n", V3ARGS(es_mparam));
@@ -2676,10 +2670,10 @@ int idx;
 	bn_mat_xform_about_pt(scalemat, m, es_keypoint);
 
 	bn_mat_mul(m, dsp->dsp_stom, scalemat);
-	bn_mat_copy(dsp->dsp_stom, m);
+	MAT_COPY(dsp->dsp_stom, m);
 
 	bn_mat_mul(m, scalemat, dsp->dsp_mtos);
-	bn_mat_copy(dsp->dsp_mtos, m);
+	MAT_COPY(dsp->dsp_mtos, m);
 
 }
 /*
@@ -2742,7 +2736,8 @@ sedit()
 
 			RT_DSP_CK_MAGIC( dsp );
 
-			fname = get_file_name( dsp->dsp_file );
+			/* Pop-up the Tk file browser */
+			fname = get_file_name( bu_vls_addr(&dsp->dsp_name) );
 			if ( ! fname) break;
 
 			if( stat( fname, &stat_buf ) ) {
@@ -2763,7 +2758,7 @@ sedit()
 				mged_print_result( TCL_ERROR );
 				return;
 			}
-			strcpy( dsp->dsp_file, fname );
+			bu_vls_strcpy( &dsp->dsp_name, fname );
 
 			break;
 		}
@@ -3217,9 +3212,9 @@ sedit()
 			}
 
 			if( face_no > -1 )
-				sprintf( fmode, " %d", BU_BITTEST( bot->face_mode, face_no ) );
+				sprintf( fmode, " %d", BU_BITTEST( bot->face_mode, face_no )?1:0 );
 			else
-				sprintf( fmode, " %d", BU_BITTEST( bot->face_mode, 0 ) );
+				sprintf( fmode, " %d", BU_BITTEST( bot->face_mode, 0 )?1:0 );
 
 			ret_tcl = Tcl_VarEval( interp, "cad_radio", " .bot_fmode_radio ", bu_vls_addr( &pathName ),
 					       " _bot_fmode_result ", "\"BOT Face Mode\"",
@@ -3324,7 +3319,7 @@ sedit()
 		{
 			struct rt_extrude_internal *extr =
 				(struct rt_extrude_internal *)es_int.idb_ptr;
-			char *sketch_name, *curve_name;
+			char *sketch_name;
 			int ret_tcl;
 			struct directory *dp;
 			struct rt_db_internal tmp_ip;
@@ -3349,16 +3344,19 @@ sedit()
 			bu_vls_free( &tcl_cmd );
 
 			sketch_name = Tcl_GetVar( interp, "final_sketch_name", TCL_GLOBAL_ONLY );
-			NAMEMOVE( sketch_name, extr->sketch_name );
+			if( extr->sketch_name )
+				bu_free( (char *)extr->sketch_name, "extr->sketch_name" );
+			extr->sketch_name = bu_strdup( sketch_name );
 
 			if( extr->skt )
 			{
 				/* free the old sketch */
 				RT_INIT_DB_INTERNAL( &tmp_ip );
+				tmp_ip.idb_major_type = DB5_MAJORTYPE_BRLCAD;
 				tmp_ip.idb_type = ID_SKETCH;
 				tmp_ip.idb_ptr = (genptr_t)extr->skt;
 				tmp_ip.idb_meth = &rt_functab[ID_SKETCH];
-				rt_sketch_ifree( &tmp_ip );
+				rt_db_free_internal( &tmp_ip, &rt_uniresource );
 			}
 
 			if( (dp=db_lookup( dbip, sketch_name, 0 )) == DIR_NULL )
@@ -3371,7 +3369,7 @@ sedit()
 			{
 				/* import the new sketch */
 
-			        if( rt_db_get_internal( &tmp_ip, dp, dbip, bn_mat_identity ) != ID_SKETCH )
+			        if( rt_db_get_internal( &tmp_ip, dp, dbip, bn_mat_identity, &rt_uniresource ) != ID_SKETCH )
 			        {
 			                bu_log( "rt_extrude_import: ERROR: Cannot import sketch (%.16s) for extrusion\n",
 			                        sketch_name );
@@ -3574,12 +3572,12 @@ sedit()
 			if( inpara == 3 ){
 				/* 3 params:  absolute X,Y,Z rotations */
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 #ifdef TRY_EDIT_NEW_WAY
 				/* Borrow incr_change matrix here */
@@ -3595,7 +3593,7 @@ sedit()
 				   */
 				  bn_mat_mul( mat1, edit, es_mat );
 				  bn_mat_mul( mat, es_invmat, mat1 );
-				  bn_mat_idn( incr_change );
+				  MAT_IDN( incr_change );
 				  /* work contains original es_peqn[es_menu][0] */
 				  MAT4X3VEC( eqp, mat, work );
 				}else{
@@ -3635,7 +3633,7 @@ sedit()
 			es_peqn[es_menu][3]=VDOT(eqp,tempvec);	
 
 			/*  Clear out solid rotation */
-			bn_mat_idn( modelchanges );
+			MAT_IDN( modelchanges );
 
 		}  else  {
 			/* Apply incremental changes */
@@ -3654,7 +3652,7 @@ sedit()
 		}
 
 		(void)rt_arb_calc_points( arb , es_type , es_peqn , &mged_tol );
-		bn_mat_idn( incr_change );
+		MAT_IDN( incr_change );
 
 		/* no need to calc_planes again */
 		replot_editing_solid();
@@ -3711,18 +3709,18 @@ sedit()
 			    MAT4X3PNT(raw_para, es_invmat, es_para);
 			    MAT4X3PNT(work, es_invmat, es_keypoint);
 			    VSUB2( delta, work, raw_para );
-			    bn_mat_idn( xlatemat );
+			    MAT_IDN( xlatemat );
 			    MAT_DELTAS_VEC_NEG( xlatemat, delta );
 			  }else{ /* move solid to position es_para */
 			    /* move solid to position es_para */
 			    MAT4X3PNT(work, es_invmat, es_keypoint);
 			    VSUB2( delta, work, es_para );
-			    bn_mat_idn( xlatemat );
+			    MAT_IDN( xlatemat );
 			    MAT_DELTAS_VEC_NEG( xlatemat, delta );
 			  }
 #else
 				VSUB2( delta, es_para, es_keypoint );
-				bn_mat_idn( xlatemat );
+				MAT_IDN( xlatemat );
 				MAT_DELTAS_VEC( xlatemat, delta );
 #endif
 				transform_editing_solid(&es_int, xlatemat, &es_int, 1);
@@ -4003,18 +4001,18 @@ sedit()
 				bn_mat_inv( invsolr, acc_rot_sol );
 
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
 				/* Borrow incr_change matrix here */
 				bn_mat_mul( incr_change, modelchanges, invsolr );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 				/* Apply new rotation to solid */
 				/*  Clear out solid rotation */
-				bn_mat_idn( modelchanges );
+				MAT_IDN( modelchanges );
 			}  else  {
 				/* Apply incremental changes already in incr_change */
 			}
@@ -4024,11 +4022,11 @@ sedit()
 			switch(mged_variables->mv_rotate_about){
 			case 'v':       /* View Center */
 			  VSET(work, 0.0, 0.0, 0.0);
-			  MAT4X3PNT(rot_point, view_state->vs_view2model, work);
+			  MAT4X3PNT(rot_point, view_state->vs_vop->vo_view2model, work);
 			  break;
 			case 'e':       /* Eye */
 			  VSET(work, 0.0, 0.0, 1.0);
-			  MAT4X3PNT(rot_point, view_state->vs_view2model, work);
+			  MAT4X3PNT(rot_point, view_state->vs_vop->vo_view2model, work);
 			  break;
 			case 'm':       /* Model Center */
 			  VSETALL(rot_point, 0.0);
@@ -4059,7 +4057,7 @@ sedit()
 #endif
 			transform_editing_solid(&es_int, mat, &es_int, 1);
 
-			bn_mat_idn( incr_change );
+			MAT_IDN( incr_change );
 		}
 		break;
 
@@ -4081,18 +4079,18 @@ sedit()
 				bn_mat_inv( invsolr, acc_rot_sol );
 
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
 				/* Borrow incr_change matrix here */
 				bn_mat_mul( incr_change, modelchanges, invsolr );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 				/* Apply new rotation to solid */
 				/*  Clear out solid rotation */
-				bn_mat_idn( modelchanges );
+				MAT_IDN( modelchanges );
 			}  else  {
 				/* Apply incremental changes already in incr_change */
 			}
@@ -4116,7 +4114,7 @@ sedit()
 			MAT4X3VEC(extr->h, incr_change, extr->h);
 #endif
 
-			bn_mat_idn( incr_change );
+			MAT_IDN( incr_change );
 		}
 		break;
 
@@ -4138,18 +4136,18 @@ sedit()
 				bn_mat_inv( invsolr, acc_rot_sol );
 
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
 				/* Borrow incr_change matrix here */
 				bn_mat_mul( incr_change, modelchanges, invsolr );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 				/* Apply new rotation to solid */
 				/*  Clear out solid rotation */
-				bn_mat_idn( modelchanges );
+				MAT_IDN( modelchanges );
 			}  else  {
 				/* Apply incremental changes already in incr_change */
 			}
@@ -4173,7 +4171,7 @@ sedit()
 			MAT4X3VEC(tgc->h, incr_change, tgc->h);
 #endif
 
-			bn_mat_idn( incr_change );
+			MAT_IDN( incr_change );
 		}
 		break;
 
@@ -4195,18 +4193,18 @@ sedit()
 				bn_mat_inv( invsolr, acc_rot_sol );
 
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
 				/* Borrow incr_change matrix here */
 				bn_mat_mul( incr_change, modelchanges, invsolr );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 				/* Apply new rotation to solid */
 				/*  Clear out solid rotation */
-				bn_mat_idn( modelchanges );
+				MAT_IDN( modelchanges );
 			}  else  {
 				/* Apply incremental changes already in incr_change */
 			}
@@ -4242,7 +4240,7 @@ sedit()
 			MAT4X3VEC(work, incr_change, tgc->d);
 			VMOVE(tgc->d, work);
 #endif
-			bn_mat_idn( incr_change );
+			MAT_IDN( incr_change );
 		}
 		break;
 
@@ -4264,18 +4262,18 @@ sedit()
 				bn_mat_inv( invsolr, acc_rot_sol );
 
 				/* Build completely new rotation change */
-				bn_mat_idn( modelchanges );
-				buildHrot( modelchanges,
-					es_para[0] * degtorad,
-					es_para[1] * degtorad,
-					es_para[2] * degtorad );
+				MAT_IDN( modelchanges );
+				bn_mat_angles(modelchanges,
+					      es_para[0],
+					      es_para[1],
+					      es_para[2]);
 				/* Borrow incr_change matrix here */
 				bn_mat_mul( incr_change, modelchanges, invsolr );
-				bn_mat_copy(acc_rot_sol, modelchanges);
+				MAT_COPY(acc_rot_sol, modelchanges);
 
 				/* Apply new rotation to solid */
 				/*  Clear out solid rotation */
-				bn_mat_idn( modelchanges );
+				MAT_IDN( modelchanges );
 			}  else  {
 				/* Apply incremental changes already in incr_change */
 			}
@@ -4301,7 +4299,7 @@ sedit()
 			VMOVE(eto->eto_C, work);
 #endif
 		}
-		bn_mat_idn( incr_change );
+		MAT_IDN( incr_change );
 		break;
 
 	case ECMD_NMG_EPICK:
@@ -4364,7 +4362,7 @@ sedit()
 
 					/* Get view direction vector */
 					VSET( view_z_dir, 0.0, 0.0, 1.0 );
-					MAT4X3VEC( view_dir , view_state->vs_view2model , view_z_dir );
+					MAT4X3VEC(view_dir , view_state->vs_vop->vo_view2model , view_z_dir);
 
 					/* intersect line through new_pt with plane of loop */
 					if( bn_isect_line3_plane( &dist , new_pt , view_dir , pl , &mged_tol ) < 1)
@@ -4534,7 +4532,7 @@ sedit()
 
 					/* Get view direction vector */
 					VSET( view_z_dir, 0.0, 0.0, 1.0 );
-					MAT4X3VEC( view_dir , view_state->vs_view2model , view_z_dir );
+					MAT4X3VEC(view_dir, view_state->vs_vop->vo_view2model, view_z_dir);
 
 					/* intersect line through new_pt with plane of loop */
 					if( bn_isect_line3_plane( &dist , new_pt , view_dir , pl , &mged_tol ) < 1)
@@ -4900,7 +4898,7 @@ sedit()
 
 			/* Get view direction vector */
 			VSET( z_dir, 0.0, 0.0, 1.0 );
-			MAT4X3VEC( view_dir , view_state->vs_view2model , z_dir );
+			MAT4X3VEC(view_dir , view_state->vs_vop->vo_view2model , z_dir);
 			find_nearest_ars_pt( &es_ars_crv, &es_ars_col, ars, pick_pt, view_dir );
 			VMOVE( es_pt, &ars->curves[es_ars_crv][es_ars_col*3] );
 			VSCALE( selected_pt, es_pt, base2local );
@@ -5241,7 +5239,7 @@ sedit()
 				 * that passes through ARS point being moved
 				 */
 				VSET( view_dir, 0.0, 0.0, 1.0 );
-				MAT4X3VEC( view_pl, view_state->vs_view2model, view_dir );
+				MAT4X3VEC(view_pl, view_state->vs_vop->vo_view2model, view_dir);
 				VUNITIZE( view_pl );
 				view_pl[3] = VDOT( view_pl, &ars->curves[es_ars_crv][es_ars_col*3] );
 
@@ -5303,7 +5301,7 @@ sedit()
 				 * that passes through ARS point being moved
 				 */
 				VSET( view_dir, 0.0, 0.0, 1.0 );
-				MAT4X3VEC( view_pl, view_state->vs_view2model, view_dir );
+				MAT4X3VEC(view_pl, view_state->vs_vop->vo_view2model, view_dir);
 				VUNITIZE( view_pl );
 				view_pl[3] = VDOT( view_pl, &ars->curves[es_ars_crv][es_ars_col*3] );
 
@@ -5364,7 +5362,7 @@ sedit()
 				 * that passes through ARS point being moved
 				 */
 				VSET( view_dir, 0.0, 0.0, 1.0 );
-				MAT4X3VEC( view_pl, view_state->vs_view2model, view_dir );
+				MAT4X3VEC(view_pl, view_state->vs_vop->vo_view2model, view_dir);
 				VUNITIZE( view_pl );
 				view_pl[3] = VDOT( view_pl, &ars->curves[es_ars_crv][es_ars_col*3] );
 
@@ -5611,8 +5609,7 @@ sedit()
  *  to actually do the work.
  */
 void
-sedit_mouse( mousevec )
-CONST vect_t	mousevec;
+sedit_mouse( const vect_t mousevec )
 {
   vect_t pos_view;	 	/* Unrotated view space pos */
   vect_t pos_model;		/* Rotated screen space pos */
@@ -5668,10 +5665,10 @@ CONST vect_t	mousevec;
       vect_t	delta;
       mat_t	xlatemat;
 
-      MAT4X3PNT( pos_view, view_state->vs_model2view, curr_e_axes_pos );
+      MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
       pos_view[X] = mousevec[X];
       pos_view[Y] = mousevec[Y];
-      MAT4X3PNT( pt, view_state->vs_view2model, pos_view );
+      MAT4X3PNT(pt, view_state->vs_vop->vo_view2model, pos_view);
 
       /* Need vector from current vertex/keypoint
        * to desired new location.
@@ -5679,7 +5676,7 @@ CONST vect_t	mousevec;
       MAT4X3PNT( raw_mp, es_invmat, pt );
       MAT4X3PNT( raw_kp, es_invmat, curr_e_axes_pos );
       VSUB2( delta, raw_kp, raw_mp );
-      bn_mat_idn( xlatemat );
+      MAT_IDN( xlatemat );
       MAT_DELTAS_VEC_NEG( xlatemat, delta );
       transform_editing_solid(&es_int, xlatemat, &es_int, 1);
     }
@@ -5694,10 +5691,10 @@ CONST vect_t	mousevec;
      * Leave desired location in es_mparam.
      */
 
-    MAT4X3PNT( pos_view, view_state->vs_model2view, curr_e_axes_pos );
+    MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
     pos_view[X] = mousevec[X];
     pos_view[Y] = mousevec[Y];
-    MAT4X3PNT( temp, view_state->vs_view2model, pos_view );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
     MAT4X3PNT( es_mparam, es_invmat, temp );
     es_mvalid = 1;	/* es_mparam is valid */
     /* Leave the rest to code in sedit() */
@@ -5711,11 +5708,11 @@ CONST vect_t	mousevec;
 	(struct rt_tgc_internal *)es_int.idb_ptr;
       RT_TGC_CK_MAGIC(tgc);
 
-      MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+      MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
       pos_view[X] = mousevec[X];
       pos_view[Y] = mousevec[Y];
       /* Do NOT change pos_view[Z] ! */
-      MAT4X3PNT( temp, view_state->vs_view2model, pos_view );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( tgc->h, tr_temp, tgc->v );
     }
@@ -5728,11 +5725,11 @@ CONST vect_t	mousevec;
 	(struct rt_extrude_internal *)es_int.idb_ptr;
       RT_EXTRUDE_CK_MAGIC(extr);
 
-      MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+      MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
       pos_view[X] = mousevec[X];
       pos_view[Y] = mousevec[Y];
       /* Do NOT change pos_view[Z] ! */
-      MAT4X3PNT( temp, view_state->vs_view2model, pos_view );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( extr->h, tr_temp, extr->V );
     }
@@ -5745,11 +5742,11 @@ CONST vect_t	mousevec;
 
     	RT_CLINE_CK_MAGIC( cli );
 
-      MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+      MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
       pos_view[X] = mousevec[X];
       pos_view[Y] = mousevec[Y];
       /* Do NOT change pos_view[Z] ! */
-      MAT4X3PNT( temp, view_state->vs_view2model, pos_view );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( cli->h, tr_temp, cli->v );
     }
@@ -5758,28 +5755,28 @@ CONST vect_t	mousevec;
   case PTARB:
     /* move an arb point to indicated point */
     /* point is located at es_values[es_menu*3] */
-    MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+    MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
     pos_view[X] = mousevec[X];
     pos_view[Y] = mousevec[Y];
-    MAT4X3PNT(temp, view_state->vs_view2model, pos_view);
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
     MAT4X3PNT(pos_model, es_invmat, temp);
     editarb( pos_model );
 
     break;
   case EARB:
-    MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+    MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
     pos_view[X] = mousevec[X];
     pos_view[Y] = mousevec[Y];
-    MAT4X3PNT(temp, view_state->vs_view2model, pos_view);
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
     MAT4X3PNT(pos_model, es_invmat, temp);
     editarb( pos_model );
 
     break;
   case ECMD_ARB_MOVE_FACE:
-    MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+    MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
     pos_view[X] = mousevec[X];
     pos_view[Y] = mousevec[Y];
-    MAT4X3PNT(temp, view_state->vs_view2model, pos_view);
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
     MAT4X3PNT(pos_model, es_invmat, temp);
     /* change D of planar equation */
     es_peqn[es_menu][3]=VDOT(&es_peqn[es_menu][0], pos_model);
@@ -5801,11 +5798,11 @@ CONST vect_t	mousevec;
 
   	RT_BOT_CK_MAGIC( bot );
 
-	MAT4X3PNT( pos_view, view_state->vs_model2view, curr_e_axes_pos );
+	MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
 	pos_view[X] = mousevec[X];
 	pos_view[Y] = mousevec[Y];
 
-  	tmp_vert = bot_find_v_nearest_pt2( bot, pos_view, view_state->vs_model2view );
+  	tmp_vert = rt_bot_find_v_nearest_pt2(bot, pos_view, view_state->vs_vop->vo_model2view);
   	if( tmp_vert < 0 )
   	{
   		Tcl_AppendResult(interp, "ECMD_BOT_PICKV: unable to find a vertex!!!\n", (char *)NULL );
@@ -5829,11 +5826,11 @@ CONST vect_t	mousevec;
 
     	RT_BOT_CK_MAGIC( bot );
 
-	MAT4X3PNT( pos_view, view_state->vs_model2view, curr_e_axes_pos );
+	MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
 	pos_view[X] = mousevec[X];
 	pos_view[Y] = mousevec[Y];
 
-    	if( bot_find_e_nearest_pt2( &vert1, &vert2, bot, pos_view, view_state->vs_model2view ) )
+    	if (rt_bot_find_e_nearest_pt2(&vert1, &vert2, bot, pos_view, view_state->vs_vop->vo_model2view))
   	{
   		Tcl_AppendResult(interp, "ECMD_BOT_PICKE: unable to find an edge!!!\n", (char *)NULL );
   		mged_print_result( TCL_ERROR );
@@ -5863,9 +5860,9 @@ CONST vect_t	mousevec;
 		bu_vls_init( &vls );
 
   		VSET( tmp, mousevec[X], mousevec[Y], 0.0 );
-  		MAT4X3PNT( start_pt, view_state->vs_view2model, tmp );
-  		VSET( tmp, 0, 0, 1 );
-  		MAT4X3VEC( dir, view_state->vs_view2model, tmp );
+  		MAT4X3PNT(start_pt, view_state->vs_vop->vo_view2model, tmp);
+  		VSET(tmp, 0, 0, 1 );
+  		MAT4X3VEC(dir, view_state->vs_vop->vo_view2model, tmp);
 
 		bu_vls_strcat( &vls, " {" );
 		hits = 0;
@@ -5933,12 +5930,11 @@ CONST vect_t	mousevec;
       tmp_tol.perp = 0.0;
       tmp_tol.para = 1 - tmp_tol.perp;
 
-      MAT4X3PNT( pos_view, view_state->vs_model2view, curr_e_axes_pos );
+      MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
       pos_view[X] = mousevec[X];
       pos_view[Y] = mousevec[Y];
-      if( (e = nmg_find_e_nearest_pt2( &m->magic, pos_view,
-				       view_state->vs_model2view, &tmp_tol )) ==
-	  (struct edge *)NULL )  {
+      if ((e = nmg_find_e_nearest_pt2(&m->magic, pos_view,
+				      view_state->vs_vop->vo_model2view, &tmp_tol)) == (struct edge *)NULL) {
 	Tcl_AppendResult(interp, "ECMD_NMG_EPICK: unable to find an edge\n",
 			 (char *)NULL);
 	mged_print_result( TCL_ERROR );
@@ -5977,10 +5973,11 @@ CONST vect_t	mousevec;
   case ECMD_BOT_MOVEV:
   case ECMD_BOT_MOVEE:
   case ECMD_BOT_MOVET:
-    MAT4X3PNT(pos_view, view_state->vs_model2view, curr_e_axes_pos);
+
+    MAT4X3PNT(pos_view, view_state->vs_vop->vo_model2view, curr_e_axes_pos);
     pos_view[X] = mousevec[X];
     pos_view[Y] = mousevec[Y];
-    MAT4X3PNT(temp, view_state->vs_view2model, pos_view);
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, pos_view);
     MAT4X3PNT(es_mparam, es_invmat, temp);
     es_mvalid = 1;
 
@@ -5996,22 +5993,21 @@ CONST vect_t	mousevec;
 }
 
 void
-update_edit_absolute_tran(view_pos)
-vect_t view_pos;
+update_edit_absolute_tran(vect_t view_pos)
 {
-  vect_t model_pos;
-  vect_t ea_view_pos;
-  vect_t diff;
-  fastf_t inv_Viewscale = 1/view_state->vs_Viewscale;
+	vect_t model_pos;
+	vect_t ea_view_pos;
+	vect_t diff;
+	fastf_t inv_Viewscale = 1/view_state->vs_vop->vo_scale;
 
-  MAT4X3PNT(model_pos, view_state->vs_view2model, view_pos);
-  VSUB2(diff, model_pos, e_axes_pos);
-  VSCALE(edit_absolute_model_tran, diff, inv_Viewscale);
-  VMOVE(last_edit_absolute_model_tran, edit_absolute_model_tran);
+	MAT4X3PNT(model_pos, view_state->vs_vop->vo_view2model, view_pos);
+	VSUB2(diff, model_pos, e_axes_pos);
+	VSCALE(edit_absolute_model_tran, diff, inv_Viewscale);
+	VMOVE(last_edit_absolute_model_tran, edit_absolute_model_tran);
 
-  MAT4X3PNT(ea_view_pos, view_state->vs_model2view, e_axes_pos);
-  VSUB2(edit_absolute_view_tran, view_pos, ea_view_pos);
-  VMOVE(last_edit_absolute_view_tran, edit_absolute_view_tran);
+	MAT4X3PNT(ea_view_pos, view_state->vs_vop->vo_model2view, e_axes_pos);
+	VSUB2(edit_absolute_view_tran, view_pos, ea_view_pos);
+	VMOVE(last_edit_absolute_view_tran, edit_absolute_view_tran);
 }
 
 void
@@ -6039,7 +6035,7 @@ vect_t tvec;
       vect_t	delta;
       mat_t	xlatemat;
 
-      MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
       MAT4X3PNT( pt, es_invmat, temp );
       MAT4X3PNT( raw_kp, es_invmat, es_keypoint );
 
@@ -6047,7 +6043,7 @@ vect_t tvec;
        * to desired new location.
        */
       VSUB2( delta, raw_kp, pt );
-      bn_mat_idn( xlatemat );
+      MAT_IDN( xlatemat );
       MAT_DELTAS_VEC_NEG( xlatemat, delta );
       transform_editing_solid(&es_int, xlatemat, &es_int, 1);
     }
@@ -6061,7 +6057,7 @@ vect_t tvec;
      * project result back to model space.
      * Leave desired location in es_mparam.
      */
-    MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
     MAT4X3PNT( es_mparam, es_invmat, temp );
     es_mvalid = 1;	/* es_mparam is valid */
     /* Leave the rest to code in sedit() */
@@ -6076,7 +6072,7 @@ vect_t tvec;
 	(struct rt_tgc_internal *)es_int.idb_ptr;
       RT_TGC_CK_MAGIC(tgc);
 
-      MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( tgc->h, tr_temp, tgc->v );
     }
@@ -6090,7 +6086,7 @@ vect_t tvec;
 	(struct rt_extrude_internal *)es_int.idb_ptr;
       RT_EXTRUDE_CK_MAGIC(extr);
 
-      MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( extr->h, tr_temp, extr->V );
     }
@@ -6104,7 +6100,7 @@ vect_t tvec;
 	(struct rt_cline_internal *)es_int.idb_ptr;
       RT_CLINE_CK_MAGIC(cli);
 
-      MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+      MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
       MAT4X3PNT( tr_temp, es_invmat, temp );
       VSUB2( cli->h, tr_temp, cli->v );
     }
@@ -6121,14 +6117,14 @@ vect_t tvec;
       VMOVE( temp , arb->pt[es_menu] );
     }
 
-    MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
     MAT4X3PNT(pos_model, es_invmat, temp);
     editarb( pos_model );
 
     break;
   case EARB:
     /* move arb edge, through indicated point */
-    MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
     /* apply inverse of es_mat */
     MAT4X3PNT( pos_model, es_invmat, temp );
     editarb( pos_model );
@@ -6136,7 +6132,7 @@ vect_t tvec;
     break;
   case ECMD_ARB_MOVE_FACE:
     /* move arb face, through  indicated  point */
-    MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
 
     /* apply inverse of es_mat */
     MAT4X3PNT( pos_model, es_invmat, temp );
@@ -6170,10 +6166,10 @@ vect_t tvec;
       tmp_tol.perp = 0.0;
       tmp_tol.para = 1 - tmp_tol.perp;
 
-      if( (e = nmg_find_e_nearest_pt2( &m->magic,
-				       tvec,
-				       view_state->vs_model2view,
-				       &tmp_tol )) == (struct edge *)NULL )  {
+      if ((e = nmg_find_e_nearest_pt2(&m->magic,
+				      tvec,
+				      view_state->vs_vop->vo_model2view,
+				      &tmp_tol)) == (struct edge *)NULL) {
 	Tcl_AppendResult(interp,
 			 "ECMD_NMG_EPICK: unable to find an edge\n",
 			 (char *)NULL);
@@ -6209,7 +6205,7 @@ vect_t tvec;
   case ECMD_ARS_MOVE_PT:
   case ECMD_ARS_MOVE_CRV:
   case ECMD_ARS_MOVE_COL:
-    MAT4X3PNT( temp, view_state->vs_view2model, tvec );
+    MAT4X3PNT(temp, view_state->vs_vop->vo_view2model, tvec);
     /* apply inverse of es_mat */
     MAT4X3PNT( es_mparam, es_invmat, temp );
     es_mvalid = 1;
@@ -6227,7 +6223,7 @@ vect_t tvec;
 }
 
 void
-sedit_abs_scale()
+sedit_abs_scale(void)
 {
   fastf_t old_acc_sc_sol;
 
@@ -6256,8 +6252,7 @@ sedit_abs_scale()
  *  Object Edit
  */
 void
-objedit_mouse( mousevec )
-CONST vect_t	mousevec;
+objedit_mouse( const vect_t mousevec )
 {
   fastf_t			scale;
   vect_t	pos_view;	 	/* Unrotated view space pos */
@@ -6265,7 +6260,7 @@ CONST vect_t	mousevec;
   vect_t	tr_temp;		/* temp translation vector */
   vect_t	temp;
 
-  bn_mat_idn( incr_change );
+  MAT_IDN( incr_change );
   scale = 1;
   if( movedir & SARROW )  {
     /* scaling option is in effect */
@@ -6329,7 +6324,7 @@ CONST vect_t	mousevec;
     MAT4X3PNT(pos_model, modelchanges, temp);
     wrt_point(modelchanges, incr_change, modelchanges, pos_model);
 
-    bn_mat_idn( incr_change );
+    MAT_IDN( incr_change );
     new_edit_mats();
   }  else if( movedir & (RARROW|UARROW) )  {
     mat_t oldchanges;	/* temporary matrix */
@@ -6347,15 +6342,15 @@ CONST vect_t	mousevec;
     if( movedir & UARROW )
       pos_view[Y] = mousevec[Y];
 
-    MAT4X3PNT( pos_model, view_state->vs_view2model, pos_view );/* NOT objview */
+    MAT4X3PNT(pos_model, view_state->vs_vop->vo_view2model, pos_view);/* NOT objview */
     MAT4X3PNT( tr_temp, modelchanges, temp );
     VSUB2( tr_temp, pos_model, tr_temp );
     MAT_DELTAS(incr_change,
 	       tr_temp[X], tr_temp[Y], tr_temp[Z]);
-    bn_mat_copy( oldchanges, modelchanges );
+    MAT_COPY( oldchanges, modelchanges );
     bn_mat_mul( modelchanges, incr_change, oldchanges );
 
-    bn_mat_idn( incr_change );
+    MAT_IDN( incr_change );
     new_edit_mats();
 
     update_edit_absolute_tran(pos_view);
@@ -6376,18 +6371,18 @@ point_t tvec;
   mat_t incr_mat;
   mat_t oldchanges;	/* temporary matrix */
 
-  bn_mat_idn( incr_mat );
+  MAT_IDN( incr_mat );
 #if 0
   MAT4X3PNT( temp, es_mat, es_keypoint );
 #else
   VMOVE(temp, es_keypoint);
 #endif
-  MAT4X3PNT( pos_model, view_state->vs_view2model, tvec );/* NOT objview */
+  MAT4X3PNT( pos_model, view_state->vs_vop->vo_view2model, tvec );/* NOT objview */
   MAT4X3PNT( tr_temp, modelchanges, temp );
   VSUB2( tr_temp, pos_model, tr_temp );
   MAT_DELTAS(incr_mat,
 	     tr_temp[X], tr_temp[Y], tr_temp[Z]);
-  bn_mat_copy( oldchanges, modelchanges );
+  MAT_COPY( oldchanges, modelchanges );
   bn_mat_mul( modelchanges, incr_mat, oldchanges );
 
   new_edit_mats();
@@ -6395,14 +6390,14 @@ point_t tvec;
 
 
 void
-oedit_abs_scale()
+oedit_abs_scale(void)
 {
   fastf_t scale;
   vect_t temp;
   vect_t pos_model;
   mat_t incr_mat;
 
-  bn_mat_idn( incr_mat );
+  MAT_IDN( incr_mat );
 
   if(-SMALL_FASTF < edit_absolute_scale && edit_absolute_scale < SMALL_FASTF)
     scale = 1;
@@ -6465,10 +6460,7 @@ oedit_abs_scale()
  *			V L S _ S O L I D
  */
 void
-vls_solid( vp, ip, mat )
-register struct bu_vls		*vp;
-CONST struct rt_db_internal	*ip;
-CONST mat_t			mat;
+vls_solid( struct bu_vls *vp, const struct rt_db_internal *ip, const mat_t mat )
 {
 	struct rt_db_internal	intern;
 	int			id;
@@ -6485,13 +6477,13 @@ CONST mat_t			mat;
 	if( id != ID_ARS && id != ID_POLY && id != ID_BOT )
 	{
 		if( rt_functab[id].ft_describe( vp, &intern, 1 /*verbose*/,
-		    base2local ) < 0 )
+		    base2local, &rt_uniresource, dbip ) < 0 )
 		  Tcl_AppendResult(interp, "vls_solid: describe error\n", (char *)NULL);
 	}
 	else
 	{
 		if( rt_functab[id].ft_describe( vp, &intern, 0 /* not verbose */,
-		    base2local ) < 0 )
+		    base2local, &rt_uniresource, dbip ) < 0 )
 		  Tcl_AppendResult(interp, "vls_solid: describe error\n", (char *)NULL);
 	}
 
@@ -6512,10 +6504,10 @@ CONST mat_t			mat;
 		}
 
 		if( ps == es_pipept )
-			vls_pipept( vp, seg_no, &intern, base2local );
+			rt_vls_pipept( vp, seg_no, &intern, base2local );
 	}
 
-	rt_functab[id].ft_ifree( &intern );
+	rt_db_free_internal( &intern, &rt_uniresource );
 }
 
 /*
@@ -6565,6 +6557,83 @@ pscale()
 			VADD2( old_top, tgc->v, tgc->h );
 			VSCALE(tgc->h, tgc->h, es_scale);
 			VSUB2( tgc->v, old_top, tgc->h );
+		}
+		break;
+
+	case MENU_TGC_SCALE_H_CD:
+		{
+			vect_t vec1, vec2;
+			vect_t c, d;
+			struct rt_tgc_internal	*tgc = 
+				(struct rt_tgc_internal *)es_int.idb_ptr;
+
+			RT_TGC_CK_MAGIC(tgc);
+
+			if (inpara) {
+				/* take es_mat[15] (path scaling) into account */
+				es_para[0] *= es_mat[15];
+				es_scale = es_para[0] / MAGNITUDE(tgc->h);
+			}
+
+			/* calculate new c */
+			VSUB2(vec1, tgc->a, tgc->c);
+			VSCALE(vec2, vec1, 1-es_scale);
+			VADD2(c, tgc->c, vec2);
+
+			/* calculate new d */
+			VSUB2(vec1, tgc->b, tgc->d);
+			VSCALE(vec2, vec1, 1-es_scale);
+			VADD2(d, tgc->d, vec2);
+
+			if (0 <= VDOT(tgc->c, c) &&
+			    0 <= VDOT(tgc->d, d) &&
+			    !NEAR_ZERO(MAGNITUDE(c), SMALL_FASTF) &&
+			    !NEAR_ZERO(MAGNITUDE(d), SMALL_FASTF)) {
+				/* adjust c, d and h */
+				VMOVE(tgc->c, c);
+				VMOVE(tgc->d, d);
+				VSCALE(tgc->h, tgc->h, es_scale);
+			}
+		}
+		break;
+
+	case MENU_TGC_SCALE_H_V_AB:
+		{
+			vect_t vec1, vec2;
+			vect_t a, b;
+			point_t old_top;
+			struct rt_tgc_internal	*tgc = 
+				(struct rt_tgc_internal *)es_int.idb_ptr;
+
+			RT_TGC_CK_MAGIC(tgc);
+
+			if (inpara) {
+				/* take es_mat[15] (path scaling) into account */
+				es_para[0] *= es_mat[15];
+				es_scale = es_para[0] / MAGNITUDE(tgc->h);
+			}
+
+			/* calculate new a */
+			VSUB2(vec1, tgc->c, tgc->a);
+			VSCALE(vec2, vec1, 1-es_scale);
+			VADD2(a, tgc->a, vec2);
+
+			/* calculate new b */
+			VSUB2(vec1, tgc->d, tgc->b);
+			VSCALE(vec2, vec1, 1-es_scale);
+			VADD2(b, tgc->b, vec2);
+
+			if (0 <= VDOT(tgc->a, a) &&
+			    0 <= VDOT(tgc->b, b) &&
+			    !NEAR_ZERO(MAGNITUDE(a), SMALL_FASTF) &&
+			    !NEAR_ZERO(MAGNITUDE(b), SMALL_FASTF)) {
+				/* adjust a, b, v and h */
+				VMOVE(tgc->a, a);
+				VMOVE(tgc->b, b);
+				VADD2( old_top, tgc->v, tgc->h );
+				VSCALE(tgc->h, tgc->h, es_scale);
+				VSUB2( tgc->v, old_top, tgc->h );
+			}
 		}
 		break;
 
@@ -6836,6 +6905,8 @@ pscale()
 			}
 			if (epa->epa_r1 * es_scale >= epa->epa_r2)
 				epa->epa_r1 *= es_scale;
+			else
+				bu_log("pscale:  semi-minor axis cannot be longer than semi-major axis!");
 		}
 		break;
 
@@ -6853,6 +6924,8 @@ pscale()
 			}
 			if (epa->epa_r2 * es_scale <= epa->epa_r1)
 				epa->epa_r2 *= es_scale;
+			else
+				bu_log("pscale:  semi-minor axis cannot be longer than semi-major axis!");
 		}
 		break;
 
@@ -6886,6 +6959,8 @@ pscale()
 			}
 			if (ehy->ehy_r1 * es_scale >= ehy->ehy_r2)
 				ehy->ehy_r1 *= es_scale;
+			else
+				bu_log("pscale:  semi-minor axis cannot be longer than semi-major axis!");
 		}
 		break;
 
@@ -6903,6 +6978,8 @@ pscale()
 			}
 			if (ehy->ehy_r2 * es_scale <= ehy->ehy_r1)
 				ehy->ehy_r2 *= es_scale;
+			else
+				bu_log("pscale:  semi-minor axis cannot be longer than semi-major axis!");
 		}
 		break;
 
@@ -7310,7 +7387,7 @@ init_oedit_guts()
 	/* for safety sake */
 	es_menu = 0;
 	es_edflag = -1;
-	bn_mat_idn(es_mat);
+	MAT_IDN(es_mat);
 
 	if (dbip == DBI_NULL)
 		return;
@@ -7328,23 +7405,17 @@ init_oedit_guts()
 	}
 
 	/* Not an evaluated region - just a regular path ending in a solid */
-	if (db_get_external(&es_ext, illump->s_path[illump->s_last], dbip) < 0) {
-		Tcl_AppendResult(interp, "init_oedit(", illump->s_path[illump->s_last]->d_namep,
-				 "): db_get_external failure\n", (char *)NULL);
-		button(BE_REJECT);
-		return;
-	}
-
-	id = rt_id_solid(&es_ext);
-	if (rt_functab[id].ft_import(&es_int, &es_ext, bn_mat_identity, dbip) < 0) {
-		Tcl_AppendResult(interp, "init_oedit(", illump->s_path[illump->s_last]->d_namep,
+	if( rt_db_get_internal( &es_int, LAST_SOLID(illump),
+	    dbip, NULL, &rt_uniresource ) < 0 )  {
+		Tcl_AppendResult(interp, "init_oedit(",
+	    			LAST_SOLID(illump)->d_namep,
 				 "):  solid import failure\n", (char *)NULL);
-		if (es_int.idb_ptr)
-			rt_functab[id].ft_ifree( &es_int );
-		db_free_external(&es_ext);
+		rt_db_free_internal( &es_int, &rt_uniresource );
+		button(BE_REJECT);
 		return;				/* FAIL */
 	}
 	RT_CK_DB_INTERNAL(&es_int);
+	id = es_int.idb_type;
 
 	if (id == ID_ARB8) {
 		struct rt_arb_internal *arb;
@@ -7356,7 +7427,7 @@ init_oedit_guts()
 	}
 
 	/* Save aggregate path matrix */
-	pathHmat(illump, es_mat, illump->s_last-1);
+	pathHmat(illump, es_mat, illump->s_fullpath.fp_len-2);
 
 	/* get the inverse matrix */
 	bn_mat_inv(es_invmat, es_mat);
@@ -7391,8 +7462,8 @@ init_oedit_vars()
 	VSETALL(edit_rate_model_tran, 0.0);
 	VSETALL(edit_rate_view_tran, 0.0);
 
-	bn_mat_idn(modelchanges);
-	bn_mat_idn(acc_rot_sol);
+	MAT_IDN(modelchanges);
+	MAT_IDN(acc_rot_sol);
 }
 
 /*
@@ -7400,7 +7471,7 @@ init_oedit_vars()
  *
  */
 void
-init_oedit()
+init_oedit(void)
 {
 	struct bu_vls		vls;
 
@@ -7411,7 +7482,7 @@ init_oedit()
 
 	/* begin edit callback */
 	bu_vls_init(&vls);
-	bu_vls_strcpy(&vls, "begin_edit_callback");
+	bu_vls_strcpy(&vls, "begin_edit_callback {}");
 	(void)Tcl_Eval(interp, bu_vls_addr(&vls));
 	bu_vls_free(&vls);
 }
@@ -7419,7 +7490,7 @@ init_oedit()
 void oedit_reject();
 
 static void
-oedit_apply()
+oedit_apply( int continue_editing )
 {
 	register struct solid *sp;
 	/* matrices used to accept editing done from a depth
@@ -7432,18 +7503,19 @@ oedit_apply()
 
 	switch (ipathpos) {
 	case 0:
-		moveHobj(illump->s_path[ipathpos], modelchanges);
+		moveHobj(DB_FULL_PATH_GET(&illump->s_fullpath,ipathpos),
+			modelchanges);
 		break;
 	case 1:
-		moveHinstance(illump->s_path[ipathpos-1],
-			      illump->s_path[ipathpos],
+		moveHinstance(DB_FULL_PATH_GET(&illump->s_fullpath,ipathpos-1),
+			      DB_FULL_PATH_GET(&illump->s_fullpath,ipathpos),
 			      modelchanges);
 		break;
 	default:
-		bn_mat_idn(topm);
-		bn_mat_idn(inv_topm);
-		bn_mat_idn(deltam);
-		bn_mat_idn(tempm);
+		MAT_IDN(topm);
+		MAT_IDN(inv_topm);
+		MAT_IDN(deltam);
+		MAT_IDN(tempm);
 
 		pathHmat(illump, topm, ipathpos-2);
 
@@ -7452,8 +7524,8 @@ oedit_apply()
 		bn_mat_mul(tempm, modelchanges, topm);
 		bn_mat_mul(deltam, inv_topm, tempm);
 
-		moveHinstance(illump->s_path[ipathpos-1],
-			      illump->s_path[ipathpos],
+		moveHinstance(DB_FULL_PATH_GET(&illump->s_fullpath,ipathpos-1),
+			      DB_FULL_PATH_GET(&illump->s_fullpath,ipathpos),
 			      deltam);
 		break;
 	}
@@ -7467,16 +7539,19 @@ oedit_apply()
 	modelchanges[15] = 1000000000;	/* => small ratio */
 
 	/* Now, recompute new chunks of displaylist */
-	FOR_ALL_SOLIDS(sp, &HeadSolid.l) {
+	FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid) {
 		if (sp->s_iflag == DOWN)
 			continue;
 		(void)replot_original_solid(sp);
-		sp->s_iflag = DOWN;
+
+		if( continue_editing == DOWN ) {
+			sp->s_iflag = DOWN;
+		}
 	}
 }
 
 void
-oedit_accept()
+oedit_accept(void)
 {
 	register struct solid *sp;
 
@@ -7485,7 +7560,7 @@ oedit_accept()
 
 	if (dbip->dbi_read_only) {
 		oedit_reject();
-		FOR_ALL_SOLIDS(sp, &HeadSolid.l) {
+		FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid) {
 			if (sp->s_iflag == DOWN)
 				continue;
 			(void)replot_original_solid(sp);
@@ -7497,17 +7572,14 @@ oedit_accept()
 		return;
 	}
 
-	oedit_apply();
+	oedit_apply( DOWN ); /* finished editing */
 	oedit_reject();
 }
 
 void
-oedit_reject()
+oedit_reject(void)
 {
-	if (es_int.idb_ptr)
-		rt_functab[es_int.idb_type].ft_ifree(&es_int);
-	es_int.idb_ptr = (genptr_t)NULL;
-	db_free_external(&es_ext);
+	rt_db_free_internal(&es_int, &rt_uniresource);
 }
 
 /* 			F _ E Q N ( )
@@ -7579,7 +7651,6 @@ char	*argv[];
 }
 
 /* Hooks from buttons.c */
-void sedit_reject();
 
 /*
  * Copied from sedit_accept - modified to optionally leave
@@ -7606,7 +7677,7 @@ sedit_apply(accept_flag)
 	}
 
 	/* write editing changes out to disc */
-	dp = illump->s_path[illump->s_last];
+	dp = LAST_SOLID(illump);
 
 	/* make sure that any BOT solid is minimally legal */
 	if (es_int.idb_type == ID_BOT) {
@@ -7635,24 +7706,13 @@ sedit_apply(accept_flag)
 	}
 
 	/* Scale change on export is 1.0 -- no change */
-	if (rt_functab[es_int.idb_type].ft_export( &es_ext, &es_int, 1.0, dbip) < 0)  {
+	if( rt_db_put_internal( dp, dbip, &es_int, &rt_uniresource ) < 0 )  {
 		Tcl_AppendResult(interp, "sedit_apply(", dp->d_namep,
 				 "):  solid export failure\n", (char *)NULL);
 		if (accept_flag) {
-			if (es_int.idb_ptr)
-				rt_functab[es_int.idb_type].ft_ifree(&es_int);
-			db_free_external(&es_ext);
+			rt_db_free_internal(&es_int, &rt_uniresource);
 		}
 		return TCL_ERROR;				/* FAIL */
-	}
-
-    	if (es_int.idb_ptr && accept_flag)
-		rt_functab[es_int.idb_type].ft_ifree(&es_int);
-
-	if (db_put_external(&es_ext, dp, dbip) < 0) {
-		if (accept_flag)
-			db_free_external(&es_ext);
-		TCL_WRITE_ERR_return;
 	}
 
 	if (accept_flag) {
@@ -7661,24 +7721,31 @@ sedit_apply(accept_flag)
 		es_edflag = -1;
 		es_edclass = EDIT_CLASS_NULL;
 
-		if (es_int.idb_ptr)
-			rt_functab[es_int.idb_type].ft_ifree(&es_int);
-		es_int.idb_ptr = (genptr_t)NULL;
-		db_free_external(&es_ext);
+		rt_db_free_internal(&es_int, &rt_uniresource);
+	} else {
+		/* XXX hack to restore es_int after rt_db_put_internal blows it away */
+		/* Read solid description into es_int again!!! Gaak! */
+		if (rt_db_get_internal(&es_int, LAST_SOLID(illump),
+				       dbip, NULL, &rt_uniresource) < 0) {
+			Tcl_AppendResult(interp, "sedit_apply(",
+					 LAST_SOLID(illump)->d_namep,
+					 "):  solid reimport failure\n", (char *)NULL);
+			rt_db_free_internal(&es_int, &rt_uniresource);
+			return TCL_ERROR;
+		}
 	}
+
 
 	return TCL_OK;
 }
 
 void
-sedit_accept()
+sedit_accept(void)
 {
-	struct directory	*dp;
-
 	if (dbip == DBI_NULL)
 		return;
 
-	if (not_state(ST_S_EDIT, "Solid edit accept"))
+	if (not_state(ST_S_EDIT, "Primitive edit accept"))
 		return;
 
 	if (dbip->dbi_read_only) {
@@ -7695,7 +7762,7 @@ sedit_accept()
 }
 
 void
-sedit_reject()
+sedit_reject(void)
 {
 	if( not_state( ST_S_EDIT, "Solid edit reject" ) )  return;
 
@@ -7723,8 +7790,8 @@ sedit_reject()
 	{
 	  register struct solid *sp;
 
-	  FOR_ALL_SOLIDS(sp, &HeadSolid.l) {
-	    if(sp->s_path[sp->s_last]->d_addr == illump->s_path[illump->s_last]->d_addr)
+	  FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid) {
+	    if(LAST_SOLID(sp) == LAST_SOLID(illump))
 	      (void)replot_original_solid( sp );
 	  }
 	}
@@ -7734,9 +7801,7 @@ sedit_reject()
 	es_edflag = -1;
 	es_edclass = EDIT_CLASS_NULL;
 
-    	if( es_int.idb_ptr )  rt_functab[es_int.idb_type].ft_ifree( &es_int );
-	es_int.idb_ptr = (genptr_t)NULL;
-	db_free_external( &es_ext );
+	rt_db_free_internal( &es_int, &rt_uniresource );
 }
 
 int
@@ -7773,7 +7838,13 @@ vect_t argvect;
   }
 
   if( es_edflag == PSCALE || es_edflag == SSCALE )  {
-    if( es_menu == MENU_PIPE_PT_OD || es_menu == MENU_PIPE_PT_ID || MENU_PIPE_SCALE_ID )
+    if (inpara != 1) {
+	    Tcl_AppendResult(interp, "ERROR: only one argument needed\n", (char *)NULL);
+	    inpara = 0;
+	    return TCL_ERROR;
+    }
+
+    if( es_menu == MENU_PIPE_PT_OD || es_menu == MENU_PIPE_PT_ID || es_menu == MENU_PIPE_SCALE_ID )
       {
 	if( es_para[0] < 0.0 )
 	  {
@@ -7790,6 +7861,12 @@ vect_t argvect;
 	  return TCL_ERROR;
 	}
       }
+  } else {
+    if (inpara != 3) {
+	    Tcl_AppendResult(interp, "ERROR: three arguments needed\n", (char *)NULL);
+	    inpara = 0;
+	    return TCL_ERROR;
+    }
   }
 
   /* check if need to convert input values to the base unit */
@@ -7844,7 +7921,7 @@ vect_t argvect;
 
   if(SEDIT_TRAN){
     vect_t diff;
-    fastf_t inv_Viewscale = 1/view_state->vs_Viewscale;
+    fastf_t inv_Viewscale = 1/view_state->vs_vop->vo_scale;
 		    
     VSUB2(diff, es_para, e_axes_pos);
     VSCALE(edit_absolute_model_tran, diff, inv_Viewscale);
@@ -7907,12 +7984,12 @@ double	xangle, yangle, zangle;
 	if(!SEDIT_ROTATE)
 	  return 0;
 
-	bn_mat_idn( incr_change );
-	buildHrot( incr_change, xangle, yangle, zangle );
+	MAT_IDN( incr_change );
+	bn_mat_angles_rad(incr_change, xangle, yangle, zangle);
 
 	/* accumulate the translations */
 	bn_mat_mul(tempp, incr_change, acc_rot_sol);
-	bn_mat_copy(acc_rot_sol, tempp);
+	MAT_COPY(acc_rot_sol, tempp);
 
 	/* sedit() will use incr_change or acc_rot_sol ?? */
 	sedit();	/* change es_int only, NOW */
@@ -7934,8 +8011,8 @@ double	xangle, yangle, zangle;
 
 	if( movedir != ROTARROW )  return 0;
 
-	bn_mat_idn( incr_change );
-	buildHrot( incr_change, xangle, yangle, zangle );
+	MAT_IDN( incr_change );
+	bn_mat_angles_rad(incr_change, xangle, yangle, zangle);
 
 	/* accumulate change matrix - do it wrt a point NOT view center */
 #if 0
@@ -7959,13 +8036,13 @@ double	xangle, yangle, zangle;
  *  XXX This really should use import/export interface!!!  Or be part of it.
  */
 void
-label_edited_solid( num_lines, lines, pl, max_pl, xform, ip )
-int *num_lines;
-point_t *lines;
-struct rt_point_labels	pl[];
-int			max_pl;
-CONST mat_t		xform;
-struct rt_db_internal	*ip;
+label_edited_solid(
+	int *num_lines,
+	point_t *lines,
+	struct rt_point_labels	pl[],
+	int			max_pl,
+	const mat_t		xform,
+	struct rt_db_internal	*ip)
 {
 	register int	i;
 	point_t		work;
@@ -8363,9 +8440,11 @@ struct rt_db_internal	*ip;
 	case ID_NMG:
 		/* New way only */
 		{
+#ifndef NO_MAGIC_CHECKING
 			register struct model *m =
 				(struct model *) es_int.idb_ptr;
 			NMG_CK_MODEL(m);
+#endif
 
 			if( es_eu )  {
 				point_t	cent;
@@ -8381,10 +8460,12 @@ struct rt_db_internal	*ip;
 		break;
 	case ID_PIPE:
 		{
+#ifndef NO_MAGIC_CHECKING
 			register struct rt_pipe_internal *pipe =
 				(struct rt_pipe_internal *)es_int.idb_ptr;
 
 			RT_PIPE_CK_MAGIC( pipe );
+#endif
 
 			if( es_pipept ) {
 				BU_CKMAG( es_pipept, WDB_PIPESEG_MAGIC, "wdb_pipept" );
@@ -8477,11 +8558,11 @@ struct rt_db_internal	*ip;
  *	 0	OK
  */
 int
-rt_arb_calc_planes( planes, arb, type, tol )
-plane_t			planes[6];
-struct rt_arb_internal	*arb;
-int			type;
-CONST struct bn_tol	*tol;
+rt_arb_calc_planes(
+	plane_t			planes[6],
+	struct rt_arb_internal	*arb,
+	int			type,
+	const struct bn_tol	*tol)
 {
 	register int i, p1, p2, p3;
 
@@ -8513,8 +8594,7 @@ CONST struct bn_tol	*tol;
 
 /* -------------------------------- */
 void
-sedit_vpick( v_pos )
-point_t	v_pos;
+sedit_vpick( point_t v_pos )
 {
 	point_t	m_pos;
 	int	surfno, u, v;
@@ -8645,8 +8725,8 @@ nurb_closest3d(surface, uval, vval, spl, ref_pt )
 int				*surface;
 int				*uval;
 int				*vval;
-CONST struct rt_nurb_internal	*spl;
-CONST point_t			ref_pt;
+const struct rt_nurb_internal	*spl;
+const point_t			ref_pt;
 {
 	struct face_g_snurb	*srf;
 	fastf_t		*mesh;
@@ -8702,13 +8782,13 @@ CONST point_t			ref_pt;
  *	transformed into 2 space projection plane coordinates.
  */
 int
-nurb_closest2d(surface, uval, vval, spl, ref_pt, mat )
-int				*surface;
-int				*uval;
-int				*vval;
-CONST struct rt_nurb_internal	*spl;
-CONST point_t			ref_pt;
-CONST mat_t			mat;
+nurb_closest2d(
+	int				*surface,
+	int				*uval,
+	int				*vval,
+	const struct rt_nurb_internal	*spl,
+	const point_t			ref_pt,
+	const mat_t			mat)
 {
 	struct face_g_snurb	*srf;
 	point_t		ref_2d;
@@ -8993,7 +9073,6 @@ Tcl_Interp *interp;
 int argc;
 char **argv;
 {
-  int i;
   int status;
   struct rt_db_internal ces_int;
   Tcl_Obj *pto;
@@ -9023,7 +9102,7 @@ char **argv;
 
     pnto = Tcl_NewObj();
     /* insert solid name, type and parameters */
-    Tcl_AppendStringsToObj(pnto, illump->s_path[illump->s_last]->d_namep, " ",
+    Tcl_AppendStringsToObj(pnto, LAST_SOLID(illump)->d_namep, " ",
 			   Tcl_GetStringFromObj(pto, (int *)0), (char *)0);
 
     Tcl_SetObjResult(interp, pnto);
@@ -9047,8 +9126,12 @@ char **argv;
 
   pnto = Tcl_NewObj();
   /* insert full pathname */
-  for(i=0; i <= illump->s_last; i++){
-    Tcl_AppendStringsToObj(pnto, "/", illump->s_path[i]->d_namep, (char *)0);
+  {
+  	struct bu_vls str;
+  	bu_vls_init(&str);
+  	db_path_to_vls(&str, &illump->s_fullpath);
+        Tcl_AppendStringsToObj(pnto, bu_vls_addr(&str), NULL );
+  	bu_vls_free(&str);
   }
 
   /* insert solid type and parameters */
@@ -9056,8 +9139,7 @@ char **argv;
 
   Tcl_SetObjResult(interp, pnto);
 
-  if( ces_int.idb_ptr )
-    rt_functab[ces_int.idb_type].ft_ifree( &ces_int );
+  rt_db_free_internal( &ces_int, &rt_uniresource );
 
   return status;
 }
@@ -9069,7 +9151,7 @@ Tcl_Interp *interp;
 int argc;
 char **argv;
 {
-  register CONST struct rt_functab *ftp;
+  register const struct rt_functab *ftp;
   long save_magic;
   int context;
 
@@ -9143,6 +9225,9 @@ char **argv;
   return TCL_OK;
 }
 
+/*
+ *			F _ S E D I T _ R E S E T
+ */
 int
 f_sedit_reset(clientData, interp, argc, argv)
 ClientData clientData;
@@ -9150,7 +9235,6 @@ Tcl_Interp *interp;
 int argc;
 char **argv;
 {
-  int id;
   struct bu_vls vls;
 
   if(state != ST_S_EDIT)
@@ -9165,17 +9249,19 @@ char **argv;
   }
 
   /* free old copy */
-  if(es_int.idb_ptr)
-    rt_functab[es_int.idb_type].ft_ifree(&es_int);
+  rt_db_free_internal( &es_int, &rt_uniresource );
+
+  /* reset */
+  es_pipept = (struct wdb_pipept *)NULL;
+  es_s = (struct shell *)NULL;
+  es_eu = (struct edgeuse *)NULL;
 
   /* read in a fresh copy */
-  RT_INIT_DB_INTERNAL(&es_int);
-  id = rt_id_solid( &es_ext );
-  if( rt_functab[id].ft_import( &es_int, &es_ext, bn_mat_identity, dbip ) < 0 )  {
-    Tcl_AppendResult(interp, "init_sedit(", illump->s_path[illump->s_last]->d_namep,
+  if( rt_db_get_internal( &es_int, LAST_SOLID(illump),
+   dbip, NULL, &rt_uniresource ) < 0 )  {
+    Tcl_AppendResult(interp, "sedit_reset(",
+   			LAST_SOLID(illump)->d_namep,
 		     "):  solid import failure\n", (char *)NULL);
-    if( es_int.idb_ptr )  rt_functab[id].ft_ifree( &es_int );
-    db_free_external( &es_ext );
     return TCL_ERROR;				/* FAIL */
   }
   RT_CK_DB_INTERNAL( &es_int );
@@ -9186,7 +9272,7 @@ char **argv;
   get_solid_keypoint( es_keypoint, &es_keytag, &es_int, es_mat );
 
   /* Reset relevant variables */
-  bn_mat_idn(acc_rot_sol);
+  MAT_IDN(acc_rot_sol);
   VSETALL( edit_absolute_model_rotate, 0.0 );
   VSETALL( edit_absolute_object_rotate, 0.0 );
   VSETALL( edit_absolute_view_rotate, 0.0 );
@@ -9228,7 +9314,7 @@ f_sedit_apply(clientData, interp, argc, argv)
 
 	CHECK_DBI_NULL;
 
-	if (not_state(ST_S_EDIT, "Solid edit accept")) {
+	if (not_state(ST_S_EDIT, "Primitive edit accept")) {
 		Tcl_AppendResult(interp, "Must be in solid edit state!\n");
 		return TCL_ERROR;
 	}
@@ -9294,13 +9380,11 @@ f_oedit_apply(clientData, interp, argc, argv)
 	char		*strp="";
 
 	CHECK_DBI_NULL;
-	oedit_apply();
-
-	replot_original_solid(illump);
+	oedit_apply( UP ); /* apply changes, but continue editing */
 
 	/* Save aggregate path matrix */
-	bn_mat_idn(es_mat);
-	pathHmat(illump, es_mat, illump->s_last-1);
+	MAT_IDN(es_mat);
+	pathHmat(illump, es_mat, illump->s_fullpath.fp_len-2);
 
 	/* get the inverse matrix */
 	bn_mat_inv(es_invmat, es_mat);

@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCScell[] = "@(#)$Header$ (BRL)";
+static const char RCScell[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -24,12 +24,18 @@ static char RCScell[] = "@(#)$Header$ (BRL)";
 #include <stdio.h>
 #include <math.h>
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "./ext.h"
 
-#include "rdebug.h"
+#include "rtprivate.h"
 
 #define	MM2IN	0.03937008		/* mm times MM2IN gives inches */
 
@@ -130,7 +136,7 @@ struct application	*ap;
 	 *  a point in model space (with units of mm), and convert it
 	 *  to a point in HV space, with units of inches.
 	 */
-	bn_mat_copy( model2hv, Viewrotscale );
+	MAT_COPY( model2hv, Viewrotscale );
 	model2hv[15] = 1/MM2IN;
 }
 

@@ -18,7 +18,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #define USE_OLD_MENUS 0
@@ -68,11 +68,9 @@ extern struct rt_db_internal	es_int;
  *  Prepare the numerical display of the currently edited solid/object.
  */
 void
-create_text_overlay( vp )
-register struct bu_vls	*vp;
+create_text_overlay( struct bu_vls *vp )
 {
 	struct directory	*dp;
-	register int	i;
 	struct bu_vls vls;
 
 	BU_CK_VLS(vp);
@@ -86,7 +84,7 @@ register struct bu_vls	*vp;
 
 	/* print solid info at top of screen */
 	if( es_edflag >= 0 ) {
-		dp = illump->s_path[illump->s_last];
+		dp = LAST_SOLID(illump);
 
 		bu_vls_strcat( vp, "** SOLID -- " );
 		bu_vls_strcat( vp, dp->d_namep );
@@ -94,12 +92,9 @@ register struct bu_vls	*vp;
 
 		vls_solid( vp, &es_int, bn_mat_identity );
 
-		if(illump->s_last) {
+		if(illump->s_fullpath.fp_len > 1) {
 			bu_vls_strcat( vp, "\n** PATH --  ");
-			for(i=0; i <= illump->s_last; i++) {
-				bu_vls_strcat( vp, "/" );
-				bu_vls_strcat( vp, illump->s_path[i]->d_namep);
-			}
+			db_path_to_vls( vp, &illump->s_fullpath );
 			bu_vls_strcat( vp, ": " );
 
 			/* print the evaluated (path) solid parameters */
@@ -110,10 +105,7 @@ register struct bu_vls	*vp;
 	/* display path info for object editing also */
 	if( state == ST_O_EDIT ) {
 		bu_vls_strcat( vp, "** PATH --  ");
-		for(i=0; i <= illump->s_last; i++) {
-			bu_vls_strcat( vp, "/" );
-			bu_vls_strcat( vp, illump->s_path[i]->d_namep);
-		}
+		db_path_to_vls( vp, &illump->s_fullpath );
 		bu_vls_strcat( vp, ": " );
 
 		/* print the evaluated (path) solid parameters */
@@ -189,10 +181,10 @@ register struct bu_vls	*vp;
  * so each line is written with a separate call to DM_DRAW_STRING_2D().
  */
 void
-screen_vls( xbase, ybase, vp )
-int	xbase;
-int	ybase;
-register struct bu_vls	*vp;
+screen_vls(
+	int	xbase,
+	int	ybase,
+	struct bu_vls	*vp)
 {
   register char	*start;
   register char	*end;
@@ -226,8 +218,7 @@ register struct bu_vls	*vp;
  * NOTE that this routine depends on being called AFTER dozoom();
  */
 void
-dotitles(overlay_vls)
-struct bu_vls *overlay_vls;
+dotitles(struct bu_vls *overlay_vls)
 {
 	register int    i;
 	register int    x, y;			/* for menu computations */
@@ -238,6 +229,7 @@ struct bu_vls *overlay_vls;
 	typedef char    c_buf[80];
 	auto c_buf      cent_x, cent_y, cent_z, size, ang_x, ang_y, ang_z;
 	int             ss_line_not_drawn=1; /* true if the second status line has not been drawn */
+	fastf_t		tmp_val;
 
 	if(dbip == DBI_NULL)
 	  return;
@@ -252,9 +244,9 @@ struct bu_vls *overlay_vls;
 	  bu_vls_init(&path_lhs);
 	  bu_vls_init(&path_rhs);
 	  for (i = 0; i < ipathpos; i++)
-	    bu_vls_printf(&path_lhs, "/%s", illump->s_path[i]->d_namep);
-	  for (; i <= illump->s_last; i++)
-	    bu_vls_printf(&path_rhs, "/%s", illump->s_path[i]->d_namep);
+	    bu_vls_printf(&path_lhs, "/%s", DB_FULL_PATH_GET(&illump->s_fullpath,i)->d_namep);
+	  for (; i < illump->s_fullpath.fp_len; i++)
+	    bu_vls_printf(&path_rhs, "/%s", DB_FULL_PATH_GET(&illump->s_fullpath,i)->d_namep);
 
 	  bu_vls_printf(&vls, "%s(path_lhs)", MGED_DISPLAY_VAR);
 	  Tcl_SetVar(interp, bu_vls_addr(&vls), bu_vls_addr(&path_lhs), TCL_GLOBAL_ONLY);
@@ -271,15 +263,36 @@ struct bu_vls *overlay_vls;
 	  Tcl_SetVar(interp, bu_vls_addr(&vls), "", TCL_GLOBAL_ONLY);
 	}
 
-	sprintf(cent_x, "%.3f", -view_state->vs_toViewcenter[MDX]*base2local);
-	sprintf(cent_y, "%.3f", -view_state->vs_toViewcenter[MDY]*base2local);
-	sprintf(cent_z, "%.3f", -view_state->vs_toViewcenter[MDZ]*base2local);
+	/* take some care here to avoid buffer overrun */
+	tmp_val = -view_state->vs_vop->vo_center[MDX]*base2local;
+	if( fabs( tmp_val ) < 10e70 ) {
+		sprintf(cent_x, "%.3f", tmp_val);
+	} else {
+		sprintf(cent_x, "%.3g", tmp_val);
+	}
+	tmp_val = -view_state->vs_vop->vo_center[MDY]*base2local;
+	if( fabs( tmp_val ) < 10e70 ) {
+		sprintf(cent_y, "%.3f", tmp_val);
+	} else {
+		sprintf(cent_y, "%.3g", tmp_val);
+	}
+	tmp_val = -view_state->vs_vop->vo_center[MDZ]*base2local;
+	if( fabs( tmp_val ) < 10e70 ) {
+		sprintf(cent_z, "%.3f", tmp_val);
+	} else {
+		sprintf(cent_z, "%.3g", tmp_val);
+	}
 	bu_vls_trunc(&vls, 0);
 	bu_vls_printf(&vls, "cent=(%s %s %s)", cent_x, cent_y, cent_z);
 	Tcl_SetVar(interp, bu_vls_addr(&curr_dm_list->dml_center_name),
 		   bu_vls_addr(&vls), TCL_GLOBAL_ONLY);
 
-	sprintf(size, "sz=%.3f", VIEWSIZE*base2local);
+	tmp_val = view_state->vs_vop->vo_size*base2local;
+	if( fabs( tmp_val ) < 10e70 ) {
+		sprintf(size, "sz=%.3f", tmp_val);
+	} else {
+		sprintf(size, "sz=%.3g", tmp_val);
+	}
 	Tcl_SetVar(interp, bu_vls_addr(&curr_dm_list->dml_size_name),
 		    size, TCL_GLOBAL_ONLY);
 
@@ -289,10 +302,7 @@ struct bu_vls *overlay_vls;
 		   (char *)bu_units_string(dbip->dbi_local2base), TCL_GLOBAL_ONLY);
 
 	bu_vls_trunc(&vls, 0);
-	bu_vls_printf(&vls, "az=%3.2f  el=%3.2f  tw=%3.2f",
-		      view_state->vs_azimuth,
-		      view_state->vs_elevation,
-		      view_state->vs_twist);
+	bu_vls_printf(&vls, "az=%3.2f  el=%3.2f  tw=%3.2f", V3ARGS(view_state->vs_vop->vo_aet));
 	Tcl_SetVar(interp, bu_vls_addr(&curr_dm_list->dml_aet_name),
 		   bu_vls_addr(&vls), TCL_GLOBAL_ONLY);
 
@@ -314,7 +324,7 @@ struct bu_vls *overlay_vls;
 		point_t lines[2*4];	/* up to 4 lines to draw */
 		int num_lines=0;
 
-		if( mged_variables->mv_perspective <= 0)
+		if( view_state->vs_vop->vo_perspective <= 0)
 		  bn_mat_mul( xform, view_state->vs_model2objview, es_mat );
 		else{
 		  mat_t tmat;
@@ -391,7 +401,7 @@ if(mged_variables->mv_faceplate){
 	 */
 	if( illump != SOLID_NULL &&
 	    (state==ST_O_PATH || state==ST_O_PICK || state==ST_S_PICK) )  {
-	  for( i=0; i <= illump->s_last; i++ )  {
+	  for( i=0; i < illump->s_fullpath.fp_len; i++ )  {
 	    if( i == ipathpos  &&  state == ST_O_PATH )  {
 	      DM_SET_FGCOLOR(dmp,
 			     color_scheme->cs_state_text1[0],
@@ -405,8 +415,9 @@ if(mged_variables->mv_faceplate){
 			   color_scheme->cs_state_text2[0],
 			   color_scheme->cs_state_text2[1],
 			   color_scheme->cs_state_text2[2], 1);
-	    DM_DRAW_STRING_2D( dmp, illump->s_path[i]->d_namep,
-			       GED2PM1(x), GED2PM1(y), 0, 0 );
+	    DM_DRAW_STRING_2D( dmp,
+			DB_FULL_PATH_GET(&illump->s_fullpath,i)->d_namep,
+			GED2PM1(x), GED2PM1(y), 0, 0 );
 	    y += MENU_DY;
 	  }
 	}
@@ -472,11 +483,7 @@ if(mged_variables->mv_faceplate){
 	bu_vls_printf(&vls,
 		      " cent=(%s, %s, %s), %s %s, ", cent_x, cent_y, cent_z,
 		      size, bu_units_string(dbip->dbi_local2base));
-	bu_vls_printf(&vls,
-		       "az=%3.2f el=%3.2f tw=%3.2f ang=(%s, %s, %s)",
-		      view_state->vs_azimuth,
-		      view_state->vs_elevation,
-		      view_state->vs_twist,
+	bu_vls_printf(&vls, "az=%3.2f el=%3.2f tw=%3.2f ang=(%s, %s, %s)", V3ARGS(view_state->vs_vop->vo_aet),
 		      ang_x, ang_y, ang_z);
 	DM_SET_FGCOLOR(dmp,
 		       color_scheme->cs_status_text1[0],
@@ -501,7 +508,7 @@ if(mged_variables->mv_faceplate){
 	if( adc_state->adc_draw ) {
 	  fastf_t f;
 
-	  f = view_state->vs_Viewscale * base2local;
+	  f = view_state->vs_vop->vo_scale * base2local;
 	  /* Angle/Distance cursor */
 	  bu_vls_trunc(&vls, 0);
 	  bu_vls_printf( &vls,
@@ -563,11 +570,12 @@ if(mged_variables->mv_faceplate){
 
 	    /* Illuminated path */
 	    bu_vls_strcat(&vls, " Path: ");
-	    for( i=0; i <= illump->s_last; i++ )  {
+	    for( i=0; i < illump->s_fullpath.fp_len; i++ )  {
 	      if( i == ipathpos  &&
 		  (state == ST_O_PATH || state == ST_O_EDIT) )
 		bu_vls_strcat( &vls, "/__MATRIX__" );
-	      bu_vls_printf(&vls, "/%s", illump->s_path[i]->d_namep);
+	      bu_vls_printf(&vls, "/%s",
+	    		DB_FULL_PATH_GET(&illump->s_fullpath,i)->d_namep );
 	    }
 	    DM_SET_FGCOLOR(dmp,
 			   color_scheme->cs_status_text2[0],

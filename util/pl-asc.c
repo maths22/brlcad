@@ -18,10 +18,22 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <unistd.h>
+
+#include "conf.h"
+#include "machine.h"
+#include "bu.h"
 
 #define	TBAD	0	/* no such command */
 #define TNONE	1	/* no arguments */
@@ -106,6 +118,7 @@ void	outchar(), outstring(), outshort(), outfloat();
 static char usage[] = "\
 Usage: pl-asc [-v] [unix_plot]\n";
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;
@@ -185,6 +198,7 @@ char	**argv;
 			}
 		}
 	}
+	return 0;
 }
 
 void
@@ -213,6 +227,21 @@ int	n;
 	putchar('"');
 }
 
+short
+getshort()
+{
+	register long	v, w;
+
+	v = getc(fp);
+	v |= (getc(fp)<<8);	/* order is important! */
+
+	/* worry about sign extension - sigh */
+	if( v <= 0x7FFF )  return(v);
+	w = -1;
+	w &= ~0x7FFF;
+	return( w | v );
+}
+
 void
 outshort( n )
 int	n;
@@ -237,7 +266,7 @@ int	n;
 	double	out[16];
 
 	fread( in, 8, n, fp );
-	ntohd( out, in, n );
+	ntohd( (unsigned char *)out, (unsigned char *)in, n );
 
 	for( i = 0; i < n; i++ ) {
 		if( i != 0 )
@@ -246,16 +275,3 @@ int	n;
 	}
 }
 
-getshort()
-{
-	register long	v, w;
-
-	v = getc(fp);
-	v |= (getc(fp)<<8);	/* order is important! */
-
-	/* worry about sign extension - sigh */
-	if( v <= 0x7FFF )  return(v);
-	w = -1;
-	w &= ~0x7FFF;
-	return( w | v );
-}

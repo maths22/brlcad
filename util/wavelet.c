@@ -42,6 +42,7 @@
 
 
 #include <stdio.h>
+#include <unistd.h>
 #include "machine.h"
 #include "bu.h"
 #include "vmath.h"
@@ -105,7 +106,7 @@ char *av[];
 	int  c;
 	char *strrchr();
 
-	if ( progname=strrchr(*av, '/') )
+	if ( (progname=strrchr(*av, '/')) )
 		progname++;
 	else
 		progname = *av;

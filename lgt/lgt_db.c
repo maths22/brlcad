@@ -6,7 +6,7 @@
 			(301)278-6647 or AV-298-6647
 */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -30,6 +30,7 @@ STATIC int	get_Lgt_Entry(), put_Lgt_Entry();
 /*	l g t _ P r i n t _ D b ( )
 	Print light source database entry.
  */
+int
 lgt_Print_Db( id )
 int		id;
 	{	register Lgt_Source	*entry;
@@ -100,6 +101,7 @@ int		id;
 	Open light source database and read entries into table,
 	return number of entries successfully read.
  */
+int
 lgt_Rd_Db( file )
 char	*file;
 	{	register Lgt_Source	*entry;
@@ -121,6 +123,7 @@ char	*file;
 	Write ASCII light source database from table.
 	Return 1 for success, 0 for failure.
  */
+int
 lgt_Save_Db( file )
 char	*file;
 	{
@@ -145,6 +148,7 @@ char	*file;
 /*	l g t _ E d i t _ D b _ E n t r y ( )
 	Create or overwrite entry in light source table.
  */
+int
 lgt_Edit_Db_Entry( id )
 int	id;
 	{	register Lgt_Source	*entry;

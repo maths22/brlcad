@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Id$ (BRL)";
+static const char RCSid[] = "@(#)$Id$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -153,6 +153,7 @@ register char	**argv;
 /*
  *			M A I N
  */
+int
 main( argc, argv )
 int	argc;
 char	*argv[];
@@ -250,7 +251,7 @@ char	*argv[];
 	outrle.ymin = screen_yoff;
 	outrle.xmax = screen_xoff + file_width - 1;
 	outrle.ymax = screen_yoff + file_height - 1;
-	outrle.comments = (CONST char **)0;
+	outrle.comments = (const char **)0;
 
 	/* Add comments to the header file, since we have one */
 	if( framebuffer == (char *)0 )

@@ -15,17 +15,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "nmg.h"
 #include "raytrace.h"
+#include "plot3.h"
 
 /*	EDGE-FACE correlation data
  * 	used in edge_hit() for 3manifold case
@@ -38,7 +40,7 @@ struct ef_data {
 };
 
 #if 0
-static CONST 
+static const 
 struct bu_structparse rt_ef_parsetab[] = {
 	{"%f", 1, "fdotr", offsetof(struct ef_data, fdotr), BU_STRUCTPARSE_FUNC_NULL},
 	{"%f", 1, "fdotl", offsetof(struct ef_data, fdotl), BU_STRUCTPARSE_FUNC_NULL},
@@ -47,7 +49,7 @@ struct bu_structparse rt_ef_parsetab[] = {
 	{"", 0, (char *)NULL,	  0,			  BU_STRUCTPARSE_FUNC_NULL}
 };
 
-static CONST
+static const
 struct bu_structparse rt_hit_parsetab[] = {
 {"%f", 1, "hit_dist", offsetof(struct hit, hit_dist), BU_STRUCTPARSE_FUNC_NULL},
 {"%f", 3, "hit_point", bu_offsetofarray(struct hit, hit_point), BU_STRUCTPARSE_FUNC_NULL},
@@ -914,7 +916,7 @@ struct soltab		*stp;
 			}
 
 			/* Now bomb off */
-			bu_log("Solid: %s, pixel=%d %d, lvl=%d %s\n",
+			bu_log("Primitive: %s, pixel=%d %d, lvl=%d %s\n",
 				rd->stp->st_dp->d_namep,
 				rd->ap->a_x, rd->ap->a_y, rd->ap->a_level,
 				rd->ap->a_purpose );
@@ -936,7 +938,7 @@ struct soltab		*stp;
 	    	bu_log("Ray: pt:(%g %g %g) dir:(%g %g %g)\n",
 	    		V3ARGS(rd->rp->r_pt), V3ARGS(rd->rp->r_dir) );
 		
-		bu_log("Solid: %s, pixel=%d %d, lvl=%d %s\n",
+		bu_log("Primitive: %s, pixel=%d %d, lvl=%d %s\n",
 			stp->st_dp->d_namep,
 			ap->a_x, ap->a_y, ap->a_level,
 			ap->a_purpose );
@@ -1110,7 +1112,7 @@ struct ray_data *rd;
 
 	bu_log("<---Unable to fix state transition\n");
 	pl_ray(rd);
-	bu_log("Solid: %s, pixel=%d %d,  lvl=%d %s\n",
+	bu_log("Primitive: %s, pixel=%d %d,  lvl=%d %s\n",
 		rd->stp->st_dp->d_namep,
 		rd->ap->a_x, rd->ap->a_y, rd->ap->a_level,
 		rd->ap->a_purpose );
@@ -1161,7 +1163,7 @@ struct ray_data	*rd;
 		/* this better be a 2-manifold face */
 		bu_log("%s[%d]: This better be a 2-manifold face\n",
 			__FILE__, __LINE__);
-		bu_log("Solid: %s, pixel=%d %d,  lvl=%d %s\n",
+		bu_log("Primitive: %s, pixel=%d %d,  lvl=%d %s\n",
 				rd->stp->st_dp->d_namep,
 				rd->ap->a_x, rd->ap->a_y, rd->ap->a_level,
 				rd->ap->a_purpose );
@@ -1218,7 +1220,7 @@ struct ray_data	*rd;
 			 *   else
 			 *	This is a real conflict.
 			 */
-			if (long_ptr = common_topo(a_tbl, next_tbl)) {
+			if ( (long_ptr = common_topo(a_tbl, next_tbl)) ) {
 				/* morf the two hit points */
 				a_hit->in_out = (a_hit->in_out & 0x0f0) + 
 					NMG_RAY_STATE_ON;
@@ -1263,7 +1265,6 @@ nmg_ray_segs(rd)
 struct ray_data	*rd;
 {
 	struct hitmiss *a_hit;
-	int seg_count=0;
 	static int last_miss=0;
 
 #ifdef DO_LONGJMP
@@ -1287,6 +1288,7 @@ struct ray_data	*rd;
 		last_miss = 1;
 		return(0);			/* MISS */
 	} else if (rt_g.NMG_debug & DEBUG_RT_SEGS) {
+		int seg_count=0;
 
 		print_seg_list(rd->seghead, seg_count, "before");
 
@@ -1312,18 +1314,19 @@ struct ray_data	*rd;
 		pl_ray(rd);
 	}
 
-	seg_count = nmg_bsegs(rd, rd->ap, rd->seghead, rd->stp);
+	{
+		int seg_count = nmg_bsegs(rd, rd->ap, rd->seghead, rd->stp);
 
 
-	NMG_FREE_HITLIST( &rd->rd_hit, rd->ap );
-	NMG_FREE_HITLIST( &rd->rd_miss, rd->ap );
+		NMG_FREE_HITLIST( &rd->rd_hit, rd->ap );
+		NMG_FREE_HITLIST( &rd->rd_miss, rd->ap );
 
 
-	if (rt_g.NMG_debug & DEBUG_RT_SEGS) {
-		/* print debugging data before returning */
-		print_seg_list(rd->seghead, seg_count, "after");
+		if (rt_g.NMG_debug & DEBUG_RT_SEGS) {
+			/* print debugging data before returning */
+			print_seg_list(rd->seghead, seg_count, "after");
+		}
+		return(seg_count);
 	}
-
-	return(seg_count);
 }
 

@@ -16,7 +16,7 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include <stdio.h>
@@ -185,6 +185,7 @@ char *av[];
 	 */
 	if ((arg_index = parse_args(ac, av)) >= ac) usage("No extra args specified\n");
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
 
 	/* open the database */
 	if ((dbip = db_open(av[arg_index], "r")) == DBI_NULL) {
@@ -194,7 +195,7 @@ char *av[];
 
 	if (++arg_index >= ac) usage("No NMG specified\n");
 
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
 	/* process each remaining argument */
 	for ( ; arg_index < ac ; arg_index++ ) {
@@ -204,9 +205,9 @@ char *av[];
 			exit(-1);
 		}
 		
-		bn_mat_idn( my_mat );
-		if ((rt_db_get_internal( &ip, dp, dbip, my_mat ))<0) {
-			fprintf(stderr, "%s: rt_db_get_internal() failed\n", progname);
+		MAT_IDN( my_mat );
+		if ((rt_db_get_internal( &ip, dp, dbip, my_mat, &rt_uniresource ))<0) {
+			fprintf(stderr, "%s: rt_db_get_internal() failed\n", progname );
 			exit(-1);
 		}
 
@@ -217,4 +218,5 @@ char *av[];
 		}
 		nmg_to_rib((struct model *)ip.idb_ptr );
 	}
+	return 0;
 }

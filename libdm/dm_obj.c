@@ -21,14 +21,23 @@
  *	This software is Copyright (C) 1997 by the United States Army
  *	in all countries except the USA.  All rights reserved.
  */
+
+#include "conf.h"
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#include <math.h>
+
+#ifdef DM_X
 #if 1
 #define USE_FBSERV
 #endif
 
-#include "conf.h"
-#include <math.h>
 #include "tk.h"
 #include <X11/Xutil.h>
+#else
+#include "tcl.h"
+#endif
 
 #include "machine.h"
 #include "externs.h"
@@ -38,25 +47,34 @@
 #include "raytrace.h"
 #include "solid.h"
 #include "dm.h"
-#ifdef USE_FBSERV
+
+#ifdef DM_X
 #include "dm-X.h"
+#include "dm_xvars.h"
+
 #ifdef DM_OGL
 #include <GL/glx.h>
 #include <GL/gl.h>
 #include "dm-ogl.h"
-#endif
-#include "dm_xvars.h"
-#endif
+#ifdef USE_FBSERV
+extern int _ogl_open_existing();
+extern int ogl_close_existing();
+#endif /* USE_FBSERV */
+#endif /* DM_OGL */
 
+#ifdef USE_FBSERV
 /* These functions live in libfb. */
 extern int _X24_open_existing();
 extern int X24_close_existing();
-extern int _ogl_open_existing();
-extern int ogl_close_existing();
 extern int fb_refresh();
+#endif /* USE_FBSERV */
+
+#endif /* DM_X */
 
 static int dmo_open_tcl();
+#if 0
 static int dmo_close_tcl();
+#endif
 static int dmo_drawBegin_tcl();
 static int dmo_drawEnd_tcl();
 static int dmo_clear_tcl();
@@ -84,6 +102,7 @@ static int dmo_openFb();
 static int dmo_closeFb();
 static int dmo_listen_tcl();
 static int dmo_refreshFb_tcl();
+static void dmo_fbs_callback();
 #endif
 static int dmo_flush_tcl();
 static int dmo_sync_tcl();
@@ -91,15 +110,15 @@ static int dmo_size_tcl();
 static int dmo_get_aspect_tcl();
 static int dmo_observer_tcl();
 
-static void dmo_fbs_callback();
-
 static struct dm_obj HeadDMObj;	/* head of display manager object list */
 
 static struct bu_cmdtab dmo_cmds[] = {
 	{"bg",			dmo_bg_tcl},
 	{"bounds",		dmo_bounds_tcl},
 	{"clear",		dmo_clear_tcl},
+#if 0
 	{"close",		dmo_close_tcl},
+#endif
 	{"configure",		dmo_configure_tcl},
 	{"debug",		dmo_debug_tcl},
 	{"drawBegin",		dmo_drawBegin_tcl},
@@ -175,8 +194,10 @@ dmo_deleteProc(clientData)
 	/* free observers */
 	bu_observer_free(&dmop->dmo_observers);
 
+#ifdef USE_FBSERV
 	/* close framebuffer */
 	dmo_closeFb(dmop);
+#endif
 
 	bu_vls_free(&dmop->dmo_name);
 	DM_CLOSE(dmop->dmo_dmp);
@@ -185,6 +206,7 @@ dmo_deleteProc(clientData)
 
 }
 
+#if 0
 /*
  * Close a display manager object.
  *
@@ -214,6 +236,7 @@ dmo_close_tcl(clientData, interp, argc, argv)
 
 	return TCL_OK;
 }
+#endif
 
 /*
  * Open/create a display manager object.
@@ -266,13 +289,14 @@ dmo_open_tcl(clientData, interp, argc, argv)
 		}
 	}
 
+#ifdef DM_X
 	/* find display manager type */
 	if (argv[2][0] == 'X' || argv[2][0] == 'x')
 		type = DM_TYPE_X;
 #ifdef DM_OGL
 	else if (!strcmp(argv[2], "ogl"))
 		type = DM_TYPE_OGL;
-#endif
+#endif /* DM_OGL */
 #if 0
 	/* XXX - not yet ready to handle these display types */
 	else if (!strcmp(argv[2], "ps"))
@@ -291,6 +315,11 @@ dmo_open_tcl(clientData, interp, argc, argv)
 		Tcl_SetObjResult(interp, obj);
 		return TCL_ERROR;
 	}
+#else
+	Tcl_AppendStringsToObj(obj, "dmo_open: no supported display types", (char *)NULL);
+	Tcl_SetObjResult(interp, obj);
+	return TCL_ERROR;
+#endif /* DM_X */
 
 	{
 		int i;
@@ -345,12 +374,16 @@ dmo_open_tcl(clientData, interp, argc, argv)
 	dmop->dmo_dmp = dmp;
 	VSETALL(dmop->dmo_dmp->dm_clipmin, -2048.0);
 	VSETALL(dmop->dmo_dmp->dm_clipmax, 2047.0);
+
+#ifdef USE_FBSERV
 	dmop->dmo_fbs.fbs_listener.fbsl_fbsp = &dmop->dmo_fbs;
 	dmop->dmo_fbs.fbs_listener.fbsl_fd = -1;
 	dmop->dmo_fbs.fbs_listener.fbsl_port = -1;
 	dmop->dmo_fbs.fbs_fbp = FBIO_NULL;
 	dmop->dmo_fbs.fbs_callback = dmo_fbs_callback;
 	dmop->dmo_fbs.fbs_clientData = dmop;
+#endif
+
 	BU_LIST_INIT(&dmop->dmo_observers.l);
 
 	/* append to list of dm_obj's */
@@ -368,8 +401,10 @@ dmo_open_tcl(clientData, interp, argc, argv)
 	Tcl_Eval(interp, bu_vls_addr(&vls));
 	bu_vls_free(&vls);
 
+#ifdef USE_FBSERV
 	/* open the framebuffer */
 	dmo_openFb(dmop, interp);
+#endif
 
 	/* Return new function name as result */
 	Tcl_SetResult(interp, bu_vls_addr(&dmop->dmo_name), TCL_VOLATILE);
@@ -999,11 +1034,13 @@ dmo_configure_tcl(clientData, interp, argc, argv)
 	/* configure the display manager window */
 	status = DM_CONFIGURE_WIN(dmop->dmo_dmp);
 
+#ifdef USE_FBSERV
 	/* configure the framebuffer window */
 	if (dmop->dmo_fbs.fbs_fbp != FBIO_NULL)
 		fb_configureWindow(dmop->dmo_fbs.fbs_fbp,
 				   dmop->dmo_dmp->dm_width,
 				   dmop->dmo_dmp->dm_height);
+#endif
 
 	return status;
 }
@@ -1385,6 +1422,7 @@ dmo_openFb(dmop, interp)
 		_X24_open_existing(dmop->dmo_fbs.fbs_fbp,
 				   ((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->dpy,
 				   ((struct x_vars *)dmop->dmo_dmp->dm_vars.priv_vars)->pix,
+				   ((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->win,
 				   ((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->cmap,
 				   ((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->vip,
 				   dmop->dmo_dmp->dm_width,
@@ -1597,9 +1635,11 @@ dmo_flush_tcl(clientData, interp, argc, argv)
      int	argc;
      char	**argv;
 {
+#ifdef DM_X
 	struct dm_obj *dmop = (struct dm_obj *)clientData;
 
 	XFlush(((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->dpy);
+#endif
   
 	return TCL_OK;
 }
@@ -1618,9 +1658,11 @@ dmo_sync_tcl(clientData, interp, argc, argv)
      int	argc;
      char	**argv;
 {
+#ifdef DM_X
 	struct dm_obj	*dmop = (struct dm_obj *)clientData;
 
 	XSync(((struct dm_xvars *)dmop->dmo_dmp->dm_vars.pub_vars)->dpy, 0);
+#endif
   
 	return TCL_OK;
 }
@@ -1657,6 +1699,7 @@ dmo_size_tcl(clientData, interp, argc, argv)
 		return TCL_OK;
 	}
 
+#ifdef DM_X
 	if (argc == 3 || argc == 4) {
 		int width, height;
 
@@ -1687,6 +1730,10 @@ dmo_size_tcl(clientData, interp, argc, argv)
 	Tcl_Eval(interp, bu_vls_addr(&vls));
 	bu_vls_free(&vls);
 	return TCL_ERROR;
+#else
+	/* do nothing for now */
+	return TCL_OK;
+#endif
 }
 
 /*
@@ -1759,6 +1806,7 @@ dmo_observer_tcl(clientData, interp, argc, argv)
 		      interp, argc - 2, argv + 2, bu_observer_cmds, 0);
 }
 
+#ifdef USE_FBSERV
 static void
 dmo_fbs_callback(clientData)
      genptr_t clientData;
@@ -1768,3 +1816,4 @@ dmo_fbs_callback(clientData)
 	bu_observer_notify(dmop->dmo_dmp->dm_interp, &dmop->dmo_observers,
 			   bu_vls_addr(&dmop->dmo_name));
 }
+#endif

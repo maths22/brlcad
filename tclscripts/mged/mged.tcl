@@ -179,12 +179,13 @@ proc do_New { id } {
 	    "Enter new database filename:" ia_filename "${mged_gui(databaseDir)}/" \
 	    0 {{ summary "Enter a new database name. Note - a database
 must not exist by this name."}}\
-	    OK CANCEL]
+	    OK Cancel]
 
     if {$ia_filename != "" && $ret == 0} {
 	# save the directory
 	if [file isdirectory $ia_filename] {
-	    set mged_gui(databaseDir) $ia_filename
+	    # the split followed by the join removes extra /'s
+	    set mged_gui(databaseDir) [eval file join [file split $ia_filename]]
 	    cad_dialog $tkPriv(cad_dialog) $mged_gui($id,screen) "Not a database." \
 		    "$ia_filename is a directory!" info 0 OK
 	    return
@@ -294,7 +295,7 @@ proc do_Concat { id } {
 		0 {{ summary "
 This is where to enter a prefix. The prefix,
 if entered, is prepended to each object of
-the database being inserted."} { see_also dbconcat } } OK CANCEL]
+the database being inserted."} { see_also dbconcat } } OK Cancel]
 
         if {$prefix == ""} {
 	    set prefix /

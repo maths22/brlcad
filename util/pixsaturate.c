@@ -32,10 +32,11 @@
  *			Paul Haeberli - 1988
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define RINTLUM	(79)
@@ -44,6 +45,7 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 char	buf[3*16*1024];
 
+int
 main(argc, argv)
 int	argc;
 char	**argv;

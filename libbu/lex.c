@@ -10,26 +10,25 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "machine.h"
 #include "externs.h"
-#include "vmath.h"
-#include "raytrace.h"
-#include "rtlex.h"
+#include "bu.h"
 
-static int rt_lex_reading_comment = 0;
+static int bu_lex_reading_comment = 0;
 
 /*
- *			R T _ G E T O N E
+ *			B U _ L E X _ G E T O N E
  */
 static char *
-rt_getone(used, rtstr)
+bu_lex_getone(used, rtstr)
 int *used;
 struct bu_vls *rtstr;
 {
@@ -44,7 +43,7 @@ struct bu_vls *rtstr;
 	BU_CK_VLS(rtstr);
 	cp = bu_vls_addr(rtstr);
 top:
-	if (rt_lex_reading_comment) {
+	if (bu_lex_reading_comment) {
 		for(;;) {
 			register char tc;
 			tc = *cp; cp++;
@@ -56,7 +55,7 @@ top:
 			cp++;	/* Skip the '/' */
 			break;
 		}
-		rt_lex_reading_comment = 0;
+		bu_lex_reading_comment = 0;
 	}
 		
 	/*
@@ -74,7 +73,7 @@ top:
 	 */
 	if (*cp == '/' && *(cp+1)=='*') {
 		cp += 2;
-		rt_lex_reading_comment = 1;
+		bu_lex_reading_comment = 1;
 		goto top;
 	}
 	/*
@@ -145,14 +144,14 @@ top:
 }
 
 /*
- *			R T _ L E X
+ *			B U _ L E X
  */
 int
-rt_lex(token, rtstr, keywords, symbols)
-union rt_lex_token *token;
-struct bu_vls *rtstr;
-struct rt_lex_key *keywords;
-struct rt_lex_key *symbols;
+bu_lex(
+	union bu_lex_token *token,
+	struct bu_vls *rtstr,
+	struct bu_lex_key *keywords,
+	struct bu_lex_key *symbols)
 {
 	char *unit;
 	char *cp;
@@ -162,14 +161,14 @@ struct rt_lex_key *symbols;
 	 * get a unit of information from rtstr.
 	 */
 	used = 0;
-	unit = rt_getone(&used, rtstr);
+	unit = bu_lex_getone(&used, rtstr);
 
 	/*
 	 * Was line empty or commented out.
 	 */
 	if (!unit) {
-		if (used) rt_bomb("rt_lex: Null unit, and something used.\n");
-		return RT_LEX_NEED_MORE;
+		if (used) bu_bomb("bu_lex: Null unit, and something used.\n");
+		return BU_LEX_NEED_MORE;
 	}
 
 	/*
@@ -189,8 +188,8 @@ struct rt_lex_key *symbols;
 			 */
 			for (cp=unit; *cp && *cp>='0' && *cp <='7'; cp++);
 			if (!*cp) {	/* We have an octal value */
-				token->type = RT_LEX_INT;
-				sscanf(unit,"%o",&token->t_int.value);
+				token->type = BU_LEX_INT;
+				sscanf(unit,"%o", (unsigned int *)&token->t_int.value);
 				bu_free(unit,"unit token");
 				return used;
 			}
@@ -203,8 +202,8 @@ struct rt_lex_key *symbols;
 			if (*cp == 'x' || *cp == 'X') {
 				for(;*cp && isxdigit(*cp);cp++);
 				if (!*cp) {
-					token->type = RT_LEX_INT;
-					sscanf(unit,"%x",&token->t_int.value);
+					token->type = BU_LEX_INT;
+					sscanf(unit,"%x",(unsigned int *)&token->t_int.value);
 					bu_free(unit, "unit token");
 					return used;
 				}
@@ -216,7 +215,7 @@ struct rt_lex_key *symbols;
 		 */
 		for (cp=unit; *cp && isdigit(*cp); cp++);
 		if (!*cp) {
-			token->type = RT_LEX_INT;
+			token->type = BU_LEX_INT;
 			sscanf(unit,"%d", &token->t_int.value);
 			bu_free(unit, "unit token");
 			return used;
@@ -234,7 +233,7 @@ struct rt_lex_key *symbols;
 			if (*cp == '+' || *cp == '-') cp++;
 			for(;*cp &&isdigit(*cp);cp++);
 			if (!*cp) {
-				token->type = RT_LEX_DOUBLE;
+				token->type = BU_LEX_DOUBLE;
 				sscanf(unit, "%lg", &token->t_dbl.value);
 				bu_free(unit, "unit token");
 				return used;
@@ -250,10 +249,10 @@ struct rt_lex_key *symbols;
 	 */
 	if (symbols) {
 		if (!*(unit+1) ) {	/* single character, good choice for a symbol. */
-			register struct rt_lex_key *sp;
+			register struct bu_lex_key *sp;
 			for (sp=symbols;sp->tok_val;sp++) {
 				if (*sp->string == *unit) {
-					token->type = RT_LEX_SYMBOL;
+					token->type = BU_LEX_SYMBOL;
 					token->t_key.value = sp->tok_val;
 					bu_free(unit, "unit token");
 					return used;
@@ -262,17 +261,17 @@ struct rt_lex_key *symbols;
 		}
 	}
 	if (keywords) {
-		register struct rt_lex_key *kp;
+		register struct bu_lex_key *kp;
 		for (kp=keywords;kp->tok_val; kp++) {
 			if (strcmp(kp->string, unit) == 0) {
-				token->type = RT_LEX_KEYWORD;
+				token->type = BU_LEX_KEYWORD;
 				token->t_key.value = kp->tok_val;
 				bu_free(unit, "unit token");
 				return used;
 			}
 		}
 	}
-	token->type = RT_LEX_IDENT;
+	token->type = BU_LEX_IDENT;
 	token->t_id.value = unit;
 	return used;
 }

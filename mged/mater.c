@@ -24,12 +24,17 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include "machine.h"
 #include "vmath.h"
 #include "db.h"
@@ -46,126 +51,13 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  * increasing).
  */
 extern struct mater *rt_material_head;	/* now defined in librt/mater.c */
+extern void rt_insert_color( struct mater *newp );
 
 void color_soltab();
 void color_putrec(), color_zaprec();
 
 static char	tmpfil[17];
 static char	*tmpfil_init = "/tmp/GED.aXXXXXX";
-
-static void
-pr_mater( mp )
-register struct mater *mp;
-{
-  char buf[128];
-  struct bu_vls vls;
-
-  bu_vls_init(&vls);
-
-  (void)sprintf(buf, "%5d..%d", mp->mt_low, mp->mt_high );
-  vls_col_item(&vls, buf);
-  (void)sprintf( buf, "%3d,%3d,%3d", mp->mt_r, mp->mt_g, mp->mt_b);
-  vls_col_item(&vls, buf);
-  vls_col_eol(&vls);
-
-  Tcl_AppendResult(interp, bu_vls_addr(&vls), (char *)NULL);
-  bu_vls_free(&vls);
-}
-
-/*
- *  			F _ P R C O L O R
- */
-int
-f_prcolor(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int	argc;
-char	**argv;
-{
-  register struct mater *mp;
-
-  if(argc < 1 || 1 < argc){
-    struct bu_vls vls;
-
-    bu_vls_init(&vls);
-    bu_vls_printf(&vls, "help prcolor");
-    Tcl_Eval(interp, bu_vls_addr(&vls));
-    bu_vls_free(&vls);
-    return TCL_ERROR;
-  }
-
-  if( rt_material_head == MATER_NULL )  {
-    Tcl_AppendResult(interp, "none\n", (char *)NULL);
-    return TCL_OK;
-  }
-
-  for( mp = rt_material_head; mp != MATER_NULL; mp = mp->mt_forw )
-    pr_mater( mp );
-
-  return TCL_OK;
-}
-
-/*
- *  			F _ C O L O R
- *  
- *  Add a color table entry.
- */
-int
-f_color(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int	argc;
-char	**argv;
-{
-	register struct mater *newp,*next_mater;
-
-	CHECK_DBI_NULL;
-	CHECK_READ_ONLY;
-
-	if(argc < 7 || 7 < argc){
-	  struct bu_vls vls;
-
-	  bu_vls_init(&vls);
-	  bu_vls_printf(&vls, "help color");
-	  Tcl_Eval(interp, bu_vls_addr(&vls));
-	  bu_vls_free(&vls);
-	  return TCL_ERROR;
-	}
-
-	/* Delete all color records from the database */
-	newp = rt_material_head;
-	while( newp != MATER_NULL )
-	{
-		next_mater = newp->mt_forw;
-		color_zaprec( newp );
-		newp = next_mater;
-	}
-
-	/* construct the new color record */
-	BU_GETSTRUCT( newp, mater );
-	newp->mt_low = atoi( argv[1] );
-	newp->mt_high = atoi( argv[2] );
-	newp->mt_r = atoi( argv[3] );
-	newp->mt_g = atoi( argv[4] );
-	newp->mt_b = atoi( argv[5] );
-	newp->mt_daddr = MATER_NO_ADDR;		/* not in database yet */
-
-	/* Insert new color record in the in-memory list */
-	rt_insert_color( newp );
-
-	/* Write new color records for all colors in the list */
-	newp = rt_material_head;
-	while( newp != MATER_NULL )
-	{
-		next_mater = newp->mt_forw;
-		color_putrec( newp );
-		newp = next_mater;
-	}
-
-	color_soltab();
-
-	return TCL_OK;
-}
 
 /*
  *  			F _ E D C O L O R
@@ -185,8 +77,10 @@ char	**argv;
 	register struct mater *mp;
 	register struct mater *zot;
 	register FILE *fp;
+	register int fd;
 	char line[128];
 	static char hdr[] = "LOW\tHIGH\tRed\tGreen\tBlue\n";
+	int ret = TCL_OK;
 
 	CHECK_DBI_NULL;
 	CHECK_READ_ONLY;
@@ -202,11 +96,23 @@ char	**argv;
 	}
 
 	strcpy(tmpfil, tmpfil_init);
+#if 0
 	(void)mktemp(tmpfil);
 	if ((fp = fopen(tmpfil, "w")) == NULL) {
 		perror(tmpfil);
 		return TCL_ERROR;;
 	}
+#else
+	if ((fd = mkstemp(tmpfil)) < 0) {
+		perror(tmpfil);
+		return TCL_ERROR;
+	}
+	if ((fp = fdopen(fd, "w+")) == NULL) {
+		close(fd);
+		perror(tmpfil);
+		return TCL_ERROR;;
+	}
+#endif
 
 	(void)fprintf( fp, hdr );
 	for( mp = rt_material_head; mp != MATER_NULL; mp = mp->mt_forw )  {
@@ -228,47 +134,76 @@ char	**argv;
 	  return TCL_ERROR;
 	}
 
-	if( fgets(line, sizeof (line), fp) == NULL  ||
-	    line[0] != hdr[0] )  {
-	  Tcl_AppendResult(interp, "Header line damaged, aborting\n", (char *)NULL);
-	  return TCL_ERROR;
+	if (fgets(line, sizeof (line), fp) == NULL ||
+	    line[0] != hdr[0]) {
+		Tcl_AppendResult(interp, "Header line damaged, aborting\n", (char *)NULL);
+		return TCL_ERROR;
 	}
 
-	/* Zap all the current records, both in core and on disk */
-	while( rt_material_head != MATER_NULL )  {
-		zot = rt_material_head;
-		rt_material_head = rt_material_head->mt_forw;
-		color_zaprec( zot );
-		bu_free( (genptr_t)zot, "mater rec" );
-	}
-
-	while( fgets(line, sizeof (line), fp) != NULL )  {
-		int cnt;
-		int low, hi, r, g, b;
-
-		cnt = sscanf( line, "%d %d %d %d %d",
-			&low, &hi, &r, &g, &b );
-		if( cnt != 5 )  {
-		  Tcl_AppendResult(interp, "Discarding ",
-				   line, "\n", (char *)NULL);
-			continue;
+	if (dbip->dbi_version < 5) {
+		/* Zap all the current records, both in core and on disk */
+		while (rt_material_head != MATER_NULL) {
+			zot = rt_material_head;
+			rt_material_head = rt_material_head->mt_forw;
+			color_zaprec(zot);
+			bu_free((genptr_t)zot, "mater rec");
 		}
-		BU_GETSTRUCT( mp, mater );
-		mp->mt_low = low;
-		mp->mt_high = hi;
-		mp->mt_r = r;
-		mp->mt_g = g;
-		mp->mt_b = b;
-		mp->mt_daddr = MATER_NO_ADDR;
-		rt_insert_color( mp );
-		color_putrec( mp );
+
+		while (fgets(line, sizeof (line), fp) != NULL) {
+			int cnt;
+			int low, hi, r, g, b;
+
+			cnt = sscanf(line, "%d %d %d %d %d",
+				     &low, &hi, &r, &g, &b);
+			if (cnt != 5) {
+				Tcl_AppendResult(interp, "Discarding ",
+						 line, "\n", (char *)NULL);
+				continue;
+			}
+			BU_GETSTRUCT(mp, mater);
+			mp->mt_low = low;
+			mp->mt_high = hi;
+			mp->mt_r = r;
+			mp->mt_g = g;
+			mp->mt_b = b;
+			mp->mt_daddr = MATER_NO_ADDR;
+			rt_insert_color(mp);
+			color_putrec(mp);
+		}
+	} else {
+		struct bu_vls vls;
+
+		/* free colors in rt_material_head */
+		rt_color_free();
+
+		bu_vls_init(&vls);
+
+		while (fgets(line, sizeof (line), fp) != NULL) {
+			int cnt;
+			int low, hi, r, g, b;
+
+			/* check to see if line is reasonable */
+			cnt = sscanf(line, "%d %d %d %d %d",
+				     &low, &hi, &r, &g, &b);
+			if (cnt != 5) {
+				Tcl_AppendResult(interp, "Discarding ",
+						 line, "\n", (char *)NULL);
+				continue;
+			}
+			bu_vls_printf(&vls, "{%d %d %d %d %d} ", low, hi, r, g, b);
+		}
+
+		db5_update_attribute("_GLOBAL", "regionid_colortable", bu_vls_addr(&vls), dbip);
+		db5_import_color_table(bu_vls_addr(&vls));
+		bu_vls_free(&vls);
 	}
+
 	(void)fclose(fp);
 	(void)unlink(tmpfil);
 
 	color_soltab();
 
-	return TCL_OK;
+	return ret;
 }
 
 /*
@@ -343,12 +278,12 @@ register struct mater *mp;
  *  mater structure.
  */
 void
-color_soltab()
+color_soltab(void)
 {
 	register struct solid *sp;
 	register struct mater *mp;
 
-	FOR_ALL_SOLIDS( sp, &HeadSolid.l )  {
+	FOR_ALL_SOLIDS( sp, &dgop->dgo_headSolid )  {
 		sp->s_cflag = 0;
 
 	        /* the user specified the color, so use it */

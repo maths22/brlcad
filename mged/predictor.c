@@ -23,7 +23,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -236,13 +236,13 @@ predictor_frame()
 	if( nframes < 1 )  nframes = 1;
 
 	/* Build view2model matrix for the future time */
-	bn_mat_idn( predictor );
+	MAT_IDN( predictor );
 	for( i=0; i < nframes; i++ )  {
 		bn_mat_mul2( view_state->vs_ModelDelta, predictor );
 	}
-	bn_mat_mul( predictorXv2m, predictor, view_state->vs_view2model );
+	bn_mat_mul(predictorXv2m, predictor, view_state->vs_vop->vo_view2model);
+	MAT_DELTAS_GET_NEG(center_m, view_state->vs_vop->vo_center);
 
-	MAT_DELTAS_GET_NEG( center_m, view_state->vs_toViewcenter );
 	MAT4X3PNT( framecenter_m, predictor, center_m );
 #if 0
 	MAT4X3PNT( framecenter_v, view_state->vs_model2view, framecenter_m );
@@ -351,7 +351,7 @@ predictor_frame()
 	BU_LIST_APPEND_LIST(&curr_dm_list->dml_p_vlist, &trail);
 
 	/* Done */
-	bn_mat_idn( view_state->vs_ModelDelta );
+	MAT_IDN( view_state->vs_ModelDelta );
 }
 
 /*

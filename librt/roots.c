@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSroots[] = "@(#)$Header$ (BRL)";
+static const char RCSroots[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -46,9 +46,8 @@ int	rt_poly_findroot(), rt_poly_checkroots();
  *		Some changes in the algorithm will also be required.
  */
 int
-rt_poly_roots( eqn, roots )
-register bn_poly_t	*eqn;		/* equation to be solved	*/
-register bn_complex_t	roots[];	/* space to put roots found	*/
+rt_poly_roots(register bn_poly_t	*eqn,	/* equation to be solved */
+	      register bn_complex_t	roots[])/* space to put roots found */
 {
 	register int	n;		/* number of roots found	*/
 	LOCAL fastf_t	factor;		/* scaling factor for copy	*/

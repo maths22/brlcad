@@ -21,7 +21,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -120,7 +120,7 @@ char	*argv[];
 			break;
 		case 'x':		/* librt debug flag (see librt/debug.h) */
 			sscanf( optarg, "%x", &rt_g.debug );
-			bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+			bu_printb( "librt RT_G_DEBUG", RT_G_DEBUG, DEBUG_FORMAT );
 			bu_log("\n");
 			break;
 		case 'X':		/* NMG debug flag (see h/nmg.h) */
@@ -150,7 +150,7 @@ char	*argv[];
 	}
 
 	/* scan all the records in the database and build a directory */
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
 	/* open output file */
 	if( out_file == NULL )

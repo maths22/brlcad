@@ -1,4 +1,4 @@
-##                 C O M M A N D . T C L
+#                 C O M M A N D . T C L
 #
 # Author -
 #	Bob Parker
@@ -28,6 +28,7 @@ class Command {
 
     itk_option define -edit_style edit_style Edit_style emacs
     itk_option define -prompt prompt Prompt "> "
+    itk_option define -prompt2 prompt2 Prompt ""
     itk_option define -cmd_prefix cmd_prefix Cmd_prefix ""
     itk_option define -selection_color selection_color TextColor #fefe8e
     itk_option define -prompt_color prompt_color TextColor red1
@@ -38,6 +39,7 @@ class Command {
 
     public method history {}
     public method edit_style {args}
+    public method putstring {str}
 
     private method invoke {}
     private method first_char_in_line {}
@@ -76,6 +78,7 @@ class Command {
     private method selection_modify {x y}
     private method print {str}
     private method print_prompt {}
+    private method print_prompt2 {}
     private method print_tag {str tag}
     private method cursor_highlight {}
 
@@ -114,17 +117,21 @@ configbody Command::cmd_prefix {
 	return
     }
 
-    set bad [catch {eval $itk_option(-cmd_prefix) info function} _cmdlist]
-    if {$bad} {
-	error "Bad command prefix: no related functions"
+    # if getUserCmds doesn't exist, use all recognized functions
+    if {[catch {eval $itk_option(-cmd_prefix) info function getUserCmds}]} {
+	if {[catch {eval $itk_option(-cmd_prefix) info function} _cmdlist]} {
+	    error "Bad command prefix: no related functions"
+	}
+
+	# strip off namespace
+	set cmdlist ""
+	foreach cmd $_cmdlist {
+	    lappend cmdlist [namespace tail $cmd]
+	}
+    } else {
+	set cmdlist [eval $itk_option(-cmd_prefix) getUserCmds]
     }
 
-    set bad [catch {eval $itk_option(-cmd_prefix) info class} class]
-    if {$bad} {
-	error "Bad command prefix: no class"
-    }
-    # strip off class
-    set cmdlist [string map "$class\:: \"\"" $_cmdlist]
 }
 
 configbody Command::selection_color {
@@ -202,18 +209,50 @@ body Command::edit_style {args} {
     }
 }
 
+body Command::putstring {str} {
+    set w $itk_component(text)
+    set promptBegin [$w index {end - 1 l}]
+    $w mark set curr insert
+    $w mark set insert $promptBegin
+
+    if {$str != ""} {
+	if {[string index $str end] == "\n"} {
+	    print_tag $str result
+	} else {
+	    print_tag $str\n result
+	}
+    }
+
+    $w mark set insert curr
+    $w see insert
+
+    # get rid of oldest output
+    set nlines [expr int([$w index end])]
+    if {$nlines > $itk_option(-maxlines)} {
+	$w delete 1.0 [expr $nlines - $itk_option(-maxlines)].end
+    }
+}
+
 ############################## Protected/Private Methods  ##############################
+
 body Command::invoke {} {
     set w $itk_component(text)
 
     set cmd [$w get promptEnd insert]
+
+    # remove any instances of prompt2 from the beginning of each secondary line
+    regsub -all "\n$itk_option(-prompt2)" $cmd "" cmd
+    
     set hcmd $cmd
 
     if {$itk_option(-cmd_prefix) != ""} {
-	set cname [lindex $cmd 0]
-	set cindex [lsearch $cmdlist $cname]
-	if {$cindex != -1} {
-	    set cmd [concat $itk_option(-cmd_prefix) $cmd]
+	# get command name
+	if {[regexp {^[ \t]*([^\]\[ \t\n\r{}]+)} $cmd match cname]} {
+	    set cindex [lsearch -exact $cmdlist $cname]
+	    if {$cindex != -1} {
+		# found command name in cmdlist, so prepend cmd_prefix to cmd
+		set cmd [concat $itk_option(-cmd_prefix) $cmd]
+	    }
 	}
     }
 
@@ -239,6 +278,8 @@ body Command::invoke {} {
 	if {$nlines > $itk_option(-maxlines)} {
 	    $w delete 1.0 [expr $nlines - $itk_option(-maxlines)].end
 	}
+    } else {
+	print_prompt2
     }
     $w see insert
 }
@@ -317,7 +358,7 @@ body Command::end_word {} {
 
 body Command::backward_delete_char {} {
     set w $itk_component(text)
-    catch {$w tag remove sel sel.first promptEnd}
+#    catch {$w tag remove sel sel.first promptEnd}
     if [$w compare insert > promptEnd] {
 	$w mark set insert {insert - 1c}
 	$w delete insert
@@ -327,7 +368,7 @@ body Command::backward_delete_char {} {
 
 body Command::delete_char {} {
     set w $itk_component(text)
-    catch {$w tag remove sel sel.first promptEnd}
+#    catch {$w tag remove sel sel.first promptEnd}
     if {[$w compare insert >= promptEnd] && [$w compare insert < {end - 2c}]} {
 	$w delete insert
 	cursor_highlight
@@ -960,6 +1001,11 @@ body Command::print_prompt {} {
     print_tag $itk_option(-prompt) prompt
     $w mark set promptEnd insert
     $w mark gravity promptEnd left
+}
+
+body Command::print_prompt2 {} {
+    set w $itk_component(text)
+    $w insert insert $itk_option(-prompt2)
 }
 
 body Command::print_tag {str tag} {

@@ -30,6 +30,12 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include "machine.h"
 #include "externs.h"		/* For malloc, calloc, and free */
 #include "rle.h"
@@ -134,7 +140,7 @@ void applymap(), shiftmap();
  *	the input file to the output file.  If stdin is empty (no input at
  *	all, an output RLE file with just a color map will be generated).
  */
-void
+int
 main( argc, argv )
 int argc;
 char **argv;

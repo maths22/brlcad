@@ -25,6 +25,7 @@
 #include "machine.h"
 #include "db.h"
 #include "vmath.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 #define MAXSEG 10		/*  Maximum number of segments.  The  */
@@ -39,7 +40,7 @@ int argc;
 char *argv[];
 
 {							/*  START # 1  */
-   FILE *fpw;			/*  File to be created.  */
+   struct rt_wdb *fpw;		/*  File to be created.  */
    char filemged[26];		/*  Mged file name.  */
    double numseg;		/*  Number of segments.  */
    double strtpt[MAXSEG][3];	/*  Start point of segment.  */
@@ -197,16 +198,16 @@ char *argv[];
    for(i=0; i<numseg; i++)
    {							/*  START # 5  */
 	(void)printf("Segment # %d:  ",(i+1));
-	(void)printf("(%f,%f,%f) %f\n",
-		strtpt[i][0],strtpt[i][1],strtpt[i][2],strtrad[i]);
+	(void)printf("(%f,%f,%f)", strtpt[i][0],strtpt[i][1],strtpt[i][2]);
+        (void)printf(" %f\n", strtrad[i]);
 	(void)printf("              ");
-	(void)printf("(%f,%f,%f) %f\n",
-		endpt[i][0],endpt[i][1],endpt[i][2],endrad[i]);
+	(void)printf("(%f,%f,%f)", endpt[i][0],endpt[i][1],endpt[i][2]);
+	(void)printf("%f\n",endrad[i]);
 	(void)fflush(stdout);
    }							/*  END # 5  */
 
    /*  Open mged file.  */
-   fpw = fopen(filemged,"w");
+   fpw = wdb_fopen(filemged);
 
    /*  Write ident record.  */
    mk_id(fpw,"Wiring");
@@ -354,11 +355,11 @@ char *argv[];
 	   (void)fflush(stdout);
 	}						/*  END # 37  */
 
-	(void)mk_addmember(solcyl,&comb,WMOP_INTERSECT);
+	(void)mk_addmember(solcyl,&comb.l, NULL, WMOP_INTERSECT);
 
 	if(i < (numseg - 1) )
 	{						/*  START # 38  */
-	   (void)mk_addmember(solsub1,&comb,WMOP_SUBTRACT);
+	   (void)mk_addmember(solsub1,&comb.l, NULL, WMOP_SUBTRACT);
 	}						/*  END # 38  */
 
 	mk_lfcomb(fpw,regcyl,&comb,1);
@@ -401,9 +402,9 @@ char *argv[];
 	   (void)fflush(stdout);
 	}						/*  END # 43  */
 
-	(void)mk_addmember(solsph,&comb,WMOP_INTERSECT);
-	(void)mk_addmember(solsub1,&comb,WMOP_SUBTRACT);
-	(void)mk_addmember(solsub2,&comb,WMOP_SUBTRACT);
+	(void)mk_addmember(solsph,&comb.l, NULL, WMOP_INTERSECT);
+	(void)mk_addmember(solsub1,&comb.l, NULL, WMOP_SUBTRACT);
+	(void)mk_addmember(solsub2,&comb.l, NULL, WMOP_SUBTRACT);
 
 	mk_lfcomb(fpw,regsph,&comb,1);
    }							/*  END # 40  */
@@ -442,10 +443,11 @@ char *argv[];
 	   (void)fflush(stdout);
 	}						/*  END # 54  */
 
-	(void)mk_addmember(regcyl,&comb1,WMOP_UNION);
-	if(i != 0)(void)mk_addmember(regsph,&comb1,WMOP_UNION);
+	(void)mk_addmember(regcyl,&comb1.l, NULL, WMOP_UNION);
+	if(i != 0)(void)mk_addmember(regsph,&comb1.l, NULL, WMOP_UNION);
    }							/*  END # 50  */
 
    mk_lfcomb(fpw,group,&comb1,0);
+   wdb_close(fpw);
    return 0;
 }							/*  END # 1  */

@@ -17,12 +17,18 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 #include <ctype.h>
 #include "machine.h"
 #include "fb.h"
@@ -34,6 +40,7 @@ ColorMap cm;
 static char usage[] = "\
 Usage: cmap-fb [-h -o] [colormap]\n";
 
+int
 main( argc, argv )
 int argc; char **argv;
 {

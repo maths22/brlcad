@@ -8,6 +8,14 @@
  */
 #include "conf.h"
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <math.h>		/* XXX - temp debug */
 #include "machine.h"
@@ -34,6 +42,8 @@ void	Efill();
 void	Horizon();
 void	Intersect();
 void	Draw();
+int	fhvis();
+int	sign();
 
 void
 fhinit()
@@ -152,6 +162,7 @@ int	f[], num;
  *	    1 if visible above upper horizon.
  *	   -1 if visible below lower horizon.
  */
+int
 fhvis( x, y )
 int x, y;
 {
@@ -260,6 +271,7 @@ fflush( stdout );
 /*printf("(%3d,%3d)\n", *xi, *yi );*/
 }
 
+int
 sign( i )
 int	i;
 {
@@ -323,7 +335,7 @@ int	x1, y1, x2, y2;
 }
 
 #ifdef SOMBRERO
-main()
+int main()
 {
 	int	f[500];
 	int	x, y, z;
@@ -346,13 +358,15 @@ main()
 		}
 		fhnewz( f, 500 );
 	}
+
+	return 0;
 }
 #endif
 
 static char usage[] = "\
 Usage: fhor [width] < doubles\n";
 
-main( argc, argv )
+int main( argc, argv )
 int	argc;
 char	**argv;
 {
@@ -400,4 +414,6 @@ char	**argv;
 		fhnewz( f, 512 );
 		z++;
 	}
+
+	return 0;
 }

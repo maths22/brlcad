@@ -22,15 +22,22 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+
+#include "machine.h"
+#include "externs.h"
 
 #define NUM	(1024 * 16)	/* Note the powers of 2 -- v. efficient */
 static double		doub[NUM];
 static unsigned char	cha[NUM];
 
+int
 main(argc, argv)
 int	argc;
 char	*argv[];
@@ -92,7 +99,7 @@ char	*argv[];
 		 * compute the m and the b of the line as specified by the
 		 * equation y = mx + b.
 		 */
-		fprintf(stderr, "min=%lf, max=%lf\n", min, max);
+		fprintf(stderr, "min=%f, max=%f\n", min, max);
 		if (max < min)  {
 			printf("MINMAX: max less than min!\n");
 			exit(1);

@@ -11,6 +11,8 @@
 #include <math.h>
 #include "./complex.h"
 
+void cdiv();
+
 /*
  *  Returns the magnitude of the transfer function Hs(s) for a
  *  1/3 octave 6-pole Butterworth bandpass filter of the given
@@ -71,7 +73,7 @@ int	points;		/* Length of filter kernel wanted */
 
 #ifdef TEST
 #define	N	512.0
-main()
+int main()
 {
 	int	offset;
 	double	wr, mag, step;
@@ -83,5 +85,7 @@ main()
 		mag = butter( wr );
 		printf( "%4d: %f, %f, %f\n", offset, wr, mag, 20.0*log10( mag ) );
 	}
+
+	return 0;
 }
 #endif /* TEST */

@@ -1,3 +1,13 @@
+#include "conf.h"
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
+#include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -11,13 +21,13 @@ int	verbose = 0;
 static char usage[] = "\
 Usage: ihist [-v] < shorts\n";
 
-main( argc, argv )
+int main( argc, argv )
 int argc; char **argv;
 {
 	register long i, bit;
 	int	n;
 	int	max, min;
-	long	num, levels;
+	long	num, levels=0;
 
 	while( argc > 1 ) {
 		if( strcmp( argv[1], "-v" ) == 0 ) {
@@ -73,4 +83,6 @@ int argc; char **argv;
 			}
 		}
 	}
+
+	return 0;
 }

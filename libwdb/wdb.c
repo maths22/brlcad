@@ -30,7 +30,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -52,19 +52,20 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  *  outward pointing normal vector.
  */
 int
-mk_half( fp, name, norm, d )
-FILE		*fp;
-char		*name;
-CONST vect_t	norm;
+mk_half( wdbp, name, norm, d )
+struct rt_wdb	*wdbp;
+const char		*name;
+const vect_t	norm;
 double		d;
 {
-	struct rt_half_internal		half;
+	struct rt_half_internal		*half;
 
-	half.magic = RT_HALF_INTERNAL_MAGIC;
-	VMOVE( half.eqn, norm );
-	half.eqn[3] = d;
+	BU_GETSTRUCT( half, rt_half_internal );
+	half->magic = RT_HALF_INTERNAL_MAGIC;
+	VMOVE( half->eqn, norm );
+	half->eqn[3] = d;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&half, ID_HALF );
+	return wdb_export( wdbp, name, (genptr_t)half, ID_HALF, mk_conv2mm );
 }
 
 /*
@@ -74,21 +75,22 @@ double		d;
  *  magnitude.
  */
 int
-mk_grip( fp, name, center, normal, magnitude )
-FILE		*fp;
-char		*name;
-CONST point_t	center;
-CONST vect_t	normal;
-CONST fastf_t	magnitude;
+mk_grip( 
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t center,
+	const vect_t normal,
+	const fastf_t magnitude )
 {
-	struct rt_grip_internal		grip;
+	struct rt_grip_internal		*grip;
 
-	grip.magic = RT_GRIP_INTERNAL_MAGIC;
-	VMOVE( grip.center, center );
-	VMOVE( grip.normal, normal );
-	grip.mag = magnitude;
+	BU_GETSTRUCT( grip, rt_grip_internal );
+	grip->magic = RT_GRIP_INTERNAL_MAGIC;
+	VMOVE( grip->center, center );
+	VMOVE( grip->normal, normal );
+	grip->mag = magnitude;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&grip, ID_GRIP );
+	return wdb_export( wdbp, name, (genptr_t)grip, ID_GRIP, mk_conv2mm );
 }
 
 /*
@@ -97,11 +99,11 @@ CONST fastf_t	magnitude;
  *  Make a right parallelpiped.  Specified by minXYZ, maxXYZ.
  */
 int
-mk_rpp( fp, name, min, max )
-FILE		*fp;
-char		*name;
-CONST point_t	min;
-CONST point_t	max;
+mk_rpp( wdbp, name, min, max )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	min;
+const point_t	max;
 {
 	point_t	pt8[8];
 
@@ -115,7 +117,7 @@ CONST point_t	max;
 	VSET( pt8[6], max[X], max[Y], max[Z] );
 	VSET( pt8[7], min[X], max[Y], max[Z] );
 
-	return( mk_arb8( fp, name, &pt8[0][X] ) );
+	return( mk_arb8( wdbp, name, &pt8[0][X] ) );
 }
 
 
@@ -127,12 +129,12 @@ CONST point_t	max;
  *  x length for the top.  The y direcion vector is x cross z.
  */
 int
-mk_wedge(fp, name, vert, xdirv, zdirv, xlen, ylen, zlen, x_top_len)
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	xdirv;
-CONST vect_t	zdirv;
+mk_wedge(wdbp, name, vert, xdirv, zdirv, xlen, ylen, zlen, x_top_len)
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	vert;
+const vect_t	xdirv;
+const vect_t	zdirv;
 fastf_t		xlen;
 fastf_t		ylen;
 fastf_t		zlen;
@@ -175,7 +177,7 @@ fastf_t		x_top_len;
 	VADD2(pts[6], pts[5], yvec);	/* seventh vertex */
 	VADD2(pts[7], pts[4], yvec);	/* eighth vertex */
 
-	return( mk_arb8(fp, name, &pts[0][X]) );
+	return( mk_arb8(wdbp, name, &pts[0][X]) );
 }
 
 
@@ -183,10 +185,10 @@ fastf_t		x_top_len;
  *			M K _ A R B 4
  */
 int
-mk_arb4( fp, name, pts )
-FILE		*fp;
-char		*name;
-CONST fastf_t	*pts;	/* [4*3] */
+mk_arb4( wdbp, name, pts )
+struct rt_wdb		*wdbp;
+const char		*name;
+const fastf_t	*pts;	/* [4*3] */
 {
 	point_t	pt8[8];
 
@@ -200,7 +202,7 @@ CONST fastf_t	*pts;	/* [4*3] */
 	VMOVE( pt8[6], &pts[3*3] );
 	VMOVE( pt8[7], &pts[3*3] );
 
-	return( mk_arb8( fp, name, &pt8[0][X] ) );
+	return( mk_arb8( wdbp, name, &pt8[0][X] ) );
 }
 
 /*
@@ -214,21 +216,22 @@ CONST fastf_t	*pts;	/* [4*3] */
  *  the second four points listed must lie on the other plate.
  */
 int
-mk_arb8( fp, name, pts )
-FILE		*fp;
-char		*name;
-CONST fastf_t	*pts;		/* [24] */
+mk_arb8( wdbp, name, pts )
+struct rt_wdb		*wdbp;
+const char		*name;
+const fastf_t	*pts;		/* [24] */
 {
 	register int i;
-	struct rt_arb_internal	arb;
+	struct rt_arb_internal	*arb;
 
-	arb.magic = RT_ARB_INTERNAL_MAGIC;
+	BU_GETSTRUCT( arb, rt_arb_internal );
+	arb->magic = RT_ARB_INTERNAL_MAGIC;
 #	include "noalias.h"
 	for( i=0; i < 8; i++ )  {
-		VMOVE( arb.pt[i], &pts[i*3] );
+		VMOVE( arb->pt[i], &pts[i*3] );
 	}
 
-	return mk_export_fwrite( fp, name, (genptr_t)&arb, ID_ARB8 );
+	return wdb_export( wdbp, name, (genptr_t)arb, ID_ARB8, mk_conv2mm );
 }
 
 /*
@@ -237,21 +240,22 @@ CONST fastf_t	*pts;		/* [24] */
  *  Make a sphere with the given center point and radius.
  */
 int
-mk_sph( fp, name, center, radius )
-FILE		*fp;
-char		*name;
-CONST point_t	center;
+mk_sph( wdbp, name, center, radius )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	center;
 fastf_t		radius;
 {
-	struct rt_ell_internal	ell;
+	struct rt_ell_internal	*ell;
 
-	ell.magic = RT_ELL_INTERNAL_MAGIC;
-	VMOVE( ell.v, center );
-	VSET( ell.a, radius, 0, 0 );
-	VSET( ell.b, 0, radius, 0 );
-	VSET( ell.c, 0, 0, radius );
+	BU_GETSTRUCT( ell, rt_ell_internal );
+	ell->magic = RT_ELL_INTERNAL_MAGIC;
+	VMOVE( ell->v, center );
+	VSET( ell->a, radius, 0, 0 );
+	VSET( ell->b, 0, radius, 0 );
+	VSET( ell->c, 0, 0, radius );
 
-	return mk_export_fwrite( fp, name, (genptr_t)&ell, ID_ELL );
+	return wdb_export( wdbp, name, (genptr_t)ell, ID_ELL, mk_conv2mm );
 }
 
 /*
@@ -262,21 +266,22 @@ fastf_t		radius;
  *  lengths of the three radius vectors.
  */
 int
-mk_ell( fp, name, center, a, b, c )
-FILE		*fp;
-char		*name;
-CONST point_t	center;
-CONST vect_t	a, b, c;
+mk_ell( wdbp, name, center, a, b, c )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	center;
+const vect_t	a, b, c;
 {
-	struct rt_ell_internal	ell;
+	struct rt_ell_internal	*ell;
 
-	ell.magic = RT_ELL_INTERNAL_MAGIC;
-	VMOVE( ell.v, center );
-	VMOVE( ell.a, a );
-	VMOVE( ell.b, b );
-	VMOVE( ell.c, c );
+	BU_GETSTRUCT( ell, rt_ell_internal );
+	ell->magic = RT_ELL_INTERNAL_MAGIC;
+	VMOVE( ell->v, center );
+	VMOVE( ell->a, a );
+	VMOVE( ell->b, b );
+	VMOVE( ell->c, c );
 
-	return mk_export_fwrite( fp, name, (genptr_t)&ell, ID_ELL );
+	return wdb_export( wdbp, name, (genptr_t)ell, ID_ELL, mk_conv2mm );
 }
 
 /*
@@ -287,22 +292,23 @@ CONST vect_t	a, b, c;
  *  r2: radius of solid part.
  */
 int
-mk_tor( fp, name, center, inorm, r1, r2 )
-FILE		*fp;
-char		*name;
-CONST point_t	center;
-CONST vect_t	inorm;
+mk_tor( wdbp, name, center, inorm, r1, r2 )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	center;
+const vect_t	inorm;
 double		r1, r2;
 {
-	struct rt_tor_internal	tor;
+	struct rt_tor_internal	*tor;
 
-	tor.magic = RT_TOR_INTERNAL_MAGIC;
-	VMOVE( tor.v, center );
-	VMOVE( tor.h, inorm );
-	tor.r_a = r1;
-	tor.r_h = r2;
+	BU_GETSTRUCT( tor, rt_tor_internal );
+	tor->magic = RT_TOR_INTERNAL_MAGIC;
+	VMOVE( tor->v, center );
+	VMOVE( tor->h, inorm );
+	tor->r_a = r1;
+	tor->r_h = r2;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&tor, ID_TOR );
+	return wdb_export( wdbp, name, (genptr_t)tor, ID_TOR, mk_conv2mm );
 }
 
 /*
@@ -311,11 +317,11 @@ double		r1, r2;
  *  Make a Right Circular Cylinder (special case of the TGC).
  */
 int
-mk_rcc( fp, name, base, height, radius )
-FILE		*fp;
-char		*name;
-CONST point_t	base;
-CONST vect_t	height;
+mk_rcc( wdbp, name, base, height, radius )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	base;
+const vect_t	height;
 fastf_t		radius;
 {
 	vect_t	cross1, cross2;
@@ -332,7 +338,7 @@ fastf_t		radius;
 	VSCALE( a, cross1, radius );
 	VSCALE( b, cross2, radius );
 
-	return mk_tgc( fp, name, base, height, a, b, a, b );
+	return mk_tgc( wdbp, name, base, height, a, b, a, b );
 }
 
 /*
@@ -341,27 +347,28 @@ fastf_t		radius;
  *  Make a Truncated General Cylinder.
  */
 int
-mk_tgc( fp, name, base, height, a, b, c, d )
-FILE		*fp;
-char		*name;
-CONST point_t	base;
-CONST vect_t	height;
-CONST vect_t	a;
-CONST vect_t	b;
-CONST vect_t	c;
-CONST vect_t	d;
+mk_tgc( wdbp, name, base, height, a, b, c, d )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	base;
+const vect_t	height;
+const vect_t	a;
+const vect_t	b;
+const vect_t	c;
+const vect_t	d;
 {
-	struct rt_tgc_internal	tgc;
+	struct rt_tgc_internal	*tgc;
 
-	tgc.magic = RT_TGC_INTERNAL_MAGIC;
-	VMOVE( tgc.v, base );
-	VMOVE( tgc.h, height );
-	VMOVE( tgc.a, a );
-	VMOVE( tgc.b, b );
-	VMOVE( tgc.c, c );
-	VMOVE( tgc.d, d );
+	BU_GETSTRUCT( tgc, rt_tgc_internal );
+	tgc->magic = RT_TGC_INTERNAL_MAGIC;
+	VMOVE( tgc->v, base );
+	VMOVE( tgc->h, height );
+	VMOVE( tgc->a, a );
+	VMOVE( tgc->b, b );
+	VMOVE( tgc->c, c );
+	VMOVE( tgc->d, d );
 
-	return mk_export_fwrite( fp, name, (genptr_t)&tgc, ID_TGC );
+	return wdb_export( wdbp, name, (genptr_t)tgc, ID_TGC, mk_conv2mm );
 }
 
 
@@ -372,11 +379,11 @@ CONST vect_t	d;
  *  cone.
  */
 int
-mk_cone( fp, name, base, dirv, height, rad1, rad2)
-FILE		*fp;
-char		*name;
-CONST point_t	base;
-CONST vect_t	dirv;
+mk_cone( wdbp, name, base, dirv, height, rad1, rad2)
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	base;
+const vect_t	dirv;
 fastf_t		height;
 fastf_t		rad1;
 fastf_t		rad2;
@@ -405,7 +412,7 @@ fastf_t		rad2;
 	VSCALE(cvec, a, rad2);
 	VSCALE(dvec, b, rad2);
 
-	return( mk_tgc(fp, name, base, hgtv, avec, bvec, cvec, dvec) );
+	return( mk_tgc(wdbp, name, base, hgtv, avec, bvec, cvec, dvec) );
 }
 
 
@@ -418,11 +425,11 @@ fastf_t		rad2;
  *  of that name with different calling sequence.
  */
 int
-mk_trc_h( fp, name, base, height, radbase, radtop )
-FILE		*fp;
-char		*name;
-CONST point_t	base;
-CONST vect_t	height;
+mk_trc_h( wdbp, name, base, height, radbase, radtop )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	base;
+const vect_t	height;
 fastf_t		radbase;
 fastf_t		radtop;
 {
@@ -443,7 +450,7 @@ fastf_t		radtop;
 	VSCALE( c, cross1, radtop );
 	VSCALE( d, cross2, radtop );
 
-	return mk_tgc( fp, name, base, height, a, b, c, d );
+	return mk_tgc( wdbp, name, base, height, a, b, c, d );
 }
 
 /*
@@ -452,18 +459,18 @@ fastf_t		radtop;
  *  Convenience wrapper for mk_trc_h().
  */
 int
-mk_trc_top( fp, name, ibase, itop, radbase, radtop )
-FILE		*fp;
-char		*name;
-CONST point_t	ibase;
-CONST point_t	itop;
+mk_trc_top( wdbp, name, ibase, itop, radbase, radtop )
+struct rt_wdb		*wdbp;
+const char		*name;
+const point_t	ibase;
+const point_t	itop;
 fastf_t		radbase;
 fastf_t		radtop;
 {
 	vect_t	height;
 
 	VSUB2( height, itop, ibase );
-	return( mk_trc_h( fp, name, ibase, height, radbase, radtop ) );
+	return( mk_trc_h( wdbp, name, ibase, height, radbase, radtop ) );
 }
 
 /*
@@ -474,23 +481,25 @@ fastf_t		radtop;
  *  rectangular half-width (for the top of the rpc).
  */
 int
-mk_rpc( fp, name, vert, height, breadth, half_w )
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	height, breadth;
-double		half_w;
+mk_rpc(
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t vert,
+	const vect_t height,
+	const vect_t breadth,
+	double half_w )
 {
-	struct rt_rpc_internal	rpc;
+	struct rt_rpc_internal	*rpc;
 
-	rpc.rpc_magic = RT_RPC_INTERNAL_MAGIC;
+	BU_GETSTRUCT( rpc, rt_rpc_internal );
+	rpc->rpc_magic = RT_RPC_INTERNAL_MAGIC;
 
-	VMOVE( rpc.rpc_V, vert );
-	VMOVE( rpc.rpc_H, height );
-	VMOVE( rpc.rpc_B, breadth );
-	rpc.rpc_r = half_w;
+	VMOVE( rpc->rpc_V, vert );
+	VMOVE( rpc->rpc_H, height );
+	VMOVE( rpc->rpc_B, breadth );
+	rpc->rpc_r = half_w;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&rpc, ID_RPC );
+	return wdb_export( wdbp, name, (genptr_t)rpc, ID_RPC, mk_conv2mm );
 }
 
 /*
@@ -503,25 +512,27 @@ double		half_w;
  *  asymptotes.
  */
 int
-mk_rhc( fp, name, vert, height, breadth, half_w, asymp )
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	height, breadth;
-fastf_t		half_w;
-fastf_t		asymp;
+mk_rhc(
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t vert,
+	const vect_t height,
+	const vect_t breadth,
+	fastf_t	half_w,
+	fastf_t asymp )
 {
-	struct rt_rhc_internal	rhc;
+	struct rt_rhc_internal	*rhc;
 
-	rhc.rhc_magic = RT_RHC_INTERNAL_MAGIC;
+	BU_GETSTRUCT( rhc, rt_rhc_internal );
+	rhc->rhc_magic = RT_RHC_INTERNAL_MAGIC;
 
-	VMOVE( rhc.rhc_V, vert );
-	VMOVE( rhc.rhc_H, height );
-	VMOVE( rhc.rhc_B, breadth );
-	rhc.rhc_r = half_w;
-	rhc.rhc_c = asymp;
+	VMOVE( rhc->rhc_V, vert );
+	VMOVE( rhc->rhc_H, height );
+	VMOVE( rhc->rhc_B, breadth );
+	rhc->rhc_r = half_w;
+	rhc->rhc_c = asymp;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&rhc, ID_RHC );
+	return wdb_export( wdbp, name, (genptr_t)rhc, ID_RHC, mk_conv2mm );
 }
 
 /*
@@ -532,24 +543,27 @@ fastf_t		asymp;
  *  the scalar lengths, r1 and r2, of the semi-major and -minor axes.
  */
 int
-mk_epa( fp, name, vert, height, breadth, r1, r2 )
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	height, breadth;
-fastf_t		r1, r2;
+mk_epa(
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t vert,
+	const vect_t height,
+	const vect_t breadth,
+	fastf_t r1,
+	fastf_t r2 )
 {
-	struct rt_epa_internal	epa;
+	struct rt_epa_internal	*epa;
 
-	epa.epa_magic = RT_EPA_INTERNAL_MAGIC;
+	BU_GETSTRUCT( epa, rt_epa_internal );
+	epa->epa_magic = RT_EPA_INTERNAL_MAGIC;
 
-	VMOVE( epa.epa_V, vert );
-	VMOVE( epa.epa_H, height );
-	VMOVE( epa.epa_Au, breadth );
-	epa.epa_r1 = r1;
-	epa.epa_r2 = r2;
+	VMOVE( epa->epa_V, vert );
+	VMOVE( epa->epa_H, height );
+	VMOVE( epa->epa_Au, breadth );
+	epa->epa_r1 = r1;
+	epa->epa_r2 = r2;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&epa, ID_EPA );
+	return wdb_export( wdbp, name, (genptr_t)epa, ID_EPA, mk_conv2mm );
 }
 
 /*
@@ -562,25 +576,29 @@ fastf_t		r1, r2;
  *  of the asymptotic cone.
  */
 int
-mk_ehy( fp, name, vert, height, breadth, r1, r2, c )
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	height, breadth;
-fastf_t		r1, r2, c;
+mk_ehy(
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t vert,
+	const vect_t height,
+	const vect_t breadth,
+	fastf_t r1,
+	fastf_t r2,
+	fastf_t c )
 {
-	struct rt_ehy_internal	ehy;
+	struct rt_ehy_internal	*ehy;
 
-	ehy.ehy_magic = RT_EHY_INTERNAL_MAGIC;
+	BU_GETSTRUCT( ehy, rt_ehy_internal );
+	ehy->ehy_magic = RT_EHY_INTERNAL_MAGIC;
 
-	VMOVE( ehy.ehy_V, vert );
-	VMOVE( ehy.ehy_H, height );
-	VMOVE( ehy.ehy_Au, breadth );
-	ehy.ehy_r1 = r1;
-	ehy.ehy_r2 = r2;
-	ehy.ehy_c = c;
+	VMOVE( ehy->ehy_V, vert );
+	VMOVE( ehy->ehy_H, height );
+	VMOVE( ehy->ehy_Au, breadth );
+	ehy->ehy_r1 = r1;
+	ehy->ehy_r2 = r2;
+	ehy->ehy_c = c;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&ehy, ID_EHY );
+	return wdb_export( wdbp, name, (genptr_t)ehy, ID_EHY, mk_conv2mm );
 }
 
 /*
@@ -592,22 +610,25 @@ fastf_t		r1, r2, c;
  *  of semi-minor axis of the elliptical cross section.
  */
 int
-mk_eto( fp, name, vert, norm, smajor, rrot, sminor )
-FILE		*fp;
-char		*name;
-CONST point_t	vert;
-CONST vect_t	norm, smajor;
-fastf_t		rrot, sminor;
+mk_eto(
+	struct rt_wdb *wdbp,
+	const char *name,
+	const point_t vert,
+	const vect_t norm,
+	const vect_t smajor,
+	fastf_t rrot,
+	fastf_t sminor )
 {
-	struct rt_eto_internal	eto;
+	struct rt_eto_internal	*eto;
 
-	eto.eto_magic = RT_ETO_INTERNAL_MAGIC;
+	BU_GETSTRUCT( eto, rt_eto_internal );
+	eto->eto_magic = RT_ETO_INTERNAL_MAGIC;
 
-	VMOVE( eto.eto_V, vert );
-	VMOVE( eto.eto_N, norm );
-	VMOVE( eto.eto_C, smajor );
-	eto.eto_r = rrot;
-	eto.eto_rd = sminor;
+	VMOVE( eto->eto_V, vert );
+	VMOVE( eto->eto_N, norm );
+	VMOVE( eto->eto_C, smajor );
+	eto->eto_r = rrot;
+	eto->eto_rd = sminor;
 
-	return mk_export_fwrite( fp, name, (genptr_t)&eto, ID_ETO );
+	return wdb_export( wdbp, name, (genptr_t)eto, ID_ETO, mk_conv2mm );
 }

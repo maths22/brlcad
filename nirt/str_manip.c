@@ -1,12 +1,19 @@
 /*	STR_MANIP.C	*/
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 /*	INCLUDES	*/
 #include "conf.h"
 
 #include <stdio.h>
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include <ctype.h>
 
 #include "machine.h"

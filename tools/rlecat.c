@@ -58,7 +58,7 @@ void	rep_file();
  *  	repeat count.  If the collation flag (-c) is specified, then
  *  	all images will be read before starting to repeat.
  */
-void
+int
 main( argc, argv )
 int argc;
 char **argv;
@@ -74,7 +74,7 @@ char **argv;
     	    	nfiles = 0;
     int		rle_cnt, rle_err, y, nskip;
     int	    	file_cnt;
-    FILE       *outfile, *tmpfile;
+    FILE       *outfile, *tmpfile=NULL;
     rle_hdr in_hdr, out_hdr;	/* Headers for input and output files. */
     rle_hdr tmp_hdr;		/* Header for temp file for repeats. */
     char    	buf[BUFSIZ];	/* For building title comment. */
@@ -103,7 +103,7 @@ char **argv;
 	    nflag = 0;		/* Not really repeating! */
 	else
 	{
-	    mktemp( temp );	/* Make a temporary file name */
+	    mkstemp( temp );	/* Make a temporary file name */
 	    tmpfile = rle_open_f( cmd_name( argv ), temp, "w+" );
 	}
     }

@@ -11,7 +11,7 @@
  *			probably in range 0 > flicker > 10
  *
  *	stretch=dist	Specifies a scaling of the exponential stretch of the
- *			flames.  flame stretch = e^(pos[Z} * -stretch)
+ *			flames.  flame stretch = e^(pos[Z] * -stretch)
  *
  *
  *  Standard fbm parameters:
@@ -30,11 +30,7 @@
  *			"what piece of noise space maps to shader origin"
  *
  *  Usage:
- *	mged> mater fire.r
- * 	Material?  ('del' to delete, CR to skip) fire
- * 	Parameter string? ('del' to delete, CR to skip) st=3 f=2.173
- * 	Color R G B (0..255)? ('del' to delete, CR to skip)
- *	Inheritance (0|1)? (CR to skip)
+ *	mged> shader flame.r {fire {st 1.25}}
  *
  *	Note:  The fire shader provides its own color.  It does not read any
  *		color information from the region definition.
@@ -56,20 +52,26 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
+#include "rtprivate.h"
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 #define fire_MAGIC 0x46697265   /* ``Fire'' */
 #define CK_fire_SP(_p) BU_CKMAG(_p, fire_MAGIC, "fire_specific")
 
@@ -97,7 +99,7 @@ struct fire_specific {
 };
 
 /* The default values for the variables in the shader specific structure */
-static CONST
+static const
 struct fire_specific fire_defaults = {
 	fire_MAGIC,
 	0,			/* fire_debug */
@@ -187,28 +189,28 @@ struct mfuncs fire_mfuncs[] = {
 	0,		0,		0,		0 }
 };
 
-CONST double flame_colors[18][3] = {
-	0.0, 0.0, 0.0,
-	0.0, 0.0, 0.0,
-	0.106, 0.0, 0.0,
-	0.212, 0.0, 0.0,
-	0.318, 0.0, 0.0,
-	0.427, 0.0, 0.0,
-	0.533, 0.0, 0.0,
-	0.651, 0.02, 0.0,
-	0.741, 0.118, 0.0,
-	0.827, 0.235, 0.0,
-	0.906, 0.353, 0.0,
-	0.933, 0.500, 0.0,
-	0.957, 0.635, 0.047,
-	0.973, 0.733, 0.227,
-	0.984, 0.820, 0.451,
-	0.990, 0.925, 0.824,
-	1.0, 0.945, 0.902,
-	1.0, 0.945, 0.902
+const double flame_colors[18][3] = {
+	{0.0, 0.0, 0.0},
+	{0.0, 0.0, 0.0},
+	{0.106, 0.0, 0.0},
+	{0.212, 0.0, 0.0},
+	{0.318, 0.0, 0.0},
+	{0.427, 0.0, 0.0},
+	{0.533, 0.0, 0.0},
+	{0.651, 0.02, 0.0},
+	{0.741, 0.118, 0.0},
+	{0.827, 0.235, 0.0},
+	{0.906, 0.353, 0.0},
+	{0.933, 0.500, 0.0},
+	{0.957, 0.635, 0.047},
+	{0.973, 0.733, 0.227},
+	{0.984, 0.820, 0.451},
+	{0.990, 0.925, 0.824},
+	{1.0, 0.945, 0.902},
+	{1.0, 0.945, 0.902}
 };
 
-/*	F I R E _ S E T U P
+/*	F I R E _ S E T U P
  *
  *	This routine is called (at prep time)
  *	once for each region which uses this shader.
@@ -255,14 +257,14 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	 */
 
 	db_shader_mat(fire_sp->fire_m_to_sh, rtip, rp, fire_sp->fire_min,
-		fire_sp->fire_max);
+		fire_sp->fire_max, &rt_uniresource);
 
 	/* Build matrix to map shader space to noise space.
 	 * XXX If only we could get the frametime at this point
 	 * we could factor the flicker of flames into this matrix 
 	 * rather than having to recompute it on a pixel-by-pixel basis.
 	 */
-	bn_mat_idn(fire_sp->fire_sh_to_noise);
+	MAT_IDN(fire_sp->fire_sh_to_noise);
 	MAT_DELTAS_VEC(fire_sp->fire_sh_to_noise, fire_sp->noise_delta);
 	MAT_SCALE_VEC(fire_sp->fire_sh_to_noise, fire_sp->noise_vscale);
 
@@ -281,7 +283,7 @@ struct rt_i		*rtip;	/* New since 4.4 release */
 	return(1);
 }
 
-/*
+/*
  *	F I R E _ P R I N T
  */
 HIDDEN void
@@ -302,7 +304,7 @@ char *cp;
 	bu_free( cp, "fire_specific" );
 }
 
-/*
+/*
  *	F I R E _ R E N D E R
  *
  *	This is called (from viewshade() in shade.c) once for each hit point

@@ -20,7 +20,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -32,6 +32,7 @@ static char RCSid[] = "$Header$";
 #else
 #include <strings.h>
 #endif
+#include <ctype.h>
 #include <errno.h>
 
 #include "machine.h"
@@ -101,10 +102,11 @@ static fastf_t conv[3]={
 };
 
 static int			units;		/* units flag */
-static FILE			*fdout;		/* brlcad output file */
+static char			*output_file = "nastran.g";
+static struct rt_wdb		*fdout;		/* brlcad output file */
 static FILE			*fdin;		/* NASTRAN input file */
 static FILE			*fdtmp;		/* temporary version of NASTRAN input */
-static char			*Usage="Usage:\n\t%s [-n] [-xX lvl] [-t tol.dist] -i NASTRAN_file -o brl-cad_file\n";
+static char			*Usage="Usage:\n\t%s [-p] [-xX lvl] [-t tol.dist] [-i NASTRAN_file] -o brl-cad_file\n";
 static long			start_off;
 static char			*delims=", \t";
 static struct coord_sys		coord_head;	/* head of linked list of coordinate systems */
@@ -127,6 +129,9 @@ static struct model		*nmg_model;	/* NMG solid for surfaces */
 static struct shell		*nmg_shell;	/* NMG shell */
 static struct bn_tol		tol;		/* tolerance for NMG's */
 static int			polysolids=1;	/* flag for outputting NMG's rather than BOT's */
+
+HIDDEN int get_next_record( FILE *fd, int call_input, int write_flag );
+HIDDEN int convert_pt( const point_t pt, struct coord_sys *cs, point_t out_pt );
 
 #define		INPUT_OK	0
 #define		INPUT_NULL	1
@@ -214,7 +219,7 @@ do_silly_nastran_shortcuts()
 
 				a = atof( prev_rec[field_no] );
 				b = atof( &curr_rec[field_no][i] );
-				sprintf( curr_rec[field_no], "%-#0.*E", FIELD_LENGTH-6, a+b );
+				sprintf( curr_rec[field_no], "%-#*E", FIELD_LENGTH-6, a+b );
 			}
 			else
 			{
@@ -438,10 +443,7 @@ int write_flag;
 }
 
 HIDDEN int
-get_next_record( fd, call_input, write_flag )
-FILE *fd;
-int call_input;
-int write_flag;
+get_next_record( FILE *fd, int call_input, int write_flag )
 {
 	char *tmp;
 	int form;
@@ -602,10 +604,7 @@ struct coord_sys *cs;
 }
 
 HIDDEN int
-convert_pt( pt, cs, out_pt )
-point_t pt;
-struct coord_sys *cs;
-point_t out_pt;
+convert_pt( const point_t pt, struct coord_sys *cs, point_t out_pt )
 {
 	point_t tmp_pt;
 	fastf_t c1, c2, c3, c4;
@@ -1168,9 +1167,10 @@ get_cbar()
 	sprintf( cbar_name, "cbar.%d", eid );
 	mk_rcc( fdout, cbar_name, pt1, height, radius );
 
-	mk_addmember( cbar_name, &pb->head, WMOP_UNION );
+	mk_addmember( cbar_name, &pb->head.l, NULL, WMOP_UNION );
 }
 
+int
 main( argc, argv )
 int argc;
 char *argv[];
@@ -1181,10 +1181,9 @@ char *argv[];
 	struct pbar *pb;
 	struct wmember head;
 	struct wmember all_head;
-	char *nastran_file;
+	char *nastran_file = "Converted from NASTRAN file (stdin)";
 
-	fdin = (FILE *)NULL;
-	fdout = (FILE *)NULL;
+	fdin = stdin;
 
 	units = INCHES;
 
@@ -1200,12 +1199,12 @@ char *argv[];
 		switch( c )
 		{
 			case 'x':
-				sscanf( optarg, "%x", &rt_g.debug );
-				bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+				sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
+				bu_printb( "librt RT_G_DEBUG", RT_G_DEBUG, DEBUG_FORMAT );
 				bu_log("\n");
 				break;
 			case 'X':
-				sscanf( optarg, "%x", &rt_g.NMG_debug );
+				sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 				bu_printb( "librt rt_g.NMG_debug", rt_g.NMG_debug, NMG_DEBUG_FORMAT );
 				bu_log("\n");
 				break;
@@ -1229,15 +1228,17 @@ char *argv[];
 				}
 				break;
 			case 'o':
-				fdout = fopen( optarg, "w" );
-				if( fdout == (FILE *)NULL )
-				{
-					bu_log( "Cannot open BRL-CAD file (%s) for writing!!!\n", optarg );
-					bu_log( "Usage", argv[0] );
-					exit( 1 );
-				}
+				output_file = optarg;
 				break;
 		}
+	}
+
+	fdout = wdb_fopen( output_file );
+	if( fdout == NULL )
+	{
+		bu_log( "Cannot open BRL-CAD file (%s) for writing!!!\n", output_file );
+		bu_log( "Usage", argv[0] );
+		exit( 1 );
 	}
 
 	if( !fdin || !fdout )
@@ -1478,12 +1479,12 @@ char *argv[];
 		else
 			mk_nmg( fdout, name, m );
 
-		mk_addmember( name, &head, WMOP_UNION );
+		mk_addmember( name, &head.l, NULL, WMOP_UNION );
 	}
 	if( BU_LIST_NON_EMPTY( &head.l ) )
 	{
 		mk_lfcomb( fdout, "shells", &head, 0 );
-		mk_addmember( "shells", &all_head, WMOP_UNION );
+		mk_addmember( "shells", &all_head.l, NULL, WMOP_UNION );
 	}
 
 	BU_LIST_INIT( &head.l );
@@ -1497,16 +1498,18 @@ char *argv[];
 		sprintf( name, "pbar_group.%d", pb->pid );
 		mk_lfcomb( fdout, name, &pb->head, 0 );
 
-		mk_addmember( name, &head, WMOP_UNION );
+		mk_addmember( name, &head.l, NULL, WMOP_UNION );
 	}
 	if( BU_LIST_NON_EMPTY( &head.l ) )
 	{
 		mk_lfcomb( fdout, "pbars", &head, 0 );
-		mk_addmember( "pbars", &all_head, WMOP_UNION );
+		mk_addmember( "pbars", &all_head.l, NULL, WMOP_UNION );
 	}
 
 	if( BU_LIST_NON_EMPTY( &all_head.l ) )
 	{
 		mk_lfcomb( fdout, "all", &all_head, 0 );
 	}
+	wdb_close(fdout);
+	return 0;
 }

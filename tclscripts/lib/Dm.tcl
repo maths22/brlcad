@@ -83,8 +83,10 @@ class Dm {
 
     protected variable width 512
     protected variable height 512
-    protected variable invWidth ""
+    protected variable invWidth 0.001953125
+    protected variable invHeight 0.001953125
     protected variable aspect 1.0
+    protected variable invAspect 1.0
     private variable initializing 1
     private variable priv_type X
     private variable tkwin
@@ -106,7 +108,7 @@ body Dm::destructor {} {
 # Hack around problem that showed up in Itcl3.2
 # 
     $tkwin listen -1
-    $tkwin close
+    rename $tkwin ""
 }
 
 configbody Dm::dmsize {
@@ -437,7 +439,7 @@ body Dm::toggle_light {} {
 	set itk_option(-light) 0
     } else {
 	$itk_component(dm) light 1
-	set itk_opton(-light) 1
+	set itk_option(-light) 1
     }
 }
 
@@ -458,13 +460,19 @@ body Dm::handle_configure {} {
     set width [lindex $itk_option(-dmsize) 0]
     set height [lindex $itk_option(-dmsize) 1]
     set invWidth [expr 1.0 / $width]
+    set invHeight [expr 1.0 / $height]
     set aspect [get_aspect]
+    set invAspect [expr 1.0 / $aspect]
 }
 
 body Dm::changeType {type} {
     if {$type != $priv_type} {
 	$itk_component(dm) listen -1
-	$itk_component(dm) close
+
+	# the close method no longer exists
+	#$itk_component(dm) close
+	rename $itk_component(dm) ""
+
 	createDm $type
 	initDm
 	set priv_type $type

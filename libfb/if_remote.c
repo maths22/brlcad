@@ -24,7 +24,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -169,6 +169,7 @@ register char *s;
  *
  *  Return -1 on error, else 0.
  */
+int
 parse_file( file, host, portp, device )
 char *file;	/* input file spec */
 char *host;	/* host part */
@@ -445,7 +446,7 @@ _LOCAL_ int
 rem_write( ifp, x, y, pixelp, num )
 register FBIO	*ifp;
 int		x, y;
-CONST unsigned char	*pixelp;
+const unsigned char	*pixelp;
 int		num;
 {
 	int	ret;
@@ -512,7 +513,7 @@ rem_writerect( ifp, xmin, ymin, width, height, pp )
 FBIO	*ifp;
 int	xmin, ymin;
 int	width, height;
-CONST unsigned char	*pp;
+const unsigned char	*pp;
 {
 	int	num;
 	int	ret;
@@ -583,7 +584,7 @@ rem_bwwriterect( ifp, xmin, ymin, width, height, pp )
 FBIO	*ifp;
 int	xmin, ymin;
 int	width, height;
-CONST unsigned char	*pp;
+const unsigned char	*pp;
 {
 	int	num;
 	int	ret;
@@ -668,7 +669,7 @@ int	*x, *y;
 _LOCAL_ int
 rem_setcursor( ifp, bits, xbits, ybits, xorig, yorig )
 FBIO	*ifp;
-CONST unsigned char	*bits;
+const unsigned char	*bits;
 int		xbits, ybits;
 int		xorig, yorig;
 {

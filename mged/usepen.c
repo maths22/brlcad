@@ -19,7 +19,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -86,17 +86,17 @@ static void	illuminate();
  *  is by completing the sequence, or pressing BE_REJECT.
  */
 int
-f_mouse(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int	argc;
-char	**argv;
+f_mouse(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv)
 {
 	vect_t	mousevec;		/* float pt -1..+1 mouse pos vect */
 	int	isave;
-	int	up = atoi(argv[1]);
-	int	xpos = atoi(argv[2]);
-	int	ypos = atoi(argv[3]);
+	int	up;
+	int	xpos;
+	int	ypos;
 
 	if(argc < 4 || 4 < argc){
 	  struct bu_vls vls;
@@ -107,6 +107,10 @@ char	**argv;
 	  bu_vls_free(&vls);
 	  return TCL_ERROR;
 	}
+
+	up = atoi(argv[1]);
+	xpos = atoi(argv[2]);
+	ypos = atoi(argv[3]);
 
 	/* Build floating point mouse vector, -1 to +1 */
 	mousevec[X] =  xpos * INV_GED;
@@ -190,8 +194,8 @@ char	**argv;
 	   * Convert DT position to path element select
 	   */
 	  isave = ipathpos;
-	  ipathpos = illump->s_last - (
-				       (ypos+(int)GED_MAX) * (illump->s_last+1) / (int)GED_RANGE);
+	  ipathpos = illump->s_fullpath.fp_len-1 - (
+	       (ypos+(int)GED_MAX) * (illump->s_fullpath.fp_len) / (int)GED_RANGE);
 	  if( ipathpos != isave )
 	    view_state->vs_flag = 1;
 	  return TCL_OK;
@@ -285,7 +289,7 @@ illuminate( y )  {
 	 */
 	count = ((fastf_t)y + GED_MAX) * ndrawn / GED_RANGE;
 
-	FOR_ALL_SOLIDS(sp, &HeadSolid.l)  {
+	FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid)  {
 		/* Only consider solids which are presently in view */
 		if( sp->s_flag == UP )  {
 		        if( count-- == 0 ) {
@@ -307,11 +311,11 @@ illuminate( y )  {
  *   advance illump or ipathpos
  */
 int
-f_aip(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int argc;
-char *argv[];
+f_aip(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int argc,
+	char **argv)
 {
   register struct solid *sp;
 
@@ -326,24 +330,20 @@ char *argv[];
   }
 
   if (!ndrawn){
-      Tcl_AppendResult(interp, "aip: no solids displayed\n", (char *)NULL);
-      return TCL_ERROR;
-    }
-    else if (state != ST_S_PICK && state != ST_O_PICK  && state != ST_O_PATH)
-    {
-      state_err("advance the illumination pointer");
-      return TCL_ERROR;
+	  return TCL_OK;
+  } else if (state != ST_S_PICK && state != ST_O_PICK  && state != ST_O_PATH) {
+	  return TCL_OK;
   }
 
   if(state == ST_O_PATH){
     if(argc == 1 || *argv[1] == 'f'){
       ++ipathpos;
-      if(ipathpos > illump->s_last)
+      if(ipathpos >= illump->s_fullpath.fp_len)
 	ipathpos = 0;
     }else if(*argv[1] == 'b'){
       --ipathpos;
       if(ipathpos < 0)
-	ipathpos = illump->s_last;
+	ipathpos = illump->s_fullpath.fp_len-1;
     }else{
       Tcl_AppendResult(interp, "aip: bad parameter - ", argv[1], "\n", (char *)NULL);
       return TCL_ERROR;
@@ -352,13 +352,13 @@ char *argv[];
     sp = illump;
     sp->s_iflag = DOWN;
     if(argc == 1 || *argv[1] == 'f'){
-      if(BU_LIST_NEXT_IS_HEAD(sp, &HeadSolid.l))
-	sp = BU_LIST_NEXT(solid, &HeadSolid.l);
+      if(BU_LIST_NEXT_IS_HEAD(sp, &dgop->dgo_headSolid))
+	sp = BU_LIST_NEXT(solid, &dgop->dgo_headSolid);
       else
 	sp = BU_LIST_PNEXT(solid, sp);
     }else if(*argv[1] == 'b'){
-      if(BU_LIST_PREV_IS_HEAD(sp, &HeadSolid.l))
-	sp = BU_LIST_PREV(solid, &HeadSolid.l);
+      if(BU_LIST_PREV_IS_HEAD(sp, &dgop->dgo_headSolid))
+	sp = BU_LIST_PREV(solid, &dgop->dgo_headSolid);
       else
 	sp = BU_LIST_PLAST(solid, sp);
     }else{
@@ -375,69 +375,6 @@ char *argv[];
 }
 
 /*
- *			B U I L D H R O T
- *
- * This routine builds a Homogeneous rotation matrix, given
- * alpha, beta, and gamma as angles of rotation.
- *
- * NOTE:  Only initialize the rotation 3x3 parts of the 4x4
- * There is important information in dx,dy,dz,s .
- */
-void
-buildHrot( mat, alpha, beta, ggamma )
-register matp_t mat;
-double alpha, beta, ggamma;
-{
-	static fastf_t calpha, cbeta, cgamma;
-	static fastf_t salpha, sbeta, sgamma;
-
-	calpha = cos( alpha );
-	cbeta = cos( beta );
-	cgamma = cos( ggamma );
-
-	salpha = sin( alpha );
-	sbeta = sin( beta );
-	sgamma = sin( ggamma );
-
-	/*
-	 * compute the new rotation to apply to the previous
-	 * viewing rotation.
-	 * Alpha is angle of rotation about the X axis, and is done third.
-	 * Beta is angle of rotation about the Y axis, and is done second.
-	 * Gamma is angle of rotation about Z axis, and is done first.
-	 */
-#ifdef m_RZ_RY_RX
-	/* view = model * RZ * RY * RX (Neuman+Sproul, premultiply) */
-	mat[0] = cbeta * cgamma;
-	mat[1] = -cbeta * sgamma;
-	mat[2] = -sbeta;
-
-	mat[4] = -salpha * sbeta * cgamma + calpha * sgamma;
-	mat[5] = salpha * sbeta * sgamma + calpha * cgamma;
-	mat[6] = -salpha * cbeta;
-
-	mat[8] = calpha * sbeta * cgamma + salpha * sgamma;
-	mat[9] = -calpha * sbeta * sgamma + salpha * cgamma;
-	mat[10] = calpha * cbeta;
-#endif
-	/* This is the correct form for this version of GED */
-	/* view = RX * RY * RZ * model (Rodgers, postmultiply) */
-	/* Point thumb along axis of rotation.  +Angle as hand closes */
-	mat[0] = cbeta * cgamma;
-	mat[1] = -cbeta * sgamma;
-	mat[2] = sbeta;
-
-	mat[4] = salpha * sbeta * cgamma + calpha * sgamma;
-	mat[5] = -salpha * sbeta * sgamma + calpha * cgamma;
-	mat[6] = -salpha * cbeta;
-
-	mat[8] = -calpha * sbeta * cgamma + salpha * sgamma;
-	mat[9] = calpha * sbeta * sgamma + salpha * cgamma;
-	mat[10] = calpha * cbeta;
-}
-
-
-/*
  *  			W R T _ V I E W
  *  
  *  Given a model-space transformation matrix "change",
@@ -445,18 +382,17 @@ double alpha, beta, ggamma;
  *  the view center.
  */
 void
-wrt_view( out, change, in )
-register matp_t out, change, in;
+wrt_view( mat_t out, const mat_t change, const mat_t in )
 {
 	static mat_t t1, t2;
 
-	bn_mat_mul( t1, view_state->vs_toViewcenter, in );
-	bn_mat_mul( t2, change, t1 );
+	bn_mat_mul(t1, view_state->vs_vop->vo_center, in);
+	bn_mat_mul(t2, change, t1);
 
 	/* Build "fromViewcenter" matrix */
-	bn_mat_idn( t1 );
-	MAT_DELTAS( t1, -view_state->vs_toViewcenter[MDX], -view_state->vs_toViewcenter[MDY], -view_state->vs_toViewcenter[MDZ] );
-	bn_mat_mul( out, t1, t2 );
+	MAT_IDN(t1);
+	MAT_DELTAS(t1, -view_state->vs_vop->vo_center[MDX], -view_state->vs_vop->vo_center[MDY], -view_state->vs_vop->vo_center[MDZ]);
+	bn_mat_mul(out, t1, t2);
 }
 
 /*
@@ -467,10 +403,7 @@ register matp_t out, change, in;
  *  "point".
  */
 void
-wrt_point( out, change, in, point )
-register matp_t out;
-register CONST matp_t change, in;
-register CONST vect_t point;
+wrt_point( mat_t out, const mat_t change, const mat_t in, const point_t point )
 {
 	mat_t	t;
 
@@ -490,9 +423,7 @@ register CONST vect_t point;
  *  given "point" and "direc".
  */
 void
-wrt_point_direc( out, change, in, point, direc )
-register matp_t out, change, in;
-register vect_t point, direc;
+wrt_point_direc( mat_t out, const mat_t change, const mat_t in, const point_t point, const vect_t direc )
 {
 	static mat_t	t1;
 	static mat_t	pt_to_origin, origin_to_pt;
@@ -500,11 +431,11 @@ register vect_t point, direc;
 	static vect_t	zaxis;
 
 	/* build "point to origin" matrix */
-	bn_mat_idn( pt_to_origin );
+	MAT_IDN( pt_to_origin );
 	MAT_DELTAS(pt_to_origin, -point[X], -point[Y], -point[Z]);
 
 	/* build "origin to point" matrix */
-	bn_mat_idn( origin_to_pt );
+	MAT_IDN( origin_to_pt );
 	MAT_DELTAS(origin_to_pt, point[X], point[Y], point[Z]);
 
 	/* build "direc to zaxis" matrix */
@@ -537,14 +468,14 @@ register vect_t point, direc;
  *	matpick a/b	Pick arc between a and b.
  *	matpick #	Similar to internal interface.
  *			0 = top level object is a solid.
- *			n = edit arc from s_path[n-1] to [n]
+ *			n = edit arc from path [n-1] to [n]
  */
 int
-f_matpick(clientData, interp, argc, argv)
-ClientData clientData;
-Tcl_Interp *interp;
-int	argc;
-char	**argv;
+f_matpick(
+	ClientData clientData,
+	Tcl_Interp *interp,
+	int	argc,
+	char	**argv)
 {
 	register struct solid	*sp;
 	char			*cp;
@@ -582,7 +513,7 @@ char	**argv;
 	if( not_state( ST_O_PATH, "Object Edit matrix pick" ) )
 	  return TCL_ERROR;
 
-	if( cp = strchr( argv[1], '/' ) )  {
+	if( (cp = strchr( argv[1], '/' )) != NULL )  {
 		struct directory	*d0, *d1;
 		if( (d1 = db_lookup( dbip, cp+1, LOOKUP_NOISY )) == DIR_NULL )
 		  return TCL_ERROR;
@@ -590,9 +521,9 @@ char	**argv;
 		if( (d0 = db_lookup( dbip, argv[1], LOOKUP_NOISY )) == DIR_NULL )
 		  return TCL_ERROR;
 		/* Find arc on illump path which runs from d0 to d1 */
-		for( j=1; j <= illump->s_last; j++ )  {
-			if( illump->s_path[j-1] != d0 )  continue;
-			if( illump->s_path[j-0] != d1 )  continue;
+		for( j=1; j < illump->s_fullpath.fp_len; j++ )  {
+			if( DB_FULL_PATH_GET(&illump->s_fullpath,j-1) != d0 )  continue;
+			if( DB_FULL_PATH_GET(&illump->s_fullpath,j-0) != d1 )  continue;
 			ipathpos = j;
 			goto got;
 		}
@@ -603,13 +534,15 @@ char	**argv;
 	} else {
 		ipathpos = atoi(argv[1]);
 		if( ipathpos < 0 )  ipathpos = 0;
-		else if( ipathpos > illump->s_last )  ipathpos = illump->s_last;
+		else if( ipathpos >= illump->s_fullpath.fp_len )
+			ipathpos = illump->s_fullpath.fp_len-1;
 	}
 got:
 	/* Include all solids with same tree top */
-	FOR_ALL_SOLIDS(sp, &HeadSolid.l)  {
+	FOR_ALL_SOLIDS(sp, &dgop->dgo_headSolid)  {
 		for( j = 0; j <= ipathpos; j++ )  {
-			if( sp->s_path[j] != illump->s_path[j] )
+			if( DB_FULL_PATH_GET(&sp->s_fullpath,j) !=
+			    DB_FULL_PATH_GET(&illump->s_fullpath,j) )
 				break;
 		}
 		/* Only accept if top of tree is identical */

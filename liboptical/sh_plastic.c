@@ -23,7 +23,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -36,9 +36,15 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include "raytrace.h"
 #include "shadefuncs.h"
 #include "shadework.h"
-#include "../rt/rdebug.h"
-#include "../rt/light.h"
+#include "rtprivate.h"
+#include "light.h"
+#if RT_MULTISPECTRAL
+#include "spectrum.h"
+#endif
 
+extern int rr_render(struct application	*ap,
+		     struct partition	*pp,
+		     struct shadework   *swp);
 /* Fast approximation to specular term */
 #define PHAST_PHONG 1	/* See Graphics Gems IV pg 387 */
 
@@ -46,7 +52,7 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 extern double AmbientIntensity;
 
 #if RT_MULTISPECTRAL
-extern CONST struct bn_table	*spectrum;	/* from rttherm/viewtherm.c */
+extern const struct bn_table	*spectrum;	/* from rttherm/viewtherm.c */
 #endif
 
 /* Local information */
@@ -59,6 +65,7 @@ struct phong_specific {
 	double	reflect;	/* Moss "transmission" */
 	double	refrac_index;
 	double	extinction;
+	double	emission[3];
 	struct mfuncs *mfp;
 };
 #define PL_MAGIC	0xbeef00d
@@ -80,6 +87,8 @@ struct bu_structparse phong_parse[] = {
 	{"%f",	1, "extinction_per_meter", PL_O(extinction),	BU_STRUCTPARSE_FUNC_NULL },
 	{"%f",	1, "extinction",	PL_O(extinction),	BU_STRUCTPARSE_FUNC_NULL },
 	{"%f",	1, "ex",		PL_O(extinction),	BU_STRUCTPARSE_FUNC_NULL },
+	{"%f",	3, "emission",		PL_O(emission),		BU_STRUCTPARSE_FUNC_NULL },
+	{"%f",	3, "em",		PL_O(emission),		BU_STRUCTPARSE_FUNC_NULL },
 	{"",	0, (char *)0,		0,			BU_STRUCTPARSE_FUNC_NULL }
 };
 
@@ -88,9 +97,12 @@ HIDDEN int phong_render();
 HIDDEN void	phong_print();
 HIDDEN void	phong_free();
 
-/* This can't be CONST, so the forward link can be written later */
+/* This can't be const, so the forward link can be written later */
 struct mfuncs phg_mfuncs[] = {
 	{MF_MAGIC,	"default",	0,		MFI_NORMAL,	0,
+	phong_setup,	phong_render,	phong_print,	phong_free },
+
+	{MF_MAGIC,	"phong",	0,		MFI_NORMAL,	0,
 	phong_setup,	phong_render,	phong_print,	phong_free },
 
 	{MF_MAGIC,	"plastic",	0,		MFI_NORMAL,	0,
@@ -310,7 +322,7 @@ char *cp;
 		a function of the angle of incidence, range 0.0 to 1.0,
 		for the material.
 	s	is the angle between the reflected ray and the observer.
-	n	'Shininess' of the material,  range 1 to 10.
+`	n	'Shininess' of the material,  range 1 to 10.
  */
 HIDDEN int
 phong_render( ap, pp, swp, dp )
@@ -346,6 +358,12 @@ char	*dp;
 	swp->sw_reflect = ps->reflect;
 	swp->sw_refrac_index = ps->refrac_index;
 	swp->sw_extinction = ps->extinction;
+#if SW_SET_TRANSMIT
+	if (swp->sw_phong_set_vector & SW_SET_TRANSMIT) swp->sw_transmit = swp->sw_phong_transmit;
+	if (swp->sw_phong_set_vector & SW_SET_REFLECT) swp->sw_reflect = swp->sw_phong_reflect;
+	if (swp->sw_phong_set_vector & SW_SET_REFRAC_INDEX) swp->sw_refrac_index = swp->sw_phong_ri;
+	if (swp->sw_phong_set_vector & SW_SET_EXTINCTION) swp->sw_extinction = swp->sw_phong_extinction;
+#endif /* SW_SET_TRANSMIT */
 	if (swp->sw_xmitonly ) {
 		if (swp->sw_xmitonly > 1 )
 			return(1);	/* done -- wanted parameters only */
@@ -366,11 +384,24 @@ char	*dp;
 	/* Diffuse reflectance from "Ambient" light source (at eye) */
 	if ((cosine = -VDOT( swp->sw_hit.hit_normal, ap->a_ray.r_dir )) > 0.0 )  {
 		if (cosine > 1.00001 )  {
-			bu_log("cosAmb=1+%g (x%d,y%d,lvl%d)\n", cosine-1,
+			bu_log("cosAmb=1+%g %s surfno=%d (x%d,y%d,lvl%d)\n",
+				cosine-1,
+				pp->pt_inseg->seg_stp->st_dp->d_namep,
+				swp->sw_hit.hit_surfno,
 				ap->a_x, ap->a_y, ap->a_level);
+			VPRINT(" normal", swp->sw_hit.hit_normal);
+			VPRINT(" r_dir ", ap->a_ray.r_dir);
 			cosine = 1;
 		}
+#if SW_SET_TRANSMIT
+		if (swp->sw_phong_set_vector & SW_SET_AMBIENT) {
+			cosine *= swp->sw_phong_ambient;
+		} else {
+			cosine *= AmbientIntensity;
+		}
+#else
 		cosine *= AmbientIntensity;
+#endif
 #if RT_MULTISPECTRAL
 		bn_tabdata_scale( swp->msw_color, ms_matcolor, cosine );
 #else
@@ -383,6 +414,37 @@ char	*dp;
 		VSETALL( swp->sw_color, 0 );
 #endif
 	}
+
+	/* Emission.  0..1 is normal range, -1..0 sucks light out, like OpenGL */
+#if RT_MULTISPECTRAL
+	{
+		float emission[3];
+		struct bn_tabdata	*ms_emission = BN_TABDATA_NULL;
+		VMOVE(emission,ps->emission);
+#if SW_SET_TRANSMIT
+		if (swp->sw_phong_set_vector & SW_SET_EMISSION) {
+			VSETALL(emission, swp->sw_phong_emission);
+		}
+#endif
+		/* XXX Really should get a curve at prep, not expand RGB samples */
+		BN_GET_TABDATA( ms_emission, spectrum );
+		rt_spect_reflectance_rgb( ms_emission, emission );
+		bn_tabdata_add( swp->msw_color, swp->msw_color, ms_emission );
+		bn_tabdata_free( ms_emission );
+	}
+#else
+#if SW_SET_TRANSMIT
+	if (swp->sw_phong_set_vector & SW_SET_EMISSION) {
+		vect_t tmp;
+		VSETALL(tmp,swp->sw_phong_emission);
+		VADD2( swp->sw_color, swp->sw_color, tmp);
+	} else {
+		VADD2( swp->sw_color, swp->sw_color, ps->emission );
+	}
+#else
+	VADD2( swp->sw_color, swp->sw_color, ps->emission );
+#endif /* SW_SET_TRANSMIT */
+#endif
 
 	/* With the advent of procedural shaders, the caller can no longer
 	 * provide us reliable light visibility information.  The hit point

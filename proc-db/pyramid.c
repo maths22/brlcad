@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -28,11 +28,14 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "bu.h"
 #include "vmath.h"
 #include "bn.h"
+#include "raytrace.h"
 #include "wdb.h"
 
 void	do_leaf(), do_pleaf(), pnorms(), do_tree();
 
 double sin60;
+
+struct rt_wdb *outfp;
 
 int
 main(argc, argv)
@@ -47,10 +50,14 @@ char	**argv;
 	depth = atoi( argv[1] );
 	sin60 = sin(60.0 * 3.14159265358979323846264 / 180.0);
 
-	mk_id( stdout, "Triangles" );
+	outfp = wdb_fopen( "pyramid.g" );
+
+	mk_id( outfp, "3-D Pyramids" );
 
 	do_leaf("leaf");
+#if 0
 	do_pleaf("polyleaf");
+#endif
 	do_tree("tree", "leaf", depth);
 
 	return 0;
@@ -68,9 +75,10 @@ char	*name;
 	VSET( pt[2], 50, 100*sin60, 0);
 	VSET( pt[3], 50, 100*sin60/3, 100*sin60 );
 
-	mk_arb4( stdout, name, &pt[0][X] );
+	mk_arb4( outfp, name, &pt[0][X] );
 }
 
+#if 0
 /* Make a leaf node out of 4 polygons */
 void
 do_pleaf(name)
@@ -93,32 +101,33 @@ char	*name;
 	}
 	VSCALE( centroid, centroid, 0.25 );
 
-	mk_polysolid( stdout, name );
+	mk_polysolid( outfp, name );
 
 	VMOVE( verts[0], pt[0] );
 	VMOVE( verts[1], pt[1] );
 	VMOVE( verts[2], pt[2] );
 	pnorms( norms, verts, centroid, 3 );
-	mk_poly( stdout, 3, verts, norms );
+	mk_poly( outfp, 3, verts, norms );
 
 	VMOVE( verts[0], pt[0] );
 	VMOVE( verts[1], pt[1] );
 	VMOVE( verts[2], pt[3] );
 	pnorms( norms, verts, centroid, 3 );
-	mk_poly( stdout, 3, verts, norms );
+	mk_poly( outfp, 3, verts, norms );
 
 	VMOVE( verts[0], pt[0] );
 	VMOVE( verts[1], pt[2] );
 	VMOVE( verts[2], pt[3] );
 	pnorms( norms, verts, centroid, 3 );
-	mk_poly( stdout, 3, verts, norms );
+	mk_poly( outfp, 3, verts, norms );
 
 	VMOVE( verts[0], pt[1] );
 	VMOVE( verts[1], pt[2] );
 	VMOVE( verts[2], pt[3] );
 	pnorms( norms, verts, centroid, 3 );
-	mk_poly( stdout, 3, verts, norms );
+	mk_poly( outfp, 3, verts, norms );
 }
+#endif
 
 /*
  *  Find the single outward pointing normal for a facet.
@@ -160,10 +169,13 @@ char	*lname;
 int	level;
 {
 	register int i;
-	mat_t m;
 	char nm[64];
 	char *leafp;
 	int scale;
+	struct wmember	head;
+	struct wmember	*wp;
+
+	BU_LIST_INIT(&head.l);
 
 	if( level <= 1 )
 		leafp = lname;
@@ -174,24 +186,24 @@ int	level;
 	for( i=1; i<level; i++ )
 		scale *= 2;
 
-	/* len = 4, set region on lowest level */
-	mk_fcomb( stdout, name, 4, level<=1 );
-
-	bn_mat_idn( m );
 	sprintf(nm, "%sL", name);
-	mk_memb( stdout, leafp, m, WMOP_UNION );
+	wp = mk_addmember( leafp, &head.l, NULL, WMOP_UNION );
+	MAT_IDN( wp->wm_mat );
 
-	MAT_DELTAS( m, 1*scale, 0, 0 );
 	sprintf(nm, "%sR", name);
-	mk_memb( stdout, leafp, m, WMOP_UNION );
+	wp = mk_addmember( leafp, &head.l, NULL, WMOP_UNION );
+	MAT_DELTAS( wp->wm_mat, 1*scale, 0, 0 );
 
-	MAT_DELTAS( m, 0.5*scale, sin60*scale, 0 );
 	sprintf(nm, "%sB", name);
-	mk_memb( stdout, leafp, m, WMOP_UNION );
+	wp = mk_addmember( leafp, &head.l, NULL, WMOP_UNION );
+	MAT_DELTAS( wp->wm_mat, 0.5*scale, sin60*scale, 0 );
 
-	MAT_DELTAS( m, 0.5*scale, sin60/3*scale, sin60*scale );
 	sprintf(nm, "%sT", name);
-	mk_memb( stdout, leafp, m, WMOP_UNION );
+	wp = mk_addmember( leafp, &head.l, NULL, WMOP_UNION );
+	MAT_DELTAS( wp->wm_mat, 0.5*scale, sin60/3*scale, sin60*scale );
+
+	/* Set region flag on lowest level */
+	mk_lcomb( outfp, name, &head, level<=1, NULL, NULL, NULL, 0 );
 
 	/* Loop for children if level > 1 */
 	if( level <= 1 )

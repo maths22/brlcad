@@ -19,7 +19,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrt[] = "@(#)$Header$ (BRL)";
+static const char RCSrt[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -32,8 +32,9 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #include "externs.h"
 #include "vmath.h"
 #include "raytrace.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "../librt/debug.h"
+#include "plot3.h"
 
 char	usage[] = "\
 Usage:  rtwalk [options] startXYZ destXYZ model.g objects...\n\
@@ -89,6 +90,7 @@ void		write_matrix();
 /*
  *			G E T _ A R G S
  */
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -97,11 +99,11 @@ register char **argv;
 	while( (c=bu_getopt( argc, argv, "x:X:n:v:" )) != EOF )  {
 		switch( c )  {
 		case 'x':
-			sscanf( bu_optarg, "%x", &rt_g.debug );
+			sscanf( bu_optarg, "%x", (unsigned int *)&rt_g.debug );
 			fprintf(stderr,"librt rt_g.debug=x%x\n", rt_g.debug);
 			break;
 		case 'X':
-			sscanf( bu_optarg, "%x", &rdebug );
+			sscanf( bu_optarg, "%x", (unsigned int *)&rdebug );
 			fprintf(stderr,"rt rdebug=x%x\n", rdebug);
 			break;
 
@@ -123,6 +125,7 @@ register char **argv;
 /*
  *			M A I N
  */
+int
 main(argc, argv)
 int argc;
 char **argv;
@@ -197,7 +200,7 @@ char **argv;
 	/* Plot all of the solids */
 	if( rdebug > 0 )  {
 		pl_color( plotfp, 150, 150, 150 );
-		rt_plot_all_solids( plotfp, rtip );
+		rt_plot_all_solids( plotfp, rtip, &rt_uniresource );
 	}
 
 	/* Take a walk */
@@ -365,7 +368,7 @@ advance:	;
 	exit(1);
 }
 
-hit( ap, PartHeadp )
+int hit( ap, PartHeadp )
 register struct application *ap;
 struct partition *PartHeadp;
 {
@@ -390,6 +393,7 @@ struct partition *PartHeadp;
 	return(1);	/* HIT */
 }
 
+int
 miss()
 {
 	return(0);

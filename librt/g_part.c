@@ -166,12 +166,15 @@
  *  The calculation for theta come from a diagram drawn by PJT on 18-Nov-99.
  */
 #ifndef lint
-static char RCSpart[] = "@(#)$Header$ (BRL)";
+static const char RCSpart[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -199,12 +202,13 @@ struct part_specific {
 #define RT_PARTICLE_SURF_BODY		2
 #define RT_PARTICLE_SURF_HSPHERE	3
 
-CONST struct bu_structparse rt_part_parse[] = {
+const struct bu_structparse rt_part_parse[] = {
     { "%f", 3, "V",  offsetof(struct rt_part_internal, part_V[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "H",  offsetof(struct rt_part_internal, part_H[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_v",offsetof(struct rt_part_internal, part_vrad), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_h",offsetof(struct rt_part_internal, part_hrad), BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+ };
 	    
 RT_EXTERN( void rt_part_ifree, (struct rt_db_internal *ip) );
 
@@ -331,14 +335,14 @@ struct rt_i		*rtip;
 	part->part_hrad_prime = part->part_h_erad / part->part_v_erad;
 
 	/* Compute R and Rinv */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VMOVE( &R[0], a );		/* has unit length */
 	VMOVE( &R[4], b );		/* has unit length */
 	VMOVE( &R[8], Hunit );
 	bn_mat_trn( Rinv, R );
 
 	/* Compute scale matrix S, where |A| = |B| = equiv_Vradius */ 
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = 1.0 / part->part_v_erad;
 	S[ 5] = S[0];
 	S[10] = inv_hlen;
@@ -387,9 +391,9 @@ struct rt_i		*rtip;
  */
 void
 rt_part_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct part_specific *part =
+	register const struct part_specific *part =
 		(struct part_specific *)stp->st_specific;
 
 	VPRINT("part_V", part->part_int.part_V );
@@ -856,7 +860,7 @@ struct soltab		*stp;
 register struct hit	*hitp;
 register struct uvcoord	*uvp;
 {
-	register CONST struct part_specific *part =
+	register const struct part_specific *part =
 		(struct part_specific *)stp->st_specific;
 	point_t	hit_local;	/* hit_point, with V as origin */
 	point_t	hit_unit;	/* hit_poit in unit coords, +Z along H */
@@ -962,8 +966,8 @@ int
 rt_part_plot( vhead, ip, ttol, tol )
 struct bu_list	*vhead;
 struct rt_db_internal *ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	struct rt_part_internal	*pip;
 	point_t		tail;
@@ -1099,8 +1103,8 @@ rt_part_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol		*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol		*tol;
 {
 	struct rt_part_internal	*pip;
 	LOCAL mat_t	R;
@@ -1147,7 +1151,7 @@ CONST struct bn_tol		*tol;
 
 	/* Compute S and invS matrices */
 	/* invS is just 1/diagonal elements */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = S[ 5] = S[10] = 1/pip->part_hrad;
 	bn_mat_inv( invS, S );
 
@@ -1161,7 +1165,7 @@ CONST struct bn_tol		*tol;
 
 	/* Compute S and invS matrices */
 	/* invS is just 1/diagonal elements */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = S[ 5] = S[10] = 1/pip->part_vrad;
 	bn_mat_inv( invS, S );
 
@@ -1485,9 +1489,9 @@ fail:
 int
 rt_part_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	point_t		v;
 	vect_t		h;
@@ -1511,7 +1515,8 @@ CONST struct db_i		*dbip;
 	ntohd( (unsigned char *)&vrad, rp->part.p_vrad, 1 );
 	ntohd( (unsigned char *)&hrad, rp->part.p_hrad, 1 );
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_PARTICLE;
 	ip->idb_meth = &rt_functab[ID_PARTICLE];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_part_internal), "rt_part_internal");
@@ -1567,9 +1572,9 @@ CONST struct db_i		*dbip;
 int
 rt_part_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_part_internal	*pip;
 	union record		*rec;
@@ -1583,7 +1588,7 @@ CONST struct db_i		*dbip;
 	pip = (struct rt_part_internal *)ip->idb_ptr;
 	RT_PART_CK_MAGIC(pip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "part external");
 	rec = (union record *)ep->ext_buf;
@@ -1605,6 +1610,113 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ P A R T _ I M P O R T 5
+ */
+int
+rt_part_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	fastf_t			maxrad, minrad;
+	struct rt_part_internal	*part;
+	fastf_t			vec[8];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 8 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_PARTICLE;
+	ip->idb_meth = &rt_functab[ID_PARTICLE];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_part_internal), "rt_part_internal");
+
+	part = (struct rt_part_internal *)ip->idb_ptr;
+	part->part_magic = RT_PART_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 8 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( part->part_V, mat, &vec[0*3] );
+	MAT4X3VEC( part->part_H, mat, &vec[1*3] );
+	if( (part->part_vrad = vec[2*3] / mat[15]) < 0 )  {
+		bu_free( ip->idb_ptr, "rt_part_internal" );
+		return(-2);
+	}
+	if( (part->part_hrad = vec[2*3+1] / mat[15]) < 0 )  {
+		bu_free( ip->idb_ptr, "rt_part_internal" );
+		return(-3);
+	}
+
+	if( part->part_vrad > part->part_hrad )  {
+		maxrad = part->part_vrad;
+		minrad = part->part_hrad;
+	} else {
+		maxrad = part->part_hrad;
+		minrad = part->part_vrad;
+	}
+	if( maxrad <= 0 )  {
+		bu_free( ip->idb_ptr, "rt_part_internal" );
+		return(-4);
+	}
+
+	if( MAGSQ( part->part_H ) * 1000000 < maxrad * maxrad )  {
+		/* Height vector is insignificant, particle is a sphere */
+		part->part_vrad = part->part_hrad = maxrad;
+		VSETALL( part->part_H, 0 );		/* sanity */
+		part->part_type = RT_PARTICLE_TYPE_SPHERE;
+		return(0);		/* OK */
+	}
+
+	if( (maxrad - minrad) / maxrad < 0.001 )  {
+		/* radii are nearly equal, particle is a cylinder (lozenge) */
+		part->part_vrad = part->part_hrad = maxrad;
+		part->part_type = RT_PARTICLE_TYPE_CYLINDER;
+		return(0);		/* OK */
+	}
+
+	part->part_type = RT_PARTICLE_TYPE_CONE;
+	return(0);		/* OK */
+}
+
+/*
+ *			R T _ P A R T _ E X P O R T 5
+ */
+int
+rt_part_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_part_internal	*pip;
+	fastf_t			vec[8];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_PARTICLE )  return(-1);
+	pip = (struct rt_part_internal *)ip->idb_ptr;
+	RT_PART_CK_MAGIC(pip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 8;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "part external");
+
+	/* scale 'em into local buffer */
+	VSCALE( &vec[0*3], pip->part_V, local2mm );
+	VSCALE( &vec[1*3], pip->part_H, local2mm );
+	vec[2*3] = pip->part_vrad * local2mm;
+	vec[2*3+1] = pip->part_hrad * local2mm;
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 8 );
+
+	return(0);
+}
+
+/*
  *			R T _ P A R T _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1614,7 +1726,7 @@ CONST struct db_i		*dbip;
 int
 rt_part_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {

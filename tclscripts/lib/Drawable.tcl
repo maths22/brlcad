@@ -24,36 +24,46 @@ class Drawable {
 
     constructor {db} {}
     destructor {}
+    
+    public {
+	method assoc {args}
+	method autoview {args}
+	method blast {args}
+	method clear {args}
+	method draw {args}
+	method E {args}
+	method erase {args}
+	method erase_all {args}
+	method ev {args}
+	method get_autoview {}
+	method get_eyemodel {viewObj}
+	method get_dgname {}
+	method illum {obj}
+	method label {obj}
+	method nirt {args}
+	method observer {args}
+	method overlay {args}
+	method report {args}
+	method qray {args}
+	method rt {args}
+	method rtabort {args}
+	method rtcheck {args}
+	method rtedge {args}
+	method shaded_mode {args}
+	method vdraw {args}
+	method who {args}
+	method zap {args}
 
-    public method assoc {args}
-    public method blast {args}
-    public method clear {}
-    public method draw {args}
-    public method erase {args}
-    public method erase_all {args}
-    public method ev {args}
-    public method get_autoview {}
-    public method get_dgname {}
-    public method illum {obj}
-    public method label {obj}
-    public method observer {args}
-    public method overlay {args}
-    public method report {args}
-    public method rt {args}
-    public method rtabort {args}
-    public method rtcheck {args}
-    public method vdraw {args}
-    public method who {args}
-    public method zap {}
+	method ? {}
+	method apropos {key}
+	method help {args}
+	method getUserCmds {}
+    }
 
-    public method ? {}
-    public method apropos {key}
-    public method help {args}
-    public method getUserCmds {}
-
-    private method help_init {}
-
-    private variable help
+    private {
+	method help_init {}
+	variable help
+    }
 }
 
 body Drawable::constructor {db} {
@@ -63,48 +73,72 @@ body Drawable::constructor {db} {
 }
 
 body Drawable::destructor {} {
-    $dg close
-    delete object $help
-}
-
-body Drawable::observer {args} {
-    eval $dg observer $args
+    rename $dg ""
+    catch {delete object $help}
 }
 
 body Drawable::assoc {args} {
     eval $dg assoc $args
 }
 
-body Drawable::draw {args} {
-    eval $dg draw $args
-}
-
-body Drawable::erase {args} {
-    eval $dg erase $args
-}
-
-body Drawable::zap {} {
-    $dg zap
-}
-
-body Drawable::who {args} {
-    eval $dg who $args
+body Drawable::autoview {args} {
+    eval $dg autoview $args
 }
 
 body Drawable::blast {args} {
     eval $dg blast $args
 }
 
-body Drawable::clear {} {
-    $dg clear
+body Drawable::clear {args} {
+    eval $dg clear $args
+}
+
+body Drawable::draw {args} {
+    eval $dg draw $args
+}
+
+body Drawable::E {args} {
+    eval $dg E $args
+}
+
+body Drawable::erase {args} {
+    eval $dg erase $args
+}
+
+body Drawable::erase_all {args} {
+    eval $dg erase_all $args
 }
 
 body Drawable::ev {args} {
     eval $dg ev $args
 }
 
-body Drawable::erase_all {args} {
-    eval $dg erase_all $args
+body Drawable::get_autoview {} {
+    $dg get_autoview
+}
+
+body Drawable::get_dgname {} {
+    return $dg
+}
+
+body Drawable::get_eyemodel {viewObj} {
+    return [$dg get_eyemodel $viewObj]
+}
+
+body Drawable::illum {args} {
+    eval $dg illum $args
+}
+
+body Drawable::label {args} {
+    eval $dg label $args
+}
+
+body Drawable::nirt {args} {
+    eval $dg nirt $args
+}
+
+body Drawable::observer {args} {
+    eval $dg observer $args
 }
 
 body Drawable::overlay {args} {
@@ -113,6 +147,10 @@ body Drawable::overlay {args} {
 
 body Drawable::report {args} {
     eval $dg report $args
+}
+
+body Drawable::qray {args} {
+    eval $dg qray $args
 }
 
 body Drawable::rt {args} {
@@ -127,24 +165,24 @@ body Drawable::rtcheck {args} {
     eval $dg rtcheck $args
 }
 
+body Drawable::rtedge {args} {
+    eval $dg rtedge $args
+}
+
+body Drawable::shaded_mode {args} {
+    eval $dg shaded_mode $args
+}
+
 body Drawable::vdraw {args} {
     eval $dg vdraw $args
 }
 
-body Drawable::get_autoview {} {
-    $dg get_autoview
+body Drawable::who {args} {
+    eval $dg who $args
 }
 
-body Drawable::get_dgname {} {
-    return $dg
-}
-
-body Drawable::illum {args} {
-    eval $dg illum $args
-}
-
-body Drawable::label {args} {
-    eval $dg label $args
+body Drawable::zap {args} {
+    eval $dg zap $args
 }
 
 body Drawable::help {args} {
@@ -166,6 +204,9 @@ body Drawable::getUserCmds {} {
 body Drawable::help_init {} {
     set help [cadwidgets::Help #auto]
 
+    $help add autoview		{{view_obj} {set the view object's size and center}}
+    $help add E			{{[-s] <objects>} {evaluated edit of objects. Option 's' provides a slower,
+        but better fidelity evaluation}}
     $help add blast		{{-C#/#/# <objects>} {clear screen, draw objects}}
     $help add clear		{{} {clear screen}}
     $help add draw		{{-C#/#/# <objects>} {draw objects}}
@@ -174,11 +215,16 @@ body Drawable::help_init {} {
     $help add ev		{{[-dfnqstuvwT] [-P #] <objects>} {evaluate objects via NMG tessellation}}
     $help add get_autoview	{{} {get view parameters that shows drawn geometry}}
     $help add illum		{{name} {illuminate object}}
-    $help add label		{{} {}}
+    $help add label		{{[-n] obj} {label objects}}
+    $help add nirt		{{[nirt(1) options] [x y z]}	{trace a single ray from current view}}
     $help add overlay		{{file.plot [name]} {read UNIX-Plot as named overlay}}
-    $help add report		{{} {}}
+    $help add qray		{{subcommand}	{get/set query_ray characteristics}}
+    $help add report		{{[lvl]} {print solid table & vector list}}
     $help add rt		{{[options] [-- objects]} {do raytrace of view or specified objects}}
+    $help add rtabort		{{} {abort the associated raytraces}}
     $help add rtcheck		{{[options]} {check for overlaps in current view}}
+    $help add rtedge		{{[options] [-- objects]} {do raytrace of view or specified objects yielding only edges}}
+    $help add shaded_mode	{{[0|1|2]}	{get/set shaded mode}}
     $help add vdraw		{{write|insert|delete|read|length|show [args]} {vector drawing (cnuzman)}}
     $help add who		{{[r(eal)|p(hony)|b(oth)]} {list the top-level objects currently being displayed}}
     $help add zap		{{} {clear screen}}

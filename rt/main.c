@@ -22,15 +22,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrt[] = "@(#)$Header$ (BRL)";
+static const char RCSrt[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <ctype.h>
 #include <signal.h>
 #include <math.h>
+#include <unistd.h>
 
 #include "machine.h"
 #include "externs.h"
@@ -40,7 +44,7 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "fb.h"
 #include "./ext.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "../librt/debug.h"
 
 extern char	usage[];
@@ -73,6 +77,9 @@ extern int	pix_end;		/* pixel to end at */
 extern int	nobjs;			/* Number of cmd-line treetops */
 extern char	**objtab;		/* array of treetop strings */
 char		*beginptr;		/* sbrk() at start of program */
+long		n_malloc;		/* Totals at last check */
+long		n_free;
+long		n_realloc;
 extern int	matflag;		/* read matrix from stdin */
 extern int	desiredframe;		/* frame to start at */
 extern int	curframe;		/* current frame number,
@@ -110,24 +117,47 @@ int	arg;
 #endif
 }
 
+/*
+ *			M E M O R Y _ S U M M A R Y
+ */
+void
+memory_summary()
+{
+#ifdef HAVE_SBRK_DECL
+	if (rt_verbosity & VERBOSE_STATS)  {
+		long	mdelta = bu_n_malloc - n_malloc;
+		long	fdelta = bu_n_free - n_free;
+		fprintf(stderr,
+			"Additional mem=%ld., #malloc=%ld, #free=%ld, #realloc=%ld (%ld retained)\n",
+			(long)((char *)sbrk(0)-beginptr),
+			mdelta,
+			fdelta,
+			bu_n_realloc - n_realloc,
+			mdelta - fdelta);
+	}
+	beginptr = (char *) sbrk(0);
+#endif
+	n_malloc = bu_n_malloc;
+	n_free = bu_n_free;
+	n_realloc = bu_n_realloc;
+}
 
 /*
  *			M A I N
  */
-main(argc, argv)
-int argc;
-char **argv;
+int main(int argc, char **argv)
 {
 	static struct rt_i *rtip;
 	char *title_file, *title_obj;	/* name of file and first object */
 	register int	x;
 	char idbuf[132];		/* First ID record info */
 	void	application_init();
+	struct bu_vls	times;
 	int i;
 
 	bu_setlinebuf( stderr );
 
-#ifdef HAVE_SBRK
+#ifdef HAVE_SBRK_DECL
 	beginptr = (char *) sbrk(0);
 #endif
 	azimuth = 35.0;			/* GIFT defaults */
@@ -156,6 +186,10 @@ char **argv;
 			bu_version+5
 		      );	/* +5 to skip @(#) */
 	}
+#ifdef PRODUCTION
+	(void)fprintf(stderr, "Running with production compilation\n");
+#endif
+
 	/* Identify what host we're running on */
 	if (rt_verbosity & VERBOSE_LIBVERSIONS) {
 		char	hostname[512];
@@ -176,6 +210,17 @@ char **argv;
 		width = 512;
 	if( height <= 0 && cell_height <= 0 )
 		height = 512;
+
+	if( sub_grid_mode ) {
+		/* check that we have a legal subgrid */
+		if( sub_xmax >= width || sub_ymax >= height ) {
+			fprintf( stderr, "rt: illegal values for subgrid %d,%d,%d,%d\n", 
+				 sub_xmin, sub_ymin, sub_xmax, sub_ymax );
+			fprintf( stderr, "\tFor a %d X %d image, the subgrid must be within 0,0,%d,%d\n",
+				 width, height, width-1, height-1 );
+			exit( 1 );
+		}
+	}
 
 	if( incr_mode )  {
 		x = height;
@@ -221,7 +266,7 @@ char **argv;
 	}
 
 	if( rt_g.debug )  {
-		bu_printb( "librt rt_g.debug", rt_g.debug, DEBUG_FORMAT );
+		bu_printb( "librt RT_G_DEBUG", rt_g.debug, DEBUG_FORMAT );
 		bu_log("\n");
 	}
 	if( rdebug )  {
@@ -229,24 +274,54 @@ char **argv;
 		bu_log("\n");
 	}
 
+	/* We need this to run rt_dirbuild */
+	rt_init_resource( &rt_uniresource, MAX_PSW, NULL );
+	bn_rand_init( rt_uniresource.re_randptr, 0 );
+
 	title_file = argv[bu_optind];
 	title_obj = argv[bu_optind+1];
 	nobjs = argc - bu_optind - 1;
 	objtab = &(argv[bu_optind+1]);
 
 	if( nobjs <= 0 )  {
-		bu_log("%s: no objects specified\n", argv[0]);
+		bu_log("%s: no objects specified -- raytrace aborted\n", argv[0]);
 		exit(1);
 	}
 
+	/* Echo back the command line arugments as given, in 3 Tcl commands */
+	if (rt_verbosity & VERBOSE_MODELTITLE) {
+		struct bu_vls str;
+		bu_vls_init(&str);
+		bu_vls_from_argv( &str, bu_optind, argv );
+		bu_vls_strcat( &str, "\nopendb "  );
+		bu_vls_strcat( &str, title_file );
+		bu_vls_strcat( &str, ";\ntree " );
+		bu_vls_from_argv( &str,
+			nobjs <= 16 ? nobjs : 16,
+			argv+bu_optind+1 );
+		if( nobjs > 16 )
+			bu_vls_strcat( &str, " ...");
+		else
+			bu_vls_putc( &str, ';' );
+		bu_log("%s\n", bu_vls_addr(&str) );
+		bu_vls_free(&str);
+	}
+
 	/* Build directory of GED database */
+	bu_vls_init( &times );
+	rt_prep_timer();
 	if( (rtip=rt_dirbuild(title_file, idbuf, sizeof(idbuf))) == RTI_NULL ) {
 		bu_log("rt:  rt_dirbuild(%s) failure\n", title_file);
 		exit(2);
 	}
 	ap.a_rt_i = rtip;
+	(void)rt_get_timer( &times, NULL );
 	if (rt_verbosity & VERBOSE_MODELTITLE)
 		bu_log("db title:  %s\n", idbuf);
+	if (rt_verbosity & VERBOSE_STATS)
+		bu_log("DIRBUILD: %s\n", bu_vls_addr(&times) );
+	bu_vls_free( &times );
+	memory_summary();
 
 	/* Copy values from command line options into rtip */
 	rtip->rti_space_partition = space_partition;
@@ -324,19 +399,11 @@ char **argv;
 	 *  Initialize all the per-CPU memory resources.
 	 *  The number of processors can change at runtime, init them all.
 	 */
-	rt_init_resource( &rt_uniresource, 0 );
-	bn_rand_init( rt_uniresource.re_randptr, 0 );
 	for( i=0; i < MAX_PSW; i++ )  {
-		rt_init_resource( &resource[i], i );
+		rt_init_resource( &resource[i], i, rtip );
 		bn_rand_init( resource[i].re_randptr, i );
 	}
-
-#ifdef HAVE_SBRK
-	if (rt_verbosity & VERBOSE_STATS)
-		fprintf(stderr,"initial dynamic memory use=%ld.\n",
-			(long)((char *)sbrk(0)-beginptr) );
-	beginptr = (char *) sbrk(0);
-#endif
+	memory_summary();
 
 #ifdef SIGUSR1
 	(void)signal( SIGUSR1, siginfo_handler );

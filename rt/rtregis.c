@@ -39,12 +39,19 @@
 *	All rights reserved.
 */
 #ifndef lint
-static char RCSregis[] = "@(#)$Header$";
+static const char RCSregis[] = "@(#)$Header$";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -74,7 +81,7 @@ int		verbose;		/* to be used for debugging */
  *  Main exists to coordinate the actions of the parts of this program.
  *  It also processes its own arguments (argc and argv).
  */
-
+int
 main(argc, argv)
 int	argc;
 char	**argv;
@@ -87,9 +94,9 @@ char	**argv;
 	mat_t		view2model;		/* matrix for converting from view to model space */
 	int		ret;			/* function return code */
 
-	bn_mat_idn(mod2view1);				/* makes an identity matrix */
-	bn_mat_idn(mod2view2);
-	bn_mat_idn(regismat);
+	MAT_IDN(mod2view1);				/* makes an identity matrix */
+	MAT_IDN(mod2view2);
+	MAT_IDN(regismat);
 
 	/* Check to see that the correct format is given, else print
 	 * usage message.
@@ -205,7 +212,7 @@ mat_t	regismat;
 	 * deltas are used.   This will be implemented later.
 	 */
 
-	bn_mat_copy( regismat, mat2);
+	MAT_COPY( regismat, mat2);
 	bn_mat_print("regismat", regismat);
 	return(1);				/* OK */
 }

@@ -16,7 +16,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -114,10 +114,10 @@ int code;
 
 static void
 Write_euclid_face( lu , facet_type , regionid , face_number , fp_out )
-CONST struct loopuse *lu;
-CONST int facet_type;
-CONST int regionid;
-CONST int face_number;
+const struct loopuse *lu;
+const int facet_type;
+const int regionid;
+const int face_number;
 FILE *fp_out;
 {
 	struct faceuse *fu;
@@ -173,7 +173,7 @@ struct db_tree_state *tsp;
 FILE *fp_out;
 {
 	struct shell *s;
-	struct facets *faces;
+	struct facets *faces = NULL;
 	int i,j;
 
 	NMG_CK_REGION( r );
@@ -266,7 +266,7 @@ FILE *fp_out;
 			}
 			else if( no_of_loops == no_of_holes + 1 )
 			{
-				struct loopuse *outer_lu;
+				struct loopuse *outer_lu = NULL;
 
 				/* only one outer loop, so find it */
 				for( i=0 ; i<no_of_loops ; i++ )
@@ -460,6 +460,8 @@ char	*argv[];
 
 	BU_LIST_INIT( &rt_g.rtg_vlfree );	/* for vlist macros */
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	/* Get command line arguments. */
 	while ((c = getopt(argc, argv, "a:n:r:s:vx:P:X:")) != EOF) {
 		switch (c) {
@@ -485,10 +487,10 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			break;
 		default:
@@ -510,7 +512,7 @@ char	*argv[];
 		perror(argv[0]);
 		exit(1);
 	}
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 	optind++;
 
 	/* Walk indicated tree(s).  Each region will be output separately */
@@ -521,7 +523,7 @@ char	*argv[];
 	tree_state.ts_tol = &tol;
 	tree_state.ts_ttol = &ttol;
 
-	(void)db_walk_tree(dbip, argc-optind, (CONST char **)(&argv[optind]),
+	(void)db_walk_tree(dbip, argc-optind, (const char **)(&argv[optind]),
 		1,			/* ncpu */
 		&tree_state,
 		0,
@@ -547,7 +549,7 @@ char	*argv[];
 		regions_written, percent );
 
 	/* Release dynamic storage */
-	bn_vlist_cleanup();
+	rt_vlist_cleanup();
 	db_close(dbip);
 
 #if MEMORY_LEAK_CHECKING
@@ -585,7 +587,7 @@ genptr_t		client_data;
 
 	BU_LIST_INIT(&vhead);
 
-	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+	if (RT_G_DEBUG&DEBUG_TREEWALK || verbose) {
 		char	*sofar = db_path_to_string(pathp);
 		bu_log("\ndo_region_end(%d %d%%) %s\n",
 			regions_tried,
@@ -625,9 +627,9 @@ genptr_t		client_data;
 		nmg_isect2d_final_cleanup();
 
 		/* Release the tree memory & input regions */
-		db_free_tree(curtree);		/* Does an nmg_kr() */
+		db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
-		bn_vlist_cleanup();
+		rt_vlist_cleanup();
 
 		/* Get rid of (m)any other intermediate structures */
 		if( (*tsp->ts_m)->magic == NMG_MODEL_MAGIC )
@@ -655,7 +657,7 @@ genptr_t		client_data;
 	(void)alarm( alarm_secs );
 
 	(void)nmg_model_fuse(*tsp->ts_m, tsp->ts_tol);
-	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol);	/* librt/nmg_bool.c */
+	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol, &rt_uniresource);	/* librt/nmg_bool.c */
 
 	if( ret_tree )
 		r = ret_tree->tr_d.td_r;
@@ -710,7 +712,7 @@ genptr_t		client_data;
 		/* Now, make a new, clean model structure for next pass. */
 		*tsp->ts_m = nmg_mm();
 
-		bn_vlist_cleanup();
+		rt_vlist_cleanup();
 	}
 
 	/*
@@ -719,7 +721,7 @@ genptr_t		client_data;
 	 *  A return of TREE_NULL from this routine signals an error,
 	 *  so we need to cons up an OP_NOP node to return.
 	 */
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 #if MEMORY_LEAK_CHECKING
 	bu_prmem("After Success:");

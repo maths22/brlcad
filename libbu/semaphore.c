@@ -24,7 +24,7 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSsemaphore[] = "@(#)$Header$ (ARL)";
+static const char RCSsemaphore[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -208,8 +208,10 @@ register long *p;
 }
 #endif /* convex */
 
+#if defined(PARALLEL) || defined(DEFINED_BU_SEMAPHORES)
 static unsigned int		bu_nsemaphores = 0;
 static struct bu_semaphores	*bu_semaphores = (struct bu_semaphores *)NULL;
+#endif
 
 /*
  *			B U _ S E M A P H O R E _ I N I T
@@ -225,11 +227,11 @@ void
 bu_semaphore_init( nsemaphores )
 unsigned int	nsemaphores;
 {
-	int	i;
-
 #if !defined(PARALLEL) && !defined(DEFINED_BU_SEMAPHORES)
 	return;					/* No support on this hardware */
 #else
+	int	i;
+
 	if( bu_nsemaphores != 0 )  return;	/* Already called */
 	bu_semaphores = (struct bu_semaphores *)calloc(
 		nsemaphores,
@@ -301,7 +303,7 @@ unsigned int	nsemaphores;
 #	if SUNOS
 	for( i=0; i < nsemaphores; i++ )  {
 		bu_semaphores[i].magic = BU_SEMAPHORE_MAGIC;
-		if (mutex_init( &bu_semaphores[i].mu, USYNC_THREAD, (void *)0)) {
+		if (mutex_init( &bu_semaphores[i].mu, USYNC_THREAD, NULL)) {
 			fprintf(stderr, "bu_semaphore_init(): mutex_init() failed on %d\n", i);
 			abort();
 		}
@@ -311,7 +313,7 @@ unsigned int	nsemaphores;
 #	if HAS_POSIX_THREADS
 	for( i=0; i < nsemaphores; i++ )  {
 		bu_semaphores[i].magic = BU_SEMAPHORE_MAGIC;
-		if (pthread_mutex_init( &bu_semaphores[i].mu,  (void *)0)) {
+		if (pthread_mutex_init( &bu_semaphores[i].mu,  NULL)) {
 			fprintf(stderr, "bu_semaphore_init(): pthread_mutex_init() failed on %d\n", i);
 			abort();
 		}

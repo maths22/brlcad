@@ -24,12 +24,13 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include "machine.h"
 #include "externs.h"
 #include "vmath.h"
@@ -42,7 +43,7 @@ extern int nmg_class_nothing_broken;
 /* XXX Move to nmg_manif.c or nmg_ck.c */
 struct dangling_faceuse_state {
 	char		*visited;
-	CONST char	*manifolds;
+	const char	*manifolds;
 	int		count;
 };
 
@@ -80,7 +81,7 @@ int		first;
 int
 nmg_has_dangling_faces( magic_p, manifolds )
 long		*magic_p;
-CONST char	*manifolds;
+const char	*manifolds;
 {
 	struct model			*m;
 	struct nmg_visit_handlers	handlers;
@@ -113,7 +114,7 @@ nmg_show_each_loop(s, classlist, new, fancy, str)
 struct shell	*s;
 long		*classlist[4];
 int		new;		/* non-zero means flush previous vlist */
-CONST char	*str;		/* non-zero means pause after the display */
+const char	*str;		/* non-zero means pause after the display */
 {
 	struct faceuse	*fu;
 	struct loopuse	*lu;
@@ -439,7 +440,7 @@ long *classlist[8];
 void
 nmg_kill_anti_loops( s, tol )
 struct shell *s;
-CONST struct bn_tol *tol;
+const struct bn_tol *tol;
 {
 	struct bu_ptbl loops;
 	struct faceuse *fu;
@@ -579,8 +580,8 @@ struct shell *s;
  */
 static struct shell * nmg_bool(sA, sB, oper, tol)
 struct shell *sA, *sB;
-CONST int		oper;
-CONST struct bn_tol	*tol;
+const int		oper;
+const struct bn_tol	*tol;
 {
 	int	i;
 	int	nelem;
@@ -1088,8 +1089,8 @@ nmg_s_radial_check( sA, tol );
 struct nmgregion *
 nmg_do_bool(rA, rB, oper, tol)
 struct nmgregion *rA, *rB;
-CONST int		oper;
-CONST struct bn_tol	*tol;
+const int		oper;
+const struct bn_tol	*tol;
 {
 	struct shell		*s;
 	struct nmgregion	*r;
@@ -1150,14 +1151,12 @@ nmg_region_v_unique( rB, tol );
  *  This routine must be prepared to run in parallel.
  */
 union tree *
-nmg_booltree_leaf_tess(tsp, pathp, ep, id, client_data)
+nmg_booltree_leaf_tess(tsp, pathp, ip, client_data)
 struct db_tree_state	*tsp;
 struct db_full_path	*pathp;
-struct bu_external	*ep;
-int			id;
+struct rt_db_internal	*ip;
 genptr_t		client_data;
 {
-	struct rt_db_internal	intern;
 	struct model		*m;
 	struct nmgregion	*r1;
 	union tree		*curtree;
@@ -1166,41 +1165,33 @@ genptr_t		client_data;
 	NMG_CK_MODEL(*tsp->ts_m);
 	BN_CK_TOL(tsp->ts_tol);
 	RT_CK_TESS_TOL(tsp->ts_ttol);
+	RT_CK_DB_INTERNAL(ip);
+	RT_CK_RESOURCE(tsp->ts_resp);
 
 	RT_CK_FULL_PATH(pathp);
 	dp = DB_FULL_PATH_CUR_DIR(pathp);
 	RT_CK_DIR(dp);
 
-	RT_INIT_DB_INTERNAL(&intern);
-	if (rt_functab[id].ft_import(&intern, ep, tsp->ts_mat, tsp->ts_dbip) < 0) {
-		bu_log("nmg_booltree_leaf_tess(%s):  solid import failure\n", dp->d_namep);
-	    	if (intern.idb_ptr)  rt_functab[id].ft_ifree(&intern);
-	    	return(TREE_NULL);		/* ERROR */
-	}
-	RT_CK_DB_INTERNAL(&intern);
-
 	m = nmg_mm();
 
-	if (rt_functab[id].ft_tessellate(
-	    &r1, m, &intern, tsp->ts_ttol, tsp->ts_tol) < 0) {
+	if (ip->idb_meth->ft_tessellate(
+	    &r1, m, ip, tsp->ts_ttol, tsp->ts_tol) < 0) {
 		bu_log("nmg_booltree_leaf_tess(%s): tessellation failure\n", dp->d_namep);
-		rt_functab[id].ft_ifree(&intern);
 	    	return(TREE_NULL);
 	}
-	rt_functab[id].ft_ifree(&intern);
 
 	NMG_CK_REGION(r1);
 	if( rt_g.NMG_debug & DEBUG_VERIFY )  {
 		nmg_vshell( &r1->s_hd, r1 );
 	}
 
-	BU_GETUNION(curtree, tree);
+	RT_GET_TREE( curtree, tsp->ts_resp );
 	curtree->magic = RT_TREE_MAGIC;
 	curtree->tr_op = OP_NMG_TESS;
 	curtree->tr_d.td_name = bu_strdup(dp->d_namep);
 	curtree->tr_d.td_r = r1;
 
-	if (rt_g.debug&DEBUG_TREEWALK)
+	if (RT_G_DEBUG&DEBUG_TREEWALK)
 		bu_log("nmg_booltree_leaf_tess(%s) OK\n", dp->d_namep);
 
 	return(curtree);
@@ -1225,14 +1216,12 @@ genptr_t		client_data;
  *  This routine must be prepared to run in parallel.
  */
 union tree *
-nmg_booltree_leaf_tnurb(tsp, pathp, ep, id, client_data)
+nmg_booltree_leaf_tnurb(tsp, pathp, ip, client_data)
 struct db_tree_state	*tsp;
 struct db_full_path	*pathp;
-struct bu_external	*ep;
-int			id;
+struct rt_db_internal	*ip;
 genptr_t		client_data;
 {
-	struct rt_db_internal	intern;
 	struct nmgregion	*r1;
 	union tree		*curtree;
 	struct directory	*dp;
@@ -1240,39 +1229,31 @@ genptr_t		client_data;
 	NMG_CK_MODEL(*tsp->ts_m);
 	BN_CK_TOL(tsp->ts_tol);
 	RT_CK_TESS_TOL(tsp->ts_ttol);
+	RT_CK_DB_INTERNAL(ip);
+	RT_CK_RESOURCE(tsp->ts_resp);
 
 	RT_CK_FULL_PATH(pathp);
 	dp = DB_FULL_PATH_CUR_DIR(pathp);
 	RT_CK_DIR(dp);
 
-	RT_INIT_DB_INTERNAL(&intern);
-	if (rt_functab[id].ft_import(&intern, ep, tsp->ts_mat, tsp->ts_dbip) < 0) {
-		bu_log("nmg_booltree_leaf_tess(%s):  solid import failure\n", dp->d_namep);
-	    	if (intern.idb_ptr)  rt_functab[id].ft_ifree(&intern);
-	    	return(TREE_NULL);		/* ERROR */
-	}
-	RT_CK_DB_INTERNAL(&intern);
-
-	if (rt_functab[id].ft_tnurb(
-	    &r1, *tsp->ts_m, &intern, tsp->ts_tol) < 0) {
+	if (ip->idb_meth->ft_tnurb(
+	    &r1, *tsp->ts_m, ip, tsp->ts_tol) < 0) {
 		bu_log("nmg_booltree_leaf_tnurb(%s): CSG to t-NURB conversation failure\n", dp->d_namep);
-		rt_functab[id].ft_ifree(&intern);
 	    	return(TREE_NULL);
 	}
-	rt_functab[id].ft_ifree(&intern);
 
 	NMG_CK_REGION(r1);
 	if( rt_g.NMG_debug & DEBUG_VERIFY )  {
 		nmg_vshell( &r1->s_hd, r1 );
 	}
 
-	BU_GETUNION(curtree, tree);
+	RT_GET_TREE( curtree, tsp->ts_resp );
 	curtree->magic = RT_TREE_MAGIC;
 	curtree->tr_op = OP_NMG_TESS;
 	curtree->tr_d.td_name = bu_strdup(dp->d_namep);
 	curtree->tr_d.td_r = r1;
 
-	if (rt_g.debug&DEBUG_TREEWALK)
+	if (RT_G_DEBUG&DEBUG_TREEWALK)
 		bu_log("nmg_booltree_leaf_tnurb(%s) OK\n", dp->d_namep);
 
 	return(curtree);
@@ -1304,19 +1285,21 @@ genptr_t		client_data;
  *	curtree = nmg_booltree_evaluate( curtree, tol );
  */
 union tree *
-nmg_booltree_evaluate(tp, tol)
+nmg_booltree_evaluate(tp, tol, resp)
 register union tree		*tp;
-CONST struct bn_tol		*tol;
+const struct bn_tol		*tol;
+struct resource			*resp;
 {
 	union tree		*tl;
 	union tree		*tr;
 	struct nmgregion	*reg;
 	int			op;
-	CONST char		*op_str;
+	const char		*op_str;
 	char			*name;
 
 	RT_CK_TREE(tp);
 	BN_CK_TOL(tol);
+	RT_CK_RESOURCE(resp);
 
 	switch(tp->tr_op) {
 	case OP_NOP:
@@ -1344,22 +1327,26 @@ CONST struct bn_tol		*tol;
 		return(0);
 	}
 	/* Handle a boolean operation node.  First get it's leaves. */
-	tl = nmg_booltree_evaluate(tp->tr_b.tb_left, tol);
-	tr = nmg_booltree_evaluate(tp->tr_b.tb_right, tol);
+	tl = nmg_booltree_evaluate(tp->tr_b.tb_left, tol, resp);
+	tr = nmg_booltree_evaluate(tp->tr_b.tb_right, tol, resp);
 	if (tl == 0 || !tl->tr_d.td_r) {
 		if (tr == 0 || !tr->tr_d.td_r)
 			return 0;
 		if( op == NMG_BOOL_ADD )
 			return tr;
 		/* For sub and intersect, if lhs is 0, result is null */
-		db_free_tree(tr);
+		db_free_tree(tr, resp);
+		tp->tr_b.tb_right = TREE_NULL;
+		tp->tr_op = OP_NOP;
 		return 0;
 	}
 	if (tr == 0 || !tr->tr_d.td_r) {
 		if (tl == 0 || !tl->tr_d.td_r)
 			return 0;
 		if( op == NMG_BOOL_ISECT )  {
-			db_free_tree(tl);
+			db_free_tree(tl, resp);
+			tp->tr_b.tb_left = TREE_NULL;
+			tp->tr_op = OP_NOP;
 			return 0;
 		}
 		/* For sub and add, if rhs is 0, result is lhs */
@@ -1415,8 +1402,8 @@ nmg_r_radial_check( tl->tr_d.td_r, tol );
 	strcat( name+1, ")" );
 
 	/* Clean up child tree nodes (and their names) */
-	db_free_tree(tl);
-	db_free_tree(tr);
+	db_free_tree(tl, resp);
+	db_free_tree(tr, resp);
 
 	/* Convert argument binary node into a result node */
 	tp->tr_op = OP_NMG_TESS;
@@ -1441,10 +1428,7 @@ nmg_r_radial_check( tl->tr_d.td_r, tol );
  *  typically with db_free_tree(tp);
  */
 int
-nmg_boolean( tp, m, tol )
-register union tree		*tp;
-struct model			*m;
-CONST struct bn_tol		*tol;
+nmg_boolean( union tree *tp, struct model *m, const struct bn_tol *tol, struct resource *resp )
 {
 	union tree	*result;
 	int		ret;
@@ -1452,6 +1436,7 @@ CONST struct bn_tol		*tol;
 	RT_CK_TREE(tp);
 	NMG_CK_MODEL(m);
 	BN_CK_TOL(tol);
+	RT_CK_RESOURCE(resp);
 
 	if (rt_g.NMG_debug & (DEBUG_BOOL|DEBUG_BASIC) )  {
 		bu_log("\n\nnmg_boolean( tp=x%x, m=x%x ) START\n",
@@ -1470,7 +1455,7 @@ CONST struct bn_tol		*tol;
 	 *  Evaluate the nodes of the boolean tree one at a time,
 	 *  until only a single region remains.
 	 */
-	result = nmg_booltree_evaluate( tp, tol );
+	result = nmg_booltree_evaluate( tp, tol, resp );
 	RT_CK_TREE( result );
 	if( result != tp )  rt_bomb("nmg_boolean() result of nmg_booltree_evaluate() isn't tp\n");
 	if( tp->tr_op != OP_NMG_TESS )  {

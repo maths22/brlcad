@@ -25,7 +25,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSviewxray[] = "@(#)$Header$ (BRL)";
+static const char RCSviewxray[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -34,7 +34,7 @@ static char RCSviewxray[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "fb.h"
 
 int	use_air = 0;			/* Handling of air in librt */
@@ -171,10 +171,10 @@ void	view_setup() {}
 void	view_cleanup() {}
 
 /* end of each frame */
-int
+void
 view_end()
 {
-	return	0;		/* OK */
+
 }
 
 static int

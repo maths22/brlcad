@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrt[] = "@(#)$Header$ (BRL)";
+static const char RCSrt[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -37,7 +37,7 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #include "fb.h"
 #include "./ext.h"
 
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "../librt/debug.h"
 
 extern int	rdebug;			/* RT program debugging (not library) */
@@ -47,14 +47,19 @@ int		doubles_out = 0;	/* u_char or double .pix output file */
 double		AmbientIntensity = 0.4;	/* Ambient light intensity */
 double		azimuth, elevation;
 int		lightmodel = 0;		/* Select lighting model */
-int		rpt_overlap = 0;	/* report overlapping region names */
+int		rpt_overlap = 1;	/* report overlapping region names */
 int		rpt_dist = 0;		/* report distance to each pixel */
 /***** end of sharing with viewing model *****/
 
 /***** variables shared with worker() ******/
+int		query_x;
+int		query_y;
+int		Query_one_pixel;
+int		query_rdebug;
+int		query_debug;
 int		stereo = 0;		/* stereo viewing */
 int		hypersample=0;		/* number of extra rays to fire */
-int		jitter=0;		/* jitter ray starting positions */
+unsigned int	jitter=0;		/* ray jitter control variable */
 fastf_t		rt_perspective=0;	/* presp (degrees X) 0 => ortho */
 fastf_t		aspect = 1;		/* view aspect ratio X/Y */
 vect_t		dx_model;		/* view delta-X as model-space vect */
@@ -75,6 +80,7 @@ int		incr_level;		/* current incremental level */
 int		incr_nlevel;		/* number of levels */
 int		npsw = 1;		/* number of worker PSWs to run */
 struct resource	resource[MAX_PSW];	/* memory resources */
+int		transpose_grid = 0;     /* reverse the order of grid traversal */
 /***** end variables shared with worker() *****/
 
 /***** variables shared with do.c *****/
@@ -105,8 +111,9 @@ int		sub_ymax = 0;
 fastf_t		frame_delta_t = 1./30.; /* 1.0 / frames_per_second_playback */
 /***** end variables shared with view.c *****/
 
+/* temporary kludge to get rt to use a tighter tolerance for raytracing */
+fastf_t		rt_dist_tol = 0.0005;	/* Value for rti_tol.dist */
 
-fastf_t		rt_dist_tol = 0;	/* Value for rti_tol.dist */
 fastf_t		rt_perp_tol = 0;	/* Value for rti_tol.perp */
 char		*framebuffer;		/* desired framebuffer */
 
@@ -124,16 +131,16 @@ extern struct command_tab	rt_cmdtab[];
 /*
  *			G E T _ A R G S
  */
-get_args( argc, argv )
-register char **argv;
+int get_args( int argc, register char **argv )
 {
 	register int c;
 	register int i;
 
 	bu_optind = 1;		/* restart */
 
+
 #define GETOPT_STR	\
-	".:,:@:a:b:c:d:e:f:g:ij:l:n:o:p:q:rs:v:w:x:A:BC:D:E:F:G:H:IJ:K:MN:O:P:RST:U:V:X:!:"
+	".:,:@:a:b:c:d:e:f:g:ij:l:n:o:p:q:rs:tv:w:x:A:BC:D:E:F:G:H:IJ:K:MN:O:P:Q:RST:U:V:X:!:"
 
 	while( (c=bu_getopt( argc, argv, GETOPT_STR )) != EOF )  {
 		switch( c )  {
@@ -149,6 +156,9 @@ register char **argv;
 				bu_bomb("");
 			}
 			bn_randhalftabsize = i;
+			break;
+		case 't':
+			transpose_grid = 1;
 			break;
 		case 'j':
 			{
@@ -230,6 +240,8 @@ register char **argv;
 							rt_perp_tol = f;
 					}
 				}
+				bu_log("Using tolerance %lg", f);
+				break;
 			}
 		case 'U':
 			use_air = atoi( bu_optarg );
@@ -261,7 +273,7 @@ register char **argv;
 			finalframe = atoi( bu_optarg );
 			break;
 		case 'N':
-			sscanf( bu_optarg, "%x", &rt_g.NMG_debug);
+			sscanf( bu_optarg, "%x", (unsigned int *)&rt_g.NMG_debug);
 			bu_log("NMG_debug=0x%x\n", rt_g.NMG_debug);
 			break;
 		case 'M':
@@ -271,13 +283,13 @@ register char **argv;
 			AmbientIntensity = atof( bu_optarg );
 			break;
 		case 'x':
-			sscanf( bu_optarg, "%x", &rt_g.debug );
+			sscanf( bu_optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'X':
-			sscanf( bu_optarg, "%x", &rdebug );
+			sscanf( bu_optarg, "%x", (unsigned int *)&rdebug );
 			break;
 		case '!':
-			sscanf( bu_optarg, "%x", &bu_debug );
+			sscanf( bu_optarg, "%x", (unsigned int *)&bu_debug );
 			break;
 
 		case 's':
@@ -343,7 +355,7 @@ register char **argv;
 			}
 			break;
 		case 'v': /* Set level of "non-debug" debugging output */
-			sscanf( bu_optarg, "%x", &rt_verbosity );
+			sscanf( bu_optarg, "%x", (unsigned int *)&rt_verbosity );
 			bu_printb( "Verbosity:", rt_verbosity,
 				VERBOSE_FORMAT);
 			bu_log("\n");
@@ -354,12 +366,29 @@ register char **argv;
 
 		case 'P':
 			/* Number of parallel workers */
-			npsw = atoi( bu_optarg );
-			if( npsw == 0 || npsw < -MAX_PSW || npsw > MAX_PSW )  {
-				fprintf(stderr,"abs(npsw) out of range 1..%d, using -P%d\n",
-					MAX_PSW, MAX_PSW);
-				npsw = MAX_PSW;
+			{
+				int avail_cpus;
+
+				avail_cpus = bu_avail_cpus();
+
+				npsw = atoi( bu_optarg );
+
+				if( npsw > avail_cpus ) {
+					fprintf( stderr, "Requesting %d cpus, only %d available. ",
+						 npsw, avail_cpus );
+					fprintf( stderr, "Will use %d.\n", avail_cpus );
+					npsw = avail_cpus;
+				}
+				if( npsw == 0 || npsw < -MAX_PSW || npsw > MAX_PSW )  {
+					fprintf(stderr,"abs(npsw) out of range 1..%d, using -P%d\n",
+						MAX_PSW, MAX_PSW);
+					npsw = MAX_PSW;
+				}
 			}
+			break;
+		case 'Q':
+			Query_one_pixel = ! Query_one_pixel;
+			sscanf(bu_optarg, "%d,%d\n", &query_x, &query_y);
 			break;
 		case 'B':
 			/*  Remove all intentional random effects
@@ -432,13 +461,13 @@ register char **argv;
 	}
 
 	/* Compat */
-	if( rt_g.debug || rdebug || rt_g.NMG_debug )
+	if( RT_G_DEBUG || rdebug || rt_g.NMG_debug )
 		bu_debug |= BU_DEBUG_COREDUMP;
 
-	if( rt_g.debug & DEBUG_MEM_FULL )  bu_debug |= BU_DEBUG_MEM_CHECK;
-	if( rt_g.debug & DEBUG_MEM )  bu_debug |= BU_DEBUG_MEM_LOG;
-	if( rt_g.debug & DEBUG_PARALLEL )  bu_debug |= BU_DEBUG_PARALLEL;
-	if( rt_g.debug & DEBUG_MATH )  bu_debug |= BU_DEBUG_MATH;
+	if( RT_G_DEBUG & DEBUG_MEM_FULL )  bu_debug |= BU_DEBUG_MEM_CHECK;
+	if( RT_G_DEBUG & DEBUG_MEM )  bu_debug |= BU_DEBUG_MEM_LOG;
+	if( RT_G_DEBUG & DEBUG_PARALLEL )  bu_debug |= BU_DEBUG_PARALLEL;
+	if( RT_G_DEBUG & DEBUG_MATH )  bu_debug |= BU_DEBUG_MATH;
 
 	if( rdebug & RDEBUG_RTMEM_END )  bu_debug |= BU_DEBUG_MEM_CHECK;
 

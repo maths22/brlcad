@@ -21,7 +21,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -47,11 +47,12 @@ static char RCSid[] = "$Header$";
 
 #define POLY_BLOCK	512
 
-static char *usage="\
+static const char *usage="\
 Usage: poly-bot < file_poly.g > file_bot.g\n\
    or  poly-bot file_poly.g file_bot.g\n\
- Convert polysolids to BOT solids\n";
+ Convert polysolids to BOT solids in v4 database format only\n";
 
+int
 main( argc, argv )
 int argc;
 char *argv[];
@@ -62,7 +63,6 @@ char *argv[];
 	union record *poly;
 	long poly_limit=0;
 	long curr_poly=0;
-	struct rt_tess_tol	ttol;
 	struct bn_tol		tol;
 	int polys=0;
 	int frees=0;
@@ -70,15 +70,10 @@ char *argv[];
 	int bots=0;
 	int i;
 	int num_rec;
+	int first=1;
 
 	ifp = stdin;
 	ofp = stdout;
-
-        ttol.magic = RT_TESS_TOL_MAGIC;
-        /* Defaults, updated by command line options. */
-        ttol.abs = 0.0;
-        ttol.rel = 0.01;
-        ttol.norm = 0.0;
 
         /* XXX These need to be improved */
         tol.magic = BN_TOL_MAGIC;
@@ -93,7 +88,7 @@ char *argv[];
 		ofp = fopen(argv[2],"w");
 		if( !ofp )  perror(argv[2]);
 		if (ifp == NULL || ofp == NULL) {
-			(void)fprintf(stderr, "g2asc: can't open files.");
+			(void)fprintf(stderr, "poly-bot: can't open files.");
 			exit(1);
 		}
 	}
@@ -116,7 +111,7 @@ top:
 				continue;
 
 			case DBID_SKETCH:
-				num_rec = bu_glong( (CONST unsigned char *)&record.skt.skt_count );
+				num_rec = bu_glong( (const unsigned char *)&record.skt.skt_count );
 				others += num_rec + 1;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -129,7 +124,7 @@ top:
 				}
 				break;
 			case DBID_EXTR:
-				num_rec = bu_glong( (CONST unsigned char *)&record.extr.ex_count );
+				num_rec = bu_glong( (const unsigned char *)&record.extr.ex_count );
 				others += num_rec + 1;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -142,7 +137,7 @@ top:
 				}
 				break;
 			case DBID_NMG:
-				num_rec = bu_glong( (CONST unsigned char *)&record.nmg.N_count );
+				num_rec = bu_glong( (const unsigned char *)&record.nmg.N_count );
 				others += num_rec + 1;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -155,7 +150,7 @@ top:
 				}
 				break;
 			case DBID_PIPE:
-				num_rec = bu_glong( (CONST unsigned char *)&record.pwr.pwr_count );
+				num_rec = bu_glong( (const unsigned char *)&record.pwr.pwr_count );
 				others += num_rec + 1;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -168,7 +163,7 @@ top:
 				}
 				break;
 			case DBID_ARBN:
-				num_rec = bu_glong( (CONST unsigned char *)&record.n.n_grans );
+				num_rec = bu_glong( (const unsigned char *)&record.n.n_grans );
 				others += num_rec + 1;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -210,7 +205,7 @@ top:
 				bots++;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
-				num_rec = bu_glong( (CONST unsigned char *)&record.bot.bot_nrec );
+				num_rec = bu_glong( (const unsigned char *)&record.bot.bot_nrec );
 				for( i=0 ; i<num_rec ; i++ )
 				{
 					if( fread( (char *)&record, sizeof record, 1, ifp ) != 1 )
@@ -223,13 +218,7 @@ top:
 			{
 				struct rt_db_internal intern;
 				struct bu_external ext;
-				struct rt_bot_internal *bot;
-				struct soltab st;
-				struct rt_i rti;
-				struct tri_specific *tri;
-				int i;
-
-				rti.rti_tol = tol;
+				struct bu_external ext2;
 
 				polys++;
 				curr_poly = 0;
@@ -249,66 +238,30 @@ top:
 				BU_INIT_EXTERNAL( &ext );
 				ext.ext_nbytes = curr_poly * sizeof( union record );
 				ext.ext_buf = (char *)poly;
-				if( rt_pg_import( &intern, &ext, bn_mat_identity, (struct db_i *)NULL ) )
+				if( rt_functab[ID_POLY].ft_import( &intern, &ext, bn_mat_identity, (struct db_i *)NULL, &rt_uniresource ) )
 				{
 					bu_log( "Import failed for polysolid %s\n", poly[0].p.p_name );
 					bu_bomb( "Import failed for polysolid\n" );
 				}
-				st.st_specific = (genptr_t)NULL;
-				if( rt_pg_prep( &st, &intern, &rti ) )
-				{
+				/* Don't free this ext buffer! */
+
+				if( rt_pg_to_bot( &intern, &tol, &rt_uniresource ) < 0 )  {
 					bu_log( "Unable to convert polysolid %s\n", poly[0].p.p_name );
 					bu_bomb( "Unable to convert!!!\n" );
 				}
 
-				tri = (struct tri_specific *)st.st_specific;
-				bot = (struct rt_bot_internal *)bu_calloc( 1, sizeof( struct rt_bot_internal), "bot" );
-				bot->magic = RT_BOT_INTERNAL_MAGIC;
-				bot->mode = RT_BOT_SOLID;
-				bot->orientation = RT_BOT_CCW;
-				bot->num_vertices = 0;
-				bot->num_faces = 0;
-
-				while( tri )
-				{
-					bot->num_faces++;
-					tri = tri->tri_forw;
+				BU_INIT_EXTERNAL( &ext2 );
+				if( rt_functab[ID_POLY].ft_export( &ext2, &intern, 1.0, (struct db_i *)NULL, &rt_uniresource ) < 0 )  {
+					bu_log( "Unable to export v4 BoT %s\n", poly[0].p.p_name );
+					bu_bomb( "Unable to convert!!!\n" );
 				}
-
-				bot->faces = (int *)bu_calloc( bot->num_faces * 3, sizeof( int ), "bot->faces" );
-				bot->num_vertices = bot->num_faces * 3;
-				bot->vertices = (fastf_t *)bu_calloc( bot->num_vertices * 3, sizeof( fastf_t ), "bot->vertices" );
-
-				i = 0;
-				tri = (struct tri_specific *)st.st_specific;
-				while( tri )
-				{
-					bot->faces[i] = i;
-					bot->faces[i + 1] = i + 1;
-					bot->faces[i + 2] = i + 2;
-					VMOVE( &bot->vertices[i*3], tri->tri_A );
-					VADD2( &bot->vertices[(i+1)*3], tri->tri_A, tri->tri_BA );
-					VADD2( &bot->vertices[(i+2)*3], tri->tri_A, tri->tri_CA );
-					tri = tri->tri_forw;
-					i += 3;
+				rt_db_free_internal( &intern, &rt_uniresource );
+				if( db_fwrite_external( ofp, poly[0].p.p_name, &ext2 ) < 0 )  {
+					bu_log( "Unable to fwrite v4 BoT %s\n", poly[0].p.p_name );
+					bu_bomb( "Unable to convert!!!\n" );
 				}
+				db_free_external( &ext2 );
 
-				(void)bot_vertex_fuse( bot );
-
-				mk_export_fwrite( ofp, poly[0].p.p_name, (genptr_t)bot, ID_BOT );
-
-				tri = (struct tri_specific *)st.st_specific;
-				while( tri )
-				{
-					struct tri_specific *tmp;
-
-					tmp = tri;
-					tri = tri->tri_forw;
-					bu_free( (char *)tmp, "tri_specific" );
-				}
-				bu_free( (char *)bot->faces, "bot->faces" );
-				bu_free( (char *)bot->vertices, "bot->vertices" );
-				bu_free( (char *)bot, "bot" );
 				if( feof( ifp ) )
 					break;
 				goto top;
@@ -318,6 +271,14 @@ top:
 				bu_log( "ERROR: Unattached polysolid data record!!!!\n" );
 				continue;
 			default:
+				if( first )
+				{
+					if( record.u_id != ID_IDENT ) {
+						bu_log( "This is not a BRL-CAD 'v4' database, aborting.\n" );
+						exit( 1 );
+					}
+					first = 0;
+				}
 				others++;
 				if( fwrite( &record, sizeof( union record ), 1, ofp ) < 1 )
 					bu_bomb( "Write failed!!!\n" );
@@ -328,4 +289,7 @@ top:
 	bu_log( "%d BOT solids copied without change\n", bots );
 	bu_log( "%d other records copied without change\n", others );
 	bu_log( "%d free records skipped\n", frees );
+
+	fclose(ofp);
+	return 0;
 }

@@ -13,7 +13,7 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char libbu_getopt_RCSid[] = "@(#)$Header$ (BRL)";
+static const char libbu_getopt_RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -50,8 +50,8 @@ char	*bu_optarg = NULL;	/* argument associated with option */
 int
 bu_getopt(nargc,nargv,ostr)
 int	nargc;
-char	* CONST nargv[];
-CONST char *ostr;
+char	* const nargv[];
+const char *ostr;
 {
 	static char	*place = EMSG;	/* option letter processing */
 	register char	*oli;		/* option letter list index */
@@ -69,10 +69,15 @@ CONST char *ostr;
 		}
 	}				/* option letter okay? */
 	if ((bu_optopt = (int)*place++) == (int)':' || !(oli = strchr(ostr,bu_optopt))) {
+#if 0
 		if(*place == '\0') {
 			++bu_optind;
 			place = EMSG;
 		}
+#else
+		++bu_optind;
+		place = EMSG;
+#endif
 		tell(": illegal option -- ");
 	}
 	if (*++oli != ':') {		/* don't need argument */

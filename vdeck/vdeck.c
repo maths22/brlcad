@@ -18,7 +18,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 /*
@@ -129,11 +129,14 @@ jmp_buf	env;
 /* File names and descriptors.						*/
 char	*objfile;
 FILE	*regfp;		
-char	rt_file[15];
+struct bu_vls	rt_vls;
+struct bu_vls	st_vls;
+struct bu_vls	id_vls;
+char	*rt_file;
 FILE	*solfp;		
-char	st_file[73];
+char	*st_file;
 FILE	*ridfp;		
-char	id_file[73];
+char	*id_file;
 
 /* Counters.								*/
 int	nns;		/* Solids.					*/
@@ -172,8 +175,16 @@ void			vls_ftoa_vec_cvt();
 void			vls_ftoa_vec();
 void			vls_ftoa_cvt();
 void			vls_ftoa();
+extern int		parsArg();
+extern int		insert();
+extern int		col_prt();
+extern int		match();
+extern int		delete();
+extern int		shell();
+extern int		cgarbs();
+extern int		redoarb();
 
-RT_EXTERN(void ewrite, (FILE *fp, CONST char *buf, unsigned bytes) );
+RT_EXTERN(void ewrite, (FILE *fp, const char *buf, unsigned bytes) );
 RT_EXTERN(void blank_fill, (FILE *fp, int count) );
 
 /* Head of linked list of solids */
@@ -203,15 +214,15 @@ char	*fmt;
 static int
 sortFunc( a, b )
 #if __STDC__
-CONST void	*a;		/* The exact template expected by qsort */
-CONST void	*b;
+const void	*a;		/* The exact template expected by qsort */
+const void	*b;
 #else
-CONST genptr_t	a;
-CONST genptr_t	b;
+const genptr_t	a;
+const genptr_t	b;
 #endif
 {
-	CONST char **lhs = (CONST char **)a;
-	CONST char **rhs = (CONST char **)b;
+	const char **lhs = (const char **)a;
+	const char **rhs = (const char **)b;
 
 	return( strcmp( *lhs, *rhs ) );
 }
@@ -219,11 +230,16 @@ CONST genptr_t	b;
 /*
  *			M A I N
  */
+int
 main( argc, argv )
 char	*argv[];
 {
 	setbuf( stdout, rt_malloc( BUFSIZ, "stdout buffer" ) );
 	RT_LIST_INIT( &(sol_hd.l) );
+
+	bu_vls_init( &rt_vls );
+	bu_vls_init( &st_vls );
+	bu_vls_init( &id_vls );
 
 	if( ! parsArg( argc, argv ) )
 	{
@@ -231,9 +247,11 @@ char	*argv[];
 		exit( 1 );
 	}
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	/* Build directory from object file.	 	*/
-	if( db_scan( dbip, (int (*)())db_diradd, 1, NULL ) < 0 )  {
-		fprintf(stderr,"db_scan failure\n");
+	if( db_dirbuild(dbip) < 0 )  {
+		fprintf(stderr,"db_dirbuild() failure\n");
 		exit(1);
 	}
 
@@ -467,7 +485,7 @@ genptr_t		client_data;
 		rt_vls_strcat( &flat, "" );
 	} else {
 		/* Rewrite tree so that all unions are at tree top */
-		db_non_union_push( curtree );
+		db_non_union_push( curtree, &rt_uniresource );
 		flatten_tree( &flat, curtree, "  ", 0 );
 	}
 
@@ -553,25 +571,23 @@ genptr_t		client_data;
  *
  *  Re-use the librt "soltab" structures here, for our own purposes.
  */
-union tree *gettree_leaf( tsp, pathp, ep, id, client_data )
+union tree *gettree_leaf( tsp, pathp, ip, client_data )
 struct db_tree_state	*tsp;
 struct db_full_path	*pathp;
-struct rt_external	*ep;
-int			id;
+struct rt_db_internal	*ip;
 genptr_t		client_data;
 {
 	register fastf_t	f;
 	register struct soltab	*stp;
 	union tree		*curtree;
 	struct directory	*dp;
-	struct rt_db_internal	intern;
 	struct rt_vls		sol;
 	register int		i;
 	register matp_t		mat;
 
 	RT_VLS_INIT( &sol );
 
-	RT_CK_EXTERNAL(ep);
+	RT_CK_DB_INTERNAL(ip);
 	dp = DB_FULL_PATH_CUR_DIR(pathp);
 
 	/* Determine if this matrix is an identity matrix */
@@ -626,11 +642,11 @@ next_one:
 
 	GETSTRUCT(stp, soltab);
 	stp->l.magic = RT_SOLTAB_MAGIC;
-	stp->st_id = id;
+	stp->st_id = ip->idb_type;
 	stp->st_dp = dp;
 	if( mat )  {
 		stp->st_matp = (matp_t)rt_malloc( sizeof(mat_t), "st_matp" );
-		mat_copy( stp->st_matp, mat );
+		MAT_COPY( stp->st_matp, mat );
 	} else {
 		stp->st_matp = mat;
 	}
@@ -640,26 +656,18 @@ next_one:
 	VSETALL( stp->st_max, -INFINITY );
 	VSETALL( stp->st_min,  INFINITY );
 
-	RT_INIT_DB_INTERNAL(&intern);
-	if( rt_functab[id].ft_import( &intern, ep, stp->st_matp ? stp->st_matp : rt_identity, tsp->ts_dbip ) < 0 )  {
-		rt_log("rt_gettree_leaf(%s):  solid import failure\n", dp->d_namep );
-		if( intern.idb_ptr )  rt_functab[id].ft_ifree( &intern );
-		if( stp->st_matp )  rt_free( (char *)stp->st_matp, "st_matp");
-		rt_free( (char *)stp, "struct soltab");
-		return( TREE_NULL );		/* BAD */
-	}
-	RT_CK_DB_INTERNAL( &intern );
+	RT_CK_DB_INTERNAL( ip );
 
 	if(debug)  {
 		struct rt_vls	str;
 		rt_vls_init( &str );
 		/* verbose=1, mm2local=1.0 */
-		if( rt_functab[id].ft_describe( &str, &intern, 1, 1.0 ) < 0 )  {
+		if( ip->idb_meth->ft_describe( &str, ip, 1, 1.0, &rt_uniresource, dbip ) < 0 )  {
 			rt_log("rt_gettree_leaf(%s):  solid describe failure\n",
 			    dp->d_namep );
 		}
-		rt_log( "%s:  %s", dp->d_namep, rt_vls_addr( &str ) );
-		rt_vls_free( &str );
+		bu_log( "%s:  %s", dp->d_namep, rt_vls_addr( &str ) );
+		bu_vls_free( &str );
 	}
 
 	/* For now, just link them all onto the same list */
@@ -670,43 +678,43 @@ next_one:
 	/* Solid number is stp->st_bit + delsol */
 
 	/* Process appropriate solid type.				*/
-	switch( intern.idb_type )  {
+	switch( ip->idb_type )  {
 	case ID_TOR:
-		addtor( &sol, (struct rt_tor_internal *)intern.idb_ptr,
+		addtor( &sol, (struct rt_tor_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_ARB8:
-		addarb( &sol, (struct rt_arb_internal *)intern.idb_ptr,
+		addarb( &sol, (struct rt_arb_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_ELL:
-		addell( &sol, (struct rt_ell_internal *)intern.idb_ptr,
+		addell( &sol, (struct rt_ell_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_TGC:
-		addtgc( &sol, (struct rt_tgc_internal *)intern.idb_ptr,
+		addtgc( &sol, (struct rt_tgc_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_ARS:
-		addars( &sol, (struct rt_ars_internal *)intern.idb_ptr,
+		addars( &sol, (struct rt_ars_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_HALF:
-		addhalf( &sol, (struct rt_half_internal *)intern.idb_ptr,
+		addhalf( &sol, (struct rt_half_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_ARBN:
-		addarbn( &sol, (struct rt_arbn_internal *)intern.idb_ptr,
+		addarbn( &sol, (struct rt_arbn_internal *)ip->idb_ptr,
 		    dp->d_namep, stp->st_bit+delsol );
 		break;
 	case ID_PIPE:
 		/* XXX */
 	default:
 		(void) fprintf( stderr,
-		    "vdeck: '%s' Solid type %s has no corresponding COMGEOM solid, skipping\n",
-		    dp->d_namep, rt_functab[id].ft_name );
+		    "vdeck: '%s' Primitive type %s has no corresponding COMGEOM primitive, skipping\n",
+		    dp->d_namep, ip->idb_meth->ft_name );
 		vls_itoa( &sol, stp->st_bit+delsol, 5 );
-		rt_vls_strcat( &sol, rt_functab[id].ft_name );
+		rt_vls_strcat( &sol, ip->idb_meth->ft_name );
 		vls_blanks( &sol, 5*10 );
 		rt_vls_strcat( &sol, dp->d_namep );
 		rt_vls_strcat( &sol, "\n");
@@ -715,9 +723,6 @@ next_one:
 
 	rt_vls_fwrite( solfp, &sol );
 	rt_vls_free( &sol );
-
-	/* Free storage for internal form */
-	if( intern.idb_ptr )  rt_functab[id].ft_ifree( &intern );
 
 found_it:
 	GETUNION( curtree, tree );
@@ -846,11 +851,11 @@ int			num;
 static void
 vls_solid_pts( v, pts, npts, name, num, kind )
 struct rt_vls	*v;
-CONST point_t	pts[];
-CONST int	npts;
-CONST char	*name;
-CONST int	num;
-CONST char	*kind;
+const point_t	pts[];
+const int	npts;
+const char	*name;
+const int	num;
+const char	*kind;
 {
 	register int	i;
 
@@ -905,21 +910,21 @@ int			num;
 	/* Print the solid parameters.					*/
 	switch( cgtype )  {
 	case 8:
-		vls_solid_pts( v, (CONST point_t *)pts, 8, name, num, "arb8 " );
+		vls_solid_pts( v, (const point_t *)pts, 8, name, num, "arb8 " );
 		break;
 	case 7:
-		vls_solid_pts( v, (CONST point_t *)pts, 7, name, num, "arb7 " );
+		vls_solid_pts( v, (const point_t *)pts, 7, name, num, "arb7 " );
 		break;
 	case 6:
 		VMOVE( pts[5], pts[6] );
-		vls_solid_pts( v, (CONST point_t *)pts, 6, name, num, "arb6 " );
+		vls_solid_pts( v, (const point_t *)pts, 6, name, num, "arb6 " );
 		break;
 	case 5:
-		vls_solid_pts( v, (CONST point_t *)pts, 5, name, num, "arb5 " );
+		vls_solid_pts( v, (const point_t *)pts, 5, name, num, "arb5 " );
 		break;
 	case 4:
 		VMOVE( pts[3], pts[4] );
-		vls_solid_pts( v, (CONST point_t *)pts, 4, name, num, "arb4 " );
+		vls_solid_pts( v, (const point_t *)pts, 4, name, num, "arb4 " );
 		break;
 
 		/* Currently, cgarbs() will not return RAW, BOX, or RPP */
@@ -1265,7 +1270,7 @@ int			num;
 void
 ewrite( fp, buf, bytes )
 FILE		*fp;
-CONST char	*buf;
+const char	*buf;
 unsigned	bytes;
 {	
 	if( bytes == 0 )  return;
@@ -1297,11 +1302,12 @@ register char *prefix;
 	/* Create file for solid table.					*/
 	if( prefix != 0 )
 	{
-		(void) strncpy( st_file, prefix, 73 );
-		(void) strcat( st_file, ".st" );
+		(void) bu_vls_strcpy( &st_vls, prefix );
+		(void) bu_vls_strcat( &st_vls, ".st" );
 	}
 	else
-		(void) strncpy( st_file, "solids", 7 );
+		(void) bu_vls_strcpy( &st_vls, "solids" );
+	st_file = bu_vls_addr( &st_vls );
 	if( (solfp = fopen( st_file, "w")) == NULL )  {
 		perror( st_file );
 		exit( 10 );
@@ -1327,11 +1333,12 @@ register char *prefix;
 	/* Create file for region table.				*/
 	if( prefix != 0 )
 	{
-		(void) strncpy( rt_file, prefix, 73 );
-		(void) strcat( rt_file, ".rt" );
+		(void) bu_vls_strcpy( &rt_vls, prefix );
+		(void) bu_vls_strcat( &rt_vls, ".rt" );
 	}
 	else
-		(void) strncpy( rt_file, "regions", 8 );
+		(void) bu_vls_strcpy( &rt_vls, "regions" );
+	rt_file = bu_vls_addr( &rt_vls );
 	if( (regfp = fopen( rt_file, "w" )) == NULL )  {
 		perror( rt_file );
 		exit( 10 );
@@ -1341,11 +1348,12 @@ register char *prefix;
 	 */
 	if( prefix != 0 )
 	{
-		(void) strncpy( id_file, prefix, 73 );
-		(void) strcat( id_file, ".id" );
+		(void) bu_vls_strcpy( &id_vls, prefix );
+		(void) bu_vls_strcat( &id_vls, ".id" );
 	}
 	else
-		(void) strncpy( id_file, "region_ids", 11 );
+		(void) bu_vls_strcpy( &id_vls, "region_ids" );
+	id_file = bu_vls_addr( &id_vls );
 	if( (ridfp = fopen( id_file, "w" )) == NULL )  {
 		perror( id_file );
 		exit( 10 );
@@ -1355,13 +1363,13 @@ register char *prefix;
 	ewrite( ridfp, LF, 1 );
 
 	/* Initialize matrices.						*/
-	mat_idn( identity );
+	MAT_IDN( identity );
 
 	if( !sol_hd.l.magic )  RT_LIST_INIT( &sol_hd.l );
 
 	/*  Build the whole card deck.	*/
 	/*  '1' indicates one CPU.  This code isn't ready for parallelism */
-	if( db_walk_tree( dbip, curr_ct, (CONST char **)curr_list,
+	if( db_walk_tree( dbip, curr_ct, (const char **)curr_list,
 	    1, &rt_initial_tree_state,
 	    0, region_end, gettree_leaf, (genptr_t)NULL ) < 0 )  {
 		fprintf(stderr,"Unable to treewalk any trees!\n");
@@ -1396,6 +1404,7 @@ register char *prefix;
 /*	s h e l l ( )
 	Execute shell command.
  */
+int
 shell( args )
 char  *args[];
 {
@@ -1525,6 +1534,7 @@ char	 *args[];
 /*	c o l _ p r t ( )
 	Print list of names in tabular columns.
  */
+int
 col_prt( list, ct )
 register char	*list[];
 register int	ct;
@@ -1559,6 +1569,7 @@ register int	ct;
 	Insert each member of the table of contents 'toc_list' which
 	matches one of the arguments into the current list 'curr_list'.
  */
+int
 insert(  args,	ct )
 char		*args[];
 register int	ct;
@@ -1589,6 +1600,7 @@ register int	ct;
 	delete all members of current list 'curr_list' which match
 	one of the arguments
  */
+int
 delete(  args )
 char	*args[];
 {

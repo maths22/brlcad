@@ -18,19 +18,29 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#include <ctype.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include "externs.h"
 
 #define	MAX_BYTES	(128*1024)
 
-char Usage[] = "usage: gencolor [-r#] [val1 .. valN]\n";
+char Usage[] = "usage: gencolor [-r#] [val1 .. valN] > output_file\n";
 
 int	bytes_in_buf, copies_per_buf;
 
 unsigned char	buf[MAX_BYTES];
 
+int
 main( argc, argv )
 int argc; char **argv;
 {

@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSshoot[] = "@(#)$Header$ (BRL)";
+static const char RCSshoot[] = "@(#)$Header$ (BRL)";
 #endif
 
 char CopyRight_Notice[] = "@(#) Copyright (C) 1985 by the United States Army";
@@ -103,7 +103,7 @@ register struct application *ap;
 	}
 	RT_RESOURCE_CHECK(ap->a_resource);
 
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION)) {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION)) {
 		rt_g.rtg_logindent += 2;
 		bu_log("\n**********mshootray cpu=%d  %d,%d lvl=%d (%s)\n",
 			ap->a_resource->re_cpu,
@@ -176,7 +176,7 @@ register struct application *ap;
 	}
 
 	/* For each type of solid to be shot at, assemble the vectors */
-	for( id = 1; id <= ID_MAXIMUM; id++ )  {
+	for( id = 1; id <= ID_MAX_SOLID; id++ )  {
 		register int	nsol;
 
 		if( (nsol = rtip->rti_nsol_by_type[id]) <= 0 )  continue;
@@ -243,7 +243,7 @@ register struct application *ap;
 	 */
 	if( InitialPart.pt_forw == &InitialPart )  {
 		ret = ap->a_miss( ap );
-		status = "MISSed all solids";
+		status = "MISSed all primitives";
 		goto freeup;
 	}
 
@@ -274,7 +274,7 @@ register struct application *ap;
 	 *  VJOIN1( hitp->hit_point, rp->r_pt, hitp->hit_dist, rp->r_dir );
 	 */
 hitit:
-	if(rt_g.debug&DEBUG_SHOOT)  rt_pr_partitions(rtip,&FinalPart,"a_hit()");
+	if(RT_G_DEBUG&DEBUG_SHOOT)  rt_pr_partitions(rtip,&FinalPart,"a_hit()");
 
 	ret = ap->a_hit( ap, &FinalPart );
 	status = "HIT";
@@ -320,7 +320,7 @@ out:
 	if( solidbits != BITV_NULL)  {
 		FREE_BITV( solidbits, ap->a_resource );
 	}
-	if(rt_g.debug&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION))  {
+	if(RT_G_DEBUG&(DEBUG_ALLRAYS|DEBUG_SHOOT|DEBUG_PARTITION))  {
 		if( rt_g.rtg_logindent > 0 )
 			rt_g.rtg_logindent -= 2;
 		else

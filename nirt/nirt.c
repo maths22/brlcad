@@ -17,7 +17,7 @@
  *
  */
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -39,13 +39,18 @@ static char RCSid[] = "$Header$";
 #include "./nirt.h"
 #include "./usrfmt.h"
 
+
+extern int	rt_bot_minpieces;	/* from g_bot.c */
+
 extern char	version[];		/* from vers.c */
 extern void	cm_libdebug();
 extern void	cm_debug();
+extern void	cm_attr();
 
 char		*db_name;	/* the name of the BRL-CAD geometry file */
 com_table	ComTab[] =
 		{
+		    { "attr", cm_attr, "select attributes", "<-f(flush) | -p(print) | attribute_name>" },
 		    { "ae", az_el, "set/query azimuth and elevation", 
 			"azimuth elevation" },
 		    { "dir", dir_vect, "set/query direction vector", 
@@ -75,6 +80,9 @@ com_table	ComTab[] =
 			"read new state for NIRT from the state file" },
 		    { "print", print_item, "query an output item",
 			"item" },
+		    { "bot_minpieces", bot_minpieces,
+		      "Get/Set value for rt_bot_minpieces (0 means do not use pieces, default is 32)",
+		      "min_pieces" },
 		    { "libdebug", cm_libdebug,
 			"set/query librt debug flags", "hex_flag_value" },
 		    { "debug", cm_debug,
@@ -82,7 +90,7 @@ com_table	ComTab[] =
 		    { "!", sh_esc, "escape to the shell" },
 		    { "q", quit, "quit" },
 		    { "?", show_menu, "display this help menu" },
-		    { 0 }
+		    { (char *)NULL, NULL, (char *)NULL, (char *)NULL }
 		};
 int		do_backout = 0;			/* Backout before shooting? */
 int		overlap_claims = OVLP_RESOLVE;	/* Rebuild/retain overlaps? */
@@ -93,9 +101,79 @@ int		nirt_debug = 0;			/* Control of diagnostics */
 /* Parallel structures needed for operation w/ and w/o air */
 struct rt_i		*rti_tab[2];
 struct rt_i		*rtip;
-struct resource		res_tab[2];
+struct resource		res_tab;
 
 struct application	ap;
+
+
+int need_prep = 1;
+attr_table a_tab;
+
+void
+attrib_print(void)
+{
+    int i;
+
+    for (i=0 ; i < a_tab.attrib_use ; i++) {
+	bu_log("\"%s\"\n", a_tab.attrib[i]);
+    }
+
+}
+
+void
+attrib_flush()
+{
+    int i;
+    /* flush the list of desired attributs */
+
+    a_tab.attrib_use = 0;
+    for (i=0 ; i < a_tab.attrib_use; i++ )
+	bu_free(a_tab.attrib[i], "strdup");
+
+    return;
+}
+
+void
+attrib_add(char *a)
+{
+    char *p;
+
+    if (!a) {
+	bu_log("attrib_add null arg\n");
+	return; /* null char ptr */
+    }
+
+    p = strtok(a, "\t ");
+    while (p) {
+
+	/* make sure we have space */
+	if (!a_tab.attrib || a_tab.attrib_use >= (a_tab.attrib_cnt-1)) {
+	    a_tab.attrib_cnt += 16;
+	    a_tab.attrib = bu_realloc(a_tab.attrib, 
+				      a_tab.attrib_cnt * sizeof(char *),
+				      "attrib_tab");
+	}
+
+	/* add the attribute name(s) */
+    	a_tab.attrib[a_tab.attrib_use] = bu_strdup(p);
+	/* bu_log("attrib[%d]=\"%s\"\n", attrib_use, attrib[attrib_use]); */
+	a_tab.attrib[++a_tab.attrib_use] = (char *)NULL;
+
+	p = strtok((char *)NULL, "\t ");
+	need_prep = 1;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 struct script_rec
 {
@@ -211,12 +289,13 @@ struct bu_list	*sl;
 	show_scripts(sl, "after running them");
 }
 
+int
 main (argc, argv)
 int argc;
 char **argv;
 {
     char                db_title[TITLE_LEN+1];/* title from MGED file      */
-    extern char		*local_unit[];
+    const char		*tmp_str;
     extern char		local_u_name[];
     extern double	base2local;
     extern double	local2base;
@@ -266,6 +345,12 @@ char **argv;
     while ((Ch = getopt(argc, argv, OPT_STRING)) != EOF)
         switch (Ch)
         {
+	    case 'A':
+		attrib_add(optarg);
+		break;
+	    case 'B':
+		rt_bot_minpieces = atoi( optarg );
+		break;
 	    case 'b':
 		do_backout = 1;
 		break;
@@ -303,10 +388,10 @@ char **argv;
 		silent_flag = SILENT_NO;	/* Positively no */
 		break;
             case 'x':
-		sscanf( optarg, "%x", &rt_g.debug );
+		sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 		break;
             case 'X':
-		sscanf( optarg, "%x", &nirt_debug );
+		sscanf( optarg, "%x", (unsigned int *)&nirt_debug );
 		break;
             case 'u':
                 if (sscanf(optarg, "%d", &use_of_air) != 1)
@@ -405,14 +490,11 @@ char **argv;
     rtip -> useair = use_of_air;
     rtip -> rti_save_overlaps = (overlap_claims > 0);
 
-    if (silent_flag != SILENT_YES)
-	printf("\nPrepping the geometry...");
     ++optind;
     do_rt_gettrees (rtip, argv + optind, argc - optind);
- 
+
     /* Initialize the table of resource structures */
-    res_tab[use_of_air].re_magic =
-	(res_tab[1 - use_of_air].re_magic = RESOURCE_MAGIC);
+    rt_init_resource( &res_tab, 0, rtip );
 
     /* initialization of the application structure */
     ap.a_hit = if_hit;        /* branch to if_hit routine            */
@@ -420,13 +502,12 @@ char **argv;
     ap.a_overlap = if_overlap;/* branch to if_overlap routine        */
     ap.a_logoverlap = rt_silent_logoverlap;
     ap.a_onehit = 0;          /* continue through shotline after hit */
-    ap.a_resource = &res_tab[use_of_air];
+    ap.a_resource = &res_tab;
     ap.a_purpose = "NIRT ray";
     ap.a_rt_i = rtip;         /* rt_i pointer                        */
     ap.a_zero1 = 0;           /* sanity check, sayth raytrace.h      */
     ap.a_zero2 = 0;           /* sanity check, sayth raytrace.h      */
-
-    rt_prep( rtip );
+    ap.a_uptr = (genptr_t)a_tab.attrib;
 
     /* initialize variables */
     azimuth() = 0.0;
@@ -446,7 +527,12 @@ char **argv;
     /* initialize NIRT's local units */
     base2local = rtip -> rti_dbip -> dbi_base2local;
     local2base = rtip -> rti_dbip -> dbi_local2base;
-    strncpy(local_u_name, bu_units_string(local2base), 64);
+    tmp_str = bu_units_string(local2base);
+    if( tmp_str ) {
+	    strncpy(local_u_name, bu_units_string(local2base), 64);
+    } else {
+	    strcpy( local_u_name, "Unknown units" );
+    }
 
     if (silent_flag != SILENT_YES)
     {
@@ -479,12 +565,14 @@ char **argv;
     }
     else
 	interact(READING_FILE, stdin);
+    return 0;
 }
  
 char	usage[] = "\
 Usage: 'nirt [options] model.g objects...'\n\
 Options:\n\
  -b        back out of geometry before first shot\n\
+ -B n      set rt_bot_minpieces=n\n\
  -e script run script before interacting\n\
  -f sfile  run script sfile before interacting\n\
  -M        read matrix, cmds on stdin\n\
@@ -501,8 +589,8 @@ void printusage()
     (void) fputs(usage, stderr);
 }
 
-void do_rt_gettrees (rtip, object_name, nm_objects)
-
+void
+do_rt_gettrees (rtip, object_name, nm_objects)
 struct rt_i	*rtip;
 char		*object_name[];
 int		nm_objects;
@@ -525,12 +613,28 @@ int		nm_objects;
 	prev_names = object_name;
 	prev_nm = nm_objects;
     }
-    if (rt_gettrees (rtip, nm_objects, (const char **) object_name, 1))
+
+    if (silent_flag != SILENT_YES) {
+	    printf("\nGet trees...");
+	    fflush(stdout);
+    }
+
+    if (rt_gettrees_and_attrs(rtip, (const char **)a_tab.attrib, nm_objects, (const char **) object_name, 1))
     {
 	fflush(stdout);
 	fprintf(stderr, "rt_gettrees() failed\n");
 	exit (1);
     }
+
+    if( need_prep ) {
+	    if (silent_flag != SILENT_YES) {
+		    printf("\nPrepping the geometry...");
+		    fflush(stdout);
+	    }
+	    rt_prep( rtip );
+	    need_prep = 0;
+    }
+
     if (silent_flag != SILENT_YES)
     {
 	int	i;
@@ -540,4 +644,6 @@ int		nm_objects;
 	    printf(" '%s'", object_name[i]);
 	printf(" processed\n");
     }
+
+
 }

@@ -18,16 +18,26 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <unistd.h>
 
 unsigned char	ibuf[3*1024];
 unsigned char	red[1024], green[1024], blue[1024];
 
 char *Usage = "usage: pix-bw3 redout greenout blueout < file.pix\n";
 
+int
 main( argc, argv )
 int argc;
 char **argv;
@@ -61,4 +71,6 @@ char **argv;
 		fwrite( green, sizeof( *green ), num/3, gfp );
 		fwrite( blue, sizeof( *blue ), num/3, bfp );
 	}
+
+	return 0;
 }

@@ -18,7 +18,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -79,7 +79,7 @@ char	*argv[];
 
 	CHECK_DBI_NULL;
 
-	if(argc < 1 || MAXARGS < argc){
+	if(argc < 1){
 	  struct bu_vls vls;
 
 	  bu_vls_init(&vls);
@@ -97,7 +97,7 @@ char	*argv[];
 		  state_err( "Default SOLID Analyze" );
 		  return TCL_ERROR;
 		}
-		ndp = illump->s_path[illump->s_last];
+		ndp = LAST_SOLID(illump);
 		if(illump->s_Eflag) {
 		  Tcl_AppendResult(interp, "analyze: cannot analyze evaluated region containing ",
 				   ndp->d_namep, "\n", (char *)NULL);
@@ -121,7 +121,7 @@ char	*argv[];
 		}
 		bn_mat_mul(new_mat, modelchanges, es_mat);
 
-		if( rt_db_get_internal( &intern, ndp, dbip, new_mat ) < 0 )  {
+		if( rt_db_get_internal( &intern, ndp, dbip, new_mat, &rt_uniresource ) < 0 )  {
 		  Tcl_AppendResult(interp, "rt_db_get_internal() error\n", (char *)NULL);
 		  return TCL_ERROR;
 		}
@@ -129,7 +129,7 @@ char	*argv[];
 		do_anal(&v, &intern);
 		Tcl_AppendResult(interp, bu_vls_addr(&v), (char *)NULL);
 		bu_vls_free(&v);
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		return TCL_OK;
 	}
 
@@ -138,7 +138,7 @@ char	*argv[];
 		if( (ndp = db_lookup( dbip,  argv[i], LOOKUP_NOISY )) == DIR_NULL )
 			continue;
 
-		if( rt_db_get_internal( &intern, ndp, dbip, bn_mat_identity ) < 0 )  {
+		if( rt_db_get_internal( &intern, ndp, dbip, bn_mat_identity, &rt_uniresource ) < 0 )  {
 		  Tcl_AppendResult(interp, "rt_db_get_internal() error\n", (char *)NULL);
 		  return TCL_ERROR;
 		}
@@ -151,7 +151,7 @@ char	*argv[];
 		do_anal(&v, &intern);
 		Tcl_AppendResult(interp, bu_vls_addr(&v), (char *)NULL);
 		bu_vls_free(&v);
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 	}
 
 	return TCL_OK;
@@ -162,7 +162,7 @@ char	*argv[];
 static void
 do_anal(vp, ip)
 struct bu_vls		*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	/* XXX Could give solid name, and current units, here */
 
@@ -210,7 +210,7 @@ CONST struct rt_db_internal	*ip;
 
 
 /* edge definition array */
-static CONST int nedge[5][24] = {
+static const int nedge[5][24] = {
 	{0,1, 1,2, 2,0, 0,3, 3,2, 1,3, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},	/* ARB4 */
 	{0,1, 1,2, 2,3, 0,3, 0,4, 1,4, 2,4, 3,4, -1,-1,-1,-1,-1,-1,-1,-1},	/* ARB5 */
 	{0,1, 1,2, 2,3, 0,3, 0,4, 1,4, 2,5, 3,5, 4,5, -1,-1,-1,-1,-1,-1},	/* ARB6 */
@@ -224,7 +224,7 @@ static CONST int nedge[5][24] = {
 static void
 arb_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	struct rt_arb_internal	*arb = (struct rt_arb_internal *)ip->idb_ptr;
 	register int	i;
@@ -293,7 +293,7 @@ CONST struct rt_db_internal	*ip;
 }
 
 /* ARB face printout array */
-static CONST int prface[5][6] = {
+static const int prface[5][6] = {
 	{123, 124, 234, 134, -111, -111},	/* ARB4 */
 	{1234, 125, 235, 345, 145, -111},	/* ARB5 */
 	{1234, 2365, 1564, 512, 634, -111},	/* ARB6 */
@@ -301,7 +301,7 @@ static CONST int prface[5][6] = {
 	{1234, 5678, 1584, 2376, 1265, 4378},	/* ARB8 */
 };
 /* division of an arb8 into 6 arb4s */
-static CONST int farb4[6][4] = {
+static const int farb4[6][4] = {
 	{0, 1, 2, 4},
 	{4, 5, 6, 1},
 	{1, 2, 6, 4},
@@ -371,9 +371,9 @@ anal_face( vp, face, center_pt, arb, type, tol )
 struct bu_vls	*vp;
 int		face;
 point_t		center_pt;		/* reference center point */
-CONST struct rt_arb_internal	*arb;
+const struct rt_arb_internal	*arb;
 int		type;
-CONST struct bn_tol	*tol;
+const struct bn_tol	*tol;
 {
 	register int i, j, k;
 	int a, b, c, d;		/* 4 points of face to look at */
@@ -458,7 +458,7 @@ static void
 anal_edge( vp, edge, arb, type )
 struct bu_vls		*vp;
 int			edge;
-CONST struct rt_arb_internal	*arb;
+const struct rt_arb_internal	*arb;
 int			type;
 {
 	register int a, b;
@@ -540,7 +540,7 @@ static double pi = 3.1415926535898;
 static void
 tor_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	struct rt_tor_internal	*tor = (struct rt_tor_internal *)ip->idb_ptr;
 	fastf_t r1, r2, vol, sur_area;
@@ -571,7 +571,7 @@ CONST struct rt_db_internal	*ip;
 static void
 ell_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	struct rt_ell_internal	*ell = (struct rt_ell_internal *)ip->idb_ptr;
 	fastf_t ma, mb, mc;
@@ -682,7 +682,7 @@ CONST struct rt_db_internal	*ip;
 static void
 tgc_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	struct rt_tgc_internal	*tgc = (struct rt_tgc_internal *)ip->idb_ptr;
 	fastf_t maxb, ma, mb, mc, md, mh;
@@ -774,7 +774,7 @@ CONST struct rt_db_internal	*ip;
 static void
 ars_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	bu_vls_printf(vp,"ARS analyze not implemented\n");
 }
@@ -783,7 +783,7 @@ CONST struct rt_db_internal	*ip;
  * static void
  * spline_anal(vp, ip)
  * struct bu_vls	*vp;
- * CONST struct rt_db_internal	*ip;
+ * const struct rt_db_internal	*ip;
  * {
  * 	bu_vls_printf(vp,"SPLINE analyze not implemented\n");
  * }
@@ -793,7 +793,7 @@ CONST struct rt_db_internal	*ip;
 static void
 part_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	bu_vls_printf(vp,"PARTICLE analyze not implemented\n");
 }
@@ -804,7 +804,7 @@ CONST struct rt_db_internal	*ip;
 static void
 rpc_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	fastf_t	area_parab, area_body, b, h, r, vol_parab;
 	struct rt_rpc_internal	*rpc = (struct rt_rpc_internal *)ip->idb_ptr;
@@ -842,7 +842,7 @@ CONST struct rt_db_internal	*ip;
 static void
 rhc_anal(vp, ip)
 struct bu_vls	*vp;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 {
 	fastf_t	area_hyperb, area_body, b, c, h, r, vol_hyperb,	work1;
 	struct rt_rhc_internal	*rhc = (struct rt_rhc_internal *)ip->idb_ptr;

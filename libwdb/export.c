@@ -16,7 +16,7 @@
  *	Public Domain, Distribution Unlimitied.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -30,38 +30,4 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "wdb.h"
 
-/*
- *  Applies scalling (units change) as specified in mk_conv2mm.
- *  The caller must free "gp".
- *
- *  Returns -
- *	 0	OK
- *	<0	error
- */
-int
-mk_export_fwrite( fp, name, gp, id )
-FILE		*fp;
-CONST char	*name;
-genptr_t	gp;
-int		id;
-{
-	struct rt_db_internal	intern;
-
-	if( (id <= 0 || id > ID_MAXIMUM) && id != ID_COMBINATION )  {
-		bu_log("mk_export_fwrite(%s): id=%d bad\n",
-			name, id );
-		return(-1);
-	}
-
-	RT_INIT_DB_INTERNAL( &intern );
-	intern.idb_type = id;
-	intern.idb_meth = &rt_functab[id];
-	intern.idb_ptr = gp;
-
-	if( rt_fwrite_internal( fp, name, &intern, mk_conv2mm ) < 0 )  {
-		bu_log("mk_export_fwrite(%s): rt_fwrite_internal failure\n",
-			name );
-		return(-2);				/* FAIL */
-	}
-	return 0;					/* OK */
-}
+int	mk_version = 5;		/* which version of the database to write */

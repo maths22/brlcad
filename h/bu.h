@@ -67,6 +67,18 @@ extern char	*realloc();
 /**extern void	free(); **/
 #endif
 
+/* 
+ * BU_FLSTR   Macro for getting a concatenated string of the current 
+ * file and line number.  Produces something of the form:
+ *   "filename.c"":""1234"
+ */
+#define bu_cpp_str(s) # s
+#define bu_cpp_xstr(s)  bu_cpp_str(s)
+#define bu_cpp_glue(a, b) a ## b
+#define bu_cpp_xglue(a, b) bu_cpp_glue(a, b)
+#define BU_FLSTR __FILE__ ":" bu_cpp_xstr(__LINE__)
+#define BU_QFLSTR bu_cpp_xstr(__FILE__ line __LINE__)
+
 /*
  *  Macros for providing function prototypes, regardless of whether
  *  the compiler understands them or not.
@@ -114,16 +126,32 @@ extern char	*realloc();
 
 /* Acquire storage for a given struct, eg, BU_GETSTRUCT(ptr,structname); */
 #if __STDC__
-# define BU_GETSTRUCT(_p,_str) \
+#  define BU_GETSTRUCT(_p,_str) \
 	_p = (struct _str *)bu_calloc(1,sizeof(struct _str), #_str " (getstruct)" )
-# define BU_GETUNION(_p,_unn) \
-	_p = (union _unn *)bu_calloc(1,sizeof(union _unn), #_unn " (getstruct)")
+#  define BU_GETUNION(_p,_unn) \
+	_p = (union _unn *)bu_calloc(1,sizeof(union _unn), #_unn " (getunion)")
 #else
-# define BU_GETSTRUCT(_p,_str) \
+#  define BU_GETSTRUCT(_p,_str) \
 	_p = (struct _str *)bu_calloc(1,sizeof(struct _str), "_str (getstruct)")
-# define BU_GETUNION(_p,_unn) \
-	_p = (union _unn *)bu_calloc(1,sizeof(union _unn), "_unn (getstruct)")
+#  define BU_GETUNION(_p,_unn) \
+	_p = (union _unn *)bu_calloc(1,sizeof(union _unn), "_unn (getunion)")
 #endif
+
+/*
+ *                B U _ G E T T Y P E
+ *
+ * Acquire storage for a given TYPE, eg, BU_GETTYPE(ptr, typename);
+ * Equivalent to BU_GETSTRUCT, except without the 'struct' Useful
+ * for typedef'ed objects.
+ */
+#if __STDC__
+#  define BU_GETTYPE(_p,_type) \
+	_p = (_type *)bu_calloc(1,sizeof(_type), #_type " (gettype)" )
+#else
+#  define BU_GETTYPE(_p,_type) \
+	_p = (_type *)bu_calloc(1,sizeof(_type), "_type (getstruct)")
+#endif
+
 
 
 /*
@@ -132,17 +160,22 @@ extern char	*realloc();
  *  Macros to check and validate a structure pointer, given that
  *  the first entry in the structure is a magic number.
  */
-#define BU_CKMAG(_ptr, _magic, _str)	\
+#ifdef NO_BOMBING_MACROS
+#  define BU_CKMAG(_ptr, _magic, _str)
+#  define BU_CKMAG_TCL(_interp, _ptr, _magic, _str)
+#else
+#  define BU_CKMAG(_ptr, _magic, _str)	\
 	if( !(_ptr) || ( ((long)(_ptr)) & (sizeof(long)-1) ) || \
 	    *((long *)(_ptr)) != (_magic) )  { \
 		bu_badmagic( (long *)(_ptr), _magic, _str, __FILE__, __LINE__ ); \
 	}
-#define BU_CKMAG_TCL(_interp, _ptr, _magic, _str)	\
+#  define BU_CKMAG_TCL(_interp, _ptr, _magic, _str)	\
 	if( !(_ptr) || ( ((long)(_ptr)) & (sizeof(long)-1) ) || \
 	     *((long *)(_ptr)) != (_magic) )  { \
 		bu_badmagic_tcl( (_interp), (long *)(_ptr), _magic, _str, __FILE__, __LINE__ ); \
 		return TCL_ERROR; \
 	}
+#endif
 
 /*
  *			B U _ A S S E R T
@@ -152,75 +185,156 @@ extern char	*realloc();
  *
  *  Example:		BU_ASSERT_LONG( j+7, <, 42 );
  */
-#ifdef __STDC__
-#define BU_ASSERT(_equation)	\
+#ifdef NO_BOMBING_MACROS
+#  define BU_ASSERT(_equation)
+#else
+#  ifdef __STDC__
+#    define BU_ASSERT(_equation)	\
 	if( !(_equation) )  { \
 		bu_log("BU_ASSERT( " #_equation " ) failed, file %s, line %d\n", \
 			__FILE__, __LINE__ ); \
 		bu_bomb("assertion failure\n"); \
 	}
-#else
-#define BU_ASSERT(_equation)	\
+#  else
+#    define BU_ASSERT(_equation)	\
 	if( !(_equation) )  { \
 		bu_log("BU_ASSERT( _equation ) failed, file %s, line %d\n", \
 			__FILE__, __LINE__ ); \
 		bu_bomb("assertion failure\n"); \
 	}
+#  endif
 #endif
 
-#ifdef __STDC__
-#define BU_ASSERT_PTR(_lhs,_relation,_rhs)	\
+#ifdef NO_BOMBING_MACROS
+#  define BU_ASSERT_PTR(_lhs,_relation,_rhs)
+#else
+#  ifdef __STDC__
+#    define BU_ASSERT_PTR(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_PTR( " #_lhs #_relation #_rhs " ) failed, lhs=x%lx, rhs=x%lx, file %s, line %d\n", \
 			(long)(_lhs), (long)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_PTR failure\n"); \
 	}
-#else
-#define BU_ASSERT_PTR(_lhs,_relation,_rhs)	\
+#  else
+#    define BU_ASSERT_PTR(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_PTR( _lhs _relation _rhs ) failed, lhs=x%lx, rhs=x%lx, file %s, line %d\n", \
 			(long)(_lhs), (long)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_PTR failure\n"); \
 	}
+#  endif
 #endif
 
-#ifdef __STDC__
-#define BU_ASSERT_LONG(_lhs,_relation,_rhs)	\
+
+#ifdef NO_BOMBING_MACROS
+#  define BU_ASSERT_LONG(_lhs,_relation,_rhs)
+#else
+#  ifdef __STDC__
+#    define BU_ASSERT_LONG(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_LONG( " #_lhs #_relation #_rhs " ) failed, lhs=%ld, rhs=%ld, file %s, line %d\n", \
 			(long)(_lhs), (long)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_LONG failure\n"); \
 	}
-#else
-#define BU_ASSERT_LONG(_lhs,_relation,_rhs)	\
+#  else
+#    define BU_ASSERT_LONG(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_LONG( _lhs _relation _rhs ) failed, lhs=%ld, rhs=%ld, file %s, line %d\n", \
 			(long)(_lhs), (long)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_LONG failure\n"); \
 	}
+#  endif
 #endif
 
-#ifdef __STDC__
-#define BU_ASSERT_DOUBLE(_lhs,_relation,_rhs)	\
+
+#ifdef NO_BOMBING_MACROS
+#  define BU_ASSERT_DOUBLE(_lhs,_relation,_rhs)
+#else
+#  ifdef __STDC__
+#    define BU_ASSERT_DOUBLE(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_DOUBLE( " #_lhs #_relation #_rhs " ) failed, lhs=%lf, rhs=%lf, file %s, line %d\n", \
 			(double)(_lhs), (double)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_DOUBLE failure\n"); \
 	}
-#else
-#define BU_ASSERT_DOUBLE(_lhs,_relation,_rhs)	\
+#  else
+#    define BU_ASSERT_DOUBLE(_lhs,_relation,_rhs)	\
 	if( !((_lhs) _relation (_rhs)) )  { \
 		bu_log("BU_ASSERT_DOUBLE( _lhs _relation _rhs ) failed, lhs=%lf, rhs=%lf, file %s, line %d\n", \
 			(long)(_lhs), (long)(_rhs),\
 			__FILE__, __LINE__ ); \
 		bu_bomb("BU_ASSERT_DOUBLE failure\n"); \
 	}
+#  endif
 #endif
+
+/*----------------------------------------------------------------------*/
+/*
+ *  Sizes of "network" format data.
+ *  We use the same convention as the TCP/IP specification,
+ *  namely, big-Endian, IEEE format, twos compliment.
+ *  This is the BRL-CAD external data representation (XDR).
+ *  See also the support routines in libbu/xdr.c
+ */
+#define SIZEOF_NETWORK_SHORT	2	/* htons(), bu_gshort(), bu_pshort() */
+#define SIZEOF_NETWORK_LONG	4	/* htonl(), bu_glong(), bu_plong() */
+#define SIZEOF_NETWORK_FLOAT	4	/* htonf() */
+#define SIZEOF_NETWORK_DOUBLE	8	/* htond() */
+
+/*----------------------------------------------------------------------*/
+/* convert.c
+ *
+ *
+ */
+/*
+ * Forward declarations.
+ */
+extern int bu_cv_itemlen(int cookie);
+extern int bu_cv_cookie(char *in);
+extern int bu_cv_optimize(int cookie);
+extern int bu_cv_w_cookie(genptr_t, int, int, genptr_t, int, int);
+
+extern int bu_cv_ntohss(signed short *, int, genptr_t, int);
+extern int bu_cv_ntohus(unsigned short *, int, genptr_t, int);
+extern int bu_cv_ntohsl(signed long int *, int, genptr_t, int);
+extern int bu_cv_ntohul(unsigned long int *, int, genptr_t, int);
+extern int bu_cv_htonss(genptr_t, int, signed short *, int);
+extern int bu_cv_htonus(genptr_t, int, unsigned short *, int);
+extern int bu_cv_htonsl(genptr_t, int, long *, int);
+extern int bu_cv_htonul(genptr_t, int, unsigned long *, int);
+
+/*
+ * Theses should be moved to a header file soon.
+ */
+#define CV_CHANNEL_MASK	0x00ff
+#define CV_HOST_MASK	0x0100
+#define CV_SIGNED_MASK	0x0200
+#define CV_TYPE_MASK	0x1c00  /* 0001 1100 0000 0000 */
+#define CV_CONVERT_MASK 0x6000  /* 0110 0000 0000 0000 */
+
+#define CV_TYPE_SHIFT	10
+#define CV_CONVERT_SHIFT 13
+
+#define CV_8	0x0400
+#define	CV_16	0x0800
+#define CV_32	0x0c00
+#define CV_64	0x1000
+#define CV_D	0x1400
+
+#define CV_CLIP		0x0000
+#define CV_NORMAL	0x2000
+#define CV_LIT		0x4000
+
+#define	IND_NOTSET	0
+#define IND_BIG		1
+#define IND_LITTLE	2
+#define IND_ILL		3		/* PDP-11 */
+#define IND_CRAY	4
 
 /*----------------------------------------------------------------------*/
 /* list.c */
@@ -286,6 +400,20 @@ struct bu_list {
 #define BU_LIST_HEAD_MAGIC	0x01016580	/* Magic num for list head */
 #define BU_LIST_NULL	((struct bu_list *)0)
 
+typedef struct bu_list bu_list_t;
+
+struct bu_list *bu_list_new();
+struct bu_list *bu_list_pop( struct bu_list *hp );
+
+#define BU_LIST_CLOSE( hp ) { \
+	assert( (hp) != NULL ); \
+	if( (hp) == NULL ) \
+		return; \
+	assert( BU_LIST_IS_EMPTY( (hp) ) ); \
+	bu_list_free( (hp) ); \
+	bu_free( (char *)(hp), "bu_list head" ); \
+}
+
 
 /*
  *  Insert "new" item in front of "old" item.  Often, "old" is the head.
@@ -315,6 +443,26 @@ struct bu_list {
 	(cur)->back->forw = (cur)->forw; \
 	(cur)->forw = (cur)->back = BU_LIST_NULL;  /* sanity */ }
 
+/* Dequeue "cur" but do not fix its links */
+#define BU_LIST_DQ(cur) {\
+	(cur)->forw->back = (cur)->back; \
+	(cur)->back->forw = (cur)->forw; }
+
+#define BU_LIST_DQ_T(cur, type) (\
+	(cur)->forw->back = (cur)->back, \
+	(cur)->back->forw = (cur)->forw, \
+	(type *)(cur) )
+
+/* This version of BU_LIST_DEQUEUE uses the comma operator
+ * inorder to return a typecast version of the dequeued pointer
+ */
+#define BU_LIST_DEQUEUE_T( cur, type ) (\
+	(cur)->forw->back = (cur)->back, \
+	(cur)->back->forw = (cur)->forw, \
+	(cur)->forw = (cur)->back = BU_LIST_NULL, \
+	(type *)(cur) )
+
+
 /*
  *  The Stack Discipline
  *
@@ -326,13 +474,19 @@ struct bu_list {
 	BU_LIST_APPEND(hp, (struct bu_list *)(p))
 
 #define BU_LIST_POP(structure,hp,p)				\
-	if (BU_LIST_NON_EMPTY(hp))				\
 	{							\
-	    (p) = ((struct structure *)((hp)->forw));		\
-	    BU_LIST_DEQUEUE((struct bu_list *)(p));		\
-	}							\
-	else							\
-	     (p) = (struct structure *) 0
+		if (BU_LIST_NON_EMPTY(hp))				\
+		{							\
+		    (p) = ((struct structure *)((hp)->forw));		\
+		    BU_LIST_DEQUEUE((struct bu_list *)(p));		\
+		}							\
+		else							\
+		     (p) = (struct structure *) 0;			\
+	}
+
+#define BU_LIST_POP_T(hp, type )				\
+	(type *)bu_list_pop( hp )
+
 /*
  *  "Bulk transfer" all elements from the list headed by src_hd
  *  onto the list headed by dest_hd, without examining every element
@@ -405,11 +559,32 @@ struct bu_list {
 	(((struct bu_list *)(p)) != (hp))
 #define BU_CK_LIST_HEAD( _p )	BU_CKMAG( (_p), BU_LIST_HEAD_MAGIC, "bu_list")
 
+/* Boolean test to see if previous list element is the head */
+#define BU_LIST_PREV_IS_HEAD(p,hp)\
+	(((struct bu_list *)(p))->back == (hp))
+#define BU_LIST_PREV_NOT_HEAD(p,hp)\
+	(((struct bu_list *)(p))->back != (hp))
+
 /* Boolean test to see if the next list element is the head */
 #define BU_LIST_NEXT_IS_HEAD(p,hp)	\
 	(((struct bu_list *)(p))->forw == (hp))
 #define BU_LIST_NEXT_NOT_HEAD(p,hp)	\
 	(((struct bu_list *)(p))->forw != (hp))
+
+#define BU_LIST_EACH( hp, p, type ) \
+	 for( (p)=(type *)BU_LIST_FIRST(bu_list,hp); \
+	      BU_LIST_NOT_HEAD(p,hp); \
+	      (p)=(type *)BU_LIST_PNEXT(bu_list,p) ) \
+
+#define BU_LIST_REVEACH( hp, p, type ) \
+	 for( (p)=(type *)BU_LIST_LAST(bu_list,hp); \
+	      BU_LIST_NOT_HEAD(p,hp); \
+	      (p)=(type *)BU_LIST_PREV(bu_list,((struct bu_list *)(p))) ) \
+
+#define BU_LIST_TAIL( hp, start, p, type ) \
+	 for( (p)=(type *)start ; \
+	      BU_LIST_NOT_HEAD(p,hp); \
+	      (p)=(type *)BU_LIST_PNEXT(bu_list,(p)) )
 
 /*
  *  Intended as innards for a for() loop to visit all nodes on list, e.g.:
@@ -547,29 +722,51 @@ struct bu_bitv {
 #define BU_BITS2WORDS(_nb)	(((_nb)+BITV_MASK)>>BITV_SHIFT)
 #define BU_WORDS2BITS(_nw)	((_nw)*sizeof(bitv_t)*8)
 
+#if 1
 #define BU_BITTEST(_bv,bit)	\
-	(((_bv)->bits[(bit)>>BITV_SHIFT] & (((bitv_t)1)<<((bit)&BITV_MASK)))?1:0)
+	(((_bv)->bits[(bit)>>BITV_SHIFT] & (((bitv_t)1)<<((bit)&BITV_MASK)))!=0)
+#else
+static __inline__ int BU_BITTEST(volatile void * addr, int nr)
+{
+        int oldbit;
+
+        __asm__ __volatile__(
+                "btl %2,%1\n\tsbbl %0,%0"
+                :"=r" (oldbit)
+                :"m" (addr),"Ir" (nr));
+        return oldbit;
+}
+#endif
+
 #define BU_BITSET(_bv,bit)	\
 	((_bv)->bits[(bit)>>BITV_SHIFT] |= (((bitv_t)1)<<((bit)&BITV_MASK)))
 #define BU_BITCLR(_bv,bit)	\
 	((_bv)->bits[(bit)>>BITV_SHIFT] &= ~(((bitv_t)1)<<((bit)&BITV_MASK)))
 #define BU_BITV_ZEROALL(_bv)	\
-	{ bzero( (char *)((_bv)->bits), BU_BITS2BYTES( (_bv)->nbits ) ); }
+	{ memset( (char *)((_bv)->bits), 0, BU_BITS2BYTES( (_bv)->nbits ) ); }
 
 /* This is not done by default for performance reasons */
-#define BU_BITV_BITNUM_CHECK(_bv,_bit)	/* Validate bit number */ \
+#ifdef NO_BOMBING_MACROS
+#  define BU_BITV_BITNUM_CHECK(_bv,_bit)
+#else
+#  define BU_BITV_BITNUM_CHECK(_bv,_bit)	/* Validate bit number */ \
 	if( ((unsigned)(_bit)) >= (_bv)->nbits )  {\
 		bu_log("BU_BITV_BITNUM_CHECK bit number (%u) out of range (0..%u)\n", \
 			((unsigned)(_bit)), (_bv)->nbits); \
 		bu_bomb("process self-terminating\n");\
 	}
+#endif
 
-#define BU_BITV_NBITS_CHECK(_bv,_nbits)	/* Validate number of bits */ \
+#ifdef NO_BOMBING_MACROS
+#  define BU_BITV_NBITS_CHECK(_bv,_nbits)
+#else
+#  define BU_BITV_NBITS_CHECK(_bv,_nbits)	/* Validate number of bits */ \
 	if( ((unsigned)(_nbits)) > (_bv)->nbits )  {\
 		bu_log("BU_BITV_NBITS_CHECK number of bits (%u) out of range (> %u)", \
 			((unsigned)(_nbits)), (_bv)->nbits ); \
 		bu_bomb("process self-terminating"); \
 		}
+#endif
 
 
 /*
@@ -676,6 +873,7 @@ struct bu_ptbl {
 #define BU_PTBL_END(ptbl)	((ptbl)->end)
 #define BU_PTBL_LEN(p)	((p)->end)
 #define BU_PTBL_GET(ptbl,i)	((ptbl)->buffer[(i)])
+#define BU_PTBL_SET(ptbl,i,val)	((ptbl)->buffer[(i)] = (long*)(val))
 #define BU_PTBL_TEST(ptbl)	((ptbl)->l.magic == BU_PTBL_MAGIC)
 #define BU_PTBL_CLEAR_I(_ptbl, _i) ((_ptbl)->buffer[(_i)] = (long *)0)
 
@@ -739,7 +937,76 @@ struct bu_mapped_file {
 
 /* formerly rt_g.rtg_logindent, now use bu_log_indent_delta() */
 typedef int (*bu_hook_t)BU_ARGS((genptr_t, genptr_t));
+
+struct bu_hook_list {
+	struct bu_list	l;
+	bu_hook_t	hookfunc;
+	genptr_t 	clientdata;
+};
+
 #define BUHOOK_NULL 0
+#define BUHOOK_LIST_MAGIC	0x90d5dead	/* Nietzsche? */
+#define BUHOOK_LIST_NULL	((struct bu_hook_list *) 0)
+
+extern struct bu_hook_list bu_log_hook_list;
+extern struct bu_hook_list bu_bomb_hook_list;
+
+/*----------------------------------------------------------------------*/
+/* avs.c */
+/*
+ *  Attribute/value sets
+ */
+
+/*
+ *			B U _ A T T R I B U T E _ V A L U E _ P A I R
+ *
+ *  These strings may or may not be individually allocated,
+ *  it depends on usage.
+ */
+struct bu_attribute_value_pair {
+	const char	*name;
+	const char	*value;
+};
+
+/*
+ *			B U _ A T T R I B U T E _ V A L U E _ S E T
+ *
+ *  A variable-sized attribute-value-pair array.
+ *
+ *  avp points to an array of [max] slots.
+ *  The interface routines will realloc to extend as needed.
+ *
+ *  In general,
+ *  each of the names and values is a local copy made with bu_strdup(),
+ *  and each string needs to be freed individually.
+ *  However, if a name or value pointer is between
+ *  readonly_min and readonly_max, then it is part of a big malloc
+ *  block that is being freed by the caller, and should not be individually
+ *  freed.
+ */
+struct bu_attribute_value_set {
+	long				magic;
+	int				count;	/* # valid entries in avp */
+	int				max;	/* # allocated slots in avp */
+	struct bu_attribute_value_pair	*avp;	/* array[max] */
+	char				*readonly_min;
+	char				*readonly_max;
+};
+#define BU_AVS_MAGIC		0x41765321	/* AvS! */
+#define BU_CK_AVS(_avp)		BU_CKMAG(_avp, BU_AVS_MAGIC, "bu_attribute_value_set")
+
+#define BU_AVS_FOR(_pp, _avp)	\
+	(_pp) = &(_avp)->avp[(_avp)->count-1]; (_pp) >= (_avp)->avp; (_pp)--
+
+/*
+ *  Some (but not all) attribute name and value string pointers are
+ *  taken from an on-disk format bu_external block,
+ *  while others have been bu_strdup()ed and need to be freed.
+ *  This macro indicates whether the pointer needs to be freed or not.
+ */
+#define AVS_IS_FREEABLE(_avsp, _p)	\
+	( (_avsp)->readonly_max == NULL || \
+	    ((_p) < (_avsp)->readonly_min || (_p) > (_avsp)->readonly_max) )
 
 /*----------------------------------------------------------------------*/
 /* vls.c */
@@ -779,6 +1046,39 @@ struct bu_vls  {
 extern int	bu_setjmp_valid;		/* !0 = bu_jmpbuf is valid */
 extern jmp_buf	bu_jmpbuf;			/* for BU_SETJMP() */
 
+/*-------------------------------------------------------------------------*/
+/* 			B U _ M R O
+ *
+ *	Support for Multiply Represented Objects
+ */
+
+struct bu_mro {
+	long		magic;
+	struct bu_vls	string_rep;
+	char		long_rep_is_valid;
+	long		long_rep;
+	char		double_rep_is_valid;
+	double		double_rep;
+};
+
+#define BU_MRO_MAGIC	0x4D524F4F	/* MROO */
+#define BU_CK_MRO(_vp)		BU_CKMAG(_vp, BU_MRO_MAGIC, "bu_mro")
+
+#define BU_MRO_INVALIDATE(_p ) {\
+	_p->long_rep_is_valid = '\0';\
+	_p->double_rep_is_valid = '\0';\
+}
+
+#define BU_MRO_GETDOUBLE( _p ) ( _p->double_rep_is_valid ? _p->double_rep : \
+	(_p->double_rep = strtod( bu_vls_addr( &_p->string_rep ), NULL ), \
+	( _p->double_rep_is_valid='y', _p->double_rep ) ) )
+
+#define BU_MRO_GETLONG( _p ) ( _p->long_rep_is_valid ? _p->long_rep : \
+	(_p->long_rep = strtol( bu_vls_addr( &_p->string_rep ), NULL, 10 ), \
+	( _p->long_rep_is_valid='y', _p->long_rep ) ) )
+
+#define BU_MRO_GETSTRING( _p ) bu_vls_addr( &_p->string_rep )
+
 /*----------------------------------------------------------------------*/
 /*
  * Section for BU_DEBUG values
@@ -800,6 +1100,8 @@ extern int	bu_debug;
 
 #define BU_DEBUG_MATH		0x00000100	/* 011 Fundamental math routines (plane.c, mat.c) */
 #define BU_DEBUG_PTBL		0x00000200	/* 012 bu_ptbl_*() logging */
+#define BU_DEBUG_AVS		0x00000400	/* 013 bu_avs_*() logging */
+#define BU_DEBUG_MAPPED_FILE	0x00000800	/* 014 bu_mapped_file logging */
 
 #define BU_DEBUG_TABDATA	0x00010000	/* 025 LIBBN: tabdata */
 
@@ -808,7 +1110,7 @@ extern int	bu_debug;
 "\020\
 \025TABDATA\
 \015?\
-\012PTBL\011MATH\010?\7?\6?\5PARALLEL\
+\014MAPPED_FILE\013AVS\012PTBL\011MATH\010?\7?\6?\5PARALLEL\
 \4?\3MEM_LOG\2MEM_CHECK\1COREDUMP"
 
 /*----------------------------------------------------------------------*/
@@ -866,15 +1168,54 @@ extern int	bu_debug;
  *	short	a_short;
  *	int	a_int;
  *	double	a_double;
- * };
+ * } 
+ *
+ * struct data_structure data_default = 
+ *	{ 'c', "the default string", 32767, 1, 1.0 };
+ *
+ * struct data_structure my_values;
  *
  * struct bu_structparse data_sp[] ={
- * {"%c", 1,  "char_value", bu_offsetof(data_structure, a_char),   BU_STRUCTPARSE_FUNC_NULL}, 
- * {"%s", 32, "char_value", bu_offsetofarray(data_structure, str), BU_STRUCTPARSE_FUNC_NULL}, 
- * {"%i", 1,  "char_value", bu_offsetof(data_structure, a_short),  BU_STRUCTPARSE_FUNC_NULL}, 
- * {"%d", 1,  "char_value", bu_offsetof(data_structure, a_int),    BU_STRUCTPARSE_FUNC_NULL}, 
- * {"%f", 1,  "char_value", bu_offsetof(data_structure, a_double), BU_STRUCTPARSE_FUNC_NULL}, 
+ *
+ * {"%c", 1,  "a_char",   bu_offsetof(data_structure, a_char),
+ *	BU_STRUCTPARSE_FUNC_NULL,
+ *	"a single character",	(void*)&default.a_char }, 
+ *
+ * {"%s", 32, "str",      bu_offsetofarray(data_structure, str),
+ *	BU_STRUCTPARSE_FUNC_NULL,
+ *	"This is a full character string", (void*)default.str }, }, 
+ *
+ * {"%i", 1,  "a_short",  bu_offsetof(data_structure, a_short),
+ *	BU_STRUCTPARSE_FUNC_NULL,
+ *	"A 16bit integer",	(void*)&default.a_short },
+ *
+ * {"%d", 1,  "a_int",    bu_offsetof(data_structure, a_int),
+ *	BU_STRUCTPARSE_FUNC_NULL,
+ *	"A full integer",	(void*)&default.a_int },
+ *
+ * {"%f", 1,  "a_double", bu_offsetof(data_structure, a_double),
+ *	BU_STRUCTPARSE_FUNC_NULL,
+ *	"A double-precision floating point value",  (void*)&default.a_double },
+ *
+ * { "", 0, (char *)NULL, 0,
+ *	BU_STRUCTPARSE_FUNC_NULL, 
+ *	(char *)NULL, (void *)NULL }
+ *
  * };
+ *
+ *
+ * To parse a string, call:
+ *
+ *	bu_struct_parse( vls_string, data_sp, (char *)my_values)
+ *
+ * this will parse the vls string and assign values to the members of the
+ * structure my_values
+ *
+ *  A gross hack:  To set global variables (or others for that matter) you
+ *	can store the actual address of the variable in the sp_offset field
+ *	and pass a null pointer as the last argument to bu_struct_parse().
+ *	If you don't understand why this would work, you probably shouldn't
+ *	use this technique.
  */
 struct bu_structparse {
 	char		sp_fmt[4];		/* "i" or "%f", etc */
@@ -892,6 +1233,8 @@ struct bu_structparse {
 
 /*----------------------------------------------------------------------*/
 /*
+ *			B U _ E X T E R N A L
+ *
  *  An "opaque" handle for holding onto objects,
  *  typically in some kind of external form that is not directly
  *  usable without passing through an "importation" function.
@@ -1084,6 +1427,15 @@ struct bu_observer {
 };
 #define BU_OBSERVER_NULL	((struct bu_observer *)0)
 
+/*			B U _ C M D T A B
+ *
+ *
+ */
+struct bu_cmdtab {
+  char *ct_name;
+  int (*ct_func)();
+};
+
 /*----------------------------------------------------------------------*/
 /* Miscellaneous macros */
 #define bu_made_it()		bu_log("Made it to %s:%d\n",	\
@@ -1094,28 +1446,50 @@ struct bu_observer {
  *  Source file names listed alphabetically.
  */
 
+/* avs.c */
+BU_EXTERN(void			bu_avs_init, (struct bu_attribute_value_set *avp,
+				int len, const char *str));
+BU_EXTERN(void			bu_avs_init_empty, (struct bu_attribute_value_set *avp ));
+BU_EXTERN(struct bu_attribute_value_set	*bu_avs_new, (int len, const char *str));
+BU_EXTERN(int			bu_avs_add, (struct bu_attribute_value_set *avp,
+				const char *attribute,
+				const char *value));
+extern int			bu_avs_add_vls(struct bu_attribute_value_set *avp,
+				const char *attribute,
+				const struct bu_vls *value_vls);
+void				bu_avs_merge( struct bu_attribute_value_set *dest,
+				const struct bu_attribute_value_set *src );
+extern const char *		bu_avs_get( const struct bu_attribute_value_set *avp,
+				const char *attribute );
+BU_EXTERN(int			bu_avs_remove, (struct bu_attribute_value_set *avp,
+				const char *attribute));
+BU_EXTERN(void			bu_avs_free, (struct bu_attribute_value_set *avp));
+extern void			bu_avs_print( const struct bu_attribute_value_set *avp, const char *title );
+extern void bu_avs_add_nonunique( struct bu_attribute_value_set *avsp, char *attribute, char *value );
+
 /* badmagic.c */
-BU_EXTERN(void			bu_badmagic, (CONST long *ptr, long magic,
-				CONST char *str, CONST char *file, int line));
+BU_EXTERN(void			bu_badmagic, (const long *ptr, long magic,
+				const char *str, const char *file, int line));
 
 /* bitv.c */
 BU_EXTERN(struct bu_bitv *	bu_bitv_new, (int nbits));
 BU_EXTERN(void			bu_bitv_clear, (struct bu_bitv *bv));
 BU_EXTERN(void			bu_bitv_or, (struct bu_bitv *ov,
-				CONST struct bu_bitv *iv));
+				const struct bu_bitv *iv));
 BU_EXTERN(void			bu_bitv_and, (struct bu_bitv *ov,
-				CONST struct bu_bitv *iv));
+				const struct bu_bitv *iv));
 BU_EXTERN(void			bu_bitv_vls, (struct bu_vls *v,
-				CONST struct bu_bitv *bv));
-BU_EXTERN(void			bu_pr_bitv, (CONST char *str,
-				CONST struct bu_bitv *bv));
+				const struct bu_bitv *bv));
+BU_EXTERN(void			bu_pr_bitv, (const char *str,
+				const struct bu_bitv *bv));
 BU_EXTERN(void			bu_bitv_to_hex, (struct bu_vls *v,
-				CONST struct bu_bitv *bv));
-BU_EXTERN( struct bu_bitv *	bu_hex_to_bitv, (CONST char *str));
-BU_EXTERN( struct bu_bitv *	bu_bitv_dup, (CONST struct bu_bitv *bv));
+				const struct bu_bitv *bv));
+BU_EXTERN( struct bu_bitv *	bu_hex_to_bitv, (const char *str));
+BU_EXTERN( struct bu_bitv *	bu_bitv_dup, (const struct bu_bitv *bv));
+BU_EXTERN( void			bu_bitv_free, (struct bu_bitv *bv));
 
 /* bomb.c */
-BU_EXTERN(void			bu_bomb, (CONST char *str) );
+BU_EXTERN(void			bu_bomb, (const char *str) );
 
 /* color.c */
 BU_EXTERN(void		bu_rgb_to_hsv,		(unsigned char *rgb,
@@ -1137,6 +1511,12 @@ BU_EXTERN(int		bu_color_of_hsv_floats,	(struct bu_color *cp,
 BU_EXTERN(int		bu_color_to_hsv_floats,	(struct bu_color *cp,
 						    fastf_t *hsv) );
 
+/* convert.c*/
+BU_EXTERN(int bu_cv_cookie, (char *in));
+BU_EXTERN(int bu_cv_optimize, (int cookie));
+BU_EXTERN(int bu_cv_w_cookie, (genptr_t out, int outcookie, int size,
+			     genptr_t in,  int incookie,  int count));
+
 /* file.c */
 BU_EXTERN(struct bu_file	*bu_fopen, (char *fname, char *type) );
 BU_EXTERN(int			bu_fclose, (struct bu_file *bfp) );
@@ -1144,16 +1524,20 @@ BU_EXTERN(int			bu_fgetc, (struct bu_file *bfp) );
 BU_EXTERN(void			bu_printfile, (struct bu_file *bfp) );
 
 /* brlcad_path.c */
-BU_EXTERN(int			bu_file_exists, (CONST char *path) );
-BU_EXTERN(char			*bu_brlcad_path, (CONST char *rhs) );
+BU_EXTERN(int			bu_file_exists, (const char *path) );
+BU_EXTERN(char			*bu_brlcad_path, (const char *rhs) );
 
+/* fopen_uniq */
+BU_EXTERN(FILE *		bu_fopen_uniq, (const char *outfmt,
+						const char *namefmt,
+						int n) );
 /* getopt.c */
 extern int			bu_opterr;
 extern int			bu_optind;
 extern int			bu_optopt;
 extern char *			bu_optarg;
-BU_EXTERN(int			bu_getopt, (int nargc, char * CONST nargv[],
-				CONST char *ostr) );
+BU_EXTERN(int			bu_getopt, (int nargc, char * const nargv[],
+				const char *ostr) );
 
 /* hist.c */
 BU_EXTERN(void			bu_hist_free, (struct bu_hist *histp));
@@ -1161,14 +1545,20 @@ BU_EXTERN(void			bu_hist_init, (struct bu_hist *histp,
 				fastf_t min, fastf_t max, int nbins));
 BU_EXTERN(void			bu_hist_range, (struct bu_hist *hp,
 				fastf_t low, fastf_t high));
-BU_EXTERN(void			bu_hist_pr, (CONST struct bu_hist *histp,
-				CONST char *title));
+BU_EXTERN(void			bu_hist_pr, (const struct bu_hist *histp,
+				const char *title));
 
 /* htond.c */
 BU_EXTERN(void			htond, (unsigned char *out,
-				CONST unsigned char *in, int count));
+				const unsigned char *in, int count));
 BU_EXTERN(void			ntohd, (unsigned char *out,
-				CONST unsigned char *in, int count));
+				const unsigned char *in, int count));
+
+/* htonf.c */
+BU_EXTERN(void			htonf, (unsigned char *out,
+				const unsigned char *in, int count));
+BU_EXTERN(void			ntohf, (unsigned char *out,
+				const unsigned char *in, int count));
 
 /* ispar.c */
 BU_EXTERN(int			bu_is_parallel, () );
@@ -1179,22 +1569,28 @@ BU_EXTERN(void			bu_kill_parallel, () );
 BU_EXTERN(void			bu_setlinebuf, (FILE *fp) );
 
 /* list.c */
-BU_EXTERN(int			bu_list_len, (CONST struct bu_list *hd));
+BU_EXTERN(int			bu_list_len, (const struct bu_list *hd));
 BU_EXTERN(void			bu_list_reverse, (struct bu_list *hd));
 BU_EXTERN(void			bu_list_free, (struct bu_list *hd));
 BU_EXTERN(void			bu_list_parallel_append, (struct bu_list *headp,
 					struct bu_list *itemp));
 BU_EXTERN(struct bu_list *	bu_list_parallel_dequeue, (struct bu_list *headp));
-BU_EXTERN(void			bu_ck_list, (CONST struct bu_list *hd,
-				CONST char *str) );
-BU_EXTERN(void			bu_ck_list_magic, (CONST struct bu_list *hd,
-				CONST char *str, CONST long magic) );
+BU_EXTERN(void			bu_ck_list, (const struct bu_list *hd,
+				const char *str) );
+BU_EXTERN(void			bu_ck_list_magic, (const struct bu_list *hd,
+				const char *str, const long magic) );
+
+/* hook.c */
+BU_EXTERN(void			bu_hook_list_init, (struct bu_hook_list *hlp));
+BU_EXTERN(void			bu_add_hook, (struct bu_hook_list *hlp, bu_hook_t func, genptr_t clientdata));
+BU_EXTERN(void			bu_delete_hook, (struct bu_hook_list *hlp, bu_hook_t func, genptr_t clientdata));
+BU_EXTERN(void			bu_call_hook, (struct bu_hook_list *hlp, genptr_t buf));
 
 /* log.c */
 BU_EXTERN(void			bu_log_indent_delta, (int delta) );
 BU_EXTERN(void			bu_log_indent_vls, (struct bu_vls *v) );
-BU_EXTERN(void			bu_add_hook, (bu_hook_t func, genptr_t clientdata));
-BU_EXTERN(void			bu_delete_hook, (bu_hook_t func, genptr_t clientdata));
+BU_EXTERN(void			bu_log_add_hook, (bu_hook_t func, genptr_t clientdata));
+BU_EXTERN(void			bu_log_delete_hook, (bu_hook_t func, genptr_t clientdata));
 BU_EXTERN(void			bu_putchar, (int c) );
 #if __STDC__
  BU_EXTERN(void			bu_log, (char *, ... ) );
@@ -1205,32 +1601,35 @@ BU_EXTERN(void			bu_putchar, (int c) );
 #endif
 
 /* magic.c */
-BU_EXTERN(CONST char *		bu_identify_magic, (long magic) );
+BU_EXTERN(const char *		bu_identify_magic, (long magic) );
 
 /* malloc.c */
-BU_EXTERN(genptr_t		bu_malloc, (unsigned int cnt, CONST char *str));
-BU_EXTERN(void			bu_free, (genptr_t ptr, CONST char *str));
+extern long		bu_n_malloc;
+extern long		bu_n_free;
+extern long		bu_n_realloc;
+BU_EXTERN(genptr_t		bu_malloc, (unsigned int cnt, const char *str));
+BU_EXTERN(void			bu_free, (genptr_t ptr, const char *str));
 BU_EXTERN(genptr_t		bu_realloc, (genptr_t ptr, unsigned int cnt,
-				CONST char *str));
+				const char *str));
 BU_EXTERN(genptr_t		bu_calloc, (unsigned int nelem,
-				unsigned int elsize, CONST char *str));
-BU_EXTERN(void			bu_prmem, (CONST char *str));
-BU_EXTERN(char *		bu_strdup, (CONST char *cp));
-BU_EXTERN(char *		bu_dirname, (CONST char *cp));
+				unsigned int elsize, const char *str));
+BU_EXTERN(void			bu_prmem, (const char *str));
+BU_EXTERN(char *		bu_strdup, (const char *cp));
+BU_EXTERN(char *		bu_dirname, (const char *cp));
 BU_EXTERN(int			bu_malloc_len_roundup, (int nbytes));
-BU_EXTERN(void			bu_ck_malloc_ptr, (genptr_t ptr, CONST char *str));
+BU_EXTERN(void			bu_ck_malloc_ptr, (genptr_t ptr, const char *str));
 BU_EXTERN(int			bu_mem_barriercheck, ());
 
 /* mappedfile.c */
-BU_EXTERN(struct bu_mapped_file *bu_open_mapped_file, (CONST char *name,
-					CONST char *appl));
+BU_EXTERN(struct bu_mapped_file *bu_open_mapped_file, (const char *name,
+					const char *appl));
 BU_EXTERN(void			bu_close_mapped_file, (struct bu_mapped_file *mp));
-BU_EXTERN(void			bu_pr_mapped_file, (CONST char *title,
-					CONST struct bu_mapped_file *mp));
+BU_EXTERN(void			bu_pr_mapped_file, (const char *title,
+					const struct bu_mapped_file *mp));
 BU_EXTERN(void			bu_free_mapped_files, (int verbose));
 BU_EXTERN(struct bu_mapped_file *bu_open_mapped_file_with_path,
-					(char * CONST *path,
-					CONST char *name, CONST char *appl));
+					(char * const *path,
+					const char *name, const char *appl));
 
 /* parallel.c */
 BU_EXTERN(void			bu_nice_set, (int newnice));
@@ -1245,67 +1644,77 @@ BU_EXTERN(void			bu_parallel, (void (*func)BU_ARGS((int ncpu, genptr_t arg)),
 
 /* parse.c */
 BU_EXTERN(int			bu_struct_export, (struct bu_external *ext,
-				CONST genptr_t base,
-				CONST struct bu_structparse *imp));
+				const genptr_t base,
+				const struct bu_structparse *imp));
 BU_EXTERN(int			bu_struct_import, (genptr_t base,
-				CONST struct bu_structparse *imp,
-				CONST struct bu_external *ext));
+				const struct bu_structparse *imp,
+				const struct bu_external *ext));
 BU_EXTERN(int			bu_struct_put, (FILE *fp,
-				CONST struct bu_external *ext));
+				const struct bu_external *ext));
 BU_EXTERN(int			bu_struct_get, (struct bu_external *ext,
 				FILE *fp));
 BU_EXTERN(void			bu_struct_wrap_buf,
 				(struct bu_external *ext, genptr_t buf));
-BU_EXTERN(int			bu_struct_parse, (CONST struct bu_vls *in_vls,
-				CONST struct bu_structparse *desc, 
+BU_EXTERN(int			bu_struct_parse, (const struct bu_vls *in_vls,
+				const struct bu_structparse *desc, 
 				char *base));
-BU_EXTERN(void			bu_struct_print, ( CONST char *title,
-				CONST struct bu_structparse	*parsetab,
-				CONST char			*base));
+BU_EXTERN(void			bu_struct_print, ( const char *title,
+				const struct bu_structparse	*parsetab,
+				const char			*base));
 BU_EXTERN(void			bu_vls_struct_print, (struct bu_vls *vls,
-				CONST struct bu_structparse *sdp,
-				CONST char *base));
+				const struct bu_structparse *sdp,
+				const char *base));
+BU_EXTERN(void			bu_vls_struct_print2, (struct bu_vls *vls,
+						       const char *title,
+						       const struct bu_structparse *sdp,
+						       const char *base));
 BU_EXTERN(void			bu_vls_struct_item, (struct bu_vls *vp,
-				CONST struct bu_structparse *sdp,
-				CONST char *base,
+				const struct bu_structparse *sdp,
+				const char *base,
 				int sep_char));
 BU_EXTERN(int			bu_vls_struct_item_named, (struct bu_vls *vp,
-				CONST struct bu_structparse *sdp,
-				CONST char *name,
-				CONST char *base,
+				const struct bu_structparse *sdp,
+				const char *name,
+				const char *base,
 				int sep_char));
-BU_EXTERN(void			bu_parse_mm, (CONST struct bu_structparse *sdp,
-				CONST char *name,
+BU_EXTERN(void			bu_parse_mm, (const struct bu_structparse *sdp,
+				const char *name,
 				char *base,
-				CONST char *value));
+				const char *value));
 BU_EXTERN( int                  bu_key_eq_to_key_val, (char *in, char **next, struct bu_vls *vls) );
 BU_EXTERN( int                  bu_shader_to_tcl_list, (char *in, struct bu_vls *vls) );
 BU_EXTERN( int                  bu_key_val_to_key_eq, (char *in) );
 BU_EXTERN( int                  bu_shader_to_key_eq, (char *in, struct bu_vls *vls) );
+int				bu_fwrite_external( FILE *fp, const struct bu_external *ep );
+void				bu_hexdump_external( FILE *fp, const struct bu_external *ep, const char *str);
+void				bu_free_external(struct bu_external *ep);
+void				bu_copy_external(struct bu_external *op, const struct bu_external *ip);
+char				*bu_next_token( char *str );
 				
 /* printb.c */
 BU_EXTERN(void			bu_vls_printb, (struct bu_vls *vls,
-				CONST char *s, unsigned long v,
-				CONST char *bits));
-BU_EXTERN(void			bu_printb, (CONST char *s, unsigned long v,
-				CONST char *bits));
+				const char *s, unsigned long v,
+				const char *bits));
+BU_EXTERN(void			bu_printb, (const char *s, unsigned long v,
+				const char *bits));
 
 /* ptbl.c */
-BU_EXTERN(void			bu_ptbl_init, (struct bu_ptbl *b, int len, CONST char *str));
+BU_EXTERN(void			bu_ptbl_init, (struct bu_ptbl *b, int len, const char *str));
 BU_EXTERN(void			bu_ptbl_reset, (struct bu_ptbl	*b));
 BU_EXTERN(int			bu_ptbl_ins, (struct bu_ptbl *b, long *p));
-BU_EXTERN(int			bu_ptbl_locate, (CONST struct bu_ptbl *b, CONST long *p));
-BU_EXTERN(void			bu_ptbl_zero, (struct bu_ptbl *b, CONST long *p));
+BU_EXTERN(int			bu_ptbl_locate, (const struct bu_ptbl *b, const long *p));
+BU_EXTERN(void			bu_ptbl_zero, (struct bu_ptbl *b, const long *p));
 BU_EXTERN(int			bu_ptbl_ins_unique, (struct bu_ptbl *b, long *p));
-BU_EXTERN(int			bu_ptbl_rm, (struct bu_ptbl *b, CONST long *p));
+BU_EXTERN(int			bu_ptbl_rm, (struct bu_ptbl *b, const long *p));
 BU_EXTERN(void			bu_ptbl_cat, (struct bu_ptbl *dest,
-				CONST struct bu_ptbl *src));
+				const struct bu_ptbl *src));
 BU_EXTERN(void			bu_ptbl_cat_uniq, (struct bu_ptbl *dest,
-				CONST struct bu_ptbl *src));
+				const struct bu_ptbl *src));
 BU_EXTERN(void			bu_ptbl_free, (struct bu_ptbl	*b));
 BU_EXTERN(int			bu_ptbl, (struct bu_ptbl *b, int func, long *p));
-BU_EXTERN(void			bu_pr_ptbl, (CONST char *title,
-				CONST struct bu_ptbl *tbl, int verbose));
+BU_EXTERN(void			bu_pr_ptbl, (const char *title,
+				const struct bu_ptbl *tbl, int verbose));
+BU_EXTERN(void			bu_ptbl_trunc, (struct bu_ptbl *tbl, int end));
 
 /* rb_create.c */
 BU_EXTERN(bu_rb_tree *bu_rb_create,	(char		*description,
@@ -1412,49 +1821,56 @@ BU_EXTERN(void			bu_semaphore_release, (unsigned int i));
 BU_EXTERN(void			bu_vls_init, (struct bu_vls *vp) );
 BU_EXTERN(void			bu_vls_init_if_uninit, (struct bu_vls *vp) );
 BU_EXTERN(struct bu_vls *	bu_vls_vlsinit, () );
-BU_EXTERN(char *		bu_vls_addr, (CONST struct bu_vls *vp) );
-BU_EXTERN(char *		bu_vls_strdup, (CONST struct bu_vls *vp) );
+BU_EXTERN(char *		bu_vls_addr, (const struct bu_vls *vp) );
+BU_EXTERN(char *		bu_vls_strdup, (const struct bu_vls *vp) );
 BU_EXTERN(char *		bu_vls_strgrab, (struct bu_vls *vp) );
 BU_EXTERN(void			bu_vls_extend, (struct bu_vls *vp, int extra) );
 BU_EXTERN(void			bu_vls_setlen, (struct bu_vls *vp, int newlen));
-BU_EXTERN(int			bu_vls_strlen, (CONST struct bu_vls *vp) );
+BU_EXTERN(int			bu_vls_strlen, (const struct bu_vls *vp) );
 BU_EXTERN(void			bu_vls_trunc, (struct bu_vls *vp, int len) );
 BU_EXTERN(void			bu_vls_trunc2, (struct bu_vls *vp, int len) );
 BU_EXTERN(void			bu_vls_nibble, (struct bu_vls *vp, int len) );
 BU_EXTERN(void			bu_vls_free, (struct bu_vls *vp) );
 BU_EXTERN(void			bu_vls_vlsfree, (struct bu_vls *vp) );
-BU_EXTERN(void			bu_vls_strcpy, (struct bu_vls *vp, CONST char *s) );
-BU_EXTERN(void			bu_vls_strncpy, (struct bu_vls *vp, CONST char *s, long n) );
-BU_EXTERN(void			bu_vls_strcat, (struct bu_vls *vp, CONST char *s) );
-BU_EXTERN(void			bu_vls_strncat, (struct bu_vls *vp, CONST char *s, long n) );
-BU_EXTERN(void			bu_vls_vlscat, (struct bu_vls *dest, CONST struct bu_vls *src) );
+BU_EXTERN(void			bu_vls_strcpy, (struct bu_vls *vp, const char *s) );
+BU_EXTERN(void			bu_vls_strncpy, (struct bu_vls *vp, const char *s, long n) );
+BU_EXTERN(void			bu_vls_strcat, (struct bu_vls *vp, const char *s) );
+BU_EXTERN(void			bu_vls_strncat, (struct bu_vls *vp, const char *s, long n) );
+BU_EXTERN(void			bu_vls_vlscat, (struct bu_vls *dest, const struct bu_vls *src) );
 BU_EXTERN(void			bu_vls_vlscatzap, (struct bu_vls *dest, struct bu_vls *src) );
 BU_EXTERN(void			bu_vls_from_argv, (struct bu_vls *vp, int argc, char **argv) );
-BU_EXTERN(void			bu_vls_fwrite, (FILE *fp, CONST struct bu_vls *vp) );
+BU_EXTERN(int			bu_argv_from_string, (char **argv, int lim, char *lp));
+BU_EXTERN(void			bu_vls_fwrite, (FILE *fp, const struct bu_vls *vp) );
+void				bu_vls_write( int fd, const struct bu_vls *vp );
+int				bu_vls_read( struct bu_vls *vp, int fd );
 BU_EXTERN(int			bu_vls_gets, (struct bu_vls *vp, FILE *fp) );
 BU_EXTERN(void			bu_vls_putc, (struct bu_vls *vp, int c) );
+void				bu_vls_trimspace( struct bu_vls *vp );
 #if 0
 BU_EXTERN(void			bu_vls_vprintf, (struct bu_vls *vls,
-				CONST char *fmt, va_list ap));
+				const char *fmt, va_list ap));
 #endif
 BU_EXTERN(void			bu_vls_printf, (struct bu_vls *vls, char *fmt, ... ) );
 BU_EXTERN(void			bu_vls_spaces, (struct bu_vls *vp, int cnt));
-BU_EXTERN(int			bu_vls_print_positions_used, (CONST struct bu_vls *vp));
+BU_EXTERN(int			bu_vls_print_positions_used, (const struct bu_vls *vp));
 BU_EXTERN(void			bu_vls_detab, (struct bu_vls *vp));
 
 #if 0
 BU_EXTERN(void			bu_vls_blkset, (struct bu_vls *vp, int len, int ch) );
 #endif
 
+BU_EXTERN(void			bu_vls_prepend, (struct bu_vls *vp, char *str) );
+
+
 /* vers.c (created by the Cakefile) */
-extern CONST char		bu_version[];
+extern const char		bu_version[];
 
 /* units.c */
-BU_EXTERN(double bu_units_conversion, (CONST char *str) );
-BU_EXTERN(CONST char *bu_units_string, (CONST double mm) );
-BU_EXTERN(double bu_mm_value, (CONST char *s) );
-BU_EXTERN(void bu_mm_cvt, (register CONST struct bu_structparse	*sdp,
-		register CONST char *name,  char *base, CONST char *value) );
+BU_EXTERN(double bu_units_conversion, (const char *str) );
+BU_EXTERN(const char *bu_units_string, (const double mm) );
+BU_EXTERN(double bu_mm_value, (const char *s) );
+BU_EXTERN(void bu_mm_cvt, (register const struct bu_structparse	*sdp,
+		register const char *name,  char *base, const char *value) );
 
 /* xdr.c */
 /* Macro version of library routine bu_glong() */
@@ -1477,8 +1893,8 @@ BU_EXTERN(void bu_mm_cvt, (register CONST struct bu_structparse	*sdp,
             ((((short)((_cp)[0])) << 8) | \
                        (_cp)[1] )
 
-BU_EXTERN(unsigned short	bu_gshort, (CONST unsigned char *msgp));
-BU_EXTERN(unsigned long		bu_glong, (CONST unsigned char *msgp));
+BU_EXTERN(unsigned short	bu_gshort, (const unsigned char *msgp));
+BU_EXTERN(unsigned long		bu_glong, (const unsigned char *msgp));
 BU_EXTERN(unsigned char *	bu_pshort, (register unsigned char *msgp,
 				register int s));
 BU_EXTERN(unsigned char *	bu_plong, (register unsigned char *msgp,
@@ -1486,11 +1902,85 @@ BU_EXTERN(unsigned char *	bu_plong, (register unsigned char *msgp,
 
 
 /* association.c */
-BU_EXTERN(struct bu_vls *bu_association, (CONST char *fname, CONST char *value, int field_sep));
+BU_EXTERN(struct bu_vls *bu_association, (const char *fname, const char *value, int field_sep));
 
-/* These things live in libbu/observer.c */
+/* Things that live in libbu/observer.c */
 extern void bu_observer_notify();
 extern struct bu_cmdtab bu_observer_cmds[];
+extern void bu_observer_free(struct bu_observer *);
+
+/* bu_tcl.c */
+/* The presence of Tcl_Interp as an arg prevents giving arg list */
+extern void bu_badmagic_tcl();
+extern void bu_structparse_get_terse_form();
+extern int bu_structparse_argv();
+extern int bu_tcl_mem_barriercheck();
+extern int bu_tcl_ck_malloc_ptr();
+extern int bu_tcl_malloc_len_roundup();
+extern int bu_tcl_prmem();
+extern int bu_tcl_printb();
+extern int bu_get_value_by_keyword();
+extern int bu_get_all_keyword_values();
+extern int bu_tcl_rgb_to_hsv();
+extern int bu_tcl_hsv_to_rgb();
+extern int bu_tcl_key_eq_to_key_val();
+extern int bu_tcl_shader_to_key_val();
+extern int bu_tcl_key_val_to_key_eq();
+extern int bu_tcl_shader_to_key_eq();
+extern int bu_tcl_brlcad_path();
+extern int bu_tcl_units_conversion();
+extern void bu_tcl_setup();
+extern int Bu_Init();
+
+/* lex.c */
+#define BU_LEX_ANY	0	/* pseudo type */
+struct bu_lex_t_int {
+	int type;
+	int value;
+};
+#define BU_LEX_INT	1
+struct bu_lex_t_dbl {
+	int	type;
+	double	value;
+};
+#define BU_LEX_DOUBLE	2
+struct bu_lex_t_key {
+	int	type;
+	int	value;
+};
+#define BU_LEX_SYMBOL	3
+#define BU_LEX_KEYWORD	4
+struct bu_lex_t_id {
+	int	type;
+	char 	*value;
+};
+#define BU_LEX_IDENT	5
+#define BU_LEX_NUMBER	6	/* Pseudo type */
+union bu_lex_token {
+	int			type;
+	struct	bu_lex_t_int	t_int;
+	struct	bu_lex_t_dbl	t_dbl;
+	struct	bu_lex_t_key	t_key;
+	struct	bu_lex_t_id	t_id;
+};
+struct bu_lex_key {
+	int	tok_val;
+	char	*string;
+};
+#define BU_LEX_NEED_MORE	0
+
+int bu_lex(
+	union bu_lex_token *token,
+	struct bu_vls *rtstr,
+	struct bu_lex_key *keywords,
+	struct bu_lex_key *symbols);
+
+
+/* mro.c */
+void bu_mro_init_with_string( struct bu_mro *mrop, const char *string );
+void bu_mro_set( struct bu_mro *mrop, const char *string );
+void bu_mro_init( struct bu_mro *mrop );
+void bu_mro_free( struct bu_mro *mrop );
 
 #ifdef __cplusplus
 }

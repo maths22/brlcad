@@ -22,7 +22,7 @@
 
 
 #ifndef lint
-static char RCSrayrange[] = "@(#)$Header$";
+static const char RCSrayrange[] = "@(#)$Header$";
 #endif
 
 #include "conf.h"
@@ -34,7 +34,8 @@ static char RCSrayrange[] = "@(#)$Header$";
 #include "vmath.h"
 #include "raytrace.h"
 #include "./ext.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
+#include "plot3.h"
 
 #define CELLNULL ( (struct cell *) 0)
 

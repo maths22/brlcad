@@ -11,6 +11,10 @@
 /Copyright_1994_US_Army -text
 /Copyright_1995_US_Army -text
 /Copyright_2000_US_Army -text
+/Copyright_2001_US_Army -text
+/Copyright_2002_US_Army -text
+/INSTALL svneol=native#text/plain
+/INSTALL.pmac svneol=native#text/plain
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
@@ -59,6 +63,8 @@ awf/pass2.base -text
 awf/pass2.man svneol=native#text/plain
 awf/pass2.ms svneol=native#text/plain
 awf/pass3 -text
+bat/subdirmk.bat -text svneol=CRLF#text/plain
+bench/.cvsignore svneol=native#text/plain
 bench/Cakefile -text
 bench/lgt.sh svneol=native#text/x-sh
 bench/perf.sh svneol=native#text/x-sh
@@ -71,6 +77,7 @@ brlman/Cakefile -text
 brlman/awf -text
 brlman/brlman -text
 brlman/brlman.1 svneol=native#text/plain
+btclsh/Cakefile -text
 burst/Cakefile -text
 burst/Hm.c svneol=native#text/plain
 burst/Hm.h svneol=native#text/plain
@@ -100,9 +107,9 @@ burst/trie.h svneol=native#text/plain
 burst/ui.c svneol=native#text/plain
 burst/vecmath.h svneol=native#text/plain
 bwish/Cakefile -text
-bwish/bwish.c svneol=native#text/plain
 bwish/cmd.c svneol=native#text/plain
 bwish/input.c svneol=native#text/plain
+bwish/main.c svneol=native#text/plain
 bwish/tcl.c svneol=native#text/plain
 cake/COPYING svneol=native#text/plain
 cake/Makefile svneol=native#text/plain
@@ -188,8 +195,11 @@ conv/cy-g.1 svneol=native#text/plain
 conv/cy-g.c svneol=native#text/plain
 conv/dbclean.1 svneol=native#text/plain
 conv/dbclean.sh svneol=native#text/x-sh
+conv/dbupgrade.c svneol=native#text/plain
 conv/dxf-g.1 svneol=native#text/plain
 conv/dxf-g.c svneol=native#text/plain
+conv/enf-g.1 svneol=native#text/plain
+conv/enf-g.c svneol=native#text/plain
 conv/euclid-g.1 svneol=native#text/plain
 conv/euclid-g.c svneol=native#text/plain
 conv/euclid_format.c svneol=native#text/plain
@@ -211,13 +221,17 @@ conv/g-vrml.1 svneol=native#text/plain
 conv/g-vrml.c svneol=native#text/plain
 conv/g-wave.1 svneol=native#text/plain
 conv/g-wave.c svneol=native#text/plain
+conv/g-x3d.1 svneol=native#text/plain
+conv/g-x3d.c svneol=native#text/plain
 conv/g-xxx.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
+conv/g4-g5.c svneol=native#text/plain
+conv/g5-g4.c svneol=native#text/plain
 conv/nastran-g.1 svneol=native#text/plain
 conv/nastran-g.c svneol=native#text/plain
-conv/nmg-polysolid.1 svneol=native#text/plain
-conv/nmg-polysolid.c svneol=native#text/plain
+conv/nmg-bot.1 svneol=native#text/plain
+conv/nmg-bot.c svneol=native#text/plain
 conv/nmg-rib.1 svneol=native#text/plain
 conv/nmg-rib.c svneol=native#text/plain
 conv/nmg-sgp.c svneol=native#text/plain
@@ -239,6 +253,7 @@ db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
 db/boolean-ops.asc svneol=native#text/plain
 db/castle.asc svneol=native#text/plain
+db/cornell.asc svneol=native#text/plain
 db/cray.asc svneol=native#text/plain
 db/crod.asc svneol=native#text/plain
 db/cube.asc svneol=native#text/plain
@@ -256,6 +271,7 @@ db/sphflake.asc svneol=native#text/plain
 db/star.asc svneol=native#text/plain
 db/tank_car.asc svneol=native#text/plain
 db/terra.asc svneol=native#text/plain
+db/terra.dsp -text svneol=CRLF#text/plain
 db/truck.asc svneol=native#text/plain
 db/wave.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
@@ -264,6 +280,8 @@ db/xmp.asc svneol=native#text/plain
 doc/4.4-bugs.doc svneol=native#text/plain
 doc/Cakefile -text
 doc/agreement -text
+doc/agreement_R6.0.pdf -text svneol=unset#application/pdf
+doc/agreement_R6.0.rtf svneol=native#text/rtf
 doc/anim.doc svneol=native#text/plain
 doc/benchmark.doc svneol=native#text/plain
 doc/blurb100.doc svneol=native#text/plain
@@ -271,7 +289,6 @@ doc/bw.5 svneol=native#text/plain
 doc/cmap.5 svneol=native#text/plain
 doc/ged.doc svneol=native#text/plain
 doc/hypot.doc svneol=native#text/plain
-doc/install.doc svneol=native#text/plain
 doc/irprep.doc svneol=native#text/plain
 doc/mater.doc svneol=native#text/plain
 doc/matrix.doc svneol=native#text/plain
@@ -452,6 +469,8 @@ h/itclInt.h svneol=native#text/plain
 h/itclIntDecls.h svneol=native#text/plain
 h/itk.h svneol=native#text/plain
 h/itkDecls.h svneol=native#text/plain
+h/libtermio.h svneol=native#text/plain
+h/light.h svneol=native#text/plain
 h/machine.h svneol=native#text/plain
 h/mater.h svneol=native#text/plain
 h/msr.h svneol=native#text/plain
@@ -475,8 +494,8 @@ h/rle_getraw.h svneol=native#text/plain
 h/rle_put.h svneol=native#text/plain
 h/rle_raw.h svneol=native#text/plain
 h/rtgeom.h svneol=native#text/plain
-h/rtlex.h svneol=native#text/plain
 h/rtlist.h svneol=native#text/plain
+h/rtprivate.h svneol=native#text/plain
 h/rtstring.h svneol=native#text/plain
 h/sed4 -text
 h/shadefuncs.h svneol=native#text/plain
@@ -589,6 +608,8 @@ html/ReleaseNotes/Rel5.0/deprecated.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/index.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_cmds.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_libs.html svneol=native#text/html
+html/ReleaseNotes/Rel6.0/Cakefile -text
+html/ReleaseNotes/Rel6.0/index.html svneol=native#text/html
 html/ReleaseNotes/email2.0.html svneol=native#text/html
 html/ReleaseNotes/email3.0.html svneol=native#text/html
 html/ReleaseNotes/email3.1.html svneol=native#text/html
@@ -677,6 +698,7 @@ html/manuals/librt/dg_obj.html svneol=native#text/html
 html/manuals/librt/index.html svneol=native#text/html
 html/manuals/librt/view_obj.html svneol=native#text/html
 html/manuals/librt/wdb_obj.html svneol=native#text/html
+html/manuals/mged/.cvsignore svneol=native#text/plain
 html/manuals/mged/Cakefile -text
 html/manuals/mged/animmate/Cakefile -text
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
@@ -782,8 +804,7 @@ html/manuals/mged/mged1.html svneol=native#text/html
 html/manuals/mged/mged2.html svneol=native#text/html
 html/manuals/mged/mged3.html svneol=native#text/html
 html/manuals/mged/mged_callbacks.html svneol=native#text/html
-html/manuals/mged/mged_cmds.html svneol=native#text/html
-html/manuals/mged/mged_devel_cmds.html svneol=native#text/html
+html/manuals/mged/mged_cmd_index.html svneol=native#text/html
 html/manuals/mged/mged_env_vars.html svneol=native#text/html
 html/manuals/mged/mged_gui.html svneol=native#text/html
 html/manuals/mged/mged_tcl_vars.html svneol=native#text/html
@@ -999,6 +1020,7 @@ libbn/axis.c svneol=native#text/plain
 libbn/bn_tcl.c svneol=native#text/plain
 libbn/complex.c svneol=native#text/plain
 libbn/const.c svneol=native#text/plain
+libbn/fast.sh svneol=native#text/x-sh
 libbn/font.c svneol=native#text/plain
 libbn/fortran.c svneol=native#text/plain
 libbn/htester.c svneol=native#text/plain
@@ -1024,8 +1046,8 @@ libbn/vectfont.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
 libbn/wavelet.c svneol=native#text/plain
 libbu/Cakefile -text
-libbu/asize.c svneol=native#text/plain
 libbu/association.c svneol=native#text/plain
+libbu/avs.c svneol=native#text/plain
 libbu/badmagic.c svneol=native#text/plain
 libbu/bitv.c svneol=native#text/plain
 libbu/bomb.c svneol=native#text/plain
@@ -1036,10 +1058,14 @@ libbu/cmdhist.c svneol=native#text/plain
 libbu/cmdhist_obj.c svneol=native#text/plain
 libbu/color.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
+libbu/fast.sh svneol=native#text/x-sh
+libbu/fopen_uniq.c svneol=native#text/plain
 libbu/getopt.c svneol=native#text/plain
 libbu/hist.c svneol=native#text/plain
+libbu/hook.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libbu/htonf.c svneol=native#text/plain
 libbu/ispar.c svneol=native#text/plain
 libbu/lex.c svneol=native#text/plain
 libbu/libbu.3 svneol=native#text/plain
@@ -1047,9 +1073,11 @@ libbu/linebuf.c svneol=native#text/plain
 libbu/list.c svneol=native#text/plain
 libbu/log.c svneol=native#text/plain
 libbu/magic.c svneol=native#text/plain
+libbu/makefile.vc svneol=native#text/plain
 libbu/malloc.c svneol=native#text/plain
 libbu/mappedfile.c svneol=native#text/plain
 libbu/memset.c svneol=native#text/plain
+libbu/mro.c svneol=native#text/plain
 libbu/observer.c svneol=native#text/plain
 libbu/parallel.c svneol=native#text/plain
 libbu/parse.c svneol=native#text/plain
@@ -1077,7 +1105,6 @@ libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
 libdm/Cakefile -text
 libdm/clip.c svneol=native#text/plain
-libdm/cmd.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
 libdm/dm-Null.c svneol=native#text/plain
 libdm/dm-X.c svneol=native#text/plain
@@ -1143,6 +1170,7 @@ libfft/Cakefile -text
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
 libfft/ditsplitc.c svneol=native#text/plain
+libfft/fft.h svneol=native#text/plain
 libfft/fftc.c svneol=native#text/plain
 libfft/fftest.c svneol=native#text/plain
 libfft/fftfast.c svneol=native#text/plain
@@ -1976,10 +2004,12 @@ liboptical/sh_cloud.c svneol=native#text/plain
 liboptical/sh_cook.c svneol=native#text/plain
 liboptical/sh_fbm.c svneol=native#text/plain
 liboptical/sh_fire.c svneol=native#text/plain
+liboptical/sh_flat.c svneol=native#text/plain
 liboptical/sh_gauss.c svneol=native#text/plain
 liboptical/sh_grass.c svneol=native#text/plain
 liboptical/sh_light.c svneol=native#text/plain
 liboptical/sh_noise.c svneol=native#text/plain
+liboptical/sh_null.c svneol=native#text/plain
 liboptical/sh_plastic.c svneol=native#text/plain
 liboptical/sh_points.c svneol=native#text/plain
 liboptical/sh_prj.c svneol=native#text/plain
@@ -2065,13 +2095,22 @@ libpng/scripts/smakefile.ppc -text
 libpng/scripts/zlibdef.pas -text
 libpng/scripts/zlibdll.mak -text
 librt/Cakefile -text
+librt/bezier_2d_isect.c svneol=native#text/plain
+librt/bigE.c svneol=native#text/plain
+librt/binary_obj.c svneol=native#text/plain
 librt/bomb.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
+librt/bot.h svneol=native#text/plain
 librt/bundle.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
 librt/comb.c svneol=native#text/plain
 librt/cut.c svneol=native#text/plain
+librt/db5_alloc.c svneol=native#text/plain
+librt/db5_bin.c svneol=native#text/plain
+librt/db5_comb.c svneol=native#text/plain
+librt/db5_io.c svneol=native#text/plain
 librt/db5_scan.c svneol=native#text/plain
+librt/db5_types.c svneol=native#text/plain
 librt/db_alloc.c svneol=native#text/plain
 librt/db_anim.c svneol=native#text/plain
 librt/db_comb.c svneol=native#text/plain
@@ -2114,7 +2153,6 @@ librt/g_rhc.c svneol=native#text/plain
 librt/g_rpc.c svneol=native#text/plain
 librt/g_sketch.c svneol=native#text/plain
 librt/g_sph.c svneol=native#text/plain
-librt/g_spline.c svneol=native#text/plain
 librt/g_submodel.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
 librt/g_torus.c svneol=native#text/plain
@@ -2127,6 +2165,7 @@ librt/many.c svneol=native#text/plain
 librt/mater.c svneol=native#text/plain
 librt/memalloc.c svneol=native#text/plain
 librt/mkbundle.c svneol=native#text/plain
+librt/nirt.c svneol=native#text/plain
 librt/nmg_bool.c svneol=native#text/plain
 librt/nmg_ck.c svneol=native#text/plain
 librt/nmg_class.c svneol=native#text/plain
@@ -2178,13 +2217,15 @@ librt/oslo_calc.c svneol=native#text/plain
 librt/oslo_map.c svneol=native#text/plain
 librt/parse.c svneol=native#text/plain
 librt/plane.h svneol=native#text/plain
+librt/pmalloc.c svneol=native#text/plain
 librt/pr.c svneol=native#text/plain
 librt/prep.c svneol=native#text/plain
+librt/qray.c svneol=native#text/plain
+librt/qray.h svneol=native#text/plain
 librt/raydebug.tcl svneol=native#text/plain
 librt/regionfix.c svneol=native#text/plain
 librt/roots.c svneol=native#text/plain
 librt/rt_dspline.c svneol=native#text/plain
-librt/rtlex.c svneol=native#text/plain
 librt/shoot.c svneol=native#text/plain
 librt/spectrum.c svneol=native#text/plain
 librt/sqrt.gould.s svneol=native#text/plain
@@ -3198,6 +3239,7 @@ libtk8.3/generic/tkBitmap.c svneol=native#text/plain
 libtk8.3/generic/tkButton.c svneol=native#text/plain
 libtk8.3/generic/tkButton.h svneol=native#text/plain
 libtk8.3/generic/tkCanvArc.c svneol=native#text/plain
+libtk8.3/generic/tkCanvBezier.c svneol=native#text/plain
 libtk8.3/generic/tkCanvBmap.c svneol=native#text/plain
 libtk8.3/generic/tkCanvImg.c svneol=native#text/plain
 libtk8.3/generic/tkCanvLine.c svneol=native#text/plain
@@ -3795,10 +3837,13 @@ libwdb/export.c svneol=native#text/plain
 libwdb/extr.c svneol=native#text/plain
 libwdb/id.c svneol=native#text/plain
 libwdb/libwdb.3 svneol=native#text/plain
+libwdb/mater.c svneol=native#text/plain
 libwdb/nmg.c svneol=native#text/plain
+libwdb/nurb.c svneol=native#text/plain
 libwdb/pipe.c svneol=native#text/plain
 libwdb/poly.c svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
+libwdb/reg4.c svneol=native#text/plain
 libwdb/skt.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/strsol.c svneol=native#text/plain
@@ -3900,6 +3945,8 @@ libz/zlib.h svneol=native#text/plain
 libz/zlib.rc -text svneol=CRLF#text/plain
 libz/zutil.c svneol=native#text/plain
 libz/zutil.h svneol=native#text/plain
+/makefile.vc svneol=native#text/plain
+/makemsc.hdr -text
 mged/Cakefile -text
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
@@ -3908,6 +3955,7 @@ mged/arb.c svneol=native#text/plain
 mged/arbs.c svneol=native#text/plain
 mged/attach.c svneol=native#text/plain
 mged/axes.c svneol=native#text/plain
+mged/bodyio.c svneol=native#text/plain
 mged/bool_rewrite.c svneol=native#text/plain
 mged/buttons.c svneol=native#text/plain
 mged/cad_boundp.1 svneol=native#text/plain
@@ -3925,7 +3973,6 @@ mged/columns.c svneol=native#text/plain
 mged/comb_bool.h svneol=native#text/plain
 mged/comb_bool_parse.y svneol=native#text/plain
 mged/comb_bool_scan.l svneol=native#text/plain
-mged/comb_std.c svneol=native#text/plain
 mged/concat.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
 mged/dm-X.c svneol=native#text/plain
@@ -3934,10 +3981,10 @@ mged/dm-ogl.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
 mged/dm-ps.c svneol=native#text/plain
 mged/dm_old/dm-4d.c svneol=native#text/plain
-mged/dm_old/dm-glX.c svneol=native#text/plain
 mged/dm_old/dm-glx.c svneol=native#text/plain
 mged/dm_old/dm-hp.c svneol=native#text/plain
 mged/dm_old/dm-mer.c svneol=native#text/plain
+mged/dm_old/dm-oglX.c svneol=native#text/plain
 mged/dm_old/dm-pex.c svneol=native#text/plain
 mged/dm_old/dm-sun.c svneol=native#text/plain
 mged/dm_old/dm-tek.c svneol=native#text/plain
@@ -3958,7 +4005,6 @@ mged/fbserv.c svneol=native#text/plain
 mged/fbserv.h svneol=native#text/plain
 mged/ged.c svneol=native#text/plain
 mged/ged.h svneol=native#text/plain
-mged/ged_types.h svneol=native#text/plain
 mged/grid.c svneol=native#text/plain
 mged/hideline.c svneol=native#text/plain
 mged/history.c svneol=native#text/plain
@@ -3982,7 +4028,6 @@ mged/overlay.c svneol=native#text/plain
 mged/plot.c svneol=native#text/plain
 mged/polyif.c svneol=native#text/plain
 mged/predictor.c svneol=native#text/plain
-mged/proc_reg.c svneol=native#text/plain
 mged/qray.c svneol=native#text/plain
 mged/qray.h svneol=native#text/plain
 mged/rect.c svneol=native#text/plain
@@ -3993,7 +4038,6 @@ mged/scroll.h svneol=native#text/plain
 mged/sedit.h svneol=native#text/plain
 mged/set.c svneol=native#text/plain
 mged/share.c svneol=native#text/plain
-mged/sliders.h svneol=native#text/plain
 mged/solids_on_ray.c svneol=native#text/plain
 mged/sunicon.h svneol=native#text/plain
 mged/tedit.c svneol=native#text/plain
@@ -4042,6 +4086,30 @@ nirt/showshot.1 svneol=native#text/plain
 nirt/showshot.c svneol=native#text/plain
 nirt/str_manip.c svneol=native#text/plain
 nirt/usrfmt.h svneol=native#text/plain
+notes/README svneol=native#text/plain
+notes/bugs.txt svneol=native#text/plain
+notes/info.txt svneol=native#text/plain
+notes/regression/a-d.sh svneol=native#text/x-sh
+notes/regression/a-d.txt svneol=native#text/plain
+notes/regression/alias-pix.sh svneol=native#text/x-sh
+notes/regression/alias-pix.txt svneol=native#text/plain
+notes/regression/badtestascii.txt svneol=native#text/plain
+notes/regression/d-a.sh svneol=native#text/x-sh
+notes/regression/d-a.txt svneol=native#text/plain
+notes/regression/pix-png.sh svneol=native#text/x-sh
+notes/regression/png-pix.sh svneol=native#text/x-sh
+notes/regression/png-pix.txt svneol=native#text/plain
+notes/regression/regression.sh svneol=native#text/x-sh
+notes/regression/template.sh svneol=native#text/x-sh
+notes/regression/testascii.txt svneol=native#text/plain
+notes/regression/testasciidouble.txt svneol=native#text/plain
+notes/regression/testasciifloat.txt svneol=native#text/plain
+notes/regression/testasciiint.txt svneol=native#text/plain
+notes/regression/testdouble.bin -text svneol=unset#unset
+notes/regression/testdouble2.bin -text svneol=unset#unset
+notes/regression/testdouble3.bin -text svneol=unset#unset
+notes/regression/testimage.pix -text svneol=unset#image/x-rgb
+notes/regression/testimage.png -text svneol=unset#image/png
 off/Cakefile -text
 off/g-off.c svneol=native#text/plain
 off/off-g.c svneol=native#text/plain
@@ -4077,14 +4145,14 @@ pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
-pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
+pro-engineer/resource/Cakefile -text
+pro-engineer/resource/proe_brl.res svneol=native#text/plain
+pro-engineer/sgi_mips4/Cakefile -text
+pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
+pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
+pro-engineer/sgi_mips4/proe_brl.res svneol=native#text/plain
 pro-engineer/text/Cakefile -text
-pro-engineer/text/fullhelp/Cakefile -text
-pro-engineer/text/fullhelp/helpfiles.txt svneol=native#text/plain
-pro-engineer/text/fullhelp/proe-brl.hlp -text
-pro-engineer/text/menus/Cakefile -text
-pro-engineer/text/menus/intf_exprt.aux -text
 pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
@@ -4097,6 +4165,7 @@ proc-db/contours.c svneol=native#text/plain
 proc-db/ducks.h svneol=native#text/plain
 proc-db/fence.c svneol=native#text/plain
 proc-db/fence.h svneol=native#text/plain
+proc-db/globe.c svneol=native#text/plain
 proc-db/kurt.c svneol=native#text/plain
 proc-db/molecule.c svneol=native#text/plain
 proc-db/nmgmodel.c svneol=native#text/plain
@@ -4106,6 +4175,7 @@ proc-db/pickett_fence.1 svneol=native#text/plain
 proc-db/pickett_fence.c svneol=native#text/plain
 proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
+proc-db/pix2g.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
 proc-db/sketch.c svneol=native#text/plain
@@ -4118,6 +4188,42 @@ proc-db/terrain.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 proc-db/wdb_example.c svneol=native#text/plain
+regress/README svneol=native#text/plain
+regress/client.sh svneol=native#text/x-sh
+regress/client2.sh svneol=native#text/x-sh
+regress/client_build.sh svneol=native#text/x-sh
+regress/client_test.sh svneol=native#text/x-sh
+regress/client_wait.sh svneol=native#text/x-sh
+regress/crontab_client -text
+regress/crontab_master -text
+regress/library -text
+regress/master.lock -text
+regress/master.old.sh svneol=native#text/x-sh
+regress/master.sh svneol=native#text/x-sh
+regress/nightly.sh svneol=native#text/x-sh
+regress/ref_7d -text
+regress/ref_fbsd -text
+regress/ref_li -text
+regress/ref_m4i64 -text
+regress/ref_m4i65 -text
+regress/ref_sun5 -text
+regress/regression -text
+regress/status.sh svneol=native#text/x-sh
+regress/systems.d/localhost -text
+regress/systems.d/wide -text
+regress/systems.d/wider -text
+regress/systems.d/widest -text
+regress/tests.d/README svneol=native#text/plain
+regress/tests.d/build -text
+regress/tests.d/geometry -text
+regress/tests.d/library -text
+regress/tests.d/primitives -text
+regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
+regress/tests.d/ref/shaders.pix -text svneol=unset#image/x-rgb
+regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
+regress/tests.d/spdi -text
+regress/tests.d/template -text
+regress/upgradeNotes.txt svneol=native#text/plain
 remrt/Cakefile -text
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
@@ -4135,11 +4241,12 @@ rt/main.c svneol=native#text/plain
 rt/material.c svneol=native#text/plain
 rt/opt.c svneol=native#text/plain
 rt/rad.h svneol=native#text/plain
-rt/rdebug.h svneol=native#text/plain
 rt/read-rtlog.c svneol=native#text/plain
 rt/refract.c svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
+rt/rt_simple.c svneol=native#text/plain
 rt/rtcheck.1 svneol=native#text/plain
+rt/rtedge.1 svneol=native#text/plain
 rt/rtexample.c svneol=native#text/plain
 rt/rtg3.1 svneol=native#text/plain
 rt/rthide.1 svneol=native#text/plain
@@ -4164,6 +4271,7 @@ rt/viewcell.c svneol=native#text/plain
 rt/viewcheck.c svneol=native#text/plain
 rt/viewdir.c svneol=native#text/plain
 rt/viewdummy.c svneol=native#text/plain
+rt/viewedge.c svneol=native#text/plain
 rt/viewfrac.c svneol=native#text/plain
 rt/viewg3.c svneol=native#text/plain
 rt/viewhide.c svneol=native#text/plain
@@ -4188,6 +4296,7 @@ rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/std_day_1km.dat -text
 rttherm/test.sh svneol=native#text/x-sh
 rttherm/viewtherm.c svneol=native#text/plain
+sample_applications/.cvsignore svneol=native#text/plain
 sample_applications/Cakefile -text
 sample_applications/build_makefile.sh svneol=native#text/x-sh
 sample_applications/debug.h svneol=native#text/plain
@@ -4270,6 +4379,7 @@ tclscripts/.cvsignore svneol=native#text/plain
 tclscripts/Cakefile -text
 tclscripts/README svneol=native#text/plain
 tclscripts/ami.tcl svneol=native#text/plain
+tclscripts/ampi.tcl svneol=native#text/plain
 tclscripts/cad_clrpick.tcl svneol=native#text/plain
 tclscripts/cad_dialog.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
@@ -4295,15 +4405,19 @@ tclscripts/lib/Mged.tcl svneol=native#text/plain
 tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 tclscripts/lib/RtControl.tcl svneol=native#text/plain
 tclscripts/lib/Splash.tcl svneol=native#text/plain
+tclscripts/lib/Table.tcl svneol=native#text/plain
+tclscripts/lib/TableView.tcl svneol=native#text/plain
 tclscripts/lib/View.tcl svneol=native#text/plain
 tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
 tclscripts/mged/.cvsignore svneol=native#text/plain
 tclscripts/mged/Cakefile -text
+tclscripts/mged/accel.tcl svneol=native#text/plain
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
 tclscripts/mged/apply.tcl svneol=native#text/plain
 tclscripts/mged/apply_mat.tcl svneol=native#text/plain
+tclscripts/mged/attr_edit.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/bot_face_select.tcl svneol=native#text/plain
 tclscripts/mged/build_region.tcl svneol=native#text/plain
@@ -4315,6 +4429,7 @@ tclscripts/mged/color_scheme.tcl svneol=native#text/plain
 tclscripts/mged/comb.tcl svneol=native#text/plain
 tclscripts/mged/combmenu.tcl svneol=native#text/plain
 tclscripts/mged/cycle.tcl svneol=native#text/plain
+tclscripts/mged/dbupgrade.tcl svneol=native#text/plain
 tclscripts/mged/e_id.tcl svneol=native#text/plain
 tclscripts/mged/edit_menu.tcl svneol=native#text/plain
 tclscripts/mged/edit_solid.tcl svneol=native#text/plain
@@ -4371,6 +4486,7 @@ tclscripts/mged/l_i1_v1_s6.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s7.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s8.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s9.gif -text svneol=unset#image/gif
+tclscripts/mged/lgt_mat.tcl svneol=native#text/plain
 tclscripts/mged/list.tcl svneol=native#text/plain
 tclscripts/mged/make_solid.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
@@ -4384,6 +4500,8 @@ tclscripts/mged/muves.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
 tclscripts/mged/openw.tcl svneol=native#text/plain
 tclscripts/mged/overlap.tcl svneol=native#text/plain
+tclscripts/mged/pattern.tcl svneol=native#text/plain
+tclscripts/mged/pattern_gui.tcl svneol=native#text/plain
 tclscripts/mged/plot.tcl svneol=native#text/plain
 tclscripts/mged/prj_add.tcl svneol=native#text/plain
 tclscripts/mged/ps.tcl svneol=native#text/plain
@@ -4409,6 +4527,66 @@ tclscripts/pl-dm/Cakefile -text
 tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
+tclscripts/rtwizard/Cakefile -text
+tclscripts/rtwizard/examples/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeA/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeA/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeA/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeA/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeA/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeB/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeB/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeB/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeB/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeB/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeB/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeC/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeC/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeC/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeC/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeC/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeC/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeD/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeD/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeD/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeD/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeD/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeD/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeE/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeE/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeE/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeE/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeE/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeE/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeF/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeF/desc.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeF/preview.small.gif -text svneol=unset#image/gif
+tclscripts/rtwizard/examples/PictureTypeF/title.txt svneol=native#text/plain
+tclscripts/rtwizard/lib/Cakefile -text
+tclscripts/rtwizard/lib/DbPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/ExamplePage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FbPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FeedbackDialog.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FrameBufferDialog.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/FullColorPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/GhostPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/HelpPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/HighlightedPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/IntroPage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/LinePage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/MGEDpage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeA.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeB.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeBase.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeC.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
+tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
+tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 tclscripts/util/.cvsignore svneol=native#text/plain
 tclscripts/util/Cakefile -text
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
@@ -4599,6 +4777,7 @@ util/decimate.c svneol=native#text/plain
 util/double-asc.c svneol=native#text/plain
 util/dpix-pix.1 svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
+util/dsp_add.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
 util/dunncomm.c svneol=native#text/plain
@@ -4758,13 +4937,16 @@ util/query.c svneol=native#text/plain
 util/remapid.c svneol=native#text/plain
 util/rle-pix.1 svneol=native#text/plain
 util/rle-pix.c svneol=native#text/plain
+util/rtwizard -text
 util/sgi-pix.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
 util/strdup.c svneol=native#text/plain
 util/sun-pix.1 svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
+util/terrain.1 svneol=native#text/plain
 util/terrain.c svneol=native#text/plain
 util/texturescale.c svneol=native#text/plain
+util/ttcp.c svneol=native#text/plain
 util/wavelet.1 svneol=native#text/plain
 util/wavelet.c svneol=native#text/plain
 util/xyz-pl.c svneol=native#text/plain

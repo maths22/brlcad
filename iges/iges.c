@@ -29,7 +29,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -41,6 +41,7 @@ static char RCSid[] = "$Header$";
 #else
 #include <strings.h>
 #endif
+#include <ctype.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -80,6 +81,17 @@ extern int	solid_is_brep;
 extern int	comb_form;
 extern int	do_nurbs;
 extern int	mode;
+
+BU_EXTERN( int write_freeform, ( FILE *fp, char s[], int de, char c ) );
+BU_EXTERN( int write_dir_entry, ( FILE *fp, int entry[] ) );
+BU_EXTERN( int write_vertex_list, ( struct nmgregion *r, struct bu_ptbl *vtab, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_edge_list, ( struct nmgregion *r, int vert_de, struct bu_ptbl *etab, struct bu_ptbl *vtab, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_shell_face_loop, ( char *name, struct nmgregion *r, int dependent, int edge_de, struct bu_ptbl *etab, int vert_de, struct bu_ptbl *vtab, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_solid_assembly, ( char *name, int de_list[], int length, int dependent, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_planar_nurb, ( struct faceuse *fu, vect_t u_dir, vect_t v_dir, fastf_t *u_max, fastf_t *v_max, point_t base_pt, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_name_entity, ( char *name, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int write_att_entity, ( struct iges_properties *props, FILE *fp_dir, FILE *fp_param ) );
+BU_EXTERN( int nmg_to_iges, ( struct rt_db_internal *ip, char *name, FILE *fp_dir, FILE *fp_param ) );
 
 #define		NO_OF_TYPES	31
 static int	type_count[NO_OF_TYPES][2]={
@@ -166,17 +178,17 @@ static char	*type_name[NO_OF_TYPES]={
 			"Right Circular Cone Frustum",
 			"Sphere",
 			"Torus",
-			"Solid of Linear Extrusion",
+			"Linear Sketch Extrusion",
 			"Ellipsoid",
 			"Boolean Tree",
-			"Solid Assembly",
-			"Manifold Solid BREP Object",
+			"Assembly Primitive",
+			"Manifold Boundary Representation",
 			"Plane Surface",
 			"Color Definition",
 			"Attribute Table Definition",
 			"Property Entity",
 			"Attribute Table Instance",
-			"Solid Instance",
+			"Primitive Instance",
 			"Vertex List",
 			"Edge List",
 			"Loop",
@@ -352,18 +364,18 @@ char *name;
 	if( !(dp->d_flags & DIR_COMB) )
 		return( 1 );
 
-	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL );
+	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL , &rt_uniresource);
 
 	if( id < 0 )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern , &rt_uniresource);
 		bu_log( "Could not get internal form of %s\n", dp->d_namep );
 		return( 1 );
 	}
 
 	if( id != ID_COMBINATION )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern , &rt_uniresource);
 		bu_log( "Directory/Database mismatch!!!! is %s a combination or not???\n", dp->d_namep );
 		return( 1 );
 	}
@@ -372,7 +384,7 @@ char *name;
 	RT_CK_COMB( comb );
 
 	get_props( props , comb );
-	rt_db_free_internal( &intern );
+	rt_db_free_internal( &intern , &rt_uniresource);
 	return( 0 );
 }
 
@@ -569,13 +581,14 @@ int entry[];
 }
 
 int
-write_freeform( fp , s , de , c )
-FILE *fp;	/* output file */
-char s[];	/* the string to be output (must not contain any NL's) */
-int de;		/* the directory entry # that this belongs to (ignored for Global section) */
-char c;		/* 'G' for global section
+write_freeform(
+FILE *fp,	/* output file */
+char s[],	/* the string to be output (must not contain any NL's) */
+int de,		/* the directory entry # that this belongs to (ignored for Global section) */
+char c)		/* 'G' for global section
 		 * 'P' for parameter section
 		 * 'S' for start section */
+
 {
 	int paramlen;
 	int start_seq;
@@ -763,13 +776,14 @@ char c;		/* 'G' for global section
 }
 
 void
-w_start_global(fp_dir , fp_param , db_name , prog_name , output_file , id , version )
-FILE *fp_dir,*fp_param;
-char *db_name;
-char *prog_name;
-char *output_file;
-char *id;
-char *version;
+w_start_global(
+	FILE *fp_dir,
+	FILE *fp_param,
+	const char *db_name,
+	const char *prog_name,
+	const char *output_file,
+	const char *id,
+	const char *version)
 {
 	struct bu_vls str;
 	time_t now;
@@ -854,7 +868,7 @@ FILE *fp_dir,*fp_param;
 	int			vert_de;	/* Directory entry sequence # for vertex list */
 	int			edge_de;	/* Directory entry sequence # for edge list */
 	int			outer_shell_count; /* number of outer shells in nmgregion */
-	int			face_count=0;	/* number of shells in nmgregion */
+	int			face_count=0;	/* number of faces in nmgregion */
 	int			i;
 
 	NMG_CK_REGION( r );
@@ -873,6 +887,7 @@ FILE *fp_dir,*fp_param;
 					continue;
 
 				face_count++;
+
 				for( BU_LIST_FOR( lu , loopuse , &fu->lu_hd ) )
 				{
 					struct edgeuse *eu;
@@ -893,6 +908,7 @@ FILE *fp_dir,*fp_param;
 			}
 		}
 	}
+
 	if( face_count == 0 )
 		return( 0 );
 
@@ -2753,7 +2769,7 @@ FILE *fp_dir,*fp_param;
 			struct rt_bot_internal *bot=(struct rt_bot_internal *)ip->idb_ptr;
 			if( bot->mode != RT_BOT_SOLID )
 			{
-				bu_log( "Solid %s is a plate mode solid, and cannot be converted to IGES format!!!\n", name );
+				bu_log( "%s is a plate mode primitive, and cannot be converted to IGES format!!!\n", name );
 				return( 0 );
 			}
 		}

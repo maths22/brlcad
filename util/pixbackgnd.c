@@ -20,7 +20,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -52,6 +52,7 @@ Usage:  pixbackgnd [-h -i] [-s squaresize] [-w width] [-n height]\n\
 or	r g b\n\
 	> file.pix";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -114,6 +115,7 @@ register char **argv;
 	return(1);			/* OK */
 }
 
+int
 main(argc, argv )
 char **argv;
 {

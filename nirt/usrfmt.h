@@ -127,6 +127,7 @@ extern FILE	*fopenrc();
 #define		VTI_CLAIMANT_COUNT 56
 #define		VTI_CLAIMANT_LIST 57
 #define		VTI_CLAIMANT_LISTN 58
+#define		VTI_ATTRIBUTES 59
 
 #define		direct(i)	(ValTab[VTI_X_DIR + i].value.fval)
 #define		target(i)	(ValTab[VTI_X_ORIG + i].value.fval)

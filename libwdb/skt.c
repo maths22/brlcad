@@ -20,7 +20,7 @@
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char skt_RCSid[] = "@(#)$Header$ (BRL)";
+static const char skt_RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -36,23 +36,12 @@ static char skt_RCSid[] = "@(#)$Header$ (BRL)";
 #include "wdb.h"
 
 int
-mk_sketch( fp, name, skt )
-FILE *fp;
-char *name;
-struct rt_sketch_internal *skt;
+mk_sketch(
+	struct rt_wdb *fp,
+	const char *name,
+	struct rt_sketch_internal *skt )
 {
-	struct rt_db_internal intern;
-	int ret;
-
 	RT_SKETCH_CK_MAGIC( skt );
 
-	ret = mk_export_fwrite( fp, name, (genptr_t)skt, ID_SKETCH );
-
-	RT_INIT_DB_INTERNAL( &intern );
-	intern.idb_ptr = (genptr_t)skt;
-	intern.idb_type = ID_SKETCH;
-
-	rt_sketch_ifree( &intern );
-
-	return( ret );
+	return wdb_export( fp, name, (genptr_t)skt, ID_SKETCH, mk_conv2mm );
 }

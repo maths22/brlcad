@@ -23,13 +23,13 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
-#ifdef USE_STRING_H
+#ifdef HAVE_STRING_H
 #include	<string.h>
 #else
 #include	<strings.h>
@@ -56,19 +56,19 @@ struct	kernels {
 	int	kerndiv;	/* Divisor for kernel */
 	int	kernoffset;	/* To be added to result */
 } kernel[] = {
-	{ "Low Pass", "lo", 1, 3, 1, 3, 5, 3, 1, 3, 1,
+	{ "Low Pass", "lo", {1, 3, 1, 3, 5, 3, 1, 3, 1,
 			    3, 5, 3, 5,10, 5, 3, 5, 3,
-			    1, 3, 1, 3, 5, 3, 1, 3, 1, 84, 0 },
-	{ "High Pass", "hi", -1, -2, -1, -2, -4, -2, -1, -2, -1,
+			    1, 3, 1, 3, 5, 3, 1, 3, 1}, 84, 0 },
+	{ "High Pass", "hi", {-1, -2, -1, -2, -4, -2, -1, -2, -1,
 			     -2, -4, -2, -4, 56, -4, -2, -4, -2,
-			     -1, -2, -1, -2, -4, -2, -1, -2, -1, 1, 0},
-	{ "Boxcar Average", "b", 1, 1, 1, 1, 1, 1, 1, 1, 1,
+			     -1, -2, -1, -2, -4, -2, -1, -2, -1}, 1, 0},
+	{ "Boxcar Average", "b", {1, 1, 1, 1, 1, 1, 1, 1, 1,
 				 1, 1, 1, 1,27, 1, 1, 1, 1,
-				 1, 1, 1, 1, 1, 1, 1, 1, 1, 53, 0},
-	{ "Animation Smear", "s",1, 1, 1, 1, 1, 1, 1, 1, 1,
+				 1, 1, 1, 1, 1, 1, 1, 1, 1}, 53, 0},
+	{ "Animation Smear", "s",{1, 1, 1, 1, 1, 1, 1, 1, 1,
 				 1, 1, 1, 1, 1, 1, 1, 1, 1,
-				 2, 2, 2, 2,35, 2, 2, 2, 2, 69, 0},
-	{ NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				 2, 2, 2, 2,35, 2, 2, 2, 2}, 69, 0},
+	{ NULL, NULL, {0, 0, 0, 0, 0, 0, 0, 0, 0}, 0, 0 },
 };
 
 int	*kern;
@@ -90,6 +90,7 @@ Usage: pix3filter [-f<type>] [-v] [-d#] [-o#]\n\
         [-s squaresize] [-w width] [-n height]\n\
 	file.pix.n | file.pix1 file.pix2 file.pix3  > file.pix\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -214,6 +215,7 @@ register char **argv;
 	return(1);		/* OK */
 }
 
+int
 main( argc, argv )
 int argc; char **argv;
 {

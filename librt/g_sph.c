@@ -19,12 +19,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSsph[] = "@(#)$Header$ (BRL)";
+static const char RCSsph[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -159,7 +162,7 @@ struct rt_i		*rtip;
 	 * to unit length.  Used here in UV mapping.
 	 * See ell.c for details.
 	 */
-	bn_mat_idn( sph->sph_SoR );
+	MAT_IDN( sph->sph_SoR );
 	VSCALE( &sph->sph_SoR[0], eip->a, 1.0/magsq_a );
 	VSCALE( &sph->sph_SoR[4], eip->b, 1.0/magsq_b );
 	VSCALE( &sph->sph_SoR[8], eip->c, 1.0/magsq_c );
@@ -184,9 +187,9 @@ struct rt_i		*rtip;
  */
 void
 rt_sph_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct sph_specific *sph =
+	register const struct sph_specific *sph =
 		(struct sph_specific *)stp->st_specific;
 
 	VPRINT("V", sph->sph_V);
@@ -426,3 +429,79 @@ rt_sph_class()
 }
 
 /* ELL versions of the plot and tess functions are used */
+
+
+#if 0
+/*
+ *			R T _ S P H _ I M P O R T 5
+ *
+ *  Import a sphere from the v5 database format to
+ *  the internal structure.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_sph_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	struct rt_sph_internal	*sip;
+	LOCAL fastf_t		vec[3+1];
+
+	BU_CK_EXTERNAL( ep );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_SPH;
+	ip->idb_meth = &rt_functab[ID_SPH];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_sph_internal), "rt_sph_internal");
+
+	sip = (struct rt_sph_internal *)ip->idb_ptr;
+	sip->magic = RT_SPH_INTERNAL_MAGIC;
+
+	/* Convert from database to internal format */
+	htond( vec, ep->ext_buf, 3+1 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( sip->v, mat, &vec[0*3] );
+	MAT4XSCALOR( sip->r, mat, vec[1*3] );
+
+	return(0);		/* OK */
+}
+
+/*
+ *			R T _ S P H _ E X P O R T 5
+ */
+int
+rt_sph_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_sph_internal	*tip;
+	union record		*rec;
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_ELL )  return(-1);
+	tip = (struct rt_sph_internal *)ip->idb_ptr;
+	RT_ELL_CK_MAGIC(tip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = sizeof(union record);
+	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "sph external");
+	rec = (union record *)ep->ext_buf;
+
+	rec->s.s_id = ID_SOLID;
+	rec->s.s_type = GENELL;
+
+	/* NOTE: This also converts to dbfloat_t */
+	VSCALE( &rec->s.s_values[0], tip->v, local2mm );
+	VSCALE( &rec->s.s_values[3], tip->a, local2mm );
+	VSCALE( &rec->s.s_values[6], tip->b, local2mm );
+	VSCALE( &rec->s.s_values[9], tip->c, local2mm );
+
+	return(0);
+}
+#endif

@@ -25,12 +25,19 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include "machine.h"
 #include "bu.h"
 #include "vmath.h"
@@ -47,9 +54,9 @@ static int	col_len;		/* length of previous name */
  *			V L S _ C O L _ I T E M
  */
 void
-vls_col_item( str, cp )
-struct bu_vls	*str;
-register char	*cp;
+vls_col_item(
+	struct bu_vls		*str,
+	register const char	*cp)
 {
 	/* Output newline if last column printed. */
 	if( col_count >= COLUMNS || (col_len+NAMESIZE-1) >= TERMINAL_WIDTH )  {
@@ -76,8 +83,7 @@ register char	*cp;
 /*
  */
 void
-vls_col_eol( str )
-struct bu_vls	*str;
+vls_col_eol( struct bu_vls *str )
 {
 	if ( col_count != 0 )		/* partial line */
 		bu_vls_putc( str, '\n' );
@@ -94,8 +100,8 @@ struct bu_vls	*str;
  */
 int
 cmpdirname(a, b)
-CONST genptr_t a;
-CONST genptr_t b;
+const genptr_t a;
+const genptr_t b;
 {
 	register struct directory **dp1, **dp2;
 
@@ -111,30 +117,47 @@ CONST genptr_t b;
  *  in that list, sort and print that list in column order over four columns.
  */
 void
-vls_col_pr4v(vls, list_of_names, num_in_list)
-struct bu_vls *vls;
-struct directory **list_of_names;
-int num_in_list;
+vls_col_pr4v(struct bu_vls *vls, struct directory **list_of_names, int num_in_list)
 {
   int lines, i, j, namelen, this_one;
+  int k,
+      maxnamelen,      /* longest name in list */
+      cwidth,          /* column width */
+      numcol;         /* number of columns */
 
   qsort( (genptr_t)list_of_names,
 	 (unsigned)num_in_list, (unsigned)sizeof(struct directory *),
 	 (int (*)())cmpdirname);
 
+  /* 
+   * Traverse the list of names, find the longest name and set the
+   * the column width and number of columns accordingly.
+   * If the longest name is greater than 80 characters, the number of columns
+   * will be one.
+   */
+  maxnamelen = 0;
+  for( k=0; k < num_in_list; k++) {
+    namelen = strlen(list_of_names[k]->d_namep);
+    if(namelen > maxnamelen)
+      maxnamelen = namelen;
+  }
+  if(maxnamelen <= 16) 
+    maxnamelen = 16;
+  cwidth = maxnamelen + 4;
+  if(cwidth > 80)
+    cwidth = 80;
+  numcol = TERMINAL_WIDTH / cwidth;
+     
   /*
    * For the number of (full and partial) lines that will be needed,
    * print in vertical format.
    */
-  lines = (num_in_list + 3) / 4;
+  lines = (num_in_list + (numcol - 1)) / numcol;
   for( i=0; i < lines; i++) {
-    for( j=0; j < 4; j++) {
+    for(j=0; j < numcol; j++) {
       this_one = j * lines + i;
-      /* Restrict the print to 16 chars per spec. */
-      bu_vls_printf(vls,  "%.16s", list_of_names[this_one]->d_namep);
+      bu_vls_printf(vls, "%s", list_of_names[this_one]->d_namep);
       namelen = strlen( list_of_names[this_one]->d_namep);
-      if( namelen > 16)
-	namelen = 16;
       /*
        * Region and ident checks here....  Since the code
        * has been modified to push and sort on pointers,
@@ -163,13 +186,97 @@ int num_in_list;
 	 * Pad to next boundary as there will be
 	 * another entry to the right of this one. 
 	 */
-	while( namelen++ < 20)
+        while( namelen++ < cwidth)
 	  bu_vls_putc(vls, ' ');
       }
     }
   }
 }
 
+void
+vls_long_dpp( 
+	struct bu_vls *vls,
+	struct directory **list_of_names,
+	int num_in_list,
+	int aflag,	/* print all objects */
+	int cflag,	/* print combinations */
+	int rflag,	/* print regions */
+	int sflag)	/* print solids */
+{
+  int i;
+  int isComb, isRegion;
+  int isSolid;
+  const char *type;
+  int max_nam_len = 0;
+  int max_type_len = 0;
+  struct directory *dp;
+
+  qsort( (genptr_t)list_of_names,
+	 (unsigned)num_in_list, (unsigned)sizeof(struct directory *),
+	 (int (*)())cmpdirname);
+
+  for( i=0 ; i<num_in_list ; i++ ) {
+	  int len;
+
+	  dp = list_of_names[i];
+	  len = strlen( dp->d_namep );
+	  if( len > max_nam_len )
+		  max_nam_len = len;
+
+	  if( dp->d_flags & DIR_REGION )
+		  len = 6;
+	  else if( dp->d_flags & DIR_COMB )
+		  len = 4;
+	  else if( dp->d_major_type == DB5_MAJORTYPE_ATTRIBUTE_ONLY )
+		  len = 6;
+	  else
+		  len = strlen( rt_functab[dp->d_minor_type].ft_label );
+
+	  if( len > max_type_len )
+		  max_type_len = len;
+  }
+  /*
+   * i - tracks the list item
+   */
+  for (i=0; i < num_in_list; ++i) {
+    if (list_of_names[i]->d_flags & DIR_COMB) {
+      isComb = 1;
+      isSolid = 0;
+      type = "comb";
+
+      if (list_of_names[i]->d_flags & DIR_REGION) {
+	isRegion = 1;
+        type = "region";
+      }
+      else
+	isRegion = 0;
+    } else {
+      isComb = isRegion = 0;
+      isSolid = 1;
+      type = rt_functab[list_of_names[i]->d_minor_type].ft_label;
+    }
+
+    if( list_of_names[i]->d_major_type == DB5_MAJORTYPE_ATTRIBUTE_ONLY ) {
+	    isSolid = 0;
+	    type = "global";
+    }
+
+    /* print list item i */
+    dp = list_of_names[i];
+    if (aflag ||
+	(!cflag && !rflag && !sflag) ||
+	(cflag && isComb) ||
+	(rflag && isRegion) ||
+	(sflag && isSolid)) {
+	    bu_vls_printf(vls, "%s", dp->d_namep );
+	    bu_vls_spaces(vls, max_nam_len - strlen( dp->d_namep ) );
+	    bu_vls_printf(vls, " %s", type );
+	    bu_vls_spaces(vls, max_type_len - strlen( type ) );
+	    bu_vls_printf(vls,  " %2d %2d %d\n",
+		    dp->d_major_type, dp->d_minor_type, dp->d_len);
+    }
+  }
+}
 /*
  *				V L S _ L I N E _ D P P
  *
@@ -177,14 +284,14 @@ int num_in_list;
  *  in that list, sort and print that list on the same line.
  */
 void
-vls_line_dpp(vls, list_of_names, num_in_list, aflag, cflag, rflag, sflag)
-struct bu_vls *vls;
-struct directory **list_of_names;
-int num_in_list;
-int aflag;	/* print all objects */
-int cflag;	/* print combinations */
-int rflag;	/* print regions */
-int sflag;	/* print solids */
+vls_line_dpp(
+	struct bu_vls *vls,
+	struct directory **list_of_names,
+	int num_in_list,
+	int aflag,	/* print all objects */
+	int cflag,	/* print combinations */
+	int rflag,	/* print regions */
+	int sflag)	/* print solids */
 {
   int i;
   int isComb, isRegion;
@@ -213,10 +320,10 @@ int sflag;	/* print solids */
 
     /* print list item i */
     if (aflag ||
-	!cflag && !rflag && !sflag ||
-	cflag && isComb ||
-	rflag && isRegion ||
-	sflag && isSolid) {
+	(!cflag && !rflag && !sflag) ||
+	(cflag && isComb) ||
+	(rflag && isRegion) ||
+	(sflag && isSolid)) {
       bu_vls_printf(vls,  "%s ", list_of_names[i]->d_namep);
     }
   }

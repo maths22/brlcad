@@ -17,11 +17,11 @@
  *	The BRL-CAD Package" agreement.
  *
  *  Copyright Notice -
- *	This software is Copyright (C) 1996 by the United States Army
+ *	This software is Copyright (C) 2000 by the United States Army
  *	in all countries except the USA.  All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
@@ -30,7 +30,6 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
 #include <math.h>
 #include "machine.h"
 #include "bu.h"
-#include "db.h"
 #include "vmath.h"
 #include "bn.h"
 #include "rtgeom.h"
@@ -41,29 +40,33 @@ static char RCSid[] = "@(#)$Header$ (ARL)";
  *			W D B _ F O P E N
  *
  *  Create a libwdb output stream destined for a disk file.
- *  The stream is established in "append-only" mode.
+ *  This will destroy any existing file by this name, and start fresh.
+ *  The file is then opened in the normal "update" mode and
+ *  an in-memory directory is built along the way,
+ *  allowing retrievals and object replacements as needed.
+ *
+ *  Users can change the database title by calling: ???
  */
 struct rt_wdb *
-wdb_fopen( filename )
-CONST char *filename;
+wdb_fopen_v( const char *filename, int version )
 {
-	struct rt_wdb	*wdbp;
-	FILE		*fp;
 	struct db_i	*dbip;
 
-	if( (dbip = db_create( filename )) == DBI_NULL )
-		return RT_WDB_NULL;
-	db_close(dbip);
+	if( rt_uniresource.re_magic != RESOURCE_MAGIC )
+		rt_init_resource( &rt_uniresource, 0, NULL );
 
-	if( (fp = fopen( filename, "ab" )) == NULL )
+	if( (dbip = db_create( filename, version )) == DBI_NULL )
 		return RT_WDB_NULL;
 
-	BU_GETSTRUCT(wdbp, rt_wdb);
-	wdbp->l.magic = RT_WDB_MAGIC;
-	wdbp->type = RT_WDB_TYPE_FILE;
-	wdbp->fp = fp;
-	return wdbp;
+	return wdb_dbopen( dbip, RT_WDB_TYPE_DB_DISK );
 }
+
+struct rt_wdb *
+wdb_fopen( const char *filename)
+{
+    return wdb_fopen_v(filename, 5);
+}
+
 
 /*
  *			W D B _ D B O P E N
@@ -76,35 +79,54 @@ CONST char *filename;
  *	RT_WDB_TYPE_DB_INMEM_APPEND_ONLY	Ditto, but give errors if name in use.
  */
 struct rt_wdb *
-wdb_dbopen( dbip, mode )
-struct db_i	*dbip;
-int		mode;
+wdb_dbopen( struct db_i *dbip, int mode )
 {
 	struct rt_wdb	*wdbp;
 
 	RT_CK_DBI(dbip);
 
-	if( mode != RT_WDB_TYPE_DB_DISK && mode != RT_WDB_TYPE_DB_INMEM && mode != RT_WDB_TYPE_DB_DISK )  {
+	if (mode != RT_WDB_TYPE_DB_DISK	 && mode != RT_WDB_TYPE_DB_DISK_APPEND_ONLY &&
+	    mode != RT_WDB_TYPE_DB_INMEM && mode != RT_WDB_TYPE_DB_INMEM_APPEND_ONLY) {
 		bu_log("wdb_dbopen(%s) mode %d unknown\n",
 			dbip->dbi_filename, mode );
 		return RT_WDB_NULL;
 	}
 
+#if 0
 	if( (mode == RT_WDB_TYPE_DB_DISK || mode == RT_WDB_TYPE_DB_DISK_APPEND_ONLY ) &&
 	    dbip->dbi_read_only )  {
 		/* In-mem updates happen regardless of disk read-only flag */
 		bu_log("wdb_dbopen(%s): read-only\n",
 			dbip->dbi_filename );
 	}
+#endif
+
+	if( rt_uniresource.re_magic != RESOURCE_MAGIC )
+		rt_init_resource( &rt_uniresource, 0, NULL );
 
 	BU_GETSTRUCT(wdbp, rt_wdb);
 	wdbp->l.magic = RT_WDB_MAGIC;
 	wdbp->type = mode;
 	wdbp->dbip = dbip;
+	wdbp->dbip->dbi_wdbp = wdbp;
 
 	dbip->dbi_uses++;
 
+	/* Provide the same default tolerance that librt/prep.c does */
+	wdbp->wdb_tol.magic = BN_TOL_MAGIC;
+	wdbp->wdb_tol.dist = 0.005;
+	wdbp->wdb_tol.dist_sq = wdbp->wdb_tol.dist * wdbp->wdb_tol.dist;
+	wdbp->wdb_tol.perp = 1e-6;
+	wdbp->wdb_tol.para = 1 - wdbp->wdb_tol.perp;
+
+	wdbp->wdb_ttol.magic = RT_TESS_TOL_MAGIC;
+	wdbp->wdb_ttol.abs = 0.0;
+	wdbp->wdb_ttol.rel = 0.01;
+	wdbp->wdb_ttol.norm = 0;
+	bu_vls_init( &wdbp->wdb_prestr );
+
 	return wdbp;
+
 }
 
 /* 
@@ -116,23 +138,22 @@ int		mode;
  *	-2	db_get_external failure (from rt_db_get_internal)
  *	-3	Attempt to import from write-only (stream) file.
  *	-4	Name not found in database TOC.
+ *
+ *  NON-PARALLEL because of rt_uniresource
  */
 int
-wdb_import( wdbp, internp, name, mat )
-struct rt_wdb			*wdbp;
-struct rt_db_internal		*internp;
-CONST char			*name;
-CONST mat_t			mat;
+wdb_import(
+	struct rt_wdb *wdbp,
+	struct rt_db_internal *internp,
+	const char *name,
+	const mat_t mat )
 {
 	struct directory	*dp;
-
-	if( wdbp->type == RT_WDB_TYPE_FILE )
-		return -3;	/* No table of contents, file is write-only */
 
 	if( (dp = db_lookup( wdbp->dbip, name, LOOKUP_QUIET )) == DIR_NULL )
 		return -4;
 
-	return rt_db_get_internal( internp, dp, wdbp->dbip, mat );
+	return rt_db_get_internal( internp, dp, wdbp->dbip, mat, &rt_uniresource );
 }
 
 /*
@@ -145,33 +166,34 @@ CONST mat_t			mat;
  *	<0	error
  */
 int
-wdb_export_external( wdbp, ep, name, flags )
-struct rt_wdb		*wdbp;
-struct bu_external	*ep;
-CONST char		*name;
-int			flags;
+wdb_export_external(
+	struct rt_wdb *wdbp,
+	struct bu_external *ep,
+	const char *name,
+	int flags,
+	unsigned char type)
 {
 	struct directory	*dp;
 
 	RT_CK_WDB(wdbp);
 	BU_CK_EXTERNAL(ep);
-	switch( wdbp->type )  {
 
-	case RT_WDB_TYPE_FILE:
-		{
-			union record	*rec;
-
-			/* v4: Depends on solid names always being in the same place */
-			rec = (union record *)ep->ext_buf;
-			NAMEMOVE( name, rec->s.s_name );
-		}
-
-		if( fwrite( ep->ext_buf, ep->ext_nbytes, 1, wdbp->fp ) != 1 )  {
-			bu_log("wdb_export_external(%s): fwrite error\n",
+	/* Stash name into external representation */
+	if( wdbp->dbip->dbi_version <= 4 )  {
+		db_wrap_v4_external( ep, name );
+	} else if( wdbp->dbip->dbi_version == 5 )  {
+		if( db_wrap_v5_external( ep, name ) < 0 )  {
+			bu_log("wdb_export_external(%s): db_wrap_v5_external error\n",
 				name );
-			return(-3);
+			return -4;
 		}
-		break;
+	} else {
+		bu_log("wdb_export_external(%s): version %d unsupported\n",
+				name, wdbp->dbip->dbi_version );
+		return -4;
+	}
+
+	switch( wdbp->type )  {
 
 	case RT_WDB_TYPE_DB_DISK:
 		if( wdbp->dbip->dbi_read_only )  {
@@ -179,11 +201,14 @@ int			flags;
 			return -5;
 		}
 		/* If name already exists, that object will be updated. */
-		if( (dp = db_lookup( wdbp->dbip, name, LOOKUP_QUIET )) == DIR_NULL &&
-		    (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags, NULL )) == DIR_NULL )  {
+		dp = db_lookup( wdbp->dbip, name, LOOKUP_QUIET );
+		if( dp == DIR_NULL ) {
+			if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags,
+					   (genptr_t)&type )) == DIR_NULL )  {
 			bu_log("wdb_export_external(%s): db_diradd error\n",
-				name );
+			       name );
 			return -3;
+			}
 		}
 		dp->d_flags = (dp->d_flags & ~7) | flags;
 		if( db_put_external( ep, dp, wdbp->dbip ) < 0 )  {
@@ -199,9 +224,10 @@ int			flags;
 			return -5;
 		}
 		/* If name already exists, new non-conflicting name will be generated */
-		if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags, NULL )) == DIR_NULL )  {
+		if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags,
+				    (genptr_t)&type )) == DIR_NULL )  {
 			bu_log("wdb_export_external(%s): db_diradd error\n",
-				name );
+			       name );
 			return -3;
 		}
 		if( db_put_external( ep, dp, wdbp->dbip ) < 0 )  {
@@ -217,17 +243,11 @@ int			flags;
 				name );
 			return -3;
 		}
-		if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags, NULL )) == DIR_NULL )  {
+		if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags,
+				(genptr_t)&type )) == DIR_NULL )  {
 			bu_log("wdb_export_external(%s): db_diradd error\n",
-				name );
+			       name );
 			return -3;
-		}
-
-		/* Stash name into external representation */
-		if( db_wrap_v4_external( ep, ep, dp ) < 0 )  {
-			bu_log("wdb_export_external(%s): db_wrap_v4_external error\n",
-				name );
-			return -4;
 		}
 
 		db_inmem( dp, ep, flags );
@@ -236,91 +256,146 @@ int			flags;
 
 	case RT_WDB_TYPE_DB_INMEM:
 		if( (dp = db_lookup( wdbp->dbip, name, 0 )) == DIR_NULL )  {
-			if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags, NULL )) == DIR_NULL )  {
+			if( (dp = db_diradd( wdbp->dbip, name, -1L, 0, flags,
+					(genptr_t)&type )) == DIR_NULL )  {
 				bu_log("wdb_export_external(%s): db_diradd error\n",
-					name );
-				db_free_external( ep );
+				       name );
+				bu_free_external( ep );
 				return -3;
 			}
 		} else {
 			dp->d_flags = (dp->d_flags & ~7) | flags;
 		}
 
-		/* Stash name into external representation */
-		if( db_wrap_v4_external( ep, ep, dp ) < 0 )  {
-			bu_log("wdb_export_external(%s): db_wrap_v4_external error\n",
-				name );
-			db_free_external( ep );
-			return -4;
-		}
-
 		db_inmem( dp, ep, flags );
 		/* ep->buf has been stolen, replaced with null. */
 		break;
 	}
+
 	return 0;
 }
 
 /*
- *			W D B _ E X P O R T
+ *			W D B _ P U T _ I N T E R N A L
  *
- *  The caller must free "gp".
+ *  Convert the internal representation of a solid to the external one,
+ *  and write it into the database.
+ *  The internal representation is always freed.
+ *  This is the analog of rt_db_put_internal() for rt_wdb objects.
+ *
+ *  Use this routine in preference to wdb_export() whenever the
+ *  caller already has an rt_db_internal structure handy.
+ *
+ *  NON-PARALLEL because of rt_uniresource
  *
  *  Returns -
  *	 0	OK
  *	<0	error
  */
 int
-wdb_export( wdbp, name, gp, id, local2mm )
-struct rt_wdb	*wdbp;
-CONST char	*name;
-genptr_t	gp;
-int		id;
-double		local2mm;
+wdb_put_internal(
+	struct rt_wdb *wdbp,
+	const char *name,
+	struct rt_db_internal *ip,
+	double local2mm )
 {
-	struct rt_db_internal	intern;
 	struct bu_external	ext;
 	int			ret;
+	int			flags;
 
-	if( (id <= 0 || id > ID_MAXIMUM) && id != ID_COMBINATION )  {
+	RT_CK_WDB(wdbp);
+	RT_CK_DB_INTERNAL(ip);
+
+	if( wdbp->dbip->dbi_version <= 4 )  {
+		BU_INIT_EXTERNAL( &ext );
+		ret = ip->idb_meth->ft_export( &ext, ip, local2mm, wdbp->dbip, &rt_uniresource );
+		if( ret < 0 )  {
+			bu_log("rt_db_put_internal(%s):  solid export failure\n",
+				name);
+			ret = -1;
+			goto out;
+		}
+		db_wrap_v4_external( &ext, name );
+	} else {
+		if( rt_db_cvt_to_external5( &ext, name, ip, local2mm, wdbp->dbip, &rt_uniresource, ip->idb_major_type ) < 0 )  {
+			bu_log("wdb_export(%s): solid export failure\n",
+				name );
+			ret = -2;
+			goto out;
+		}
+	}
+	BU_CK_EXTERNAL( &ext );
+
+	flags = db_flags_internal( ip );
+	ret = wdb_export_external( wdbp, &ext, name, flags, ip->idb_type );
+out:
+	bu_free_external( &ext );
+	rt_db_free_internal( ip, &rt_uniresource );
+	return ret;
+}
+
+/*
+ *			W D B _ E X P O R T
+ *
+ *  Export an in-memory representation of an object,
+ *  as described in the file h/rtgeom.h, into the indicated database.
+ *
+ *  The internal representation (gp) is always freed.
+ *
+ *  WARNING: The caller must be careful not to double-free gp,
+ *  particularly if it's been extracted from an rt_db_internal,
+ *  e.g. by passing intern.idb_ptr for gp.
+ *
+ *  If the caller has an rt_db_internal structure handy already,
+ *  they should call wdb_put_internal() directly -- this is a
+ *  convenience routine intended primarily for internal use in LIBWDB.
+ *
+ *  Returns -
+ *	 0	OK
+ *	<0	error
+ */
+int
+wdb_export(
+	struct rt_wdb *wdbp,
+	const char *name,
+	genptr_t gp,
+	int id,
+	double local2mm )
+{
+	struct rt_db_internal	intern;
+
+	RT_CK_WDB(wdbp);
+
+	if( (id <= 0 || id > ID_MAX_SOLID) && id != ID_COMBINATION )  {
 		bu_log("wdb_export(%s): id=%d bad\n",
 			name, id );
 		return(-1);
 	}
 
 	RT_INIT_DB_INTERNAL( &intern );
+	intern.idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	intern.idb_type = id;
 	intern.idb_ptr = gp;
+	intern.idb_meth = &rt_functab[id];
 
-	if( rt_functab[id].ft_export( &ext, &intern, local2mm, wdbp->dbip ) < 0 )  {
-		bu_log("wdb_export(%s): solid export failure\n",
-			name );
-		db_free_external( &ext );
-		return(-2);				/* FAIL */
-	}
-	BU_CK_EXTERNAL( &ext );
-
-	ret = wdb_export_external( wdbp, &ext, name, db_flags_internal( &intern ) );
-	db_free_external( &ext );
-	return ret;
+	return wdb_put_internal( wdbp, name, &intern, local2mm );
 }
 
 /*
  *			W D B _ C L O S E
  *
- *  Release from associated database "file", destroy dyanmic data structure.
+ *  Release from associated database "file", destroy dynamic data structure.
  */
 void
-wdb_close( wdbp )
-struct rt_wdb	*wdbp;
+wdb_close( struct rt_wdb *wdbp )
 {
 
 	RT_CK_WDB(wdbp);
-	if( wdbp->type == RT_WDB_TYPE_FILE )  {
-		fclose( wdbp->fp );
-	} else {
-		/* db_i is use counted */
-		db_close( wdbp->dbip );
-	}
+
+	/* XXX Flush any unwritten "struct matter" records here */
+
+	db_close( wdbp->dbip );
+
+	bu_vls_free( &wdbp->wdb_prestr );
 	bu_free( (genptr_t)wdbp, "struct rt_wdb");
 }

@@ -14,20 +14,27 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrefract[] = "@(#)$Header$ (BRL)";
+static const char RCSrefract[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "mater.h"
 #include "raytrace.h"
-#include "./rdebug.h"
+#include "rtprivate.h"
 #include "shadefuncs.h"
 #include "shadework.h"
+#include "plot3.h"
+
+extern int viewshade(struct application *ap,
+		     register const struct partition *pp,
+		     register struct shadework *swp);
+
 
 int	max_ireflect = 5;	/* Maximum internal reflection level */
 int	max_bounces = 5;	/* Maximum recursion level */
@@ -43,7 +50,7 @@ HIDDEN int	rr_hit(), rr_miss();
 HIDDEN int	rr_refract();
 
 #if RT_MULTISPECTRAL
-extern CONST struct bn_table	*spectrum;
+extern const struct bn_table	*spectrum;
 extern struct bn_tabdata	*background; /* from rttherm/viewtherm.c */
 #else
 extern vect_t background;
@@ -53,37 +60,29 @@ extern vect_t background;
  *			R R _ R E N D E R
  */
 int
-rr_render( ap, pp, swp )
-register struct application *ap;
-struct partition	*pp;
-struct shadework	*swp;
+rr_render(register struct application *ap,
+	  struct partition	*pp,
+	  struct shadework	*swp)
 {
 	struct application sub_ap;
 	vect_t	work;
 	vect_t	incident_dir;
+	fastf_t	shader_fract;
+	fastf_t	reflect;
+	fastf_t	transmit;
+
 #if RT_MULTISPECTRAL
 	struct bn_tabdata	*ms_filter_color = BN_TABDATA_NULL;
-#else
-	vect_t	filter_color;
-#endif
-	fastf_t	shader_fract;
-#if RT_MULTISPECTRAL
 	struct bn_tabdata	*ms_shader_color = BN_TABDATA_NULL;
-#else
-	vect_t	shader_color;
-#endif
-	fastf_t	reflect;
-#if RT_MULTISPECTRAL
 	struct bn_tabdata	*ms_reflect_color = BN_TABDATA_NULL;
-#else
-	vect_t	reflect_color;
-#endif
-	fastf_t	transmit;
-#if RT_MULTISPECTRAL
 	struct bn_tabdata	*ms_transmit_color = BN_TABDATA_NULL;
 #else
+	vect_t	filter_color;
+	vect_t	shader_color;
+	vect_t	reflect_color;
 	vect_t	transmit_color;
 #endif
+
 	fastf_t	attenuation;
 	vect_t	to_eye;
 	int	code;
@@ -334,7 +333,7 @@ do_inside:
 		if(rdebug&RDEBUG_REFRACT)  {
 			bu_log("rr_render: calculating refraction @ exit from %s (green)\n", pp->pt_regionp->reg_name);
 			bu_log("Start point to exit point:\n\
-vdraw o rr;vdraw p c 00ff00; vdraw w n 0 %g %g %g; vdraw w n 1 %g %g %g; vdraw s\n",
+vdraw open rr;vdraw params c 00ff00; vdraw write n 0 %g %g %g; vdraw wwrite n 1 %g %g %g; vdraw send\n",
 				V3ARGS(sub_ap.a_ray.r_pt),
 				V3ARGS(sub_ap.a_uvec) );
 		}
@@ -350,10 +349,12 @@ vdraw o rr;vdraw p c 00ff00; vdraw w n 0 %g %g %g; vdraw w n 1 %g %g %g; vdraw s
 		}
 		if( rdebug&RDEBUG_RAYPLOT )  {
 			/* plotfp */
+			bu_semaphore_acquire( BU_SEM_SYSCALL );
 			pl_color( stdout, 0, 255, 0 );
 			pdv_3line( stdout,
 				sub_ap.a_ray.r_pt,
 				sub_ap.a_uvec );
+			bu_semaphore_release( BU_SEM_SYSCALL );
 		}
 		/* Advance.  Exit point becomes new start point */
 		VMOVE( sub_ap.a_ray.r_pt, sub_ap.a_uvec );
@@ -515,13 +516,17 @@ do_reflection:
 			point_t		endpt;
 			/* Plot the surface normal -- green/blue */
 			/* plotfp */
-			if(rdebug&RDEBUG_RAYPLOT) pl_color( stdout, 0, 255, 255 );
 			f = sub_ap.a_rt_i->rti_radius * 0.02;
 			VJOIN1( endpt, sub_ap.a_ray.r_pt,
 				f, swp->sw_hit.hit_normal );
-			if(rdebug&RDEBUG_RAYPLOT) pdv_3line( stdout, sub_ap.a_ray.r_pt, endpt );
+			if(rdebug&RDEBUG_RAYPLOT)  {
+				bu_semaphore_acquire( BU_SEM_SYSCALL );
+				pl_color( stdout, 0, 255, 255 );
+				pdv_3line( stdout, sub_ap.a_ray.r_pt, endpt );
+				bu_semaphore_release( BU_SEM_SYSCALL );
+			}
 			bu_log("Surface normal for reflection:\n\
-vdraw o rrnorm;vdraw p c 00ffff;vdraw w n 0 %g %g %g;vdraw w n 1 %g %g %g;vdraw s\n",
+vdraw open rrnorm;vdraw params c 00ffff;vdraw write n 0 %g %g %g;vdraw write n 1 %g %g %g;vdraw send\n",
 				V3ARGS(sub_ap.a_ray.r_pt),
 				V3ARGS(endpt) );
 
@@ -789,7 +794,7 @@ struct partition *PartHeadp;
 			 */
 			appl = *ap;			/* struct copy */
 
-			bzero( (char *)&sw, sizeof(sw) );
+			memset( (char *)&sw, 0, sizeof(sw) );
 			sw.sw_transmit = sw.sw_reflect = 0.0;
 
 			/* Set default in case shader doesn't fill this in. */

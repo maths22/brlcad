@@ -27,6 +27,18 @@
 static const char RCSid[] = "$Header$";
 #endif
 
+/* #define MEMORY_LEAK_CHECKING 1 */
+
+#ifdef MEMORY_LEAK_CHECKING
+#define BARRIER_CHECK { \
+	if( bu_mem_barriercheck() ) { \
+		bu_log( "memory is corrupted at line %d in file %d\n", __LINE__, __FILE__ ); \
+	} \
+}
+#else
+#define BARRIER_CHECK /* */
+#endif
+
 #include "conf.h"
 
 #include <stdio.h>
@@ -52,6 +64,13 @@ static const char RCSid[] = "$Header$";
 
 #define TXT_BUF_LEN	512
 #define TXT_NAME_LEN	128
+
+struct plate_mode {
+	int num_bots;
+	int num_nonbots;
+	int array_size;
+	struct rt_bot_internal **bots;
+};
 
 struct vrml_mat {
 	/* typical shader parameters */
@@ -112,11 +131,69 @@ static struct db_tree_state	tree_state;	/* includes tol & model */
 static int	regions_tried = 0;
 static int	regions_converted = 0;
 
+static void
+clean_pmp( struct plate_mode *pmp )
+{
+	int i;
+
+	BARRIER_CHECK;
+
+	pmp->num_bots = 0;
+	pmp->num_nonbots = 0;
+	for( i=0 ; i<pmp->array_size ; i++ ) {
+		if( pmp->bots[i] ) {
+			struct rt_db_internal intern;
+
+			intern.idb_ptr = (genptr_t) pmp->bots[i];
+			intern.idb_major_type = DB5_MAJORTYPE_BRLCAD;
+			intern.idb_type = ID_BOT;
+			intern.idb_meth = &rt_functab[ID_BOT];
+			intern.idb_magic = RT_DB_INTERNAL_MAGIC;
+			intern.idb_meth->ft_ifree( &intern, &rt_uniresource );
+			pmp->bots[i] = NULL;
+		}
+	}
+	BARRIER_CHECK;
+}
+
+struct rt_bot_internal *
+dup_bot( struct rt_bot_internal *bot_in )
+{
+	struct rt_bot_internal *bot;
+	int i;
+
+	RT_BOT_CK_MAGIC( bot_in );
+
+	bot = (struct rt_bot_internal *)bu_malloc( sizeof( struct rt_bot_internal ), "dup bot" );
+
+	*bot = *bot_in;	/* struct copy */
+
+	bot->faces = (int *)bu_calloc( bot_in->num_faces*3, sizeof( int ), "bot faces" );
+	for( i=0 ; i<bot_in->num_faces*3 ; i++ )
+		bot->faces[i] = bot_in->faces[i];
+
+	bot->vertices = (fastf_t *)bu_calloc( bot_in->num_vertices*3, sizeof( fastf_t ), "bot verts" );
+	for( i=0 ; i<bot_in->num_vertices*3 ; i++ )
+		bot->vertices[i] = bot_in->vertices[i];
+
+	if( bot_in->thickness ) {
+		bot->thickness = (fastf_t *)bu_calloc( bot_in->num_faces, sizeof( fastf_t ), "bot thickness" );
+		for( i=0 ; i<bot_in->num_faces ; i++ )
+			bot->thickness[i] = bot_in->thickness[i];
+	}
+
+	if( bot_in->face_mode ) {
+		bot->face_mode = bu_bitv_dup( bot_in->face_mode );
+	}
+
+	return( bot );
+}
+
 static int
 select_lights( tsp, pathp, combp, client_data )
 register struct db_tree_state	*tsp;
 struct db_full_path		*pathp;
-CONST struct rt_comb_internal	*combp;
+const struct rt_comb_internal	*combp;
 genptr_t			client_data;
 {
 	struct directory *dp;
@@ -130,7 +207,7 @@ genptr_t			client_data;
 	if( !(dp->d_flags & DIR_COMB) )
 		return( -1 );
 
-	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL );
+	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL, &rt_uniresource );
 	if( id < 0 )
 	{
 		bu_log( "Cannot internal form of %s\n", dp->d_namep );
@@ -149,12 +226,12 @@ genptr_t			client_data;
 
 	if( !strcmp( bu_vls_addr( &comb->shader ), "light" ) )
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		return( 0 );
 	}
 	else
 	{
-		rt_db_free_internal( &intern );
+		rt_db_free_internal( &intern, &rt_uniresource );
 		return( -1 );
 	}
 }
@@ -163,7 +240,7 @@ static int
 select_non_lights( tsp, pathp, combp, client_data )
 register struct db_tree_state	*tsp;
 struct db_full_path		*pathp;
-CONST struct rt_comb_internal	*combp;
+const struct rt_comb_internal	*combp;
 genptr_t			client_data;
 {
 	int ret;
@@ -176,39 +253,47 @@ genptr_t			client_data;
 }
 
 union tree *
-leaf_tess(tsp, pathp, ep, id, client_data)
+leaf_tess(tsp, pathp, ip, client_data)
 struct db_tree_state    *tsp;
 struct db_full_path     *pathp;
-struct bu_external	*ep;
-int			id;
+struct rt_db_internal	*ip;
 genptr_t                client_data;
 {
-	struct rt_db_internal intern;
 	struct rt_bot_internal *bot;
-	struct directory *dp;
+	struct plate_mode *pmp = (struct plate_mode *)client_data;
 
-	if( id != ID_BOT )
-		return( nmg_booltree_leaf_tess(tsp, pathp, ep, id, client_data) );
+	BARRIER_CHECK;
 
-        RT_INIT_DB_INTERNAL(&intern);
-        if (rt_functab[id].ft_import(&intern, ep, tsp->ts_mat, tsp->ts_dbip) < 0) {
-                bu_log("nmg_booltree_leaf_tess(%s):  solid import failure\n", dp->d_namep);
-                if (intern.idb_ptr)  rt_functab[id].ft_ifree(&intern);
-                return(TREE_NULL);              /* ERROR */
-        }
-        RT_CK_DB_INTERNAL(&intern);
+	if( ip->idb_type != ID_BOT ) {
+		pmp->num_nonbots++;
+		return( nmg_booltree_leaf_tess(tsp, pathp, ip, client_data) );
+	}
 
-	bot = (struct rt_bot_internal *)intern.idb_ptr;
+	bot = (struct rt_bot_internal *)ip->idb_ptr;
 	RT_BOT_CK_MAGIC( bot );
 
 	if( bot->mode == RT_BOT_PLATE || bot->mode == RT_BOT_SURFACE )
 	{
-		rt_db_free_internal( &intern );
+		if( pmp->array_size <= pmp->num_bots ) {
+			pmp->array_size += 5;
+			pmp->bots = (struct rt_bot_internal **)bu_realloc(
+				    (char *)pmp->bots,
+				    pmp->array_size * sizeof( struct rt_bot_internal *),
+				    "pmp->bots" );
+		}
+
+		/* walk tree will free the BOT, so we need a copy */
+		pmp->bots[pmp->num_bots] = dup_bot( bot );
+		BARRIER_CHECK;
+		pmp->num_bots++;
 		return( (union tree *)NULL );
 	}
 
-	rt_db_free_internal( &intern );
-	return( nmg_booltree_leaf_tess(tsp, pathp, ep, id, client_data) );
+	pmp->num_nonbots++;
+
+	BARRIER_CHECK;
+
+	return( nmg_booltree_leaf_tess(tsp, pathp, ip, client_data) );
 }
 
 /*
@@ -221,11 +306,12 @@ char	*argv[];
 {
 	int		i;
 	register int	c;
+	struct plate_mode pm;
 
 	port_setlinebuf( stderr );
 
 #if MEMORY_LEAK_CHECKING
-	rt_g.debug |= DEBUG_MEM_FULL;
+	bu_debug |= BU_DEBUG_MEM_CHECK;
 #endif
 	the_model = nmg_mm();
 	tree_state = rt_initial_tree_state;	/* struct copy */
@@ -253,8 +339,11 @@ char	*argv[];
 		nmg_eue_dist = 2.0;
 	}
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	BU_LIST_INIT( &rt_g.rtg_vlfree );	/* for vlist macros */
 
+	BARRIER_CHECK;
 	/* Get command line arguments. */
 	while ((c = getopt(argc, argv, "d:a:n:o:r:vx:P:X:u:")) != EOF) {
 		switch (c) {
@@ -284,10 +373,10 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			break;
 		case 'u':
@@ -322,7 +411,9 @@ char	*argv[];
 		perror(argv[0]);
 		exit(1);
 	}
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	if( db_dirbuild( dbip ) ) {
+		bu_bomb( "db_dirbuild() failed!\n" );
+	}
 
 	if( out_file == NULL )
 		fp_out = stdout;
@@ -363,6 +454,13 @@ char	*argv[];
 
 	optind++;
 
+	BARRIER_CHECK;
+
+	pm.num_bots = 0;
+	pm.num_nonbots = 0;
+	pm.array_size = 5;
+	pm.bots = (struct rt_bot_internal **)bu_calloc( pm.array_size,
+		sizeof( struct rt_bot_internal *), "pm.bots" );
 	for( i=optind ; i<argc ; i++ )
 	{
 		struct directory *dp;
@@ -381,26 +479,28 @@ char	*argv[];
 			continue;
 
 		/* walk trees selecting only light source regions */
-		(void)db_walk_tree(dbip, 1, (CONST char **)(&argv[i]),
+		(void)db_walk_tree(dbip, 1, (const char **)(&argv[i]),
 			1,				/* ncpu */
 			&tree_state,
 			select_lights,
 			do_region_end,
 			leaf_tess,
-			(genptr_t)NULL);	/* in librt/nmg_bool.c */
+			(genptr_t)&pm);	/* in librt/nmg_bool.c */
 
 
 	}
+	BARRIER_CHECK;
 
 	/* Walk indicated tree(s).  Each non-light-source region will be output separately */
-	(void)db_walk_tree(dbip, argc-optind, (CONST char **)(&argv[optind]),
+	(void)db_walk_tree(dbip, argc-optind, (const char **)(&argv[optind]),
 		1,				/* ncpu */
 		&tree_state,
 		select_non_lights,
 		do_region_end,
 		leaf_tess,
-		(genptr_t)NULL);	/* in librt/nmg_bool.c */
+		(genptr_t)&pm);	/* in librt/nmg_bool.c */
 
+	BARRIER_CHECK;
 	/* Release dynamic storage */
 	nmg_km(the_model);
 
@@ -409,9 +509,9 @@ char	*argv[];
 		/* Now we need to close each group set */
 		fprintf ( fp_out, "\t]\n}\n");
 
-#if MEMORY_LEAK_CHECKING
-	bu_prmem("After complete G-NMG conversion");
-#endif
+	if( verbose )
+		bu_log( "Total of %d regions converted of %d regions attempted\n",
+			regions_converted, regions_tried );
 
 	return 0;
 }
@@ -446,6 +546,8 @@ struct mater_info *mater;
 
 	NMG_CK_MODEL( m );
 
+	BARRIER_CHECK;
+
 	full_path = db_path_to_string( pathp );
 
 	RT_CK_FULL_PATH( pathp );
@@ -454,7 +556,7 @@ struct mater_info *mater;
 	if( !(dp->d_flags & DIR_COMB) )
 		return;
 
-	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL );
+	id = rt_db_get_internal( &intern, dp, dbip, (matp_t)NULL, &rt_uniresource );
 	if( id < 0 )
 	{
 		bu_log( "Cannot internal form of %s\n", dp->d_namep );
@@ -821,91 +923,62 @@ struct mater_info *mater;
 		else
 			fprintf( fp, "\t\tPointLight {\n\t\t\ton TRUE\n\t\t\tintensity 1\n\t\t\tcolor %g %g %g\n\t\t\tlocation %g %g %g\n\t\t}\n",r,g,b,V3ARGS( ave_pt ) );
 	}
+	BARRIER_CHECK;
 }
 
 void
-is_leaf_bot( dbip, dp, clientdata )
-struct db_i *dbip;
-struct directory *dp;
-genptr_t clientdata;
+bot2vrml( struct plate_mode *pmp, struct db_full_path *pathp, int region_id )
 {
-	struct rt_bot_internal *bot, **abot;
-	struct rt_db_internal intern;
-	int id;
-
-	id = rt_db_get_internal( &intern, dp, dbip, bn_mat_identity );
-	if( id < 0 )
-	{
-		bu_log( "Error importing solid (%s)\n", dp->d_namep );
-		bu_bomb( "Error importing solid\n" );
-	}
-
-	if( id == ID_BOT )
-	{
-		int *i;
-
-		i = (int *)clientdata;
-		(*i)++;
-	}
-	else
-		rt_db_free_internal( &intern );
-}
-
-void
-bot2vrml( dbip, comb, tree, ptr1, ptr2, ptr3 )
-struct db_i *dbip;
-struct rt_comb_internal *comb;
-union tree *tree;
-genptr_t ptr1, ptr2, ptr3;
-{
-	struct db_full_path *pathp;
 	char *path_str;
 	int appearance;
-	struct directory *dp;
-	struct rt_db_internal intern;
 	struct rt_bot_internal *bot;
-	int id;
+	int bot_num;
 	int i;
+	int vert_count=0;
 
-	if( (dp = db_lookup( dbip, tree->tr_l.tl_name, 1 )) == DIR_NULL )
-		bu_bomb( "db_lookup failed!!\n" );
+	BARRIER_CHECK;
 
-	id = rt_db_get_internal( &intern, dp, dbip, tree->tr_l.tl_mat );
-	if( id != ID_BOT )
-	{
-		bu_log( "ERROR: %s is not a BOT solid!!!!\n", tree->tr_l.tl_name );
-		bu_bomb( "ERROR: expecting a BOT solid!!!!\n" );
-	}
-
-	bot = (struct rt_bot_internal *)intern.idb_ptr;
-	RT_BOT_CK_MAGIC( bot );
-
-	pathp = (struct db_full_path *)ptr1;
 	path_str = db_path_to_string( pathp );
 
-	fprintf( fp_out, "\t\tShape {\n\t\t\t# Component_ID: %d   %s\n", comb->region_id, path_str );
+	fprintf( fp_out, "\t\tShape {\n\t\t\t# Component_ID: %d   %s\n",
+		 region_id, path_str );
 	bu_free( path_str, "result of db_path_to_string" );
 
-	appearance = comb->region_id / 1000;
+	appearance = region_id / 1000;
 	appearance = appearance * 1000 + 999;
 	fprintf( fp_out, "\t\t\tappearance Appearance {\n\t\t\tmaterial USE Material_%d\n\t\t\t}\n", appearance );
 	fprintf( fp_out, "\t\t\tgeometry IndexedFaceSet {\n\t\t\t\tcoord Coordinate {\n\t\t\t\tpoint [\n" );
 
-	for( i=0 ; i<bot->num_vertices ; i++ )
-	{
-		point_t pt;
+	for( bot_num = 0 ; bot_num < pmp->num_bots ; bot_num++ ) {
+		bot = pmp->bots[bot_num];
+		RT_BOT_CK_MAGIC( bot );
+		for( i=0 ; i<bot->num_vertices ; i++ )
+			{
+				point_t pt;
 
-		VSCALE( pt, &bot->vertices[i*3], scale_factor );
-		fprintf( fp_out, "\t\t\t\t\t%10.10e %10.10e %10.10e, # point %d\n", V3ARGS( pt ), i );
+				VSCALE( pt, &bot->vertices[i*3], scale_factor );
+				fprintf( fp_out, "\t\t\t\t\t%10.10e %10.10e %10.10e, # point %d\n", V3ARGS( pt ), vert_count );
+				vert_count++;
+			}
 	}
 	fprintf( fp_out, "\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t\tcoordIndex [\n" );
-	for( i=0 ; i<bot->num_faces ; i++ )
-		fprintf( fp_out, "\t\t\t\t\t%d, %d, %d, -1,\n", V3ARGS( &bot->faces[i*3] ) );
+	vert_count = 0;
+	for( bot_num = 0 ; bot_num < pmp->num_bots ; bot_num++ ) {
+		bot = pmp->bots[bot_num];
+		RT_BOT_CK_MAGIC( bot );
+		for( i=0 ; i<bot->num_faces ; i++ )
+			fprintf( fp_out, "\t\t\t\t\t%d, %d, %d, -1,\n",
+				 vert_count+bot->faces[i*3],
+				 vert_count+bot->faces[i*3+1],
+				 vert_count+bot->faces[i*3+2]);
+		vert_count += bot->num_vertices;
+	}
 	fprintf( fp_out, "\t\t\t\t]\n\t\t\t\tnormalPerVertex FALSE\n" );
 	fprintf( fp_out, "\t\t\t\tconvex TRUE\n" );
 	fprintf( fp_out, "\t\t\t\tcreaseAngle 0.5\n" );
 	fprintf( fp_out, "\t\t\t\tsolid FALSE\n" );
 	fprintf( fp_out, "\t\t\t}\n\t\t}\n" );
+	BARRIER_CHECK;
 }
 
 /*
@@ -921,36 +994,37 @@ struct db_full_path	*pathp;
 union tree		*curtree;
 genptr_t		client_data;
 {
-	struct directory *dp;
-	struct rt_comb_internal *comb;
-	struct rt_db_internal intern;
-	int id;
-	int bot=0;
+	struct plate_mode *pmp = (struct plate_mode *)client_data;
 	char *name;
 
-	if( tsp->ts_is_fastgen != REGION_FASTGEN_PLATE )
+	BARRIER_CHECK;
+	if( tsp->ts_is_fastgen != REGION_FASTGEN_PLATE ) {
+		clean_pmp( pmp );
 		return( nmg_region_end(tsp, pathp, curtree, client_data) );
+	}
 
 	/* FASTGEN plate mode region, just spew the bot triangles */
-	dp = DB_FULL_PATH_CUR_DIR(pathp);
-	db_functree( tsp->ts_dbip, dp, NULL, is_leaf_bot, (genptr_t)&bot );
-	if( !bot )
+	if( pmp->num_bots < 1 || pmp->num_nonbots > 0 ) {
+		clean_pmp( pmp );
+		BARRIER_CHECK;
 		return( nmg_region_end(tsp, pathp, curtree, client_data) );
-	else
-	{
-		id = rt_db_get_internal( &intern, dp, dbip, bn_mat_identity );
-		if( id != ID_COMBINATION )
-		{
-			bu_log( "ERROR: %s is not a combination????\n", dp->d_namep );
-			bu_bomb( "Expected a region!!!!\n" );
-		}
-		comb = (struct rt_comb_internal *)intern.idb_ptr;
-		name = db_path_to_string( pathp );
-		bu_log( "Attempting %s\n", name );
-		bu_free( name, "db_path_to_string" );
-		db_tree_funcleaf( tsp->ts_dbip, comb, comb->tree, bot2vrml, pathp, NULL, NULL );
-		return( (union tree *)NULL );
 	}
+
+	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+		bu_log("\nConverted %d%% so far (%d of %d)\n",
+			regions_tried>0 ? (regions_converted * 100) / regions_tried : 0,
+		       regions_converted, regions_tried );
+	}
+
+	regions_tried++;
+	name = db_path_to_string( pathp );
+	bu_log( "Attempting %s\n", name );
+	bu_free( name, "db_path_to_string" );
+	bot2vrml( pmp, pathp, tsp->ts_regionid );
+	clean_pmp( pmp );
+	regions_converted++;
+	BARRIER_CHECK;
+	return( (union tree *)NULL );
 }
 
 union tree *nmg_region_end(tsp, pathp, curtree, client_data)
@@ -968,15 +1042,13 @@ genptr_t		client_data;
 	BN_CK_TOL(tsp->ts_tol);
 	NMG_CK_MODEL(*tsp->ts_m);
 
+	BARRIER_CHECK;
 	BU_LIST_INIT(&vhead);
 
 	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
-		char	*sofar = db_path_to_string(pathp);
-		bu_log("\ndo_region_end(%d %d%%) %s\n",
-			regions_tried,
+		bu_log("\nConverted %d%% so far (%d of %d)\n",
 			regions_tried>0 ? (regions_converted * 100) / regions_tried : 0,
-			sofar);
-		bu_free(sofar, "path string");
+		       regions_converted, regions_tried );
 	}
 
 	if (curtree->tr_op == OP_NOP)
@@ -984,7 +1056,6 @@ genptr_t		client_data;
 
 	name = db_path_to_string( pathp );
 	bu_log( "Attempting %s\n", name );
-	bu_free( name, "db_path_to_string" );
 
 	regions_tried++;
 	/* Begin rt_bomb() protection */
@@ -992,6 +1063,7 @@ genptr_t		client_data;
 	{
 		/* Error, bail out */
 		BU_UNSETJUMP;		/* Relinquish the protection */
+		bu_log( "conversion of %s FAILED!!!\n", name );
 
 		/* Sometimes the NMG library adds debugging bits when
 		 * it detects an internal error, before rt_bomb().
@@ -1002,7 +1074,7 @@ genptr_t		client_data;
 		nmg_isect2d_final_cleanup();
 
 		/* Release the tree memory & input regions */
-		db_free_tree(curtree);		/* Does an nmg_kr() */
+		db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 		/* Get rid of (m)any other intermediate structures */
 		if( (*tsp->ts_m)->magic == NMG_MODEL_MAGIC )
@@ -1014,11 +1086,12 @@ genptr_t		client_data;
 			bu_log("WARNING: tsp->ts_m pointer corrupted, ignoring it.\n");
 		}
 	
+		bu_free( name, "db_path_to_string" );
 		/* Now, make a new, clean model structure for next pass. */
 		*tsp->ts_m = nmg_mm();
 		goto out;
 	}
-	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol);	/* librt/nmg_bool.c */
+	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol, &rt_uniresource);
 
 	if( ret_tree )
 		r = ret_tree->tr_d.td_r;
@@ -1026,6 +1099,7 @@ genptr_t		client_data;
 		r = (struct nmgregion *)NULL;
 
 	BU_UNSETJUMP;		/* Relinquish the protection */
+	bu_free( name, "db_path_to_string" );
 	regions_converted++;
 	if (r != 0)
 	{
@@ -1078,11 +1152,12 @@ genptr_t		client_data;
 	 *  A return of TREE_NULL from this routine signals an error,
 	 *  so we need to cons up an OP_NOP node to return.
 	 */
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 out:
 	BU_GETUNION(curtree, tree);
 	curtree->magic = RT_TREE_MAGIC;
 	curtree->tr_op = OP_NOP;
+	BARRIER_CHECK;
 	return(curtree);
 }

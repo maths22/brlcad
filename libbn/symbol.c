@@ -25,13 +25,13 @@
  *	Public Domain, Distribution Unlimited.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (ARL)";
+static const char RCSid[] = "@(#)$Header$ (ARL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
-#ifdef USE_STRING_H
+#ifdef HAVE_STRING_H
 #include <string.h>
 #else
 #include <strings.h>
@@ -75,7 +75,7 @@ double	scale;			/* scale factor to change 1x1 char sz */
 	 *  If the user provided translation or
 	 *  scaling in his matrix, it will *also* be applied.
 	 */
-	bn_mat_idn( xlate_to_origin );
+	MAT_IDN( xlate_to_origin );
 	MAT_DELTAS( xlate_to_origin,	origin[X], origin[Y], origin[Z] );
 	bn_mat_mul( mat, xlate_to_origin, rot );
 

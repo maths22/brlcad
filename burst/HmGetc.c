@@ -7,9 +7,10 @@
 	$Header$ (BRL)
 */
 #if ! defined( lint )
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 #include <stdio.h>
+#include <signal.h>
 #include "./burst.h"
 #include "./Hm.h"
 /*LINTLIBRARY*/

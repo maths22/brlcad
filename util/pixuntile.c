@@ -18,12 +18,17 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
 
 #include "machine.h"
 #include "externs.h"			/* For malloc and getopt */
@@ -41,6 +46,7 @@ Usage: pixuntile [-h] [-s squareinsize] [-w in_width] [-n in_height]\n\
 	[-S squareoutsize] [-W out_width] [-N out_height]\n\
 	[-o startframe] basename [file2 ... fileN] <file.pix\n";
 
+int
 get_args( argc, argv )
 register char **argv;
 {
@@ -95,6 +101,7 @@ int	numx;
 int	numy;
 int	pixsize = 3;
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;

@@ -79,7 +79,7 @@ rle_op ** Araw, **Braw;
 int * Anraw, *Bnraw;
 rle_pixel * non_zero_pixels;
 
-void
+int
 main(argc, argv)
 int	argc;
 char	*argv[];
@@ -104,7 +104,7 @@ char	*argv[];
     int		rle_cnt, rle_err;
     char	*err_fname;
       
-    static CONST char *comp_ops[NUM_OPS] =
+    static const char *comp_ops[NUM_OPS] =
 	 { "clear",
 	   "over",
 	   "in",

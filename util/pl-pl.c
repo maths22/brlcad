@@ -17,10 +17,22 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <unistd.h>
+
+#include "conf.h"
+#include "machine.h"
+#include "bu.h"
 
 void	putshort(), putieee(), getstring();
 void	putargs(), getargs();
@@ -118,6 +130,7 @@ int	no3d = 1;
 static char usage[] = "\
 Usage: pl-pl [-v] [-S] < unix_plot > unix_plot\n";
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;
@@ -326,6 +339,45 @@ char	**argv;
 	return(0);
 }
 
+
+void
+getstring()
+{
+	int	c;
+	char	*cp;
+
+	cp = strarg;
+	while( (c = getchar()) != '\n' && c != EOF )
+		*cp++ = c;
+	*cp = 0;
+}
+
+short
+getshort()
+{
+	register long	v, w;
+
+	v = getchar();
+	v |= (getchar()<<8);	/* order is important! */
+
+	/* worry about sign extension - sigh */
+	if( v <= 0x7FFF )  return(v);
+	w = -1;
+	w &= ~0x7FFF;
+	return( w | v );
+}
+
+double
+getieee()
+{
+	char	in[8];
+	double	d;
+
+	fread( in, 8, 1, stdin );
+	ntohd( (unsigned char *)&d, (unsigned char *)in, 1 );
+	return	d;
+}
+
 /*** Input args ***/
 
 void
@@ -355,44 +407,6 @@ struct uplot *up;
 		}
 	}
 }
-
-void
-getstring()
-{
-	int	c;
-	char	*cp;
-
-	cp = strarg;
-	while( (c = getchar()) != '\n' && c != EOF )
-		*cp++ = c;
-	*cp = 0;
-}
-
-getshort()
-{
-	register long	v, w;
-
-	v = getchar();
-	v |= (getchar()<<8);	/* order is important! */
-
-	/* worry about sign extension - sigh */
-	if( v <= 0x7FFF )  return(v);
-	w = -1;
-	w &= ~0x7FFF;
-	return( w | v );
-}
-
-double
-getieee()
-{
-	char	in[8];
-	double	d;
-
-	fread( in, 8, 1, stdin );
-	ntohd( &d, in, 1 );
-	return	d;
-}
-
 /*** Output args ***/
 
 void
@@ -462,9 +476,9 @@ void
 putieee( d )
 double	d;
 {
-	char	out[8];
+	unsigned char	out[8];
 
-	htond( out, &d, 1 );
+	htond( out, (unsigned char *)&d, 1 );
 	fwrite( out, 1, 8, stdout );
 }
 

@@ -1,6 +1,6 @@
 /*      COMMAND.C       */ 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 /*	INCLUDES	*/
@@ -37,6 +37,37 @@ extern outval			ValTab[];
 extern int			overlap_claims;
 extern char			*ocname[];
 extern int			nirt_debug;
+extern int			rt_bot_minpieces;	/* grom g_bot.c */
+
+void		printusage();
+void		do_rt_gettrees();
+
+void
+bot_minpieces(char *buffer, com_table *ctp )
+{
+	int new_value;
+	int i=0;
+
+	while (isspace(*(buffer+i)))
+		++i;
+	if (*(buffer+i) == '\0')     /* display current rt_bot_minpieces */
+	{
+		bu_log( "rt_bot_minpieces = %d\n", rt_bot_minpieces );
+		return;
+	}
+
+	new_value = atoi( buffer );
+
+	if( new_value < 0 ) {
+		bu_log( "Error: rt_bot_minpieces cannot be less than 0\n" );
+		return;
+	}
+
+	if( new_value != rt_bot_minpieces ) {
+		rt_bot_minpieces = new_value;
+		need_prep = 1;
+	}
+}
 
 void az_el(buffer, ctp)
 char			*buffer;
@@ -300,10 +331,19 @@ int			ctp;
 
     extern void	init_ovlp();
 
+    if (need_prep) {
+	if (rtip) rt_clean(rtip);
+	do_rt_gettrees(rtip, NULL, NULL);
+    }
+
+
+
     if (do_backout)
     {
 	backout();
+#if 0
 	do_backout = 0;
+#endif
     }
 
     for (i = 0; i < 3; ++i)
@@ -438,11 +478,8 @@ char		*buffer;
 com_table	*ctp;
 
 {
-    double		tmp_dbl;
     int			i = 0;      /* current position on the *buffer */
     int			j;
-    extern struct rt_i	*rtip;
-
     double		mk_cvt_factor();
 
     while (isspace(*(buffer+i)))
@@ -479,6 +516,32 @@ com_table	*ctp;
 }
 
 void
+cm_attr(buffer, ctp)
+char		*buffer;
+com_table	*ctp;
+{
+    while (isascii(*buffer) && isspace(*buffer)) buffer++;
+
+    if (strlen(buffer) == 0) {
+	com_usage(ctp);
+	return;
+    }
+
+    if (! strncmp(buffer, "-p", 2) ) {
+	attrib_print();
+	return;
+    }
+
+    if (! strncmp(buffer, "-f", 2) ) {
+	attrib_flush();
+	return;
+    }
+
+    attrib_add(buffer);
+}
+
+
+void
 cm_debug(buffer, ctp)
 char		*buffer;
 com_table	*ctp;
@@ -496,7 +559,7 @@ com_table	*ctp;
 	}
 
 	/* Set a new value */
-	if (sscanf( cp, "%x", &nirt_debug ) == 1)
+	if (sscanf( cp, "%x", (unsigned int *)&nirt_debug ) == 1)
 	{
 	    bu_printb( "debug ", nirt_debug, DEBUG_FMT );
 	    bu_log("\n");
@@ -517,15 +580,15 @@ com_table	*ctp;
 	if (*cp == '\0')
 	{
 	    /* display current value */
-	    bu_printb( "libdebug ", rt_g.debug, RT_DEBUG_FMT );
+	    bu_printb( "libdebug ", RT_G_DEBUG, RT_DEBUG_FMT );
 	    bu_log("\n");
 	    return;
 	}
 
 	/* Set a new value */
-	if (sscanf( cp, "%x", &rt_g.debug ) == 1)
+	if (sscanf( cp, "%x", (unsigned int *)&rt_g.debug ) == 1)
 	{
-	    bu_printb( "libdebug ", rt_g.debug, RT_DEBUG_FMT );
+	    bu_printb( "libdebug ", RT_G_DEBUG, RT_DEBUG_FMT );
 	    bu_log("\n");
 	}
 	else

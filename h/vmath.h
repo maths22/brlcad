@@ -69,6 +69,27 @@
 extern "C" {
 #endif
 
+#ifndef M_PI
+
+# define M_E		2.7182818284590452354	/* e */
+# define M_LOG2E	1.4426950408889634074	/* log_2 e */
+# define M_LOG10E	0.43429448190325182765	/* log_10 e */
+# define M_LN2		0.69314718055994530942	/* log_e 2 */
+# define M_LN10		2.30258509299404568402	/* log_e 10 */
+# define M_PI		3.14159265358979323846	/* pi */
+# define M_PI_2		1.57079632679489661923	/* pi/2 */
+# define M_PI_4		0.78539816339744830962	/* pi/4 */
+# define M_1_PI		0.31830988618379067154	/* 1/pi */
+# define M_2_PI		0.63661977236758134308	/* 2/pi */
+# define M_2_SQRTPI	1.12837916709551257390	/* 2/sqrt(pi) */
+# define M_SQRT2	1.41421356237309504880	/* sqrt(2) */
+# define M_SQRT1_2	0.70710678118654752440	/* 1/sqrt(2) */
+# define M_SQRT2_DIV2   0.70710678118654752440  /* 1/sqrt(2) */
+#endif
+#ifndef PI
+#  define PI M_PI
+#endif
+
 #ifndef sqrt
 	/* In case <math.h> has not been included, define sqrt() here */
 #	if __STDC__
@@ -202,15 +223,47 @@ typedef fastf_t	plane_t[ELEMENTS_PER_PLANE];
 
 
 /* Macro versions of librt/mat.c functions, for when speed really matters */
-#define MAT_ZERO(m)	{\
+#define MAT_ZERO(m)	{ \
+	(m)[0] = (m)[1] = (m)[2] = (m)[3] = \
+	(m)[4] = (m)[5] = (m)[6] = (m)[7] = \
+	(m)[8] = (m)[9] = (m)[10] = (m)[11] = \
+	(m)[12] = (m)[13] = (m)[14] = (m)[15] = 0.0;}
+
+/* #define MAT_ZERO(m)	{\
 	register int _j; \
 	for(_j=0; _j<16; _j++) (m)[_j]=0.0; }
+  */
 
 #define MAT_IDN(m)	{\
-	int _j;	for(_j=0;_j<16;_j++) (m)[_j]=0.0;\
+	(m)[1] = (m)[2] = (m)[3] = (m)[4] =\
+	(m)[6] = (m)[7] = (m)[8] = (m)[9] = \
+	(m)[11] = (m)[12] = (m)[13] = (m)[14] = 0.0;\
 	(m)[0] = (m)[5] = (m)[10] = (m)[15] = 1.0;}
 
-#define MAT_COPY(o,m)   VMOVEN(o,m,16)
+/* #define MAT_IDN(m)	{\
+	int _j;	for(_j=0;_j<16;_j++) (m)[_j]=0.0;\
+	(m)[0] = (m)[5] = (m)[10] = (m)[15] = 1.0;}
+  */
+
+#define MAT_COPY( d, s )	{ \
+	(d)[0] = (s)[0];\
+	(d)[1] = (s)[1];\
+	(d)[2] = (s)[2];\
+	(d)[3] = (s)[3];\
+	(d)[4] = (s)[4];\
+	(d)[5] = (s)[5];\
+	(d)[6] = (s)[6];\
+	(d)[7] = (s)[7];\
+	(d)[8] = (s)[8];\
+	(d)[9] = (s)[9];\
+	(d)[10] = (s)[10];\
+	(d)[11] = (s)[11];\
+	(d)[12] = (s)[12];\
+	(d)[13] = (s)[13];\
+	(d)[14] = (s)[14];\
+	(d)[15] = (s)[15]; }
+
+/* #define MAT_COPY(o,m)   VMOVEN(o,m,16)  */
 
 /* Set vector at `a' to have coordinates `b', `c', `d' */
 #define VSET(a,b,c,d)	{ \
@@ -856,8 +909,8 @@ typedef fastf_t	plane_t[ELEMENTS_PER_PLANE];
 	NEAR_ZERO(v[X],tol) && NEAR_ZERO(v[Y],tol) && NEAR_ZERO(v[Z],tol)  )
 
 /* Macros to update min and max X,Y,Z values to contain a point */
-#define V_MIN(r,s)	if( (r) > (s) ) r = (s)
-#define V_MAX(r,s)	if( (r) < (s) ) r = (s)
+#define V_MIN(r,s)	if( (s) < (r) ) r = (s)
+#define V_MAX(r,s)	if( (s) > (r) ) r = (s)
 #define VMIN(r,s)	{ V_MIN((r)[X],(s)[X]); V_MIN((r)[Y],(s)[Y]); V_MIN((r)[Z],(s)[Z]); }
 #define VMAX(r,s)	{ V_MAX((r)[X],(s)[X]); V_MAX((r)[Y],(s)[Y]); V_MAX((r)[Z],(s)[Z]); }
 #define VMINMAX( min, max, pt )	{ VMIN( (min), (pt) ); VMAX( (max), (pt) ); }

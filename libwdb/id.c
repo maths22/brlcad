@@ -19,7 +19,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -42,10 +42,10 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 int
 mk_id( fp, title )
-FILE		*fp;
-CONST char	*title;
+struct rt_wdb		*fp;
+const char	*title;
 {
-	return db_fwrite_ident( fp, title, 1.0 );
+	return mk_id_editunits( fp, title, 1.0 );
 }
 
 /*
@@ -60,11 +60,11 @@ CONST char	*title;
  */
 int
 mk_id_units( fp, title, units )
-FILE		*fp;
-CONST char	*title;
-register CONST char	*units;
+struct rt_wdb		*fp;
+const char	*title;
+register const char	*units;
 {
-	return db_fwrite_ident( fp, title, bu_units_conversion(units) );
+	return mk_id_editunits( fp, title, bu_units_conversion(units) );
 }
 
 /*
@@ -78,17 +78,22 @@ register CONST char	*units;
  *  If the user is editing in unusual units (like 2.5feet), don't
  *  fail to create the database header.
  *
- *  In the v5 database, the conversion factor should be stored intact.
+ *  In the v5 database, the conversion factor will be stored intact.
+ *
+ *  Note that the database-layer header record
+ *  will have already been written by db_create().
+ *  All we have to do here is update it.
  *
  *  Returns -
  *	<0	error
  *	0	success
  */
 int
-mk_id_editunits( fp, title, local2mm )
-FILE		*fp;
-CONST char	*title;
-double		local2mm;
+mk_id_editunits(
+	struct rt_wdb *wdbp,
+	const char *title,
+	double local2mm )
 {
-	return db_fwrite_ident( fp, title, local2mm );
+	RT_CK_WDB(wdbp);
+	return db_update_ident( wdbp->dbip, title, local2mm );
 }

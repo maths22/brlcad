@@ -138,12 +138,15 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSehy[] = "@(#)$Header$ (BRL)";
+static const char RCSehy[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
 
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #include <math.h>
 #include "machine.h"
 #include "vmath.h"
@@ -163,14 +166,15 @@ struct ehy_specific {
 	fastf_t	ehy_cprime;	/* c / |H| */
 };
 
-CONST struct bu_structparse rt_ehy_parse[] = {
+const struct bu_structparse rt_ehy_parse[] = {
     { "%f", 3, "V",   offsetof(struct rt_ehy_internal, ehy_V[X]),  BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "H",   offsetof(struct rt_ehy_internal, ehy_H[X]),  BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 3, "A",   offsetof(struct rt_ehy_internal, ehy_Au[X]), BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_1", offsetof(struct rt_ehy_internal, ehy_r1),    BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "r_2", offsetof(struct rt_ehy_internal, ehy_r2),    BU_STRUCTPARSE_FUNC_NULL },
     { "%f", 1, "c",   offsetof(struct rt_ehy_internal, ehy_c),     BU_STRUCTPARSE_FUNC_NULL },
-    {0} };
+    { {'\0','\0','\0','\0'}, 0, (char *)NULL, 0, BU_STRUCTPARSE_FUNC_NULL }
+ };
 
 /*
  *  			R T _ E H Y _ P R E P
@@ -195,7 +199,9 @@ struct rt_i		*rtip;
 {
 	struct rt_ehy_internal		*xip;
 	register struct ehy_specific	*ehy;
-	CONST struct bn_tol		*tol = &rtip->rti_tol;
+#ifndef NO_MAGIC_CHECKING
+	const struct bn_tol		*tol = &rtip->rti_tol;
+#endif
 	LOCAL fastf_t	magsq_h;
 	LOCAL fastf_t	mag_a, mag_h;
 	LOCAL fastf_t	c, f, r1, r2;
@@ -203,8 +209,10 @@ struct rt_i		*rtip;
 	LOCAL mat_t	Rinv;
 	LOCAL mat_t	S;
 
+#ifndef NO_MAGIC_CHECKING
 	RT_CK_DB_INTERNAL(ip);
 	BN_CK_TOL(tol);
+#endif
 	xip = (struct rt_ehy_internal *)ip->idb_ptr;
 	RT_EHY_CK_MAGIC(xip);
 
@@ -246,14 +254,14 @@ struct rt_i		*rtip;
 	ehy->ehy_cprime = c / mag_h;
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], ehy->ehy_Bunit );
 	VMOVE(    &R[4], ehy->ehy_Aunit );
 	VREVERSE( &R[8], ehy->ehy_Hunit );
 	bn_mat_trn( Rinv, R );			/* inv of rot mat is trn */
 
 	/* Compute S */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = 1.0/r2;
 	S[ 5] = 1.0/r1;
 	S[10] = 1.0/mag_h;
@@ -286,9 +294,9 @@ struct rt_i		*rtip;
  */
 void
 rt_ehy_print( stp )
-register CONST struct soltab *stp;
+register const struct soltab *stp;
 {
-	register CONST struct ehy_specific *ehy =
+	register const struct ehy_specific *ehy =
 		(struct ehy_specific *)stp->st_specific;
 
 	VPRINT("V", ehy->ehy_V);
@@ -529,7 +537,7 @@ struct soltab		*stp;
 		/* get the saved away scale factor */
 		scale = - hitp->hit_vpriv[X];
 
-		bn_mat_idn( M1 );
+		MAT_IDN( M1 );
 		M1[0] = M1[5] = (4 * ehy->ehy_cprime + 2)
 			/ (ehy->ehy_cprime * ehy->ehy_cprime);
 		M1[10] = -1.;
@@ -645,8 +653,8 @@ int
 rt_ehy_plot( vhead, ip, ttol, tol )
 struct bu_list		*vhead;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		c, dtol, f, mag_a, mag_h, ntol, r1, r2;
 	fastf_t		**ellipses, theta_prev, theta_new, rt_ell_ang();
@@ -693,7 +701,7 @@ CONST struct bn_tol	*tol;
 	VCROSS(   Bu, Au, Hu );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Bu );
 	VMOVE(    &R[4], Au );
 	VREVERSE( &R[8], Hu );
@@ -929,8 +937,8 @@ rt_ehy_tess( r, m, ip, ttol, tol )
 struct nmgregion	**r;
 struct model		*m;
 struct rt_db_internal	*ip;
-CONST struct rt_tess_tol *ttol;
-CONST struct bn_tol	*tol;
+const struct rt_tess_tol *ttol;
+const struct bn_tol	*tol;
 {
 	fastf_t		c, dtol, f, mag_a, mag_h, ntol, r1, r2, cprime;
 	fastf_t		**ellipses, theta_prev, theta_new, rt_ell_ang();
@@ -945,7 +953,7 @@ CONST struct bn_tol	*tol;
 	point_t		p1;
 	struct rt_pt_node	*pos_a, *pos_b, *pts_a, *pts_b, *rt_ptalloc();
 	struct shell	*s;
-	struct faceuse	**outfaceuses;
+	struct faceuse	**outfaceuses = NULL;
 	struct faceuse	*fu_top;
 	struct loopuse	*lu;
 	struct edgeuse	*eu;
@@ -989,14 +997,14 @@ CONST struct bn_tol	*tol;
 	VCROSS(   Bu, Au, Hu );
 
 	/* Compute R and Rinv matrices */
-	bn_mat_idn( R );
+	MAT_IDN( R );
 	VREVERSE( &R[0], Bu );
 	VMOVE(    &R[4], Au );
 	VREVERSE( &R[8], Hu );
 	bn_mat_trn( invR, R );			/* inv of rot mat is trn */
 
 	/* Compute S */
-	bn_mat_idn( S );
+	MAT_IDN( S );
 	S[ 0] = 1.0/r2;
 	S[ 5] = 1.0/r1;
 	S[10] = 1.0/mag_h;
@@ -1090,8 +1098,11 @@ CONST struct bn_tol	*tol;
 		/* free mem for old approximation of hyperbola */
 		pos_b = pts_b;
 		while ( pos_b ) {
+			struct rt_pt_node *tmp;
+
+			tmp = pos_b->next;
 			bu_free( (char *)pos_b, "rt_pt_node" );
-			pos_b = pos_b->next;
+			pos_b = tmp;
 		}
 		/* construct hyperbola along semi-major axis of ehy
 		 * using same z coords as parab along semi-minor axis
@@ -1145,12 +1156,13 @@ CONST struct bn_tol	*tol;
 			face = nseg*(1 + 3*((1 << (nell-1)) - 1));
 			/* array for each triangular face */
 			outfaceuses = (struct faceuse **)
-			bu_malloc( (face+1) * sizeof(struct faceuse *), "faceuse []" );
+				bu_malloc( (face+1) * sizeof(struct faceuse *), "ehy: *outfaceuses[]" );
 		} else if (theta_new < theta_prev) {
 			nseg *= 2;
 			pts_dbl[i] = 1;
-		} else
+		} else {
 			pts_dbl[i] = 0;
+		}
 		theta_prev = theta_new;
 
 		ellipses[i] = (fastf_t *)bu_malloc(3*(nseg+1)*sizeof(fastf_t),
@@ -1184,6 +1196,7 @@ CONST struct bn_tol	*tol;
 	for (i = 0; i < nseg; i++)
 		vells[nell-1][i] = (struct vertex *)NULL;
 	face = 0;
+	BU_ASSERT_PTR( outfaceuses, !=, NULL );
 	if ( (outfaceuses[face++] = nmg_cface(s, vells[nell-1], nseg)) == 0) {
 		bu_log("rt_ehy_tess() failure, top face\n");
 		goto fail;
@@ -1414,9 +1427,9 @@ fail:
 int
 rt_ehy_import( ip, ep, mat, dbip )
 struct rt_db_internal		*ip;
-CONST struct bu_external	*ep;
-register CONST mat_t		mat;
-CONST struct db_i		*dbip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
 {
 	LOCAL struct rt_ehy_internal	*xip;
 	union record			*rp;
@@ -1429,7 +1442,8 @@ CONST struct db_i		*dbip;
 		return(-1);
 	}
 
-	RT_INIT_DB_INTERNAL( ip );
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
 	ip->idb_type = ID_EHY;
 	ip->idb_meth = &rt_functab[ID_EHY];
 	ip->idb_ptr = bu_malloc( sizeof(struct rt_ehy_internal), "rt_ehy_internal");
@@ -1463,9 +1477,9 @@ CONST struct db_i		*dbip;
 int
 rt_ehy_export( ep, ip, local2mm, dbip )
 struct bu_external		*ep;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 double				local2mm;
-CONST struct db_i		*dbip;
+const struct db_i		*dbip;
 {
 	struct rt_ehy_internal	*xip;
 	union record		*ehy;
@@ -1475,7 +1489,7 @@ CONST struct db_i		*dbip;
 	xip = (struct rt_ehy_internal *)ip->idb_ptr;
 	RT_EHY_CK_MAGIC(xip);
 
-	BU_INIT_EXTERNAL(ep);
+	BU_CK_EXTERNAL(ep);
 	ep->ext_nbytes = sizeof(union record);
 	ep->ext_buf = (genptr_t)bu_calloc( 1, ep->ext_nbytes, "ehy external");
 	ehy = (union record *)ep->ext_buf;
@@ -1519,6 +1533,119 @@ CONST struct db_i		*dbip;
 }
 
 /*
+ *			R T _ E H Y _ I M P O R T 5
+ *
+ *  Import an EHY from the database format to the internal format.
+ *  Apply modeling transformations as well.
+ */
+int
+rt_ehy_import5( ip, ep, mat, dbip )
+struct rt_db_internal		*ip;
+const struct bu_external	*ep;
+register const mat_t		mat;
+const struct db_i		*dbip;
+{
+	LOCAL struct rt_ehy_internal	*xip;
+	fastf_t				vec[3*4];
+
+	BU_CK_EXTERNAL( ep );
+
+	BU_ASSERT_LONG( ep->ext_nbytes, ==, SIZEOF_NETWORK_DOUBLE * 3*4 );
+
+	RT_CK_DB_INTERNAL( ip );
+	ip->idb_major_type = DB5_MAJORTYPE_BRLCAD;
+	ip->idb_type = ID_EHY;
+	ip->idb_meth = &rt_functab[ID_EHY];
+	ip->idb_ptr = bu_malloc( sizeof(struct rt_ehy_internal), "rt_ehy_internal");
+
+	xip = (struct rt_ehy_internal *)ip->idb_ptr;
+	xip->ehy_magic = RT_EHY_INTERNAL_MAGIC;
+
+	/* Convert from database (network) to internal (host) format */
+	ntohd( (unsigned char *)vec, ep->ext_buf, 3*4 );
+
+	/* Apply modeling transformations */
+	MAT4X3PNT( xip->ehy_V, mat, &vec[0*3] );
+	MAT4X3VEC( xip->ehy_H, mat, &vec[1*3] );
+	MAT4X3VEC( xip->ehy_Au, mat, &vec[2*3] );
+	VUNITIZE( xip->ehy_Au );
+	xip->ehy_r1 = vec[3*3] / mat[15];
+	xip->ehy_r2 = vec[3*3+1] / mat[15];
+	xip->ehy_c  = vec[3*3+2] / mat[15];
+
+	if( xip->ehy_r1 < SMALL_FASTF || xip->ehy_r2 < SMALL_FASTF || xip->ehy_c < SMALL_FASTF )
+	{
+		bu_log( "rt_ehy_import: r1, r2, or c are zero\n" );
+		bu_free( (char *)ip->idb_ptr , "rt_ehy_import: ip->idb_ptr" );
+		return( -1 );
+	}
+
+	return(0);			/* OK */
+}
+
+/*
+ *			R T _ E H Y _ E X P O R T 5
+ *
+ *  The name is added by the caller, in the usual place.
+ */
+int
+rt_ehy_export5( ep, ip, local2mm, dbip )
+struct bu_external		*ep;
+const struct rt_db_internal	*ip;
+double				local2mm;
+const struct db_i		*dbip;
+{
+	struct rt_ehy_internal	*xip;
+	fastf_t			vec[3*4];
+
+	RT_CK_DB_INTERNAL(ip);
+	if( ip->idb_type != ID_EHY )  return(-1);
+	xip = (struct rt_ehy_internal *)ip->idb_ptr;
+	RT_EHY_CK_MAGIC(xip);
+
+	BU_CK_EXTERNAL(ep);
+	ep->ext_nbytes = SIZEOF_NETWORK_DOUBLE * 3*4;
+	ep->ext_buf = (genptr_t)bu_malloc( ep->ext_nbytes, "ehy external");
+
+	if (!NEAR_ZERO( MAGNITUDE(xip->ehy_Au) - 1., RT_LEN_TOL)) {
+		bu_log("rt_ehy_export: Au not a unit vector!\n");
+		return(-1);
+	}
+
+	if (MAGNITUDE(xip->ehy_H) < RT_LEN_TOL
+		|| xip->ehy_c < RT_LEN_TOL
+		|| xip->ehy_r1 < RT_LEN_TOL
+		|| xip->ehy_r2 < RT_LEN_TOL) {
+		bu_log("rt_ehy_export: not all dimensions positive!\n");
+		return(-1);
+	}
+	
+	if ( !NEAR_ZERO( VDOT(xip->ehy_Au, xip->ehy_H), RT_DOT_TOL) ) {
+		bu_log("rt_ehy_export: Au and H are not perpendicular!\n");
+		return(-1);
+	}
+	
+	if (xip->ehy_r2 > xip->ehy_r1) {
+		bu_log("rt_ehy_export: semi-minor axis cannot be longer than semi-major axis!\n");
+		return(-1);
+	}
+
+	/* Warning:  type conversion */
+	VSCALE( &vec[0*3], xip->ehy_V, local2mm );
+	VSCALE( &vec[1*3], xip->ehy_H, local2mm );
+	/* don't scale ehy_Au (unit vector!!) */
+	VMOVE( &vec[2*3], xip->ehy_Au );
+	vec[3*3] = xip->ehy_r1 * local2mm;
+	vec[3*3+1] = xip->ehy_r2 * local2mm;
+	vec[3*3+2] = xip->ehy_c * local2mm;
+
+	/* Convert from internal (host) to database (network) format */
+	htond( ep->ext_buf, (unsigned char *)vec, 3*4 );
+
+	return(0);
+}
+
+/*
  *			R T _ E H Y _ D E S C R I B E
  *
  *  Make human-readable formatted presentation of this solid.
@@ -1528,7 +1655,7 @@ CONST struct db_i		*dbip;
 int
 rt_ehy_describe( str, ip, verbose, mm2local )
 struct bu_vls		*str;
-CONST struct rt_db_internal	*ip;
+const struct rt_db_internal	*ip;
 int			verbose;
 double			mm2local;
 {

@@ -1,5 +1,5 @@
 #ifndef lint
-static char rcsid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 #include "conf.h"
 
@@ -45,6 +45,13 @@ extern double Beta;
  *	Christopher T. Johnson
  *
  * $Log$
+ * Revision 11.2  2000/08/24 23:07:42  mike
+ *
+ * lint
+ *
+ * Revision 11.1  1995/01/04  10:21:52  mike
+ * Release_4.4
+ *
  * Revision 10.2  94/08/23  17:59:09  gdurf
  * Added includes of conf.h, machine.h, externs.h for malloc
  * 

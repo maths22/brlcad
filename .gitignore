@@ -34,6 +34,11 @@
 /.util.*
 /.vas4.*
 /.vdeck.*
+bench/*.log
+bench/*.log.*
+bench/*.pix
+bench/*.pix.*
+bench/.cvsignore
 tclscripts/lib/tclIndex
 tclscripts/mged/tclIndex
 tclscripts/pl-dm/tclIndex

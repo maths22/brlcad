@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -33,6 +33,7 @@ static char	*framebuffer = NULL;
 static char usage[] = "\
 Usage: fbfree [-F framebuffer]\n";
 
+int
 main(argc, argv)
 char	**argv;
 int	argc;

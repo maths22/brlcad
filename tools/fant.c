@@ -50,6 +50,12 @@
 #include <stdio.h>
 #include <math.h>
 
+#ifdef USE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+
 #include "machine.h"
 #include "externs.h"
 #include "rle.h"
@@ -149,7 +155,7 @@ rle_pixel * ptr;
 }
 #endif /* DEBUG */
 
-void
+int
 main(argc,argv)
 int argc;
 char *argv[];
@@ -469,7 +475,8 @@ double xscale, yscale, angle;
       /*H_PASS*/   INDEX(in_rast[cur_chan], index, const_ind ) )
 
 #define putpxl(index,pxlval)                                        \
-{   unsigned int pxl = pxlval;                                      \
+{   unsigned int pxl;						    \
+    pxl = pxlval;                                      		    \
     if (pxl > 255) pxl = 255;                                       \
     if (pass == V_PASS)                                             \
 	INDEX(out_rast[cur_chan], const_ind, index) =  pxl;         \

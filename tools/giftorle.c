@@ -35,7 +35,7 @@
 #include "rle.h"
 
 #ifndef lint
-static char rcsid[] = "$Id$";
+static const char rcsid[] = "$Id$";
 #endif
 
 #define	MAXCOLORMAPSIZE		256
@@ -65,7 +65,7 @@ int ReadInterlaced(), ReadRaster();
 
 static rle_map out_map[3*(1<<8)];
 
-CONST char *MY_NAME = "giftorle";
+const char *MY_NAME = "giftorle";
 
 FILE *outfile;
 
@@ -80,7 +80,7 @@ struct {
 
 static int output_colormap = FALSE;
 
-void
+int
 main(argc,argv)
 int	argc;
 char	**argv;
@@ -106,6 +106,7 @@ char	**argv;
 
     while ( nfname-- > 0 )
 	(void)ReadGIF( *infname++ );
+    return 0;
 }
 
 int

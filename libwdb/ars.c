@@ -16,7 +16,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -46,18 +46,19 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
  */
 int
 mk_ars( filep, name, ncurves, pts_per_curve, curves )
-FILE	*filep;
-char	*name;
+struct rt_wdb	*filep;
+const char	*name;
 int	ncurves;
 int	pts_per_curve;
 fastf_t	**curves;
 {
-	struct rt_ars_internal	ars;
+	struct rt_ars_internal	*ars;
 
-	ars.magic = RT_ARS_INTERNAL_MAGIC;
-	ars.ncurves = ncurves;
-	ars.pts_per_curve = pts_per_curve;
-	ars.curves = curves;
+	BU_GETSTRUCT( ars, rt_ars_internal );
+	ars->magic = RT_ARS_INTERNAL_MAGIC;
+	ars->ncurves = ncurves;
+	ars->pts_per_curve = pts_per_curve;
+	ars->curves = curves;
 
-	return mk_export_fwrite( filep, name, (genptr_t)&ars, ID_ARS );
+	return wdb_export( filep, name, (genptr_t)ars, ID_ARS, mk_conv2mm );
 }

@@ -20,10 +20,25 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
+#include "conf.h"
+
 #include <stdio.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#else
+#include <strings.h>
+#endif
+#include <unistd.h>
+#include <stdlib.h>
+
+#include "conf.h"
+#include "machine.h"
+#include "bu.h"
+#include "vmath.h"
+#include "bn.h"
 
 void	getstring();
 void	getargs();
@@ -126,6 +141,7 @@ int	expand_it = 0;		/* expand plot to 4k, beyond what will fit on real Tek scree
 static char usage[] = "\
 Usage: pl-tek [-e] [-v] < file.pl > file.tek\n";
 
+int
 main( argc, argv )
 int	argc;
 char	**argv;
@@ -305,6 +321,21 @@ char	**argv;
 
 /*** Input args ***/
 
+int
+getshort()
+{
+	register long	v, w;
+
+	v = getchar();
+	v |= (getchar()<<8);	/* order is important! */
+
+	/* worry about sign extension - sigh */
+	if( v <= 0x7FFF )  return(v);
+	w = -1;
+	w &= ~0x7FFF;
+	return( w | v );
+}
+
 void
 getargs( up )
 struct uplot *up;
@@ -345,28 +376,15 @@ getstring()
 	*cp = 0;
 }
 
-getshort()
-{
-	register long	v, w;
-
-	v = getchar();
-	v |= (getchar()<<8);	/* order is important! */
-
-	/* worry about sign extension - sigh */
-	if( v <= 0x7FFF )  return(v);
-	w = -1;
-	w &= ~0x7FFF;
-	return( w | v );
-}
 
 double
 getieee()
 {
-	char	in[8];
+	unsigned char	in[8];
 	double	d;
 
 	fread( in, 8, 1, stdin );
-	ntohd( &d, in, 1 );
+	ntohd( (unsigned char *)&d, in, 1 );
 	return	d;
 }
 
@@ -431,7 +449,7 @@ register int x,y;
 	hiy=(y>>7) & 037;
 	lox = (x>>2)&037;
 	loy=(y>>2)&037;
-	extra=x&03+(y<<2)&014;
+	extra = (x & 03) + ((y<<2) & 014);
 	n = (abs(hix-ohix) + abs(hiy-ohiy) + 6) / 12;
 	if(hiy != ohiy){
 		(void)putc(hiy|040,stdout);

@@ -16,7 +16,7 @@
  */
 
 #ifndef lint
-static char RCSid[] = "$Header$";
+static const char RCSid[] = "$Header$";
 #endif
 
 #include "conf.h"
@@ -136,7 +136,7 @@ static int
 select_region( tsp, pathp, combp, client_data )
 register struct db_tree_state	*tsp;
 struct db_full_path	*pathp;
-CONST struct rt_comb_internal *combp;
+const struct rt_comb_internal *combp;
 genptr_t		client_data;
 {
 	if(verbose )
@@ -152,7 +152,7 @@ static int
 get_reg_id( tsp, pathp, combp, client_data )
 register struct db_tree_state	*tsp;
 struct db_full_path	*pathp;
-CONST struct rt_comb_internal *combp;
+const struct rt_comb_internal *combp;
 genptr_t client_data;
 {
 	if( verbose )
@@ -175,11 +175,10 @@ genptr_t		client_data;
 }
 
 static union tree *
-leaf_stub( tsp, pathp, ep, id, client_data )
+leaf_stub( tsp, pathp, ip, client_data )
 struct db_tree_state    *tsp;
 struct db_full_path     *pathp;
-struct bu_external      *ep;
-int                     id;
+struct rt_db_internal	*ip;
 genptr_t		client_data;
 {
 	bu_log( "leaf stub called, this shouldn't happen\n" );
@@ -190,10 +189,10 @@ genptr_t		client_data;
 
 static void
 Write_euclid_face( lu , facet_type , regionid , face_number )
-CONST struct loopuse *lu;
-CONST int facet_type;
-CONST int regionid;
-CONST int face_number;
+const struct loopuse *lu;
+const int facet_type;
+const int regionid;
+const int face_number;
 {
 	struct faceuse *fu;
 	struct edgeuse *eu;
@@ -247,7 +246,7 @@ struct nmgregion *r;
 struct db_tree_state *tsp;
 {
 	struct shell *s;
-	struct facets *faces;
+	struct facets *faces=NULL;
 	int i,j;
 
 	NMG_CK_REGION( r );
@@ -338,7 +337,7 @@ struct db_tree_state *tsp;
 			}
 			else if( no_of_loops == no_of_holes + 1 )
 			{
-				struct loopuse *outer_lu;
+				struct loopuse *outer_lu=(struct loopuse *)NULL;
 
 				/* only one outer loop, so find it */
 				for( i=0 ; i<no_of_loops ; i++ )
@@ -532,6 +531,8 @@ char	*argv[];
 	tree_state.ts_tol = &tol;
 	tree_state.ts_ttol = &ttol;
 
+	rt_init_resource( &rt_uniresource, 0, NULL );
+
 	/* XXX For visualization purposes, in the debug plot files */
 	{
 		extern fastf_t	nmg_eue_dist;	/* librt/nmg_plot.c */
@@ -565,10 +566,10 @@ char	*argv[];
 			rt_g.debug = 1;	/* XXX DEBUG_ALLRAYS -- to get core dumps */
 			break;
 		case 'x':
-			sscanf( optarg, "%x", &rt_g.debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.debug );
 			break;
 		case 'X':
-			sscanf( optarg, "%x", &rt_g.NMG_debug );
+			sscanf( optarg, "%x", (unsigned int *)&rt_g.NMG_debug );
 			NMG_debug = rt_g.NMG_debug;
 			break;
 		default:
@@ -590,7 +591,7 @@ char	*argv[];
 		perror(argv[0]);
 		exit(1);
 	}
-	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+	db_dirbuild( dbip );
 
 	if( out_file == NULL )
 		fp_out = stdout;
@@ -608,7 +609,7 @@ char	*argv[];
 	fprintf( fp_out , "$03" );
 
 	/* First produce an unordered list of region ident codes */
-	(void)db_walk_tree(dbip, argc-optind, (CONST char **)(&argv[optind]),
+	(void)db_walk_tree(dbip, argc-optind, (const char **)(&argv[optind]),
 		1,			/* ncpu */
 		&tree_state,
 		get_reg_id,			/* put id in table */
@@ -642,7 +643,7 @@ char	*argv[];
 		tree_state.ts_tol = &tol;
 		tree_state.ts_ttol = &ttol;
 
-		(void)db_walk_tree(dbip, argc-optind, (CONST char **)(&argv[optind]),
+		(void)db_walk_tree(dbip, argc-optind, (const char **)(&argv[optind]),
 			1,			/* ncpu */
 			&tree_state,
 			select_region,
@@ -669,7 +670,7 @@ char	*argv[];
 		regions_written, percent );
 
 	/* Release dynamic storage */
-	bn_vlist_cleanup();
+	rt_vlist_cleanup();
 	db_close(dbip);
 
 #if MEMORY_LEAK_CHECKING
@@ -692,7 +693,6 @@ struct db_full_path	*pathp;
 union tree		*curtree;
 genptr_t		client_data;
 {
-	extern FILE		*fp_fig;
 	struct nmgregion	*r;
 	struct bu_list		vhead;
 	union tree		*ret_tree;
@@ -706,7 +706,7 @@ genptr_t		client_data;
 
 	BU_LIST_INIT(&vhead);
 
-	if (rt_g.debug&DEBUG_TREEWALK || verbose) {
+	if (RT_G_DEBUG&DEBUG_TREEWALK || verbose) {
 		char	*sofar = db_path_to_string(pathp);
 		bu_log("\ndo_region_end(%d %d%%) %s\n",
 			regions_tried,
@@ -734,7 +734,7 @@ genptr_t		client_data;
 		nmg_isect2d_final_cleanup();
 
 		/* Release the tree memory & input regions */
-		db_free_tree(curtree);		/* Does an nmg_kr() */
+		db_free_tree(curtree, &rt_uniresource);	/* Does an nmg_kr() */
 
 		/* Get rid of (m)any other intermediate structures */
 		if( (*tsp->ts_m)->magic == NMG_MODEL_MAGIC )
@@ -750,7 +750,9 @@ genptr_t		client_data;
 	if( verbose )
 		bu_log( "\tEvaluating region\n" );
 	(void)nmg_model_fuse(*tsp->ts_m, tsp->ts_tol);
-	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol);	/* librt/nmg_bool.c */
+
+	/* librt/nmg_bool.c */
+	ret_tree = nmg_booltree_evaluate(curtree, tsp->ts_tol, &rt_uniresource);
 
 	if( ret_tree )
 		r = ret_tree->tr_d.td_r;
@@ -805,7 +807,7 @@ genptr_t		client_data;
 	 *  A return of TREE_NULL from this routine signals an error,
 	 *  so we need to cons up an OP_NOP node to return.
 	 */
-	db_free_tree(curtree);		/* Does an nmg_kr() */
+	db_free_tree(curtree, &rt_uniresource);		/* Does an nmg_kr() */
 
 out:
 	BU_GETUNION(curtree, tree);

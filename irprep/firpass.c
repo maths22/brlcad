@@ -49,7 +49,7 @@
 /*			   desired.  */
 
 #ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+static const char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include "conf.h"
@@ -89,7 +89,7 @@ extern double radians();/*  Subroutines to find angle in radians.  */
 /*  Define structure.  */
 struct table
 {
-	CONST char *regname;		/*  region name  */
+	const char *regname;		/*  region name  */
 	short mat;		/*  material code  */
 	double cumnorm[3];	/*  cummulative normal vector sum  */
 				/*  for the exterior free surfaces  */
@@ -153,7 +153,7 @@ char *argv[];
 				/*  surface area  */
 	int num;		/*  number of regions  */
 	double total;		/*  used in computing different values  */
-	FILE *fp;		/*  used for writing output to file  */
+	FILE *fp=NULL;		/*  used for writing output to file  */
 	char filename[16];	/*  file name for writing output to  */
 	int iwrite;		/*  0=>write to standard out, 1=>write  */
 				/*  to file  */
@@ -184,7 +184,7 @@ char *argv[];
 	/*  Variables used in facet grouping file.  */
 	FILE *fp1;		/*  facet grouping file  */
 	char facfile[16];	/*  facet grouping file name  */
-	int facnum;		/*  facet number  */
+	int facnum=0;		/*  facet number  */
 	char facname[25];	/*  facet name  */
 	int c;			/*  used in finding facet name from  */
 				/*  region name  */
@@ -2284,7 +2284,7 @@ char *argv[];
    return(0);
 }
 
-
+int
 hit(ap_p,PartHeadp)
 register struct application *ap_p;
 struct partition *PartHeadp;
@@ -2710,6 +2710,7 @@ struct partition *PartHeadp;
 	return (1);
 }
 
+int
 miss(ap_p)
 
 /*  User supplied miss function.  */
@@ -2723,6 +2724,7 @@ register struct application *ap_p;
 	return (0);
 }
 
+int
 ovrlap(ap_p,PartHeadp,reg1,reg2)
 
 /*  User supplied overlap function.  */
