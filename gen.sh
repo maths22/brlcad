@@ -37,7 +37,7 @@ NFS=1
 # Label number for this CAD Release,
 # RCS main Revision number, and date.
 #RELEASE=M.N;	RCS_REVISION=X;		REL=DATE=dd-mmm-yy
-RELEASE=5.1;	RCS_REVISION=13;	REL_DATE=Today		# beyond 5.1
+RELEASE=5.2;	RCS_REVISION=13;	REL_DATE=7-Oct-00	# 5.2
 #RELEASE=5.0;	RCS_REVISION=12;	REL_DATE=15-Sept-99	# 5.0 production
 #RELEASE=4.6;	RCS_REVISION=11;	REL_DATE=7-Jul-99	# 5.0beta
 #RELEASE=4.5;	RCS_REVISION=11;	REL_DATE=14-Feb-98	# 4.5 production
@@ -187,6 +187,7 @@ BDIRS="bench \
 	libmultispectral \
 	libtermio \
 	libtclcad \
+	libtclhooks \
 	conv \
 	db \
 	rt \
@@ -220,8 +221,7 @@ BDIRS="bench \
 	canon \
 	burst \
 	gtools \
-	tk \
-	cwish \
+	bwish \
 "			# This ends the list.
 
 TSDIRS=". mged nirt pl-dm lib util"
@@ -407,7 +407,8 @@ perms)
 	#
 	#########################################
 
-	chown -R bin.bin /usr/brlcad
+	chown -R bin /usr/brlcad
+	chgrp -R bin /usr/brlcad
 
 	for dir in /usr/brlcad/etc /usr/brlcad/html /usr/brlcad/include \
 		/usr/brlcad/man /usr/brlcad/sample_applications \
@@ -551,6 +552,15 @@ checkin)
 #	Any additional arguments to "gen.sh" after the "dist" will be passed to "cvs"
 #
 dist)
+#	/usr/gnu/bin/tar doesn't work correctly on CAD
+#	make sure we are not running under IRIX
+	OS=`uname`
+	if test "$OS" != Linux -a "$OS" != FreeBSD
+	then
+		echo "Source distribution should be made using Linux or FreeBSD"
+		echo "/usr/gnu/bin/tar is broken under IRIX"
+		exit
+	fi
 #	if this is a tty, get the encryption key
 	if tty -s
 	then
@@ -650,58 +660,69 @@ dist)
 	echo 'pro-engineer/*' >> ${EXCLUDE}
 	echo 'libtcl/*' >> ${EXCLUDE}
 	echo 'libtk/*' >> ${EXCLUDE}
+	echo 'libitcl/*' >> ${EXCLUDE}
 
-	/usr/gnu/bin/tar cfv - Copy* README doc html \
+	tar cfv - Copy* README doc html \
 	    zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-a.gz
 	chmod 444 ${FTP_ARCHIVE}-a.gz
 	echo "${FTP_ARCHIVE}-a.gz created (doc)"
 
-	/usr/gnu/bin/tar -cvf - -X ${EXCLUDE} [A-Z]* [a-k]* zzzEND |\
+	tar -cvf - -X ${EXCLUDE} [A-Z]* [a-k]* zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-b.gz
 	chmod 444 ${FTP_ARCHIVE}-b.gz
 	echo "${FTP_ARCHIVE}-b.gz created (core 1)"
 
-	/usr/gnu/bin/tar -cvf - -X ${EXCLUDE} Copy* README l[a-g]* lia* lib[a-s]* zzzEND |\
+	tar -cvf - -X ${EXCLUDE} Copy* README l[a-g]* lia* lib[a-s]* zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-c.gz
 	chmod 444 ${FTP_ARCHIVE}-c.gz
 	echo "${FTP_ARCHIVE}-c.gz created (core 2)"
 
-	/usr/gnu/bin/tar -cvf - -X ${EXCLUDE} Copy* README lib[t-z]* li[c-z]* l[j-z]* [m-t]* zzzEND |\
+	tar -cvf - -X ${EXCLUDE} Copy* README lib[t-z]* li[c-z]* l[j-z]* [m-p]* zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-d.gz
 	chmod 444 ${FTP_ARCHIVE}-d.gz
 	echo "${FTP_ARCHIVE}-d.gz created (core 3)"
 
-	/usr/gnu/bin/tar -cvf - -X ${EXCLUDE} Copy* README [m-t]* [u-z]* zzzEND |\
+	tar -cvf - -X ${EXCLUDE} Copy* README [q-z]* zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-e.gz
 	chmod 444 ${FTP_ARCHIVE}-e.gz
 	echo "${FTP_ARCHIVE}-e.gz created (core 4)"
 
-	/usr/gnu/bin/tar cfv - Copy* README pix zzzEND |\
+	tar cfv - Copy* README pix zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-f.gz
 	chmod 444 ${FTP_ARCHIVE}-f.gz
 	echo "${FTP_ARCHIVE}-f.gz created (pix)"
 
-	/usr/gnu/bin/tar cfv - Copy* README vfont zzzEND |\
+	tar cfv - Copy* README vfont zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-g.gz
 	chmod 444 ${FTP_ARCHIVE}-g.gz
 	echo "${FTP_ARCHIVE}-g.gz created (vfont)"
 
-	/usr/gnu/bin/tar cfv - Copy* README pro-engineer zzzEND |\
+	tar cfv - Copy* README pro-engineer zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-h.gz
 	chmod 444 ${FTP_ARCHIVE}-h.gz
 	echo "${FTP_ARCHIVE}-h.gz created (pro-engineer)"
 
-	/usr/gnu/bin/tar cfv - Copy* README libtcl libtk zzzEND |\
+	tar cfv - Copy* README libtcl libtk libitcl zzzEND |\
 		gzip -9 > ${FTP_ARCHIVE}-i.gz
 	chmod 444 ${FTP_ARCHIVE}-i.gz
-	echo "${FTP_ARCHIVE}-i.gz created (libtcl libtk)"
+	echo "${FTP_ARCHIVE}-i.gz created (libtcl libtk libitcl)"
 
 	rm -f ${EXCLUDE}
+
+#	Select available encryption utility
+	echo "Hello" | crypt key > /dev/null 2>&1
+	if test $? -gt 0
+	then
+		COMMAND=enigma
+	else
+		COMMAND=crypt
+	fi
+
 	if test ${DO_ENCRYPTION} -eq 1
 	then
 		for FILE in ${FTP_ARCHIVE}-*.gz ; do
-			crypt ${KEY} < ${FILE} > ${FILE}.crypt
+			$COMMAND ${KEY} < ${FILE} > ${FILE}.crypt
 			rm -f ${FILE}
 		done
 	else

@@ -32,8 +32,11 @@
  *
  */
 
-#include <sys/time.h>
 #include <time.h>
+#if defined(IRIX) && IRIX == 5
+#define _BSD_COMPAT
+#endif
+#include <sys/time.h>
 #include "conf.h"
 #include "tcl.h"
 
@@ -56,7 +59,7 @@
 #define ESC         27
 #define BACKSPACE   '\b'
 #define DELETE      127
-#define PROMPT "\rcwish> "
+#define PROMPT "\rbwish> "
 
 #define SPACES "                                                                                                                                                                                                                                                                                                           "
 
