@@ -3110,6 +3110,7 @@ libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
+libtermio/vers.c svneol=native#text/plain
 libtk8.3/Cakefile -text
 libtk8.3/ChangeLog svneol=native#text/plain
 libtk8.3/README svneol=native#text/plain
