@@ -2286,6 +2286,16 @@ src/other/libpng/scripts/makevms.com svneol=native#text/plain
 src/other/libpng/scripts/pngdef.pas -text
 src/other/libpng/scripts/pngos2.def svneol=native#text/plain
 src/other/libpng/scripts/smakefile.ppc -text
+src/other/libregex/Makefile.am svneol=native#text/plain
+src/other/libregex/cclass.h svneol=native#text/plain
+src/other/libregex/cname.h svneol=native#text/plain
+src/other/libregex/engine.c svneol=native#text/plain
+src/other/libregex/regcomp.c svneol=native#text/plain
+src/other/libregex/regerror.c svneol=native#text/plain
+src/other/libregex/regex2.h svneol=native#text/plain
+src/other/libregex/regexec.c svneol=native#text/plain
+src/other/libregex/regfree.c svneol=native#text/plain
+src/other/libregex/utils.h svneol=native#text/plain
 src/other/libtcl/ChangeLog svneol=native#text/plain
 src/other/libtcl/ChangeLog.1999 svneol=native#text/plain
 src/other/libtcl/ChangeLog.2000 svneol=native#text/plain
