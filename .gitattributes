@@ -1775,12 +1775,6 @@ libitcl3.2/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
 libitcl3.2/itk/win/rc/itk.rc -text svneol=CRLF#text/plain
 libitcl3.2/itk/win/rc/itkwish.rc -text svneol=CRLF#text/plain
 libitcl3.2/itk/win/winMain.c svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/CHANGES -text
-libitcl3.2/iwidgets2.2.0/Makefile.in svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/README svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/aclocal.m4 svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/configure -text
-libitcl3.2/iwidgets2.2.0/configure.in svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/demos/buttonbox -text
 libitcl3.2/iwidgets2.2.0/demos/canvasprintdialog -text
 libitcl3.2/iwidgets2.2.0/demos/catalog -text
@@ -1942,17 +1936,12 @@ libitcl3.2/iwidgets2.2.0/incoming/README svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/incoming/doc/man.macros -text
 libitcl3.2/iwidgets2.2.0/incoming/tests/all -text
 libitcl3.2/iwidgets2.2.0/incoming/tests/defs -text
-libitcl3.2/iwidgets2.2.0/iwidgets.tcl svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/iwidgets.tcl.in svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/license.terms svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/mac/Build_Iwidgets.rsrc -text
 libitcl3.2/iwidgets2.2.0/mac/iwidgets.tcl svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/mac/iwidgetsResources.r svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/mac/pkgIndex.tcl svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/mac/tclIndex -text
 libitcl3.2/iwidgets2.2.0/outgoing/README svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/pkgIndex.tcl svneol=native#text/plain
-libitcl3.2/iwidgets2.2.0/pkgIndex.tcl.in svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/tests/all -text
 libitcl3.2/iwidgets2.2.0/tests/all.tcl svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/tests/buttonbox.test svneol=native#text/plain
