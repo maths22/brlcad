@@ -114,6 +114,7 @@ mged/usepen.c svneol=native#text/plain
 mged/utility1.c svneol=native#text/plain
 mged/utility2.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
+rt/libfb-dummy.c svneol=native#text/plain
 rt/main.c svneol=native#text/plain
 rt/material.c svneol=native#text/plain
 rt/material.h svneol=native#text/plain
