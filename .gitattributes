@@ -388,6 +388,7 @@ jove/jove_temp.h svneol=native#text/plain
 jove/jove_term.c svneol=native#text/plain
 jove/jove_tune.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
+jove/mkversion.sh svneol=native#text/x-sh
 jove/termcap.h svneol=native#text/plain
 lgt/Cakefile -text
 lgt/ascii.h svneol=native#text/plain
