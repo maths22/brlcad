@@ -92,6 +92,7 @@ src/conv/Makefile.in
 src/conv/asc-nmg
 src/conv/asc2g
 src/conv/asc2pix
+src/conv/bot-bldxf
 src/conv/bot_shell-vtk
 src/conv/conv-vg2g
 src/conv/cy-g
