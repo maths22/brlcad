@@ -683,6 +683,7 @@ html/manuals/librt/dg_obj.html svneol=native#text/html
 html/manuals/librt/index.html svneol=native#text/html
 html/manuals/librt/view_obj.html svneol=native#text/html
 html/manuals/librt/wdb_obj.html svneol=native#text/html
+html/manuals/mged/.cvsignore svneol=native#text/plain
 html/manuals/mged/Cakefile -text
 html/manuals/mged/animmate/Cakefile -text
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
