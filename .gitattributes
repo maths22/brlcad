@@ -140,6 +140,7 @@ conv/euclid-g.1 svneol=native#text/plain
 conv/euclid-g.c svneol=native#text/plain
 conv/euclid_format.c svneol=native#text/plain
 conv/g-euclid.c svneol=native#text/plain
+conv/g-euclid1.c svneol=native#text/plain
 conv/g-nmg.c svneol=native#text/plain
 conv/g-tankill.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
