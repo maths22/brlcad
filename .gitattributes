@@ -1655,20 +1655,16 @@ src/other/incrTcl/.cvsignore svneol=native#text/plain
 src/other/incrTcl/CHANGES -text
 src/other/incrTcl/ChangeLog svneol=native#text/plain
 src/other/incrTcl/INCOMPATIBLE -text
-src/other/incrTcl/Makefile.in svneol=native#text/plain
+src/other/incrTcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/README svneol=native#text/plain
 src/other/incrTcl/TODO svneol=native#text/plain
 src/other/incrTcl/config/config.guess -text
 src/other/incrTcl/config/config.sub -text
 src/other/incrTcl/config/install-sh svneol=native#text/plain
-src/other/incrTcl/configure -text
-src/other/incrTcl/configure.in svneol=native#text/plain
 src/other/incrTcl/doc/README svneol=native#text/plain
 src/other/incrTcl/itcl/.cvsignore svneol=native#text/plain
-src/other/incrTcl/itcl/Makefile.in svneol=native#text/plain
+src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/aclocal.m4 svneol=native#text/plain
-src/other/incrTcl/itcl/configure -text
-src/other/incrTcl/itcl/configure.in svneol=native#text/plain
 src/other/incrTcl/itcl/doc/body.n svneol=native#text/plain
 src/other/incrTcl/itcl/doc/class.n svneol=native#text/plain
 src/other/incrTcl/itcl/doc/code.n svneol=native#text/plain
@@ -1754,10 +1750,8 @@ src/other/incrTcl/itcl/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itcl/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itcl/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/itk/.cvsignore svneol=native#text/plain
-src/other/incrTcl/itk/Makefile.in svneol=native#text/plain
+src/other/incrTcl/itk/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/aclocal.m4 svneol=native#text/plain
-src/other/incrTcl/itk/configure -text
-src/other/incrTcl/itk/configure.in svneol=native#text/plain
 src/other/incrTcl/itk/demos/README svneol=native#text/plain
 src/other/incrTcl/itk/demos/itkedit -text
 src/other/incrTcl/itk/doc/Archetype.n svneol=native#text/plain
