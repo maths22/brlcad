@@ -10,6 +10,7 @@
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
+anim/Cakefile -text
 awf/AWF_COPYRIGHT -text
 awf/Cakefile -text
 awf/awf.1 svneol=native#text/plain
