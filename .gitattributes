@@ -1667,9 +1667,6 @@ src/other/incrTcl/INCOMPATIBLE -text
 src/other/incrTcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/README svneol=native#text/plain
 src/other/incrTcl/TODO svneol=native#text/plain
-src/other/incrTcl/config/config.guess -text
-src/other/incrTcl/config/config.sub -text
-src/other/incrTcl/config/install-sh svneol=native#text/plain
 src/other/incrTcl/doc/README svneol=native#text/plain
 src/other/incrTcl/itcl/.cvsignore svneol=native#text/plain
 src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
