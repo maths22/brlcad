@@ -1480,6 +1480,7 @@ tcl/tclAppInit.c svneol=native#text/plain
 tcl/tclTest.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
 tclscripts/Cakefile -text
+tclscripts/README svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
 tclscripts/fs_dialog.tk svneol=native#text/plain
 tclscripts/helpcomm.tcl svneol=native#text/plain
@@ -1512,6 +1513,8 @@ tclscripts/mged/solclick.tcl svneol=native#text/plain
 tclscripts/mged/solcreate.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/nirt/prototype.sh svneol=native#text/x-sh
+tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
+tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
 tk/Cakefile -text
