@@ -3933,6 +3933,7 @@ proc-db/tea.c svneol=native#text/plain
 proc-db/tea.h svneol=native#text/plain
 proc-db/tea_nmg.c svneol=native#text/plain
 proc-db/terrain.c svneol=native#text/plain
+proc-db/torii.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 proc-db/vegitation.c svneol=native#text/plain
 proc-db/vegitation.h svneol=native#text/plain
