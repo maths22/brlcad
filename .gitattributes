@@ -271,6 +271,7 @@ rt/rdebug.h svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
 rt/rtpp.1 svneol=native#text/plain
 rt/rtray.1 svneol=native#text/plain
+rt/rtshot.c svneol=native#text/plain
 rt/sh_cloud.c svneol=native#text/plain
 rt/sh_light.c svneol=native#text/plain
 rt/sh_plastic.c svneol=native#text/plain
