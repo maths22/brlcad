@@ -32,6 +32,9 @@ anim/anim_track.c svneol=native#text/plain
 anim/anim_turn.1 svneol=native#text/plain
 anim/anim_turn.c svneol=native#text/plain
 anim/cattrack.c svneol=native#text/plain
+anim/chan_add.c svneol=native#text/plain
+anim/chan_mult.1 svneol=native#text/plain
+anim/chan_mult.c svneol=native#text/plain
 anim/chan_permute.1 svneol=native#text/plain
 anim/chan_permute.c svneol=native#text/plain
 awf/AWF_COPYRIGHT -text
