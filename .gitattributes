@@ -4186,6 +4186,7 @@ regress/library -text
 regress/master.lock -text
 regress/master.old.sh svneol=native#text/x-sh
 regress/master.sh svneol=native#text/x-sh
+regress/nightly.sh svneol=native#text/x-sh
 regress/ref_7d -text
 regress/ref_fbsd -text
 regress/ref_li -text
