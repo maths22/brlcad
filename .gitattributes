@@ -4191,6 +4191,7 @@ pro-engineer/protk.dat -text
 pro-engineer/resource/Cakefile -text
 pro-engineer/resource/proe_brl.res svneol=native#text/plain
 pro-engineer/resource/proe_brl_error.res svneol=native#text/plain
+pro-engineer/resource/proe_brl_gen_error.res svneol=native#text/plain
 pro-engineer/sgi_mips4/Cakefile -text
 pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
 pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
