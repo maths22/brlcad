@@ -425,6 +425,7 @@ librt/g_ebm.c svneol=native#text/plain
 librt/g_ell.c svneol=native#text/plain
 librt/g_epa.c svneol=native#text/plain
 librt/g_half.c svneol=native#text/plain
+librt/g_nurb.c svneol=native#text/plain
 librt/g_part.c svneol=native#text/plain
 librt/g_pg.c svneol=native#text/plain
 librt/g_pipe.c svneol=native#text/plain
