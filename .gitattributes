@@ -1019,6 +1019,7 @@ mged/dm-xgl.info -text
 mged/dodraw.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
 mged/edarb.c svneol=native#text/plain
+mged/edpipe.c svneol=native#text/plain
 mged/edsol.c svneol=native#text/plain
 mged/facedef.c svneol=native#text/plain
 mged/fast.sh svneol=native#text/x-sh
