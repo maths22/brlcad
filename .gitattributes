@@ -2003,10 +2003,6 @@ libsysv/regfree.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
 libsysv/vers.c svneol=native#text/plain
-libtcl8.3/Cakefile -text
-libtcl8.3/ChangeLog svneol=native#text/plain
-libtcl8.3/README svneol=native#text/plain
-libtcl8.3/changes -text
 libtcl8.3/compat/README svneol=native#text/plain
 libtcl8.3/compat/dirent.h svneol=native#text/plain
 libtcl8.3/compat/dirent2.h svneol=native#text/plain
@@ -2213,7 +2209,6 @@ libtcl8.3/doc/upvar.n svneol=native#text/plain
 libtcl8.3/doc/variable.n svneol=native#text/plain
 libtcl8.3/doc/vwait.n svneol=native#text/plain
 libtcl8.3/doc/while.n svneol=native#text/plain
-libtcl8.3/fix_makefile.sh svneol=native#text/x-sh
 libtcl8.3/generic/README svneol=native#text/plain
 libtcl8.3/generic/foo/regc_color.c svneol=native#text/plain
 libtcl8.3/generic/foo/regc_cvec.c svneol=native#text/plain
@@ -2492,7 +2487,6 @@ libtcl8.3/library/tclIndex -text
 libtcl8.3/library/tcltest1.0/pkgIndex.tcl svneol=native#text/plain
 libtcl8.3/library/tcltest1.0/tcltest.tcl svneol=native#text/plain
 libtcl8.3/library/word.tcl svneol=native#text/plain
-libtcl8.3/license.terms svneol=native#text/plain
 libtcl8.3/mac/AppleScript.html svneol=native#text/html
 libtcl8.3/mac/Background.doc svneol=native#text/plain
 libtcl8.3/mac/MW_TclAppleScriptHeader.h svneol=native#text/plain
