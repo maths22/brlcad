@@ -1180,6 +1180,7 @@ liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
 libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
+libpkg/tcl.c svneol=native#text/plain
 libpng/ANNOUNCE -text
 libpng/CHANGES -text
 libpng/Cakefile -text
