@@ -109,3 +109,4 @@ rt/viewpp.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
 util/pix-ik.c svneol=native#text/plain
+util/pixtile.c svneol=native#text/plain
