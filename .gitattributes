@@ -738,6 +738,7 @@ mged/dm-ps.c svneol=native#text/plain
 mged/dm-sun.c svneol=native#text/plain
 mged/dm-tek.c svneol=native#text/plain
 mged/dm-tek4109.c svneol=native#text/plain
+mged/dm-xgl.c svneol=native#text/plain
 mged/dodraw.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
 mged/edarb.c svneol=native#text/plain
