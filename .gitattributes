@@ -539,6 +539,7 @@ librt/debug.h svneol=native#text/plain
 librt/dir.c svneol=native#text/plain
 librt/fast.sh svneol=native#text/x-sh
 librt/fixpt.h svneol=native#text/plain
+librt/fortray.c svneol=native#text/plain
 librt/g_arb.c svneol=native#text/plain
 librt/g_arbn.c svneol=native#text/plain
 librt/g_ars.c svneol=native#text/plain
