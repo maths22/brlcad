@@ -98,6 +98,7 @@ fb/pix-fb.c svneol=native#text/plain
 fb/pl-fb.c svneol=native#text/plain
 fb/pp-fb.1 svneol=native#text/plain
 fb/pp-fb.c svneol=native#text/plain
+fb/rle-fb.1 svneol=native#text/plain
 fb/rle-fb.c svneol=native#text/plain
 fbed/Cakefile -text
 fbed/ascii.h svneol=native#text/plain
