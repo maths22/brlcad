@@ -177,6 +177,7 @@ h/externs.h svneol=native#text/plain
 h/fb.h svneol=native#text/plain
 h/machine.h svneol=native#text/plain
 h/mater.h svneol=native#text/plain
+h/nmg.h svneol=native#text/plain
 h/noalias-prag.h svneol=native#text/plain
 h/noalias.h svneol=native#text/plain
 h/orle.h svneol=native#text/plain
