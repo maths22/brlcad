@@ -227,6 +227,7 @@ src/librt/vers.c
 src/libsysv/vers.c
 src/libtermio/vers.c
 src/libwdb/vers.c
+src/libwdb/version
 src/mged/cad_boundp
 src/mged/cad_parea
 src/mged/mged
