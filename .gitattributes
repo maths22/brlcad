@@ -8,9 +8,12 @@
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
+bench/Cakefile -text
 bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
+bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
+bench/try.sh svneol=native#text/x-sh
 cake/COPYING svneol=native#text/plain
 cake/Makefile svneol=native#text/plain
 cake/README svneol=native#text/plain
