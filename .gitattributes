@@ -3406,6 +3406,7 @@ rttherm/ssampview.c svneol=native#text/plain
 rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/viewtherm.c svneol=native#text/plain
 /setup.sh svneol=native#text/x-sh
+sh/any-png.sh svneol=native#text/x-sh
 sh/cadbug.sh svneol=native#text/x-sh
 sh/cakeinclude.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
