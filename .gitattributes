@@ -2089,6 +2089,7 @@ librt/bigE.c svneol=native#text/plain
 librt/binary_obj.c svneol=native#text/plain
 librt/bomb.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
+librt/bot.h svneol=native#text/plain
 librt/bundle.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
 librt/comb.c svneol=native#text/plain
