@@ -3193,6 +3193,7 @@ mged/scroll.c svneol=native#text/plain
 mged/scroll.h svneol=native#text/plain
 mged/sedit.h svneol=native#text/plain
 mged/set.c svneol=native#text/plain
+mged/share.c svneol=native#text/plain
 mged/sliders.h svneol=native#text/plain
 mged/solids_on_ray.c svneol=native#text/plain
 mged/sunicon.h svneol=native#text/plain
