@@ -1120,7 +1120,6 @@ liboptical/Cakefile -text
 liboptical/init.c svneol=native#text/plain
 liboptical/sh_air.c svneol=native#text/plain
 liboptical/sh_brdf.c svneol=native#text/plain
-liboptical/sh_brick.c svneol=native#text/plain
 liboptical/sh_camo.c svneol=native#text/plain
 liboptical/sh_cloud.c svneol=native#text/plain
 liboptical/sh_cook.c svneol=native#text/plain
@@ -1130,7 +1129,6 @@ liboptical/sh_gauss.c svneol=native#text/plain
 liboptical/sh_grass.c svneol=native#text/plain
 liboptical/sh_light.c svneol=native#text/plain
 liboptical/sh_noise.c svneol=native#text/plain
-liboptical/sh_noiseperlin.c svneol=native#text/plain
 liboptical/sh_plastic.c svneol=native#text/plain
 liboptical/sh_points.c svneol=native#text/plain
 liboptical/sh_prj.c svneol=native#text/plain
