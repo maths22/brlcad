@@ -279,7 +279,6 @@ doc/rounding.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
 doc/summary.doc svneol=native#text/plain
 doc/sun.doc svneol=native#text/plain
-doc/test.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
 fb/Makefile.am svneol=native#text/plain
 fb/bw-fb.1 svneol=native#text/plain
