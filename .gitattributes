@@ -23,6 +23,7 @@ jove/jove_re.c svneol=native#text/plain
 jove/jove_screen.c svneol=native#text/plain
 jove/jove_temp.h svneol=native#text/plain
 jove/jove_term.c svneol=native#text/plain
+jove/jove_tune.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
 jove/termcap.h svneol=native#text/plain
 libbn/mat.c svneol=native#text/plain
