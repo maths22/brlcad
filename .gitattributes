@@ -2213,6 +2213,7 @@ librt/polylib.c svneol=native#text/plain
 librt/polyno.h svneol=native#text/plain
 librt/pr.c svneol=native#text/plain
 librt/prep.c svneol=native#text/plain
+librt/qray.h svneol=native#text/plain
 librt/raydebug.tcl svneol=native#text/plain
 librt/regionfix.c svneol=native#text/plain
 librt/roots.c svneol=native#text/plain
