@@ -1315,6 +1315,7 @@ proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 remrt/Cakefile -text
 remrt/demo.tcl svneol=native#text/plain
+remrt/dg.tcl svneol=native#text/plain
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
 remrt/mon.tcl svneol=native#text/plain
