@@ -1595,6 +1595,7 @@ libfft/fftfast.c svneol=native#text/plain
 libfft/ifftc.c svneol=native#text/plain
 libfft/splitdit.c svneol=native#text/plain
 libfft/splitditc.c svneol=native#text/plain
+liboptical/Cakefile -text
 liboptical/sh_Nfbm.c svneol=native#text/plain
 liboptical/sh_air.c svneol=native#text/plain
 liboptical/sh_brdf.c svneol=native#text/plain
