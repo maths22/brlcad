@@ -2056,6 +2056,7 @@ tclscripts/mged/solid.tcl svneol=native#text/plain
 tclscripts/mged/text.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/mged/tree.tcl svneol=native#text/plain
+tclscripts/mouse.tcl svneol=native#text/plain
 tclscripts/nirt/Cakefile -text
 tclscripts/nirt/prototype.sh svneol=native#text/x-sh
 tclscripts/pl-dm/.cvsignore svneol=native#text/plain
