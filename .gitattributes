@@ -131,7 +131,9 @@ conv/pix2asc.c svneol=native#text/plain
 db/Cakefile -text
 db/Makefile svneol=native#text/plain
 db/Makefile.dist svneol=native#text/plain
+db/havoc.asc svneol=native#text/plain
 db/moss.asc svneol=native#text/plain
+db/tank_car.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
 doc/Cakefile -text
 doc/benchmark.doc svneol=native#text/plain
