@@ -1058,7 +1058,6 @@ libdm/knob.c svneol=native#text/plain
 libdm/options.c svneol=native#text/plain
 libdm/query.c svneol=native#text/plain
 libdm/tcl.c svneol=native#text/plain
-libdm/view_obj.c svneol=native#text/plain
 libfb/Cakefile -text
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
