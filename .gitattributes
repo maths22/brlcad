@@ -435,6 +435,7 @@ util/buffer.1 svneol=native#text/plain
 util/buffer.c svneol=native#text/plain
 util/bw-imp.c svneol=native#text/plain
 util/bw-pix.c svneol=native#text/plain
+util/bw-ps.c svneol=native#text/plain
 util/bw3-pix.c svneol=native#text/plain
 util/bwcrop.c svneol=native#text/plain
 util/bwdiff.c svneol=native#text/plain
