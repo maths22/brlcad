@@ -3942,6 +3942,7 @@ misc/Description.txt svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
 misc/enigma/Makefile.am svneol=native#text/plain
+misc/enigma/README svneol=native#text/plain
 misc/enigma/build.sh svneol=native#text/x-sh
 misc/enigma/configure.in svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
