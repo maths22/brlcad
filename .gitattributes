@@ -4397,6 +4397,7 @@ tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
 tclscripts/mged/.cvsignore svneol=native#text/plain
 tclscripts/mged/Cakefile -text
+tclscripts/mged/accel.tcl svneol=native#text/plain
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
 tclscripts/mged/apply.tcl svneol=native#text/plain
