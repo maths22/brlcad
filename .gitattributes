@@ -695,6 +695,7 @@ libbn/vectfont.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
 libbn/wavelet.c svneol=native#text/plain
 libbu/Cakefile -text
+libbu/asize.c svneol=native#text/plain
 libbu/association.c svneol=native#text/plain
 libbu/badmagic.c svneol=native#text/plain
 libbu/bitv.c svneol=native#text/plain
@@ -988,6 +989,9 @@ libsysv/regexec.c svneol=native#text/plain
 libsysv/regfree.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
+libtclcad/Cakefile -text
+libtclcad/tclcad.c svneol=native#text/plain
+libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtkGLX/makedescnames.sh svneol=native#text/x-sh
