@@ -3585,7 +3585,6 @@ tools/fant.1 svneol=native#text/plain
 tools/fant.c svneol=native#text/plain
 tools/font.h svneol=native#text/plain
 tools/font.src -text
-tools/g_diff.c svneol=native#text/plain
 tools/gifencod.c svneol=native#text/plain
 tools/giftorle.1 svneol=native#text/plain
 tools/giftorle.c svneol=native#text/plain
