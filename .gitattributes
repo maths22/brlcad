@@ -1215,6 +1215,7 @@ mged/polyif.c svneol=native#text/plain
 mged/predictor.c svneol=native#text/plain
 mged/proc_reg.c svneol=native#text/plain
 mged/qray.c svneol=native#text/plain
+mged/qray.h svneol=native#text/plain
 mged/rect.c svneol=native#text/plain
 mged/red.c svneol=native#text/plain
 mged/rtif.c svneol=native#text/plain
