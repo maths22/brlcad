@@ -1301,7 +1301,6 @@ librt/g_rhc.c svneol=native#text/plain
 librt/g_rpc.c svneol=native#text/plain
 librt/g_sketch.c svneol=native#text/plain
 librt/g_sph.c svneol=native#text/plain
-librt/g_spline.c svneol=native#text/plain
 librt/g_submodel.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
 librt/g_torus.c svneol=native#text/plain
