@@ -476,6 +476,7 @@ mged/chgview.c svneol=native#text/plain
 mged/clip.c svneol=native#text/plain
 mged/cmd.c svneol=native#text/plain
 mged/columns.c svneol=native#text/plain
+mged/concat.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
 mged/dm-4d.c svneol=native#text/plain
 mged/dm-X.c svneol=native#text/plain
