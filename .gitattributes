@@ -639,6 +639,7 @@ librt/g_ehy.c svneol=native#text/plain
 librt/g_ell.c svneol=native#text/plain
 librt/g_epa.c svneol=native#text/plain
 librt/g_eto.c svneol=native#text/plain
+librt/g_grip.c svneol=native#text/plain
 librt/g_half.c svneol=native#text/plain
 librt/g_nmg.c svneol=native#text/plain
 librt/g_nurb.c svneol=native#text/plain
