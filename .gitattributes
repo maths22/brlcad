@@ -507,6 +507,7 @@ iges/iges_struct.h svneol=native#text/plain
 iges/iges_types.h svneol=native#text/plain
 iges/main.c svneol=native#text/plain
 iges/make_face.c svneol=native#text/plain
+iges/make_nurb_face.c svneol=native#text/plain
 iges/makedir.c svneol=native#text/plain
 iges/makegroup.c svneol=native#text/plain
 iges/makemembers.c svneol=native#text/plain
