@@ -210,6 +210,7 @@ librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 libsysv/getopt.c svneol=native#text/plain
 libtermio/termio.c svneol=native#text/plain
+libwdb/libwdb.3 svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
