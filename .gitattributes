@@ -2955,7 +2955,6 @@ src/other/libtcl/unix/mkLinks -text
 src/other/libtcl/unix/tcl.m4 svneol=native#text/plain
 src/other/libtcl/unix/tcl.spec svneol=native#text/plain
 src/other/libtcl/unix/tclAppInit.c svneol=native#text/plain
-src/other/libtcl/unix/tclConfig.sh svneol=native#text/x-sh
 src/other/libtcl/unix/tclConfig.sh.in svneol=native#text/plain
 src/other/libtcl/unix/tclLoadAix.c svneol=native#text/plain
 src/other/libtcl/unix/tclLoadAout.c svneol=native#text/plain
@@ -3655,7 +3654,6 @@ src/other/libtk/unix/mkLinks -text
 src/other/libtk/unix/tcl.m4 svneol=native#text/plain
 src/other/libtk/unix/tk.spec svneol=native#text/plain
 src/other/libtk/unix/tkAppInit.c svneol=native#text/plain
-src/other/libtk/unix/tkConfig.sh svneol=native#text/x-sh
 src/other/libtk/unix/tkConfig.sh.in svneol=native#text/plain
 src/other/libtk/unix/tkUnix.c svneol=native#text/plain
 src/other/libtk/unix/tkUnix3d.c svneol=native#text/plain
