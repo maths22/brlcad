@@ -66,6 +66,7 @@ mged/objdir.h svneol=native#text/plain
 mged/path.c svneol=native#text/plain
 mged/proc_reg.c svneol=native#text/plain
 mged/sedit.h svneol=native#text/plain
+mged/tedit.c svneol=native#text/plain
 mged/titles.c svneol=native#text/plain
 mged/usepen.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
