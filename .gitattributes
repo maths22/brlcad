@@ -793,6 +793,7 @@ util/strchr.c svneol=native#text/plain
 util/strdup.c svneol=native#text/plain
 util/sun-pix.1 svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
+util/xyz-pl.c svneol=native#text/plain
 vas4/Cakefile -text
 vas4/init_ik.c svneol=native#text/plain
 vas4/record_seq.c svneol=native#text/plain
