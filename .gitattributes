@@ -108,6 +108,7 @@ lgt/lgt_db.c svneol=native#text/plain
 lgt/mat_db.c svneol=native#text/plain
 lgt/mat_db.h svneol=native#text/plain
 lgt/octree.c svneol=native#text/plain
+lgt/prnt.c svneol=native#text/plain
 lgt/reflect.c svneol=native#text/plain
 lgt/resource.c svneol=native#text/plain
 lgt/screen.h svneol=native#text/plain
