@@ -15,6 +15,7 @@ bench/pretty.sh svneol=native#text/x-sh
 bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
+burst/Cakefile -text
 burst/Mm.h svneol=native#text/plain
 burst/ascii.h svneol=native#text/plain
 burst/burst.c svneol=native#text/plain
