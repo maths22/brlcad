@@ -1069,6 +1069,7 @@ libfb/fb_paged_io.c svneol=native#text/plain
 libfb/fb_rect.c svneol=native#text/plain
 libfb/fb_util.c svneol=native#text/plain
 libfb/fblocal.h svneol=native#text/plain
+libfb/fbserv_obj.c svneol=native#text/plain
 libfb/getput.c svneol=native#text/plain
 libfb/if_4d-old.c svneol=native#text/plain
 libfb/if_4d.c svneol=native#text/plain
