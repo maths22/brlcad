@@ -4188,6 +4188,9 @@ regress/ref_7d -text
 regress/ref_fbsd -text
 regress/ref_li -text
 regress/ref_m4i64 -text
+regress/systems.d/wide -text
+regress/systems.d/wider -text
+regress/systems.d/widest -text
 regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
 regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
 regress/tests.d/shaders.sh svneol=native#text/x-sh
