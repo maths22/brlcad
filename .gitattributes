@@ -807,6 +807,7 @@ libfb/pkgswitch.c svneol=native#text/plain
 libfb/pkgtypes.h svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
 libfb/sgiselect.s svneol=native#text/plain
+libfb/tcl.c svneol=native#text/plain
 libfft/Cakefile -text
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
