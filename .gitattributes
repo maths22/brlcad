@@ -816,6 +816,7 @@ sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
 sh/ranlib5.sh svneol=native#text/x-sh
 sh/sgisnap.sh svneol=native#text/x-sh
+sig/Cakefile -text
 sig/a-d.c svneol=native#text/plain
 sig/butter.c svneol=native#text/plain
 sig/bw-d.c svneol=native#text/plain
