@@ -4,7 +4,6 @@
 /BUGS svneol=native#text/plain
 /COPYING svneol=native#text/plain
 /HACKING svneol=native#text/plain
-/HISTORY -text
 /INSTALL svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
