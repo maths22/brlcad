@@ -4855,6 +4855,7 @@ src/vas4/vas4.c svneol=native#text/plain
 src/vas4/vas4.doc svneol=native#text/plain
 src/vas4/vas4.h svneol=native#text/plain
 src/vas4/vas_io.c svneol=native#text/plain
+src/vdeck/.cvsignore svneol=native#text/plain
 src/vdeck/Makefile.am svneol=native#text/plain
 src/vdeck/Makefile.loc svneol=native#text/plain
 src/vdeck/cgarbs.c svneol=native#text/plain
