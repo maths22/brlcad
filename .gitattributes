@@ -433,6 +433,7 @@ fbserv/Cakefile -text
 fbserv/fbserv.1 svneol=native#text/plain
 fbserv/fbserv.c svneol=native#text/plain
 g_lint/Cakefile -text
+g_lint/g_diff.1 svneol=native#text/plain
 g_lint/g_diff.c svneol=native#text/plain
 g_lint/g_lint.1 svneol=native#text/plain
 g_lint/g_lint.c svneol=native#text/plain
