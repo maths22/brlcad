@@ -1707,6 +1707,7 @@ src/other/incrTcl/itcl/generic/itcl_objects.c svneol=native#text/plain
 src/other/incrTcl/itcl/generic/itcl_parse.c svneol=native#text/plain
 src/other/incrTcl/itcl/generic/itcl_util.c svneol=native#text/plain
 src/other/incrTcl/itcl/itclConfig.sh.in svneol=native#text/plain
+src/other/incrTcl/itcl/library/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/library/itcl.tcl svneol=native#text/plain
 src/other/incrTcl/itcl/license.terms svneol=native#text/plain
 src/other/incrTcl/itcl/mac/MW_ItclHeader.pch -text
