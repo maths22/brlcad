@@ -3886,7 +3886,7 @@ pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
-pro-engineer/protk.dat -text
+pro-engineer/protk.in svneol=native#text/plain
 pro-engineer/resource/Cakefile -text
 pro-engineer/resource/proe_brl.res svneol=native#text/plain
 pro-engineer/resource/proe_brl_error.res svneol=native#text/plain
