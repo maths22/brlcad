@@ -4026,6 +4026,7 @@ mged/titles.c svneol=native#text/plain
 mged/titles.h svneol=native#text/plain
 mged/track.c svneol=native#text/plain
 mged/typein.c svneol=native#text/plain
+mged/update.c svneol=native#text/plain
 mged/usepen.c svneol=native#text/plain
 mged/utility1.c svneol=native#text/plain
 mged/utility2.c svneol=native#text/plain
