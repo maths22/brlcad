@@ -5,6 +5,7 @@
 BRL-CAD.pbproj/project.pbxproj svneol=native#text/plain
 /COPYRIGHT -text
 /Cakefile.defs -text
+/HISTORY -text
 /INSTALL.pmac svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
