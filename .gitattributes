@@ -59,6 +59,7 @@ awf/pass2.base -text
 awf/pass2.man svneol=native#text/plain
 awf/pass2.ms svneol=native#text/plain
 awf/pass3 -text
+bat/subdirmk.bat -text svneol=CRLF#text/plain
 bench/Cakefile -text
 bench/lgt.sh svneol=native#text/x-sh
 bench/perf.sh svneol=native#text/x-sh
