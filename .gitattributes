@@ -384,6 +384,7 @@ mged/facedef.c svneol=native#text/plain
 mged/ged.c svneol=native#text/plain
 mged/ged.h svneol=native#text/plain
 mged/ged_types.h svneol=native#text/plain
+mged/hideline.c svneol=native#text/plain
 mged/inside.c svneol=native#text/plain
 mged/mater.c svneol=native#text/plain
 mged/memalloc.c svneol=native#text/plain
