@@ -1672,6 +1672,7 @@ src/other/URToolkit/MANIFEST -text
 src/other/URToolkit/Makefile.am svneol=native#text/plain
 src/other/URToolkit/README svneol=native#text/plain
 src/other/URToolkit/blurb -text
+src/other/URToolkit/cnv/Makefile.am svneol=native#text/plain
 src/other/URToolkit/cnv/README svneol=native#text/plain
 src/other/URToolkit/cnv/aliastorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/cubitorle.c svneol=native#text/plain
@@ -1688,11 +1689,13 @@ src/other/URToolkit/cnv/rlatorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/rlb_header.h svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA60.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA62/COPYRIGHT -text
+src/other/URToolkit/cnv/rletoabA62/Makefile.am svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA62/rle.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoabA62/rletoabA62.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoalias.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletoascii.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletocgm.c svneol=native#text/plain
+src/other/URToolkit/cnv/rletogif/Makefile.am svneol=native#text/plain
 src/other/URToolkit/cnv/rletogif/compgif.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletogif/gifencod.c svneol=native#text/plain
 src/other/URToolkit/cnv/rletogif/rletogif.c svneol=native#text/plain
@@ -1714,6 +1717,7 @@ src/other/URToolkit/cnv/vcrtorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/wasatchrle.c svneol=native#text/plain
 src/other/URToolkit/cnv/xbmtorle.c svneol=native#text/plain
 src/other/URToolkit/copyright -text
+src/other/URToolkit/man/Makefile.am svneol=native#text/plain
 src/other/URToolkit/man/aliastorle.1 svneol=native#text/plain
 src/other/URToolkit/man/applymap.1 svneol=native#text/plain
 src/other/URToolkit/man/avg4.1 svneol=native#text/plain
@@ -1809,8 +1813,10 @@ src/other/URToolkit/man/unslice.1 svneol=native#text/plain
 src/other/URToolkit/man/urt.1 svneol=native#text/plain
 src/other/URToolkit/man/wasatchrle.1 svneol=native#text/plain
 src/other/URToolkit/patchlevel.h svneol=native#text/plain
+src/other/URToolkit/tools/Makefile.am svneol=native#text/plain
 src/other/URToolkit/tools/applymap.c svneol=native#text/plain
 src/other/URToolkit/tools/avg4.c svneol=native#text/plain
+src/other/URToolkit/tools/clock/Makefile.am svneol=native#text/plain
 src/other/URToolkit/tools/clock/README svneol=native#text/plain
 src/other/URToolkit/tools/clock/font.c svneol=native#text/plain
 src/other/URToolkit/tools/clock/font.h svneol=native#text/plain
