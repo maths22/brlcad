@@ -99,6 +99,11 @@ burst/trie.c svneol=native#text/plain
 burst/trie.h svneol=native#text/plain
 burst/ui.c svneol=native#text/plain
 burst/vecmath.h svneol=native#text/plain
+bwish/Cakefile -text
+bwish/bwish.c svneol=native#text/plain
+bwish/cmd.c svneol=native#text/plain
+bwish/input.c svneol=native#text/plain
+bwish/tcl.c svneol=native#text/plain
 cake/COPYING svneol=native#text/plain
 cake/Makefile svneol=native#text/plain
 cake/README svneol=native#text/plain
