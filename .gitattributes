@@ -1181,7 +1181,6 @@ libpng/scripts/smakefile.ppc -text
 libpng/scripts/zlibdef.pas -text
 libpng/scripts/zlibdll.mak -text
 librt/Cakefile -text
-librt/anim.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
 librt/comb.c svneol=native#text/plain
