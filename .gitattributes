@@ -869,6 +869,7 @@ librt/db_anim.c svneol=native#text/plain
 librt/db_comb.c svneol=native#text/plain
 librt/db_io.c svneol=native#text/plain
 librt/db_lookup.c svneol=native#text/plain
+librt/db_match.c svneol=native#text/plain
 librt/db_open.c svneol=native#text/plain
 librt/db_path.c svneol=native#text/plain
 librt/db_scan.c svneol=native#text/plain
