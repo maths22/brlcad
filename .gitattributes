@@ -204,6 +204,7 @@ conv/g-vrml.1 svneol=native#text/plain
 conv/g-vrml.c svneol=native#text/plain
 conv/g-wave.1 svneol=native#text/plain
 conv/g-wave.c svneol=native#text/plain
+conv/g-xxx.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/nastran-g.1 svneol=native#text/plain
