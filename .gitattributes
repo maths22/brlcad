@@ -697,6 +697,7 @@ html/manuals/mged/rim.ppm -text svneol=unset#image/x-portable-pixmap
 html/manuals/mged/shaders.html svneol=native#text/html
 html/manuals/mged/skipped -text
 html/manuals/mged/tex-html.tcl svneol=native#text/plain
+html/manuals/shaders/Cakefile -text
 html/manuals/shaders/camo.html svneol=native#text/html
 html/manuals/small-eagleCAD.gif -text svneol=unset#image/gif
 iges/Cakefile -text
