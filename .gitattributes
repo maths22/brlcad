@@ -11,6 +11,8 @@
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
 anim/Cakefile -text
+anim/anim_keyread.1 svneol=native#text/plain
+anim/anim_keyread.c svneol=native#text/plain
 anim/anim_orient.1 svneol=native#text/plain
 anim/anim_orient.c svneol=native#text/plain
 anim/anim_script.1 svneol=native#text/plain
