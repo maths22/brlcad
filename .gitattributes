@@ -1622,6 +1622,7 @@ util/dunncomm.c svneol=native#text/plain
 util/dunnsnap.1 svneol=native#text/plain
 util/dunnsnap.c svneol=native#text/plain
 util/files-tape.c svneol=native#text/plain
+util/fix_polysolids.c svneol=native#text/plain
 util/gencolor.1 svneol=native#text/plain
 util/gencolor.c svneol=native#text/plain
 util/hd.1 svneol=native#text/plain
