@@ -1482,6 +1482,7 @@ libbu/association.c svneol=native#text/plain
 libbu/badmagic.c svneol=native#text/plain
 libbu/bitv.c svneol=native#text/plain
 libbu/bomb.c svneol=native#text/plain
+libbu/brlcad_path.c svneol=native#text/plain
 libbu/bu_tcl.c svneol=native#text/plain
 libbu/color.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
