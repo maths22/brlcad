@@ -687,6 +687,7 @@ rt/rtg3.1 svneol=native#text/plain
 rt/rthide.1 svneol=native#text/plain
 rt/rtpp.1 svneol=native#text/plain
 rt/rtray.1 svneol=native#text/plain
+rt/rtscale.c svneol=native#text/plain
 rt/rtshot.1 svneol=native#text/plain
 rt/rtshot.c svneol=native#text/plain
 rt/rtwalk.1 svneol=native#text/plain
