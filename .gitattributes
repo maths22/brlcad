@@ -2205,6 +2205,7 @@ libz/inftrees.c svneol=native#text/plain
 libz/inftrees.h svneol=native#text/plain
 libz/infutil.c svneol=native#text/plain
 libz/infutil.h svneol=native#text/plain
+libz/maketree.c svneol=native#text/plain
 libz/minigzip.c svneol=native#text/plain
 libz/sfile -text
 libz/so_locations -text
