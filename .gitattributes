@@ -1,6 +1,7 @@
 * text=auto !eol
 /.cvsignore svneol=native#text/plain
 /Acknowledgements -text
+BRL-CAD.pbproj/project.pbxproj svneol=native#text/plain
 /Cakefile -text
 /Cakefile.defs -text
 /Cakefile.lib -text
