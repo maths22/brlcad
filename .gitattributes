@@ -647,6 +647,7 @@ html/manuals/cadwidgets/Mged.html svneol=native#text/html
 html/manuals/cadwidgets/QuadDisplay.html svneol=native#text/html
 html/manuals/cadwidgets/Splash.html svneol=native#text/html
 html/manuals/cadwidgets/View.html svneol=native#text/html
+html/manuals/cadwidgets/skeleton.html svneol=native#text/html
 html/manuals/eagleCAD.gif -text svneol=unset#image/gif
 html/manuals/index.html svneol=native#text/html
 html/manuals/libbu/cmdhist_obj.html svneol=native#text/html
