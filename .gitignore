@@ -373,6 +373,7 @@ src/other/incrTcl/itk/win/Debug
 src/other/incrTcl/itk/win/Release
 src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
+src/other/libpng/pngtest
 src/other/libpng/vers.c
 src/patch/patch-g
 src/patch/rpatch
