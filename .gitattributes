@@ -8,7 +8,6 @@
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
-/README.MacOSX svneol=native#text/plain
 /TODO svneol=native#text/plain
 /autogen.sh svneol=native#text/x-sh
 bench/.cvsignore svneol=native#text/plain
@@ -55,6 +54,7 @@ db/woodsman.asc svneol=native#text/plain
 db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
 doc/Makefile.am svneol=native#text/plain
+doc/README.MacOSX svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
 doc/bw.5 svneol=native#text/plain
