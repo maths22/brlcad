@@ -89,6 +89,7 @@ jove/jove_term.c svneol=native#text/plain
 jove/jove_tune.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
 jove/termcap.h svneol=native#text/plain
+lgt/ascii.h svneol=native#text/plain
 lgt/char.c svneol=native#text/plain
 lgt/cursors.h svneol=native#text/plain
 lgt/error.c svneol=native#text/plain
