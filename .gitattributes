@@ -288,6 +288,7 @@ h/pkg.h svneol=native#text/plain
 h/plot3.h svneol=native#text/plain
 h/pyramid.h svneol=native#text/plain
 h/raytrace.h svneol=native#text/plain
+h/redblack.h svneol=native#text/plain
 h/rle.h svneol=native#text/plain
 h/rle_code.h svneol=native#text/plain
 h/rle_config.h svneol=native#text/plain
@@ -482,6 +483,9 @@ libbn/vector.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libbu/rb_create.c svneol=native#text/plain
+libbu/rb_extreme.c svneol=native#text/plain
+libbu/rb_internals.h svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
 libcursor/Cakefile -text
 libcursor/cursor.c svneol=native#text/plain
@@ -551,6 +555,10 @@ liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
 libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
+libredblack/application.c svneol=native#text/plain
+libredblack/rb_create.c svneol=native#text/plain
+libredblack/rb_extreme.c svneol=native#text/plain
+libredblack/rb_internals.h svneol=native#text/plain
 librt/Cakefile -text
 librt/anim.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
