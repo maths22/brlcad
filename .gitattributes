@@ -4135,12 +4135,6 @@ src/other/libz/amiga/Makefile.sas svneol=native#text/plain
 src/other/libz/compress.c svneol=native#text/plain
 src/other/libz/configure -text
 src/other/libz/contrib/README.contrib svneol=native#text/plain
-src/other/libz/contrib/asm386/gvmat32.asm -text
-src/other/libz/contrib/asm386/gvmat32c.c svneol=native#text/plain
-src/other/libz/contrib/asm386/mkgvmt32.bat -text svneol=CRLF#text/plain
-src/other/libz/contrib/asm386/zlibvc.def svneol=native#text/plain
-src/other/libz/contrib/asm386/zlibvc.dsp -text svneol=CRLF#text/plain
-src/other/libz/contrib/asm386/zlibvc.dsw -text svneol=CRLF#text/plain
 src/other/libz/contrib/iostream/test.cpp svneol=native#text/plain
 src/other/libz/contrib/iostream/zfstream.cpp svneol=native#text/plain
 src/other/libz/contrib/iostream/zfstream.h svneol=native#text/plain
@@ -4193,10 +4187,6 @@ src/other/libz/msdos/Makefile.w32 svneol=native#text/plain
 src/other/libz/msdos/Makefile.wat svneol=native#text/plain
 src/other/libz/msdos/zlib.def svneol=native#text/plain
 src/other/libz/msdos/zlib.rc -text svneol=CRLF#text/plain
-src/other/libz/nt/Makefile.emx svneol=native#text/plain
-src/other/libz/nt/Makefile.gcc svneol=native#text/plain
-src/other/libz/nt/Makefile.nt svneol=native#text/plain
-src/other/libz/nt/zlib.dnt -text
 src/other/libz/sfile -text
 src/other/libz/trees.c svneol=native#text/plain
 src/other/libz/trees.h svneol=native#text/plain
