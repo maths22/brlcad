@@ -142,6 +142,7 @@ canon/canonize.1 svneol=native#text/plain
 canon/canonize.c svneol=native#text/plain
 canon/canonlib.c svneol=native#text/plain
 canon/canonserver.c svneol=native#text/plain
+canon/ipuscan.c svneol=native#text/plain
 canon/ipustat.c svneol=native#text/plain
 canon/pix-ipu.c svneol=native#text/plain
 canon/png-ipu.c svneol=native#text/plain
