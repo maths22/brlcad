@@ -9320,6 +9320,3 @@ vdeck/vdeck.1 svneol=native#text/plain
 vdeck/vdeck.c svneol=native#text/plain
 vdeck/vextern.h svneol=native#text/plain
 vdeck/vproc.c svneol=native#text/plain
-vfont/Makefile.am svneol=native#text/plain
-vfont/fix.6r -text svneol=unset#unset
-vfont/nonie.r.12 -text svneol=unset#unset
