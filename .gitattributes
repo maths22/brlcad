@@ -1,20 +1,15 @@
 * text=auto !eol
 /.cvsignore svneol=native#text/plain
+/AUTHORS svneol=native#text/plain
 /Acknowledgements -text
 BRL-CAD.pbproj/project.pbxproj svneol=native#text/plain
 /COPYRIGHT -text
-/Cakefile -text
 /Cakefile.defs -text
-/Cakefile.lib -text
-/Cakefile.prog -text
-/Cakefile.rules -text
-/INSTALL svneol=native#text/plain
 /INSTALL.pmac svneol=native#text/plain
-/Makefile svneol=native#text/plain
-/Makefile.defs svneol=native#text/plain
-/Makefile.rules svneol=native#text/plain
+/Makefile.am svneol=native#text/plain
+/NEWS svneol=native#text/plain
 /README svneol=native#text/plain
-anim/Cakefile -text
+anim/Makefile.am svneol=native#text/plain
 anim/anim_cascade.1 svneol=native#text/plain
 anim/anim_cascade.c svneol=native#text/plain
 anim/anim_fly.1 svneol=native#text/plain
@@ -47,7 +42,7 @@ anim/chan_mult.c svneol=native#text/plain
 anim/chan_permute.1 svneol=native#text/plain
 anim/chan_permute.c svneol=native#text/plain
 awf/AWF_COPYRIGHT -text
-awf/Cakefile -text
+awf/Makefile.am svneol=native#text/plain
 awf/awf.1 svneol=native#text/plain
 awf/common -text
 awf/dev.dumb -text
@@ -60,7 +55,6 @@ awf/pass2.ms svneol=native#text/plain
 awf/pass3 -text
 bat/subdirmk.bat -text svneol=CRLF#text/plain
 bench/.cvsignore svneol=native#text/plain
-bench/Cakefile -text
 bench/lgt.sh svneol=native#text/x-sh
 bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
@@ -68,17 +62,18 @@ bench/pretty.sh svneol=native#text/x-sh
 bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
-brlman/Cakefile -text
+/brlcad.spec.in svneol=native#text/plain
+brlman/Makefile.am svneol=native#text/plain
 brlman/awf -text
 brlman/brlman -text
 brlman/brlman.1 svneol=native#text/plain
-btclsh/Cakefile -text
 btclsh/vers.c svneol=native#text/plain
 burst/Cakefile -text
 burst/Hm.c svneol=native#text/plain
 burst/Hm.h svneol=native#text/plain
 burst/HmGetc.c svneol=native#text/plain
 burst/HmGlob.c svneol=native#text/plain
+burst/Makefile.am svneol=native#text/plain
 burst/Mm.h svneol=native#text/plain
 burst/Sc.c svneol=native#text/plain
 burst/Sc.h svneol=native#text/plain
@@ -102,46 +97,14 @@ burst/trie.c svneol=native#text/plain
 burst/trie.h svneol=native#text/plain
 burst/ui.c svneol=native#text/plain
 burst/vecmath.h svneol=native#text/plain
-bwish/Cakefile -text
+bwish/Makefile.am svneol=native#text/plain
 bwish/cmd.c svneol=native#text/plain
 bwish/input.c svneol=native#text/plain
 bwish/main.c svneol=native#text/plain
 bwish/tcl.c svneol=native#text/plain
 bwish/vers.c svneol=native#text/plain
-cake/COPYING svneol=native#text/plain
-cake/Makefile svneol=native#text/plain
-cake/README svneol=native#text/plain
-cake/act.c svneol=native#text/plain
-cake/cake.1 svneol=native#text/plain
-cake/cake.h svneol=native#text/plain
-cake/cake_g.y svneol=native#text/plain
 cake/cake_s.l svneol=native#text/plain
-cake/chase.c svneol=native#text/plain
-cake/conf.h svneol=native#text/plain
-cake/entry.c svneol=native#text/plain
-cake/error.c svneol=native#text/plain
-cake/expand.c svneol=native#text/plain
-cake/extern.h svneol=native#text/plain
-cake/file.c svneol=native#text/plain
-cake/list.c svneol=native#text/plain
-cake/list.h svneol=native#text/plain
-cake/macro.h svneol=native#text/plain
-cake/main.c svneol=native#text/plain
-cake/make.c svneol=native#text/plain
-cake/mem.c svneol=native#text/plain
-cake/pat.c svneol=native#text/plain
-cake/port.h svneol=native#text/plain
-cake/print.c svneol=native#text/plain
-cake/proc.c svneol=native#text/plain
-cake/std.h svneol=native#text/plain
-cake/sym.c svneol=native#text/plain
-cake/sys.c svneol=native#text/plain
-cake/table.c svneol=native#text/plain
-cake/table.h svneol=native#text/plain
-cake/test.c svneol=native#text/plain
-cake/trail.c svneol=native#text/plain
 cake/wait.h svneol=native#text/plain
-cakeaux/Makefile svneol=native#text/plain
 cakeaux/base.c svneol=native#text/plain
 cakeaux/cakeinclude.c svneol=native#text/plain
 cakeaux/cakesub.1 svneol=native#text/plain
@@ -157,7 +120,6 @@ cakeaux/refs.c svneol=native#text/plain
 cakeaux/std.h svneol=native#text/plain
 cakeaux/subcmd.c svneol=native#text/plain
 cakeaux/usrc.c svneol=native#text/plain
-canon/Cakefile -text
 canon/asize.c svneol=native#text/plain
 canon/canon.h svneol=native#text/plain
 canon/canonize.1 svneol=native#text/plain
@@ -170,7 +132,7 @@ canon/ipustat.c svneol=native#text/plain
 canon/pix-ipu.c svneol=native#text/plain
 canon/png-ipu.c svneol=native#text/plain
 comgeom-g/3d.h svneol=native#text/plain
-comgeom-g/Cakefile -text
+comgeom-g/Makefile.am svneol=native#text/plain
 comgeom-g/comgeom-g.1 svneol=native#text/plain
 comgeom-g/cvt.c svneol=native#text/plain
 comgeom-g/f2a.c svneol=native#text/plain
@@ -181,7 +143,8 @@ comgeom-g/region.c svneol=native#text/plain
 comgeom-g/solid.c svneol=native#text/plain
 comgeom-g/tools.c svneol=native#text/plain
 comgeom-g/try.sh svneol=native#text/x-sh
-conv/Cakefile -text
+/configure.in svneol=native#text/plain
+conv/Makefile.am svneol=native#text/plain
 conv/asc-nmg.1 svneol=native#text/plain
 conv/asc-nmg.c svneol=native#text/plain
 conv/asc2g.c svneol=native#text/plain
@@ -257,8 +220,7 @@ conv/tankill-g.c svneol=native#text/plain
 conv/viewpoint-g.1 svneol=native#text/plain
 conv/viewpoint-g.c svneol=native#text/plain
 /cvspolicy.txt svneol=native#text/plain
-db/Cakefile -text
-db/Makefile svneol=native#text/plain
+db/Makefile.am svneol=native#text/plain
 db/Makefile.dist svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
@@ -292,7 +254,7 @@ db/woodsman.asc svneol=native#text/plain
 db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
 doc/4.4-bugs.doc svneol=native#text/plain
-doc/Cakefile -text
+doc/Makefile.am svneol=native#text/plain
 doc/agreement -text
 doc/agreement_R6.0.pdf -text svneol=unset#application/pdf
 doc/agreement_R6.0.rtf svneol=native#text/rtf
@@ -323,7 +285,7 @@ doc/summary.doc svneol=native#text/plain
 doc/sun.doc svneol=native#text/plain
 doc/test.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
-fb/Cakefile -text
+fb/Makefile.am svneol=native#text/plain
 fb/bw-fb.1 svneol=native#text/plain
 fb/bw-fb.c svneol=native#text/plain
 fb/cat-fb.1 svneol=native#text/plain
@@ -406,8 +368,7 @@ fb/pp-fb.c svneol=native#text/plain
 fb/rle-fb.1 svneol=native#text/plain
 fb/rle-fb.c svneol=native#text/plain
 fb/spm-fb.c svneol=native#text/plain
-fbed/Cakefile -text
-fbed/Makefile svneol=native#text/plain
+fbed/Makefile.am svneol=native#text/plain
 fbed/Makefile.loc svneol=native#text/plain
 fbed/ascii.h svneol=native#text/plain
 fbed/char.c svneol=native#text/plain
@@ -433,17 +394,18 @@ fbed/squash.c svneol=native#text/plain
 fbed/std.h svneol=native#text/plain
 fbed/try.c svneol=native#text/plain
 fbed/try.h svneol=native#text/plain
-fbserv/Cakefile -text
+fbserv/Makefile.am svneol=native#text/plain
 fbserv/fbserv.1 svneol=native#text/plain
 fbserv/fbserv.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
-gtools/Cakefile -text
+gtools/Makefile.am svneol=native#text/plain
 gtools/g_diff.1 svneol=native#text/plain
 gtools/g_diff.c svneol=native#text/plain
 gtools/g_lint.1 svneol=native#text/plain
 gtools/g_lint.c svneol=native#text/plain
 gtools/solshoot.c svneol=native#text/plain
 gtools/testfree.c svneol=native#text/plain
+h/Makefile.am svneol=native#text/plain
 h/RtServerImpl.h svneol=native#text/plain
 h/XtndRunsv.h svneol=native#text/plain
 h/anim.h svneol=native#text/plain
@@ -559,7 +521,7 @@ h/vmath.h svneol=native#text/plain
 h/wdb.h svneol=native#text/plain
 h/zconf.h svneol=native#text/plain
 h/zlib.h svneol=native#text/plain
-halftone/Cakefile -text
+halftone/Makefile.am svneol=native#text/plain
 halftone/halftone.1 svneol=native#text/plain
 halftone/main.c svneol=native#text/plain
 halftone/sharpen.c svneol=native#text/plain
@@ -568,9 +530,10 @@ halftone/tone_floyd.c svneol=native#text/plain
 halftone/tone_folly.c svneol=native#text/plain
 halftone/tone_simple.c svneol=native#text/plain
 halftone/tonescale.c svneol=native#text/plain
-html/ReleaseNotes/Cakefile -text
-html/ReleaseNotes/Rel5.0/Cakefile -text
-html/ReleaseNotes/Rel5.0/Summary/Cakefile -text
+html/Makefile.am svneol=native#text/plain
+html/ReleaseNotes/Makefile.am svneol=native#text/plain
+html/ReleaseNotes/Rel5.0/Makefile.am svneol=native#text/plain
+html/ReleaseNotes/Rel5.0/Summary/Makefile.am svneol=native#text/plain
 html/ReleaseNotes/Rel5.0/Summary/activem.gif -text svneol=unset#image/gif
 html/ReleaseNotes/Rel5.0/Summary/activep.gif -text svneol=unset#image/gif
 html/ReleaseNotes/Rel5.0/Summary/collapse.gif -text svneol=unset#image/gif
@@ -648,7 +611,7 @@ html/ReleaseNotes/Rel5.0/deprecated.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/index.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_cmds.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_libs.html svneol=native#text/html
-html/ReleaseNotes/Rel6.0/Cakefile -text
+html/ReleaseNotes/Rel6.0/Makefile.am svneol=native#text/plain
 html/ReleaseNotes/Rel6.0/index.html svneol=native#text/html
 html/ReleaseNotes/email2.0.html svneol=native#text/html
 html/ReleaseNotes/email3.0.html svneol=native#text/html
@@ -658,8 +621,8 @@ html/ReleaseNotes/email4.4.html svneol=native#text/html
 html/ReleaseNotes/email5.0.html svneol=native#text/html
 html/ReleaseNotes/index.html svneol=native#text/html
 html/manuals/Anim_Tutorial/Butler.html svneol=native#text/html
-html/manuals/Anim_Tutorial/Cakefile -text
 html/manuals/Anim_Tutorial/Lee_tux.gif -text svneol=unset#image/gif
+html/manuals/Anim_Tutorial/Makefile.am svneol=native#text/plain
 html/manuals/Anim_Tutorial/Murdza.html svneol=native#text/html
 html/manuals/Anim_Tutorial/animtbl.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/chans.html svneol=native#text/html
@@ -701,17 +664,18 @@ html/manuals/Anim_Tutorial/transboth.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/transboth_sm.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/v_eqn1.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/v_eqn2.gif -text svneol=unset#image/gif
-html/manuals/Cakefile -text
 html/manuals/Install.html svneol=native#text/html
+html/manuals/Makefile.am svneol=native#text/plain
 html/manuals/Obtain.html svneol=native#text/html
 html/manuals/Overview.html svneol=native#text/html
-html/manuals/cadwidgets/Cakefile -text
+html/manuals/ReleaseNotes/Makefile.am svneol=native#text/plain
 html/manuals/cadwidgets/Command.html svneol=native#text/html
 html/manuals/cadwidgets/Database.html svneol=native#text/html
 html/manuals/cadwidgets/Db.html svneol=native#text/html
 html/manuals/cadwidgets/Display.html svneol=native#text/html
 html/manuals/cadwidgets/Dm.html svneol=native#text/html
 html/manuals/cadwidgets/Drawable.html svneol=native#text/html
+html/manuals/cadwidgets/Makefile.am svneol=native#text/plain
 html/manuals/cadwidgets/Mged.html svneol=native#text/html
 html/manuals/cadwidgets/QuadDisplay.html svneol=native#text/html
 html/manuals/cadwidgets/Splash.html svneol=native#text/html
@@ -721,26 +685,26 @@ html/manuals/cadwidgets/index.html svneol=native#text/html
 html/manuals/cadwidgets/skeleton.html svneol=native#text/html
 html/manuals/eagleCAD.gif -text svneol=unset#image/gif
 html/manuals/index.html svneol=native#text/html
-html/manuals/libbu/Cakefile -text
+html/manuals/libbu/Makefile.am svneol=native#text/plain
 html/manuals/libbu/cmdhist_obj.html svneol=native#text/html
 html/manuals/libbu/contents.html svneol=native#text/html
 html/manuals/libbu/index.html svneol=native#text/html
-html/manuals/libdm/Cakefile -text
+html/manuals/libdm/Makefile.am svneol=native#text/plain
 html/manuals/libdm/api.html svneol=native#text/html
 html/manuals/libdm/contents.html svneol=native#text/html
 html/manuals/libdm/dm_obj.html svneol=native#text/html
 html/manuals/libdm/index.html svneol=native#text/html
 html/manuals/libdm/preface.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
-html/manuals/librt/Cakefile -text
+html/manuals/librt/Makefile.am svneol=native#text/plain
 html/manuals/librt/contents.html svneol=native#text/html
 html/manuals/librt/dg_obj.html svneol=native#text/html
 html/manuals/librt/index.html svneol=native#text/html
 html/manuals/librt/view_obj.html svneol=native#text/html
 html/manuals/librt/wdb_obj.html svneol=native#text/html
 html/manuals/mged/.cvsignore svneol=native#text/plain
-html/manuals/mged/Cakefile -text
-html/manuals/mged/animmate/Cakefile -text
+html/manuals/mged/Makefile.am svneol=native#text/plain
+html/manuals/mged/animmate/Makefile.am svneol=native#text/plain
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
 html/manuals/mged/animmate/anim_doc.html svneol=native#text/html
 html/manuals/mged/animmate/anim_fly.html svneol=native#text/html
@@ -867,10 +831,10 @@ html/manuals/mged/rim.jpg -text svneol=unset#image/jpeg
 html/manuals/mged/shaders.html svneol=native#text/html
 html/manuals/mged/skipped -text
 html/manuals/mged/tex-html.tcl svneol=native#text/plain
-html/manuals/shaders/Cakefile -text
+html/manuals/shaders/Makefile.am svneol=native#text/plain
 html/manuals/shaders/camo.html svneol=native#text/html
 html/manuals/small-eagleCAD.gif -text svneol=unset#image/gif
-iges/Cakefile -text
+iges/Makefile.am svneol=native#text/plain
 iges/add_face.c svneol=native#text/plain
 iges/add_inner_shell.c svneol=native#text/plain
 iges/add_loop.c svneol=native#text/plain
@@ -959,8 +923,8 @@ iges/vers.c svneol=native#text/plain
 iges/wedge.c svneol=native#text/plain
 iges/wing128.igs -text svneol=unset#model/iges
 iges/woodie.igs -text svneol=unset#model/iges
-irprep/Cakefile -text
 irprep/Compile.sgi -text
+irprep/Makefile.am svneol=native#text/plain
 irprep/all_sf.1 svneol=native#text/plain
 irprep/all_sf.c svneol=native#text/plain
 irprep/display.1 svneol=native#text/plain
@@ -989,7 +953,7 @@ irprep/subroutines.c svneol=native#text/plain
 iwidgets4.0.1/CHANGES -text
 iwidgets4.0.1/Cakefile -text
 iwidgets4.0.1/ChangeLog svneol=native#text/plain
-iwidgets4.0.1/Makefile.in svneol=native#text/plain
+iwidgets4.0.1/Makefile.am svneol=native#text/plain
 iwidgets4.0.1/README svneol=native#text/plain
 iwidgets4.0.1/aclocal.m4 svneol=native#text/plain
 iwidgets4.0.1/configure -text
@@ -1123,6 +1087,7 @@ iwidgets4.0.1/demos/timeentry -text
 iwidgets4.0.1/demos/timefield -text
 iwidgets4.0.1/demos/toolbar -text
 iwidgets4.0.1/demos/watch -text
+iwidgets4.0.1/doc/Makefile.am svneol=native#text/plain
 iwidgets4.0.1/doc/buttonbox.n svneol=native#text/plain
 iwidgets4.0.1/doc/calendar.n svneol=native#text/plain
 iwidgets4.0.1/doc/canvasprintbox.n svneol=native#text/plain
@@ -1183,6 +1148,7 @@ iwidgets4.0.1/doc/tk2html.perl svneol=native#text/plain
 iwidgets4.0.1/doc/tk2html2.awk svneol=native#text/plain
 iwidgets4.0.1/doc/toolbar.n svneol=native#text/plain
 iwidgets4.0.1/doc/watch.n svneol=native#text/plain
+iwidgets4.0.1/generic/Makefile.am svneol=native#text/plain
 iwidgets4.0.1/generic/buttonbox.itk svneol=native#text/plain
 iwidgets4.0.1/generic/calendar.itk svneol=native#text/plain
 iwidgets4.0.1/generic/canvasprintbox.itk svneol=native#text/plain
@@ -1313,14 +1279,13 @@ iwidgets4.0.1/tests/watch.test svneol=native#text/plain
 iwidgets4.0.1/win/iwidgets.tcl svneol=native#text/plain
 iwidgets4.0.1/win/makefile.vc svneol=native#text/plain
 iwidgets4.0.1/win/pkg.vc -text
-jack/Cakefile -text
+jack/Makefile.am svneol=native#text/plain
 jack/g-jack.c svneol=native#text/plain
 jack/jack-g.c svneol=native#text/plain
 java/mil/army/arl/brlcad/BrlcadGeometry.java svneol=native#text/plain
 java/mil/army/arl/brlcad/BrlcadGeometryServer.java svneol=native#text/plain
 java/mil/army/arl/brlcad/Partition.java svneol=native#text/plain
-jove/Cakefile -text
-jove/Makefile svneol=native#text/plain
+jove/Makefile.am svneol=native#text/plain
 jove/describe.com.1 svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
 jove/jove.1 svneol=native#text/plain
@@ -1348,7 +1313,7 @@ jove/mkversion.sh svneol=native#text/x-sh
 jove/teach-jove.1 svneol=native#text/plain
 jove/teach-jove.sh svneol=native#text/x-sh
 jove/termcap.h svneol=native#text/plain
-lgt/Cakefile -text
+lgt/Makefile.am svneol=native#text/plain
 lgt/ascii.h svneol=native#text/plain
 lgt/char.c svneol=native#text/plain
 lgt/cursors.h svneol=native#text/plain
@@ -1382,8 +1347,7 @@ lgt/texture.h svneol=native#text/plain
 lgt/tree.h svneol=native#text/plain
 lgt/trie.c svneol=native#text/plain
 lgt/vecmath.h svneol=native#text/plain
-libbn/Cakefile -text
-libbn/Makefile svneol=native#text/plain
+libbn/Makefile.am svneol=native#text/plain
 libbn/Makefile.loc svneol=native#text/plain
 libbn/anim.c svneol=native#text/plain
 libbn/asize.c svneol=native#text/plain
@@ -1419,10 +1383,9 @@ libbn/tabdata.c svneol=native#text/plain
 libbn/tplot.c svneol=native#text/plain
 libbn/vectfont.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
-libbn/vers.c svneol=native#text/plain
 libbn/vert_tree.c svneol=native#text/plain
 libbn/wavelet.c svneol=native#text/plain
-libbu/Cakefile -text
+libbu/Makefile.am svneol=native#text/plain
 libbu/association.c svneol=native#text/plain
 libbu/avs.c svneol=native#text/plain
 libbu/badmagic.c svneol=native#text/plain
@@ -1479,15 +1442,15 @@ libbu/rb_walk.c svneol=native#text/plain
 libbu/redblack.3 svneol=native#text/plain
 libbu/semaphore.c svneol=native#text/plain
 libbu/units.c svneol=native#text/plain
-libbu/vers.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
 libbu/vls.c svneol=native#text/plain
 libbu/xdr.c svneol=native#text/plain
-libcursor/Cakefile -text
+libcursor/Makefile.am svneol=native#text/plain
 libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
 libcursor/vers.c svneol=native#text/plain
 libdm/Cakefile -text
+libdm/Makefile.am svneol=native#text/plain
 libdm/clip.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
 libdm/dm-Null.c svneol=native#text/plain
@@ -1508,8 +1471,7 @@ libdm/libdm.opt -text svneol=unset#unset
 libdm/options.c svneol=native#text/plain
 libdm/query.c svneol=native#text/plain
 libdm/tcl.c svneol=native#text/plain
-libdm/vers.c svneol=native#text/plain
-libfb/Cakefile -text
+libfb/Makefile.am svneol=native#text/plain
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
 libfb/adageframe.h svneol=native#text/plain
@@ -1562,8 +1524,8 @@ libfb/server.c svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
 libfb/sgiselect.s svneol=native#text/plain
 libfb/tcl.c svneol=native#text/plain
-libfb/vers.c svneol=native#text/plain
 libfft/Cakefile -text
+libfft/Makefile.am svneol=native#text/plain
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
 libfft/ditsplitc.c svneol=native#text/plain
@@ -1577,10 +1539,9 @@ libfft/splitditc.c svneol=native#text/plain
 libfft/vers.c svneol=native#text/plain
 libitcl/.cvsignore svneol=native#text/plain
 libitcl/CHANGES -text
-libitcl/Cakefile -text
 libitcl/ChangeLog svneol=native#text/plain
 libitcl/INCOMPATIBLE -text
-libitcl/Makefile.in svneol=native#text/plain
+libitcl/Makefile.am svneol=native#text/plain
 libitcl/Makefile.pmac svneol=native#text/plain
 libitcl/README svneol=native#text/plain
 libitcl/TODO svneol=native#text/plain
@@ -1595,7 +1556,6 @@ libitcl/configure.in svneol=native#text/plain
 libitcl/doc/README svneol=native#text/plain
 libitcl/fix_makefile.sh svneol=native#text/x-sh
 libitcl/itcl/.cvsignore svneol=native#text/plain
-libitcl/itcl/Makefile.in svneol=native#text/plain
 libitcl/itcl/aclocal.m4 svneol=native#text/plain
 libitcl/itcl/configure -text
 libitcl/itcl/configure.in svneol=native#text/plain
@@ -1692,7 +1652,6 @@ libitcl/itcl/win/nmakehlp.c svneol=native#text/plain
 libitcl/itcl/win/rc/itcl.rc -text svneol=CRLF#text/plain
 libitcl/itcl/win/toaster.bmp -text svneol=unset#image/bmp
 libitcl/itk/.cvsignore svneol=native#text/plain
-libitcl/itk/Makefile.in svneol=native#text/plain
 libitcl/itk/aclocal.m4 svneol=native#text/plain
 libitcl/itk/configure -text
 libitcl/itk/configure.in svneol=native#text/plain
@@ -1761,11 +1720,9 @@ libitcl/makefile.vc svneol=native#text/plain
 libitcl/rules.vc -text
 libitcl/tcl.m4 svneol=native#text/plain
 libitcl/tools/genStubs.tcl svneol=native#text/plain
-libmultispectral/Cakefile -text
 libmultispectral/init.c svneol=native#text/plain
 libmultispectral/sh_temp.c svneol=native#text/plain
-libmultispectral/vers.c svneol=native#text/plain
-liboptical/Cakefile -text
+liboptical/Makefile.am svneol=native#text/plain
 liboptical/init.c svneol=native#text/plain
 liboptical/liboptical.dsp -text svneol=CRLF#text/plain
 liboptical/liboptical.dsw -text svneol=CRLF#text/plain
@@ -1804,25 +1761,23 @@ liboptical/sh_wood.c svneol=native#text/plain
 liboptical/sh_xxx.c svneol=native#text/plain
 liboptical/shade.c svneol=native#text/plain
 liboptical/turb.c svneol=native#text/plain
-liboptical/vers.c svneol=native#text/plain
 liboptical/wray.c svneol=native#text/plain
-liborle/Cakefile -text
+liborle/Makefile.am svneol=native#text/plain
 liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
 liborle/vers.c svneol=native#text/plain
-libpkg/Cakefile -text
+libpkg/Makefile.am svneol=native#text/plain
 libpkg/libpkg.dsp -text svneol=CRLF#text/plain
 libpkg/libpkg.dsw -text svneol=CRLF#text/plain
 libpkg/libpkg.ncb -text svneol=unset#unset
 libpkg/libpkg.opt -text svneol=unset#unset
 libpkg/pkg.c svneol=native#text/plain
 libpkg/tcl.c svneol=native#text/plain
-libpkg/vers.c svneol=native#text/plain
 libpng/ANNOUNCE -text
 libpng/CHANGES -text
-libpng/Cakefile -text
 libpng/INSTALL svneol=native#text/plain
 libpng/KNOWNBUG -text
+libpng/Makefile.am svneol=native#text/plain
 libpng/README svneol=native#text/plain
 libpng/TODO svneol=native#text/plain
 libpng/ansi2knr.1 svneol=native#text/plain
@@ -1904,8 +1859,8 @@ libpng/scripts/makevms.com svneol=native#text/plain
 libpng/scripts/pngdef.pas -text
 libpng/scripts/pngos2.def svneol=native#text/plain
 libpng/scripts/smakefile.ppc -text
-libpng/vers.c svneol=native#text/plain
 librt/Cakefile -text
+librt/Makefile.am svneol=native#text/plain
 librt/bezier_2d_isect.c svneol=native#text/plain
 librt/bigE.c svneol=native#text/plain
 librt/binary_obj.c svneol=native#text/plain
@@ -2063,7 +2018,6 @@ librt/timerhep.c svneol=native#text/plain
 librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 librt/vdraw.c svneol=native#text/plain
-librt/vers.c svneol=native#text/plain
 librt/view_obj.c svneol=native#text/plain
 librt/vlist.c svneol=native#text/plain
 librt/vshoot.c svneol=native#text/plain
@@ -2071,8 +2025,9 @@ librt/wdb.c svneol=native#text/plain
 librt/wdb_comb_std.c svneol=native#text/plain
 librt/wdb_obj.c svneol=native#text/plain
 librtserver/Cakefile -text
+librtserver/Makefile.am svneol=native#text/plain
 librtserver/rtserver.c svneol=native#text/plain
-libsysv/Cakefile -text
+libsysv/Makefile.am svneol=native#text/plain
 libsysv/bsdselect.c svneol=native#text/plain
 libsysv/cclass.h svneol=native#text/plain
 libsysv/cname.h svneol=native#text/plain
@@ -2093,12 +2048,11 @@ libsysv/regexec.c svneol=native#text/plain
 libsysv/regfree.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
-libsysv/vers.c svneol=native#text/plain
-libtcl8.4/Cakefile -text
 libtcl8.4/ChangeLog svneol=native#text/plain
 libtcl8.4/ChangeLog.1999 svneol=native#text/plain
 libtcl8.4/ChangeLog.2000 svneol=native#text/plain
 libtcl8.4/ChangeLog.2001 svneol=native#text/plain
+libtcl8.4/Makefile.am svneol=native#text/plain
 libtcl8.4/README svneol=native#text/plain
 libtcl8.4/changes -text
 libtcl8.4/compat/README svneol=native#text/plain
@@ -2182,6 +2136,7 @@ libtcl8.4/doc/Interp.3 svneol=native#text/plain
 libtcl8.4/doc/LinkVar.3 svneol=native#text/plain
 libtcl8.4/doc/ListObj.3 svneol=native#text/plain
 libtcl8.4/doc/Macintosh.3 svneol=native#text/plain
+libtcl8.4/doc/Makefile.am svneol=native#text/plain
 libtcl8.4/doc/Notifier.3 svneol=native#text/plain
 libtcl8.4/doc/Object.3 svneol=native#text/plain
 libtcl8.4/doc/ObjectType.3 svneol=native#text/plain
@@ -2321,6 +2276,7 @@ libtcl8.4/doc/variable.n svneol=native#text/plain
 libtcl8.4/doc/vwait.n svneol=native#text/plain
 libtcl8.4/doc/while.n svneol=native#text/plain
 libtcl8.4/fix_makefile.sh svneol=native#text/x-sh
+libtcl8.4/generic/Makefile.am svneol=native#text/plain
 libtcl8.4/generic/README svneol=native#text/plain
 libtcl8.4/generic/regc_color.c svneol=native#text/plain
 libtcl8.4/generic/regc_cvec.c svneol=native#text/plain
@@ -2417,8 +2373,11 @@ libtcl8.4/generic/tclUniData.c svneol=native#text/plain
 libtcl8.4/generic/tclUtf.c svneol=native#text/plain
 libtcl8.4/generic/tclUtil.c svneol=native#text/plain
 libtcl8.4/generic/tclVar.c svneol=native#text/plain
+libtcl8.4/library/Makefile.am svneol=native#text/plain
 libtcl8.4/library/auto.tcl svneol=native#text/plain
+libtcl8.4/library/dde/Makefile.am svneol=native#text/plain
 libtcl8.4/library/dde/pkgIndex.tcl svneol=native#text/plain
+libtcl8.4/library/encoding/Makefile.am svneol=native#text/plain
 libtcl8.4/library/encoding/ascii.enc svneol=native#text/plain
 libtcl8.4/library/encoding/big5.enc svneol=native#text/plain
 libtcl8.4/library/encoding/cp1250.enc svneol=native#text/plain
@@ -2498,22 +2457,28 @@ libtcl8.4/library/encoding/shiftjis.enc svneol=native#text/plain
 libtcl8.4/library/encoding/symbol.enc svneol=native#text/plain
 libtcl8.4/library/encoding/tis-620.enc svneol=native#text/plain
 libtcl8.4/library/history.tcl svneol=native#text/plain
+libtcl8.4/library/http/Makefile.am svneol=native#text/plain
 libtcl8.4/library/http/http.tcl svneol=native#text/plain
 libtcl8.4/library/http/pkgIndex.tcl svneol=native#text/plain
+libtcl8.4/library/http1.0/Makefile.am svneol=native#text/plain
 libtcl8.4/library/http1.0/http.tcl svneol=native#text/plain
 libtcl8.4/library/http1.0/pkgIndex.tcl svneol=native#text/plain
 libtcl8.4/library/init.tcl svneol=native#text/plain
 libtcl8.4/library/ldAout.tcl svneol=native#text/plain
 libtcl8.4/library/license.terms svneol=native#text/plain
+libtcl8.4/library/msgcat/Makefile.am svneol=native#text/plain
 libtcl8.4/library/msgcat/msgcat.tcl svneol=native#text/plain
 libtcl8.4/library/msgcat/pkgIndex.tcl svneol=native#text/plain
+libtcl8.4/library/opt/Makefile.am svneol=native#text/plain
 libtcl8.4/library/opt/optparse.tcl svneol=native#text/plain
 libtcl8.4/library/opt/pkgIndex.tcl svneol=native#text/plain
 libtcl8.4/library/package.tcl svneol=native#text/plain
 libtcl8.4/library/parray.tcl svneol=native#text/plain
+libtcl8.4/library/reg/Makefile.am svneol=native#text/plain
 libtcl8.4/library/reg/pkgIndex.tcl svneol=native#text/plain
 libtcl8.4/library/safe.tcl svneol=native#text/plain
 libtcl8.4/library/tclIndex -text
+libtcl8.4/library/tcltest/Makefile.am svneol=native#text/plain
 libtcl8.4/library/tcltest/pkgIndex.tcl svneol=native#text/plain
 libtcl8.4/library/tcltest/tcltest.tcl svneol=native#text/plain
 libtcl8.4/library/word.tcl svneol=native#text/plain
@@ -2736,6 +2701,7 @@ libtcl8.4/tools/tcltk-man2html.tcl svneol=native#text/plain
 libtcl8.4/tools/uniClass.tcl svneol=native#text/plain
 libtcl8.4/tools/uniParse.tcl svneol=native#text/plain
 libtcl8.4/tools/white.bmp -text svneol=unset#image/bmp
+libtcl8.4/unix/Makefile.am svneol=native#text/plain
 libtcl8.4/unix/Makefile.in svneol=native#text/plain
 libtcl8.4/unix/README svneol=native#text/plain
 libtcl8.4/unix/aclocal.m4 svneol=native#text/plain
@@ -2823,21 +2789,20 @@ libtcl8.4/win/tclWinThrd.h svneol=native#text/plain
 libtcl8.4/win/tclWinTime.c svneol=native#text/plain
 libtcl8.4/win/tclsh.ico -text svneol=unset#image/x-icon
 libtcl8.4/win/tclsh.rc -text svneol=CRLF#text/plain
-libtclcad/Cakefile -text
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtclcad/vers.c svneol=native#text/plain
-libtermio/Cakefile -text
+libtermio/Makefile.am svneol=native#text/plain
 libtermio/libtermio.dsp -text svneol=CRLF#text/plain
 libtermio/libtermio.dsw -text svneol=CRLF#text/plain
 libtermio/libtermio.ncb -text svneol=unset#unset
 libtermio/libtermio.opt -text svneol=unset#unset
 libtermio/termio.c svneol=native#text/plain
 libtermio/termio_win32.c svneol=native#text/plain
-libtermio/vers.c svneol=native#text/plain
-libtk8.4/Cakefile -text
 libtk8.4/ChangeLog svneol=native#text/plain
+libtk8.4/Makefile.am svneol=native#text/plain
 libtk8.4/README svneol=native#text/plain
+libtk8.4/bitmaps/Makefile.am svneol=native#text/plain
 libtk8.4/bitmaps/error.bmp -text svneol=unset#image/bmp
 libtk8.4/bitmaps/gray12.bmp -text svneol=unset#image/bmp
 libtk8.4/bitmaps/gray25.bmp -text svneol=unset#image/bmp
@@ -2912,6 +2877,7 @@ libtk8.4/doc/InternAtom.3 svneol=native#text/plain
 libtk8.4/doc/MainLoop.3 svneol=native#text/plain
 libtk8.4/doc/MainWin.3 svneol=native#text/plain
 libtk8.4/doc/MaintGeom.3 svneol=native#text/plain
+libtk8.4/doc/Makefile.am svneol=native#text/plain
 libtk8.4/doc/ManageGeom.3 svneol=native#text/plain
 libtk8.4/doc/MapWindow.3 svneol=native#text/plain
 libtk8.4/doc/MeasureChar.3 svneol=native#text/plain
@@ -3001,6 +2967,7 @@ libtk8.4/doc/winfo.n svneol=native#text/plain
 libtk8.4/doc/wish.1 svneol=native#text/plain
 libtk8.4/doc/wm.n svneol=native#text/plain
 libtk8.4/fix_makefile.sh svneol=native#text/x-sh
+libtk8.4/generic/Makefile.am svneol=native#text/plain
 libtk8.4/generic/README svneol=native#text/plain
 libtk8.4/generic/default.h svneol=native#text/plain
 libtk8.4/generic/ks_names.h svneol=native#text/plain
@@ -3107,12 +3074,14 @@ libtk8.4/generic/tkUndo.h svneol=native#text/plain
 libtk8.4/generic/tkUtil.c svneol=native#text/plain
 libtk8.4/generic/tkVisual.c svneol=native#text/plain
 libtk8.4/generic/tkWindow.c svneol=native#text/plain
+libtk8.4/library/Makefile.am svneol=native#text/plain
 libtk8.4/library/bgerror.tcl svneol=native#text/plain
 libtk8.4/library/button.tcl svneol=native#text/plain
 libtk8.4/library/choosedir.tcl svneol=native#text/plain
 libtk8.4/library/clrpick.tcl svneol=native#text/plain
 libtk8.4/library/comdlg.tcl svneol=native#text/plain
 libtk8.4/library/console.tcl svneol=native#text/plain
+libtk8.4/library/demos/Makefile.am svneol=native#text/plain
 libtk8.4/library/demos/README svneol=native#text/plain
 libtk8.4/library/demos/arrow.tcl svneol=native#text/plain
 libtk8.4/library/demos/bind.tcl svneol=native#text/plain
@@ -3137,6 +3106,7 @@ libtk8.4/library/demos/hscale.tcl svneol=native#text/plain
 libtk8.4/library/demos/icon.tcl svneol=native#text/plain
 libtk8.4/library/demos/image1.tcl svneol=native#text/plain
 libtk8.4/library/demos/image2.tcl svneol=native#text/plain
+libtk8.4/library/demos/images/Makefile.am svneol=native#text/plain
 libtk8.4/library/demos/images/earth.gif -text svneol=unset#image/gif
 libtk8.4/library/demos/images/earthris.gif -text svneol=unset#image/gif
 libtk8.4/library/demos/images/face.bmp -text svneol=unset#image/bmp
@@ -3181,6 +3151,7 @@ libtk8.4/library/demos/widget -text
 libtk8.4/library/dialog.tcl svneol=native#text/plain
 libtk8.4/library/entry.tcl svneol=native#text/plain
 libtk8.4/library/focus.tcl svneol=native#text/plain
+libtk8.4/library/images/Makefile.am svneol=native#text/plain
 libtk8.4/library/images/README svneol=native#text/plain
 libtk8.4/library/images/logo.eps -text svneol=unset#application/postscript
 libtk8.4/library/images/logo100.gif -text svneol=unset#image/gif
@@ -3199,6 +3170,7 @@ libtk8.4/library/listbox.tcl svneol=native#text/plain
 libtk8.4/library/menu.tcl svneol=native#text/plain
 libtk8.4/library/mkpsenc.tcl svneol=native#text/plain
 libtk8.4/library/msgbox.tcl svneol=native#text/plain
+libtk8.4/library/msgs/Makefile.am svneol=native#text/plain
 libtk8.4/library/msgs/cs.msg svneol=native#text/plain
 libtk8.4/library/msgs/de.msg svneol=native#text/plain
 libtk8.4/library/msgs/el.msg svneol=native#text/plain
@@ -3215,6 +3187,7 @@ libtk8.4/library/obsolete.tcl svneol=native#text/plain
 libtk8.4/library/optMenu.tcl svneol=native#text/plain
 libtk8.4/library/palette.tcl svneol=native#text/plain
 libtk8.4/library/panedwindow.tcl svneol=native#text/plain
+libtk8.4/library/pkgIndex.tcl.in svneol=native#text/plain
 libtk8.4/library/safetk.tcl svneol=native#text/plain
 libtk8.4/library/scale.tcl svneol=native#text/plain
 libtk8.4/library/scrlbar.tcl svneol=native#text/plain
@@ -3442,6 +3415,7 @@ libtk8.4/tests/window.test svneol=native#text/plain
 libtk8.4/tests/winfo.test svneol=native#text/plain
 libtk8.4/tests/wm.test svneol=native#text/plain
 libtk8.4/tests/xmfbox.test svneol=native#text/plain
+libtk8.4/unix/Makefile.am svneol=native#text/plain
 libtk8.4/unix/Makefile.in svneol=native#text/plain
 libtk8.4/unix/README svneol=native#text/plain
 libtk8.4/unix/aclocal.m4 svneol=native#text/plain
@@ -3609,6 +3583,7 @@ libtk8.4/win/tkWinWindow.c svneol=native#text/plain
 libtk8.4/win/tkWinWm.c svneol=native#text/plain
 libtk8.4/win/tkWinX.c svneol=native#text/plain
 libtk8.4/win/winMain.c svneol=native#text/plain
+libtk8.4/xlib/Makefile.am svneol=native#text/plain
 libtk8.4/xlib/X11/X.h svneol=native#text/plain
 libtk8.4/xlib/X11/Xatom.h svneol=native#text/plain
 libtk8.4/xlib/X11/Xfuncproto.h svneol=native#text/plain
@@ -3625,7 +3600,6 @@ libtk8.4/xlib/xdraw.c svneol=native#text/plain
 libtk8.4/xlib/xgc.c svneol=native#text/plain
 libtk8.4/xlib/ximage.c svneol=native#text/plain
 libtk8.4/xlib/xutil.c svneol=native#text/plain
-libtkGLX/Cakefile -text
 libtkGLX/descnames.h svneol=native#text/plain
 libtkGLX/makedescnames.sh svneol=native#text/x-sh
 libtkGLX/patchlevel.h svneol=native#text/plain
@@ -3633,7 +3607,7 @@ libtkGLX/tkGLX.h svneol=native#text/plain
 libtkGLX/tkGLXCmds.c svneol=native#text/plain
 libtkGLX/tkGLXInit.c svneol=native#text/plain
 libtkGLX/tkGLXwin.c svneol=native#text/plain
-libutahrle/Cakefile -text
+libutahrle/Makefile.am svneol=native#text/plain
 libutahrle/Runput.c svneol=native#text/plain
 libutahrle/bstring.c svneol=native#text/plain
 libutahrle/buildmap.3 svneol=native#text/plain
@@ -3730,13 +3704,11 @@ libwdb/spl.c svneol=native#text/plain
 libwdb/strsol.c svneol=native#text/plain
 libwdb/units.c svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
-libz/Cakefile -text
 libz/ChangeLog svneol=native#text/plain
 libz/FAQ -text
 libz/INDEX -text
 libz/Make_vms.com svneol=native#text/plain
-libz/Makefile svneol=native#text/plain
-libz/Makefile.in svneol=native#text/plain
+libz/Makefile.am svneol=native#text/plain
 libz/Makefile.riscos svneol=native#text/plain
 libz/README svneol=native#text/plain
 libz/adler32.c svneol=native#text/plain
@@ -3759,7 +3731,6 @@ libz/contrib/iostream/zfstream.h svneol=native#text/plain
 libz/contrib/iostream2/zstream.h svneol=native#text/plain
 libz/contrib/iostream2/zstream_test.cpp svneol=native#text/plain
 libz/contrib/minizip/ChangeLogUnzip svneol=native#text/plain
-libz/contrib/minizip/Makefile svneol=native#text/plain
 libz/contrib/minizip/miniunz.c svneol=native#text/plain
 libz/contrib/minizip/minizip.c svneol=native#text/plain
 libz/contrib/minizip/readme.txt svneol=native#text/plain
@@ -3772,7 +3743,6 @@ libz/contrib/minizip/zip.h svneol=native#text/plain
 libz/contrib/minizip/zlibvc.def svneol=native#text/plain
 libz/contrib/minizip/zlibvc.dsp -text svneol=CRLF#text/plain
 libz/contrib/minizip/zlibvc.dsw -text svneol=CRLF#text/plain
-libz/contrib/untgz/Makefile svneol=native#text/plain
 libz/contrib/untgz/makefile.w32 svneol=native#text/plain
 libz/contrib/untgz/untgz.c svneol=native#text/plain
 libz/contrib/visual-basic.txt svneol=native#text/plain
@@ -3823,7 +3793,7 @@ libz/zutil.c svneol=native#text/plain
 libz/zutil.h svneol=native#text/plain
 /makefile.vc svneol=native#text/plain
 /makemsc.hdr -text
-mged/Cakefile -text
+mged/Makefile.am svneol=native#text/plain
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
 mged/animedit.c svneol=native#text/plain
@@ -3954,7 +3924,7 @@ misc/macosx/Resources/Welcome.rtfd/.typeAttributes.dict -text
 misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
-mk/Cakefile -text
+mk/Makefile.am svneol=native#text/plain
 mk/mk_bolt.1 svneol=native#text/plain
 mk/mk_bolt.c svneol=native#text/plain
 mk/mk_gastank.1 svneol=native#text/plain
@@ -3967,9 +3937,7 @@ mk/mk_winfrm.1 svneol=native#text/plain
 mk/mk_winfrm.c svneol=native#text/plain
 mk/mk_wire.1 svneol=native#text/plain
 mk/mk_wire.c svneol=native#text/plain
-/mtype.sh svneol=native#text/x-sh
-/newbindir.sh svneol=native#text/x-sh
-nirt/Cakefile -text
+nirt/Makefile.am svneol=native#text/plain
 nirt/bsphere.c svneol=native#text/plain
 nirt/command.c svneol=native#text/plain
 nirt/conversion.c svneol=native#text/plain
@@ -4015,10 +3983,10 @@ notes/regression/testdouble2.bin -text svneol=unset#unset
 notes/regression/testdouble3.bin -text svneol=unset#unset
 notes/regression/testimage.pix -text svneol=unset#image/x-rgb
 notes/regression/testimage.png -text svneol=unset#image/png
-off/Cakefile -text
+off/Makefile.am svneol=native#text/plain
 off/g-off.c svneol=native#text/plain
 off/off-g.c svneol=native#text/plain
-patch/Cakefile -text
+patch/Makefile.am svneol=native#text/plain
 patch/patch-g.1 svneol=native#text/plain
 patch/patch-g.c svneol=native#text/plain
 patch/patch-g.h svneol=native#text/plain
@@ -4027,8 +3995,6 @@ patch/pull_solidsub.sh svneol=native#text/x-sh
 patch/rpatch.1 svneol=native#text/plain
 patch/rpatch.c svneol=native#text/plain
 patch/rpatch.f svneol=native#text/plain
-pix/Cakefile -text
-pix/Makefile svneol=native#text/plain
 pix/Makefile.dist svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
 pix/bldg391.pix -text svneol=unset#image/x-rgb
@@ -4048,20 +4014,18 @@ pix/star.pix -text svneol=unset#image/x-rgb
 pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
-pro-engineer/Cakefile -text
+pro-engineer/Makefile.am svneol=native#text/plain
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/protk.in svneol=native#text/plain
-pro-engineer/resource/Cakefile -text
+pro-engineer/resource/Makefile.am svneol=native#text/plain
 pro-engineer/resource/proe_brl.res svneol=native#text/plain
 pro-engineer/resource/proe_brl_error.res svneol=native#text/plain
 pro-engineer/resource/proe_brl_gen_error.res svneol=native#text/plain
-pro-engineer/sgi_mips4/Cakefile -text
-pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
+pro-engineer/sgi_mips4/Makefile.am svneol=native#text/plain
+pro-engineer/sgi_mips4/mk.in svneol=native#text/plain
 pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
-pro-engineer/text/Cakefile -text
+pro-engineer/text/Makefile.am svneol=native#text/plain
 pro-engineer/text/usermsg.txt svneol=native#text/plain
-proc-db/Cakefile -text
-proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
 proc-db/bottest.c svneol=native#text/plain
 proc-db/brickwall.c svneol=native#text/plain
@@ -4134,7 +4098,7 @@ regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
 regress/tests.d/spdi -text
 regress/tests.d/template -text
 regress/upgradeNotes.txt svneol=native#text/plain
-remrt/Cakefile -text
+remrt/Makefile.am svneol=native#text/plain
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
 remrt/protocol.h svneol=native#text/plain
@@ -4143,6 +4107,7 @@ remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 remrt/vers.c svneol=native#text/plain
 rt/Cakefile -text
+rt/Makefile.am svneol=native#text/plain
 rt/do.c svneol=native#text/plain
 rt/ext.h svneol=native#text/plain
 rt/fast.sh svneol=native#text/x-sh
@@ -4179,7 +4144,6 @@ rt/rtweight.1 svneol=native#text/plain
 rt/rtxray.1 svneol=native#text/plain
 rt/scat.h svneol=native#text/plain
 rt/sh_tcl.c svneol=native#text/plain
-rt/vers.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/view_bot_faces.c svneol=native#text/plain
 rt/viewarea.c svneol=native#text/plain
@@ -4200,7 +4164,6 @@ rt/viewsil.c svneol=native#text/plain
 rt/viewweight.c svneol=native#text/plain
 rt/viewxray.c svneol=native#text/plain
 rt/worker.c svneol=native#text/plain
-rttherm/Cakefile -text
 rttherm/pixtest.c svneol=native#text/plain
 rttherm/rttherm.1 svneol=native#text/plain
 rttherm/spectrum.c svneol=native#text/plain
@@ -4212,12 +4175,13 @@ rttherm/std_day_1km.dat -text
 rttherm/test.sh svneol=native#text/x-sh
 rttherm/viewtherm.c svneol=native#text/plain
 sample_applications/.cvsignore svneol=native#text/plain
-sample_applications/Cakefile -text
+sample_applications/Makefile.am svneol=native#text/plain
 sample_applications/build_makefile.sh svneol=native#text/x-sh
 sample_applications/debug.h svneol=native#text/plain
+sample_applications/mk.in svneol=native#text/plain
 sample_applications/pl-dm.c svneol=native#text/plain
 sample_applications/rtexample.c svneol=native#text/plain
-/setup.sh svneol=native#text/x-sh
+sh/Makefile.am svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
 sh/brlcad-check.sh svneol=native#text/x-sh
 sh/cadbug.sh svneol=native#text/x-sh
@@ -4227,6 +4191,7 @@ sh/cray.sh svneol=native#text/x-sh
 sh/ldAix.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
 sh/newvers.sh svneol=native#text/x-sh
+sh/newvers2.sh svneol=native#text/x-sh
 sh/pixinfo.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
@@ -4235,7 +4200,7 @@ sh/sgisnap.sh svneol=native#text/x-sh
 sh/sharedliblink.sh svneol=native#text/x-sh
 sh/sharedlibvers.sh svneol=native#text/x-sh
 sh/show.sh svneol=native#text/x-sh
-sig/Cakefile -text
+sig/Makefile.am svneol=native#text/plain
 sig/a-d.c svneol=native#text/plain
 sig/butter.c svneol=native#text/plain
 sig/bw-d.c svneol=native#text/plain
@@ -4280,7 +4245,7 @@ sig/u-d.c svneol=native#text/plain
 sig/u-f.c svneol=native#text/plain
 sig/umod.c svneol=native#text/plain
 sig/ustat.c svneol=native#text/plain
-tab/Cakefile -text
+tab/Makefile.am svneol=native#text/plain
 tab/script-tab.c svneol=native#text/plain
 tab/script.l svneol=native#text/plain
 tab/scriptsort.1 svneol=native#text/plain
@@ -4292,7 +4257,7 @@ tab/tabsub.c svneol=native#text/plain
 tab/tokens.h svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
 tclscripts/.cvsignore svneol=native#text/plain
-tclscripts/Cakefile -text
+tclscripts/Makefile.am svneol=native#text/plain
 tclscripts/README svneol=native#text/plain
 tclscripts/ami.tcl svneol=native#text/plain
 tclscripts/ampi.tcl svneol=native#text/plain
@@ -4300,15 +4265,14 @@ tclscripts/cad_clrpick.tcl svneol=native#text/plain
 tclscripts/cad_dialog.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
 tclscripts/fs_dialog.tk svneol=native#text/plain
-tclscripts/geometree/Cakefile -text
 tclscripts/geometree/GeometryBrowser.tcl svneol=native#text/plain
+tclscripts/geometree/Makefile.am svneol=native#text/plain
 tclscripts/geometree/geometree.tcl svneol=native#text/plain
 tclscripts/helpcomm.tcl svneol=native#text/plain
 tclscripts/helplib.tcl svneol=native#text/plain
 tclscripts/hoc.tcl svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
 tclscripts/lib/.cvsignore svneol=native#text/plain
-tclscripts/lib/Cakefile -text
 tclscripts/lib/CellPlot.tcl svneol=native#text/plain
 tclscripts/lib/ColorEntry.tcl svneol=native#text/plain
 tclscripts/lib/ComboBox.tcl svneol=native#text/plain
@@ -4320,6 +4284,7 @@ tclscripts/lib/Dm.tcl svneol=native#text/plain
 tclscripts/lib/Drawable.tcl svneol=native#text/plain
 tclscripts/lib/Help.tcl svneol=native#text/plain
 tclscripts/lib/Legend.tcl svneol=native#text/plain
+tclscripts/lib/Makefile.am svneol=native#text/plain
 tclscripts/lib/Mged.tcl svneol=native#text/plain
 tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 tclscripts/lib/RtControl.tcl svneol=native#text/plain
@@ -4330,7 +4295,7 @@ tclscripts/lib/View.tcl svneol=native#text/plain
 tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
 tclscripts/mged/.cvsignore svneol=native#text/plain
-tclscripts/mged/Cakefile -text
+tclscripts/mged/Makefile.am svneol=native#text/plain
 tclscripts/mged/accel.tcl svneol=native#text/plain
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
@@ -4440,52 +4405,51 @@ tclscripts/mged/text.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/mged/tree.tcl svneol=native#text/plain
 tclscripts/mouse.tcl svneol=native#text/plain
-tclscripts/nirt/Cakefile -text
+tclscripts/nirt/Makefile.am svneol=native#text/plain
 tclscripts/nirt/prototype.sh svneol=native#text/x-sh
 tclscripts/pl-dm/.cvsignore svneol=native#text/plain
-tclscripts/pl-dm/Cakefile -text
+tclscripts/pl-dm/Makefile.am svneol=native#text/plain
 tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
-tclscripts/rtwizard/Cakefile -text
-tclscripts/rtwizard/examples/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeA/Cakefile -text
+tclscripts/rtwizard/Makefile.am svneol=native#text/plain
+tclscripts/rtwizard/examples/Makefile.am svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeA/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeA/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeB/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeB/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeB/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeC/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeC/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeC/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeD/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeD/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeD/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeE/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeE/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeE/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeF/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeF/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeF/title.txt svneol=native#text/plain
-tclscripts/rtwizard/lib/Cakefile -text
 tclscripts/rtwizard/lib/DbPage.itk svneol=native#text/plain
 tclscripts/rtwizard/lib/ExamplePage.itk svneol=native#text/plain
 tclscripts/rtwizard/lib/FbPage.itk svneol=native#text/plain
@@ -4498,6 +4462,7 @@ tclscripts/rtwizard/lib/HighlightedPage.itk svneol=native#text/plain
 tclscripts/rtwizard/lib/IntroPage.itk svneol=native#text/plain
 tclscripts/rtwizard/lib/LinePage.itk svneol=native#text/plain
 tclscripts/rtwizard/lib/MGEDpage.itk svneol=native#text/plain
+tclscripts/rtwizard/lib/Makefile.am svneol=native#text/plain
 tclscripts/rtwizard/lib/PictureTypeA.itcl svneol=native#text/plain
 tclscripts/rtwizard/lib/PictureTypeB.itcl svneol=native#text/plain
 tclscripts/rtwizard/lib/PictureTypeBase.itcl svneol=native#text/plain
@@ -4508,11 +4473,11 @@ tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
 tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
 tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 tclscripts/util/.cvsignore svneol=native#text/plain
-tclscripts/util/Cakefile -text
+tclscripts/util/Makefile.am svneol=native#text/plain
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 tclscripts/util/luniq.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
-tools/Cakefile -text
+tools/Makefile.am svneol=native#text/plain
 tools/applymap.1 svneol=native#text/plain
 tools/applymap.c svneol=native#text/plain
 tools/avg4.1 svneol=native#text/plain
@@ -4635,15 +4600,14 @@ tools/unslice.c svneol=native#text/plain
 tools/urt.1 svneol=native#text/plain
 tools/wasatchrle.1 svneol=native#text/plain
 tools/wasatchrle.c svneol=native#text/plain
-unigraphics/Cakefile -text
+unigraphics/Makefile.am svneol=native#text/plain
 unigraphics/conv.h svneol=native#text/plain
 unigraphics/log.h svneol=native#text/plain
 unigraphics/ug-g.1 svneol=native#text/plain
 unigraphics/ug-g.c svneol=native#text/plain
 unigraphics/ug_misc.c svneol=native#text/plain
 unigraphics/ug_misc.h svneol=native#text/plain
-util/Cakefile -text
-util/Makefile svneol=native#text/plain
+util/Makefile.am svneol=native#text/plain
 util/Makefile.loc svneol=native#text/plain
 util/alias-pix.1 svneol=native#text/plain
 util/alias-pix.c svneol=native#text/plain
@@ -4879,7 +4843,7 @@ util/wavelet.1 svneol=native#text/plain
 util/wavelet.c svneol=native#text/plain
 util/xyz-pl.c svneol=native#text/plain
 util/yuv-pix.c svneol=native#text/plain
-vas4/Cakefile -text
+vas4/Makefile.am svneol=native#text/plain
 vas4/init_ik.c svneol=native#text/plain
 vas4/record_seq.c svneol=native#text/plain
 vas4/status.c svneol=native#text/plain
@@ -4888,8 +4852,7 @@ vas4/vas4.c svneol=native#text/plain
 vas4/vas4.doc svneol=native#text/plain
 vas4/vas4.h svneol=native#text/plain
 vas4/vas_io.c svneol=native#text/plain
-vdeck/Cakefile -text
-vdeck/Makefile svneol=native#text/plain
+vdeck/Makefile.am svneol=native#text/plain
 vdeck/Makefile.loc svneol=native#text/plain
 vdeck/cgarbs.c svneol=native#text/plain
 vdeck/match.c svneol=native#text/plain
@@ -4899,6 +4862,6 @@ vdeck/vdeck.1 svneol=native#text/plain
 vdeck/vdeck.c svneol=native#text/plain
 vdeck/vextern.h svneol=native#text/plain
 vdeck/vproc.c svneol=native#text/plain
-vfont/Cakefile -text
+vfont/Makefile.am svneol=native#text/plain
 vfont/fix.6r -text svneol=unset#unset
 vfont/nonie.r.12 -text svneol=unset#unset
