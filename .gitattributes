@@ -1923,11 +1923,9 @@ src/other/iwidgets/incoming/doc/collapsablewidget.n svneol=native#text/plain
 src/other/iwidgets/incoming/doc/man.macros -text
 src/other/iwidgets/incoming/src/buttoncage.itk svneol=native#text/plain
 src/other/iwidgets/incoming/src/collapsablewidget.itk svneol=native#text/plain
-src/other/iwidgets/iwidgets.tcl svneol=native#text/plain
 src/other/iwidgets/iwidgets.tcl.in svneol=native#text/plain
 src/other/iwidgets/license.terms svneol=native#text/plain
 src/other/iwidgets/outgoing/README svneol=native#text/plain
-src/other/iwidgets/pkgIndex.tcl svneol=native#text/plain
 src/other/iwidgets/pkgIndex.tcl.in svneol=native#text/plain
 src/other/iwidgets/tcl.m4 svneol=native#text/plain
 src/other/iwidgets/tests/all -text
