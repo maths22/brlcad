@@ -3209,6 +3209,7 @@ mged/vdraw.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 mged/vld_std.h svneol=native#text/plain
 mged/vmathUi.h svneol=native#text/plain
+mged/vparse.c svneol=native#text/plain
 mged/vrlink.c svneol=native#text/plain
 mged/xinit.h svneol=native#text/plain
 mk/Cakefile -text
