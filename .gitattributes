@@ -55,6 +55,7 @@ awf/pass2.ms svneol=native#text/plain
 awf/pass3 -text
 bat/subdirmk.bat -text svneol=CRLF#text/plain
 bench/.cvsignore svneol=native#text/plain
+bench/Makefile.am svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
 bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
