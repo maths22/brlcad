@@ -50,6 +50,8 @@ include/stamp-h1
 include/version
 librt/vers.c
 /libtool
+misc/COPYING.backup
+misc/INSTALL.backup
 misc/Makefile
 misc/Makefile.in
 misc/compile
