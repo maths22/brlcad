@@ -684,6 +684,7 @@ html/manuals/mged/mged3.html svneol=native#text/html
 html/manuals/mged/mged_cmd_index.html svneol=native#text/html
 html/manuals/mged/mged_cmds.html svneol=native#text/html
 html/manuals/mged/mged_devel_cmds.html svneol=native#text/html
+html/manuals/mged/mged_env_vars.html svneol=native#text/html
 html/manuals/mged/mged_tcl_vars.html svneol=native#text/html
 html/manuals/mged/mug -text
 html/manuals/mged/mug-w1024-n512.pix -text svneol=unset#image/x-rgb
