@@ -1052,7 +1052,6 @@ libdm/dm-pex.c svneol=native#text/plain
 libdm/dm-plot.c svneol=native#text/plain
 libdm/dm-ps.c svneol=native#text/plain
 libdm/dm_obj.c svneol=native#text/plain
-libdm/fbserv_obj.c svneol=native#text/plain
 libdm/fbserv_obj.h svneol=native#text/plain
 libdm/knob.c svneol=native#text/plain
 libdm/options.c svneol=native#text/plain
