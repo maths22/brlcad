@@ -1015,14 +1015,17 @@ proc-db/ducks.h svneol=native#text/plain
 proc-db/kurt.c svneol=native#text/plain
 proc-db/molecule.c svneol=native#text/plain
 proc-db/nmgmodel.c svneol=native#text/plain
+proc-db/nmgxplode.c svneol=native#text/plain
 proc-db/patches.h svneol=native#text/plain
 proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
+proc-db/spltest.c svneol=native#text/plain
 proc-db/tea.c svneol=native#text/plain
 proc-db/tea.h svneol=native#text/plain
 proc-db/tea_nmg.c svneol=native#text/plain
+proc-db/terrain.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 remrt/Cakefile -text
