@@ -4149,6 +4149,8 @@ pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/protk.dat -text
+pro-engineer/resource/Cakefile -text
+pro-engineer/resource/proe_brl.res svneol=native#text/plain
 pro-engineer/sgi_mips4/Cakefile -text
 pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
 pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
