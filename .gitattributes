@@ -418,6 +418,7 @@ util/bwstat.c svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
 util/dunncomm.c svneol=native#text/plain
 util/dunnsnap.c svneol=native#text/plain
+util/files-tape.c svneol=native#text/plain
 util/gencolor.c svneol=native#text/plain
 util/loop.1 svneol=native#text/plain
 util/loop.c svneol=native#text/plain
