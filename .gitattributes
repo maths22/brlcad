@@ -2186,6 +2186,8 @@ libz/README svneol=native#text/plain
 libz/adler32.c svneol=native#text/plain
 libz/algorithm.doc svneol=native#text/plain
 libz/algorithm.txt svneol=native#text/plain
+libz/amiga/Makefile.pup svneol=native#text/plain
+libz/amiga/Makefile.sas svneol=native#text/plain
 libz/compress.c svneol=native#text/plain
 libz/configure -text
 libz/crc32.c svneol=native#text/plain
