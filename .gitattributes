@@ -572,6 +572,7 @@ sh/cray.sh svneol=native#text/x-sh
 sh/elapsed.sh svneol=native#text/x-sh
 sh/footer.sh svneol=native#text/x-sh
 sh/header.sh svneol=native#text/x-sh
+sh/indent.sh svneol=native#text/x-sh
 sh/ldAix.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
 sh/make_deb.sh svneol=native#text/x-sh
