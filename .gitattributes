@@ -1250,6 +1250,7 @@ vas4/record_seq.c svneol=native#text/plain
 vas4/status.c svneol=native#text/plain
 vas4/vas4.1 svneol=native#text/plain
 vas4/vas4.c svneol=native#text/plain
+vas4/vas4.doc svneol=native#text/plain
 vas4/vas4.h svneol=native#text/plain
 vas4/vas_io.c svneol=native#text/plain
 vdeck/Cakefile -text
