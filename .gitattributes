@@ -2648,6 +2648,12 @@ libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtermio/vers.c svneol=native#text/plain
+libtk8.4/Cakefile -text
+libtk8.4/ChangeLog svneol=native#text/plain
+libtk8.4/README svneol=native#text/plain
+libtk8.4/changes -text
+libtk8.4/fix_makefile.sh svneol=native#text/x-sh
+libtk8.4/license.terms svneol=native#text/plain
 libtkGLX/Cakefile -text
 libtkGLX/descnames.h svneol=native#text/plain
 libtkGLX/makedescnames.sh svneol=native#text/x-sh
