@@ -971,7 +971,6 @@ libbn/fortran.c svneol=native#text/plain
 libbn/htester.c svneol=native#text/plain
 libbn/libplot3.3 svneol=native#text/plain
 libbn/list.c svneol=native#text/plain
-libbn/log.c svneol=native#text/plain
 libbn/marker.c svneol=native#text/plain
 libbn/mat.c svneol=native#text/plain
 libbn/msr.c svneol=native#text/plain
