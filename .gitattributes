@@ -1524,6 +1524,7 @@ libbu/semaphore.c svneol=native#text/plain
 libbu/units.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
 libbu/vls.c svneol=native#text/plain
+libbu/xdr.c svneol=native#text/plain
 libcursor/Cakefile -text
 libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
