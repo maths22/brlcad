@@ -3,8 +3,8 @@
  */
 #include "../../Cakefile.defs"
 
-#define PRODUCTS	Makefile proe-brl.c proe-brl proe-brl.dll
-#define STATIC_PRODUCTS	 Makefile proe-brl.c proe-brl proe-brl.dll
+#define PRODUCTS	Makefile proe-brl.c proe-brl
+#define STATIC_PRODUCTS	 Makefile proe-brl.c proe-brl
 #define SRCDIR	sgi_mips4
 #undef BINDIR
 #define BINDIR	BASEDIR/pro-engineer/sgi_mips4
@@ -23,7 +23,6 @@
  *  Nothing else to do.
  */
 all&:
-	\B\A\S\E\D\I\R=\"BASEDIR\"; export \B\A\S\E\D\I\R; make proe-brl
-	\B\A\S\E\D\I\R=\"BASEDIR\"; export \B\A\S\E\D\I\R; make proe-brl.dll
+	@echo SRCDIR:  all done
 
 #include "../../Cakefile.rules"

@@ -92,7 +92,6 @@ char *aliases[] = {
 	"title",
 	"units",
 	"find",
-	"dbfind",
 	"rm",
 	(char *)0
 };
@@ -180,9 +179,6 @@ char **argv;
 				av[0] = aliases[i];
 				Tcl_CreateAlias(safe_interp, aliases[i], interp, db_name, ac, av);
 			}
-			/* add "dbfind" separately */
-			av[0] = "find";
-			Tcl_CreateAlias(safe_interp, "dbfind", interp, db_name, ac, av);
 		}
 
 		if( Tcl_EvalFile( safe_interp, argv[1] ) != TCL_OK ) {
@@ -1038,7 +1034,7 @@ struct bu_list	*headp;
 
 	cp = nxt_spc( cp );
 
-	memb = mk_addmember( inst_name, headp, NULL, relation );
+	memb = mk_addmember( inst_name, headp, relation );
 
 	for( i = 0; i < 16; i++ )  {
 		memb->wm_mat[i] = atof( cp );

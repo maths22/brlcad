@@ -37,8 +37,7 @@ NFS=1
 # Label number for this CAD Release,
 # RCS main Revision number, and date.
 #RELEASE=M.N;	RCS_REVISION=X;		REL=DATE=dd-mmm-yy
-RELEASE=6.01;	RCS_REVISION=17;	REL_DATE=2-July-02	# 6.0.1
-#RELEASE=6.0;	RCS_REVISION=16;	REL_DATE=22-March-02	# 6.0
+RELEASE=6.0;	RCS_REVISION=16;	REL_DATE=22-March-02	# 6.0
 #RELEASE=5.4;	RCS_REVISION=15;	REL_DATE=18-Jul-01	# internal
 #RELEASE=5.3;	RCS_REVISION=14;	REL_DATE=5-Mar-01	# 5.3
 #RELEASE=5.2;	RCS_REVISION=13;	REL_DATE=21-Aug-00	# 5.2
@@ -230,14 +229,10 @@ BDIRS="bench \
 	btclsh \
 "			# This ends the list.
 
-#
-# Cakefiles to execute in tclscripts.
-#
-TSDIRS=". mged nirt pl-dm lib util rtwizard/examples/PictureTypeA rtwizard/examples/PictureTypeB rtwizard/examples/PictureTypeC rtwizard/examples/PictureTypeD rtwizard/examples/PictureTypeE rtwizard/examples/PictureTypeF rtwizard/lib rtwizard"
-
+TSDIRS=". mged nirt pl-dm lib util"
 HTML_DIRS="html/manuals html/manuals/shaders html/manuals/Anim_Tutorial html/manuals/libdm html/manuals/mged html/manuals/mged/animmate html/manuals/librt html/manuals/libbu html/manuals/cadwidgets html/ReleaseNotes html/ReleaseNotes/Rel5.0 html/ReleaseNotes/Rel5.0/Summary"
 INSTALL_ONLY_DIRS="sample_applications $HTML_DIRS"
-PROE_DIRS=". sgi_mips4 text resource"
+PROE_DIRS=". sgi_mips4 text"
 
 # If there is no TCP networking, eliminate network-only directories.
 if test "${HAS_TCP}" = "0"
@@ -540,7 +535,7 @@ TAGS)
 
 etags)
 	/bin/rm -f etags;
-	for dir in ${BDIRS} pro-engineer; do
+	for dir in ${BDIRS}; do
 		echo -------------------------------- ${dir};
 #		etags -a -o etags ${dir}/*.c
 		find ${dir} -name \*.c -exec etags -a -o etags {} \;
@@ -603,15 +598,6 @@ dist)
 		echo "/usr/gnu/bin/tar is broken under IRIX"
 		exit
 	fi
-
-	if test $# -eq 0
-	then
-	    echo "You must specify a cvs tag option (like -r rel-6-0)"
-	    exit
-	else
-		CVS_ARGS=$*
-	fi
-
 #	if this is a tty, get the encryption key
 	if tty -s
 	then
@@ -638,10 +624,16 @@ dist)
 		export CVSROOT
 	fi
 
+#	create the args for the "cvs export"
+	if test $# -eq 0
+	then
+		CVS_ARGS="-D now"
+	else
+		CVS_ARGS=$*
+	fi
+
 #	get the distribution
 	cvs export -d ${DISTDIR} ${CVS_ARGS} brlcad
-	/bin/rm -f ${DISTDIR}/bench/pixcmp
-	/bin/rm -f ${DISTDIR}/bench/pixcmp.o
 
 #	fix "gen.sh" to set NFS=0
 	sed -e 's/^NFS=1/NFS=0/' < ${DISTDIR}/gen.sh > ${DISTDIR}/tmp
@@ -649,7 +641,8 @@ dist)
 
 #	fix "Cakefile.defs" to production values
 	sed -e '/^#define[ 	]*NFS/d' < ${DISTDIR}/Cakefile.defs > ${DISTDIR}/tmp
-	mv ${DISTDIR}/tmp ${DISTDIR}/Cakefile.defs
+	sed -e '/PRODUCTION/s/0/1/' < ${DISTDIR}/tmp > ${DISTDIR}/Cakefile.defs
+	rm -f ${DISTDIR}/tmp
 
 	if test `grep '^#define[ 	]*NFS' ${DISTDIR}/Cakefile.defs|wc -l` -eq 0
 	then 	echo "Shipping non-NFS version of Cakefile.defs (this is good)";
@@ -670,12 +663,12 @@ dist)
 	grep PRODUCTION ${DISTDIR}/Cakefile.defs
 	echo
 
-#	echo "Formatting the INSTALL.TXT file"
+	echo "Formatting the INSTALL.TXT file"
 	rm -f ${DISTDIR}/INSTALL.ps
-#	gtbl ${DISTDIR}/doc/install.doc | groff  > ${DISTDIR}/INSTALL.ps
+	gtbl ${DISTDIR}/doc/install.doc | groff  > ${DISTDIR}/INSTALL.ps
 
-#	echo "Preparing the 'bench' directory"
-#	(cd ${DISTDIR}/bench; cake clobber; cake install)
+	echo "Preparing the 'bench' directory"
+	(cd ${DISTDIR}/bench; cake clobber; cake install)
 	echo "End of BRL-CAD Release $RELEASE archive, `date`" > ${DISTDIR}/zzzEND
 	(cd ${DISTDIR}; du -a > Contents)
 

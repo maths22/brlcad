@@ -81,7 +81,7 @@ struct wmember  {
 	struct bu_list	l;
 	int		wm_op;		/* Boolean operation */
 	mat_t		wm_mat;		/* XXX Should be matp_t !!! */
-	char		*wm_name;
+	char		wm_name[32+3];	/* XXX Should be char* bu_strdup()ed */
 };
 #define WMEMBER_NULL	((struct wmember *)0)
 #define WMEMBER_MAGIC	0x43128912
@@ -305,7 +305,6 @@ int mk_write_color_table( struct rt_wdb *ofp );
 struct wmember *mk_addmember(
 	const char	*name,
 	struct bu_list	*headp,
-	mat_t mat,
 	int		op);
 
 #define mk_lcomb(_fp,_name,_headp,_rf,_shadername,_shaderargs,_rgb,_inh)	\

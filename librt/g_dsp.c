@@ -142,15 +142,15 @@ struct dsp_specific {
 
 /* access to the array */
 #ifdef FULL_DSP_DEBUGGING
-#define DSP(_p,_x,_y) dsp_val(_p, _x, _y, __FILE__, __LINE__)
+#define DSP(_p,_x,_y) dsp_val(_p, _x, _y)
 unsigned short
-dsp_val(struct rt_dsp_internal *dsp_i, unsigned x, unsigned y, char *file, int line)
+dsp_val(struct rt_dsp_internal *dsp_i, unsigned x, unsigned y)
 {
     RT_DSP_CK_MAGIC(dsp_i);
 
     if (x >= dsp_i->dsp_xcnt || y >= dsp_i->dsp_ycnt) {
 	bu_log("%s:%d xy: %u,%u cnt: %u,%u\n",
-	       file, line, x, y, dsp_i->dsp_xcnt, dsp_i->dsp_ycnt);
+	       __FILE__, __LINE__, x, y, dsp_i->dsp_xcnt, dsp_i->dsp_ycnt);
 	bu_bomb("");
     }
 
@@ -1107,7 +1107,7 @@ add_seg(struct isect_stuff *isect,
     struct bu_list *spot;
 #endif
 
-    dlog("add_seg %g %g line %d vpriv:%g %g\n", in_hit->hit_dist, out_hit->hit_dist, line, in_hit->hit_vpriv[X], in_hit->hit_vpriv[Y]);
+    dlog("add_seg %g %g line %d\n", in_hit->hit_dist, out_hit->hit_dist, line);
 
     tt *= tt;
 
@@ -1127,10 +1127,6 @@ add_seg(struct isect_stuff *isect,
 	    seg->seg_out.hit_surfno = out_hit->hit_surfno;
 	    VMOVE(seg->seg_out.hit_normal, out_hit->hit_normal);
 #endif
-	    if (out_hit->hit_surfno == ZTOP) {
-		seg->seg_out.hit_vpriv[X] = out_hit->hit_vpriv[X];
-		seg->seg_out.hit_vpriv[Y] = out_hit->hit_vpriv[Y];
-	    }
 	    seg->seg_out.hit_vpriv[Z] = 1.0; /* flag as out-hit */
 
 	    if (RT_G_DEBUG & DEBUG_HF) {
@@ -1226,16 +1222,6 @@ add_seg(struct isect_stuff *isect,
     VMOVE(seg->seg_out.hit_normal, out_hit->hit_normal);
 
 #endif
-    if (in_hit->hit_surfno >= ZMAX) {
-	seg->seg_in.hit_vpriv[X] = in_hit->hit_vpriv[X];
-	seg->seg_in.hit_vpriv[Y] = in_hit->hit_vpriv[Y];
-    }
-
-    if (out_hit->hit_surfno >= ZMAX) {
-	seg->seg_out.hit_vpriv[X] = out_hit->hit_vpriv[X];
-	seg->seg_out.hit_vpriv[Y] = out_hit->hit_vpriv[Y];
-    }
-
     seg->seg_in.hit_vpriv[Z] = 0.0; /* flag as in-hit */
     seg->seg_out.hit_vpriv[Z] = 1.0; /* flag as out-hit */
 
@@ -1804,8 +1790,6 @@ isect_ray_cell_top(struct isect_stuff *isect, struct dsp_bb *dsp_bb)
 	VMOVE(hits[0].hit_point, P);
 	VMOVE(hits[0].hit_normal, dsp_pl[isect->dmin]);
 	/* vpriv */
-	hits[0].hit_vpriv[X] = dsp_bb->dspb_rpp.dsp_min[X];
-	hits[0].hit_vpriv[Y] = dsp_bb->dspb_rpp.dsp_min[Y];
 	/* private */
 	hits[0].hit_surfno = isect->dmin;
 
@@ -1831,8 +1815,6 @@ isect_ray_cell_top(struct isect_stuff *isect, struct dsp_bb *dsp_bb)
 	VMOVE(hits[3].hit_point, P);
 	VMOVE(hits[3].hit_normal, dsp_pl[isect->dmax]);
 	/* vpriv */
-	hits[3].hit_vpriv[X] = dsp_bb->dspb_rpp.dsp_min[X];
-	hits[3].hit_vpriv[Y] = dsp_bb->dspb_rpp.dsp_min[Y];
 	/* private */
 	hits[3].hit_surfno = isect->dmax;
 
@@ -1863,9 +1845,8 @@ isect_ray_cell_top(struct isect_stuff *isect, struct dsp_bb *dsp_bb)
 
 	hitcount++;
 	hitf |= 2; 
-	dlog("  hit triangle 1 (alpha: %g beta:%g alpha+beta: %g) vpriv %g %g\n",
-	     ab_first[0], ab_first[1], ab_first[0] + ab_first[1],
-	     hits[1].hit_vpriv[X], hits[1].hit_vpriv[Y]);
+	dlog("  hit triangle 1 (alpha: %g beta:%g alpha+beta: %g)\n",
+	     ab_first[0], ab_first[1], ab_first[0] + ab_first[1]);
     } else {
 	dlog("  miss triangle 1 (alpha: %g beta:%g a+b: %g) cond:%d\n",
 	     ab_first[0], ab_first[1], ab_first[0] + ab_first[1], cond);
@@ -1881,9 +1862,8 @@ isect_ray_cell_top(struct isect_stuff *isect, struct dsp_bb *dsp_bb)
 	hitcount++;
 
 	hitf |= 4;
-	dlog("  hit triangle 2 (alpha: %g beta:%g alpha+beta: %g) vpriv %g %g\n",
-	     ab_second[0], ab_second[1], ab_second[0] + ab_second[1],
-	     hits[2].hit_vpriv[X], hits[2].hit_vpriv[Y]);
+	dlog("  hit triangle 2 (alpha: %g beta:%g alpha+beta: %g)\n",
+	     ab_second[0], ab_second[1], ab_second[0] + ab_second[1]);
 
 	if (hitf & 2) {
 	    /* if this hit occurs before the hit on the other triangle
@@ -2684,21 +2664,18 @@ rt_dsp_vshot( stp, rp, segp, n, ap )
     (void)rt_vstub( stp, rp, segp, n, ap );
 }
 
-
-
 /***********************************************************************
  *
  * Compute the model-space normal at a gridpoint
  *
  */
 static void
-compute_normal_at_gridpoint(vect_t N,
-			    struct dsp_specific *dsp,
-			    int x,
-			    int y,
-			    FILE *fd,
-			    int boolean,
-			    double len)
+compute_normal_at_gridpoint(N, dsp, x, y, fd, boolean)
+     vect_t N;
+     struct dsp_specific *dsp;
+     int x, y;
+     FILE *fd;
+     int boolean;
 {
     /*  Gridpoint specified is "B" we compute normal by taking the
      *  cross product of the vectors  A->C, D->E
@@ -2714,74 +2691,71 @@ compute_normal_at_gridpoint(vect_t N,
      *		D
      */
 	
-    point_t A, C, D, E, tmp, pt, endpt;
+    point_t A, C, D, E, tmp;
     vect_t Vac, Vde;
 
-    if (RT_G_DEBUG & DEBUG_HF) {
-	bu_log("normal at %d %d\n", x, y);
-	mat_print("\tstom", dsp->dsp_i.dsp_stom);
-    }
-    VSET(tmp, x, y, DSP(&dsp->dsp_i, x, y));
 
-    if (x == 0) {	VMOVE(A, tmp); }
-    else {		VSET(A, x-1, y, DSP(&dsp->dsp_i, x-1, y) );	}
+    if (fd && boolean) {
 
-    if (x >= XSIZ(dsp)) { VMOVE(C, tmp); }
-    else {		  VSET(C, x+1, y,  DSP(&dsp->dsp_i, x+1, y) );}
+	/* the debugging/plot version, with more matrix operations */
+	if (x == 0) {	VSET(tmp, x, y, DSP(&dsp->dsp_i, x, y) );	}
+	else {		VSET(tmp, x-1, y, DSP(&dsp->dsp_i, x-1, y) );	}
+	MAT4X3PNT(A, dsp->dsp_i.dsp_stom, tmp);
 
-    if (y == 0) {	VMOVE(D, tmp); }
-    else {		VSET(D, x, y-1, DSP(&dsp->dsp_i, x, y-1) );	}
-
-    if (y >= YSIZ(dsp)) { VMOVE(E, tmp); }
-    else {		 VSET(E, x, y+1, DSP(&dsp->dsp_i, x, y+1) );	}
-
-    MAT4X3PNT(pt, dsp->dsp_i.dsp_stom, tmp);
+	if (x >= XSIZ(dsp)) { VSET(tmp, x, y,  DSP(&dsp->dsp_i, x, y) );    } 
+	else {		  VSET(tmp, x+1, y,  DSP(&dsp->dsp_i, x+1, y) );}
+	MAT4X3PNT(C, dsp->dsp_i.dsp_stom, tmp);
 
 
-    /* Computing in world coordinates */
-    VMOVE(tmp, A);
-    MAT4X3PNT(A, dsp->dsp_i.dsp_stom, tmp);
+	if (y == 0) {	VSET(tmp, x, y, DSP(&dsp->dsp_i, x, y) );       }
+	else {		VSET(tmp, x, y-1, DSP(&dsp->dsp_i, x, y-1) );	}
+	MAT4X3PNT(D, dsp->dsp_i.dsp_stom, tmp);
 
-    VMOVE(tmp, C);
-    MAT4X3PNT(C, dsp->dsp_i.dsp_stom, tmp);
-
-    VMOVE(tmp, D);
-    MAT4X3PNT(D, dsp->dsp_i.dsp_stom, tmp);
-
-    VMOVE(tmp, E);
-    MAT4X3PNT(E, dsp->dsp_i.dsp_stom, tmp);
-
-    VSUB2(Vac, C, A);
-    VSUB2(Vde, E, D);
-
-    VUNITIZE(Vac);
-    VUNITIZE(Vde);
-    VCROSS(N, Vac, Vde);
-
-    if (RT_G_DEBUG & DEBUG_HF) {
-	VPRINT("\tA", A);
-	VPRINT("\tC", C);
-	VPRINT("\tD", D);
-	VPRINT("\tE", E);
-	VPRINT("\tVac", Vac);
-	VPRINT("\tVde", Vde);
-	VPRINT("\tModel Cross N", N);
-    }
-    VUNITIZE(N);
-
-    if (RT_G_DEBUG & DEBUG_HF) {
-	VPRINT("\tModel Unit N", N);
-    }
-    if (fd) {
-	VJOIN1(endpt, pt, len, N);
+	if (y >= YSIZ(dsp)) { VSET(tmp, x, y, DSP(&dsp->dsp_i, x, y) );     }
+	else {		 VSET(tmp, x, y+1, DSP(&dsp->dsp_i, x, y+1) );	}
+	MAT4X3PNT(E, dsp->dsp_i.dsp_stom, tmp);
 
 	pl_color(fd, 220, 220, 90);
 	pdv_3line(fd, A, C);
 	pdv_3line(fd, D, E);
 
-	pdv_3line(fd, pt, endpt);
-    }
+	VSUB2(Vac, C, A);
+	VSUB2(Vde, E, D);
 
+	VCROSS(N, Vac, Vde);
+
+	VUNITIZE(N);
+
+    } else {
+
+	/* the leaner, faster, production version */
+	if (x == 0) {	VSET(A, x, y, DSP(&dsp->dsp_i, x, y) );	}
+	else {		VSET(A, x-1, y, DSP(&dsp->dsp_i, x-1, y) );	}
+
+
+	if (x >= XSIZ(dsp)) { VSET(C, x, y,  DSP(&dsp->dsp_i, x, y) );    } 
+	else {		  VSET(C, x+1, y,  DSP(&dsp->dsp_i, x+1, y) );}
+
+
+
+	if (y == 0) {	VSET(D, x, y, DSP(&dsp->dsp_i, x, y) );       }
+	else {		VSET(D, x, y-1, DSP(&dsp->dsp_i, x, y-1) );	}
+
+
+	if (y >= YSIZ(dsp)) { VSET(E, x, y, DSP(&dsp->dsp_i, x, y) );     }
+	else {		 VSET(E, x, y+1, DSP(&dsp->dsp_i, x, y+1) );	}
+
+
+	VSUB2(Vac, C, A);
+	VSUB2(Vde, E, D);
+
+	VCROSS(tmp, Vac, Vde);
+
+	MAT4X3VEC(N, dsp->dsp_i.dsp_stom, tmp);
+
+	VUNITIZE(N);
+
+    }
 
 }
 
@@ -2796,7 +2770,7 @@ rt_dsp_norm( hitp, stp, rp )
      struct soltab		*stp;
      register struct xray	*rp;
 {
-    vect_t N, t, tmp, A;
+    vect_t N, t, tmp, A, B, C, D;
     struct dsp_specific *dsp = (struct dsp_specific *)stp->st_specific;
     vect_t Anorm, Bnorm, Dnorm, Cnorm, ABnorm, CDnorm;
     double Xfrac, Yfrac;
@@ -2825,9 +2799,6 @@ rt_dsp_norm( hitp, stp, rp )
 	bu_log("rt_dsp_norm(%g %g %g)\n", V3ARGS(hitp->hit_normal));
 	VJOIN1( hitp->hit_point, rp->r_pt, hitp->hit_dist, rp->r_dir );
 	VPRINT("\thit point", hitp->hit_point);
-	bu_log("hit dist: %g\n", hitp->hit_dist);
-	bu_log("%s:%d vpriv: %g,%g %g\n",
-	       __FILE__, __LINE__, V3ARGS(hitp->hit_vpriv));
     }
 
     if ( hitp->hit_surfno < XMIN || hitp->hit_surfno > ZTOP ) {
@@ -2840,7 +2811,7 @@ rt_dsp_norm( hitp, stp, rp )
     VJOIN1( hitp->hit_point, rp->r_pt, hitp->hit_dist, rp->r_dir );
 
 
-    if ( hitp->hit_surfno != ZTOP || !dsp->dsp_i.dsp_smooth ) {
+    if ( hitp->hit_surfno < ZTOP || !dsp->dsp_i.dsp_smooth ) {
 	/* We've hit one of the sides or bottom, or the user didn't
 	 * ask for smoothing of the elevation data,
 	 * so there's no interpolation to do.  Just transform the normal to
@@ -2870,7 +2841,19 @@ rt_dsp_norm( hitp, stp, rp )
     if (RT_G_DEBUG & DEBUG_HF) {
 	fd = bu_fopen_uniq("plotting normals in %s", 
 		      "dsp_gourand%02d.pl", plot_file_num++);
+    }
 
+    /* get the cell we hit */
+    x = hitp->hit_vpriv[X];
+    y = hitp->hit_vpriv[Y];
+
+    compute_normal_at_gridpoint(Anorm, dsp, x, y, fd, 1);
+    compute_normal_at_gridpoint(Bnorm, dsp, x+1, y, fd, 0);
+    compute_normal_at_gridpoint(Dnorm, dsp, x+1, y+1, fd, 0);
+    compute_normal_at_gridpoint(Cnorm, dsp, x, y+1, fd, 0);
+
+    if (RT_G_DEBUG & DEBUG_HF) {
+	
 	/* plot the ray */
 	pl_color(fd, 255, 0, 0);
 	pdv_3line(fd, rp->r_pt, hitp->hit_point);
@@ -2880,17 +2863,31 @@ rt_dsp_norm( hitp, stp, rp )
 	VJOIN1(tmp, hitp->hit_point, len, hitp->hit_normal);
 	pdv_3line(fd, hitp->hit_point, tmp);
 
+
+	/* Plot the normals we just got */
+	pl_color(fd, 220, 220, 90);
+
+	VSET(tmp, x,   y,   DSP(&dsp->dsp_i, x,   y));
+	MAT4X3PNT(A, dsp->dsp_i.dsp_stom, tmp);
+	VJOIN1(tmp, A, len, Anorm);
+	pdv_3line(fd, A, tmp);
+
+	VSET(tmp, x+1, y,   DSP(&dsp->dsp_i, x+1, y));
+	MAT4X3PNT(B, dsp->dsp_i.dsp_stom, tmp);
+	VJOIN1(tmp, B, len, Bnorm);
+	pdv_3line(fd, B, tmp);
+
+	VSET(tmp, x+1, y+1, DSP(&dsp->dsp_i, x+1, y+1));
+	MAT4X3PNT(D, dsp->dsp_i.dsp_stom, tmp);
+	VJOIN1(tmp, D, len, Dnorm);
+	pdv_3line(fd, D, tmp);
+
+	VSET(tmp, x,   y+1, DSP(&dsp->dsp_i, x,   y+1));
+	MAT4X3PNT(C, dsp->dsp_i.dsp_stom, tmp);
+	VJOIN1(tmp, C, len, Cnorm);
+	pdv_3line(fd, C, tmp);
+
     }
-
-    /* get the cell we hit */
-    x = hitp->hit_vpriv[X];
-    y = hitp->hit_vpriv[Y];
-
-    compute_normal_at_gridpoint(Anorm, dsp, x, y, fd, 1, len);
-    compute_normal_at_gridpoint(Anorm, dsp, x, y, fd, 0, len);
-    compute_normal_at_gridpoint(Bnorm, dsp, x+1, y, fd, 0, len);
-    compute_normal_at_gridpoint(Dnorm, dsp, x+1, y+1, fd, 0, len);
-    compute_normal_at_gridpoint(Cnorm, dsp, x, y+1, fd, 0, len);
 
     /* transform the hit point into DSP space for determining interpolation */
     MAT4X3PNT(pt, dsp->dsp_i.dsp_mtos, hitp->hit_point);
@@ -2946,7 +2943,6 @@ rt_dsp_norm( hitp, stp, rp )
 	 */
 	VCROSS(A, rp->r_dir, N);
 	VCROSS(N, A, rp->r_dir);
-
 	VUNITIZE(N);
 
 	dot = VDOT(N, rp->r_dir);
@@ -3146,13 +3142,11 @@ rt_dsp_plot( vhead, ip, ttol, tol )
 	(struct rt_dsp_internal *)ip->idb_ptr;
     point_t m_pt;
     point_t s_pt;
-    point_t o_pt;
     int x, y;
     int step;
     int xlim = dsp_ip->dsp_xcnt - 1;
     int ylim = dsp_ip->dsp_ycnt - 1;
     int xfudge, yfudge;
-    int drawing;
 
     if (RT_G_DEBUG & DEBUG_HF)
 	bu_log("rt_dsp_plot()\n");
@@ -3161,51 +3155,51 @@ rt_dsp_plot( vhead, ip, ttol, tol )
     RT_DSP_CK_MAGIC(dsp_ip);
 
 
-#define MOVE(_pt) \
-	MAT4X3PNT(m_pt, dsp_ip->dsp_stom, _pt); \
+#define MOVE() \
+	MAT4X3PNT(m_pt, dsp_ip->dsp_stom, s_pt); \
 	RT_ADD_VLIST( vhead, m_pt, BN_VLIST_LINE_MOVE )
 
-#define DRAW(_pt) \
-	MAT4X3PNT(m_pt, dsp_ip->dsp_stom, _pt); \
+#define DRAW() \
+	MAT4X3PNT(m_pt, dsp_ip->dsp_stom, s_pt); \
 	RT_ADD_VLIST( vhead, m_pt, BN_VLIST_LINE_DRAW )
 
 
     /* Draw the Bottom */
     VSETALL(s_pt, 0.0);
-    MOVE(s_pt);
+    MOVE();
 
     s_pt[X] = xlim;
-    DRAW(s_pt);
+    DRAW();
 
     s_pt[Y] = ylim;
-    DRAW(s_pt);
+    DRAW();
 
     s_pt[X] = 0.0;
-    DRAW(s_pt);
+    DRAW();
 
     s_pt[Y] = 0.0;
-    DRAW(s_pt);
+    DRAW();
 
 
     /* Draw the corners */
     s_pt[Z] = DSP(dsp_ip, 0, 0);
-    DRAW(s_pt);
+    DRAW();
 
     VSET(s_pt, xlim, 0.0, 0.0);
-    MOVE(s_pt);
+    MOVE();
     s_pt[Z] = DSP(dsp_ip, xlim, 0);
-    DRAW(s_pt);
+    DRAW();
 
 
     VSET(s_pt, xlim, ylim, 0.0);
-    MOVE(s_pt);
+    MOVE();
     s_pt[Z] = DSP(dsp_ip, xlim, ylim);
-    DRAW(s_pt);
+    DRAW();
 
     VSET(s_pt, 0.0, ylim, 0.0);
-    MOVE(s_pt);
+    MOVE();
     s_pt[Z] = DSP(dsp_ip, 0, ylim);
-    DRAW(s_pt);
+    DRAW();
 
 
     /* Draw the outside line of the top 
@@ -3215,24 +3209,24 @@ rt_dsp_plot( vhead, ip, ttol, tol )
      */
     for (y=0 ; y < dsp_ip->dsp_ycnt ; y += ylim ) {
 	VSET(s_pt, 0.0, y, DSP(dsp_ip, 0, y));
-	MOVE(s_pt);
+	MOVE();
 
 	for (x=0 ; x < dsp_ip->dsp_xcnt ; x++) {
 	    s_pt[X] = x;
 	    s_pt[Z] = DSP(dsp_ip, x, y);
-	    DRAW(s_pt);
+	    DRAW();
 	}
     }
 
 
     for (x=0 ; x < dsp_ip->dsp_xcnt ; x += xlim ) {
 	VSET(s_pt, x, 0.0, DSP(dsp_ip, x, 0));
-	MOVE(s_pt);
+	MOVE();
 
 	for (y=0 ; y < dsp_ip->dsp_ycnt ; y++) {
 	    s_pt[Y] = y;
 	    s_pt[Z] = DSP(dsp_ip, x, y);
-	    DRAW(s_pt);
+	    DRAW();
 	}
     }
 
@@ -3264,103 +3258,35 @@ rt_dsp_plot( vhead, ip, ttol, tol )
     if (xfudge < 1) xfudge = 1;
     if (yfudge < 1) yfudge = 1;
 
-    /* draw the horizontal (y==const) lines */
     for (y=yfudge ; y < ylim ; y += step ) {
 	VSET(s_pt, 0.0, y, DSP(dsp_ip, 0, y));
-	VMOVE(o_pt, s_pt);
-	if (o_pt[Z]) {
-	    drawing = 1;
-	    MOVE(o_pt);
-	} else {
-	    drawing = 0;
-	}
+	MOVE();
 
 	for (x=xfudge ; x < xlim ; x+=step ) {
 	    s_pt[X] = x;
-	    
-	    if (s_pt[Z] = DSP(dsp_ip, x, y)) {
-		if (drawing) {
-		    DRAW(s_pt);
-		} else {
-		    MOVE(o_pt);
-		    DRAW(s_pt);
-		    drawing = 1;
-		}
-	    } else {
-		if (drawing) {
-		    DRAW(s_pt);
-		    drawing = 0;
-		}
-	    }
-
-	    VMOVE(o_pt, s_pt);
+	    s_pt[Z] = DSP(dsp_ip, x, y);
+	    DRAW();
 	}
 		
 	s_pt[X] = xlim;
-	if (s_pt[Z] = DSP(dsp_ip, xlim, y)) {
-	    if (drawing) {
-		DRAW(s_pt);
-	    } else {
-		MOVE(o_pt);
-		DRAW(s_pt);
-		drawing = 1;
-	    }
-	} else {
-	    if (drawing) {
-		DRAW(s_pt);
-		drawing = 0;
-	    }
-	}
+	s_pt[Z] = DSP(dsp_ip, xlim, y);
+	DRAW();
 
     }
 
     for (x=xfudge ; x < xlim ; x += step ) {
 	VSET(s_pt, x, 0.0, DSP(dsp_ip, x, 0));
-	VMOVE(o_pt, s_pt);
-	if (o_pt[Z]) {
-	    drawing = 1;
-	    MOVE(o_pt);
-	} else {
-	    drawing = 0;
-	}
-
+	MOVE();
 		
 	for (y=yfudge ; y < ylim ; y+=step) {
 	    s_pt[Y] = y;
-
-	    if (s_pt[Z] = DSP(dsp_ip, x, y)) {
-		if (drawing) {
-		    DRAW(s_pt);
-		} else {
-		    MOVE(o_pt);
-		    DRAW(s_pt);
-		    drawing = 1;
-		}
-	    } else {
-		if (drawing) {
-		    DRAW(s_pt);
-		    drawing = 0;
-		}
-	    }
-
-	    VMOVE(o_pt, s_pt);
+	    s_pt[Z] = DSP(dsp_ip, x, y);
+	    DRAW();
 	}
 		
 	s_pt[Y] = ylim;
-	if (s_pt[Z] = DSP(dsp_ip, x, ylim)) {
-	    if (drawing) {
-		DRAW(s_pt);
-	    } else {
-		MOVE(o_pt);
-		DRAW(s_pt);
-		drawing = 1;
-	    }
-	} else {
-	    if (drawing) {
-		DRAW(s_pt);
-		drawing = 0;
-	    }
-	}
+	s_pt[Z] = DSP(dsp_ip, x, ylim);
+	DRAW();
     }
 
 #undef MOVE

@@ -37,7 +37,6 @@ static const char RCSprep[] = "@(#)$Header$ (BRL)";
 #include "raytrace.h"
 #include "plot3.h"
 #include "./debug.h"
-#include <unistd.h>
 
 BU_EXTERN(void		rt_ck, (struct rt_i	*rtip));
 

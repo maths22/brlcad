@@ -23,7 +23,6 @@
 
 #include <math.h>
 #include <string.h>
-#include <wchar.h>
 #include "ProToolkit.h"
 #include "ProUtil.h"
 #include "ProMessage.h"
@@ -33,17 +32,8 @@
 #include "pd_prototype.h"
 #include "ProPart.h"
 #include "ProSolid.h"
-#include "ProUIDialog.h"
-#include "ProUIInputpanel.h"
-#include "ProUILabel.h"
-#include "ProUIPushbutton.h"
 #include "ProAsmcomppath.h"
 #include "prodev_light.h"
-
-#include "machine.h"
-#include "vmath.h"
-#include "bu.h"
-#include "bn.h"
 
 static wchar_t  MSGFIL[] = {'u','s','e','r','m','s','g','.','t','x','t','\0'};
 
@@ -75,8 +65,12 @@ static ProCharName curr_part_name;	/* current part name */
 static ProCharName curr_asm_name;	/* current assembly name */
 static ProCharLine astr;		/* buffer for Pro/E output messages */
 
-static bu_rb_tree *done_list_part=NULL;	/* list of parts already done */
-static bu_rb_tree *done_list_asm=NULL;	/* list of assemblies already done */
+static ProMdl *done;			/* array of objects already output */
+static int curr_done=0;			/* number of objects already output */
+static int max_done=0;			/* current size of above array */
+
+#define DONE_BLOCK 512			/* number of slots to malloc when above array gets full */
+
 
 /* declaration of functions passed to the feature visit routine */
 static ProError assembly_comp( ProFeature *feat, ProError status, ProAppData app_data );
@@ -134,9 +128,6 @@ union vert_tree {
 #define VERT_NODE	'n'
 
 
-void doit( char *dialog, char *compnent, ProAppData appdata );
-void do_quit( char *dialog, char *compnent, ProAppData appdata );
-
 /* routine to free the "vert_tree"
  * called after each part is output
  */
@@ -154,77 +145,33 @@ free_vert_tree( union vert_tree *ptr )
 	free( (char *)ptr );
 }
 
+/* routine to add a part or assembly to the list of objects already putput */
 void
-add_to_done_part( wchar_t *name )
+add_to_done( ProMdl model )
 {
-	wchar_t *name_copy;
-
-	if( !done_list_part ) {
-		done_list_part = bu_rb_create1( "Names of Parts already Processed",
-					   wcscmp );
-		bu_rb_uniq_all_on( done_list_part );
+	if( curr_done >= max_done ) {
+		max_done += DONE_BLOCK;
+		done = (ProMdl *)realloc( done, sizeof( ProMdl ) * max_done );
 	}
 
-	name_copy = ( wchar_t *)bu_calloc( wcslen( name ) + 1, sizeof( wchar_t ),
-					   "part name for done list" );
-	wcscpy( name_copy, name );
-
-	if( bu_rb_insert( done_list_part, name_copy ) < 0 ) {
-		bu_free( (char *)name_copy, "part name for done list" );
-	}
+	done[curr_done] = model;
+	curr_done++;
 }
 
+
+/* routine to check if an object has already been output */
 int
-already_done_part( wchar_t *name )
+already_done( ProMdl model )
 {
-	char *found=NULL;
+	int i;
 
-	if( !done_list_part )
-		return( 0 );
-
-	found = bu_rb_search1( done_list_part, (void *)name );
-	if( !found ) {
-		return( 0 );
-	} else {
-		return( 1 );
-	}
-}
-
-
-void
-add_to_done_asm( wchar_t *name )
-{
-	wchar_t *name_copy;
-
-	if( !done_list_asm ) {
-		done_list_asm = bu_rb_create1( "Names of Asms already Processed",
-					   wcscmp );
-		bu_rb_uniq_all_on( done_list_asm );
+	for( i=0 ; i<curr_done ; i++ ) {
+		if( done[i] == model ) {
+			return( 1 );
+		}
 	}
 
-	name_copy = ( wchar_t *)bu_calloc( wcslen( name ) + 1, sizeof( wchar_t ),
-					   "asm name for done list" );
-	wcscpy( name_copy, name );
-
-	if( bu_rb_insert( done_list_asm, name_copy ) < 0 ) {
-		bu_free( (char *)name_copy, "asm name for done list" );
-	}
-}
-
-int
-already_done_asm( wchar_t *name )
-{
-	char *found=NULL;
-
-	if( !done_list_asm )
-		return( 0 );
-
-	found = bu_rb_search1(done_list_asm, (void *)name );
-	if( !found ) {
-		return( 0 );
-	} else {
-		return( 1 );
-	}
+	return( 0 );
 }
 
 void
@@ -280,8 +227,6 @@ free_empty_parts()
 		free( prev->name );
 		free( prev );
 	}
-
-	empty_parts_root = NULL;
 }
 
 /* routine to check for bad triangles
@@ -484,7 +429,7 @@ add_triangle( int v1, int v2, int v3 )
 int
 output_part( ProMdl model )
 {
-	ProName part_name;
+	ProName name;
 	Pro_surf_props props;
 	char sol_name[PRO_NAME_SIZE + 30];
 	ProSurfaceTessellationData *tess=NULL;
@@ -492,35 +437,16 @@ output_part( ProMdl model )
 	char str[PRO_NAME_SIZE + 1];
 	int surf_no;
 	int ret=0;
-	int ret_status=0;
 
 	/* if this part has already been output, do not do it again */
-	if( ProMdlNameGet( model, part_name ) != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get name for a part\n" );
-		return( 1 );
-	}
-	if( already_done_part( part_name ) )
+	if( already_done( model ) )
 		return( 0 );
 
 	/* let user know we are doing something */
-#if 1
-	status = ProUILabelTextSet( "proe_brl", "curr_proc", part_name );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to update dialog label for currently oricessed part\n" );
-		return( 1 );
-	}
-	status = ProUIDialogActivate( "proe_brl", &ret_status );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Error in proe-brl Dialog, error = %d\n",
-			 status );
-		fprintf( stderr, "\t dialog returned %d\n", ret_status );
-	}
-#else
 	sprintf( astr, "Processing Part: %s", curr_part_name );
 	(void)ProMessageDisplay( MSGFIL, "USER_INFO", astr );
 	ProMessageClear();
 	(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-#endif
 
 	/* can get bounding box of a solid using "ProSolidOutlineGet"
 	 * may want to use this to implement relative facetization talerance
@@ -533,7 +459,7 @@ output_part( ProMdl model )
 	if( status != PRO_TK_NO_ERROR ) {
 		/* Failed!!! */
 
-		sprintf( astr, "Failed to tessellate part (%s)", curr_part_name );
+		sprintf( astr, "Failed to tessellate part (%s)", ProWstringToString( str, name ) );
 		(void)ProMessageDisplay(MSGFIL, "USER_ERROR", astr );
 		ProMessageClear();
 		fprintf( stderr, "%s\n", astr );
@@ -566,7 +492,6 @@ output_part( ProMdl model )
 			ProMessageClear();
 			fprintf( stderr, "%s\n", astr );
 			(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-			add_to_empty_list( curr_part_name );
 			ret = 2;
 		} else {
 			int i;
@@ -671,7 +596,7 @@ output_part( ProMdl model )
 	tess = NULL;
 
 	/* add this part to the list of objects already output */
-	add_to_done_part( part_name );
+	add_to_done( model );
 
 	return( ret );
 }
@@ -711,42 +636,21 @@ list_assem( struct asm_head *curr_asm )
 void
 output_assembly( ProMdl model )
 {
-	ProName asm_name;
 	ProError status;
 	struct asm_head curr_assem;
 	struct asm_member *member;
 	int member_count=0;
 	int i, j, k;
-	int ret_status=0;
-
-	if( ProMdlNameGet( model, asm_name ) != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get model name for an assembly\n" );
-		return;
-	}
 
 	/* do not output this assembly more than once */
-	if( already_done_asm( asm_name ) )
+	if( already_done( model ) )
 		return;
 
 	/* let the user know we are doing something */
-#if 1
-	status = ProUILabelTextSet( "proe_brl", "curr_proc", asm_name );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to update dialog label for currently processed assembly\n" );
-		return;
-	}
-	status = ProUIDialogActivate( "proe_brl", &ret_status );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Error in proe-brl Dialog, error = %d\n",
-			 status );
-		fprintf( stderr, "\t dialog returned %d\n", ret_status );
-	}
-#else
 	sprintf( astr, "Processing Assembly: %s", curr_part_name );
 	(void)ProMessageDisplay( MSGFIL, "USER_INFO", astr );
 	ProMessageClear();
 	(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-#endif
 
 	/* everything starts out in "curr_part_name", copy name to "curr_asm_name" */
 	strcpy( curr_asm_name, curr_part_name );
@@ -816,7 +720,7 @@ output_assembly( ProMdl model )
 	fprintf( outfp, "\n" );
 
 	/* add this assembly to th elist of already output objects */
-	add_to_done_asm( asm_name );
+	add_to_done( model );
 
 	/* free the memory associated with this assembly */
 	free_assem( &curr_assem );
@@ -984,7 +888,6 @@ ProError
 assembly_filter( ProFeature *feat, ProAppData *data )
 {
 	ProFeattype type;
-	ProFeatStatus feat_status;
 	ProError status;
 
 	status = ProFeatureTypeGet( feat, &type );
@@ -999,21 +902,6 @@ assembly_filter( ProFeature *feat, ProAppData *data )
 	}
 
 	if( type != PRO_FEAT_COMPONENT ) {
-		return( PRO_TK_CONTINUE );
-	}
-
-	status = ProFeatureStatusGet( feat, &feat_status );
-	if( status != PRO_TK_NO_ERROR ) {
-		sprintf( astr, "In assembly_filter, cannot get feature status for feature %d",
-			 feat->id );
-		(void)ProMessageDisplay(MSGFIL, "USER_ERROR", astr );
-		ProMessageClear();
-		fprintf( stderr, "%s\n", astr );
-		(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-		return( PRO_TK_CONTINUE );
-	}
-
-	if( feat_status != PRO_FEAT_ACTIVE ) {
 		return( PRO_TK_CONTINUE );
 	}
 
@@ -1096,11 +984,6 @@ output_top_level_object( ProMdl model, ProMdlType type )
 	fprintf( outfp, "}\n" );
 }
 
-void
-free_rb_data( void *data )
-{
-	bu_free( data, "rb_data" );
-}
 
 /* this is the driver routine for converting Pro/E to BRL-CAD */
 int
@@ -1115,39 +998,9 @@ proe_brl( uiCmdCmdId command, uiCmdValue *p_value, void *p_push_cmd_data )
 	wchar_t w_output_file[128];
 	char output_file[128];
 	double range[2];
-	int ret_status;
 
 	empty_parts_root = NULL;
-#if 1
-	/* use UI dialog */
-	status = ProUIDialogCreate( "proe_brl", "proe_brl" );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to create dialog box for proe-brl, error = %d\n", status );
-		return( 0 );
-	}
 
-	status = ProUIPushbuttonActivateActionSet( "proe_brl", "doit", doit, NULL );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to set action for 'Go' button\n" );	
-		ProUIDialogDestroy( "proe_brl" );
-		return( 0 );
-	}
-
-	status = ProUIPushbuttonActivateActionSet( "proe_brl", "quit", do_quit, NULL );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to set action for 'Go' button\n" );	
-		ProUIDialogDestroy( "proe_brl" );
-		return( 0 );
-	}
-
-	status = ProUIDialogActivate( "proe_brl", &ret_status );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Error in proe-brl Dialog, error = %d\n",
-			 status );
-		fprintf( stderr, "\t dialog returned %d\n", ret_status );
-	}
-
-#else
 	/* default output file name */
 	strcpy( output_file, "proe.asc" );
 
@@ -1192,72 +1045,6 @@ proe_brl( uiCmdCmdId command, uiCmdValue *p_value, void *p_push_cmd_data )
 	if( status == PRO_TK_MSG_USER_QUIT ) {
 		return( 0 );
 	}
-#endif
-	return( 0 );
-}
-
-void
-doit( char *dialog, char *compnent, ProAppData appdata )
-{
-	ProError status;
-	ProMdl model;
-	ProMdlType type;
-	ProLine tmp_line;
-	int unit_subtype;
-	wchar_t unit_name[PRO_NAME_SIZE];
-	double proe_conv;
-	wchar_t *w_output_file;
-	wchar_t *tmp_str;
-	char output_file[128];
-	double range[2];
-
-	/* get the name of the output file */
-	status = ProUIInputpanelValueGet( "proe_brl", "output_file", &w_output_file );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get output file name\n" );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
-	}
-	ProWstringToString( output_file, w_output_file );
-	ProWstringFree( w_output_file );
-
-	/* get starting ident */
-	status = ProUIInputpanelValueGet( "proe_brl", "starting_ident", &tmp_str );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get starting ident\n" );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
-	}
-
-	ProWstringToString( astr, tmp_str );
-	ProWstringFree( tmp_str );
-	reg_id = atoi( astr );
-	if( reg_id < 1 )
-		reg_id = 1;
-
-	/* get max error */
-	status = ProUIInputpanelValueGet( "proe_brl", "max_error", &tmp_str );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get max tesellation error\n" );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
-	}
-
-	ProWstringToString( astr, tmp_str );
-	ProWstringFree( tmp_str );
-	max_error = atof( astr );
-
-	/* get the angle control */
-	status = ProUIInputpanelValueGet( "proe_brl", "angle_ctrl", &tmp_str );
-	if( status != PRO_TK_NO_ERROR ) {
-		fprintf( stderr, "Failed to get angle control\n" );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
-	}
-
-	ProWstringToString( astr, tmp_str );
-	ProWstringFree( tmp_str );
-	angle_cntrl = atof( astr );
 
 	/* open output file */
 	if( (outfp=fopen( output_file, "w" ) ) == NULL ) {
@@ -1265,8 +1052,7 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 		ProMessageClear();
 		fprintf( stderr, "Cannot open output file\n" );
 		perror( "\t" );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
+		return( PRO_TK_GENERAL_ERROR );
 	}
 
 	/* get the curently displayed model in Pro/E */
@@ -1276,8 +1062,7 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 		ProMessageClear();
 		fprintf( stderr, "No model is displayed!!\n" );
 		(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
+		return( PRO_TK_NO_ERROR );
 	}
 
 	/* get its type */
@@ -1287,8 +1072,7 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 		ProMessageClear();
 		fprintf( stderr, "Cannot get type of current model\n" );
 		(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
+		return( PRO_TK_NO_ERROR );
 	}
 
 	/* can only do parts and assemblies, no drawings, etc */
@@ -1297,8 +1081,7 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 		ProMessageClear();
 		fprintf( stderr, "Current model is not a solid object\n" );
 		(void)ProWindowRefresh( PRO_VALUE_UNUSED );
-		ProUIDialogDestroy( "proe_brl" );
-		return;
+		return( PRO_TK_NO_ERROR );
 	}
 
 	/* get units, and adjust conversion factor */
@@ -1329,19 +1112,15 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 	kill_empty_parts();
 
 	/* let user know we are done */
-	ProStringToWstring( tmp_line, "Conversion complete" );
-	ProUILabelTextSet( "proe_brl", "curr_proc", tmp_line );
+	ProMessageDisplay(MSGFIL, "USER_INFO", "Conversion complete" );
 
 	/* free a bunch of stuff */
-	if( done_list_part ) {
-		bu_rb_free( done_list_part, free_rb_data );
-		done_list_part = NULL;
+	if( done ) {
+		free( (char *)done );
 	}
-
-	if( done_list_asm ) {
-		bu_rb_free( done_list_asm, free_rb_data );
-		done_list_asm = NULL;
-	}
+	done = NULL;
+	max_done = 0;
+	curr_done = 0;
 
 	if( part_tris ) {
 		free( (char *)part_tris );
@@ -1363,7 +1142,7 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 
 	fclose( outfp );
 
-	return;
+	return( 0 );
 }
 
 /* this routine determines whether the "proe-brl" menu item in Pro/E
@@ -1372,11 +1151,6 @@ doit( char *dialog, char *compnent, ProAppData appdata )
 static uiCmdAccessState
 proe_brl_access( uiCmdAccessMode access_mode )
 {
-
-#if 1
-	/* doing the correct checks appears to be unreliable */
-	return( ACCESS_AVAILABLE );
-#else
 
 	ProMode mode;
 	ProError status;
@@ -1392,7 +1166,6 @@ proe_brl_access( uiCmdAccessMode access_mode )
 	} else {
 		return( ACCESS_UNAVAILABLE );
 	}
-#endif
 }
 
 /* routine to add our menu item */
@@ -1445,13 +1218,6 @@ user_initialize( int argc, char *argv[], char *version, char *build, wchar_t err
 
 	return( 0 );
 }
-
-void
-do_quit( char *dialog, char *compnent, ProAppData appdata )
-{
-	ProUIDialogDestroy( "proe_brl" );
-}
-
 
 /* required terminate routine, we do not use it */
 void

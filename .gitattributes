@@ -221,8 +221,6 @@ conv/g-vrml.1 svneol=native#text/plain
 conv/g-vrml.c svneol=native#text/plain
 conv/g-wave.1 svneol=native#text/plain
 conv/g-wave.c svneol=native#text/plain
-conv/g-x3d.1 svneol=native#text/plain
-conv/g-x3d.c svneol=native#text/plain
 conv/g-xxx.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
@@ -470,7 +468,6 @@ h/itclIntDecls.h svneol=native#text/plain
 h/itk.h svneol=native#text/plain
 h/itkDecls.h svneol=native#text/plain
 h/libtermio.h svneol=native#text/plain
-h/light.h svneol=native#text/plain
 h/machine.h svneol=native#text/plain
 h/mater.h svneol=native#text/plain
 h/msr.h svneol=native#text/plain
@@ -4146,12 +4143,9 @@ pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/protk.dat -text
-pro-engineer/resource/Cakefile -text
-pro-engineer/resource/proe_brl.res svneol=native#text/plain
 pro-engineer/sgi_mips4/Cakefile -text
 pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
 pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
-pro-engineer/sgi_mips4/proe_brl.res svneol=native#text/plain
 pro-engineer/text/Cakefile -text
 pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
@@ -4175,7 +4169,6 @@ proc-db/pickett_fence.1 svneol=native#text/plain
 proc-db/pickett_fence.c svneol=native#text/plain
 proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
-proc-db/pix2g.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
 proc-db/sketch.c svneol=native#text/plain
@@ -4379,7 +4372,6 @@ tclscripts/.cvsignore svneol=native#text/plain
 tclscripts/Cakefile -text
 tclscripts/README svneol=native#text/plain
 tclscripts/ami.tcl svneol=native#text/plain
-tclscripts/ampi.tcl svneol=native#text/plain
 tclscripts/cad_clrpick.tcl svneol=native#text/plain
 tclscripts/cad_dialog.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
@@ -4527,66 +4519,6 @@ tclscripts/pl-dm/Cakefile -text
 tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
-tclscripts/rtwizard/Cakefile -text
-tclscripts/rtwizard/examples/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeA/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeA/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeA/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeA/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeA/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeB/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeB/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeB/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeB/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeB/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeB/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeC/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeC/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeC/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeC/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeC/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeC/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeD/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeD/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeD/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeD/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeD/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeD/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeE/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeE/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeE/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeE/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeE/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeE/title.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeF/Cakefile -text
-tclscripts/rtwizard/examples/PictureTypeF/desc.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
-tclscripts/rtwizard/examples/PictureTypeF/preview.small.gif -text svneol=unset#image/gif
-tclscripts/rtwizard/examples/PictureTypeF/title.txt svneol=native#text/plain
-tclscripts/rtwizard/lib/Cakefile -text
-tclscripts/rtwizard/lib/DbPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/ExamplePage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/FbPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/FeedbackDialog.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/FrameBufferDialog.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/FullColorPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/GhostPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/HelpPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/HighlightedPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/IntroPage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/LinePage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/MGEDpage.itk svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeA.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeB.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeBase.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeC.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
-tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
-tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 tclscripts/util/.cvsignore svneol=native#text/plain
 tclscripts/util/Cakefile -text
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
@@ -4937,7 +4869,6 @@ util/query.c svneol=native#text/plain
 util/remapid.c svneol=native#text/plain
 util/rle-pix.1 svneol=native#text/plain
 util/rle-pix.c svneol=native#text/plain
-util/rtwizard -text
 util/sgi-pix.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
 util/strdup.c svneol=native#text/plain

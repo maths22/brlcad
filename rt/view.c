@@ -56,7 +56,7 @@ static const char RCSview[] = "@(#)$Header$ (BRL)";
 #include "shadework.h"
 #include "./ext.h"
 #include "rtprivate.h"
-#include "light.h"
+#include "./light.h"
 #include "plot3.h"
 
 int		use_air = 0;		/* Handling of air in librt */
@@ -127,7 +127,7 @@ static struct scanline {
 	char	*sl_buf;		/* ptr to buffer for scanline */
 } *scanline;
 
-static short int	pwidth;			/* Width of each pixel (in bytes) */
+static int	pwidth;			/* Width of each pixel (in bytes) */
 
 struct mfuncs *mfHead = MF_NULL;	/* Head of list of shaders */
 
@@ -280,23 +280,17 @@ register struct application *ap;
 		{
 			RGBpixel	p;
 			int		npix;
-
 			p[0] = r ;
 			p[1] = g ;
 			p[2] = b ;
 
 			if( outfp != NULL )  {
-				bu_semaphore_acquire( BU_SEM_SYSCALL );
-				if( fseek( outfp, (ap->a_y*width*pwidth) + (ap->a_x*pwidth), 0 ) != 0 )
-					fprintf(stderr, "fseek error\n");
 				if( fwrite( p, 3, 1, outfp ) != 1 )
 					rt_bomb("pixel fwrite error");
 				if( rpt_dist &&
 				    ( fwrite( dist, 8, 1, outfp ) != 1 ))
 					rt_bomb("pixel fwrite error");
-				bu_semaphore_release( BU_SEM_SYSCALL);
 			}
-
 			if( fbp != FBIO_NULL )  {
 				/* Framebuffer output */
 				bu_semaphore_acquire( BU_SEM_SYSCALL );
@@ -1386,7 +1380,7 @@ bu_log("mallocing curr_float_frame\n");
 			scanline[yy].sl_buf = bu_calloc( width,
 				sizeof(RGBpixel), 
 				"sl_buf scanline buffer (for continuation scanline)");
-			if( fseek( outfp, yy*width*pwidth, 0 ) != 0 )
+			if( fseek( outfp, yy*width*3L, 0 ) != 0 )
 		    		bu_log("fseek error\n");
 		    	/* Read the fractional scanline */
 			got = fread( scanline[yy].sl_buf, sizeof(RGBpixel),

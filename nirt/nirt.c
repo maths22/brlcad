@@ -40,7 +40,7 @@ static const char RCSid[] = "$Header$";
 #include "./usrfmt.h"
 
 
-extern int	rt_bot_minpieces;	/* from g_bot.c */
+
 
 extern char	version[];		/* from vers.c */
 extern void	cm_libdebug();
@@ -80,9 +80,6 @@ com_table	ComTab[] =
 			"read new state for NIRT from the state file" },
 		    { "print", print_item, "query an output item",
 			"item" },
-		    { "bot_minpieces", bot_minpieces,
-		      "Get/Set value for rt_bot_minpieces (0 means do not use pieces, default is 32)",
-		      "min_pieces" },
 		    { "libdebug", cm_libdebug,
 			"set/query librt debug flags", "hex_flag_value" },
 		    { "debug", cm_debug,
@@ -348,9 +345,6 @@ char **argv;
 	    case 'A':
 		attrib_add(optarg);
 		break;
-	    case 'B':
-		rt_bot_minpieces = atoi( optarg );
-		break;
 	    case 'b':
 		do_backout = 1;
 		break;
@@ -490,6 +484,8 @@ char **argv;
     rtip -> useair = use_of_air;
     rtip -> rti_save_overlaps = (overlap_claims > 0);
 
+    if (silent_flag != SILENT_YES)
+	printf("\nPrepping the geometry...");
     ++optind;
     do_rt_gettrees (rtip, argv + optind, argc - optind);
 
@@ -508,6 +504,8 @@ char **argv;
     ap.a_zero1 = 0;           /* sanity check, sayth raytrace.h      */
     ap.a_zero2 = 0;           /* sanity check, sayth raytrace.h      */
     ap.a_uptr = (genptr_t)a_tab.attrib;
+
+    rt_prep( rtip );
 
     /* initialize variables */
     azimuth() = 0.0;
@@ -572,7 +570,6 @@ char	usage[] = "\
 Usage: 'nirt [options] model.g objects...'\n\
 Options:\n\
  -b        back out of geometry before first shot\n\
- -B n      set rt_bot_minpieces=n\n\
  -e script run script before interacting\n\
  -f sfile  run script sfile before interacting\n\
  -M        read matrix, cmds on stdin\n\
@@ -613,28 +610,12 @@ int		nm_objects;
 	prev_names = object_name;
 	prev_nm = nm_objects;
     }
-
-    if (silent_flag != SILENT_YES) {
-	    printf("\nGet trees...");
-	    fflush(stdout);
-    }
-
     if (rt_gettrees_and_attrs(rtip, (const char **)a_tab.attrib, nm_objects, (const char **) object_name, 1))
     {
 	fflush(stdout);
 	fprintf(stderr, "rt_gettrees() failed\n");
 	exit (1);
     }
-
-    if( need_prep ) {
-	    if (silent_flag != SILENT_YES) {
-		    printf("\nPrepping the geometry...");
-		    fflush(stdout);
-	    }
-	    rt_prep( rtip );
-	    need_prep = 0;
-    }
-
     if (silent_flag != SILENT_YES)
     {
 	int	i;

@@ -25,8 +25,7 @@ INCS = \
   -I. \
   -I$(PROTOOL_SRC)/protk_appls/includes \
   -I$(PROTOOL_SRC)/includes \
-  -I$(PRODEV_SRC)/includes \
-  -I$(BASEDIR)/include/brlcad
+  -I$(PRODEV_SRC)/includes
 
 # Compiler
 CC = cc -n32 -mips4
@@ -43,7 +42,7 @@ CFLAGS      = $(OPTS) $(DEFS) $(INCS)
 #LDWOFF      = -Wl,-woff,15
 
 # Link Flags
-LDFLAGS     = -multigot -Wl,-wall $(LDWOFF) -rpath $(BASEDIR)/lib
+LDFLAGS     = -multigot -Wl,-wall $(LDWOFF)
 DLLFLAGS    = -Wl,-hiddens_file,/dev/null -shared -T10000000 -B symbolic
 
 # Libraries
@@ -53,7 +52,6 @@ PTLIB       = $(PROTOOL_SYS)/obj/protoolkit.a
 PTLIB_DLL   = $(PROTOOL_SYS)/obj/protk_dll.a
 PTCLIBS     = $(PTLIB) $(PDLIB)
 PTCLIBS_DLL = $(PTLIB_DLL) $(PDLIB_DLL)
-BRLLIBS     = -L $(BASEDIR)/lib -lbu
 SYSLIBS     = -lc -lm -lw
 
 # Object files
@@ -69,12 +67,12 @@ all: $(EXE) $(EXE_DLL)
 $(EXE): $(OBJS) $(PTCLIBS)
 	@echo PROTOOL_SRC = $(PROTOOL_SRC)
 	@echo PROTOOL_SYS = $(PROTOOL_SYS)
-	$(CC) $(LDFLAGS) -o $(EXE) $(OBJS) $(PTLIB) $(PDLIB) $(BRLLIBS) $(SYSLIBS)
+	$(CC) $(LDFLAGS) -o $(EXE) $(OBJS) $(PTLIB) $(PDLIB) $(SYSLIBS)
 
 $(EXE_DLL): $(OBJS) $(PTCLIBS_DLL)
 	@echo PROTOOL_SRC = $(PROTOOL_SRC)
 	@echo PROTOOL_SYS = $(PROTOOL_SYS)
-	$(CC) $(LDFLAGS) $(DLLFLAGS) -o $(EXE_DLL) $(OBJS) $(PTLIB_DLL) $(PDLIB_DLL) $(BRLLIBS) $(SYSLIBS)
+	$(CC) $(LDFLAGS) $(DLLFLAGS) -o $(EXE_DLL) $(OBJS) $(PTLIB_DLL) $(PDLIB_DLL) $(SYSLIBS)
 
 clean:
 	rm -f $(EXE) $(OBJS)

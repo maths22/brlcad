@@ -218,7 +218,7 @@ genptr_t		client_data;
 			color = (unsigned char *)NULL;
 
 		BU_LIST_INIT( &headp.l );
-		(void)mk_addmember( nmg_name , &headp.l , NULL, WMOP_UNION );
+		(void)mk_addmember( nmg_name , &headp.l , WMOP_UNION );
 		if( mk_lrcomb( fp_out,
 		    pathp->fp_names[pathp->fp_len-1]->d_namep, &headp, 1,
 		    shader, bu_vls_addr( &shader_params ), color,
@@ -383,7 +383,7 @@ genptr_t	ptr;
 				rt_db_free_internal( &intern , &rt_uniresource);
 				return;
 		}
-		wm = mk_addmember( tree_list[i].tl_tree->tr_l.tl_name , &headp.l, NULL , op );
+		wm = mk_addmember( tree_list[i].tl_tree->tr_l.tl_name , &headp.l , op );
 		if( tree_list[i].tl_tree->tr_l.tl_mat )
 			MAT_COPY( wm->wm_mat, tree_list[i].tl_tree->tr_l.tl_mat );
 	}

@@ -171,11 +171,6 @@ body View::coord {args} {
 }
 
 body View::eye {args} {
-    # get eye
-    if {$args == ""} {
-	return [$view eye]
-    }
-
     eval $view eye $args
 
     set ae [$view ae]

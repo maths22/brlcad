@@ -203,14 +203,13 @@ struct wmember *
 mk_addmember(
 	const char	*name,
 	struct bu_list	*headp,
-	mat_t mat,
 	int		op)
 {
 	register struct wmember *wp;
 
 	BU_GETSTRUCT( wp, wmember );
 	wp->l.magic = WMEMBER_MAGIC;
-	wp->wm_name = bu_strdup( name );
+	strncpy( wp->wm_name, name, sizeof(wp->wm_name) );
 	switch( op )  {
 	case WMOP_UNION:
 	case WMOP_INTERSECT:
@@ -221,13 +220,7 @@ mk_addmember(
 		bu_log("mk_addmember() op=x%x is bad\n", op);
 		return(WMEMBER_NULL);
 	}
-
-	/* if the user gave a matrix, use it.  otherwise use identity matrix*/
-	if (mat) {
-		MAT_COPY( wp->wm_mat, mat );
-	} else {
-		MAT_IDN( wp->wm_mat );
-	}
+	MAT_IDN( wp->wm_mat );
 
 	/* Append to end of doubly linked list */
 	BU_LIST_INSERT( headp, &wp->l );
@@ -245,7 +238,6 @@ mk_freemembers( struct bu_list *headp )
 	while( BU_LIST_WHILE( wp, wmember, headp ) )  {
 		WDB_CK_WMEMBER(wp);
 		BU_LIST_DEQUEUE( &wp->l );
-		bu_free( (char *)wp->wm_name, "wm_name" );
 		bu_free( (char *)wp, "wmember" );
 	}
 }
@@ -389,7 +381,7 @@ mk_comb1( struct rt_wdb *wdbp,
 	struct bu_list	head;
 
 	BU_LIST_INIT( &head );
-	if( mk_addmember( membname, &head, NULL, WMOP_UNION ) == WMEMBER_NULL )
+	if( mk_addmember( membname, &head, WMOP_UNION ) == WMEMBER_NULL )
 		return -2;
 	return mk_comb( wdbp, combname, &head, regflag,
 		(char *)NULL, (char *)NULL, (unsigned char *)NULL,
@@ -414,7 +406,7 @@ mk_region1(
 	struct bu_list	head;
 
 	BU_LIST_INIT( &head );
-	if( mk_addmember( membname, &head, NULL, WMOP_UNION ) == WMEMBER_NULL )
+	if( mk_addmember( membname, &head, WMOP_UNION ) == WMEMBER_NULL )
 		return -2;
 	return mk_comb( wdbp, combname, &head, 1, shadername, shaderargs,
 		rgb, 0, 0, 0, 0, 0, 0, 0 );

@@ -24,46 +24,41 @@ class Drawable {
 
     constructor {db} {}
     destructor {}
-    
-    public {
-	method assoc {args}
-	method autoview {args}
-	method blast {args}
-	method clear {args}
-	method draw {args}
-	method E {args}
-	method erase {args}
-	method erase_all {args}
-	method ev {args}
-	method get_autoview {}
-	method get_eyemodel {viewObj}
-	method get_dgname {}
-	method illum {obj}
-	method label {obj}
-	method nirt {args}
-	method observer {args}
-	method overlay {args}
-	method report {args}
-	method qray {args}
-	method rt {args}
-	method rtabort {args}
-	method rtcheck {args}
-	method rtedge {args}
-	method shaded_mode {args}
-	method vdraw {args}
-	method who {args}
-	method zap {args}
 
-	method ? {}
-	method apropos {key}
-	method help {args}
-	method getUserCmds {}
-    }
+    public method assoc {args}
+    public method autoview {args}
+    public method blast {args}
+    public method clear {args}
+    public method draw {args}
+    public method E {args}
+    public method erase {args}
+    public method erase_all {args}
+    public method ev {args}
+    public method get_autoview {}
+    public method get_dgname {}
+    public method illum {obj}
+    public method label {obj}
+    public method nirt {args}
+    public method observer {args}
+    public method overlay {args}
+    public method report {args}
+    public method qray {args}
+    public method rt {args}
+    public method rtabort {args}
+    public method rtcheck {args}
+    public method rtedge {args}
+    public method vdraw {args}
+    public method who {args}
+    public method zap {args}
 
-    private {
-	method help_init {}
-	variable help
-    }
+    public method ? {}
+    public method apropos {key}
+    public method help {args}
+    public method getUserCmds {}
+
+    private method help_init {}
+
+    private variable help
 }
 
 body Drawable::constructor {db} {
@@ -121,10 +116,6 @@ body Drawable::get_dgname {} {
     return $dg
 }
 
-body Drawable::get_eyemodel {viewObj} {
-    return [$dg get_eyemodel $viewObj]
-}
-
 body Drawable::illum {args} {
     eval $dg illum $args
 }
@@ -167,10 +158,6 @@ body Drawable::rtcheck {args} {
 
 body Drawable::rtedge {args} {
     eval $dg rtedge $args
-}
-
-body Drawable::shaded_mode {args} {
-    eval $dg shaded_mode $args
 }
 
 body Drawable::vdraw {args} {
@@ -224,7 +211,6 @@ body Drawable::help_init {} {
     $help add rtabort		{{} {abort the associated raytraces}}
     $help add rtcheck		{{[options]} {check for overlaps in current view}}
     $help add rtedge		{{[options] [-- objects]} {do raytrace of view or specified objects yielding only edges}}
-    $help add shaded_mode	{{[0|1|2]}	{get/set shaded mode}}
     $help add vdraw		{{write|insert|delete|read|length|show [args]} {vector drawing (cnuzman)}}
     $help add who		{{[r(eal)|p(hony)|b(oth)]} {list the top-level objects currently being displayed}}
     $help add zap		{{} {clear screen}}

@@ -439,7 +439,7 @@ body Dm::toggle_light {} {
 	set itk_option(-light) 0
     } else {
 	$itk_component(dm) light 1
-	set itk_option(-light) 1
+	set itk_opton(-light) 1
     }
 }
 
@@ -468,11 +468,7 @@ body Dm::handle_configure {} {
 body Dm::changeType {type} {
     if {$type != $priv_type} {
 	$itk_component(dm) listen -1
-
-	# the close method no longer exists
-	#$itk_component(dm) close
-	rename $itk_component(dm) ""
-
+	$itk_component(dm) close
 	createDm $type
 	initDm
 	set priv_type $type

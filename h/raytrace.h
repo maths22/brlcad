@@ -1213,9 +1213,6 @@ struct dg_obj {
 	struct dg_qray_color	dgo_qray_even_color;
 	struct dg_qray_color	dgo_qray_void_color;
 	struct dg_qray_color	dgo_qray_overlap_color;
-#if USE_SURVICE_MODS
-	int			dgo_shaded_mode;	/* 1 - draw bots shaded by default */
-#endif
 };
 extern struct dg_obj HeadDGObj;		/* head of drawable geometry object list */
 #define RT_DGO_NULL		((struct dg_obj *)NULL)
@@ -3188,9 +3185,6 @@ extern int rt_check_curve( struct curve *crv,
 			   struct rt_sketch_internal *skt,
 			   int noisey);
 
-extern void rt_curve_reverse_segment( long *lng );
-extern void rt_curve_order_segments( struct curve *crv );
-
 extern void rt_copy_curve(struct curve *crv_out, const struct curve *crv_in);
 
 BU_EXTERN(int				rt_check_curve,
@@ -4796,7 +4790,6 @@ BU_EXTERN(int	dgo_rtcheck_cmd,	(struct dg_obj *dgop, struct view_obj *vop, Tcl_I
 BU_EXTERN(int	dgo_vdraw_cmd,		(struct dg_obj *dgop, Tcl_Interp *interp, int argc, char **argv));
 BU_EXTERN(int	dgo_who_cmd,		(struct dg_obj *dgop, Tcl_Interp *interp, int argc, char **argv));
 BU_EXTERN(void	dgo_zap_cmd,		(struct dg_obj *dgop, Tcl_Interp *interp));
-BU_EXTERN(int	dgo_shaded_mode_cmd,	(struct dg_obj *dgop, Tcl_Interp *interp, int argc, char **argv));
 
 extern void dgo_color_soltab();
 extern void dgo_drawH_part2();

@@ -201,15 +201,6 @@ for LAST in \
 	man man/man1 man/man3 man/man5 \
 	tclscripts tclscripts/mged tclscripts/nirt \
 		tclscripts/lib tclscripts/util tclscripts/pl-dm \
-                tclscripts/rtwizard \
-		tclscripts/rtwizard/lib \
-		tclscripts/rtwizard/examples \
-		tclscripts/rtwizard/examples/PictureTypeA \
-		tclscripts/rtwizard/examples/PictureTypeB \
-		tclscripts/rtwizard/examples/PictureTypeC \
-		tclscripts/rtwizard/examples/PictureTypeD \
-		tclscripts/rtwizard/examples/PictureTypeE \
-		tclscripts/rtwizard/examples/PictureTypeF \
 	html html/manuals html/manuals/mged \
 		html/manuals/mged/animmate html/manuals/libdm \
 		html/manuals/shaders html/manuals/Anim_Tutorial \
@@ -217,8 +208,7 @@ for LAST in \
 		html/ReleaseNotes html/ReleaseNotes/Rel5.0 \
 		html/ReleaseNotes/Rel5.0/Summary \
 	pro-engineer pro-engineer/text pro-engineer/sgi_mips4 \
-		pro-engineer/text/usascii sample_applications \
-		pro-engineer/text/usascii/resource
+		pro-engineer/text/usascii sample_applications
 do
 	if test ! -d $BRLCAD_ROOT/$LAST
 	then

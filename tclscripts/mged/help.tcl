@@ -208,7 +208,6 @@ set mged_help_data(sca)		$helplib_data(vo_sca)
 set mged_help_data(sed)		{{<path>}	{solid-edit named solid}}
 set mged_help_data(setview)	$helplib_data(vo_setview)
 set mged_help_data(shader)	{{comb {shader_name {keyword value keyword value ...}}}	{assign shader using Tcl list format}}
-set mged_help_data(shaded_mode)	{{[-a |-auto] [0|1|2]}	{get/set shaded mode}}
 set mged_help_data(shells)	$helplib_data(wdb_shells)
 set mged_help_data(showmats)	$helplib_data(wdb_showmats)
 set mged_help_data(size)	$helplib_data(vo_size)

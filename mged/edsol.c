@@ -7490,7 +7490,7 @@ init_oedit(void)
 void oedit_reject();
 
 static void
-oedit_apply( int continue_editing )
+oedit_apply()
 {
 	register struct solid *sp;
 	/* matrices used to accept editing done from a depth
@@ -7543,10 +7543,7 @@ oedit_apply( int continue_editing )
 		if (sp->s_iflag == DOWN)
 			continue;
 		(void)replot_original_solid(sp);
-
-		if( continue_editing == DOWN ) {
-			sp->s_iflag = DOWN;
-		}
+		sp->s_iflag = DOWN;
 	}
 }
 
@@ -7572,7 +7569,7 @@ oedit_accept(void)
 		return;
 	}
 
-	oedit_apply( DOWN ); /* finished editing */
+	oedit_apply();
 	oedit_reject();
 }
 
@@ -9380,7 +9377,9 @@ f_oedit_apply(clientData, interp, argc, argv)
 	char		*strp="";
 
 	CHECK_DBI_NULL;
-	oedit_apply( UP ); /* apply changes, but continue editing */
+	oedit_apply();
+
+	replot_original_solid(illump);
 
 	/* Save aggregate path matrix */
 	MAT_IDN(es_mat);
