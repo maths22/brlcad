@@ -440,6 +440,13 @@ g_lint/g_lint.c svneol=native#text/plain
 g_lint/solshoot.c svneol=native#text/plain
 g_lint/testfree.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
+gtools/Cakefile -text
+gtools/g_diff.1 svneol=native#text/plain
+gtools/g_diff.c svneol=native#text/plain
+gtools/g_lint.1 svneol=native#text/plain
+gtools/g_lint.c svneol=native#text/plain
+gtools/solshoot.c svneol=native#text/plain
+gtools/testfree.c svneol=native#text/plain
 h/Cakefile -text
 h/XtndRunsv.h svneol=native#text/plain
 h/anim.h svneol=native#text/plain
