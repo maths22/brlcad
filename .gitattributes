@@ -1064,6 +1064,7 @@ libbu/makefile.vc svneol=native#text/plain
 libbu/malloc.c svneol=native#text/plain
 libbu/mappedfile.c svneol=native#text/plain
 libbu/memset.c svneol=native#text/plain
+libbu/mro.c svneol=native#text/plain
 libbu/observer.c svneol=native#text/plain
 libbu/parallel.c svneol=native#text/plain
 libbu/parse.c svneol=native#text/plain
