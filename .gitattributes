@@ -3281,6 +3281,7 @@ proc-db/molecule.c svneol=native#text/plain
 proc-db/nmgmodel.c svneol=native#text/plain
 proc-db/nmgxplode.c svneol=native#text/plain
 proc-db/patches.h svneol=native#text/plain
+proc-db/pickett_fence.c svneol=native#text/plain
 proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
