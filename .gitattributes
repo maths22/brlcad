@@ -260,6 +260,7 @@ mged/utility1.c svneol=native#text/plain
 mged/utility2.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 proc-db/clutter.c svneol=native#text/plain
+proc-db/kurt.c svneol=native#text/plain
 proc-db/molecule.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
