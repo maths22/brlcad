@@ -125,4 +125,5 @@ util/pix-ik.c svneol=native#text/plain
 util/pix-lowp-ik.c svneol=native#text/plain
 util/pixbustup.c svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
+util/pixt-ik.c svneol=native#text/plain
 util/pixtile.c svneol=native#text/plain
