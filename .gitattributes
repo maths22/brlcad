@@ -1988,12 +1988,6 @@ libitcl3.2/iwidgets2.2.0/win/makefile.bc svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/win/makefile.vc svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/win/pkgIndex.tcl svneol=native#text/plain
 libitcl3.2/iwidgets2.2.0/win/tclIndex -text
-libitcl3.2/iwidgets3.0.0/CHANGES -text
-libitcl3.2/iwidgets3.0.0/Makefile.in svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/README svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/aclocal.m4 svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/configure -text
-libitcl3.2/iwidgets3.0.0/configure.in svneol=native#text/plain
 libitcl3.2/iwidgets3.0.0/demos/buttonbox -text
 libitcl3.2/iwidgets3.0.0/demos/calendar -text
 libitcl3.2/iwidgets3.0.0/demos/canvasprintbox -text
@@ -2244,12 +2238,7 @@ libitcl3.2/iwidgets3.0.0/incoming/README svneol=native#text/plain
 libitcl3.2/iwidgets3.0.0/incoming/doc/man.macros -text
 libitcl3.2/iwidgets3.0.0/incoming/tests/all -text
 libitcl3.2/iwidgets3.0.0/incoming/tests/defs -text
-libitcl3.2/iwidgets3.0.0/iwidgets.tcl svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/iwidgets.tcl.in svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/license.terms svneol=native#text/plain
 libitcl3.2/iwidgets3.0.0/outgoing/README svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/pkgIndex.tcl svneol=native#text/plain
-libitcl3.2/iwidgets3.0.0/pkgIndex.tcl.in svneol=native#text/plain
 libitcl3.2/iwidgets3.0.0/tests/all -text
 libitcl3.2/iwidgets3.0.0/tests/all.tcl svneol=native#text/plain
 libitcl3.2/iwidgets3.0.0/tests/buttonbox.test svneol=native#text/plain
