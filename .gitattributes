@@ -68,6 +68,8 @@ cake/table.h svneol=native#text/plain
 cake/test.c svneol=native#text/plain
 cake/trail.c svneol=native#text/plain
 cake/wait.h svneol=native#text/plain
+cakeaux/Makefile svneol=native#text/plain
+cakeaux/cakeinclude.c svneol=native#text/plain
 conv/Cakefile -text
 conv/asc2g.c svneol=native#text/plain
 conv/asc2pix.c svneol=native#text/plain
