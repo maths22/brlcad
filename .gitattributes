@@ -551,6 +551,7 @@ doc/hypot.txt svneol=native#text/plain
 doc/irprep.tr svneol=native#text/plain
 doc/legal/bsd.txt svneol=native#text/plain
 doc/legal/fdl.txt svneol=native#text/plain
+doc/legal/gpl.txt svneol=native#text/plain
 doc/mater.txt svneol=native#text/plain
 doc/matrix.txt svneol=native#text/plain
 doc/mged.tr svneol=native#text/plain
