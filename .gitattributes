@@ -3828,6 +3828,7 @@ src/other/libtk/xlib/xdraw.c svneol=native#text/plain
 src/other/libtk/xlib/xgc.c svneol=native#text/plain
 src/other/libtk/xlib/ximage.c svneol=native#text/plain
 src/other/libtk/xlib/xutil.c svneol=native#text/plain
+src/other/libtkGLX/Makefile.am svneol=native#text/plain
 src/other/libtkGLX/descnames.h svneol=native#text/plain
 src/other/libtkGLX/makedescnames.sh svneol=native#text/x-sh
 src/other/libtkGLX/patchlevel.h svneol=native#text/plain
