@@ -477,6 +477,17 @@ halftone/tone_floyd.c svneol=native#text/plain
 halftone/tone_folly.c svneol=native#text/plain
 halftone/tone_simple.c svneol=native#text/plain
 halftone/tonescale.c svneol=native#text/plain
+html/ReleaseNotes/Rel5.0/deprecated.html svneol=native#text/html
+html/ReleaseNotes/Rel5.0/index.html svneol=native#text/html
+html/ReleaseNotes/Rel5.0/new_cmds.html svneol=native#text/html
+html/ReleaseNotes/Rel5.0/new_libs.html svneol=native#text/html
+html/ReleaseNotes/email2.0.html svneol=native#text/html
+html/ReleaseNotes/email3.0.html svneol=native#text/html
+html/ReleaseNotes/email3.1.html svneol=native#text/html
+html/ReleaseNotes/email4.0.html svneol=native#text/html
+html/ReleaseNotes/email4.4.html svneol=native#text/html
+html/ReleaseNotes/email5.0.html svneol=native#text/html
+html/ReleaseNotes/index.html svneol=native#text/html
 html/manuals/Anim_Tutorial/Butler.html svneol=native#text/html
 html/manuals/Anim_Tutorial/Cakefile -text
 html/manuals/Anim_Tutorial/Lee_tux.gif -text svneol=unset#image/gif
