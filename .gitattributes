@@ -44,6 +44,7 @@ librt/dir.c svneol=native#text/plain
 librt/g_arb.c svneol=native#text/plain
 librt/g_ars.c svneol=native#text/plain
 librt/g_ell.c svneol=native#text/plain
+librt/g_pg.c svneol=native#text/plain
 librt/g_rec.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
 librt/g_torus.c svneol=native#text/plain
