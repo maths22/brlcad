@@ -289,6 +289,7 @@ doc/old-mged.doc svneol=native#text/plain
 doc/pix.5 svneol=native#text/plain
 doc/pkg.doc svneol=native#text/plain
 doc/plot3.5 svneol=native#text/plain
+doc/port.doc svneol=native#text/plain
 doc/press-release -text
 doc/rcs.doc svneol=native#text/plain
 doc/reading-list.doc svneol=native#text/plain
