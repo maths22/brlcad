@@ -566,7 +566,6 @@ regress/spdi.sh svneol=native#text/x-sh
 regress/spdipix.asc svneol=native#text/plain
 sh/Makefile.am svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
-sh/brlcad-check.sh svneol=native#text/x-sh
 sh/cadbug.sh svneol=native#text/x-sh
 sh/cakeinclude.sh svneol=native#text/x-sh
 sh/copyright.sh svneol=native#text/x-sh
