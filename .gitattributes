@@ -365,6 +365,7 @@ irprep/secpass.c svneol=native#text/plain
 irprep/shapefact.1 svneol=native#text/plain
 irprep/shapefact.c svneol=native#text/plain
 irprep/subroutines.c svneol=native#text/plain
+jove/Cakefile -text
 jove/Makefile svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
 jove/jove.h svneol=native#text/plain
