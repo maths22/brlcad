@@ -5,6 +5,7 @@
 /COPYRIGHT -text
 /Cakefile.defs -text
 /HISTORY -text
+/INSTALL svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
