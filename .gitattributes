@@ -651,6 +651,7 @@ librt/nurb_copy.c svneol=native#text/plain
 librt/nurb_diff.c svneol=native#text/plain
 librt/nurb_eval.c svneol=native#text/plain
 librt/nurb_flat.c svneol=native#text/plain
+librt/nurb_interp.c svneol=native#text/plain
 librt/nurb_knot.c svneol=native#text/plain
 librt/nurb_norm.c svneol=native#text/plain
 librt/nurb_plot.c svneol=native#text/plain
