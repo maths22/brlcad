@@ -2329,9 +2329,11 @@ src/other/libpng/ANNOUNCE -text
 src/other/libpng/CHANGES -text
 src/other/libpng/INSTALL svneol=native#text/plain
 src/other/libpng/KNOWNBUG -text
+src/other/libpng/LICENSE -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
+src/other/libpng/Y2KINFO -text
 src/other/libpng/ansi2knr.1 svneol=native#text/plain
 src/other/libpng/ansi2knr.c svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
@@ -2341,11 +2343,15 @@ src/other/libpng/libpngpf.3 svneol=native#text/plain
 src/other/libpng/png.5 svneol=native#text/plain
 src/other/libpng/png.c svneol=native#text/plain
 src/other/libpng/png.h svneol=native#text/plain
+src/other/libpng/pngbar.jpg -text svneol=unset#image/jpeg
+src/other/libpng/pngbar.png -text svneol=unset#image/png
 src/other/libpng/pngconf.h svneol=native#text/plain
 src/other/libpng/pngerror.c svneol=native#text/plain
+src/other/libpng/pnggccrd.c svneol=native#text/plain
 src/other/libpng/pngget.c svneol=native#text/plain
 src/other/libpng/pngmem.c svneol=native#text/plain
 src/other/libpng/pngnow.png -text svneol=unset#image/png
+src/other/libpng/pngout.png -text svneol=unset#image/png
 src/other/libpng/pngpread.c svneol=native#text/plain
 src/other/libpng/pngread.c svneol=native#text/plain
 src/other/libpng/pngrio.c svneol=native#text/plain
@@ -2373,23 +2379,23 @@ src/other/libpng/scripts/makefile.aix svneol=native#text/plain
 src/other/libpng/scripts/makefile.amiga svneol=native#text/plain
 src/other/libpng/scripts/makefile.atari svneol=native#text/plain
 src/other/libpng/scripts/makefile.bc32 svneol=native#text/plain
-src/other/libpng/scripts/makefile.bd32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.beos svneol=native#text/plain
 src/other/libpng/scripts/makefile.bor svneol=native#text/plain
 src/other/libpng/scripts/makefile.cygwin svneol=native#text/plain
 src/other/libpng/scripts/makefile.darwin svneol=native#text/plain
 src/other/libpng/scripts/makefile.dec svneol=native#text/plain
 src/other/libpng/scripts/makefile.dj2 svneol=native#text/plain
+src/other/libpng/scripts/makefile.elf svneol=native#text/plain
 src/other/libpng/scripts/makefile.freebsd svneol=native#text/plain
 src/other/libpng/scripts/makefile.gcc svneol=native#text/plain
 src/other/libpng/scripts/makefile.gcmmx svneol=native#text/plain
+src/other/libpng/scripts/makefile.hp64 svneol=native#text/plain
 src/other/libpng/scripts/makefile.hpgcc svneol=native#text/plain
 src/other/libpng/scripts/makefile.hpux svneol=native#text/plain
 src/other/libpng/scripts/makefile.ibmc svneol=native#text/plain
 src/other/libpng/scripts/makefile.intel svneol=native#text/plain
 src/other/libpng/scripts/makefile.knr svneol=native#text/plain
 src/other/libpng/scripts/makefile.linux svneol=native#text/plain
-src/other/libpng/scripts/makefile.macosx svneol=native#text/plain
 src/other/libpng/scripts/makefile.mips svneol=native#text/plain
 src/other/libpng/scripts/makefile.msc svneol=native#text/plain
 src/other/libpng/scripts/makefile.ne12bsd svneol=native#text/plain
@@ -2408,8 +2414,9 @@ src/other/libpng/scripts/makefile.vcawin32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.vcwin32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.watcom svneol=native#text/plain
 src/other/libpng/scripts/makevms.com svneol=native#text/plain
-src/other/libpng/scripts/pngdef.pas -text
 src/other/libpng/scripts/pngos2.def svneol=native#text/plain
+src/other/libpng/scripts/pngw32.def svneol=native#text/plain
+src/other/libpng/scripts/pngw32.rc -text svneol=CRLF#text/plain
 src/other/libpng/scripts/smakefile.ppc -text
 src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
