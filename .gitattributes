@@ -411,7 +411,6 @@ include/dm-ps.h svneol=native#text/plain
 include/dm.h svneol=native#text/plain
 include/dm_color.h svneol=native#text/plain
 include/dm_xvars.h svneol=native#text/plain
-include/externs.h svneol=native#text/plain
 include/fb.h svneol=native#text/plain
 include/fbserv_obj.h svneol=native#text/plain
 include/forms.h svneol=native#text/plain
