@@ -1063,6 +1063,7 @@ mged/dm-xgl.info -text
 mged/dodraw.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
 mged/edarb.c svneol=native#text/plain
+mged/editobjGui.h svneol=native#text/plain
 mged/edpipe.c svneol=native#text/plain
 mged/edsol.c svneol=native#text/plain
 mged/facedef.c svneol=native#text/plain
@@ -1073,6 +1074,8 @@ mged/ged_types.h svneol=native#text/plain
 mged/glxinit.h svneol=native#text/plain
 mged/hideline.c svneol=native#text/plain
 mged/history.c svneol=native#text/plain
+mged/htmlLibraryUi.h svneol=native#text/plain
+mged/icreateGui.h svneol=native#text/plain
 mged/inside.c svneol=native#text/plain
 mged/joints.h svneol=native#text/plain
 mged/mater.c svneol=native#text/plain
@@ -1112,6 +1115,7 @@ mged/utility2.c svneol=native#text/plain
 mged/vdraw.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 mged/vld_std.h svneol=native#text/plain
+mged/vmathUi.h svneol=native#text/plain
 mged/vrlink.c svneol=native#text/plain
 mged/xinit.h svneol=native#text/plain
 mk/Cakefile -text
