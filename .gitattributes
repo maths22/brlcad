@@ -1034,6 +1034,7 @@ src/java/mil/army/arl/brlcad/BrlcadGeometry.java svneol=native#text/plain
 src/java/mil/army/arl/brlcad/BrlcadGeometryServer.java svneol=native#text/plain
 src/java/mil/army/arl/brlcad/Makefile.am svneol=native#text/plain
 src/java/mil/army/arl/brlcad/Partition.java svneol=native#text/plain
+src/lgt/.cvsignore svneol=native#text/plain
 src/lgt/Makefile.am svneol=native#text/plain
 src/lgt/ascii.h svneol=native#text/plain
 src/lgt/char.c svneol=native#text/plain

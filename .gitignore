@@ -211,6 +211,7 @@ src/irprep/shapefact
 src/irprep/showtherm
 src/jack/g-jack
 src/jack/jack-g
+src/lgt/lgt
 src/libbn/vers.c
 src/libbn/version
 src/libbu/vers.c
