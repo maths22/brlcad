@@ -487,6 +487,7 @@ librt/snoise.c svneol=native#text/plain
 /ltconfig -text
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
+misc/Makefile.am svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
 misc/enigma/Makefile.am svneol=native#text/plain
@@ -495,11 +496,15 @@ misc/enigma/build.sh svneol=native#text/x-sh
 misc/enigma/configure.in svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
 misc/enigma/enigma.c svneol=native#text/plain
+misc/macosx/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
+misc/macosx/Resources/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
+misc/macosx/Resources/ReadMe.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/Resources/Welcome.rtfd/.typeAttributes.dict -text
+misc/macosx/Resources/Welcome.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
