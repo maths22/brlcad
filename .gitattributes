@@ -156,6 +156,7 @@ mged/columns.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
 mged/dm-mer.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
+mged/dm-sun.c svneol=native#text/plain
 mged/dm-tek.c svneol=native#text/plain
 mged/dm-tek4109.c svneol=native#text/plain
 mged/dodraw.c svneol=native#text/plain
