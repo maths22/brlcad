@@ -3303,6 +3303,7 @@ tclscripts/mged/editmenu.tcl svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/eobjmenu.tcl svneol=native#text/plain
 tclscripts/mged/extract.tcl svneol=native#text/plain
+tclscripts/mged/extrusion.tcl svneol=native#text/plain
 tclscripts/mged/font.tcl svneol=native#text/plain
 tclscripts/mged/g2asc.tcl svneol=native#text/plain
 tclscripts/mged/garbage_collect.tcl svneol=native#text/plain
