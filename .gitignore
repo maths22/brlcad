@@ -87,6 +87,7 @@ src/anim/chan_permute
 src/burst/burst
 src/bwish/btclsh
 src/bwish/bwish
+src/comgeom-g/comgeom-g
 src/conv/.deps
 src/conv/.libs
 src/conv/Makefile

@@ -682,6 +682,7 @@ src/canon/ipuscan.c svneol=native#text/plain
 src/canon/ipustat.c svneol=native#text/plain
 src/canon/pix-ipu.c svneol=native#text/plain
 src/canon/png-ipu.c svneol=native#text/plain
+src/comgeom-g/.cvsignore svneol=native#text/plain
 src/comgeom-g/3d.h svneol=native#text/plain
 src/comgeom-g/Makefile.am svneol=native#text/plain
 src/comgeom-g/comgeom-g.1 svneol=native#text/plain
