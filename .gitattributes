@@ -1254,6 +1254,9 @@ src/liboptical/sh_xxx.c svneol=native#text/plain
 src/liboptical/shade.c svneol=native#text/plain
 src/liboptical/turb.c svneol=native#text/plain
 src/liboptical/wray.c svneol=native#text/plain
+src/liborle/Makefile.am svneol=native#text/plain
+src/liborle/liborle.3 svneol=native#text/plain
+src/liborle/rle.c svneol=native#text/plain
 src/libpkg/.cvsignore svneol=native#text/plain
 src/libpkg/Makefile.am svneol=native#text/plain
 src/libpkg/libpkg.dsp -text svneol=CRLF#text/plain
@@ -2196,9 +2199,6 @@ src/other/libitcl/makefile.vc svneol=native#text/plain
 src/other/libitcl/rules.vc -text
 src/other/libitcl/tcl.m4 svneol=native#text/plain
 src/other/libitcl/tools/genStubs.tcl svneol=native#text/plain
-src/other/liborle/Makefile.am svneol=native#text/plain
-src/other/liborle/liborle.3 svneol=native#text/plain
-src/other/liborle/rle.c svneol=native#text/plain
 src/other/libpng/.cvsignore svneol=native#text/plain
 src/other/libpng/ANNOUNCE -text
 src/other/libpng/CHANGES -text
