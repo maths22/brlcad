@@ -268,6 +268,7 @@ mged/mged_dm.h svneol=native#text/plain
 mged/mged_solid.h svneol=native#text/plain
 mged/mover.c svneol=native#text/plain
 mged/objdir.h svneol=native#text/plain
+mged/overlay.c svneol=native#text/plain
 mged/path.c svneol=native#text/plain
 mged/plot.c svneol=native#text/plain
 mged/proc_reg.c svneol=native#text/plain
