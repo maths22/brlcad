@@ -564,6 +564,7 @@ liborle/rle.c svneol=native#text/plain
 libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
 libredblack/application.c svneol=native#text/plain
+libredblack/libredblack.3 svneol=native#text/plain
 libredblack/rb_create.c svneol=native#text/plain
 libredblack/rb_diag.c svneol=native#text/plain
 libredblack/rb_extreme.c svneol=native#text/plain
