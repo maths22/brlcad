@@ -825,6 +825,7 @@ libwdb/wdb.c svneol=native#text/plain
 mged/Cakefile -text
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
+mged/animedit.c svneol=native#text/plain
 mged/arb.c svneol=native#text/plain
 mged/arbs.c svneol=native#text/plain
 mged/attach.c svneol=native#text/plain
