@@ -3785,6 +3785,7 @@ util/pixclump.1 svneol=native#text/plain
 util/pixclump.c svneol=native#text/plain
 util/pixcolors.1 svneol=native#text/plain
 util/pixcolors.c svneol=native#text/plain
+util/pixcount.c svneol=native#text/plain
 util/pixcut.1 svneol=native#text/plain
 util/pixcut.c svneol=native#text/plain
 util/pixdiff.1 svneol=native#text/plain
