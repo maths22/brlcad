@@ -1683,6 +1683,7 @@ util/pixcut.1 svneol=native#text/plain
 util/pixcut.c svneol=native#text/plain
 util/pixdiff.1 svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
+util/pixdsplit.1 svneol=native#text/plain
 util/pixdsplit.c svneol=native#text/plain
 util/pixelswap.c svneol=native#text/plain
 util/pixembed.c svneol=native#text/plain
