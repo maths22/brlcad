@@ -1065,6 +1065,7 @@ libfb/compress.c svneol=native#text/plain
 libfb/dmdfb.h svneol=native#text/plain
 libfb/fb_generic.c svneol=native#text/plain
 libfb/fb_log.c svneol=native#text/plain
+libfb/fb_obj.c svneol=native#text/plain
 libfb/fb_paged_io.c svneol=native#text/plain
 libfb/fb_rect.c svneol=native#text/plain
 libfb/fb_util.c svneol=native#text/plain
