@@ -4740,6 +4740,7 @@ util/azel.1 svneol=native#text/plain
 util/azel.c svneol=native#text/plain
 util/bary.1 svneol=native#text/plain
 util/bary.c svneol=native#text/plain
+util/binfo.c svneol=native#text/plain
 util/brlcad.1 svneol=native#text/plain
 util/buffer.1 svneol=native#text/plain
 util/buffer.c svneol=native#text/plain
