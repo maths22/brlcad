@@ -770,6 +770,7 @@ mged/vgdev.h svneol=native#text/plain
 /mtype.sh svneol=native#text/x-sh
 /newbindir.sh svneol=native#text/x-sh
 nirt/Cakefile -text
+nirt/bsphere.c svneol=native#text/plain
 nirt/command.c svneol=native#text/plain
 nirt/conversion.c svneol=native#text/plain
 nirt/dist_def.c svneol=native#text/plain
