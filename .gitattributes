@@ -1356,6 +1356,7 @@ librt/units.c svneol=native#text/plain
 librt/vlist.c svneol=native#text/plain
 librt/vshoot.c svneol=native#text/plain
 librt/wdb.c svneol=native#text/plain
+librt/wdb_obj.c svneol=native#text/plain
 libsysv/Cakefile -text
 libsysv/bsdselect.c svneol=native#text/plain
 libsysv/cclass.h svneol=native#text/plain
