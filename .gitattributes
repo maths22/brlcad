@@ -591,6 +591,7 @@ rt/viewhide.c svneol=native#text/plain
 rt/viewpp.c svneol=native#text/plain
 rt/viewrad.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
+rt/viewscat.c svneol=native#text/plain
 rt/worker.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
 rttherm/Cakefile -text
