@@ -105,6 +105,7 @@ comgeom-g/read.c svneol=native#text/plain
 comgeom-g/region.c svneol=native#text/plain
 comgeom-g/solid.c svneol=native#text/plain
 comgeom-g/tools.c svneol=native#text/plain
+comgeom-g/try.sh svneol=native#text/x-sh
 conv/Cakefile -text
 conv/asc2g.c svneol=native#text/plain
 conv/asc2pix.c svneol=native#text/plain
