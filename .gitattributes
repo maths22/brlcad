@@ -997,6 +997,7 @@ libbu/bitv.c svneol=native#text/plain
 libbu/bomb.c svneol=native#text/plain
 libbu/brlcad_path.c svneol=native#text/plain
 libbu/bu_tcl.c svneol=native#text/plain
+libbu/cmd.c svneol=native#text/plain
 libbu/color.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
 libbu/getopt.c svneol=native#text/plain
