@@ -369,6 +369,7 @@ util/pixscale.c svneol=native#text/plain
 util/pixstat.c svneol=native#text/plain
 util/pixt-ik.c svneol=native#text/plain
 util/pixtile.c svneol=native#text/plain
+util/pixuntile.c svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/pldebug.c svneol=native#text/plain
 util/plgetframe.c svneol=native#text/plain
