@@ -53,6 +53,7 @@ mged/chgtree.c svneol=native#text/plain
 mged/chgview.c svneol=native#text/plain
 mged/clip.c svneol=native#text/plain
 mged/cmd.c svneol=native#text/plain
+mged/columns.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
 mged/dm-tek.c svneol=native#text/plain
 mged/dodraw.c svneol=native#text/plain
