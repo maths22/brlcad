@@ -226,11 +226,6 @@ conv/tankill-g.1 svneol=native#text/plain
 conv/tankill-g.c svneol=native#text/plain
 conv/viewpoint-g.1 svneol=native#text/plain
 conv/viewpoint-g.c svneol=native#text/plain
-cwish/Cakefile -text
-cwish/cmd.c svneol=native#text/plain
-cwish/cwish.c svneol=native#text/plain
-cwish/input.c svneol=native#text/plain
-cwish/tcl.c svneol=native#text/plain
 db/Cakefile -text
 db/Makefile svneol=native#text/plain
 db/Makefile.dist svneol=native#text/plain
