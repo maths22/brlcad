@@ -800,6 +800,7 @@ libfb/if_sun.c svneol=native#text/plain
 libfb/if_ts.c svneol=native#text/plain
 libfb/if_ug.c svneol=native#text/plain
 libfb/libfb.3 svneol=native#text/plain
+libfb/oglcursor.h svneol=native#text/plain
 libfb/pkgswitch.c svneol=native#text/plain
 libfb/pkgtypes.h svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
