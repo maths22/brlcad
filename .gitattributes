@@ -5,6 +5,7 @@
 /Cakefile.prog -text
 /Cakefile.rules -text
 /Copyright_1989_US_Army -text
+/Copyright_1991_US_Army -text
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
@@ -906,6 +907,7 @@ sig/a-d.c svneol=native#text/plain
 sig/butter.c svneol=native#text/plain
 sig/bw-d.c svneol=native#text/plain
 sig/c-d.c svneol=native#text/plain
+sig/complex.h svneol=native#text/plain
 sig/coswin.c svneol=native#text/plain
 sig/d-a.c svneol=native#text/plain
 sig/d-bw.c svneol=native#text/plain
@@ -961,6 +963,7 @@ tools/cubitorle.1 svneol=native#text/plain
 tools/cubitorle.c svneol=native#text/plain
 tools/fant.1 svneol=native#text/plain
 tools/fant.c svneol=native#text/plain
+tools/font.h svneol=native#text/plain
 tools/font.src -text
 tools/gifencod.c svneol=native#text/plain
 tools/giftorle.1 svneol=native#text/plain
