@@ -3161,6 +3161,7 @@ rt/worker.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
 rttherm/Cakefile -text
 rttherm/pixtest.c svneol=native#text/plain
+rttherm/rttherm.1 svneol=native#text/plain
 rttherm/spectrum.c svneol=native#text/plain
 rttherm/ssampview.c svneol=native#text/plain
 rttherm/ssampview.tcl svneol=native#text/plain
