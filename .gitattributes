@@ -795,6 +795,7 @@ mged/utility1.c svneol=native#text/plain
 mged/utility2.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 mged/vld_std.h svneol=native#text/plain
+mged/vrlink.c svneol=native#text/plain
 /mtype.sh svneol=native#text/x-sh
 /newbindir.sh svneol=native#text/x-sh
 nirt/Cakefile -text
