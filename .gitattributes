@@ -80,6 +80,7 @@ doc/install.doc svneol=native#text/plain
 doc/movie.doc svneol=native#text/plain
 doc/regions.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
+doc/summary.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
 fb/Cakefile -text
 fb/bw-fb.c svneol=native#text/plain
