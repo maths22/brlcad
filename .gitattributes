@@ -414,6 +414,8 @@ g_lint/solshoot.c svneol=native#text/plain
 h/Cakefile -text
 h/XtndRunsv.h svneol=native#text/plain
 h/anim.h svneol=native#text/plain
+h/bu.h svneol=native#text/plain
+h/compat4.h svneol=native#text/plain
 h/conf.h svneol=native#text/plain
 h/db.h svneol=native#text/plain
 h/externs.h svneol=native#text/plain
