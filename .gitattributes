@@ -1022,6 +1022,7 @@ mged/ged.c svneol=native#text/plain
 mged/ged.h svneol=native#text/plain
 mged/ged_types.h svneol=native#text/plain
 mged/hideline.c svneol=native#text/plain
+mged/history.c svneol=native#text/plain
 mged/inside.c svneol=native#text/plain
 mged/joints.h svneol=native#text/plain
 mged/mater.c svneol=native#text/plain
@@ -1280,6 +1281,7 @@ tcl/tclAppInit.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
+tclscripts/vmath.tcl svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
 tools/applymap.c svneol=native#text/plain
