@@ -446,6 +446,7 @@ remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 rt/Cakefile -text
 rt/do.c svneol=native#text/plain
+rt/ext.h svneol=native#text/plain
 rt/libfb-dummy.c svneol=native#text/plain
 rt/light.h svneol=native#text/plain
 rt/main.c svneol=native#text/plain
