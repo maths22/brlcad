@@ -14,9 +14,11 @@
 /Makefile.rules svneol=native#text/plain
 /README svneol=native#text/plain
 anim/Cakefile -text
+anim/anim_cascade.1 svneol=native#text/plain
 anim/anim_cascade.c svneol=native#text/plain
 anim/anim_fly.1 svneol=native#text/plain
 anim/anim_fly.c svneol=native#text/plain
+anim/anim_fly.old.c svneol=native#text/plain
 anim/anim_hardtrack.1 svneol=native#text/plain
 anim/anim_hardtrack.c svneol=native#text/plain
 anim/anim_keyread.1 svneol=native#text/plain
@@ -140,6 +142,7 @@ cakeaux/std.h svneol=native#text/plain
 cakeaux/subcmd.c svneol=native#text/plain
 cakeaux/usrc.c svneol=native#text/plain
 canon/Cakefile -text
+canon/asize.c svneol=native#text/plain
 canon/canon.h svneol=native#text/plain
 canon/canonize.1 svneol=native#text/plain
 canon/canonize.c svneol=native#text/plain
