@@ -750,6 +750,7 @@ librt/nurb_c2.c svneol=native#text/plain
 librt/nurb_copy.c svneol=native#text/plain
 librt/nurb_diff.c svneol=native#text/plain
 librt/nurb_eval.c svneol=native#text/plain
+librt/nurb_example.c svneol=native#text/plain
 librt/nurb_flat.c svneol=native#text/plain
 librt/nurb_interp.c svneol=native#text/plain
 librt/nurb_knot.c svneol=native#text/plain
