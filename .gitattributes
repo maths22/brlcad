@@ -128,6 +128,7 @@ cakeaux/base.c svneol=native#text/plain
 cakeaux/cakeinclude.c svneol=native#text/plain
 cakeaux/cakesub.c svneol=native#text/plain
 cakeaux/ccincl.c svneol=native#text/plain
+cakeaux/ccincl_s.l svneol=native#text/plain
 cakeaux/gsrc.c svneol=native#text/plain
 cakeaux/later.c svneol=native#text/plain
 cakeaux/need.c svneol=native#text/plain
