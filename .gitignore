@@ -187,6 +187,7 @@ src/gtools/g_diff
 src/gtools/g_lint
 src/gtools/solshoot
 src/gtools/testfree
+src/halftone/halftone
 src/iges/.deps
 src/iges/.libs
 src/iges/Makefile
