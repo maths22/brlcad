@@ -324,6 +324,7 @@ librt/librt.3 svneol=native#text/plain
 librt/mat.c svneol=native#text/plain
 librt/mater.c svneol=native#text/plain
 librt/memalloc.c svneol=native#text/plain
+librt/parse.c svneol=native#text/plain
 librt/plane.h svneol=native#text/plain
 librt/polylib.c svneol=native#text/plain
 librt/polyno.h svneol=native#text/plain
