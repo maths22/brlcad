@@ -171,3 +171,5 @@ vdeck/match.c svneol=native#text/plain
 vdeck/parsarg.c svneol=native#text/plain
 vdeck/vdeck.1 svneol=native#text/plain
 vdeck/vdeck.c svneol=native#text/plain
+vdeck/vextern.h svneol=native#text/plain
+vdeck/vproc.c svneol=native#text/plain
