@@ -286,6 +286,7 @@ util/orle-pix.c svneol=native#text/plain
 util/pix-both-ik.c svneol=native#text/plain
 util/pix-bw.c svneol=native#text/plain
 util/pix-bw3.c svneol=native#text/plain
+util/pix-ci.c svneol=native#text/plain
 util/pix-filt-ik.c svneol=native#text/plain
 util/pix-ik.c svneol=native#text/plain
 util/pix-ikr.c svneol=native#text/plain
