@@ -2841,6 +2841,7 @@ libwdb/export.c svneol=native#text/plain
 libwdb/extr.c svneol=native#text/plain
 libwdb/id.c svneol=native#text/plain
 libwdb/libwdb.3 svneol=native#text/plain
+libwdb/mater.c svneol=native#text/plain
 libwdb/nmg.c svneol=native#text/plain
 libwdb/pipe.c svneol=native#text/plain
 libwdb/poly.c svneol=native#text/plain
