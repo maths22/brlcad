@@ -608,6 +608,7 @@ libfb/if_4d-old.c svneol=native#text/plain
 libfb/if_4d.c svneol=native#text/plain
 libfb/if_TEMPLATE.c svneol=native#text/plain
 libfb/if_X.c svneol=native#text/plain
+libfb/if_X24.c svneol=native#text/plain
 libfb/if_ab.c svneol=native#text/plain
 libfb/if_adage.c svneol=native#text/plain
 libfb/if_ap.c svneol=native#text/plain
