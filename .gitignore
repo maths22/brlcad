@@ -375,6 +375,10 @@ src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
 src/other/libpng/pngtest
 src/other/libpng/vers.c
+src/other/libtcl/tclsh
+src/other/libtcl/tclsh.static
+src/other/libtk/wish
+src/other/libtk/wish.static
 src/patch/patch-g
 src/patch/rpatch
 src/proc-db/bottest
