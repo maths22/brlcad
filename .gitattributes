@@ -3281,7 +3281,6 @@ nirt/conversion.c svneol=native#text/plain
 nirt/dist_def.c svneol=native#text/plain
 nirt/if.c svneol=native#text/plain
 nirt/interact.c svneol=native#text/plain
-nirt/makefile svneol=native#text/plain
 nirt/nirt.1 svneol=native#text/plain
 nirt/nirt.c svneol=native#text/plain
 nirt/nirt.h svneol=native#text/plain
