@@ -381,6 +381,7 @@ lgt/Cakefile -text
 lgt/ascii.h svneol=native#text/plain
 lgt/char.c svneol=native#text/plain
 lgt/cursors.h svneol=native#text/plain
+lgt/do_options.c svneol=native#text/plain
 lgt/error.c svneol=native#text/plain
 lgt/execshell.c svneol=native#text/plain
 lgt/extern.h svneol=native#text/plain
