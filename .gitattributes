@@ -16,6 +16,8 @@ anim/anim_orient.c svneol=native#text/plain
 anim/anim_script.1 svneol=native#text/plain
 anim/anim_script.c svneol=native#text/plain
 anim/cattrack.c svneol=native#text/plain
+anim/chan_permute.1 svneol=native#text/plain
+anim/chan_permute.c svneol=native#text/plain
 awf/AWF_COPYRIGHT -text
 awf/Cakefile -text
 awf/awf.1 svneol=native#text/plain
