@@ -3460,7 +3460,6 @@ tclscripts/mged/Cakefile -text
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
 tclscripts/mged/apply.tcl svneol=native#text/plain
-tclscripts/mged/attach4.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/calipers.tcl svneol=native#text/plain
 tclscripts/mged/callbacks.tcl svneol=native#text/plain
