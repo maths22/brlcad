@@ -4162,7 +4162,6 @@ pro-engineer/resource/proe_brl_error.res svneol=native#text/plain
 pro-engineer/sgi_mips4/Cakefile -text
 pro-engineer/sgi_mips4/Makefile svneol=native#text/plain
 pro-engineer/sgi_mips4/proe-brl.c svneol=native#text/plain
-pro-engineer/sgi_mips4/proe_brl.res svneol=native#text/plain
 pro-engineer/text/Cakefile -text
 pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
