@@ -134,6 +134,7 @@ conv/conv-vg2g.1 svneol=native#text/plain
 conv/conv-vg2g.c svneol=native#text/plain
 conv/dbclean.1 svneol=native#text/plain
 conv/dbclean.sh svneol=native#text/x-sh
+conv/dxf-g.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.1 svneol=native#text/plain
