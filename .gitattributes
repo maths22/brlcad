@@ -3494,6 +3494,7 @@ tclscripts/mged/apply.tcl svneol=native#text/plain
 tclscripts/mged/attach4.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/calipers.tcl svneol=native#text/plain
+tclscripts/mged/callbacks.tcl svneol=native#text/plain
 tclscripts/mged/color.tcl svneol=native#text/plain
 tclscripts/mged/comb.tcl svneol=native#text/plain
 tclscripts/mged/combmenu.tcl svneol=native#text/plain
