@@ -228,6 +228,7 @@ fb/orle-fb.1 svneol=native#text/plain
 fb/orle-fb.c svneol=native#text/plain
 fb/pix-fb.1 svneol=native#text/plain
 fb/pix-fb.c svneol=native#text/plain
+fb/pixautosize.c svneol=native#text/plain
 fb/pixflip-fb.c svneol=native#text/plain
 fb/pl-fb.1 svneol=native#text/plain
 fb/pl-fb.c svneol=native#text/plain
