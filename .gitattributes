@@ -3742,6 +3742,7 @@ notes/regression/alias-pix.txt svneol=native#text/plain
 notes/regression/badtestascii.txt svneol=native#text/plain
 notes/regression/d-a.sh svneol=native#text/x-sh
 notes/regression/d-a.txt svneol=native#text/plain
+notes/regression/para.c svneol=native#text/plain
 notes/regression/pix-png.sh svneol=native#text/x-sh
 notes/regression/png-pix.sh svneol=native#text/x-sh
 notes/regression/png-pix.txt svneol=native#text/plain
