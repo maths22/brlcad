@@ -1250,6 +1250,7 @@ sig/u-f.c svneol=native#text/plain
 sig/umod.c svneol=native#text/plain
 sig/ustat.c svneol=native#text/plain
 tab/Cakefile -text
+tab/script-tab.c svneol=native#text/plain
 tab/script.l svneol=native#text/plain
 tab/scriptsort.c svneol=native#text/plain
 tab/tabinterp.1 svneol=native#text/plain
