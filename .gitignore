@@ -202,13 +202,13 @@ src/irprep/.libs
 src/irprep/Makefile
 src/irprep/Makefile.in
 src/irprep/all_sf
-src/irprep/display
 src/irprep/firpass
 src/irprep/ir-X
 src/irprep/ir-sgi
 src/irprep/irdisp
 src/irprep/secpass
 src/irprep/shapefact
+src/irprep/showtherm
 src/libbn/vers.c
 src/libbn/version
 src/libbu/vers.c
