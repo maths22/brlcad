@@ -1147,6 +1147,7 @@ remrt/protocol.h svneol=native#text/plain
 remrt/remrt.1 svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
+remrt/rtsync.c svneol=native#text/plain
 rt/Cakefile -text
 rt/do.c svneol=native#text/plain
 rt/ext.h svneol=native#text/plain
