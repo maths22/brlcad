@@ -1183,6 +1183,7 @@ mged/edsol.c svneol=native#text/plain
 mged/facedef.c svneol=native#text/plain
 mged/fast.sh svneol=native#text/x-sh
 mged/fbserv.c svneol=native#text/plain
+mged/fbserv.h svneol=native#text/plain
 mged/ged.c svneol=native#text/plain
 mged/ged.h svneol=native#text/plain
 mged/ged_types.h svneol=native#text/plain
