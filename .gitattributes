@@ -1222,6 +1222,7 @@ src/libfft/rfft64.c svneol=native#text/plain
 src/libfft/splitdit.c svneol=native#text/plain
 src/libfft/splitditc.c svneol=native#text/plain
 src/libmultispectral/.cvsignore svneol=native#text/plain
+src/libmultispectral/Makefile.am svneol=native#text/plain
 src/libmultispectral/init.c svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
 src/liboptical/.cvsignore svneol=native#text/plain
