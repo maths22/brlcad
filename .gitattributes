@@ -4221,6 +4221,7 @@ rt/read-rtlog.c svneol=native#text/plain
 rt/refract.c svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
 rt/rtcheck.1 svneol=native#text/plain
+rt/rtedge.1 svneol=native#text/plain
 rt/rtexample.c svneol=native#text/plain
 rt/rtg3.1 svneol=native#text/plain
 rt/rthide.1 svneol=native#text/plain
