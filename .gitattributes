@@ -555,6 +555,7 @@ sh/sharedliblink.sh svneol=native#text/x-sh
 sh/sharedlibvers.sh svneol=native#text/x-sh
 sh/show.sh svneol=native#text/x-sh
 sh/vers.sh svneol=native#text/x-sh
+src/Makefile.am svneol=native#text/plain
 src/anim/Makefile.am svneol=native#text/plain
 src/anim/anim_cascade.1 svneol=native#text/plain
 src/anim/anim_cascade.c svneol=native#text/plain
@@ -1631,6 +1632,7 @@ src/nirt/usrfmt.h svneol=native#text/plain
 src/off/Makefile.am svneol=native#text/plain
 src/off/g-off.c svneol=native#text/plain
 src/off/off-g.c svneol=native#text/plain
+src/other/Makefile.am svneol=native#text/plain
 src/other/awf/AWF_COPYRIGHT -text
 src/other/awf/Makefile.am svneol=native#text/plain
 src/other/awf/awf.1 svneol=native#text/plain
