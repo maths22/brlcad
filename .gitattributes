@@ -664,6 +664,7 @@ src/burst/trie.c svneol=native#text/plain
 src/burst/trie.h svneol=native#text/plain
 src/burst/ui.c svneol=native#text/plain
 src/burst/vecmath.h svneol=native#text/plain
+src/bwish/.cvsignore svneol=native#text/plain
 src/bwish/Makefile.am svneol=native#text/plain
 src/bwish/cmd.c svneol=native#text/plain
 src/bwish/input.c svneol=native#text/plain
