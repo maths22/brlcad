@@ -25,13 +25,16 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "machine.h"
 #include "db.h"
 #include "vmath.h"
-#include "wdb.h"
 
 #include "../rt/mathtab.h"
 
 mat_t	identity;
 double degtorad = 0.0174532925199433;
 double sin60;
+
+struct ntab {
+	char	nm[64];
+} ntab[64];
 
 struct mtab {
 	char	mt_name[64];
@@ -66,9 +69,6 @@ char	**argv;
 	char	white[3];
 	int	n;
 	double	height, maxheight, minheight;
-	struct wmember head;
-
-	head.wm_forw = head.wm_back = &head;
 
 	sin60 = sin(60.0 * 3.14159265358979323846264 / 180.0);
 
@@ -83,7 +83,6 @@ char	**argv;
 	mat_idn( identity );
 	mk_mcomb( stdout, "plane.r", 1, 1, "", "", 1, rgb );
 	mk_memb( stdout, "plane", identity, UNION );
-	(void)mk_addmember( "plane.r", &head );
 
 	/* Create the detail cells */
 	size = 1000;	/* mm */
@@ -96,10 +95,7 @@ char	**argv;
 			y = base + iy*size;
 			sprintf( name, "Bx%dy%d", ix, iy );
 			do_plate( name, x, y, size );
-			(void)mk_addmember( name, &head );
-
 			sprintf( name, "x%dy%d", ix, iy );
-			(void)mk_addmember( name, &head );
 			n = rand() & 03;
 			switch(n)  {
 			case 0:
@@ -120,7 +116,6 @@ char	**argv;
 	minheight = size/2;
 	VSET( pos, 0, 0, size/4 );
 	do_rings( "rings", pos, 2*size*quant/2, size/4, size, 4 );
-	(void)mk_addmember( "rings", &head );
 
 	if( maxheight < minheight ) maxheight = minheight;
 
@@ -129,21 +124,35 @@ char	**argv;
 	base = size*(quant/2+1);
 	VSET( aim, 0, 0, 0 );
 	VSET( pos, base, base, minheight+maxheight*rand0to1() );
-	do_light( "l1", pos, aim, 1, 100.0, white, &head );
+	do_light( "l1", pos, aim, 1, 100.0, white );
 	VSET( pos, -base, base, minheight+maxheight*rand0to1() );
-	do_light( "l2", pos, aim, 1, 100.0, white, &head );
+	do_light( "l2", pos, aim, 1, 100.0, white );
 	VSET( pos, -base, -base, minheight+maxheight*rand0to1() );
-	do_light( "l3", pos, aim, 1, 100.0, white, &head );
+	do_light( "l3", pos, aim, 1, 100.0, white );
 	VSET( pos, base, -base, minheight+maxheight*rand0to1() );
-	do_light( "l4", pos, aim, 1, 100.0, white, &head );
+	do_light( "l4", pos, aim, 1, 100.0, white );
 
 	/* Build the overall combination */
-	mk_lfcomb( stdout, "clut", 0, &head );
+	mk_comb( stdout, "clut", 2*quant*quant+1+4+1, 0 );
+	mk_memb( stdout, "plane.r", identity, UNION );
+	for( ix=quant-1; ix>=0; ix-- )  {
+		for( iy=quant-1; iy>=0; iy-- )  {
+			sprintf( name, "Bx%dy%d", ix, iy );
+			mk_memb( stdout, name, identity, UNION );
+			sprintf( name, "x%dy%d", ix, iy );
+			mk_memb( stdout, name, identity, UNION );
+		}
+	}
+	mk_memb( stdout, "l1", identity, UNION );
+	mk_memb( stdout, "l2", identity, UNION );
+	mk_memb( stdout, "l3", identity, UNION );
+	mk_memb( stdout, "l4", identity, UNION );
+	mk_memb( stdout, "rings", identity, UNION );
 }
 
 double
-crystal_stack( cname, xc, yc, size )
-char	*cname;
+crystal_stack( name, xc, yc, size )
+char	*name;
 double	xc, yc;		/* center coordinates, z=0+ */
 double	size;
 {
@@ -151,17 +160,15 @@ double	size;
 	point_t	center;
 	vect_t	maj, min;
 	int	nsolids;
+	struct ntab	names[32];
+	int	len = 0;
 	char	rgb[4];		/* needs all 4 */
 	double	high;
 	double	height = 0;
 	double	esz;
-	char	name[64];
 	char	rppname[64];
 	char	crystalname[64];
 	vect_t	minpt, maxpt;
-	struct wmember head;
-
-	head.wm_forw = head.wm_back = &head;
 
 	/* These should change somewhat for each layer, and be done by rots */
 	VSET( maj, 1, 0, .2 );
@@ -170,12 +177,11 @@ double	size;
 	VUNITIZE( min );
 
 	for( i=0; i<3; i++ )  {
-		sprintf( name, "%sL%c", cname, 'a'+i);
-		(void)mk_addmember( name, &head );
+		sprintf( names[len].nm, "%sl%c", name, 'a'+i);
 		VSET( center, xc, yc, size/2*i );
 		nsolids = 3 + (rand() & 7);
 
-		high = crystal_layer( name, center, size/2,
+		high = crystal_layer( names[len++].nm, center, size/2,
 			maj, min,
 			rand0to1() * 90.0,
 			rand0to1() * 8.0 + 2.0,
@@ -183,29 +189,32 @@ double	size;
 		if( high > height )  height = high;
 	}
 
-	/* Build the crystal union */
-	sprintf( crystalname, "%scrystal", cname );
-	mk_lfcomb( stdout, crystalname, 0, &head );
-
 	/* Make the trimming RPP */
 	esz = size*0.5;	/* dist from ctr to edge of base */
 	VSET( minpt, xc-esz, yc-esz, 10 );
 	VSET( maxpt, xc+esz, yc+esz, height );
-	sprintf( rppname, "%srpp", cname );
+	sprintf( rppname, "%srpp", name );
 	mk_rpp( stdout, rppname, minpt, maxpt );
 
-	/* Build the final combination */
+	/* Build the crystal union */
+	sprintf( crystalname, "%scrystal", name );
+	mk_comb( stdout, crystalname, len, 0 );
+	for( i=0; i<len; i++ )  {
+		mk_memb( stdout, names[i].nm, identity, UNION );
+	}
+
+	/* Build the combination */
 	get_rgb(rgb);
 	i = PICK_MAT;
-	mk_mcomb( stdout, cname, 2, 1, mtab[i].mt_name, mtab[i].mt_param, 1, rgb );
+	mk_mcomb( stdout, name, 2, 1, mtab[i].mt_name, mtab[i].mt_param, 1, rgb );
 	mk_memb( stdout, crystalname, identity, UNION );
 	mk_memb( stdout, rppname, identity, INTERSECT );
 	return(height);
 }
 
 double
-crystal_layer( crname, center, radius, maj, min, var, ratio, nsolids )
-char	*crname;
+crystal_layer( name, center, radius, maj, min, var, ratio, nsolids )
+char	*name;
 point_t	center;		/* center coordinates, (min Z) */
 double	radius;		/* cell radius */
 vect_t	maj;		/* main axis of growth */
@@ -215,8 +224,9 @@ double	ratio;		/* len/width ratio */
 int	nsolids;	/* number of solids for this layer */
 {
 	int	todo;
+	struct ntab	*crname;
 	double	height = center[Z];
-	int	index = 0;
+	int	len = 0;
 	point_t	loc_cent;
 	point_t	a,b;
 	fastf_t	*maj_axis, *min_axis;
@@ -226,11 +236,9 @@ int	nsolids;	/* number of solids for this layer */
 	double	m_cos_var;
 	double	length, width;
 	point_t	pt[8];
-	char	name[32];
 	int	i;
-	struct wmember head;
 
-	head.wm_forw = head.wm_back = &head;
+	crname = (struct ntab *)malloc( sizeof(struct ntab)*nsolids );
 
 	for( todo = nsolids-1; todo >= 0; todo-- )  {
 		cos_var = cos( var*rand0to1() );
@@ -275,9 +283,8 @@ int	nsolids;	/* number of solids for this layer */
 
 		/* Consider fusing points here, for visual complexity */
 
-		sprintf( name, "%s%d", crname, index++ );
-		mk_arb8( stdout, name, pt );
-		(void)mk_addmember( name, &head );
+		sprintf( ntab[len].nm, "%s%d", name, len );
+		mk_arb8( stdout, ntab[len++].nm, pt );
 
 		for( i=0; i<8; i++ )  {
 			if( pt[i][Z] > height )
@@ -285,7 +292,10 @@ int	nsolids;	/* number of solids for this layer */
 		}
 	}
 
-	mk_lfcomb( stdout, crname, 0, &head );
+	mk_comb( stdout, name, len, 0 );
+	for( todo = nsolids-1; todo >= 0; todo-- )  {
+		mk_memb( stdout, ntab[todo].nm, identity, UNION );
+	}
 	return(height);
 }
 
@@ -315,8 +325,8 @@ double	size;
 }
 
 double
-ball_stack( bname, xc, yc, size )
-char	*bname;
+ball_stack( name, xc, yc, size )
+char	*name;
 double	xc, yc;		/* center coordinates, z=0+ */
 double	size;
 {
@@ -324,37 +334,38 @@ double	size;
 	point_t	center;
 	double	esz;
 	char	rgb[4];		/* needs all 4 */
+	int	len;
 	int	i;
 	int	n;
-	char	name[32];
-	struct wmember head;
 
-	head.wm_forw = head.wm_back = &head;
+	len = 0;
 
 	/* Make some objects */
 	esz = size*0.5*0.9;	/* dist from ctr to edge of base */
 	n = rand()&7;
 	for( i=0; i<n; i++ )  {
-		sprintf( name, "%s%c", bname, 'A'+i );
+		sprintf( ntab[len].nm, "%s%c", name, 'A'+len );
 		VSET( center, xc, yc, size/2+i*size );
-		mk_sph( stdout, name, center, esz/2 );
-		(void)mk_addmember( name, &head );
+		mk_sph( stdout, ntab[len++].nm, center, esz/2 );
 	}
 
 	/* Build the combination */
 	get_rgb(rgb);
-	mk_lcomb( stdout, bname, 1, (char *)0, "", 1, rgb, &head );
-
-	return( n*size );
+	mk_mcomb( stdout, name, len, 1, "", "", 1, rgb );
+	for( i=0; i<len; i++ )  {
+		mk_memb( stdout, ntab[i].nm, identity, UNION );
+	}
+	return( i*size );
 }
 
 double
-prim_stack( pname, xc, yc, size )
-char	*pname;
+prim_stack( name, xc, yc, size )
+char	*name;
 double	xc, yc;		/* center coordinates, z=0+ */
 double	size;
 {
 	point_t	pt[8];
+	int	len;
 	vect_t	min, max;
 	vect_t	base, hvec;
 	point_t	center;
@@ -365,10 +376,8 @@ double	size;
 	double	vpos = 0.0;
 	double	height;
 	double	xbase, ybase;
-	char	name[32];
-	struct wmember head;
 
-	head.wm_forw = head.wm_back = &head;
+	len = 0;
 
 	size *= 0.3;		/* Don't occupy full cell */
 	xbase = xc - size/2;
@@ -377,26 +386,25 @@ double	size;
 	/* Make some objects */
 	n = (rand()&7)+1;
 	for( nobj=0; nobj<n; nobj++ )  {
-		sprintf( name, "%s%c", pname, 'A'+nobj );
-		(void)mk_addmember( name, &head );
+		sprintf( ntab[len].nm, "%s%c", name, 'A'+len );
 		height = ((rand()&7)+1)*size/3;
 		i = rand()%5;
 		switch(i)  {
 		default:
 			VSET( center, xc, yc, vpos+size/2 );
-			mk_sph( stdout, name, center, size/2 );
+			mk_sph( stdout, ntab[len++].nm, center, size/2 );
 			vpos += size;
 			break;
 		case 0:
 			VSET( min, xc-size/2, yc-size/2, vpos );
 			VSET( max, xc+size/2, yc+size/2, vpos+height );
-			mk_rpp( stdout, name, min, max );
+			mk_rpp( stdout, ntab[len++].nm, min, max );
 			vpos += height;
 			break;
 		case 1:
 			VSET( base, xc, yc, vpos );
 			VSET( hvec, 0, 0, height );
-			mk_rcc( stdout, name, base, hvec, size/2 );
+			mk_rcc( stdout, ntab[len++].nm, base, hvec, size/2 );
 			vpos += height;
 			break;
 		case 2:
@@ -404,7 +412,7 @@ double	size;
 			VSET( pt[1], xbase+size, ybase, vpos);
 			VSET( pt[2], xbase+size/2, ybase+size, vpos);
 			VSET( pt[3], xbase+size/2, ybase+size*sin60/3, vpos+height );
-			mk_arb4( stdout, name, pt );
+			mk_arb4( stdout, ntab[len++].nm, pt );
 			vpos += height;
 			break;
 		case 3:
@@ -412,7 +420,7 @@ double	size;
 			VSET( pt[0], size/2, 0, 0 );
 			VSET( pt[1], 0, size/2, 0 );
 			VSET( pt[2], 0, 0, height/2 );
-			mk_ell( stdout, name, center,
+			mk_ell( stdout, ntab[len++].nm, center,
 				pt[0], pt[1], pt[2] );
 			vpos += height;
 			break;
@@ -422,43 +430,127 @@ double	size;
 	/* Build the combination */
 	get_rgb( rgb );
 	i = PICK_MAT;
-	mk_lcomb( stdout, pname, 1,
-		mtab[i].mt_name, mtab[i].mt_param,
-		1, rgb, &head );
+	mk_mcomb( stdout, name, len, 1, mtab[i].mt_name, mtab[i].mt_param, 1, rgb );
+	for( i=0; i<len; i++ )  {
+		mk_memb( stdout, ntab[i].nm, identity, UNION );
+	}
 	return(vpos);
 }
 
-do_rings( ringname, center, r1, r2, incr, n )
-char	*ringname;
+struct colors {
+	char		*name;
+	unsigned char	c_pixel[3];
+}colortab[] = {
+	"black",	20,20,20,
+	"blue",		0,0,255,
+	"brown",	200,130,0,
+	"cyan",		0,255,200,
+	"flesh",	255,200,160,
+	"gray",		120,120,120,
+	"green",	0,255,0,
+	"lime", 	200,255,0,
+	"magenta",	255,0,255,
+	"olive",	220,190,0,
+	"orange",	255,100,0,
+	"pink",		255,200,200,
+	"red",		255,0,0,
+	"rose",		255,0,175,
+	"rust",		200,100,0,
+	"silver",	237,237,237,
+	"sky",		0,255,255,
+	"violet",	200,0,255,
+	"white",	255,255,255,
+	"yellow",	255,200,0
+};
+int	ncolors = sizeof(colortab)/sizeof(struct colors);
+int	curcolor = 0;
+
+get_rgb( rgb )
+register char	*rgb;
+{
+	register struct colors *cp;
+	if( ++curcolor >= ncolors )  curcolor = 0;
+	cp = &colortab[curcolor];
+	rgb[0] = cp->c_pixel[0];
+	rgb[1] = cp->c_pixel[1];
+	rgb[2] = cp->c_pixel[2];
+}
+
+do_rings( name, center, r1, r2, incr, n )
+char	*name;
 double	r1;
 double	r2;
 double	incr;
 int	n;
 {
+	struct ntab snames[32];
 	int	i;
+	int	len = 0;	/* combination length, in ntab & snames */
 	vect_t	normal;
 	char	rgb[4];
-	char	rname[32];
-	char	sname[32];
-	struct wmember head;
-
-	head.wm_forw = head.wm_back = &head;
 
 	VSET( normal, 0, 0, 1 );
 	for( i=0; i<n; i++ )  {
-		sprintf( sname, "%s%ds", ringname, i );
-		sprintf( rname, "%s%dr", ringname, i );
-
-		mk_tor( stdout, sname, center, normal, r1, r2 );
+		sprintf( snames[len].nm, "%s%ds", name, i );
+		sprintf( ntab[len].nm, "%s%dr", name, i );
+		mk_tor( stdout, snames[len++].nm, center, normal, r1, r2 );
 		r1 += incr;
+	}
 
-		/* Build the region that contains each solid */
+	/* Build the region that contains each solid */
+	for( i=0; i<n; i++ )  {
 		get_rgb(rgb);
-		mk_mcomb( stdout, rname, 1, 1, "", "", 1, rgb );
-		mk_memb( stdout, sname, identity, UNION );
-		(void)mk_addmember( rname, &head );
+		mk_mcomb( stdout, ntab[i].nm, 1, 1, "", "", 1, rgb );
+		mk_memb( stdout, snames[i].nm, identity, UNION );
 	}
 
 	/* Build the group that holds all the regions */
-	mk_lfcomb( stdout, ringname, 0, &head );
+	mk_comb( stdout, name, n, 0 );
+	for( i=0; i<n; i++ )
+		mk_memb( stdout, ntab[i].nm, identity, UNION );
 }
+
+do_light( name, pos, dir_at, da_flag, r, rgb )
+char	*name;
+point_t	pos;
+vect_t	dir_at;		/* direction or aim point */
+int	da_flag;	/* 0 = direction, !0 = aim point */
+double	r;		/* radius of light */
+char	*rgb;
+{
+	char	nbuf[64];
+	vect_t	center;
+	mat_t	rot;
+	mat_t	xlate;
+	mat_t	both;
+	vect_t	begin;
+	vect_t	trial;
+	vect_t	from;
+	vect_t	dir;
+
+	if( da_flag )  {
+		VSUB2( dir, dir_at, pos );
+		VUNITIZE( dir );
+	} else {
+		VMOVE( dir, dir_at );
+	}
+
+	sprintf( nbuf, "%s.s", name );
+	VSETALL( center, 0 );
+	mk_sph( stdout, nbuf, center, r );
+
+	/*
+	 * Need to rotate from 0,0,-1 to vect "dir",
+	 * then xlate to final position.
+	 */
+	VSET( from, 0, 0, -1 );
+	mat_fromto( rot, from, dir );
+	mat_idn( xlate );
+	MAT_DELTAS( xlate, pos[X], pos[Y], pos[Z] );
+	mat_mul( both, xlate, rot );
+
+	mk_mcomb( stdout, name, 1, 1, "light", "shadows=1", 1, rgb );
+	mk_memb( stdout, nbuf, both, UNION );
+}
+
+rt_log(str) {fprintf(stderr,"rt_log: %s\n", str);}

@@ -24,7 +24,6 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <sys/time.h>
 #include <sys/resource.h>
 
-#undef	VMIN
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
@@ -59,23 +58,17 @@ struct application ap;
 int		stereo = 0;	/* stereo viewing */
 vect_t		left_eye_delta;
 int		hypersample=0;	/* number of extra rays to fire */
-int		jitter=0;		/* jitter ray starting positions */
-int		rt_perspective=0;	/* perspective view -vs- parallel */
-fastf_t		persp_angle = 90;	/* prespective angle (degrees X) */
-fastf_t		aspect = 1;		/* aspect ratio Y/X */
+int		perspective=0;	/* perspective view -vs- parallel view */
 vect_t		dx_model;	/* view delta-X as model-space vector */
 vect_t		dy_model;	/* view delta-Y as model-space vector */
 point_t		eye_model;	/* model-space location of eye */
-fastf_t         eye_backoff = 1.414;	/* dist from eye to center */
 int		width;			/* # of pixels in X */
 int		height;			/* # of lines in Y */
 mat_t		Viewrotscale;
 fastf_t		viewsize=0;
 fastf_t		zoomout=1;	/* >0 zoom out, 0..1 zoom in */
 char		*scanbuf;	/* For optional output buffering */
-int		incr_mode;		/* !0 for incremental resolution */
-int		incr_level;		/* current incremental level */
-int		incr_nlevel;		/* number of levels */
+int		parallel=0;		/* Trying to use multi CPUs */
 int		npsw = MAX_PSW;		/* number of worker PSWs to run */
 struct resource	resource[MAX_PSW];	/* memory resources */
 /***** end variables shared with worker() *****/
@@ -90,7 +83,6 @@ int		matflag = 0;		/* read matrix from stdin */
 int		desiredframe = 0;	/* frame to start at */
 int		curframe = 0;		/* current frame number */
 char		*outputfile = (char *)0;/* name of base of output file */
-int		interactive = 0;	/* human is watching results */
 /***** end variables shared with do.c *****/
 
 /* Variables shared within mainline pieces */
@@ -103,20 +95,20 @@ static int seen_start, seen_matrix;	/* state flags */
 
 static char *title_file, *title_obj;	/* name of file and first object */
 
-#define MAX_WIDTH	(16*1024)
+#define MAX_WIDTH	(8*1024)
 
 /*
  * Package Handlers.
  */
 extern int pkg_nochecking;
-void	ph_unexp();	/* foobar message handler */
-void	ph_start();
-void	ph_matrix();
-void	ph_options();
-void	ph_lines();
-void	ph_end();
-void	ph_restart();
-void	ph_loglvl();
+int ph_unexp();	/* foobar message handler */
+int ph_start();
+int ph_matrix();
+int ph_options();
+int ph_lines();
+int ph_end();
+int ph_restart();
+int ph_loglvl();
 struct pkg_switch pkgswitch[] = {
 	{ MSG_START, ph_start, "Startup" },
 	{ MSG_MATRIX, ph_matrix, "Set Matrix" },
@@ -134,12 +126,11 @@ char *cmd_args[MAXARGS];
 int numargs;
 
 struct pkg_conn *pcsrv;		/* PKG connection to server */
-char		*control_host;	/* name of host running controller */
-char		*tcp_port;	/* TCP port on control_host */
+char *control_host;	/* name of host running controller */
 
 int debug = 0;		/* 0=off, 1=debug, 2=verbose */
 
-char srv_usage[] = "Usage: rtsrv [-d] control-host tcp-port\n";
+char srv_usage[] = "Usage: rtsrv [-d] control-host\n";
 
 /*
  *			M A I N
@@ -158,22 +149,17 @@ char **argv;
 		argc--; argv++;
 		debug++;
 	}
-	if( argc != 3 )  {
+	if( argc != 2 )  {
 		fprintf(stderr, srv_usage);
 		exit(2);
 	}
 
 	beginptr = sbrk(0);
 
-#ifdef CRAY1
+#ifdef cray
 	npsw = 1;			/* >1 on GOS crashes system */
-#endif
+#endif cray
 
-	/* Need to set rtg_parallel non_zero here for RES_INIT to work */
-	if( npsw > 1 )  {
-		rt_g.rtg_parallel = 1;
-	} else
-		rt_g.rtg_parallel = 0;
 	RES_INIT( &rt_g.res_syscall );
 	RES_INIT( &rt_g.res_worker );
 	RES_INIT( &rt_g.res_stats );
@@ -181,12 +167,12 @@ char **argv;
 
 	pkg_nochecking = 1;
 	control_host = argv[1];
-	tcp_port = argv[2];
-	pcsrv = pkg_open( control_host, tcp_port, "tcp", "", "",
+	pcsrv = pkg_open( control_host, "rtsrv", "tcp", "", "",
 		pkgswitch, rt_log );
-	if( pcsrv == PKC_ERROR )  {
-		fprintf(stderr, "rtsrv: unable to contact %s, port %s\n",
-			control_host, tcp_port);
+	if( pcsrv == PKC_ERROR &&
+	    (pcsrv = pkg_open( control_host, "4446", "tcp", "", "",
+	    pkgswitch, rt_log )) == PKC_ERROR )  {
+		fprintf(stderr, "unable to contact %s\n", control_host);
 		exit(1);
 	}
 	if( !debug )  {
@@ -224,7 +210,6 @@ char **argv;
 	exit(0);
 }
 
-void
 ph_restart(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
@@ -234,12 +219,11 @@ char *buf;
 	if(debug)fprintf(stderr,"ph_restart %s\n", buf);
 	rt_log("Restarting\n");
 	pkg_close(pcsrv);
-	execlp( "rtsrv", "rtsrv", control_host, tcp_port, (char *)0);
+	execlp( "rtsrv", "rtsrv", control_host, (char *)0);
 	perror("rtsrv");
 	exit(1);
 }
 
-void
 ph_options(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
@@ -250,11 +234,7 @@ char *buf;
 	if( debug )  fprintf(stderr,"ph_options: %s\n", buf);
 	/* Start options in a known state */
 	hypersample = 0;
-	jitter = 0;
-	rt_perspective = 0;
-	persp_angle = 90;
-	eye_backoff = 1.414;
-	aspect = 1;
+	perspective = 0;
 	stereo = 0;
 	width = 0;
 	height = 0;
@@ -267,19 +247,11 @@ char *buf;
 		}
 
 		switch( cp[1] )  {
-		case 'I':
-			interactive = 1;
-			break;
 		case 'S':
 			stereo = 1;
 			break;
-		case 'J':
-			jitter = atoi( &cp[2] );
-			break;
 		case 'H':
 			hypersample = atoi( &cp[2] );
-			if( hypersample > 0 )
-				jitter = 1;
 			break;
 		case 'A':
 			AmbientIntensity = atof( &cp[2] );
@@ -319,13 +291,10 @@ char *buf;
 			lightmodel = atoi( &cp[2] );
 			break;
 		case 'p':
-			rt_perspective = 1;
-			persp_angle = atof( &cp[2] );
-			if( persp_angle < 1 )  persp_angle = 90;
-			if( persp_angle > 179 )  persp_angle = 90;
-			break;
-		case 'E':
-			eye_backoff = atof( &cp[2] );
+			perspective = 1;
+			if( cp[2] != '\0' )
+				zoomout = atof( &cp[2] );
+			if( zoomout <= 0 )  zoomout = 1;
 			break;
 		case 'P':
 			/* Number of parallel workers */
@@ -342,7 +311,7 @@ char *buf;
 			mathtab_constant();
 			break;
 		default:
-			rt_log("rtsrv: Option '%c' unknown\n", cp[1]);
+			rt_log("Option '%c' unknown\n", cp[1]);
 			break;
 		}
 		while( *cp && *cp++ != ' ' )
@@ -352,7 +321,6 @@ char *buf;
 	(void)free(buf);
 }
 
-void
 ph_start(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
@@ -394,12 +362,10 @@ char *buf;
 		(void)rt_gettree(rtip, cmd_args[i]);
 	}
 
-	/* In case it changed from startup time */
-	if( npsw > 1 )  {
-		rt_g.rtg_parallel = 1;
-		rt_log("rtsrv:  running with %d processors\n", npsw );
-	} else
-		rt_g.rtg_parallel = 0;
+	if( npsw > 1 )
+		parallel = 1;
+	if( parallel )
+		rt_log("running with %d processors\n", npsw );
 
 	beginptr = sbrk(0);
 
@@ -411,7 +377,6 @@ char *buf;
 		fprintf(stderr,"MSG_START error\n");
 }
 
-void
 ph_matrix(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
@@ -462,7 +427,7 @@ char *buf;
 		rt_log( "PREP: %s\n", outbuf );
 	}
 
-	if( rt_g.rtg_parallel && resource[0].re_seg == SEG_NULL )  {
+	if( parallel && resource[0].re_seg == SEG_NULL )  {
 		register int x;
 		/* 
 		 *  Get dynamic memory to keep from having to call
@@ -507,7 +472,6 @@ char *buf;
  *  Process scanlines from 'a' to 'b', inclusive, sending each back
  *  as soon as it's done.
  */
-void
 ph_lines(pc, buf)
 struct pkg_comm *pc;
 char *buf;
@@ -547,8 +511,6 @@ char *buf;
 }
 
 int print_on = 1;
-
-void
 ph_loglvl(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
@@ -580,7 +542,7 @@ char *str;
 	while( *cp++ )  ;		/* leaves one beyond null */
 	if( cp[-2] != '\n' )
 		goto out;
-	if( pcsrv == PKC_NULL || pcsrv == PKC_ERROR )  {
+	if( pcsrv == PKC_NULL )  {
 		fprintf(stderr, "%s", buf+1);
 		goto out;
 	}
@@ -601,7 +563,6 @@ char *str;
 	exit(12);
 }
 
-void
 ph_unexp(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
@@ -617,7 +578,6 @@ char *buf;
 	(void)free(buf);
 }
 
-void
 ph_end(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
@@ -627,7 +587,6 @@ char *buf;
 	exit(0);
 }
 
-void
 ph_print(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
