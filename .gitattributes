@@ -429,6 +429,7 @@ h/plot3.h svneol=native#text/plain
 h/pyramid.h svneol=native#text/plain
 h/raytrace.h svneol=native#text/plain
 h/redblack.h svneol=native#text/plain
+h/regex.h svneol=native#text/plain
 h/rle.h svneol=native#text/plain
 h/rle_code.h svneol=native#text/plain
 h/rle_config.h svneol=native#text/plain
