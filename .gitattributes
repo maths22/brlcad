@@ -1516,10 +1516,12 @@ libfft/splitdit.c svneol=native#text/plain
 libfft/splitditc.c svneol=native#text/plain
 libitcl3.2/CHANGES -text
 libitcl3.2/Cakefile -text
+libitcl3.2/ChangeLog svneol=native#text/plain
 libitcl3.2/INCOMPATIBLE -text
 libitcl3.2/Makefile.in svneol=native#text/plain
 libitcl3.2/README svneol=native#text/plain
 libitcl3.2/TODO svneol=native#text/plain
+libitcl3.2/config.vc -text
 libitcl3.2/config/config.guess -text
 libitcl3.2/config/config.sub -text
 libitcl3.2/config/install-sh svneol=native#text/plain
