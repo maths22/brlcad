@@ -2217,6 +2217,8 @@ libz/msdos/Makefile.w32 svneol=native#text/plain
 libz/msdos/Makefile.wat svneol=native#text/plain
 libz/msdos/zlib.def svneol=native#text/plain
 libz/msdos/zlib.rc -text svneol=CRLF#text/plain
+libz/nt/Makefile.nt svneol=native#text/plain
+libz/nt/zlib.dnt -text
 libz/sfile -text
 libz/so_locations -text
 libz/trees.c svneol=native#text/plain
