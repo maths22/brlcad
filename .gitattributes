@@ -1683,6 +1683,7 @@ src/other/incrTcl/doc/README svneol=native#text/plain
 src/other/incrTcl/itcl/.cvsignore svneol=native#text/plain
 src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/aclocal.m4 svneol=native#text/plain
+src/other/incrTcl/itcl/doc/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/doc/body.n svneol=native#text/plain
 src/other/incrTcl/itcl/doc/class.n svneol=native#text/plain
 src/other/incrTcl/itcl/doc/code.n svneol=native#text/plain
