@@ -76,6 +76,7 @@ libmultispectral/vers.c
 liboptical/vers.c
 libpkg/vers.c
 libpng/vers.c
+librt/vers.c
 libsysv/vers.c
 libtermio/vers.c
 libwdb/vers.c

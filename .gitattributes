@@ -1876,6 +1876,7 @@ libpng/scripts/makevms.com svneol=native#text/plain
 libpng/scripts/pngdef.pas -text
 libpng/scripts/pngos2.def svneol=native#text/plain
 libpng/scripts/smakefile.ppc -text
+librt/.cvsignore svneol=native#text/plain
 librt/Cakefile -text
 librt/Makefile.am svneol=native#text/plain
 librt/bezier_2d_isect.c svneol=native#text/plain
@@ -1939,6 +1940,7 @@ librt/g_rpc.c svneol=native#text/plain
 librt/g_sketch.c svneol=native#text/plain
 librt/g_sph.c svneol=native#text/plain
 librt/g_submodel.c svneol=native#text/plain
+librt/g_superell.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
 librt/g_torus.c svneol=native#text/plain
 librt/g_vol.c svneol=native#text/plain
