@@ -1598,6 +1598,7 @@ libfft/splitditc.c svneol=native#text/plain
 libmultispectral/Cakefile -text
 libmultispectral/init.c svneol=native#text/plain
 liboptical/Cakefile -text
+liboptical/init.c svneol=native#text/plain
 liboptical/sh_Nfbm.c svneol=native#text/plain
 liboptical/sh_air.c svneol=native#text/plain
 liboptical/sh_brdf.c svneol=native#text/plain
