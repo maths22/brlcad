@@ -1033,6 +1033,27 @@ iwidgets4.0.1/demos/html/timefield.n.html svneol=native#text/html
 iwidgets4.0.1/demos/html/toolbar.n.html svneol=native#text/html
 iwidgets4.0.1/demos/html/watch.n.html svneol=native#text/html
 iwidgets4.0.1/demos/hyperhelp -text
+iwidgets4.0.1/demos/images/box.xbm -text svneol=unset#image/x-xbitmap
+iwidgets4.0.1/demos/images/clear.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/close.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/copy.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/cut.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/exit.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/find.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/help.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/line.xbm -text svneol=unset#image/x-xbitmap
+iwidgets4.0.1/demos/images/mag.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/new.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/open.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/oval.xbm -text svneol=unset#image/x-xbitmap
+iwidgets4.0.1/demos/images/paste.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/points.xbm -text svneol=unset#image/x-xbitmap
+iwidgets4.0.1/demos/images/poly.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/print.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/ruler.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/save.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/select.gif -text svneol=unset#image/gif
+iwidgets4.0.1/demos/images/text.xbm -text svneol=unset#image/x-xbitmap
 iwidgets4.0.1/demos/iwidgets.gif -text svneol=unset#image/gif
 iwidgets4.0.1/demos/labeledframe -text
 iwidgets4.0.1/demos/labeledwidget -text
@@ -1185,8 +1206,15 @@ iwidgets4.0.1/generic/toolbar.itk svneol=native#text/plain
 iwidgets4.0.1/generic/unknownimage.gif -text svneol=unset#image/gif
 iwidgets4.0.1/generic/watch.itk svneol=native#text/plain
 iwidgets4.0.1/incoming/README svneol=native#text/plain
+iwidgets4.0.1/incoming/demos/buttoncage -text
+iwidgets4.0.1/incoming/demos/collapsablewidget -text
+iwidgets4.0.1/incoming/doc/collapsablewidget.n svneol=native#text/plain
+iwidgets4.0.1/incoming/doc/man.macros -text
+iwidgets4.0.1/incoming/src/buttoncage.itk svneol=native#text/plain
+iwidgets4.0.1/incoming/src/collapsablewidget.itk svneol=native#text/plain
 iwidgets4.0.1/iwidgets.tcl.in svneol=native#text/plain
 iwidgets4.0.1/license.terms svneol=native#text/plain
+iwidgets4.0.1/outgoing/README svneol=native#text/plain
 iwidgets4.0.1/pkgIndex.tcl.in svneol=native#text/plain
 iwidgets4.0.1/tcl.m4 svneol=native#text/plain
 iwidgets4.0.1/tests/all -text
