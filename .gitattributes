@@ -560,6 +560,7 @@ librt/timercos.c svneol=native#text/plain
 librt/timerhep.c svneol=native#text/plain
 librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
+librt/units.c svneol=native#text/plain
 librt/vshoot.c svneol=native#text/plain
 libsysv/Cakefile -text
 libsysv/bsdselect.c svneol=native#text/plain
