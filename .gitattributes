@@ -1023,6 +1023,8 @@ libtclcad/tkUnixPort.h svneol=native#text/plain
 libtclcad/unistd.h svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
+libtkGLX/Cakefile -text
+libtkGLX/descnames.h svneol=native#text/plain
 libtkGLX/makedescnames.sh svneol=native#text/x-sh
 libtkGLX/patchlevel.h svneol=native#text/plain
 libtkGLX/tkGLX.h svneol=native#text/plain
