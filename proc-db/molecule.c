@@ -1,7 +1,5 @@
 /* 
- *			M O L E C U L E . C
- *
- * Create a molecule from G. Adams format
+ * mol.c - Create a molecule from G. Adams format
  * 
  * Author:	Paul R. Stay
  * 		Ballistic Research Labratory
@@ -19,11 +17,11 @@ static char rcs_ident[] = "$Header$";
 
 struct sphere  {
 	struct sphere * next;		/* Next Sphere */
-	int	s_id;			/* Sphere id */
-	char	s_name[15];		/* Sphere name */
-	point_t	s_center;		/* Sphere Center */
-	fastf_t	s_rad;			/* Sphere radius */
-	int	s_atom_type;		/* Atom Type */
+	int  s_id;			/* Sphere id */
+	char  s_name[15];			/* Sphere name */
+	point_t s_center;		/* Sphere Center */
+	fastf_t s_rad;			/* Sphere radius */
+	int s_atom_type;		/* Atom Type */
 };
 
 struct sphere *s_list = (struct sphere *) 0;
@@ -45,7 +43,7 @@ int argc;
 char ** argv;
 {
 
-	mk_id( stdout, argv[1], ID_MM_UNIT );
+	mk_id( argv[1], ID_MM_UNIT );
 	read_data();
 }
 
@@ -67,7 +65,6 @@ read_data( )
 
 	int             data_type;
 	int             sphere_id;
-	point_t		center;
 	float           x, y, z;
 	float           sphere_radius;
 	int             atom_type;
@@ -98,14 +95,13 @@ read_data( )
 		        scanf("%f", &z);
 		        scanf("%f", &sphere_radius);
 		        scanf("%d", &atom_type);
-			VSET( center, x, y, z );
-			process_sphere(sphere_id, center, sphere_radius,
+			process_sphere(sphere_id, x,y,z, sphere_radius,
 				atom_type);
 			break;
 		case (2):
 			scanf("%d", &b_1);
 			scanf("%d", &b_2);
-			make_bond( b_1, b_2);
+			mk_bond( b_1, b_2);
 			break;
 		case (4):
 			return;
@@ -114,11 +110,10 @@ read_data( )
 }
 
 
-process_sphere(id, center, rad, sph_type)
-int	id;
-point_t	center;
-double	rad;
-int	sph_type;
+process_sphere(id, x, y, z, rad, sph_type)
+int id;
+float x, y, z, rad;
+int sph_type;
 {
 	struct sphere * new = (struct sphere *)
 	    malloc( sizeof ( struct sphere) );
@@ -134,14 +129,16 @@ int	sph_type;
 
 	sprintf(nm, "SPH.%d", id );
 	sprintf(nm1, "sph.%d", id );
-	mk_sph( stdout, nm1, center, rad );
-	mk_mcomb( stdout, nm, 1, 1, matname, matparm, 1, rgb );
-	mk_memb( stdout, nm1, m, UNION);
+	mk_sph( nm1, x, y, z, rad );
+	mk_mcomb( nm, 1, 1, matname, matparm, 1, rgb );
+	mk_memb( UNION, nm1, m);
 
 	new->next = ( struct sphere *)0;
 	new->s_id = id;
 	NAMEMOVE(nm1, new->s_name);
-	VMOVE( new->s_center, center );
+	new->s_center[0] = x;
+	new->s_center[1] = y;
+	new->s_center[2] = z;
 	new->s_rad = rad;
 	new->s_atom_type = sph_type;
 
@@ -155,7 +152,7 @@ int	sph_type;
 	}
 }
 
-make_bond( sp1, sp2 )
+mk_bond( sp1, sp2 )
 int sp1, sp2;
 {
 	struct sphere * s1, *s2, *s_ptr;
@@ -191,13 +188,12 @@ int sp1, sp2;
 	rgb[1] = 142;
 	rgb[2] = 57;
 
-	mk_rcc( stdout, nm, base, height, 5.0 );
+	mk_rcc( nm, base, height, 5.0 );
 
-	mk_mcomb( stdout, nm1, 3, 1, matname, matparm, 1, rgb);
-	mk_memb( stdout, nm, m, UNION);
-	mk_memb( stdout, s1->s_name, m, SUBTRACT);
-	mk_memb( stdout, s2->s_name, m, SUBTRACT);
+	mk_mcomb( nm1, 3, 1, matname, matparm, 1, rgb);
+	mk_memb(UNION, nm, m);
+	mk_memb(SUBTRACT, s1->s_name, m);
+	mk_memb(SUBTRACT, s2->s_name, m);
 
 }
 
-rt_log(str) {fprintf(stderr,"rt_log: %s\n", str);}
