@@ -4321,42 +4321,6 @@ proc-db/vegitation.c svneol=native#text/plain
 proc-db/vegitation.h svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 proc-db/wdb_example.c svneol=native#text/plain
-regress/README svneol=native#text/plain
-regress/client.sh svneol=native#text/x-sh
-regress/client2.sh svneol=native#text/x-sh
-regress/client_build.sh svneol=native#text/x-sh
-regress/client_test.sh svneol=native#text/x-sh
-regress/client_wait.sh svneol=native#text/x-sh
-regress/crontab_client -text
-regress/crontab_master -text
-regress/library -text
-regress/master.lock -text
-regress/master.old.sh svneol=native#text/x-sh
-regress/master.sh svneol=native#text/x-sh
-regress/nightly.sh svneol=native#text/x-sh
-regress/ref_7d -text
-regress/ref_fbsd -text
-regress/ref_li -text
-regress/ref_m4i64 -text
-regress/ref_m4i65 -text
-regress/ref_sun5 -text
-regress/regression -text
-regress/status.sh svneol=native#text/x-sh
-regress/systems.d/localhost -text
-regress/systems.d/wide -text
-regress/systems.d/wider -text
-regress/systems.d/widest -text
-regress/tests.d/README svneol=native#text/plain
-regress/tests.d/build -text
-regress/tests.d/geometry -text
-regress/tests.d/library -text
-regress/tests.d/primitives -text
-regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
-regress/tests.d/ref/shaders.pix -text svneol=unset#image/x-rgb
-regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
-regress/tests.d/spdi -text
-regress/tests.d/template -text
-regress/upgradeNotes.txt svneol=native#text/plain
 remrt/Makefile.am svneol=native#text/plain
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
