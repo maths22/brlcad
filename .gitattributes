@@ -501,6 +501,8 @@ tab/tabsub.c svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
 util/Cakefile -text
 util/Makefile svneol=native#text/plain
+util/alias-pix.1 svneol=native#text/plain
+util/alias-pix.c svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
 util/buffer.1 svneol=native#text/plain
 util/buffer.c svneol=native#text/plain
