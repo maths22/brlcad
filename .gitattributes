@@ -1197,6 +1197,7 @@ util/pixcolors.1 svneol=native#text/plain
 util/pixcolors.c svneol=native#text/plain
 util/pixdiff.1 svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
+util/pixembed.c svneol=native#text/plain
 util/pixfade.1 svneol=native#text/plain
 util/pixfade.c svneol=native#text/plain
 util/pixfields.c svneol=native#text/plain
