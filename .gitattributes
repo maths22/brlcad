@@ -552,7 +552,6 @@ pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 regress/Makefile.am svneol=native#text/plain
-regress/lights.asc svneol=native#text/plain
 regress/lights.sh svneol=native#text/x-sh
 regress/lights_ref.asc svneol=native#text/plain
 regress/mosspix.asc svneol=native#text/plain
