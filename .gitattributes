@@ -25,11 +25,6 @@ brlman/Makefile.am svneol=native#text/plain
 brlman/awf -text
 brlman/brlman -text
 brlman/brlman.1 svneol=native#text/plain
-bwish/Makefile.am svneol=native#text/plain
-bwish/cmd.c svneol=native#text/plain
-bwish/input.c svneol=native#text/plain
-bwish/main.c svneol=native#text/plain
-bwish/tcl.c svneol=native#text/plain
 /configure.ac svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
