@@ -448,6 +448,7 @@ iges/stack.c svneol=native#text/plain
 iges/summary.c svneol=native#text/plain
 iges/tor.c svneol=native#text/plain
 iges/treecheck.c svneol=native#text/plain
+iges/trimsurf.c svneol=native#text/plain
 iges/usage.c svneol=native#text/plain
 iges/wedge.c svneol=native#text/plain
 iges/wing128.igs -text svneol=unset#model/iges
