@@ -1790,6 +1790,7 @@ src/other/incrTcl/itk/generic/itk_option.c svneol=native#text/plain
 src/other/incrTcl/itk/generic/itk_util.c svneol=native#text/plain
 src/other/incrTcl/itk/itkConfig.sh.in svneol=native#text/plain
 src/other/incrTcl/itk/library/Archetype.itk svneol=native#text/plain
+src/other/incrTcl/itk/library/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/library/Toplevel.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/Widget.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/itk.tcl svneol=native#text/plain
