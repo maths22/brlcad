@@ -13,6 +13,14 @@ bench/.cvsignore
 /config.*
 /configure
 doc/html/manuals/mged/mged_cmd_index.html
+include/.cvsignore
+include/Makefile
+include/Makefile.in
+include/brlcad_version.h
+include/config.h
+include/config.h.in
+include/stamp-h1
+include/version
 librt/vers.c
 /libtool
 src/libbn/vers.c
