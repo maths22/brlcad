@@ -1733,6 +1733,7 @@ liboptical/Cakefile -text
 liboptical/init.c svneol=native#text/plain
 liboptical/photonmap.c svneol=native#text/plain
 liboptical/sh_air.c svneol=native#text/plain
+liboptical/sh_billboard.c svneol=native#text/plain
 liboptical/sh_brdf.c svneol=native#text/plain
 liboptical/sh_camo.c svneol=native#text/plain
 liboptical/sh_cloud.c svneol=native#text/plain
