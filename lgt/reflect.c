@@ -33,49 +33,6 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include "./tree.h"
 #include "./screen.h"
 #include "./extern.h"
-#define Check_Iflip( _pp, _normal, _rdir, _stp )\
-	{	fastf_t	f;\
-	if( _pp->pt_inflip )\
-		{\
-		ScaleVec( _normal, -1.0 );\
-		_pp->pt_inflip = 0;\
-		}\
-	}
-#if 0
-	f = Dot( _rdir, _normal );\
-	if( f >= 0.0 )\
-		{\
-		if( ! _pp->pt_inflip && rt_g.debug )\
-			{\
-			V_Print( "Fixed flipped entry normal, was", _normal, rt_log );\
-			rt_log( "Solid type %d\n", _stp->st_id );\
-			}\
-		ScaleVec( _normal, -1.0 );\
-		}\
-
-#endif
-
-#define Check_Oflip( _pp, _normal, _rdir, _stp )\
-	{	fastf_t	f;\
-	if( _pp->pt_outflip )\
-		{\
-		ScaleVec( _normal, -1.0 );\
-		_pp->pt_outflip = 0;\
-		}\
-	}
-#if 0
-	f = Dot( _rdir, _normal );\
-	if( f <= 0.0 )\
-		{\
-		if( ! _pp->pt_outflip && rt_g.debug )\
-			{\
-			V_Print( "Fixed flipped exit normal, was", _normal, rt_log );\
-			rt_log( "Solid type %d\n", _stp->st_id );\
-			}\
-		ScaleVec( _normal, -1.0 );\
-		}\
-
-#endif
 
 #define TWO_PI		6.28318530717958647692528676655900576839433879875022
 #define RI_AIR		1.0    /* Refractive index of air.		*/
@@ -95,9 +52,9 @@ static Mat_Db_Entry	mat_tmp_entry =
 				};
 
 /* Collect statistics on refraction.					*/
-static int		refrac_missed;
-static int		refrac_inside;
-static int		refrac_total;
+static int		refract_missed;
+static int		refract_inside;
+static int		refract_total;
 
 /* Collect statistics on shadowing.					*/
 static int		hits_shadowed;
@@ -113,22 +70,7 @@ static int a_gridsz;
 static fastf_t	grid_dh[3], grid_dv[3];
 static struct application ag;	/* Global application structure.	*/
 
-/* Bit map for hidden line drawing.					*/
-#ifndef BITSPERBYTE
-#define BITSPERBYTE	8
-#endif
-#define HL_BITVBITS		(sizeof(bitv_t)*BITSPERBYTE)
-#define HL_BITVMASK(_x)	((_x) == 0 ? 1 : 1L<<(_x)%HL_BITVBITS)
-#define HL_BITVWORD(_x,_y)	hl_bits[_y][(_x)/HL_BITVBITS]
-#define HL_SETBIT(_x,_y)	HL_BITVWORD(_x,_y) |= HL_BITVMASK(_x)
-#define HL_CLRBIT(_x,_y)	HL_BITVWORD(_x,_y) &= ~HL_BITVMASK(_x)
-#define HL_TSTBIT(_x,_y)	(HL_BITVWORD(_x,_y) & HL_BITVMASK(_x))
-#define ZeroPixel(_p)		((_p)[RED]==0 && (_p)[GRN]==0 && (_p)[BLU]==0)
-static bitv_t	hl_bits[1024][1024/HL_BITVBITS];
-static short	*hl_regmap = NULL;
-
 #ifdef cray
-int	render_Scan();
 struct taskcontrol {
 	int	tsk_len;
 	int	tsk_id;
@@ -141,38 +83,24 @@ _LOCAL_ fastf_t		correct_Lgt();
 _LOCAL_ fastf_t		*mirror_Reflect();
 
 /* "Hit" application routines to pass to "rt_shootray()".		*/
-_LOCAL_ int		f_Model(), f_Probe(), f_Shadow(), f_HL_Hit(), f_Region();
+_LOCAL_ int		do_Model(), do_Probe(), do_Shadow();
 /* "Miss" application routines to pass to "rt_shootray()".		*/
-_LOCAL_ int		f_Backgr(), f_Error(), f_Lit(), f_HL_Miss(), f_R_Miss();
-/* "Overlap" application routines to pass to "rt_shootray()".		*/
-_LOCAL_ int		f_Overlap();
+_LOCAL_ int		do_Backgr(), do_Error(), do_Lit();
 
 _LOCAL_ int		refract();
 
 _LOCAL_ void		model_Reflectance();
 _LOCAL_ void		glass_Refract();
-_LOCAL_ void		view_pix(), view_bol(), view_eol(), view_end();
+_LOCAL_ void		view_pix(), view_eol(), view_end();
 
 void			cons_Vector();
 void			render_Model();
-#if defined( BSD ) || defined( SYSV )
+#if defined( BSD ) || defined( sgi )
 int	abort_RT();
 #else
 void	abort_RT();
 #endif
 
-
-#ifdef cray
-#define BYTE_OFFSET(p)	(((long)(p)&0xE000000000000000)>>61)
-#define WORD_ADDR(p)	((long)(p)&0xFFFFFF)
-/* Work around for loop-optimization bug.				*/
-incr_Ptr( pp )
-RGBpixel	**pp;
-	{
-	(*pp)++;
-	return;
-	}
-#endif
 
 /*	r e n d e r _ M o d e l ( )					*/
 void
@@ -182,59 +110,30 @@ render_Model()
 	register int	d7;	/* known to be in d7 */
 #endif
 	int		a, x;
-
-	(void) signal( SIGINT, abort_sig );
 #ifdef PARALLEL
-	if( npsw > 1 )
-		pix_buffered = B_LINE;
+	pix_buffered = B_LINE;
 #endif
 	if( aperture_sz < 1 )
 		aperture_sz = 1;
 	if( ir_mapping & IR_OCTREE )
 		{
-		ag.a_hit = f_IR_Model;
-		ag.a_miss = f_IR_Backgr;
-		ag.a_overlap = report_overlaps ? NULL : f_Overlap;
-		}
-	else
-	if( query_region )
-		{
-		ag.a_hit = f_Region;
-		ag.a_miss = f_R_Miss;
-		ag.a_overlap = report_overlaps ? NULL : f_Overlap;
-		}
-	else
-	if( hiddenln_draw )
-		{
-		if( (hl_regmap = (short *) malloc( grid_sz*grid_sz*sizeof(short) ))
-			== (short *) NULL
-			)
-			{
-			Malloc_Bomb( grid_sz*grid_sz*sizeof(short) );
-			return;
-			}
-		ag.a_hit = f_HL_Hit;
-		ag.a_miss = f_HL_Miss;
-		ag.a_overlap = report_overlaps ? NULL : f_Overlap;
-		max_bounce = 0;
+		ag.a_hit = do_IR_Model;
+		ag.a_miss = do_IR_Backgr;
 		}
 	else
 		{
-		ag.a_hit = f_Model;
-		ag.a_miss = f_Backgr;
-		ag.a_overlap = report_overlaps ? NULL : f_Overlap;
+		ag.a_hit = do_Model;
+		ag.a_miss = do_Backgr;
 		}
-	ag.a_rt_i = rt_ip;
+	ag.a_rt_i = &rt_i;
 	ag.a_onehit = max_bounce > 0 ? 0 : 1;
 	ag.a_rbeam = modl_radius / grid_sz;
 	ag.a_diverge = 0.0;
 
 	/* Compute light source positions.				*/
 	if( ! setup_Lgts() )
-		{
-		(void) signal( SIGINT, norml_sig );
 		return;
-		}
+
 	/* Compute grid vectors of magnitude of one cell.
 		These will be the delta vectors between adjacent cells.
 	 */
@@ -249,16 +148,13 @@ render_Model()
 		}
 	else
 		cell_sz = modl_radius * 2.0/ (fastf_t) a_gridsz * grid_scale;
-	if( rt_g.debug )
-		rt_log( "Cell size is %g mm.\n", cell_sz );
-
 	Scale2Vec( grid_hor, cell_sz, grid_dh );
 	Scale2Vec( grid_ver, cell_sz, grid_dv );
 
 	/* Statistics for refraction tuning.				*/ 
-	refrac_missed = 0;
-	refrac_inside = 0;
-	refrac_total = 0;
+	refract_missed = 0;
+	refract_inside = 0;
+	refract_total = 0;
 
 	/* Statistics for shadowing.					*/
 	hits_shadowed = 0;
@@ -321,7 +217,6 @@ RES_RELEASE( &rt_g.res_worker );
 	render_Scan( 0 );
 #endif
 	view_end();
-	(void) signal( SIGINT, norml_sig );
 	return;
 	}
 
@@ -329,6 +224,7 @@ render_Scan( cpu )
 int	cpu;
 	{	fastf_t		grid_y_inc[3], grid_x_inc[3];
 		RGBpixel	scanbuf[1024];
+		RGBpixel	*scanp;	/* Pointer into line buffer.	*/
 		
 	/* Must have local copy of application structure for parallel
 		threads of execution, so make copy.			*/
@@ -357,8 +253,6 @@ int	cpu;
 		a.a_y = com;
 		a.a_hit = ag.a_hit;
 		a.a_miss = ag.a_miss;
-		a.a_overlap = ag.a_overlap;
-		a.a_onehit = FALSE;
 		a.a_rt_i = ag.a_rt_i;
 		a.a_rbeam = ag.a_rbeam;
 		a.a_diverge = ag.a_diverge;
@@ -370,20 +264,28 @@ int	cpu;
 		for(	;
 			! user_interrupt
 		     &&	a.a_y < (com+1) * aperture_sz;
-			view_eol( &a, (RGBpixel *) scanbuf ), a.a_y++
+			view_eol( &a, (RGBpixel *) scanbuf, scanp ), a.a_y++
 			)
 			{
-			view_bol( &a );
-
 			/* Compute vectors from center to origin (bottom-left) of grid.	*/
 			Scale2Vec( grid_dv, (fastf_t)(-a_gridsz/2)+a.a_y, grid_y_inc );
 			Scale2Vec( grid_dh, (fastf_t)(-a_gridsz/2)+a.a_x, grid_x_inc );
+			scanp = scanbuf;
 			for(	;
 				! user_interrupt
 			     &&	a.a_x < (grid_x_fin+1) * aperture_sz;
-				view_pix( &a, scanbuf ), a.a_x++
+				view_pix( &a, scanp ), a.a_x++
 				)
 				{	fastf_t		aim_pt[3];
+				if( anti_aliasing )
+					{
+					if( a.a_x > grid_x_org * aperture_sz
+					    &&	a.a_x % aperture_sz == 0
+						)
+						scanp++;
+					}
+				else
+					scanp++;
 				if( rel_perspective == 0.0 )
 					{ /* Parallel rays emanating from grid.	*/
 					Add2Vec( grid_loc, grid_y_inc, aim_pt );
@@ -421,7 +323,7 @@ int	cpu;
 					rt_log( "Fatal error: raytracing aborted.\n" );
 					return;
 					}
-				AddVec( grid_x_inc, grid_dh );
+				AddVec( grid_x_inc, grid_dh )
 				}
 			}
 		}
@@ -433,143 +335,56 @@ int	cpu;
 	return;
 	}
 
-_LOCAL_ int
-f_R_Miss( ap )
-register struct application *ap;
-	{
-	prnt_Scroll( "Missed model.\n" );
-	return	0;
-	}
-
-_LOCAL_ int
-f_Region( ap, pt_headp )
-register struct application *ap;
-struct partition *pt_headp;
-	{	register struct partition	*pp;
-		register struct region		*regp;
-		register struct xray		*rayp;
-		register struct hit		*ihitp;
-	for(	pp = pt_headp->pt_forw;
-		pp != pt_headp
-	    &&	pp->pt_outhit->hit_dist < 0.1;
-		pp = pp->pt_forw
-		) 
-		;
-	if( pp == pt_headp || pp->pt_outhit->hit_dist < 0.1 )
-		return	ap->a_miss( ap );
-	regp = pp->pt_regionp;
-	rayp = &ap->a_ray;
-	ihitp = pp->pt_inhit;
-	VJOIN1( ihitp->hit_point, rayp->r_pt, ihitp->hit_dist, rayp->r_dir );
-	prnt_Scroll(	"Hit region \"%s\"\n", regp->reg_name );
-	prnt_Scroll(	"\timpact point: <%8.2f,%8.2f,%8.2f>\n",
-			ihitp->hit_point[X],
-			ihitp->hit_point[Y],
-			ihitp->hit_point[Z]
-			);
-	prnt_Scroll(	"\tid: %d, aircode: %d, material: %d, LOS: %d\n",
-			regp->reg_regionid,
-			regp->reg_aircode,
-			regp->reg_gmater,
-			regp->reg_los
-			);
-	if( regp->reg_mater.ma_matname[0] != '\0' )
-		{
-		prnt_Scroll(	"\tmaterial info \"%.32s\"\n",
-				regp->reg_mater.ma_matname
-				);
-		if( regp->reg_mater.ma_override )
-			prnt_Scroll(	"\t\t\tcolor: {%5.2f,%5.2f,%5.2f}\n",
-					regp->reg_mater.ma_color[0],
-					regp->reg_mater.ma_color[1],
-					regp->reg_mater.ma_color[2]
-					);
-		if( regp->reg_mater.ma_matparm[0] != '\0' )
-			prnt_Scroll(	"\t\t\tparameters: \"%.60s\"\n",
-					regp->reg_mater.ma_matparm
-					);
-		}
-	return	1;
-	}
-
-_LOCAL_ int
-f_HL_Miss( ap )
-register struct application *ap;
-	{
-	VSETALL( ap->a_color, 0.0 );
-	hl_regmap[ap->a_y*grid_sz+ap->a_x] = 0;
-	return	0;
-	}
-
-_LOCAL_ int
-f_HL_Hit( ap, pt_headp )
-register struct application *ap;
-struct partition *pt_headp;
-	{	register struct partition	*pp;
-		register struct soltab		*stp;
-		register struct hit		*ihitp, *ohitp;
-
-	for(	pp = pt_headp->pt_forw;
-		pp != pt_headp
-	    &&	pp->pt_outhit->hit_dist < 0.1;
-		pp = pp->pt_forw
-		) 
-		;
-	if( pp == pt_headp || pp->pt_outhit->hit_dist < 0.1 )
-		return	ap->a_miss( ap );
-
-	stp = pp->pt_inseg->seg_stp;
-	ihitp = pp->pt_inhit;
-	RT_HIT_NORM( ihitp, stp, &(ap->a_ray) );
-	Check_Iflip( pp, ihitp->hit_normal, ap->a_ray.r_dir, stp );
-	ap->a_color[RED] = (ihitp->hit_normal[X] + 1.0) / 2.0;
-	ap->a_color[GRN] = (ihitp->hit_normal[Y] + 1.0) / 2.0;
-	ap->a_color[BLU] = (ihitp->hit_normal[Z] + 1.0) / 2.0;
-	if( rt_g.debug )
-		{
-		V_Print( "normal", ihitp->hit_normal, rt_log );
-		V_Print( "acolor", ap->a_color, rt_log );
-		}
-	hl_regmap[ap->a_y*grid_sz+ap->a_x] = pp->pt_regionp->reg_regionid;
-	return	1;
-	}
-
-/*	f _ M o d e l ( )
+/*	d o _ M o d e l ( )
 	'Hit' application specific routine for 'rt_shootray()' from
 	observer or a bounced ray.
 
  */
 _LOCAL_ int
-f_Model( ap, pt_headp )
+do_Model( ap, PartHeadp )
 register struct application *ap;
-struct partition *pt_headp;
+struct partition *PartHeadp;
 	{	register struct partition	*pp;
 		register Mat_Db_Entry		*entry;
 		register struct soltab		*stp;
 		register struct hit		*ihitp, *ohitp;
 		int				material_id;
 		fastf_t				rgb_coefs[3];
-
-	for(	pp = pt_headp->pt_forw;
-		pp != pt_headp
+	for(	pp = PartHeadp->pt_forw;
+		pp != PartHeadp
 	    &&	pp->pt_outhit->hit_dist < 0.1;
 		pp = pp->pt_forw
 		) 
 		;
-	if( pp == pt_headp || pp->pt_outhit->hit_dist < 0.1 )
+	if( pp == PartHeadp || pp->pt_outhit->hit_dist < 0.1 )
 		return	ap->a_miss( ap );
-
 	stp = pp->pt_inseg->seg_stp;
 	ihitp = pp->pt_inhit;
 	RT_HIT_NORM( ihitp, stp, &(ap->a_ray) );
-	Check_Iflip( pp, ihitp->hit_normal, ap->a_ray.r_dir, stp );
 
-#if 0
+	/* Check for flipped normal and fix.				*/
+	if( pp->pt_inflip )
+		{
+		ScaleVec( ihitp->hit_normal, -1.0 );
+		pp->pt_inflip = 0;
+		}
 	stp = pp->pt_outseg->seg_stp;
 	ohitp = pp->pt_outhit;
 	RT_HIT_NORM( ohitp, stp, &(ap->a_ray) );
-	Check_Oflip( pp, ohitp->hit_normal, ap->a_ray.r_dir, stp );
-#endif
+	if( pp->pt_outflip )
+		{
+		ScaleVec( ohitp->hit_normal, -1.0 );
+		pp->pt_outflip = 0;
+		}
+
+	{	fastf_t f = Dot( ap->a_ray.r_dir, ihitp->hit_normal );
+	if( f >= 0.0 )
+		{
+		ScaleVec( ihitp->hit_normal, -1.0 );
+		if( rt_g.debug )
+			rt_log( "Fixed flipped entry normal\n" );
+		}
+	}
 
 	/* See if we hit a light source.				*/
 	{	register int	i;
@@ -588,15 +403,13 @@ struct partition *pt_headp;
 	}
 
 	/* Get material id as index into material database.		*/
-#ifndef cray
 	if( icon_mapping && strncmp( stp->st_name, "TM_", 3 ) == 0 )
 		{ /* Solid has a texture map.				*/
 			struct uvcoord	uv;
 		rt_functab[stp->st_id].ft_uv( ap, stp, ihitp, &uv );
-		material_id = txtr_Val( &uv );
+		material_id = texture_Val( &uv );
 		}
 	else
-#endif
 		material_id = (int)(pp->pt_regionp->reg_gmater);
 
 	/* Get material database entry.					*/
@@ -610,17 +423,16 @@ struct partition *pt_headp;
 				int	x = ap->a_x + x_fb_origin - ir_mapx;
 				int	y = ap->a_y + y_fb_origin - ir_mapy;
 			/* Map temperature from IR image using offsets.	*/
-			RES_ACQUIRE( &rt_g.res_stats );
 			if(	x < 0 || y < 0
-			    ||	fb_read( fbiop, x, y, pixel, 1 ) == -1
+			    ||	fb_seek( fbiop, x, y ) == -1
+			    ||	fb_rpixel( fbiop, pixel ) == -1
 				)
 				fahrenheit = AMBIENT-1;
 			else
 				fahrenheit = pixel_To_Temp( pixel );
-			RES_RELEASE( &rt_g.res_stats );
 			}
 		else
-		if( ir_doing_paint )
+		if( ir_paint_flag )
 			/* User specified temp. of current rectangle.	*/
 			fahrenheit = ir_paint;
 		else
@@ -635,17 +447,14 @@ struct partition *pt_headp;
 		entry = &mat_tmp_entry;
 		if( ir_mapping & IR_READONLY )
 			{	int	ir_level = 0;
-			RES_ACQUIRE( &rt_g.res_worker );
 			octreep = find_Octant(	&ir_octree,
 						ihitp->hit_point,
 						&ir_level
 						);
-			RES_RELEASE( &rt_g.res_worker );
 			}
 		else
 		if( ir_mapping & IR_EDIT )
 			{
-			RES_ACQUIRE( &rt_g.res_worker );
 			triep = add_Trie( pp->pt_regionp->reg_name, &reg_triep );
 			octreep = add_Region_Octree(	&ir_octree,
 							ihitp->hit_point,
@@ -657,11 +466,7 @@ struct partition *pt_headp;
 				append_Octp( triep, octreep );
 			else
 			if( fatal_error )
-				{
-				RES_RELEASE( &rt_g.res_worker );
 				return	-1;
-				}
-			RES_RELEASE( &rt_g.res_worker );
 			}
 		if( octreep != OCTREE_NULL )
 			{	register int	index;
@@ -682,7 +487,12 @@ struct partition *pt_headp;
 	if(	(entry = mat_Get_Db_Entry( material_id )) == MAT_DB_NULL
 	   || ! (entry->mode_flag & MF_USED)
 		)
+		{
+		rt_log( "No material database entry for %d, using default.\n",
+			material_id
+			);
 		entry = &mat_dfl_entry;
+		}
 
 	if( lgts[0].energy < 0.0 )
 		{	fastf_t	f = RGB_INVERSE;
@@ -719,9 +529,9 @@ struct partition *pt_headp;
 				VJOIN1(	rgb_coefs, rgb_coefs, f, ap->a_color );
 				if( rt_g.debug & DEBUG_SHADOW )
 					{
-					rt_log( "\t\tcontribution from light %d:\n", i );
-					V_Print( "\t\treflectance coeffs", ap->a_color, rt_log );
-					V_Print( "\t\taccumulated coeffs", rgb_coefs, rt_log );
+					rt_log( "light %d returns\n", i );
+					V_Print( "ap->a_color", ap->a_color, rt_log );
+					V_Print( "rgb_coefs", rgb_coefs, rt_log );
 					}
 				}
 			}
@@ -787,16 +597,15 @@ register Lgt_Source		*lgt_entry;
 	{	struct application	ap_hit;
 	/* Set up application struct for 'rt_shootray()' to light source.	*/
 	ap_hit = *ap;
-	ap_hit.a_onehit = FALSE;  /* Go all the way to the light.	*/
-	ap_hit.a_hit = f_Shadow; /* Handle shadowed pixels.		*/
-	ap_hit.a_miss = f_Lit;   /* Handle illuminated pixels.		*/
-	ap_hit.a_overlap = ap->a_overlap;
+	ap_hit.a_onehit = 0;	  /* Go all the way to the light.	*/
+	ap_hit.a_hit = do_Shadow; /* Handle shadowed pixels.		*/
+	ap_hit.a_miss = do_Lit;   /* Handle illuminated pixels.		*/
 	ap_hit.a_level++;	  /* Increment recursion level.		*/
 
 	if( rt_g.debug & DEBUG_SHADOW )
 		{
-		rt_log( "\tcorrect_Lgt()\n" );
-		V_Print( "\t\tlgt source location", lgt_entry->loc, rt_log );
+		rt_log( "correct_Lgt()\n" );
+		V_Print( "light loc", lgt_entry->loc, rt_log );
 		}
 	/* Vector to light src from surface contact pt.	 		*/
 	Diff2Vec(	lgt_entry->loc,
@@ -810,8 +619,8 @@ register Lgt_Source		*lgt_entry;
 
 	if( rt_g.debug & DEBUG_SHADOW )
 		{
-		V_Print( "\t\tdir. of ray to light", ap_hit.a_ray.r_dir, rt_log );
-		V_Print( "\t\torigin of ray to lgt", ap_hit.a_ray.r_pt, rt_log );
+		V_Print( "ray to light", ap_hit.a_ray.r_dir, rt_log );
+		V_Print( "origin of ray", ap_hit.a_ray.r_pt, rt_log );
 		}
 	/* Fetch attenuated light intensity into "ap_hit.a_diverge".	*/
 	(void) rt_shootray( &ap_hit );
@@ -842,10 +651,10 @@ register Lgt_Source		*lgt_entry;
 		rel_radius = lgt_entry->radius / pp->pt_inhit->hit_dist;
 		if( rt_g.debug & DEBUG_GAUSS )
 			{
-			rt_log( "\t\tcos. of angle to lgt center = %g\n", cos_angl );
-			rt_log( "\t\t           angular distance = %g\n", ang_dist );
-			rt_log( "\t\t            relative radius = %g\n", rel_radius );
-			rt_log( "\t\t        relative distance = %g\n", ang_dist/rel_radius );
+			rt_log( "cos_angl=%g\n", cos_angl );
+			rt_log( "ang_dist=%g\n", ang_dist );
+			rt_log( "rel_radius=%g\n", rel_radius );
+			rt_log( "rel_dist=%g\n", ang_dist/rel_radius );
 			}
 		/* Return weighted and attenuated light intensity.	*/
 		return	gauss_Wgt_Func( ang_dist/rel_radius ) *
@@ -863,16 +672,11 @@ register struct partition	*pp;
 	{	fastf_t			r_dir[3];
 		struct application	ap_hit;
 	ap_hit = *ap;		/* Same as initial application.		*/
-	ap_hit.a_onehit = FALSE;
 	ap_hit.a_level++;	/* Increment recursion level.		*/
 
 	if( rt_g.debug & DEBUG_RGB )
-		{
-		rt_log( "\tmirror_Reflect: level %d grid <%d,%d>\n",
-			ap_hit.a_level, ap_hit.a_x, ap_hit.a_y
-			);
-		rt_log( "\t\tOne hit flag is %s\n", ap_hit.a_onehit ? "ON" : "OFF" );
-		}
+		rt_log( "mirror_Reflect()\n" );
+
 	/* Calculate reflected incident ray.				*/
 	Scale2Vec( ap->a_ray.r_dir, -1.0, r_dir );
 	{	fastf_t	f = 2.0	* Dot( r_dir, pp->pt_inhit->hit_normal );
@@ -896,68 +700,32 @@ register Mat_Db_Entry		*entry;
 		struct application	ap_ref; /* For getting thru.	*/
 	/* Application structure for refracted ray.			*/
 	ap_ref = *ap;
-	ap_ref.a_hit =  f_Probe;	/* Find exit from glass.	*/
-	ap_ref.a_miss = f_Error;	/* Bad news.			*/
-	ap_ref.a_overlap = ap->a_overlap;
-	ap_ref.a_onehit = TRUE;
+	ap_ref.a_hit =  do_Probe;	/* Find exit from glass.	*/
+	ap_ref.a_miss = do_Error;	/* Bad news.			*/
 	ap_ref.a_level++;		/* Increment recursion level.	*/
 
 	/* Application structure for exiting ray.			*/
 	ap_hit = *ap;
-	ap_hit.a_onehit = FALSE;
 	ap_hit.a_level++;
 
 	if( rt_g.debug & DEBUG_REFRACT )
 		{
-		rt_log( "\tEntering glass_Refract(), level %d grid <%d,%d>\n",
+		rt_log( "Entering glass_Refract(), level %d grid <%d,%d>\n",
 			ap->a_level, ap->a_x, ap->a_y
 			);
-		V_Print( "\t\tincident ray pnt", ap->a_ray.r_pt, rt_log );
-		V_Print( "\t\tincident ray dir", ap->a_ray.r_dir, rt_log );
+		V_Print( "\tincident ray pnt", ap->a_ray.r_pt, rt_log );
+		V_Print( "\tincident ray dir", ap->a_ray.r_dir, rt_log );
 		}
-	refrac_total++;
+	refract_total++;
 
 	if( entry->refrac_index == RI_AIR )
 		{ /* No refraction necessary.				*/
-			struct partition	*pt_headp = pp->pt_back;
 		if( rt_g.debug & DEBUG_REFRACT )
-			rt_log( "\t\tNo refraction on entry.\n" );
-		/* Ray direction stays the same, and so does ray origin,
-			because we are using existing partitions with
-			hit distances relative to the ray origin.
-		 */
+			rt_log( "\tNo refraction on entry.\n" );
+		/* Ray direction stays the same, origin becomes exit pt.*/
 		VMOVE( ap_hit.a_ray.r_dir, ap->a_ray.r_dir );
-		VMOVE( ap_hit.a_ray.r_pt, ap->a_ray.r_pt );
-		if( pp->pt_forw != pt_headp )
-			{
-			/* We have more partitions, so use them, but first
-				toss out the current one because we must
-				always pass the hit routine the head of the
-				partition chain, so we can detect the end
-				of the circular-doubly-linked list.
-			 */
-			DEQUEUE_PT( pp );
-			FREE_PT( pp, ap->a_resource );
-			f_Model( &ap_hit, pt_headp );
-			VMOVE( ap->a_color, ap_hit.a_color );
-			if( rt_g.debug & DEBUG_REFRACT )
-				{
-				V_Print( "\t\tf_Model returned coeffs", ap->a_color, rt_log );
-				}
-			return;	
-			}
-		else
-			{
-			f_Backgr( &ap_hit );
-			VMOVE( ap->a_color, ap_hit.a_color );
-			if( rt_g.debug & DEBUG_REFRACT )
-				{
-				rt_log( "\t\tOne hit flag is %s\n",
-					ap->a_onehit ? "ON" : "OFF" );
-				V_Print( "\t\tf_Backgr returned coeffs", ap->a_color, rt_log );
-				}
-			return;
-			}
+		VMOVE( ap_hit.a_ray.r_pt, pp->pt_outhit->hit_point );
+		goto	exiting_ray;
 		}
 	else
 		/* Set up ray-trace to find new exit point.		*/
@@ -965,7 +733,7 @@ register Mat_Db_Entry		*entry;
 		if( pp->pt_inhit->hit_dist < 0.0 )
 			{
 			if( rt_g.debug & DEBUG_REFRACT )
-				rt_log( "\t\tRefracting inside solid.\n" );
+				rt_log( "\tRefracting inside solid.\n" );
 			VMOVE( ap_ref.a_ray.r_pt, ap->a_ray.r_pt );
 			VMOVE( ap_ref.a_ray.r_dir, ap->a_ray.r_dir );
 			goto	inside_ray;
@@ -981,7 +749,7 @@ register Mat_Db_Entry		*entry;
 			VMOVE( ap_hit.a_ray.r_pt, pp->pt_inhit->hit_point );
 			VMOVE( ap_hit.a_ray.r_dir, ap_ref.a_ray.r_dir );
 			if( rt_g.debug & DEBUG_REFRACT )
-				rt_log( "\t\tPast critical angle on entry!\n" );
+				rt_log( "\tPast critical angle on entry!\n" );
 			goto	exiting_ray;
 			}
 		}
@@ -998,11 +766,11 @@ inside_ray :
 		   */
 		if( rt_g.debug & DEBUG_REFRACT )
 			{
-			rt_log( "\t\tRefracted ray missed:\n" );
-			V_Print( "\t\trefracted ray pnt", ap_ref.a_ray.r_pt, rt_log );
-			V_Print( "\t\trefracted ray dir", ap_ref.a_ray.r_dir, rt_log );
+			rt_log( "\tRefracted ray missed!\n" );
+			V_Print( "\trefracted ray pnt", ap_ref.a_ray.r_pt, rt_log );
+			V_Print( "\trefracted ray dir", ap_ref.a_ray.r_dir, rt_log );
 			}
-		refrac_missed++;
+		refract_missed++;
 		VMOVE( ap_hit.a_ray.r_pt, pp->pt_outhit->hit_point );
 		VMOVE( ap_hit.a_ray.r_dir, ap->a_ray.r_dir );
 		goto	exiting_ray;
@@ -1010,7 +778,7 @@ inside_ray :
 	else
 		{
 		if( rt_g.debug & DEBUG_REFRACT )
-			rt_log( "\t\tRefracted ray hit.\n" );
+			rt_log( "\tRefracted ray hit.\n" );
 		}
 
 	/* Calculate refraction at exit.				*/
@@ -1026,7 +794,7 @@ inside_ray :
 			)
 			{ /* Past critical angle, internal reflection.	*/
 			if( rt_g.debug & DEBUG_REFRACT )
-				rt_log( "\t\tInternal reflection, recursion level (%d)\n", ap_ref.a_level );
+				rt_log( "\tInternal reflection, recursion level (%d)\n", ap_ref.a_level );
 			ap_ref.a_level++;
 			VMOVE( ap_ref.a_ray.r_dir, ap_hit.a_ray.r_dir );
 			/* Refracted ray exit point in a_color.		*/
@@ -1038,8 +806,8 @@ inside_ray :
 		{ /* Exceeded max bounces, total absorbtion of light.	*/
 		ap->a_color[0] = ap->a_color[1] = ap->a_color[2] = 0.0;
 		if( rt_g.debug & DEBUG_REFRACT )
-			rt_log( "\t\tExceeded max bounces with internal reflections, recursion level (%d)\n", ap_ref.a_level );
-		refrac_inside++;
+			rt_log( "\tExceeded max bounces with internal reflections, recursion level (%d)\n", ap_ref.a_level );
+		refract_inside++;
 		return;
 		}
 	/* Refracted ray exit point in a_color.				*/
@@ -1047,24 +815,17 @@ inside_ray :
 
 exiting_ray :
 	/* Shoot from exit point in direction of refracted ray.		*/
-	if( rt_g.debug & DEBUG_REFRACT )
-		{
-		rt_log( "\t\tExiting ray from glass.\n" );
-		V_Print( "\t\t   ray origin", ap_hit.a_ray.r_pt, rt_log );
-		V_Print( "\t\tray direction", ap_hit.a_ray.r_dir, rt_log );
-		rt_log( "\t\tOne hit flag is %s\n", ap_hit.a_onehit ? "ON" : "OFF" );
-		}
 	(void) rt_shootray( &ap_hit );
 	VMOVE( ap->a_color, ap_hit.a_color );
 	return;
 	}
 
-/*	f _ B a c k g r ( )
+/*	d o _ B a c k g r ( )
 	'Miss' application specific routine for 'rt_shootray()' from
 	observer or a bounced ray.
  */
 _LOCAL_ int
-f_Backgr( ap )
+do_Backgr( ap )
 register struct application *ap;
 	{	register int	i;
 	/* Base-line color is same as background.			*/
@@ -1072,18 +833,14 @@ register struct application *ap;
 
 	if( rt_g.debug & DEBUG_RGB )
 		{
-		rt_log( "\tRay missed model.\n" );
-		V_Print( "\tbackground coeffs", ap->a_color, rt_log );
+		rt_log( "do_Backgr()\n" );
+		V_Print( "bg_coefs", ap->a_color, rt_log );
 		}
 
 	/* If this is a reflection, we may see each light source.	*/
 	if( ap->a_level )
-		{	Mat_Db_Entry	*mdb_entry;
-		if( (mdb_entry = mat_Get_Db_Entry( ap->a_user ))
-			== MAT_DB_NULL
-		   || ! (mdb_entry->mode_flag & MF_USED)
-			)
-			mdb_entry = &mat_dfl_entry;
+		{	Mat_Db_Entry	*mdb_entry =
+					mat_Get_Db_Entry( ap->a_user );
 		for( i = 1; i < lgt_db_size; i++ )
 			{	auto fastf_t		real_l_1[3];
 				register fastf_t	specular;
@@ -1110,55 +867,54 @@ register struct application *ap;
 		}
 	if( rt_g.debug & DEBUG_RGB )
 		{
-		V_Print( "coeffs returned from background", ap->a_color, rt_log );
+		V_Print( "ap->color final", ap->a_color, rt_log );
 		}
 	return	0;
 	}
 
-/*	f _ E r r o r ( )						*/
-/*ARGSUSED*/
+/*	d o _ E r r o r ( )						*/
 /*ARGSUSED*/
 _LOCAL_ int
-f_Error( ap )
+do_Error( ap )
 register struct application *ap;
 	{
 	if( rt_g.debug & DEBUG_RGB )
-		rt_log( "f_Error()\n" );
+		rt_log( "do_Error()\n" );
 	return	0;
 	}
 
-/*	f _ L i t ( )
+/*	d o _ L i t ( )
 	'Miss' application specific routine for 'rt_shootray()' to
 	light source for shadowing.  Return full intensity in "ap->a_diverge".
  */
 _LOCAL_ int
-f_Lit( ap )
+do_Lit( ap )
 register struct application *ap;
 	{	
 	if( rt_g.debug & DEBUG_SHADOW )
-		rt_log( "\t\tSurface is illuminated.\n" );
+		rt_log( "do_Lit()\n" );
 	ap->a_diverge = 1.0;
 	hits_lit++;
 	return	0;
 	}
 
-/*	f _ P r o b e ( )						*/
+/*	d o _ P r o b e ( )						*/
 _LOCAL_ int
-f_Probe( ap, pt_headp )
+do_Probe( ap, PartHeadp )
 register struct application *ap;
-struct partition *pt_headp;
+struct partition *PartHeadp;
 	{	register struct partition	*pp;
 		register struct hit		*hitp;
 		register struct soltab		*stp;
 	if( rt_g.debug & DEBUG_RGB )
-		rt_log( "f_Probe()\n" );
-	for(	pp = pt_headp->pt_forw;
-		pp != pt_headp
+		rt_log( "do_Probe()\n" );
+	for(	pp = PartHeadp->pt_forw;
+		pp != PartHeadp
 	    &&	pp->pt_outhit->hit_dist < 0.1;
 		pp = pp->pt_forw
 		) 
 		;
-	if( pp == pt_headp || pp->pt_outhit->hit_dist < 0.1 )
+	if( pp == PartHeadp || pp->pt_outhit->hit_dist < 0.1 )
 		{
 		if( rt_g.debug & DEBUG_REFRACT )
 			rt_log( "partition behind ray origin, no exit\n" );
@@ -1202,9 +958,9 @@ register fastf_t	*v_2;
 		fastf_t	beta;		/* Intermediate scalar.		*/
 	if( rt_g.debug & DEBUG_REFRACT )
 		{
-		V_Print( "\tEntering refract(), incident ray", v_1, rt_log );
-		V_Print( "\t\tentrance normal", norml, rt_log );
-		rt_log( "\t\trefractive indices leaving:%g, entering:%g\n", ri_1, ri_2 );
+		V_Print( "Entering refract(), incident ray", v_1, rt_log );
+		V_Print( "\tentrance normal", norml, rt_log );
+		rt_log( "\trefractive indices leaving:%g, entering:%g\n", ri_1, ri_2 );
 		}
 	if( ri_2 == 0.0 )
 		{ /* User probably forgot to specify refractive index.	*/
@@ -1250,24 +1006,24 @@ register fastf_t	*v_2;
 	/*NOTREACHED*/
 	}
 
-/*	f _ S h a d o w ( )
+/*	d o _ S h a d o w ( )
 	'Hit' application specific routine for 'rt_shootray()' to
 	light source for shadowing. Returns attenuated light intensity in
 	"ap->a_diverge".
  */
 _LOCAL_ int
-f_Shadow( ap, pt_headp )
+do_Shadow( ap, PartHeadp )
 register struct application *ap;
-struct partition *pt_headp;
+struct partition *PartHeadp;
 	{	register struct partition	*pp;
 		register Mat_Db_Entry		*entry;
-	for(	pp = pt_headp->pt_forw;
-		pp != pt_headp
+	for(	pp = PartHeadp->pt_forw;
+		pp != PartHeadp
 	    &&	pp->pt_outhit->hit_dist < 0.1;
 		pp = pp->pt_forw
 		) 
 		;
-	if( pp == pt_headp || pp->pt_outhit->hit_dist < 0.1 )
+	if( pp == PartHeadp || pp->pt_outhit->hit_dist < 0.1 )
 		{
 		if( rt_g.debug & DEBUG_SHADOW )
 			rt_log( "partition behind ray origin, no shadow\n" );
@@ -1284,7 +1040,9 @@ struct partition *pt_headp;
 		RT_HIT_NORM( ihitp, istp, &(ap->a_ray) );
 		RT_HIT_NORM( ohitp, ostp, &(ap->a_ray) );
 		V_Print( "entry normal", ihitp->hit_normal, rt_log );
+		V_Print( "exit normal", ohitp->hit_normal, rt_log );
 		V_Print( "entry point", ihitp->hit_point, rt_log );
+		V_Print( "exit point", ohitp->hit_point, rt_log );
 		rt_log( "partition[start %g end %g]\n",
 			ihitp->hit_dist, ohitp->hit_dist
 			);
@@ -1297,17 +1055,12 @@ struct partition *pt_headp;
 			rt_log( "Unobstructed path to explicit light.\n" );
 		return	ap->a_miss( ap );
 		}
-	for( ; pp != pt_headp; pp = pp->pt_forw )
+	for( ; pp != PartHeadp; pp = pp->pt_forw )
 		{
 		if( pp->pt_inseg->seg_stp == lgts[ap->a_user].stp )
 			/* Have hit the EXPLICIT light source.		*/
 			break;
-		if(	(entry =
-			mat_Get_Db_Entry( (int)(pp->pt_regionp->reg_gmater) ))
-				== MAT_DB_NULL
-		   || ! (entry->mode_flag & MF_USED)
-			)
-			entry = &mat_dfl_entry;
+		entry = mat_Get_Db_Entry( (int)(pp->pt_regionp->reg_gmater) );
 		if( (ap->a_diverge -= 1.0 - entry->transparency) <= 0.0 )
 			/* Light is totally eclipsed.			*/
 			{
@@ -1374,9 +1127,7 @@ fastf_t				*view_dir;
 		auto fastf_t		lgt_dir[3];
 
 	if( rt_g.debug & DEBUG_RGB )
-		rt_log( "\nmodel_Reflectance(): level %d grid <%d,%d>\n",
-			ap->a_level, ap->a_x, ap->a_y
-			);
+		rt_log( "model_Reflectance()\n" );
 
 	if( ap->a_user == 0 )		/* Ambient lighting.		*/
 		{
@@ -1406,13 +1157,12 @@ fastf_t				*view_dir;
 	Scale2Vec( lgt_entry->coef, ff, ap->a_color );
 	if( rt_g.debug & DEBUG_RGB )
 		{
-		rt_log( "\tDiffuse reflectance:\n" );
-		V_Print( "\tsurface normal", norml, rt_log );
-		V_Print( "\t dir. of light", lgt_dir, rt_log );
-		rt_log( "\t cosine of incident angle = %g\n", cos_il );
-		rt_log( "\tintensity of light source = %g\n", lgt_energy );
-		rt_log( "\t diffuse weighting coeff. = %g\n", mdb_entry->wgt_diffuse );
-		V_Print( "\tdiffuse coeffs", ap->a_color, rt_log );
+		V_Print( "norml", norml, rt_log );
+		V_Print( "lgt_dir", lgt_dir, rt_log );
+		rt_log( "cos_il=%g\n", cos_il );
+		rt_log( "lgt_energy=%g\n", lgt_energy );
+		rt_log( "wgt_diffuse=%g\n", mdb_entry->wgt_diffuse );
+		V_Print( "diffuse reflectance", ap->a_color, rt_log );
 		}
 	/* Facter in material color (diffuse reflectance coeffs)	*/
 	ff = RGB_INVERSE; /* Scale RGB values to coeffs (0.0 .. 1.0 )	*/
@@ -1428,14 +1178,13 @@ fastf_t				*view_dir;
 		{	auto fastf_t		lgt_reflect[3], tmp_dir[3];
 			register fastf_t	specular;
 			fastf_t			cos_s;
-		ff = 2.0 * cos_il;
+		ff = 2 * cos_il;
 		Scale2Vec( norml, ff, tmp_dir );
 		Diff2Vec( tmp_dir, lgt_dir, lgt_reflect );
 		if( rt_g.debug & DEBUG_RGB )
 			{
-			rt_log( "\tSpecular reflectance:\n" );
-			V_Print( "\t           dir of eye", view_dir, rt_log );
-			V_Print( "\tdir reflected lgt ray", lgt_reflect, rt_log );
+			V_Print( "view_dir", view_dir, rt_log );
+			V_Print( "lgt_reflect", lgt_reflect, rt_log );
 			}
 		if(	(cos_s = Dot( view_dir, lgt_reflect )) > 0.0
 		    &&	cos_s <= 1.0
@@ -1447,19 +1196,16 @@ fastf_t				*view_dir;
 			VJOIN1( ap->a_color, ap->a_color, specular, lgt_entry->coef );
 			if( rt_g.debug & DEBUG_RGB )
 				{
-				rt_log( "\tcosine of specular angle = %g\n", cos_s );
-				rt_log( "\t      specular component = %g\n", specular );
-				V_Print( "\tdiff+spec coeffs", ap->a_color, rt_log );
+				rt_log( "cos_s=%g\n", cos_s );
+				rt_log( "specular=%g\n", specular );
+				V_Print( "w/ specular", ap->a_color, rt_log );
 				}
 			}
 		else
 		if( cos_s > 1.0 )
-			{	struct soltab	*stp = pp->pt_inseg->seg_stp;
-			rt_log( "\"%s\"(%d) : solid \"%s\" type %d cos(s)=%g grid <%d,%d>!\n",
-				__FILE__, __LINE__, stp->st_name, stp->st_id,
-				cos_s, ap->a_x, ap->a_y
-				);
-			V_Print( "Surface normal", norml, rt_log );
+			{
+			rt_log( "model_Reflectance() : cos(s) > 1.0 (%g)!\n", cos_s );
+			V_Print( "norml", norml, rt_log );
 			}
 		}
 	return;
@@ -1483,7 +1229,7 @@ fastf_t	azim, elev;
 	}
 
 /*	a b o r t _ R T ( )						*/
-#if defined( BSD ) || defined( SYSV )
+#if defined( BSD ) || defined( sgi )
 int
 #else
 /*ARGSUSED*/
@@ -1492,11 +1238,11 @@ void
 abort_RT( sig )
 int	sig;
 	{
-RES_ACQUIRE( &rt_g.res_syscall );
 	(void) signal( SIGINT, abort_RT );
+	if( tty )
+		prnt_Event( "Aborted raytrace." );
 	(void) fb_flush( fbiop );
 	user_interrupt = 1;
-RES_RELEASE( &rt_g.res_syscall );
 #if defined( BSD )
 	return	sig;
 #else
@@ -1520,147 +1266,25 @@ register int	n;
 	return	result;
 	}
 
-#define COSTOL	0.91
-#define is_Odd(_a)	((_a)&01)
-
-hl_Reg_Diff( x0, y0, x1, y1 )
-register int	x0, y0, x1, y1;
-	{
-	rt_log( "hl_Reg_Diff({<%4d,%4d>,<%4d,%4d>}) %4d != %4d\n",
-		x0, y0, x1, y1,
-		hl_regmap[y0*grid_sz+x0],
-		hl_regmap[y1*grid_sz+x1]
-		);
-	return	hl_regmap[y0*grid_sz+x0] != hl_regmap[y1*grid_sz+x1];
-	}
-
-hl_Norm_Diff( pix1, pix2 )
-register RGBpixel	*pix1, *pix2;
-	{	fastf_t	dir1[3], dir2[3];
-		static fastf_t	conv = 2.0/255.0;
-#ifdef cray
-	rt_log( "hl_Norm_Diff(0x%x,0x%x)\n", pix1, pix2 );
-#endif
-	rt_log( "hl_Norm_Diff(<%d,%d,%d>,<%d,%d,%d>)\n",
-		(*pix1)[0], (*pix1)[1], (*pix1)[2],
-		(*pix2)[0], (*pix2)[1], (*pix2)[2] );
-	if( ZeroPixel( *pix1 ) )
-		{
-		if( ZeroPixel( *pix2 ) )
-			return	0;
-		else
-			return	1;
-		}
-	else
-	if( ZeroPixel( *pix2 ) )
-		return	1;
-	dir1[X] = (*pix1)[RED] * conv;
-	dir1[Y] = (*pix1)[GRN] * conv;
-	dir1[Z] = (*pix1)[BLU] * conv;
-	dir2[X] = (*pix2)[RED] * conv;
-	dir2[Y] = (*pix2)[GRN] * conv;
-	dir2[Z] = (*pix2)[BLU] * conv;
-	dir1[X] -= 1.0;
-	dir1[Y] -= 1.0;
-	dir1[Z] -= 1.0;
-	dir2[X] -= 1.0;
-	dir2[Y] -= 1.0;
-	dir2[Z] -= 1.0;
-	return	Dot( dir1, dir2 ) < COSTOL;
-	}
-
-
-void
-prnt_Pixel( pixelp, x, y )
-register RGBpixel	*pixelp;
-int	x, y;
-	{
-	rt_log( "Pixel:<%3d,%3d,%3d>(%4d,%4d)\n",
-		(*pixelp)[RED],
-		(*pixelp)[GRN],
-		(*pixelp)[BLU],
-		x, y
-		);
-	return;
-	}
-
-hl_Postprocess()
-	{	static RGBpixel	black_pixel = { 0, 0, 0 };
-		static RGBpixel	white_pixel = { 255, 255, 255 };
-		static RGBpixel bufa[1024], bufb[1024];
-		register int	x, y;
-	prnt_Event( "Making hidden-line drawing..." );
-	for( y = 0; y < grid_sz && ! user_interrupt; y++ )
-		{	static RGBpixel	*rpixp;
-			static RGBpixel	*lpixp;
-		rpixp = is_Odd(y) ? bufb : bufa;
-		lpixp = is_Odd(y) ? bufa : bufb;
-		(void) fb_seek( fbiop, 0, y );
-		for(	x = 0;
-			x < grid_sz && ! user_interrupt;
-			x++
-			)
-			{
-			if( fb_rpixel( fbiop, rpixp[x] ) == -1 )
-				{
-				fb_log( "hl_Postprocess: Failed to read pixel <%d,%d>\n", x, y );
-				return;
-				}
-			/*prnt_Pixel( rpixp[x], x, y );*/
-			if( x == 0 )
-				HL_SETBIT( x, y );
-			else
-			if( y == 0 )
-				if( hl_Norm_Diff( rpixp[x], rpixp[x-1] ) )
-					HL_CLRBIT( x, y );
-				else
-					HL_SETBIT( x, y );
-			else
-			if(	hl_Reg_Diff( x, y, x-1, y )
-			     ||	hl_Reg_Diff( x, y, x, y-1 )
-			     ||	hl_Norm_Diff( rpixp[x], rpixp[x-1] )
-			     ||	hl_Norm_Diff( rpixp[x], lpixp[x] )
-				)
-				HL_CLRBIT( x, y );
-			else
-				HL_SETBIT( x, y );
-			}
-		}
-	for( y = 0; y < grid_sz && ! user_interrupt; y++ )
-		{
-		(void) fb_seek( fbiop, 0, y );
-		for( x = 0; x < grid_sz && ! user_interrupt; x++ )
-			{
-			if( HL_TSTBIT( x, y ) )
-				{
-				FB_WPIXEL( fbiop, white_pixel );
-				}
-			else
-				{
-				FB_WPIXEL( fbiop, black_pixel );
-				}
-			}
-		}
-	(void) fb_flush( fbiop );
-	return;
-	}
-
 /*	v i e w _ p i x ( )						*/
 _LOCAL_ void
-view_pix( ap, scanbuf )
+view_pix( ap, scanp )
 register struct application	*ap;
-RGBpixel		scanbuf[];
+register RGBpixel		*scanp;
 	{	RGBpixel	pixel;
 		int		x = ap->a_x + x_fb_origin;
 		int		y = ap->a_y + y_fb_origin;
 	if( rt_g.debug && tty )
 		{
-		RES_ACQUIRE( &rt_g.res_syscall );
-		(void) sprintf( GRID_PIX_PTR, " [%04d-", ap->a_x/aperture_sz );
+		RES_ACQUIRE( &rt_g.res_malloc );
 		prnt_Timer( (char *) NULL );
+		(void) SetStandout();
+		GRID_PIX_MOVE();
+		(void) printf( " [%04d-", ap->a_x/aperture_sz );
+		(void) ClrStandout();
 		IDLE_MOVE();
 		(void) fflush( stdout );
-		RES_RELEASE( &rt_g.res_syscall );
+		RES_RELEASE( &rt_g.res_malloc );
 		}
 	/* Clip relative intensity on each gun to range 0.0 to 1.0;
 		then scale to RGB values.				*/
@@ -1703,7 +1327,7 @@ RGBpixel		scanbuf[];
 					}
 				break;
 			case B_LINE :
-				COPYRGB( tpixel, scanbuf[x] );
+				COPYRGB( tpixel, *scanp );
 				break;
 			default :
 				rt_log( "unknown buffering scheme %d\n",
@@ -1717,8 +1341,6 @@ RGBpixel		scanbuf[];
 			}
 		}
 	/* Write out pixel, depending on buffering scheme.		*/
-	if( query_region )
-		return;
 	switch( pix_buffered )
 		{
 	case B_PIO :
@@ -1727,15 +1349,14 @@ RGBpixel		scanbuf[];
 			return;
 		break;
 	case B_PAGE :
-		/* Buffered writes to frame buffer.			*/
-		if( fb_seek( fbiop, x, y ) != -1 )
-			{ /* WARNING: no error checking. */
-			FB_WPIXEL( fbiop, pixel );
+		if(	fb_seek( fbiop, x, y ) != -1
+		    &&	fb_wpixel( fbiop, pixel ) != -1
+			)
+			/* Buffered writes to frame buffer.		*/
 			return;
-			}
 		break;
 	case B_LINE :
-		COPYRGB( scanbuf[x], pixel );
+		COPYRGB( *scanp, pixel );
 		return;
 	default :
 		rt_log( "unknown buffering scheme %d\n",
@@ -1746,37 +1367,19 @@ RGBpixel		scanbuf[];
 	return;
 	}
 
-/*	v i e w _ b o l ( )						*/
+/*	v i e w _ e o l ( )						*/
 _LOCAL_ void
-view_bol( ap )
+view_eol( ap, scanbuf, scanp )
 register struct application	*ap;
+register RGBpixel		*scanbuf, *scanp;
 	{	int	x = grid_x_org + x_fb_origin;
 		int	y = ap->a_y/aperture_sz + y_fb_origin;
 	if( tracking_cursor )
 		{
 		RES_ACQUIRE( &rt_g.res_stats );
-		(void) fb_cursor( fbiop, 1, x, y );
+		(void) fb_cursor( fbiop, 1, x_fb_origin, y );
 		RES_RELEASE( &rt_g.res_stats );
 		}
-	if( tty )
-		{
-		RES_ACQUIRE( &rt_g.res_stats );
-		(void) sprintf( GRID_SCN_PTR, "%04d-", ap->a_y/aperture_sz );
-		(void) sprintf( GRID_PIX_PTR, " [%04d-", ap->a_x/aperture_sz );
-		update_Screen();
-		RES_RELEASE( &rt_g.res_stats );
-		}
-	return;
-	}
-
-/*	v i e w _ e o l ( )						*/
-_LOCAL_ void
-view_eol( ap, scanbuf )
-register struct application	*ap;
-RGBpixel			scanbuf[];
-	{	int	x = grid_x_org + x_fb_origin;
-		int	y = ap->a_y/aperture_sz + y_fb_origin;
-		int	ct = (ap->a_x - grid_x_org)/aperture_sz;
 	/* Reset horizontal pixel position.				*/
 	ap->a_x = grid_x_org * aperture_sz;
 
@@ -1784,6 +1387,12 @@ RGBpixel			scanbuf[];
 		{
 		RES_ACQUIRE( &rt_g.res_stats );
 		prnt_Timer( (char *) NULL );
+		(void) SetStandout();
+		GRID_SCN_MOVE();
+		(void) printf( "%04d-", ap->a_y/aperture_sz );
+		GRID_PIX_MOVE();
+		(void) printf( " [%04d-", ap->a_x/aperture_sz );
+		(void) ClrStandout();
 		IDLE_MOVE();
 		(void) fflush( stdout );
 		RES_RELEASE( &rt_g.res_stats );
@@ -1795,12 +1404,10 @@ RGBpixel			scanbuf[];
 		prnt_Timer( grid_y );
 		RES_RELEASE( &rt_g.res_stats );
 		}
-	if( query_region )
-		return;
 	if( pix_buffered == B_LINE )
 		{
 		RES_ACQUIRE( &rt_g.res_stats );
-		if( fb_write( fbiop, x, y, scanbuf+x, ct ) == -1 )
+		if( fb_write( fbiop, x, y, scanbuf, scanp-scanbuf+1 ) == -1 )
 			rt_log( "Write of scan line (%d) failed.\n", ap->a_y );
 		RES_RELEASE( &rt_g.res_stats );
 		}
@@ -1815,20 +1422,16 @@ view_end()
 		fb_flush( fbiop );
 	if( rt_g.debug & DEBUG_REFRACT )
 		rt_log( "Refraction stats : hits=%d misses=%d inside=%d total=%d\n",
-			refrac_total-(refrac_missed+refrac_inside),
-			refrac_missed, refrac_inside, refrac_total
+			refract_total-(refract_missed+refract_inside),
+			refract_missed, refract_inside, refract_total
 			);
 	if( rt_g.debug & DEBUG_SHADOW )
 		rt_log( "Shadowing stats : lit=%d shadowed=%d total=%d\n",
 			hits_lit, hits_shadowed, hits_lit+hits_shadowed
 			);
-	if( hiddenln_draw )
-		{
-		if( ! user_interrupt )
-			hl_Postprocess();
-		free( (char *) hl_regmap );
-		}
+	RES_ACQUIRE( &rt_g.res_malloc );
 	prnt_Timer( "VIEW" );
+	RES_RELEASE( &rt_g.res_malloc );
 	return;
 	}
 
@@ -1853,14 +1456,4 @@ gauss_Wgt_Func( R )
 fastf_t	R;
 	{
 	return	exp( - Sqr( R ) / LOG10E ) / (LOG10E * PI);
-	}
-
-_LOCAL_ int
-/*ARGSUSED*/
-f_Overlap( ap, pp, reg1, reg2 )
-struct application	*ap;
-struct partition	*pp;
-struct region		*reg1, *reg2;
-	{
-	return	1;
 	}

@@ -8,9 +8,7 @@
 
 # Make null for default, or specify -p or -pg for profiling
 PROFILE		=
-CONFIGDEFS	= -D_LOCAL_=static
-LIBES		= ${LIBFB} ${LIBTERMIO} ${LIBCURSOR} ${LIBTERMLIB} -lm\
-		${LIBSYSV}
+CONFIGDEFS	= -I.
 
 PRODUCTS	= fbed
 SRCDIR		= fbed
@@ -22,19 +20,20 @@ CFILES		= ${PRODUCTS}.c char.c sgi_dep.c \
 		empty.c execshell.c getfont.c\
 		getinput.c glob.c fill_buf.c \
 		pos_pad.c prnt.c \
-		squash.c try.c
+		squash.c try.c libcursor.c
 
 OBJS		= ${PRODUCTS}.o char.o sgi_dep.o \
 		empty.o execshell.o getfont.o \
 		getinput.o glob.o fill_buf.o \
 		pos_pad.o prnt.o \
-		squash.o try.o
+		squash.o try.o libcursor.o
 
 all:		${PRODUCTS}
 
 fbed:	${OBJS}
-	$(CC) ${CFLAGS} -o $@ ${OBJS} ${LIBES}
-#	touch $@
+	$(CC) ${CFLAGS} -o $@ ${OBJS} \
+		${LIBSYSV} ${LIBFB} ${LIBTERMIO} -ltermlib ${LIBES} 
+	touch $@
 # DO NOT DELETE THIS LINE -- make depend uses it
 fbed.o: fbed.c
 fbed.o: extern.h
@@ -63,6 +62,7 @@ prnt.o: extern.h
 squash.o: squash.c
 try.o: try.c
 try.o: extern.h
+libcursor.o: libcursor.c
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
 # see make depend above

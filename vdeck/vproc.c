@@ -1,12 +1,18 @@
 /*
+	SCCS id:	@(#) vproc.c	2.7
+	Last edit: 	7/10/86 at 11:07:27
+	Retrieved: 	8/13/86 at 08:27:02
+	SCCS archive:	/m/cad/vdeck/RCS/s.vproc.c
+
 	Author:		Gary S. Moss
 			U. S. Army Ballistic Research Laboratory
 			Aberdeen Proving Ground
 			Maryland 21005-5066
 			(301)278-6647 or AV-298-6647
 */
-#ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+#if ! defined( lint )
+static
+char	sccsTag[] = "@(#) vproc.c	2.7	last edit 7/10/86 at 11:07:27";
 #endif
 /*
 	Procedures for vproc.c
@@ -65,7 +71,7 @@ register char *prefix;
 		}
 	else
 		(void) strncpy( st_file, "solids", 7 );
-	if( (solfd = creat( st_file, 0644 )) < 0 )
+	if( (solfd = creat( st_file, 0666 )) < 0 )
 		{
 		perror( st_file );
 		exit( 10 );
@@ -95,7 +101,7 @@ register char *prefix;
 		}
 	else
 		(void) strncpy( rt_file, "regions", 8 );
-	if( (regfd = creat( rt_file, 0644 )) < 0 )
+	if( (regfd = creat( rt_file, 0666 )) < 0 )
 		{
 		perror( rt_file );
 		exit( 10 );
@@ -110,7 +116,7 @@ register char *prefix;
 		}
 	else
 		(void) strncpy( id_file, "region_ids", 11 );
-	if( (ridfd = creat( id_file, 0644 )) < 0 )
+	if( (ridfd = creat( id_file, 0666 )) < 0 )
 		{
 		perror( id_file );
 		exit( 10 );
@@ -121,7 +127,7 @@ register char *prefix;
 
 	/* Create /tmp file for discrimination of files.		*/
 	(void) strncpy( disc_file, mktemp( "/tmp/disXXXXXX" ), 15 );
-	if( (idfd = creat( disc_file, 0644 )) < 0 )
+	if( (idfd = creat( disc_file, 0666 )) < 0 )
 		{
 		perror( disc_file );
 		exit( 10 );
@@ -130,7 +136,7 @@ register char *prefix;
 
 	/* Create /tmp file for storage of region names in the comgeom desc.	*/
 	(void) strncpy( reg_file, mktemp( "/tmp/regXXXXXX" ), 15 );
-	if( (rrfd = creat( reg_file, 0644 )) < 0 )
+	if( (rrfd = creat( reg_file, 0666 )) < 0 )
 		{
 		perror( reg_file );
 		exit( 10 );
@@ -539,42 +545,37 @@ char	 *args[];
 	return;
 	}
 
-#define MAX_COL	(NAMESIZE*5)
-#define SEND_LN()	{\
-			buf[column++] = '\n';\
-			ewrite( 1, buf, (unsigned) column );\
-			column = 0;\
-			}
-
 /*	c o l _ p r t ( )
 	Print list of names in tabular columns.
  */
 col_prt( list, ct )
 register char	*list[];
 register int	ct;
-	{	char		buf[MAX_COL+2];
+	{	char		buf[72];
 		register int	i, column, spaces;
 
 	for( i = 0, column = 0; i < ct; i++ )
 		{
-		if( column + strlen( list[i] ) > MAX_COL )
+		(void) strcpy( &buf[column], list[i] );
+		column += strlen( list[i] );
+		if( column > 56 )
 			{
-			SEND_LN();
-			i--;
+			buf[column++] = '\n';
+			ewrite( 1, buf, (unsigned) column );
+			column = 0;
 			}
 		else
 			{
-			(void) strcpy( &buf[column], list[i] );
-			column += strlen( list[i] );
-			spaces = NAMESIZE - (column % NAMESIZE );
-			if( column + spaces < MAX_COL )
-				for( ; spaces > 0; spaces-- )
-					buf[column++] = ' ';
-			else
-				SEND_LN();
+			for(	spaces = NAMESIZE - (column % NAMESIZE );
+				spaces > 0;
+				spaces--
+				)
+				buf[column++] = ' ';
 			}
 		}
-	SEND_LN();
+	buf[column++] = '\n';
+	ewrite( 1, buf, (unsigned) column );
+	column = 0;
 	return	ct;
 	}
 

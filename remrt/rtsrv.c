@@ -1,7 +1,7 @@
 /*
- *			R T S R V . C
+ *			R T S R V
  *
- *  Remote Ray Tracing service program, using RT library.
+ *  Ray Tracing service program, using RT library.
  *
  *  Author -
  *	Michael John Muuss
@@ -24,99 +24,66 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #include <sys/time.h>
 #include <sys/resource.h>
 
-#undef	VMIN
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "pkg.h"
-#include "fb.h"
 #include "../librt/debug.h"
-#include "../rt/material.h"
-#include "../rt/mathtab.h"
-#include "../rt/rdebug.h"
 
 #include "./rtsrv.h"
 
-extern char	*sbrk();
 extern double atof();
 
 /***** Variables shared with viewing model *** */
-FBIO		*fbp = FBIO_NULL;	/* Framebuffer handle */
-FILE		*outfp = NULL;		/* optional pixel output file */
-int		hex_out = 0;		/* Binary or Hex .pix output file */
-double		AmbientIntensity = 0.4;	/* Ambient light intensity */
-double		azimuth, elevation;
-int		lightmodel;		/* Select lighting model */
-mat_t		view2model;
-mat_t		model2view;
+double AmbientIntensity = 0.4;	/* Ambient light intensity */
+double azimuth, elevation;
+int lightmodel;		/* Select lighting model */
+mat_t view2model;
+mat_t model2view;
+int hex_out;
 /***** end of sharing with viewing model *****/
 
 extern void grid_setup();
 extern void worker();
-
 /***** variables shared with worker() ******/
+int	nworkers;
 struct application ap;
-int		stereo = 0;	/* stereo viewing */
-vect_t		left_eye_delta;
-int		hypersample=0;	/* number of extra rays to fire */
-int		jitter=0;		/* jitter ray starting positions */
-int		rt_perspective=0;	/* perspective view -vs- parallel */
-fastf_t		persp_angle = 90;	/* prespective angle (degrees X) */
-fastf_t		aspect = 1;		/* aspect ratio Y/X */
-vect_t		dx_model;	/* view delta-X as model-space vector */
-vect_t		dy_model;	/* view delta-Y as model-space vector */
-point_t		eye_model;	/* model-space location of eye */
-fastf_t         eye_backoff = 1.414;	/* dist from eye to center */
-int		width;			/* # of pixels in X */
-int		height;			/* # of lines in Y */
-mat_t		Viewrotscale;
-fastf_t		viewsize=0;
-fastf_t		zoomout=1;	/* >0 zoom out, 0..1 zoom in */
-char		*scanbuf;	/* For optional output buffering */
-int		incr_mode;		/* !0 for incremental resolution */
-int		incr_level;		/* current incremental level */
-int		incr_nlevel;		/* number of levels */
-int		npsw = MAX_PSW;		/* number of worker PSWs to run */
-struct resource	resource[MAX_PSW];	/* memory resources */
-/***** end variables shared with worker() *****/
+int	stereo = 0;	/* stereo viewing */
+vect_t left_eye_delta;
+int	hypersample=0;	/* number of extra rays to fire */
+int	perspective=0;	/* perspective view -vs- parallel view */
+vect_t	dx_model;	/* view delta-X as model-space vector */
+vect_t	dy_model;	/* view delta-Y as model-space vector */
+point_t	eye_model;	/* model-space location of eye */
+point_t	viewbase_model;	/* model-space location of viewplane corner */
+int npts;	/* # of points to shoot: x,y */
+mat_t Viewrotscale;
+mat_t toEye;
+fastf_t viewsize;
+fastf_t	zoomout=1;	/* >0 zoom out, 0..1 zoom in */
+/***** end variables shared with worker() */
 
-/***** variables shared with do.c *****/
-int		pix_start = -1;		/* pixel to start at */
-int		pix_end;		/* pixel to end at */
-int		nobjs;			/* Number of cmd-line treetops */
-char		**objtab;		/* array of treetop strings */
-char		*beginptr;		/* sbrk() at start of program */
-int		matflag = 0;		/* read matrix from stdin */
-int		desiredframe = 0;	/* frame to start at */
-int		curframe = 0;		/* current frame number */
-char		*outputfile = (char *)0;/* name of base of output file */
-int		interactive = 0;	/* human is watching results */
-/***** end variables shared with do.c *****/
+char scanbuf[8*1024*3];		/* generous scan line */
 
 /* Variables shared within mainline pieces */
-int		rdebug;			/* RT program debugging (not library) */
-
+int npsw = MAX_PSW;
 static char outbuf[132];
-static char idbuf[132];			/* First ID record info */
+static char idbuf[132];		/* First ID record info */
 
 static int seen_start, seen_matrix;	/* state flags */
-
-static char *title_file, *title_obj;	/* name of file and first object */
-
-#define MAX_WIDTH	(16*1024)
 
 /*
  * Package Handlers.
  */
 extern int pkg_nochecking;
-void	ph_unexp();	/* foobar message handler */
-void	ph_start();
-void	ph_matrix();
-void	ph_options();
-void	ph_lines();
-void	ph_end();
-void	ph_restart();
-void	ph_loglvl();
+int ph_unexp();	/* foobar message handler */
+int ph_start();
+int ph_matrix();
+int ph_options();
+int ph_lines();
+int ph_end();
+int ph_restart();
+int ph_loglvl();
 struct pkg_switch pkgswitch[] = {
 	{ MSG_START, ph_start, "Startup" },
 	{ MSG_MATRIX, ph_matrix, "Set Matrix" },
@@ -134,12 +101,11 @@ char *cmd_args[MAXARGS];
 int numargs;
 
 struct pkg_conn *pcsrv;		/* PKG connection to server */
-char		*control_host;	/* name of host running controller */
-char		*tcp_port;	/* TCP port on control_host */
+char *control_host;	/* name of host running controller */
 
-int debug = 0;		/* 0=off, 1=debug, 2=verbose */
+int debug = 0;
 
-char srv_usage[] = "Usage: rtsrv [-d] control-host tcp-port\n";
+char srv_usage[] = "Usage: rtsrv [-d] control-host\n";
 
 /*
  *			M A I N
@@ -156,37 +122,19 @@ char **argv;
 	}
 	if( strcmp( argv[1], "-d" ) == 0 )  {
 		argc--; argv++;
-		debug++;
+		debug = 1;
 	}
-	if( argc != 3 )  {
+	if( argc != 2 )  {
 		fprintf(stderr, srv_usage);
 		exit(2);
 	}
 
-	beginptr = sbrk(0);
-
-#ifdef CRAY1
-	npsw = 1;			/* >1 on GOS crashes system */
-#endif
-
-	/* Need to set rtg_parallel non_zero here for RES_INIT to work */
-	if( npsw > 1 )  {
-		rt_g.rtg_parallel = 1;
-	} else
-		rt_g.rtg_parallel = 0;
-	RES_INIT( &rt_g.res_syscall );
-	RES_INIT( &rt_g.res_worker );
-	RES_INIT( &rt_g.res_stats );
-	RES_INIT( &rt_g.res_results );
-
 	pkg_nochecking = 1;
 	control_host = argv[1];
-	tcp_port = argv[2];
-	pcsrv = pkg_open( control_host, tcp_port, "tcp", "", "",
-		pkgswitch, rt_log );
-	if( pcsrv == PKC_ERROR )  {
-		fprintf(stderr, "rtsrv: unable to contact %s, port %s\n",
-			control_host, tcp_port);
+	pcsrv = pkg_open( control_host, "rtsrv", pkgswitch, rt_log );
+	if( pcsrv == PKC_ERROR &&
+	    (pcsrv = pkg_open( control_host, "4446", pkgswitch, rt_log )) == PKC_ERROR )  {
+		fprintf(stderr, "unable to contact %s\n", control_host);
 		exit(1);
 	}
 	if( !debug )  {
@@ -197,13 +145,11 @@ char **argv;
 		(void)open("/dev/null", 0);
 		(void)dup2(0, 1);
 		(void)dup2(0, 2);
-#ifndef SYSV
 		n = open("/dev/tty", 2);
 		if (n > 0) {
 			ioctl(n, TIOCNOTTY, 0);
 			close(n);
 		}
-#endif SYSV
 
 		/* A fresh process */
 		if (fork())
@@ -214,135 +160,73 @@ char **argv;
 		if( setpgrp( n, n ) < 0 )
 			perror("setpgrp");
 
-#ifndef SYSV
 		(void)setpriority( PRIO_PROCESS, getpid(), 20 );
-#endif
 	}
 
 	while( pkg_block(pcsrv) >= 0 )
 		;
-	exit(0);
 }
 
-void
 ph_restart(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
 {
 	register int i;
 
-	if(debug)fprintf(stderr,"ph_restart %s\n", buf);
 	rt_log("Restarting\n");
 	pkg_close(pcsrv);
-	execlp( "rtsrv", "rtsrv", control_host, tcp_port, (char *)0);
+	execlp( "rtsrv", "rtsrv", control_host, (char *)0);
 	perror("rtsrv");
 	exit(1);
 }
 
-void
 ph_options(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
 {
 	register char *cp;
-	register int i;
 
-	if( debug )  fprintf(stderr,"ph_options: %s\n", buf);
+	if( debug )  rt_log("ph_options: %s\n", buf);
 	/* Start options in a known state */
 	hypersample = 0;
-	jitter = 0;
-	rt_perspective = 0;
-	persp_angle = 90;
-	eye_backoff = 1.414;
-	aspect = 1;
-	stereo = 0;
-	width = 0;
-	height = 0;
+	perspective = 0;
 
 	cp = buf;
-	while( *cp )  {
-		if( *cp != '-' )  {
-			cp++;
-			continue;
-		}
-
+	while( *cp == '-' )  {
 		switch( cp[1] )  {
-		case 'I':
-			interactive = 1;
-			break;
-		case 'S':
-			stereo = 1;
-			break;
-		case 'J':
-			jitter = atoi( &cp[2] );
-			break;
-		case 'H':
+		case 'h':
 			hypersample = atoi( &cp[2] );
-			if( hypersample > 0 )
-				jitter = 1;
 			break;
 		case 'A':
 			AmbientIntensity = atof( &cp[2] );
 			break;
 		case 'x':
 			sscanf( &cp[2], "%x", &rt_g.debug );
-			rt_log("rt_g.debug=x%x\n", rt_g.debug);
+			rt_log("debug=x%x\n", rt_g.debug);
 			break;
-		case 's':
-			/* Square size -- fall through */
 		case 'f':
 			/* "Fast" -- just a few pixels.  Or, arg's worth */
-			i = atoi( &cp[2] );
-			if( i < 2 || i > 8*1024 )
-				rt_log("square size %d out of range\n", i);
-			else
-				width = height = i;
-
+			npts = atoi( &cp[2] );
+			if( npts < 2 || npts > 8*1024 )  {
+				npts = 50;
+			}
 			break;
-		case 'n':
-			i = atoi( &cp[2] );
-			if( i < 2 || i > MAX_WIDTH )
-				rt_log("height=%d out of range\n", i);
-			else
-				height = i;
-			break;
-		case 'w':
-			i = atoi( &cp[2] );
-			if( i < 2 || i > MAX_WIDTH )
-				rt_log("width=%d out of range\n", i);
-			else
-				width = i;
-			break;
-
 		case 'l':
 			/* Select lighting model # */
 			lightmodel = atoi( &cp[2] );
 			break;
 		case 'p':
-			rt_perspective = 1;
-			persp_angle = atof( &cp[2] );
-			if( persp_angle < 1 )  persp_angle = 90;
-			if( persp_angle > 179 )  persp_angle = 90;
-			break;
-		case 'E':
-			eye_backoff = atof( &cp[2] );
+			perspective = 1;
+			if( cp[2] != '\0' )
+				zoomout = atof( &cp[2] );
+			if( zoomout <= 0 )  zoomout = 1;
 			break;
 		case 'P':
 			/* Number of parallel workers */
 			npsw = atoi( &cp[2] );
-			if( npsw < 1 || npsw > MAX_PSW )  {
-				rt_log("npsw out of range 1..%d\n", MAX_PSW);
-				npsw = 1;
-			}
-			break;
-		case 'B':
-			/*  Remove all intentional random effects
-			 *  (dither, etc) for benchmarking.
-			 */
-			mathtab_constant();
 			break;
 		default:
-			rt_log("rtsrv: Option '%c' unknown\n", cp[1]);
+			rt_log("Option '%c' unknown\n", cp[1]);
 			break;
 		}
 		while( *cp && *cp++ != ' ' )
@@ -352,15 +236,16 @@ char *buf;
 	(void)free(buf);
 }
 
-void
 ph_start(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
 {
+	char *title_file, *title_obj;	/* name of file and first object */
 	struct rt_i *rtip;
 	register int i;
+	register struct region *regp;
 
-	if( debug )  fprintf(stderr, "ph_start: %s\n", buf );
+	if( debug )  rt_log( "ph_start: %s\n", buf );
 	if( parse_cmd( buf ) > 0 )  {
 		(void)free(buf);
 		return;	/* was nop */
@@ -376,8 +261,16 @@ char *buf;
 		return;
 	}
 
-	title_file = rt_strdup(cmd_args[0]);
-	title_obj = rt_strdup(cmd_args[1]);
+	title_file = cmd_args[0];
+	title_obj = cmd_args[1];
+
+	RES_INIT( &rt_g.res_pt );
+	RES_INIT( &rt_g.res_seg );
+	RES_INIT( &rt_g.res_malloc );
+	RES_INIT( &rt_g.res_bitv );
+	RES_INIT( &rt_g.res_printf );
+	RES_INIT( &rt_g.res_worker );
+	RES_INIT( &rt_g.res_stats );
 
 	rt_prep_timer();		/* Start timing preparations */
 
@@ -389,38 +282,75 @@ char *buf;
 	ap.a_rt_i = rtip;
 	rt_log( "db title:  %s\n", idbuf);
 
+	(void)rt_read_timer( outbuf, sizeof(outbuf) );
+	rt_log("DB TOC: %s\n", outbuf);
+	rt_prep_timer();
+
 	/* Load the desired portion of the model */
 	for( i=1; i<numargs; i++ )  {
 		(void)rt_gettree(rtip, cmd_args[i]);
 	}
+	(void)rt_read_timer( outbuf, sizeof(outbuf) );
+	rt_log("DB WALK: %s\n", outbuf);
+	rt_prep_timer();
 
-	/* In case it changed from startup time */
-	if( npsw > 1 )  {
-		rt_g.rtg_parallel = 1;
-		rt_log("rtsrv:  running with %d processors\n", npsw );
-	} else
-		rt_g.rtg_parallel = 0;
+	/* Allow library to prepare itself */
+	rt_prep(rtip);
 
-	beginptr = sbrk(0);
+	/* Initialize the material library for all regions */
+	for( regp=rtip->HeadRegion; regp != REGION_NULL; regp=regp->reg_forw )  {
+		if( mlib_setup( regp ) == 0 )  {
+			rt_log("mlib_setup failure\n");
+		}
+	}
+
+	/* initialize application (claim output to file) */
+	view_init( &ap, title_file, title_obj, npts, 1 );
+
+	(void)rt_read_timer( outbuf, sizeof(outbuf) );
+	rt_log( "PREP: %s\n", outbuf );
+
+	if( rt_i.HeadSolid == SOLTAB_NULL )  {
+		rt_log("rt: No solids remain after prep.\n");
+		exit(3);
+	}
+
+#ifdef PARALLEL
+	/* Get enough dynamic memory to keep from making malloc sbrk() */
+	for( i=0; i<npsw; i++ )  {
+		rt_get_pt();
+		rt_get_seg();
+		rt_get_bitv();
+	}
+#ifdef HEP
+	/* This isn't useful with the Caltech malloc() in most systems */
+	rt_free( rt_malloc( (20+npsw)*8192, "worker prefetch"), "worker");
+#endif
+
+	rt_log("PARALLEL: npsw=%d\n", npsw );
+#ifdef HEP
+	for( i=0; i<npsw; i++ )  {
+		Dcreate( worker );
+	}
+#endif
+	rt_log("initial memory use=%d.\n",sbrk(0) );
+#endif
 
 	seen_start = 1;
 	(void)free(buf);
 
 	/* Acknowledge that we are ready */
-	if( pkg_send( MSG_START, "", 0, pcsrv ) < 0 )
-		fprintf(stderr,"MSG_START error\n");
+	pkg_send( MSG_START, "", 0, pcsrv );
 }
 
-void
 ph_matrix(pc, buf)
 register struct pkg_comm *pc;
 char *buf;
 {
 	register int i;
 	register char *cp = buf;
-	register struct rt_i *rtip = ap.a_rt_i;
 
-	if( debug )  fprintf(stderr, "ph_matrix: %s\n", buf );
+	if( debug )  rt_log( "ph_matrix: %s\n", buf );
 	/* Visible part is from -1 to +1 in view space */
 	viewsize = atof(cp);
 	while( *cp && *cp++ != ' ') ;
@@ -434,68 +364,11 @@ char *buf;
 		Viewrotscale[i] = atof(cp);
 	}
 
-	/*
-	 * initialize application -- it will allocate 1 line and
-	 * set buf_mode=1, as well as do mlib_init().
-	 */
-	(void)view_init( &ap, title_file, title_obj, 0 );
-
-	/* This code from do.c/do_frame() */
-	if( rtip->needprep )  {
-		register struct region *regp;
-
-		rt_prep_timer();
-		rt_prep(rtip);
-
-		/* Initialize the material library for all regions */
-		for( regp=rtip->HeadRegion; regp != REGION_NULL; regp=regp->reg_forw )  {
-			if( mlib_setup( regp ) < 0 )  {
-				rt_log("mlib_setup failure on %s\n", regp->reg_name);
-			} else {
-				if(rdebug&RDEBUG_MATERIAL)
-					((struct mfuncs *)(regp->reg_mfuncs))->
-						mf_print( regp, regp->reg_udata );
-				/* Perhaps this should be a function? */
-			}
-		}
-		(void)rt_read_timer( outbuf, sizeof(outbuf) );
-		rt_log( "PREP: %s\n", outbuf );
-	}
-
-	if( rt_g.rtg_parallel && resource[0].re_seg == SEG_NULL )  {
-		register int x;
-		/* 
-		 *  Get dynamic memory to keep from having to call
-		 *  malloc(), because the portability of doing sbrk()
-		 *  sys-calls when running in parallel mode is unknown.
-		 */
-		for( x=0; x<npsw; x++ )  {
-			rt_get_seg(&resource[x]);
-			rt_get_pt(rtip, &resource[x]);
-			rt_get_bitv(rtip, &resource[x]);
-		}
-		rt_log("Additional dynamic memory used=%d. bytes\n",
-			sbrk(0)-beginptr );
-		beginptr = sbrk(0);
-	}
-
-	if( rtip->HeadSolid == SOLTAB_NULL )  {
-		rt_log("rt: No solids remain after prep.\n");
-		exit(3);
-	}
-
+rt_log("npts=%d\n", npts);
 	grid_setup();
 
 	/* initialize lighting */
-	view_2init( &ap );
-
-	rtip->nshots = 0;
-	rtip->nmiss_model = 0;
-	rtip->nmiss_tree = 0;
-	rtip->nmiss_solid = 0;
-	rtip->nmiss = 0;
-	rtip->nhits = 0;
-	rtip->rti_nrays = 0;
+	view_2init( &ap, -1 );
 
 	seen_matrix = 1;
 	(void)free(buf);
@@ -507,7 +380,6 @@ char *buf;
  *  Process scanlines from 'a' to 'b', inclusive, sending each back
  *  as soon as it's done.
  */
-void
 ph_lines(pc, buf)
 struct pkg_comm *pc;
 char *buf;
@@ -515,7 +387,6 @@ char *buf;
 	register int y;
 	auto int a,b;
 
-	if( debug > 1 )  fprintf(stderr, "ph_lines: %s\n", buf );
 	if( !seen_start )  {
 		rt_log("ph_lines:  no start yet\n");
 		return;
@@ -535,25 +406,21 @@ char *buf;
 	for( y = a; y <= b; y++)  {
 		char rbuf[4];
 
-		do_run( y*width + 0, y*width + width - 1 );
+		do_run( y*npts + 0, y*npts + npts - 1 );
 
 		rbuf[0] = y&0xFF;
 		rbuf[1] = (y>>8);
-		if( pkg_2send( MSG_PIXELS, rbuf, 2,
-			scanbuf, width*3, pcsrv ) < 0 )
-			fprintf(stderr,"MSG_PIXELS send error\n");
+		pkg_2send( MSG_PIXELS, rbuf, 2,
+			scanbuf, npts*3, pcsrv );
 	}
 	(void)free(buf);
 }
 
 int print_on = 1;
-
-void
 ph_loglvl(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
 {
-	if(debug) fprintf(stderr, "ph_loglvl %s\n", buf);
 	if( buf[0] == '0' )
 		print_on = 0;
 	else	print_on = 1;
@@ -575,21 +442,20 @@ char *str;
 	static char *cp = buf+1;
 
 	if( print_on == 0 )  return;
-	RES_ACQUIRE( &rt_g.res_syscall );
+	RES_ACQUIRE( &rt_g.res_malloc );
 	(void)sprintf( cp, str, a, b, c, d, e, f, g, h );
 	while( *cp++ )  ;		/* leaves one beyond null */
 	if( cp[-2] != '\n' )
 		goto out;
-	if( pcsrv == PKC_NULL || pcsrv == PKC_ERROR )  {
+	if( pcsrv == PKC_NULL )  {
 		fprintf(stderr, "%s", buf+1);
 		goto out;
 	}
-	if(debug) fprintf(stderr, "%s", buf+1);
 	if( pkg_send( MSG_PRINT, buf+1, strlen(buf+1)+1, pcsrv ) < 0 )
 		exit(12);
 	cp = buf+1;
 out:
-	RES_RELEASE( &rt_g.res_syscall );
+	RES_RELEASE( &rt_g.res_malloc );
 }
 
 void
@@ -601,7 +467,6 @@ char *str;
 	exit(12);
 }
 
-void
 ph_unexp(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
@@ -617,22 +482,20 @@ char *buf;
 	(void)free(buf);
 }
 
-void
 ph_end(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
 {
-	if( debug )  fprintf(stderr, "ph_end\n");
+	if( debug )  rt_log( "ph_end\n");
 	pkg_close(pcsrv);
 	exit(0);
 }
 
-void
 ph_print(pc, buf)
 register struct pkg_conn *pc;
 char *buf;
 {
-	fprintf(stderr,"msg: %s\n", buf);
+	printf("msg: %s\n", buf);
 	(void)free(buf);
 }
 
@@ -673,3 +536,52 @@ char *line;
 	cmd_args[numargs] = (char *)0;
 	return(0);
 }
+
+fb_open( name, w, h )
+char *name;
+{
+	return(0);
+}
+
+fb_close()
+{
+	return(0);
+}
+
+#ifdef cray
+#ifndef PARALLEL
+LOCKASGN(p)
+{
+}
+LOCKON(p)
+{
+}
+LOCKOFF(p)
+{
+}
+#endif
+#endif
+
+#ifdef sgi
+/* Horrible bug in 3.3.1 and 3.4 -- hypot ruins stack! */
+double
+hypot(a,b)
+double a,b;
+{
+	extern double sqrt();
+	return(sqrt(a*a+b*b));
+}
+#endif
+
+#ifdef alliant
+RES_ACQUIRE(p)
+register int *p;
+{
+#ifdef PARALLEL
+	asm("loop:");
+	while( *p )  ;
+	asm("	tas	a5@");
+	asm("	bne	loop");
+#endif
+}
+#endif alliant

@@ -1,8 +1,8 @@
 /*
- *			P Y R A M I D . C
+ *			T R I . C
  *
- *  Program to generate recursive 3-d pyramids (arb4).
- *  Inspired by the SigGraph paper of Glasser.
+ *  Program to generate recursive 3-d triangles (arb4).
+ *  Inspired by the SigGraph paper of ???
  *
  *  Author -
  *	Michael John Muuss
@@ -28,123 +28,37 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 double sin60;
 
-main(argc, argv)
-char	**argv;
+main()
 {
-	int depth;
+	sin60 = sin(3.14159265358979323846264/3.0);
 
-	if( argc != 2 )  {
-		fprintf(stderr, "Usage:  pyramid recursion\n");
-		exit(1);
-	}
-	depth = atoi( argv[1] );
-	sin60 = sin(60.0 * 3.14159265358979323846264 / 180.0);
+	mk_id( "Triangles" );
 
-	mk_id( stdout, "Triangles" );
-
-	do_leaf("leaf");
-	do_pleaf("polyleaf");
-	do_tree("tree", "leaf", depth);
+	do_leaf();
+	do_tree("tree",4);
 }
 
-/* Make a leaf node out of an ARB4 */
-do_leaf(name)
-char	*name;
+do_leaf()
 {
-	point_t pt[4];
+	point_t pt[8];
 
 	VSET( pt[0], 0, 0, 0);
-	VSET( pt[1], 100, 0, 0);
-	VSET( pt[2], 50, 100*sin60, 0);
-	VSET( pt[3], 50, 100*sin60/3, 100*sin60 );
+	VSET( pt[1], 1, 0, 0);
+	VSET( pt[2], 0.5, sin60, 0);
+	VMOVE( pt[3], pt[2] );
 
-	mk_arb4( stdout, name, pt );
+	VSET( pt[4], 0.5, sin60/3, sin60 );
+
+	VMOVE( pt[5], pt[1] );
+	VMOVE( pt[6], pt[2] );
+	VMOVE( pt[7], pt[4] );
+
+	mk_arb( "leaf", pt, 8 );
 }
 
-/* Make a leaf node out of 4 polygons */
-do_pleaf(name)
-char	*name;
-{
-	point_t pt[4];
-	fastf_t	verts[5][3];
-	fastf_t	norms[5][3];
-	point_t	centroid;
-	register int i;
-
-	VSET( pt[0], 0, 0, 0);
-	VSET( pt[1], 100, 0, 0);
-	VSET( pt[2], 50, 100*sin60, 0);
-	VSET( pt[3], 50, 100*sin60/3, 100*sin60 );
-
-	VMOVE( centroid, pt[0] );
-	for( i=1; i<4; i++ )  {
-		VADD2( centroid, centroid, pt[i] );
-	}
-	VSCALE( centroid, centroid, 0.25 );
-
-	mk_polysolid( stdout, name );
-
-	VMOVE( verts[0], pt[0] );
-	VMOVE( verts[1], pt[1] );
-	VMOVE( verts[2], pt[2] );
-	pnorms( norms, verts, centroid, 3 );
-	mk_facet( stdout, 3, verts, norms );
-
-	VMOVE( verts[0], pt[0] );
-	VMOVE( verts[1], pt[1] );
-	VMOVE( verts[2], pt[3] );
-	pnorms( norms, verts, centroid, 3 );
-	mk_facet( stdout, 3, verts, norms );
-
-	VMOVE( verts[0], pt[0] );
-	VMOVE( verts[1], pt[2] );
-	VMOVE( verts[2], pt[3] );
-	pnorms( norms, verts, centroid, 3 );
-	mk_facet( stdout, 3, verts, norms );
-
-	VMOVE( verts[0], pt[1] );
-	VMOVE( verts[1], pt[2] );
-	VMOVE( verts[2], pt[3] );
-	pnorms( norms, verts, centroid, 3 );
-	mk_facet( stdout, 3, verts, norms );
-}
-
-/*
- *  Find the single outward pointing normal for a facet.
- *  Assumes all points are coplanar (they better be!).
- */
-pnorms( norms, verts, centroid, npts )
-fastf_t	norms[5][3];
-fastf_t	verts[5][3];
-point_t	centroid;
-int	npts;
-{
-	register int i;
-	vect_t	ab, ac;
-	vect_t	n;
-	vect_t	out;		/* hopefully points outwards */
-
-	VSUB2( ab, verts[1], verts[0] );
-	VSUB2( ac, verts[2], verts[0] );
-	VCROSS( n, ab, ac );
-	VUNITIZE( n );
-
-	/* If normal points inwards (towards centroid), flip it */
-	VSUB2( out, verts[0], centroid );
-	if( VDOT( n, out ) < 0 )  {
-		VREVERSE( n, n );
-	}
-
-	/* Use same normal for all vertices (flat shading) */
-	for( i=0; i<npts; i++ )  {
-		VMOVE( norms[i], n );
-	}
-}
-
-do_tree(name, lname, level)
-char	*name;
-char	*lname;
-int	level;
+do_tree(name, level)
+char *name;
+int level;
 {
 	register int i;
 	mat_t m;
@@ -153,40 +67,38 @@ int	level;
 	int scale;
 
 	if( level <= 1 )
-		leafp = lname;
+		leafp = "leaf";		/* XXX */
 	else
 		leafp = nm;
 
-	scale = 100;
+	scale = 1;
 	for( i=1; i<level; i++ )
 		scale *= 2;
 
 	/* len = 4, set region on lowest level */
-	mk_comb( stdout, name, 4, level<=1 );
+	mk_comb( name, 4, level<=1 );
 
 	mat_idn( m );
 	sprintf(nm, "%sL", name);
-	mk_memb( stdout, leafp, m, UNION );
+	mk_memb( UNION, leafp, m );
 
 	MAT_DELTAS( m, 1*scale, 0, 0 );
 	sprintf(nm, "%sR", name);
-	mk_memb( stdout, leafp, m, UNION );
+	mk_memb( UNION, leafp, m );
 
 	MAT_DELTAS( m, 0.5*scale, sin60*scale, 0 );
 	sprintf(nm, "%sB", name);
-	mk_memb( stdout, leafp, m, UNION );
+	mk_memb( UNION, leafp, m );
 
 	MAT_DELTAS( m, 0.5*scale, sin60/3*scale, sin60*scale );
 	sprintf(nm, "%sT", name);
-	mk_memb( stdout, leafp, m, UNION );
+	mk_memb( UNION, leafp, m );
 
 	/* Loop for children if level > 1 */
 	if( level <= 1 )
 		return;
 	for( i=0; i<4; i++ )  {
 		sprintf(nm, "%s%c", name, "LRBTx"[i] );
-		do_tree( nm, lname, level-1 );
+		do_tree( nm, level-1 );
 	}
 }
-
-rt_log(str) {fprintf(stderr,"rt_log: %s\n", str);}

@@ -19,7 +19,6 @@
 #define MAX_MAT_DB	100
 #define MAX_MAT_NM	81
 #define MF_USED		1
-#undef	MF_NULL
 #define MF_NULL		0
 typedef struct
 	{
@@ -36,13 +35,15 @@ typedef struct
 	} Mat_Db_Entry;
 #define MAT_DB_NULL	(Mat_Db_Entry *) NULL
 
+extern FILE		*mat_Open_Db();
 extern Mat_Db_Entry	*fb_Entry();
 extern Mat_Db_Entry	*fb_val();
 extern Mat_Db_Entry	*mat_Get_Db_Entry();
+extern int		mat_Close_Db();
 extern int		mat_Print_Db();
-extern int		mat_Rd_Db();
+extern int		mat_Read_Db();
 extern int		mat_Save_Db();
-extern int		mat_Edit_Db_Entry();
+extern int		mat_Put_Db_Entry();
 extern int		mat_Print_Db();
 
 extern Mat_Db_Entry	mat_dfl_entry;

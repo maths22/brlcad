@@ -1,14 +1,19 @@
 /*
+	SCCS id:	@(#) prnt.c	2.1
+	Modified: 	12/9/86 at 15:55:34
+	Retrieved: 	12/26/86 at 21:54:38
+	SCCS archive:	/vld/moss/src/fbed/s.prnt.c
+
 	Author:		Gary S. Moss
 			U. S. Army Ballistic Research Laboratory
 			Aberdeen Proving Ground
 			Maryland 21005-5066
 			(301)278-6647 or AV-298-6647
 */
-#ifndef lint
-static char RCSid[] = "@(#)$Header$ (BRL)";
+#if ! defined( lint )
+static
+char	sccsTag[] = "@(#) prnt.c 2.1, modified 12/9/86 at 15:55:34, archive /vld/moss/src/fbed/s.prnt.c";
 #endif
-
 #include <stdio.h>
 #include "./extern.h"
 
@@ -130,22 +135,15 @@ RGBpixel	*pixelp;
 	}
 
 #include <varargs.h>
-#ifdef cray
-#define Va_Decl( _func )	_func(fmt, a,b,c,d,e,f,g,h,i) char *fmt;
-#define Va_Start()
-#define Va_End()
-#define Va_Print( _p )		(void) fprintf( _p, fmt, a,b,c,d,e,f,g,h,i )
-#else
-#define Va_Decl( _func )	_func(fmt, va_alist) char *fmt; va_dcl
-#define Va_Start()		va_list	ap; va_start( ap )
-#define Va_End()		va_end( ap )
-#define Va_Print( _p )		(void) _doprnt( fmt, ap, _p )
-#endif
 /* VARARGS */
 void
-Va_Decl( fb_log )
+fb_log( fmt, va_alist )
+char	*fmt;
+va_dcl
 	{	extern char	*DL, *CS;
-	Va_Start();
+		va_list		ap;
+	/* We use the same lock as malloc.  Sys-call or mem lock, really */
+	va_start( ap );
 	if( tty )
 		{
 		if( CS != NULL )
@@ -153,7 +151,7 @@ Va_Decl( fb_log )
 			SetScrlReg( TOP_SCROLL_WIN, PROMPT_LINE - 1 );
 			SCROLL_PR_MOVE();
 			ClrEOL();
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 			ResetScrlReg();
 			}
 		else
@@ -163,26 +161,31 @@ Va_Decl( fb_log )
 			DeleteLn();
 			SCROLL_PR_MOVE();
 			ClrEOL();
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 			}
 		else
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 		}
 	else
 		{
-		Va_Print( stdout );
+		(void) _doprnt( fmt, ap, stdout );
 		(void) printf( "\n" );
 		}
-	Va_End();
+	va_end( ap );
 	(void) fflush( stdout );
 	return;
 	}
 
+/*	p r n t _ S c r o l l ( )					*/
 /* VARARGS */
 void
-Va_Decl( prnt_Scroll )
+prnt_Scroll( fmt, va_alist )
+char	*fmt;
+va_dcl
 	{	extern char	*DL, *CS;
-	Va_Start();
+		va_list		ap;
+	/* We use the same lock as malloc.  Sys-call or mem lock, really */
+	va_start( ap );
 	if( tty )
 		{
 		if( CS != NULL )
@@ -190,7 +193,7 @@ Va_Decl( prnt_Scroll )
 			SetScrlReg( TOP_SCROLL_WIN, PROMPT_LINE - 1 );
 			SCROLL_PR_MOVE();
 			ClrEOL();
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 			ResetScrlReg();
 			}
 		else
@@ -200,64 +203,43 @@ Va_Decl( prnt_Scroll )
 			DeleteLn();
 			SCROLL_PR_MOVE();
 			ClrEOL();
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 			}
 		else
-			Va_Print( stdout );
+			(void) _doprnt( fmt, ap, stdout );
 		}
 	else
 		{
-		Va_Print( stdout );	
+		(void) _doprnt( fmt, ap, stdout );
 		(void) printf( "\n" );
 		}
-	Va_End();
+	va_end( ap );
 	return;
 	}
 
 /*	p r n t _ D e b u g ( )						*/
 /* VARARGS */
 void
-Va_Decl( prnt_Debug )
-	{
-	Va_Start();
+prnt_Event( fmt, va_alist )
+char	*fmt;
+va_dcl
+	{	va_list		ap;
+	va_start( ap );
 	if( tty )
 		{
 		ERROR_MOVE();
 		ClrEOL();
 		SetStandout();
-		Va_Print( stdout );
+		(void) _doprnt( fmt, ap, stdout );
 		ClrStandout();
 		(void) fflush( stdout );
 		}
 	else
 		{
-		Va_Print( stderr );
-	 	(void) fprintf( stderr, "\n" );
-		}
-	Va_End();
-	return;
-	}
-
-/* VARARGS */
-void
-Va_Decl( prnt_Event )
-	{
-	Va_Start();
-	if( tty )
-		{
-		ERROR_MOVE();
-		ClrEOL();
-		SetStandout();
-		Va_Print( stdout );
-		ClrStandout();
-		(void) fflush( stdout );
-		}
-	else
-		{
-		Va_Print( stderr );
+		(void) _doprnt( fmt, ap, stderr );
 		(void) fprintf( stderr, "\n" );
 		}
-	Va_End();
+	va_end( ap );
 	return;
 	}
 
@@ -351,6 +333,5 @@ register Rectangle	*rectp;
 			rectp->r_corner.p_x,
 			rectp->r_corner.p_y
 			);
-	(void) fflush( stdout );
 	return;
 	}

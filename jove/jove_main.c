@@ -4,20 +4,6 @@
  * $Revision$
  *
  * $Log$
- * Revision 2.10  87/09/10  00:23:01  mike
- * Hopefully, the fix for the "scramble the input" bug on the Crays
- * and other SysV machines.
- * 
- * Revision 2.9  87/05/05  21:04:12  dpk
- * Simplified getchar code. Now all systems use the read loop
- * 
- * Revision 2.8  87/04/14  20:14:21  dpk
- * Added SIGHUP fix.
- * 
- * Revision 2.7  86/09/23  22:28:52  mike
- * Externs now declared properly.
- * I/O fixes for SysV
- * 
  * Revision 2.7  86/09/23  22:26:46  mike
  * Externs now declared properly.
  * I/O fixes for SysV
@@ -153,8 +139,6 @@ finish(code)
 		}
 	}
 	if (code) {
-		if (code == SIGHUP)
-			ignorf(signal(code, SIG_IGN));	/* A little privacy */
 		if (!Crashing) {
 			putstr("Writing modified JOVE buffers...");
 			Crashing++;
@@ -177,7 +161,7 @@ finish(code)
 	byebye(code);
 }
 
-#define NTOBUF	256		/* Should never get that far ahead */
+#define NTOBUF	20		/* Should never get that far ahead */
 static char	smbuf[NTOBUF],
 		*bp = smbuf;
 static int	nchars = 0;
@@ -194,19 +178,29 @@ register int	c;
 
 getchar()
 {
+	char buf[128];
 	if (nchars <= 0) {
+#ifdef JOBCONTROL
+		nchars = read(Input, smbuf, sizeof smbuf);
+#else
 		/*
 		 *  This loop will retry the read if it is interrupted
 		 *  by an alarm signal.  (Like VMUNIX...)
 		 */
 		do {
 			nchars = read(Input, smbuf, sizeof smbuf);
+#ifdef never
+sprintf(buf,"getchar() nchars=%d\n", nchars);
+write(2,buf,strlen(buf));
+#endif
 #ifdef SYS5
 		} while ((nchars == 0 && Input == 0)	/* DAG -- added Input test */
 			 || (nchars < 0 && errno == EINTR));
 #else
 		} while (nchars < 0 && errno == EINTR);
 #endif SYS5
+#endif JOBCONTROL
+
 		if(nchars <= 0) {
 			if (Input)
 				return EOF;
@@ -247,16 +241,12 @@ charp()
 		/* Since VMIN=1, we need to be able to poll for input
 		 * here.  Yes, the 4-syscalls to do it are costly,
 		 * but not as costly as the infinite loop when VMIN=0!
-		 * Have to be careful, as we actually read in the
-		 * characters here, to see if there are any.
 		 */
 		flags = fcntl( Input, F_GETFL, 0);
 		(void)fcntl( Input, F_SETFL, flags|O_NDELAY );
-		c = &smbuf[NTOBUF] - bp - nchars;	/* space left */
-		if( c < 0 )  c = 0;
-		c = read(Input, bp+nchars, c );
+		c = read(Input, smbuf, sizeof smbuf);
 		if (c > 0)
-			nchars += c;
+			nchars = c;
 		(void)fcntl( Input, F_SETFL, flags );
 #else SYS5
 		int c;

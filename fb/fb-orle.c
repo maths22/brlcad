@@ -112,6 +112,7 @@ char	*argv[];
 		return	0;
 
 	/* Get image from framebuffer and encode it */
+	fb_ioinit( fbp );
 	y_end = ypos + ylen;
 
 	for( y = ypos; y < y_end; y++ )  {

@@ -131,7 +131,6 @@ doKeyPad()
 	case 'r' :	
 	case 'R' :				/* Reset */
 		(void)fb_zoom( fbp, 1, 1 );
-		zoom = 1;
 		xPan = fb_getwidth(fbp)/2;
 		yPan = fb_getheight(fbp)/2;
 		break;

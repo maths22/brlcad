@@ -185,7 +185,7 @@ RGBpixel	menu_border;
 /*	b i t x ( )
 	Extract a bit field from a bit string.
  */
-int
+_LOCAL_ int
 bitx( bitstring, posn )
 register char *bitstring;
 register int posn;

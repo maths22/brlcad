@@ -29,6 +29,11 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 #define Avg_Fah(sum)	((sum)/(sample_sz))
 #define Kelvin2Fah( f )	(9.0/5.0)*((f)-273.15) + 32.0
 #define S_BINS		10
+#define S_INTERVAL	(length/(S_BINS+2))
+#define S_XMAX		(xmin+(S_INTERVAL*S_BINS))
+#define S_XRANGE	(S_XMAX-xmin)
+#define S_XPOS		(x-xmin)
+#define S_YMAX		(ymin+S_INTERVAL)
 
 static RGBpixel	black = { 0, 0, 0 };
 static int	ir_max_index = -1;
@@ -39,24 +44,16 @@ _LOCAL_ void	temp_To_RGB();
 _LOCAL_ int
 adjust_Page( y )
 int	y;
-	{	int	scans_per_page = fbiop->if_ppixels/fbiop->if_width;
-		int	newy = y - (y % scans_per_page);
-	return	newy < grid_sz / 2 ? y : newy;
+	{	int	scans_per_page = 32;/* (_pagesz / sizeof(RGBpixel)) / IR_DATA_WID;*/
+	return	y + scans_per_page - (y % scans_per_page);
 	}
 
-#define D_XPOS	(x-xmin)
 void
-display_Temps( xmin, ymax )
-int	xmin, ymax;
+display_Temps( xmin, ymin, length )
+register int	xmin, ymin, length;
 	{	register int	x, y;
-		register int	interval = ((grid_sz*3+2)/4)/(S_BINS+2);
-		register int	xmax = xmin+(interval*S_BINS);
-		register int	ymin;
-		fastf_t		xrange = xmax - xmin;
-
 	/* Avoid page thrashing of frame buffer.			*/
-	ymax = adjust_Page( ymax );
-	ymin = ymax - interval;
+	ymin = adjust_Page( ymin );
 
 	if( ir_table == RGBPIXEL_NULL )
 		{
@@ -68,7 +65,7 @@ int	xmin, ymax;
 		rt_log( "Could not load font.\n" );
 		return;
 		}
-	for( y = ymin; y <= ymax; y++ )
+	for( y = ymin; y <= S_YMAX; y++ )
 		{
 		x = xmin;
 		if( fb_seek( fbiop, x, y ) == -1 )
@@ -78,33 +75,31 @@ int	xmin, ymax;
 				);
 			return;
 			}
-		for( ; x <= xmax + interval; x++ )
+		for( ; x <= S_XMAX + S_INTERVAL; x++ )
 			{	fastf_t	percent;
 				static RGBpixel	*pixel;
-			percent = D_XPOS / xrange;
-			if( D_XPOS % interval == 0 )
+			percent = S_XPOS / (fastf_t)(S_XRANGE);
+			if( S_XPOS % S_INTERVAL == 0 )
 				{	int	temp = AMBIENT+percent*RANGE;
 					register int	index = temp - ir_min;
 				pixel = (RGBpixel *) ir_table[Min(index,ir_max_index)];
 				(void) fb_wpixel( fbiop, black );
 				}
 			else
-				{
 				(void) fb_wpixel( fbiop, pixel );
-				}
+
 			}
 		}
-	y = ymin;
-	for( x = xmin; x <= xmax; x += interval )
+	for( x = xmin; x <= S_XMAX; x += S_INTERVAL )
 		{	char	tempstr[4];
-			fastf_t	percent = D_XPOS / xrange;
+			fastf_t	percent = S_XPOS / (fastf_t)(S_XRANGE);
 			int	temp = AMBIENT+percent*RANGE;
 			int	shrinkfactor = fb_getwidth( fbiop )/grid_sz;
 		(void) sprintf( tempstr, "%3d", temp );
 		do_line(	x+2,
-				y+(interval-(12/shrinkfactor))/2,
-				tempstr
-/*,shrinkfactor*/
+				y-(S_INTERVAL-(12/shrinkfactor))/2,
+				tempstr,
+				shrinkfactor
 				);
 		}
 	fb_flush( fbiop );
@@ -133,7 +128,6 @@ FILE	*fp;
 		int		min, max;
 	if( ! fb_Setup( fb_file, IR_DATA_WID ) )
 		return	0;
-/*	fbiop->if_debug = FB_DEBUG_BIO | FB_DEBUG_BRW | FB_DEBUG_RW;*/
 	fb_Zoom_Window();
 	if(	fread( (char *) &min, (int) sizeof(int), 1, fp ) != 1
 	     ||	fread( (char *) &max, (int) sizeof(int), 1, fp ) != 1
@@ -164,7 +158,7 @@ FILE	*fp;
 		}
 	if( ! init_Temp_To_RGB() )
 		return	0;
- 	for( ry = 0, fy = grid_sz-1; ; ry += ir_aperture, fy-- )
+	for( ry = 0, fy = 0; ; ry += aperture_sz, fy++ )
 		{
 		if( fb_seek( fbiop, 0, fy ) == -1 )
 			{
@@ -173,15 +167,15 @@ FILE	*fp;
 				);
 			return	0;
 			}
-		for( rx = 0 ; rx < IR_DATA_WID; rx += ir_aperture )
+		for( rx = 0 ; rx < IR_DATA_WID; rx += aperture_sz )
 			{	int	fah;
 				int	sum = 0;
 				register int	i;
 				register int	index;
 				RGBpixel	*pixel;
-			for( i = 0; i < ir_aperture; i++ )
+			for( i = 0; i < aperture_sz; i++ )
 				{	register int	j;
-				for( j = 0; j < ir_aperture; j++ )
+				for( j = 0; j < aperture_sz; j++ )
 					{
 					if( get_IR( rx+j, ry+i, &fah, fp ) )
 						sum += fah < ir_min ? ir_min : fah;
@@ -189,7 +183,10 @@ FILE	*fp;
 						{
 						if( ir_octree.o_temp == ABSOLUTE_ZERO )
 							ir_octree.o_temp = AMBIENT - 1;
-						display_Temps( grid_sz/8, grid_sz * 3 / 4);
+						display_Temps(	grid_sz/8,
+								fy + 10,
+								(grid_sz*3+2)/4
+								);
 						close_Output_Device();
 						return	1;
 						}
@@ -280,14 +277,14 @@ int		temp;
 init_Temp_To_RGB()
 	{	register int	temp, i;
 		RGBpixel	rgb;
-	if( (ir_aperture = fb_getwidth( fbiop )/grid_sz) < 1 )
+	if( (aperture_sz = fb_getwidth( fbiop )/grid_sz) < 1 )
 		{
 		rt_log( "Grid too large for IR application, max. is %d.\n",
 			IR_DATA_WID
 			);
 		return	0;
 		}
-	sample_sz = Sqr( ir_aperture );
+	sample_sz = Sqr( aperture_sz );
 	if( ir_table != RGBPIXEL_NULL )
 		/* Table already initialized presumably from another view,
 			since range may differ we must create a different
@@ -317,19 +314,19 @@ register RGBpixel	*pixel;
 		register int	temp = ir_min;
 	for( p = (RGBpixel *) ir_table[0]; p <= q; p++, temp++ )
 		{
-		if(	(int) (*p)[RED] == (int) (*pixel)[RED]
-		    &&	(int) (*p)[GRN] == (int) (*pixel)[GRN]
-		    &&	(int) (*p)[BLU] == (int) (*pixel)[BLU]
+		if(	(int) p[RED] == (int) pixel[RED]
+		    &&	(int) p[GRN] == (int) pixel[GRN]
+		    &&	(int) p[BLU] == (int) pixel[BLU]
 			)
 			return	temp;
 		}
 	return	ABSOLUTE_ZERO;
 	}
 
-f_IR_Model( ap, op )
+do_IR_Model( ap, op )
 register struct application	*ap;
 Octree				*op;
-	{	fastf_t		octnt_min[3], octnt_max[3];
+	{	fastf_t		octant_min[3], octant_max[3];
 		fastf_t		delta = modl_radius / pow_Of_2( ap->a_level );
 		fastf_t		point[3]; /* Intersection point.	*/
 		fastf_t		norml[3]; /* Unit normal at point.	*/
@@ -337,14 +334,14 @@ Octree				*op;
 	VJOIN1( point, ap->a_ray.r_pt, ap->a_uvec[0], ap->a_ray.r_dir );
 
 	/* Compute octant RPP.						*/
-	octnt_min[X] = op->o_points->c_point[X] - delta;
-	octnt_min[Y] = op->o_points->c_point[Y] - delta;
-	octnt_min[Z] = op->o_points->c_point[Z] - delta;
-	octnt_max[X] = op->o_points->c_point[X] + delta;
-	octnt_max[Y] = op->o_points->c_point[Y] + delta;
-	octnt_max[Z] = op->o_points->c_point[Z] + delta;
+	octant_min[X] = op->o_points->c_point[X] - delta;
+	octant_min[Y] = op->o_points->c_point[Y] - delta;
+	octant_min[Z] = op->o_points->c_point[Z] - delta;
+	octant_max[X] = op->o_points->c_point[X] + delta;
+	octant_max[Y] = op->o_points->c_point[Y] + delta;
+	octant_max[Z] = op->o_points->c_point[Z] + delta;
 
-	if( AproxEq( point[X], octnt_min[X], EPSILON ) )
+	if( AproxEq( point[X], octant_min[X], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			negative X-axis.
 		 */
@@ -354,7 +351,7 @@ Octree				*op;
 		norml[Z] =  0.0;
 		}
 	else
-	if( AproxEq( point[X], octnt_max[X], EPSILON ) )
+	if( AproxEq( point[X], octant_max[X], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			positive X-axis.
 		 */
@@ -364,7 +361,7 @@ Octree				*op;
 		norml[Z] = 0.0;
 		}
 	else
-	if( AproxEq( point[Y], octnt_min[Y], EPSILON ) )
+	if( AproxEq( point[Y], octant_min[Y], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			negative Y-axis.
 		 */
@@ -374,7 +371,7 @@ Octree				*op;
 		norml[Z] =  0.0;
 		}
 	else
-	if( AproxEq( point[Y], octnt_max[Y], EPSILON ) )
+	if( AproxEq( point[Y], octant_max[Y], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			positive Y-axis.
 		 */
@@ -384,7 +381,7 @@ Octree				*op;
 		norml[Z] = 0.0;
 		}
 	else
-	if( AproxEq( point[Z], octnt_min[Z], EPSILON ) )
+	if( AproxEq( point[Z], octant_min[Z], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			negative Z-axis.
 		 */
@@ -394,7 +391,7 @@ Octree				*op;
 		norml[Z] = -1.0;
 		}
 	else
-	if( AproxEq( point[Z], octnt_max[Z], EPSILON ) )
+	if( AproxEq( point[Z], octant_max[Z], EPSILON ) )
 		/* Intersection point lies on plane whose normal is the
 			positive Z-axis.
 		 */
@@ -427,7 +424,7 @@ Octree				*op;
 	return	1;
 	}
 
-f_IR_Backgr( ap )
+do_IR_Backgr( ap )
 register struct application *ap;
 	{
 	VMOVE( ap->a_color, bg_coefs );

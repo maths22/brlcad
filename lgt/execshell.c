@@ -58,11 +58,12 @@ exec_Shell( args )
 char	*args[];
 	{	register int	child_pid;
 		static char	error_buf[32];
-#if defined( BSD ) || defined( SYSV )
+#if defined( BSD ) || defined( sgi )
 		int		(*intr_sig)(), (*quit_sig)();
 #else
 		void		(*intr_sig)(), (*quit_sig)();
 #endif
+		register int	i;
 	if( args[0] == NULL )
 		{ char	*arg_sh = getenv( "SHELL" );
 		/* $SHELL, if set, DFL_SHELL otherwise.			*/

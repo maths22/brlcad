@@ -4,16 +4,6 @@
  * $Revision$
  *
  * $Log$
- * Revision 2.3  87/04/14  21:27:52  dpk
- * SYSV to SYS5.
- * 
- * Revision 2.2  87/04/14  20:47:47  dpk
- * Changes for CRAY compatability.
- * 
- * Revision 2.1  86/09/23  22:28:20  mike
- * Externs now declared properly.
- * I/O fixes for SysV
- * 
  * Revision 2.1  86/09/23  22:26:10  mike
  * Externs now declared properly.
  * I/O fixes for SysV
@@ -30,12 +20,8 @@
 
 #include <setjmp.h>
 
-#ifdef SYS5
-#define	bcopy(f, t, c)	memcpy((t), (f), (c))
-#endif
-
 /* The following is tailorable */
-#if defined(VMUNIX) || defined(CRAY)
+#ifdef VMUNIX
 
 typedef	long	disk_line;
 #define BSIZ	4096
@@ -416,31 +402,3 @@ extern BUFFER
 #define	SAVE_NO		0
 #define	SAVE_ASK	1
 #define	SAVE_ALWAYS	2
-
-#ifdef CRAY2
-/* Common SYSV definitions not supported on the CRAY2 */
-#define SIGIOT  SIGHWE
-#define SIGBUS  SIGPRE
-#define SIGSEGV SIGORE
-
-#define VQUIT   1
-#define VERASE  2
-#define VKILL   3
-#define VMIN    4
-#define VTIME   5
-#define	INLCR	0000100
-#define ICRNL   0000400
-#define IUCLC   0001000
-#define	OLCUC	0000002
-#define	ONLCR	0000004
-#define	OCRNL	0000010
-#define	ONOCR	0000020
-#define	ONLRET	0000040
-#define	OFILL	0000100
-#define TABDLY  0014000
-#define TAB3    0014000
-#define CBAUD   0000017
-
-#define	ISIG	0000001		/* line disc. 0 modes */
-#define TCSETAW TCSETA
-#endif CRAY2
