@@ -463,6 +463,7 @@ libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
 libfb/adageframe.h svneol=native#text/plain
 libfb/asize.c svneol=native#text/plain
+libfb/compress.c svneol=native#text/plain
 libfb/dmdfb.h svneol=native#text/plain
 libfb/fb_generic.c svneol=native#text/plain
 libfb/fb_log.c svneol=native#text/plain
