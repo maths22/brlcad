@@ -2466,6 +2466,8 @@ libtcl8.4/library/parray.tcl svneol=native#text/plain
 libtcl8.4/library/reg/pkgIndex.tcl svneol=native#text/plain
 libtcl8.4/library/safe.tcl svneol=native#text/plain
 libtcl8.4/library/tclIndex -text
+libtcl8.4/library/tcltest/pkgIndex.tcl svneol=native#text/plain
+libtcl8.4/library/tcltest/tcltest.tcl svneol=native#text/plain
 libtcl8.4/library/word.tcl svneol=native#text/plain
 libtcl8.4/license.terms svneol=native#text/plain
 libtcl8.4/mac/AppleScript.html svneol=native#text/html
@@ -2513,7 +2515,6 @@ libtcl8.4/mac/tclMacOSA.c svneol=native#text/plain
 libtcl8.4/mac/tclMacOSA.r svneol=native#text/plain
 libtcl8.4/mac/tclMacPanic.c svneol=native#text/plain
 libtcl8.4/mac/tclMacPort.h svneol=native#text/plain
-libtcl8.4/mac/tclMacProjects.sea.hqx -text svneol=unset#application/mac-binhex40
 libtcl8.4/mac/tclMacResource.c svneol=native#text/plain
 libtcl8.4/mac/tclMacResource.r svneol=native#text/plain
 libtcl8.4/mac/tclMacSock.c svneol=native#text/plain
@@ -2524,8 +2525,8 @@ libtcl8.4/mac/tclMacThrd.h svneol=native#text/plain
 libtcl8.4/mac/tclMacTime.c svneol=native#text/plain
 libtcl8.4/mac/tclMacUnix.c svneol=native#text/plain
 libtcl8.4/mac/tclMacUtil.c svneol=native#text/plain
-libtcl8.4/mac/tcltkMacBuildSupport.sea.hqx -text svneol=unset#application/mac-binhex40
 libtcl8.4/macosx/Makefile svneol=native#text/plain
+libtcl8.4/macosx/Tcl.pbproj/project.pbxproj svneol=native#text/plain
 libtcl8.4/macosx/tclMacOSXBundle.c svneol=native#text/plain
 libtcl8.4/tests/README svneol=native#text/plain
 libtcl8.4/tests/all.tcl svneol=native#text/plain
@@ -2691,6 +2692,14 @@ libtcl8.4/unix/README svneol=native#text/plain
 libtcl8.4/unix/aclocal.m4 svneol=native#text/plain
 libtcl8.4/unix/configure -text
 libtcl8.4/unix/configure.in svneol=native#text/plain
+libtcl8.4/unix/dltest/Makefile.in svneol=native#text/plain
+libtcl8.4/unix/dltest/README svneol=native#text/plain
+libtcl8.4/unix/dltest/pkga.c svneol=native#text/plain
+libtcl8.4/unix/dltest/pkgb.c svneol=native#text/plain
+libtcl8.4/unix/dltest/pkgc.c svneol=native#text/plain
+libtcl8.4/unix/dltest/pkgd.c svneol=native#text/plain
+libtcl8.4/unix/dltest/pkge.c svneol=native#text/plain
+libtcl8.4/unix/dltest/pkgf.c svneol=native#text/plain
 libtcl8.4/unix/install-sh svneol=native#text/plain
 libtcl8.4/unix/ldAix -text
 libtcl8.4/unix/mkLinks -text
