@@ -2845,6 +2845,7 @@ libwdb/nmg.c svneol=native#text/plain
 libwdb/pipe.c svneol=native#text/plain
 libwdb/poly.c svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
+libwdb/reg4.c svneol=native#text/plain
 libwdb/skt.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/strsol.c svneol=native#text/plain
