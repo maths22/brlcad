@@ -875,6 +875,7 @@ libwdb/pipe.c svneol=native#text/plain
 libwdb/poly.c svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
+libwdb/strsol.c svneol=native#text/plain
 libwdb/units.c svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
 mged/Cakefile -text
