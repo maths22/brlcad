@@ -17,6 +17,7 @@
 /.halftone.*
 /.iges.*
 /.irprep.*
+/.iwidgets*
 /.jack.*
 /.jove.*
 /.lgt.*
@@ -33,6 +34,7 @@
 /.tab.*
 /.tk.*
 /.tools.*
+/.unigraphics.*
 /.util.*
 /.vas4.*
 /.vdeck.*
