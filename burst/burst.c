@@ -8,68 +8,40 @@
 #ifndef lint
 static char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
-
-#ifndef DEBUG
-#define NDEBUG
-#define STATIC static
-#else
-#define STATIC
-#endif
-
-#include <assert.h>
-
 #include <stdio.h>
 #include <signal.h>
-
+#include <assert.h>
 #include "./burst.h"
 #include "./trie.h"
 #include "./ascii.h"
 #include "./extern.h"
-
-#define DEBUG_BURST	0	/* 1 enables debugging for this module */
+#define DEBUG_BURST	false
 
 /*
 	bool getCommand( char *name, char *buf, int len, FILE *fp )
 
-	Read next command line into buf and stuff the command name into name
-	from input stream fp.  buf must be at least len bytes long.
-
-	RETURN:	true for success
-
-		false for end of file 
+	Read next command line into 'buf' and stuff the command name
+	into 'name' from input stream 'fp'.
+	RETURN CODES: false for end-of-file, true for success.
  */
-STATIC bool
-#if STD_C
-getCommand( char *name, char *buf, int len, FILE *fp )
-#else
+_LOCAL_ bool
 getCommand( name, buf, len, fp )
 char *name;
 char *buf;
 int len;
 FILE *fp;
-#endif
 	{
-	assert( name != NULL );
-	assert( buf != NULL );
-	assert( fp != NULL );
+	assert( fp != (FILE *) NULL );
 	while( fgets( buf, len, fp ) != NULL )
-		{
-		if( buf[0] != CHAR_COMMENT )
+		if(	buf[0] != CHAR_COMMENT
+		     &&	sscanf( buf, "%s", name ) == 1
+			)
 			{
-			if( sscanf( buf, "%s", name ) == 1 )
-				{
-				buf[strlen(buf)-1] = NUL; /* clobber newline */
-				return	true;
-				}
-			else /* Skip over blank lines. */
-				continue;
-			}
-		else
-			{ /* Generate comment command. */
-			(void) strcpy( name, CMD_COMMENT );
+			buf[strlen(buf)-1] = NUL; /* clobber newline */
 			return	true;
 			}
-		}
+		else /* skip over comments and blank lines */
+			continue;
 	return	false; /* EOF */
 	}
 
@@ -78,13 +50,9 @@ FILE *fp;
 
 	Initialize all signal handlers.
  */
-STATIC void
-#if STD_C
-setupSigs( void )
-#else
+_LOCAL_ void
 setupSigs()
-#endif
-	{	register int i;
+	{	register int	i;
 	for( i = 0; i < NSIG; i++ )
 		switch( i )
 			{
@@ -103,7 +71,7 @@ setupSigs()
 #else
 		case SIGCLD :
 #endif
-			break; /* leave SIGCLD alone */
+			break; /* Leave SIGCLD alone.			*/
 		case SIGPIPE :
 			(void) signal( i, SIG_IGN );
 			break;
@@ -126,17 +94,13 @@ setupSigs()
 
 	Parse program command line.
  */
-STATIC int
-#if STD_C
-parsArgv( int argc, char **argv )
-#else
+_LOCAL_ int
 parsArgv( argc, argv )
 int argc;
 char **argv;
-#endif
-	{	register int c;
-		extern int optind;
-		extern char *optarg;
+	{	register int	c;
+		extern int	optind;
+		extern char	*optarg;
 	/* Parse options.						*/
 	while( (c = getopt( argc, argv, "b" )) != EOF )
 		{
@@ -155,34 +119,24 @@ char **argv;
 /*
 	void readBatchInput( FILE *fp )
 
-	Read and execute commands from input stream fp.
+	Read and execute commands from input stream 'fp'.
  */
 void
-#if STD_C
-readBatchInput( FILE *fp )
-#else
 readBatchInput( fp )
-FILE *fp;
-#endif
+FILE	*fp;
 	{
 	assert( fp != (FILE *) NULL );
 	batchmode = true;
 	while( getCommand( cmdname, cmdbuf, LNBUFSZ, fp ) )
 		{	Func	*cmdfunc;
 		if( (cmdfunc = getTrie( cmdname, cmdtrie )) == NULL )
-			{	register int i, len = strlen( cmdname );
+			{	register int	i, len = strlen( cmdname );
 			rt_log( "ERROR -- command syntax:\n" );
 			rt_log( "\t%s\n", cmdbuf );
 			rt_log( "\t" );
 			for( i = 0; i < len; i++ )
 				rt_log( " " );
 			rt_log( "^\n" );
-			}
-		else
-		if( strcmp( cmdname, CMD_COMMENT ) == 0 )
-			{ /* special handling for comments */
-			cmdptr = cmdbuf;
-			(*cmdfunc)( (HmItem *) 0 );
 			}
 		else
 			{ /* Advance pointer past nul at end of
@@ -198,14 +152,10 @@ FILE *fp;
 /*
 	int main( int argc, char *argv[] )
  */
-STATIC int
-#if STD_C
-main( int argc, char *argv[] )
-#else
+_LOCAL_ int
 main( argc, argv )
 int argc;
 char *argv[];
-#endif
 	{
 #if ! defined( BSD ) && ! defined( sgi )
 	setvbuf( stderr, (char *) NULL, _IOLBF, BUFSIZ );
@@ -218,18 +168,21 @@ char *argv[];
 		(void) fprintf( stderr,
 				"Write access denied for file (%s).\n",
 				tmpfname );
-		goto	death;
+		return	failure;
 		}
 	if( ! parsArgv( argc, argv ) )
 		{
 		prntUsage();
-		goto	clean;
+		(void) unlink( tmpfname );
+		return	failure;
 		}
 
 	setupSigs();
 	if( ! initUi() ) /* must be called before any output is produced */
-		goto	clean;
-
+		{
+		(void) unlink( tmpfname );
+		return	failure;
+		}
 #if DEBUG_BURST
 	prntTrie( cmdtrie, 0 );
 #endif
@@ -237,28 +190,23 @@ char *argv[];
 		readBatchInput( stdin );
 	if( tty )
 		(void) HmHit( mainhmenu );
-	exitCleanly( EXIT_SUCCESS );
-clean:	(void) unlink( tmpfname );
-death:	return	EXIT_FAILURE;
+	exitCleanly( 0 );
+	return	success;
 	}
 
 /*
-	void exitCleanly( int code )
+	void exitCleanly( int sig )
 
-	Should be only exit from program after success of initUi().
+	Should be only exit from program after success of 'initUi()'.
  */
 void
-#if STD_C
-exitCleanly( int code )
-#else
-exitCleanly( code )
-int code;
-#endif
+exitCleanly( sig )
+int	sig;
 	{
 	if( tty )
 		closeUi(); /* keep screen straight */
 	(void) fclose( tmpfp );
 	if( unlink( tmpfname ) == -1 )
 		locPerror( tmpfname );
-	exit( code );
+	exit( sig );
 	}

@@ -8,37 +8,22 @@
 #ifndef lint
 static char RCSid[] = "@(#)$Header$ (BRL)";
 #endif
-
-#ifndef DEBUG
-#define NDEBUG
-#define STATIC static
-#else
-#define STATIC
-#endif
-
-#include <assert.h>
-
 #include <stdio.h>
 #include <signal.h>
 #include <fcntl.h>
-
 #include <Sc/Sc.h>
-
 #include <machine.h>
 #include <vmath.h>
 #include <raytrace.h>
-
 #include "./Mm.h"
 #include "./burst.h"
 #include "./trie.h"
 #include "./ascii.h"
 #include "./extern.h"
-
-#define DEBUG_UI	1
-
-static char promptbuf[LNBUFSZ];
-static char *bannerp = "BURST (%s)";
-static char *pgmverp = "$Revision$";
+#define DEBUG_UI	true
+static char	promptbuf[LNBUFSZ];
+static char	*bannerp = "BURST (%s)";
+static char	*pgmverp = "$Revision$";
 
 #define AddCmd( nm, f )\
 	{	Trie	*p;\
@@ -69,7 +54,7 @@ static char *pgmverp = "$Revision$";
 #define GetVar( var, ptr, conv )\
 	{\
 	if( ! batchmode )\
-		{ int items;\
+		{ int	items;\
 		(void) sprintf( (ptr)->buffer, (ptr)->fmt, var*conv );\
 		(void) getInput( ptr );\
 		if( (items = sscanf( (ptr)->buffer, (ptr)->fmt, &(var) )) != 1 )\
@@ -80,7 +65,7 @@ static char *pgmverp = "$Revision$";
 		(ptr)++;\
 		}\
 	else\
-		{	char *tokptr = strtok( cmdptr, WHITESPACE );\
+		{	char	*tokptr = strtok( cmdptr, WHITESPACE );\
 		if(	tokptr == NULL\
 		    ||	sscanf( tokptr, (ptr)->fmt, &(var) ) != 1 )\
 			{\
@@ -96,67 +81,65 @@ static char *pgmverp = "$Revision$";
 
 typedef struct
 	{
-	char *prompt;
-	char buffer[LNBUFSZ];
-	char *fmt;
-	char *range;
+	char	*prompt;
+	char	buffer[LNBUFSZ];
+	char	*fmt;
+	char	*range;
 	}
 Input;
 
 /* local menu functions, names all start with M */
-STATIC void MattackDir();
-STATIC void MautoBurst();
-STATIC void MburstArmor();
-STATIC void MburstAir();
-STATIC void MburstDist();
-STATIC void MburstFile();
-STATIC void McellSize();
-STATIC void McolorFile();
-STATIC void Mcomment();
-STATIC void MconeHalfAngle();
-STATIC void McritComp();
-STATIC void MdeflectSpallCone();
-STATIC void Mdither();
-STATIC void MenclosePortion();
-STATIC void MencloseTarget();
-STATIC void MerrorFile();
-STATIC void Mexecute();
-STATIC void MfbFile();
-STATIC void MgedFile();
-STATIC void MgridFile();
-STATIC void MgroundPlane();
-STATIC void MhistFile();
-STATIC void Minput2dShot();
-STATIC void Minput3dShot();
-STATIC void MinputBurst();
-STATIC void MmaxBarriers();
-STATIC void MmaxSpallRays();
-STATIC void Mnop();
-STATIC void Mobjects();
-STATIC void Moverlaps();
-STATIC void MplotFile();
-STATIC void Mread2dShotFile();
-STATIC void Mread3dShotFile();
-STATIC void MreadBurstFile();
-STATIC void MreadCmdFile();
-STATIC void MshotlineFile();
-STATIC void Munits();
-STATIC void MwriteCmdFile();
+_LOCAL_ void	MattackDir();
+_LOCAL_ void	MautoBurst();
+_LOCAL_ void	MburstArmor();
+_LOCAL_ void	MburstAir();
+_LOCAL_ void	MburstDist();
+_LOCAL_ void	MburstFile();
+_LOCAL_ void	McellSize();
+_LOCAL_ void	McolorFile();
+_LOCAL_ void	MconeHalfAngle();
+_LOCAL_ void	McritComp();
+_LOCAL_ void	MdeflectSpallCone();
+_LOCAL_ void	Mdither();
+_LOCAL_ void	MenclosePortion();
+_LOCAL_ void	MencloseTarget();
+_LOCAL_ void	MerrorFile();
+_LOCAL_ void	Mexecute();
+_LOCAL_ void	MfbFile();
+_LOCAL_ void	MgedFile();
+_LOCAL_	void	MgridFile();
+_LOCAL_ void	MgroundPlane();
+_LOCAL_ void	MhistFile();
+_LOCAL_ void	Minput2dShot();
+_LOCAL_ void	Minput3dShot();
+_LOCAL_ void	MinputBurst();
+_LOCAL_ void	Mnop();
+_LOCAL_ void	Mobjects();
+_LOCAL_ void	Moverlaps();
+_LOCAL_ void	MplotFile();
+_LOCAL_ void	Mread2dShotFile();
+_LOCAL_ void	Mread3dShotFile();
+_LOCAL_ void	MreadBurstFile();
+_LOCAL_ void	MreadCmdFile();
+_LOCAL_ void	MmaxBarriers();
+_LOCAL_ void	MmaxSpallRays();
+_LOCAL_ void	Munits();
+_LOCAL_ void	MwriteCmdFile();
 
 /* local utility functions */
-STATIC HmMenu *addMenu();
-STATIC int getInput();
-STATIC int unitStrToInt();
-STATIC void addItem();
-STATIC void banner();
+_LOCAL_ HmMenu	*addMenu();
+_LOCAL_ int	getInput();
+_LOCAL_ int	unitStrToInt();
+_LOCAL_ void	addItem();
+_LOCAL_ void	banner();
 
-typedef struct ftable Ftable;
+typedef struct ftable	Ftable;
 struct ftable
 	{
-	char *name;
-	char *help;
-	Ftable *next;
-	Func *func;
+	char	*name;
+	char	*help;
+	Ftable	*next;
+	Func	*func;
 	};
 
 Ftable	shot2dmenu[] =
@@ -317,8 +300,6 @@ Ftable	filemenu[] =
 	{
 	{ "read-input-file",
 		"read commands from a file", 0, MreadCmdFile },
-	{ "shotline-file",
-		"name shotline output file", 0, MshotlineFile },
 	{ "burst-file",
 		"name burst point output file", 0, MburstFile },
 	{ "error-file",
@@ -334,8 +315,7 @@ Ftable	filemenu[] =
 	{ "plot-file",
 		"name UNIX plot output file", 0, MplotFile },
 	{ "write-input-file",
-		"save input up to this point in a session file",
-		0, MwriteCmdFile },
+		"save input up to this point in a file", 0, MwriteCmdFile },
 	{ 0 }
 	};
 
@@ -352,7 +332,6 @@ Ftable	mainmenu[] =
 		"shotline generation (grid specification)", shotlnmenu, 0 },
 	{ "burst points",
 		"burst point generation", burstmenu, 0 },
-	{ CMD_COMMENT, "add a comment to the session file", 0, Mcomment },
 	{ "execute", "begin ray tracing", 0, Mexecute },
 	{ "preferences",
 		"options for tailoring behavior of user interface",
@@ -360,10 +339,10 @@ Ftable	mainmenu[] =
 	{ 0 }
 	};
 
-STATIC void
+_LOCAL_ void
 addItem( tp, itemp )
 Ftable *tp;
-HmItem *itemp;
+HmItem	*itemp;
 	{
 	itemp->text = tp->name;
 	itemp->help = tp->help;
@@ -374,14 +353,14 @@ HmItem *itemp;
 	return;
 	}
 
-STATIC HmMenu *
+_LOCAL_ HmMenu *
 addMenu( tp )
-Ftable *tp;
+Ftable	*tp;
 	{	register HmMenu	*menup;
-		register HmItem *itemp;
+		register HmItem	*itemp;
 		register Ftable	*ftp = tp;
-		register int cnt;
-		register bool done = false;
+		register int	cnt;
+		register bool	done = false;
 	if( ftp == NULL )
 		return	NULL;
 	for( cnt = 0; ftp->name != NULL; ftp++ )
@@ -407,18 +386,25 @@ Ftable *tp;
 	}
 
 /*
-        void banner( void )
+        void    banner( void )
 
         Display program name and version on one line with BORDER_CHRs
-	to border the top of the scrolling region.
+		to border the top of the scrolling region.
  */
-STATIC void
+_LOCAL_ void
 banner()
-        {
+        {       register int    co;
+                register char   *p;
+        (void) ScMvCursor( MENU_LFT, BORDER_Y );
         (void) sprintf(	scrbuf,
 			bannerp,
 			pgmverp[0] == '%' ? "EXP" : pgmverp );
-	HmBanner( scrbuf, BORDER_CHR );
+        for( co = 1; co <= 3; co++ )
+                (void) putc( BORDER_CHR, stdout );
+        for( p = scrbuf; co <= ScCO && *p != '\0'; co++, p++ )
+                (void) putc( (int)(*p), stdout );
+        for( ; co <= ScCO; co++ )
+                (void) putc( BORDER_CHR, stdout );
         return;
         }
 
@@ -429,14 +415,14 @@ closeUi()
 	return;
 	}
 
-STATIC int
+_LOCAL_ int
 getInput( ip )
 Input *ip;
 	{
 	if( ! batchmode )
-		{	register int c;
-			register char *p;
-			char *defaultp = ip->buffer;
+		{	register int    c;
+			register char   *p;
+			char		*defaultp = ip->buffer;
 		if( *defaultp == NUL )
 			defaultp = "no default";
 		if( ip->range != NULL )
@@ -449,7 +435,7 @@ Input *ip;
 		for( p = ip->buffer; (c = HmGetchar()) != '\n'; )
 			if( p - ip->buffer < LNBUFSZ-1 )
 				*p++ = c;
-		/* In case user hit CR only, do not disturb buffer. */
+		/* In case user hit CR only, do not disturb buffer.    */
 		if( p != ip->buffer )
 			*p = '\0';
 		prompt( (char *) NULL );
@@ -469,7 +455,7 @@ Input *ip;
 
 	Initialize the keyword commands.
  */
-STATIC void
+_LOCAL_ void
 initCmds( tp )
 register Ftable *tp;
 	{
@@ -488,7 +474,7 @@ register Ftable *tp;
 
 	Initialize the hierarchical menus.
  */
-STATIC void
+_LOCAL_ void
 initMenus( tp )
 register Ftable	*tp;
 	{
@@ -508,12 +494,10 @@ initUi()
 		else
 		if( ScDL == NULL )
 			{
-			prntScr(
-		 "This terminal has no scroll region or delete line capability."
-				);
+			prntScr( "This terminal has no scroll region or delete line capability." );
 			return  false;
 			}
-		(void) ScClrText();	/* wipe screen */
+		(void) ScClrText(); /* Wipe screen. */
 		HmInit( MENU_LFT, MENU_TOP, MENU_MAXVISITEMS );
 		banner();
 		}
@@ -522,9 +506,9 @@ initUi()
 	return	true;
 	}
 
-STATIC int
+_LOCAL_ int
 unitStrToInt( str )
-char *str;
+char	*str;
 	{
 	if( strcmp( str, UNITS_INCHES ) == 0 )
 		return	U_INCHES;
@@ -540,19 +524,19 @@ char *str;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MattackDir( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Attack azimuth", "", "%lf", "degrees" },
 			{ "Attack elevation", "", "%lf", "degrees" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( viewazim, ip, DEGRAD );
 	GetVar( viewelev, ip, DEGRAD );
 	(void) sprintf( scrbuf, "%s\t%g %g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			viewazim, viewelev );
 	logCmd( scrbuf );
 	viewazim /= DEGRAD;
@@ -561,17 +545,17 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MautoBurst( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Burst along shotline", "n", "%d", "y or n" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetBool( nriplevels, ip );
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			nriplevels == 1 ? "yes" : "no" );
 	logCmd( scrbuf );
 	firemode &= ~FM_BURST; /* disable discrete burst point option */
@@ -579,20 +563,20 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MburstAir( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of burst air file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		FILE *airfp;
+		register Input	*ip = input;
+		FILE		*airfp;
 	if( getInput( ip ) )
 		(void) strcpy( airfile, ip->buffer );
 	else
 		airfile[0] = NUL;
-	if( (airfp = fopen( airfile, "r" )) == (FILE  *) NULL )
+	if( (airfp = fopen( airfile, "r" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Read access denied for \"%s\"",
@@ -601,7 +585,7 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			airfile );
 	logCmd( scrbuf );
 	notify( "Reading burst air idents", NOTIFY_APPEND );
@@ -611,20 +595,20 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MburstArmor( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of burst armor file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		FILE *armorfp;
+		register Input	*ip = input;
+		FILE		*armorfp;
 	if( getInput( ip ) )
 		(void) strcpy( armorfile, ip->buffer );
 	else
 		armorfile[0] = NUL;
-	if( (armorfp = fopen( armorfile, "r" )) == (FILE  *) NULL )
+	if( (armorfp = fopen( armorfile, "r" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Read access denied for \"%s\"",
@@ -633,7 +617,7 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			armorfile );
 	logCmd( scrbuf );
 	notify( "Reading burst armor idents", NOTIFY_APPEND );
@@ -643,17 +627,17 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MburstDist( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Burst distance", "", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( bdist, ip, unitconv );
 	(void) sprintf( scrbuf, "%s\t\t%g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			bdist );
 	logCmd( scrbuf );
 	bdist /= unitconv; /* convert to millimeters */
@@ -661,19 +645,19 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MburstFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of burst output file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( outfile, ip->buffer );
 	else
 		outfile[0] = NUL;
-	if( (outfp = fopen( outfile, "w" )) == (FILE  *) NULL )
+	if( (outfp = fopen( outfile, "w" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Write access denied for \"%s\"",
@@ -682,24 +666,24 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			outfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 McellSize( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Cell size", "", "%lf", 0 }
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( cellsz, ip, unitconv );
 	(void) sprintf( scrbuf, "%s\t\t%g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			cellsz );
 	logCmd( scrbuf );
 	cellsz /= unitconv; /* convert to millimeters */
@@ -707,21 +691,21 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 McolorFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of ident-to-color mapping file",
 				"", "%s", 0 },
 			};
-		register Input *ip = input;
-		FILE *colorfp;
+		register Input	*ip = input;
+		FILE		*colorfp;
 	if( getInput( ip ) )
 		(void) strcpy( colorfile, ip->buffer );
 	else
 		colorfile[0] = NUL;
-	if( (colorfp = fopen( colorfile, "r" )) == (FILE  *) NULL )
+	if( (colorfp = fopen( colorfile, "r" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Read access denied for \"%s\"",
@@ -730,7 +714,7 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			colorfile );
 	logCmd( scrbuf );
 	notify( "Reading ident-to-color mappings", NOTIFY_APPEND );
@@ -740,41 +724,17 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
-Mcomment( itemp )
-HmItem *itemp;
-	{	static Input input[] =
-			{
-			{ "Comment", " ", "%s", 0 },
-			};
-		register Input *ip = input;
-	if( ! batchmode )
-		{
-		if( getInput( ip ) )
-			{
-			(void) sprintf( scrbuf, "%c%s",
-					CHAR_COMMENT, ip->buffer );
-			logCmd( scrbuf );
-			(void) strcpy( ip->buffer, " " ); /* restore default */
-			}
-		}
-	else
-		logCmd( cmdptr );
-	return;
-	}
-
-/*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MconeHalfAngle( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Cone angle", "", "%lf", "degrees" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( conehfangle, ip, DEGRAD );
 	(void) sprintf( scrbuf, "%s\t\t%g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			conehfangle );
 	logCmd( scrbuf );
 	conehfangle /= DEGRAD;
@@ -782,20 +742,20 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 McritComp( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of critical component file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		FILE *critfp;
+		register Input	*ip = input;
+		FILE		*critfp;
 	if( getInput( ip ) )
 		(void) strcpy( critfile, ip->buffer );
 	else
 		critfile[0] = NUL;
-	if( (critfp = fopen( critfile, "r" )) == (FILE  *) NULL )
+	if( (critfp = fopen( critfile, "r" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Read access denied for \"%s\"",
@@ -804,7 +764,7 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			critfile );
 	logCmd( scrbuf );
 	notify( "Reading critical component idents", NOTIFY_APPEND );
@@ -815,58 +775,58 @@ HmItem *itemp;
 
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MdeflectSpallCone( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Deflect cone", "n", "%d", "y or n" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetBool( deflectcone, ip );
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			deflectcone ? "yes" : "no" );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mdither( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Dither cells", "n", "%d", "y or n" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetBool( dithercells, ip );
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			dithercells ? "yes" : "no" );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MenclosePortion( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Left border of grid", "", "%lf", 0 },
 			{ "Right border of grid", "", "%lf", 0 },
 			{ "Bottom border of grid", "", "%lf", 0 },
 			{ "Top border of grid", "", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( gridlf, ip, unitconv );
 	GetVar( gridrt, ip, unitconv );
 	GetVar( griddn, ip, unitconv );
 	GetVar( gridup, ip, unitconv );
 	(void) sprintf( scrbuf,
 			"%s\t\t%g %g %g %g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			gridlf, gridrt, griddn, gridup );
 	logCmd( scrbuf );
 	gridlf /= unitconv; /* convert to millimeters */
@@ -878,27 +838,27 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MencloseTarget( itemp )
-HmItem *itemp;
+HmItem	*itemp;
 	{
 	(void) sprintf( scrbuf,
 			"%s",
-			itemp != NULL ? itemp->text : cmdname );
+			itemp != (HmItem *) 0 ? itemp->text : cmdname );
 	logCmd( scrbuf );
 	firemode = FM_GRID;
 	return;
 	}
 
-STATIC void
+_LOCAL_ void
 MerrorFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of error output file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		static int errfd = -1;
+		register Input	*ip = input;
+		static int	errfd = -1;
 	if( getInput( ip ) )
 		(void) strcpy( errfile, ip->buffer );
 	else
@@ -922,21 +882,21 @@ HmItem *itemp;
                 return;
                 }
   	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			errfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mexecute( itemp )
-HmItem *itemp;
+HmItem	*itemp;
 	{	static bool	gottree = false;
 		bool		loaderror = false;
 	(void) sprintf( scrbuf,
 			"%s",
-			itemp != NULL ? itemp->text : cmdname );
+			itemp != (HmItem *) 0 ? itemp->text : cmdname );
 	logCmd( scrbuf );
 	if( gedfile[0] == NUL )
 		{
@@ -959,7 +919,7 @@ HmItem *itemp;
 	 */
 	rtip->useair = true;
 	if( ! gottree )
-		{	char *ptr, *obj;
+		{	char	*ptr, *obj;
 		rt_prep_timer();
 		for(	ptr = objects;
 			(obj = strtok( ptr, WHITESPACE )) != NULL;
@@ -1001,34 +961,34 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MfbFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of frame buffer device", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( fbfile, ip->buffer );
 	else
 		fbfile[0] = NUL;
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			fbfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MgedFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of target (MGED) file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( gedfile, ip->buffer );
 	if( access( gedfile, 04 ) == -1 )
@@ -1040,26 +1000,26 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			gedfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MgridFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of grid file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( gridfile, ip->buffer );
 	else
 		histfile[0] = NUL;
-	if( (gridfp = fopen( gridfile, "w" )) == (FILE  *) NULL )
+	if( (gridfp = fopen( gridfile, "w" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Write access denied for \"%s\"",
@@ -1068,17 +1028,17 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			gridfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MgroundPlane( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Activate ground plane bursting",
 				"n", "%d", "y or n" },
@@ -1093,7 +1053,7 @@ HmItem *itemp;
 			{ "Distance out negative Y-axis of target to edge",
 				"", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetBool( groundburst, ip );
 	if( groundburst )
 		{
@@ -1103,7 +1063,7 @@ HmItem *itemp;
 		GetVar( grndlf, ip, unitconv );
 		GetVar( grndrt, ip, unitconv );
 		(void) sprintf( scrbuf, "%s\t\tyes %g %g %g %g %g",
-				itemp != NULL ? itemp->text : cmdname,
+				itemp != (HmItem *) 0 ? itemp->text : cmdname,
 				grndht, grndfr, grndbk, grndlf, grndrt );
 		grndht /= unitconv; /* convert to millimeters */
 		grndfr /= unitconv;
@@ -1113,26 +1073,26 @@ HmItem *itemp;
 		}
 	else
 		(void) sprintf( scrbuf, "%s\t\tno",
-				itemp != NULL ? itemp->text : cmdname
+				itemp != (HmItem *) 0 ? itemp->text : cmdname
 				);
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MhistFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of histogram file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( histfile, ip->buffer );
 	else
 		histfile[0] = NUL;
-	if( (histfp = fopen( histfile, "w" )) == (FILE  *) NULL )
+	if( (histfp = fopen( histfile, "w" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Write access denied for \"%s\"",
@@ -1141,27 +1101,27 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			histfile );
 	logCmd( scrbuf );
 	return;
 	}
 
-STATIC void
+_LOCAL_ void
 MinputBurst( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
-			{ "X-coordinate of burst point", "", "%lf", 0 },
-			{ "Y-coordinate of burst point", "", "%lf", 0 },
-			{ "Z-coordinate of burst point", "", "%lf", 0 },
+			{ "Burst point (X)", "", "%lf", 0 },
+			{ "Burst point (Y)", "", "%lf", 0 },
+			{ "Burst point (Z)", "", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( burstpoint[X], ip, unitconv );
 	GetVar( burstpoint[Y], ip, unitconv );
 	GetVar( burstpoint[Z], ip, unitconv );
 	(void) sprintf( scrbuf, "%s\t%g %g %g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			burstpoint[X], burstpoint[Y], burstpoint[Z] );
 	logCmd( scrbuf );
 	burstpoint[X] /= unitconv; /* convert to millimeters */
@@ -1173,19 +1133,19 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Minput2dShot( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
-			{ "Y'-coordinate of shotline", "", "%lf", 0 },
-			{ "Z'-coordinate of shotline", "", "%lf", 0 },
+			{ "Firing coordinate (X)", "", "%lf", 0 },
+			{ "Firing coordinate (Y)", "", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( fire[X], ip, unitconv );
 	GetVar( fire[Y], ip, unitconv );
 	(void) sprintf( scrbuf, "%s\t\t%g %g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			fire[X], fire[Y] );
 	logCmd( scrbuf );
 	fire[X] /= unitconv; /* convert to millimeters */
@@ -1195,21 +1155,21 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Minput3dShot( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
-			{ "X-coordinate of shotline", "", "%lf", 0 },
-			{ "Y-coordinate of shotline", "", "%lf", 0 },
-			{ "Z-coordinate of shotline", "", "%lf", 0 },
+			{ "Firing coordinate (X)", "", "%lf", 0 },
+			{ "Firing coordinate (Y)", "", "%lf", 0 },
+			{ "Firing coordinate (Z)", "", "%lf", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( fire[X], ip, unitconv );
 	GetVar( fire[Y], ip, unitconv );
 	GetVar( fire[Z], ip, unitconv );
 	(void) sprintf( scrbuf, "%s\t\t%g %g %g",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			fire[X], fire[Y], fire[Z] );
 	logCmd( scrbuf );
 	fire[X] /= unitconv; /* convert to millimeters */
@@ -1220,96 +1180,96 @@ HmItem *itemp;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mnop( itemp )
-HmItem *itemp;
+HmItem	*itemp;
 	{
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mobjects( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "List of objects from target file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( objects, ip->buffer );
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			objects );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Moverlaps( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Report overlaps", "y", "%d", "y or n" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetBool( reportoverlaps, ip );
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			reportoverlaps ? "yes" : "no" );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MmaxBarriers( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Maximum spall barriers per ray", "", "%d", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( nbarriers, ip, 1 );
 	(void) sprintf( scrbuf, "%s\t\t%d",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			nbarriers );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MmaxSpallRays( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Maximum rays per burst", "", "%d", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	GetVar( nspallrays, ip, 1 );
 	(void) sprintf( scrbuf, "%s\t\t%d",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			nspallrays );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MplotFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of UNIX plot file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( plotfile, ip->buffer );
 	else
 		plotfile[0] = NUL;
-	if( (plotfp = fopen( plotfile, "w" )) == (FILE  *) NULL )
+	if( (plotfp = fopen( plotfile, "w" )) == (FILE *) NULL )
 		{
 		(void) sprintf( scrbuf,
 				"Write access denied for \"%s\"",
@@ -1318,21 +1278,21 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			plotfile );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mread2dShotFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of 2-D shot input file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( shotfile, ip->buffer );
 	if( (shotfp = fopen( shotfile, "r" )) == NULL )
@@ -1344,22 +1304,22 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			shotfile );
 	logCmd( scrbuf );
-	firemode = FM_SHOT | FM_FILE ;
+	firemode = FM_SHOT | FM_FILE;
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Mread3dShotFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of 3-D shot input file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( shotfile, ip->buffer );
 	if( (shotfp = fopen( shotfile, "r" )) == NULL )
@@ -1371,22 +1331,22 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			shotfile );
 	logCmd( scrbuf );
-	firemode = FM_SHOT | FM_FILE  | FM_3DIM;
+	firemode = FM_SHOT | FM_FILE | FM_3DIM;
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MreadBurstFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of 3-D burst input file", "", "%s", 0 },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	if( getInput( ip ) )
 		(void) strcpy( burstfile, ip->buffer );
 	if( (burstfp = fopen( burstfile, "r" )) == NULL )
@@ -1398,25 +1358,25 @@ HmItem *itemp;
 		return;
 		}
 	(void) sprintf( scrbuf, "%s\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			burstfile );
 	logCmd( scrbuf );
 	nriplevels = 1;
-	firemode = FM_BURST | FM_3DIM | FM_FILE ;
+	firemode = FM_BURST | FM_3DIM | FM_FILE;
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MreadCmdFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of command file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		char cmdfile[LNBUFSZ];
-		FILE *cmdfp;
+		register Input	*ip = input;
+		char		cmdfile[LNBUFSZ];
+		FILE		*cmdfp;
 	if( getInput( ip ) )
 		(void) strcpy( cmdfile, ip->buffer );
 	if( (cmdfp = fopen( cmdfile, "r" )) == NULL )
@@ -1432,35 +1392,7 @@ HmItem *itemp;
 	return;
 	}
 
-/*ARGSUSED*/
-STATIC void
-MshotlineFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
-			{
-			{ "Name of shotline output file", "", "%s", 0 },
-			};
-		register Input *ip = input;
-	if( getInput( ip ) )
-		(void) strcpy( shotlnfile, ip->buffer );
-	else
-		shotlnfile[0] = NUL;
-	if( (shotlnfp = fopen( shotlnfile, "w" )) == NULL )
-		{
-		(void) sprintf( scrbuf,
-				"Write access denied for \"%s\"",
-				shotlnfile );
-		warning( scrbuf );
-		return;
-		}
-	(void) sprintf( scrbuf, "%s\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
-			shotlnfile );
-	logCmd( scrbuf );
-	return;
-	}
-
-HmItem units_items[] =
+HmItem	units_items[] =
 	{
 	{ UNITS_MILLIMETERS,
 		"interpret inputs and convert outputs to millimeters",
@@ -1482,12 +1414,12 @@ HmItem units_items[] =
 HmMenu	units_hmenu = { units_items, 0, 0, 0, false };
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 Munits( itemp )
-HmItem *itemp;
-	{	char *unitstr;
-		HmItem *itemptr;
-	if( itemp != NULL )
+HmItem	*itemp;
+	{	char	*unitstr;
+		HmItem	*itemptr;
+	if( itemp != (HmItem *) 0 )
 		{
 		if( (itemptr = HmHit( &units_hmenu )) == (HmItem *) NULL )
 			return;
@@ -1521,24 +1453,24 @@ HmItem *itemp;
 		break;
 		}     
 	(void) sprintf( scrbuf, "%s\t\t\t%s",
-			itemp != NULL ? itemp->text : cmdname,
+			itemp != (HmItem *) 0 ? itemp->text : cmdname,
 			unitstr );
 	logCmd( scrbuf );
 	return;
 	}
 
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 MwriteCmdFile( itemp )
-HmItem *itemp;
-	{	static Input input[] =
+HmItem	*itemp;
+	{	static Input	input[] =
 			{
 			{ "Name of command file", "", "%s", 0 },
 			};
-		register Input *ip = input;
-		char cmdfile[LNBUFSZ];
-		FILE *cmdfp;
-		FILE *inpfp;
+		register Input	*ip = input;
+		char		cmdfile[LNBUFSZ];
+		FILE		*cmdfp;
+		FILE		*inpfp;
 	if( getInput( ip ) )
 		(void) strcpy( cmdfile, ip->buffer );
 	if( (cmdfp = fopen( cmdfile, "w" )) == NULL )
@@ -1565,19 +1497,19 @@ HmItem *itemp;
 	return;
 	}
 
-#if STD_SIGNAL_DECLS
+#if defined( SYSV )
 /*ARGSUSED*/
-STATIC void
+_LOCAL_ void
 #else
-STATIC int
+_LOCAL_ int
 #endif
 intr_sig( sig )
-int sig;
-	{	static Input input[] =
+int	sig;
+	{	static Input	input[] =
 			{
 			{ "Really quit ? ", "n", "%d", "y or n" },
 			};
-		register Input *ip = input;
+		register Input	*ip = input;
 	(void) signal( SIGINT, intr_sig );
 	if( getInput( ip ) )
 		{
@@ -1593,7 +1525,7 @@ int sig;
 			return;
 			}
 		}
-#if STD_SIGNAL_DECLS
+#if defined( SYSV )
 	return;
 #else
 	return	sig;
@@ -1602,7 +1534,7 @@ int sig;
 
 void
 logCmd( cmd )
-char *cmd;
+char	*cmd;
 	{
 	prntScr( "%s", cmd );
 	if( fprintf( tmpfp, "%s\n", cmd ) < 0 )
