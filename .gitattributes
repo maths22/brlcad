@@ -469,6 +469,7 @@ libsysv/regex.c svneol=native#text/plain
 libsysv/strchr.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
+libutahrle/Cakefile -text
 libutahrle/Runput.c svneol=native#text/plain
 libutahrle/bstring.c svneol=native#text/plain
 libutahrle/buildmap.3 svneol=native#text/plain
