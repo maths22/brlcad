@@ -3327,7 +3327,6 @@ pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/install.doc svneol=native#text/plain
-pro-engineer/prodev.dat -text
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
 proc-db/Cakefile -text
