@@ -987,6 +987,7 @@ pix/Cakefile -text
 pix/Makefile svneol=native#text/plain
 pix/Makefile.dist svneol=native#text/plain
 pro-engineer/install.doc svneol=native#text/plain
+pro-engineer/prodev.dat -text
 pro-engineer/proe-brl.c svneol=native#text/plain
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
