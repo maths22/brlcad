@@ -342,6 +342,8 @@ librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 libsysv/Cakefile -text
 libsysv/getopt.c svneol=native#text/plain
+libsysv/redata.c svneol=native#text/plain
+libsysv/regex.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libwdb/Cakefile -text
