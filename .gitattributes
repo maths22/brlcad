@@ -445,6 +445,7 @@ include/pngconf.h svneol=native#text/plain
 include/pyramid.h svneol=native#text/plain
 include/raytrace.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
+include/regex.h svneol=native#text/plain
 include/rle.h svneol=native#text/plain
 include/rle_code.h svneol=native#text/plain
 include/rle_config.h svneol=native#text/plain
