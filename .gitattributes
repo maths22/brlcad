@@ -586,7 +586,6 @@ src/anim/anim_cascade.1 svneol=native#text/plain
 src/anim/anim_cascade.c svneol=native#text/plain
 src/anim/anim_fly.1 svneol=native#text/plain
 src/anim/anim_fly.c svneol=native#text/plain
-src/anim/anim_fly.old.c svneol=native#text/plain
 src/anim/anim_hardtrack.1 svneol=native#text/plain
 src/anim/anim_hardtrack.c svneol=native#text/plain
 src/anim/anim_keyread.1 svneol=native#text/plain
