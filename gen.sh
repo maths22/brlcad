@@ -259,7 +259,7 @@ case "${MACHINE}" in
 		BDIRS=`echo ${BDIRS} | \
 			sed -e 's/libz//' -e 's/libpng//'`
 		;;
-	m4i65)
+	7d|m4i65)
 		# Be sure to look in /usr/lib64, not /usr/lib!
 		BDIRS=`echo ${BDIRS} | \
 		    sed -e 's/libz//' `
@@ -771,7 +771,7 @@ EndOfFile
 
 cat > contents << EOF
 @name brlcad-$RELEASE
-@pkgdep png-1.0.8_1
+@pkgdep png-1.0.9
 @cwd /usr
 @owner bin
 @group bin
