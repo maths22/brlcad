@@ -68,6 +68,7 @@ libitcl/itk/win/Debug
 libitcl/itk/win/Release
 libitcl/itk/win/nmakehlp.exe
 libitcl/itk/win/nmakehlp.obj
+rt/vers.c
 sample_applications/makefile
 tclscripts/lib/tclIndex
 tclscripts/mged/tclIndex

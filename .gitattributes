@@ -4112,6 +4112,7 @@ remrt/remrt.1 svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 remrt/vers.c svneol=native#text/plain
+rt/.cvsignore svneol=native#text/plain
 rt/Cakefile -text
 rt/Makefile.am svneol=native#text/plain
 rt/do.c svneol=native#text/plain
