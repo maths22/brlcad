@@ -4533,31 +4533,37 @@ tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
 tclscripts/rtwizard/Cakefile -text
 tclscripts/rtwizard/examples/Cakefile -text
+tclscripts/rtwizard/examples/PictureTypeA/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeA/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeA/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeB/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeB/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeB/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeB/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeC/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeC/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeC/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeC/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeD/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeD/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeD/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeD/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeE/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeE/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeE/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeE/title.txt svneol=native#text/plain
+tclscripts/rtwizard/examples/PictureTypeF/Cakefile -text
 tclscripts/rtwizard/examples/PictureTypeF/desc.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
