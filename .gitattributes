@@ -316,6 +316,7 @@ h/shortvect.h svneol=native#text/plain
 h/spm.h svneol=native#text/plain
 h/svfb.h svneol=native#text/plain
 h/svfb_global.h svneol=native#text/plain
+h/vectfont.h svneol=native#text/plain
 h/vfont-if.h svneol=native#text/plain
 h/vmath.h svneol=native#text/plain
 h/wdb.h svneol=native#text/plain
