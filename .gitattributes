@@ -1176,6 +1176,7 @@ util/pixrect.1 svneol=native#text/plain
 util/pixrect.c svneol=native#text/plain
 util/pixrot.1 svneol=native#text/plain
 util/pixrot.c svneol=native#text/plain
+util/pixsaturate.1 svneol=native#text/plain
 util/pixsaturate.c svneol=native#text/plain
 util/pixscale.1 svneol=native#text/plain
 util/pixscale.c svneol=native#text/plain
