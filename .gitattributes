@@ -530,6 +530,7 @@ liboptical/sh_spm.c svneol=native#text/plain
 liboptical/sh_stack.c svneol=native#text/plain
 liboptical/sh_stxt.c svneol=native#text/plain
 liboptical/sh_text.c svneol=native#text/plain
+liboptical/sh_toyota.c svneol=native#text/plain
 liborle/Cakefile -text
 liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
@@ -903,6 +904,7 @@ rt/sh_spm.c svneol=native#text/plain
 rt/sh_stack.c svneol=native#text/plain
 rt/sh_stxt.c svneol=native#text/plain
 rt/sh_text.c svneol=native#text/plain
+rt/sh_toyota.c svneol=native#text/plain
 rt/shade.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/viewcell.c svneol=native#text/plain
