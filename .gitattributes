@@ -410,6 +410,7 @@ librt/mat.c svneol=native#text/plain
 librt/mater.c svneol=native#text/plain
 librt/memalloc.c svneol=native#text/plain
 librt/nmg_eval.c svneol=native#text/plain
+librt/nmg_inter.c svneol=native#text/plain
 librt/nmg_misc.c svneol=native#text/plain
 librt/nmg_mk.c svneol=native#text/plain
 librt/parse.c svneol=native#text/plain
