@@ -1557,9 +1557,6 @@ iwidgets4.0.1/tests/watch.test svneol=native#text/plain
 iwidgets4.0.1/win/iwidgets.tcl svneol=native#text/plain
 iwidgets4.0.1/win/makefile.vc svneol=native#text/plain
 iwidgets4.0.1/win/pkg.vc -text
-jack/Makefile.am svneol=native#text/plain
-jack/g-jack.c svneol=native#text/plain
-jack/jack-g.c svneol=native#text/plain
 libbn/.cvsignore svneol=native#text/plain
 libbn/Makefile.am svneol=native#text/plain
 libbn/Makefile.loc svneol=native#text/plain
