@@ -3864,6 +3864,8 @@ util/strdup.c svneol=native#text/plain
 util/sun-pix.1 svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
 util/texturescale.c svneol=native#text/plain
+util/wavelet.1 svneol=native#text/plain
+util/wavelet.c svneol=native#text/plain
 util/xyz-pl.c svneol=native#text/plain
 util/yuv-pix.c svneol=native#text/plain
 vas4/Cakefile -text
