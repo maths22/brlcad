@@ -397,6 +397,9 @@ irprep/see2.c svneol=native#text/plain
 irprep/shapefact.1 svneol=native#text/plain
 irprep/shapefact.c svneol=native#text/plain
 irprep/subroutines.c svneol=native#text/plain
+jack/Cakefile -text
+jack/g-jack.c svneol=native#text/plain
+jack/jack-g.c svneol=native#text/plain
 jove/Cakefile -text
 jove/Makefile svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
