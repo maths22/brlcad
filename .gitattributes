@@ -3483,6 +3483,7 @@ tcl/tclTest.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
 tclscripts/Cakefile -text
 tclscripts/README svneol=native#text/plain
+tclscripts/ami.tcl svneol=native#text/plain
 tclscripts/cad_clrpick.tcl svneol=native#text/plain
 tclscripts/cad_dialog.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
