@@ -223,6 +223,7 @@ h/pyramid.h svneol=native#text/plain
 h/raytrace.h svneol=native#text/plain
 h/rle_getraw.h svneol=native#text/plain
 h/rtlist.h svneol=native#text/plain
+h/rtstring.h svneol=native#text/plain
 h/shadefuncs.h svneol=native#text/plain
 h/shadework.h svneol=native#text/plain
 h/shortvect-pr.h svneol=native#text/plain
