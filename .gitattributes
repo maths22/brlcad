@@ -1611,6 +1611,7 @@ util/pixmatte.1 svneol=native#text/plain
 util/pixmatte.c svneol=native#text/plain
 util/pixmerge.1 svneol=native#text/plain
 util/pixmerge.c svneol=native#text/plain
+util/pixmorph.c svneol=native#text/plain
 util/pixpaste.c svneol=native#text/plain
 util/pixrect.1 svneol=native#text/plain
 util/pixrect.c svneol=native#text/plain
