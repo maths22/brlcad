@@ -36,6 +36,11 @@
 /.util.*
 /.vas4.*
 /.vdeck.*
+bench/*.log
+bench/*.log.*
+bench/*.pix
+bench/*.pix.*
+bench/.cvsignore
 html/manuals/mged/mged_cmd_index.html
 sample_applications/makefile
 tclscripts/lib/tclIndex
