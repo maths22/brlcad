@@ -484,8 +484,10 @@ libbu/convert.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
 libbu/rb_create.c svneol=native#text/plain
+libbu/rb_diag.c svneol=native#text/plain
 libbu/rb_extreme.c svneol=native#text/plain
 libbu/rb_internals.h svneol=native#text/plain
+libbu/rb_rotate.c svneol=native#text/plain
 libbu/rb_search.c svneol=native#text/plain
 libbu/rb_walk.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
@@ -559,8 +561,10 @@ libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
 libredblack/application.c svneol=native#text/plain
 libredblack/rb_create.c svneol=native#text/plain
+libredblack/rb_diag.c svneol=native#text/plain
 libredblack/rb_extreme.c svneol=native#text/plain
 libredblack/rb_internals.h svneol=native#text/plain
+libredblack/rb_rotate.c svneol=native#text/plain
 libredblack/rb_search.c svneol=native#text/plain
 libredblack/rb_walk.c svneol=native#text/plain
 librt/Cakefile -text
