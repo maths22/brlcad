@@ -742,6 +742,7 @@ libdm/dm-ogl.c svneol=native#text/plain
 libdm/dm-pex.c svneol=native#text/plain
 libdm/dm-plot.c svneol=native#text/plain
 libdm/dm-ps.c svneol=native#text/plain
+libdm/knob.c svneol=native#text/plain
 libfb/Cakefile -text
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
