@@ -791,6 +791,7 @@ proc-db/room.c svneol=native#text/plain
 proc-db/tea.c svneol=native#text/plain
 proc-db/tea.h svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
+proc-db/wall.c svneol=native#text/plain
 remrt/Cakefile -text
 remrt/protocol.h svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
