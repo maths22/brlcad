@@ -44,6 +44,10 @@ bench/*.pix
 bench/*.pix.*
 bench/.cvsignore
 html/manuals/mged/mged_cmd_index.html
+libbn/vers.c
+libbu/vers.c
+libdm/vers.c
+libfb/vers.c
 libitcl/*.00?
 libitcl/*.dsp
 libitcl/*.dsw
@@ -68,6 +72,13 @@ libitcl/itk/win/Debug
 libitcl/itk/win/Release
 libitcl/itk/win/nmakehlp.exe
 libitcl/itk/win/nmakehlp.obj
+libmultispectral/vers.c
+liboptical/vers.c
+libpkg/vers.c
+libpng/vers.c
+libsysv/vers.c
+libtermio/vers.c
+libwdb/vers.c
 rt/vers.c
 sample_applications/makefile
 tclscripts/lib/tclIndex
