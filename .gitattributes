@@ -1666,7 +1666,14 @@ src/off/g-off.c svneol=native#text/plain
 src/off/off-g.c svneol=native#text/plain
 src/other/Makefile.am svneol=native#text/plain
 src/other/URToolkit/.cvsignore svneol=native#text/plain
+src/other/URToolkit/3.1-changes -text
+src/other/URToolkit/CHANGES -text
+src/other/URToolkit/MANIFEST -text
 src/other/URToolkit/Makefile.am svneol=native#text/plain
+src/other/URToolkit/README svneol=native#text/plain
+src/other/URToolkit/blurb -text
+src/other/URToolkit/copyright -text
+src/other/URToolkit/patchlevel.h svneol=native#text/plain
 src/other/awf/AWF_COPYRIGHT -text
 src/other/awf/Makefile.am svneol=native#text/plain
 src/other/awf/awf.1 svneol=native#text/plain
