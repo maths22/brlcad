@@ -417,6 +417,7 @@ iges/makedir.c svneol=native#text/plain
 iges/makegroup.c svneol=native#text/plain
 iges/makemembers.c svneol=native#text/plain
 iges/matmult.c svneol=native#text/plain
+iges/orient_loops.c svneol=native#text/plain
 iges/planar_nurb.c svneol=native#text/plain
 iges/read_att.c svneol=native#text/plain
 iges/read_edge_list.c svneol=native#text/plain
