@@ -381,6 +381,7 @@ iges/wing128.igs -text svneol=unset#model/iges
 iges/woodie.igs -text svneol=unset#model/iges
 irprep/Cakefile -text
 irprep/Compile.sgi -text
+irprep/all_sf.1 svneol=native#text/plain
 irprep/all_sf.c svneol=native#text/plain
 irprep/display.1 svneol=native#text/plain
 irprep/display.c svneol=native#text/plain
