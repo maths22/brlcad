@@ -62,6 +62,7 @@ bench/try.sh svneol=native#text/x-sh
 brlman/Cakefile -text
 brlman/awf -text
 brlman/brlman -text
+brlman/brlman.1 svneol=native#text/plain
 burst/Cakefile -text
 burst/Hm.c svneol=native#text/plain
 burst/Hm.h svneol=native#text/plain
