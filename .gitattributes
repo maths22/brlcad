@@ -2964,6 +2964,7 @@ tclscripts/mged/color_scheme.tcl svneol=native#text/plain
 tclscripts/mged/comb.tcl svneol=native#text/plain
 tclscripts/mged/combmenu.tcl svneol=native#text/plain
 tclscripts/mged/e_id.tcl svneol=native#text/plain
+tclscripts/mged/edit_menu.tcl svneol=native#text/plain
 tclscripts/mged/edit_solid.tcl svneol=native#text/plain
 tclscripts/mged/edit_solid_int.tcl svneol=native#text/plain
 tclscripts/mged/editmenu.tcl svneol=native#text/plain
