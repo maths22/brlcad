@@ -183,6 +183,7 @@ conv/proe-g.1 svneol=native#text/plain
 conv/proe-g.c svneol=native#text/plain
 conv/tankill-g.1 svneol=native#text/plain
 conv/tankill-g.c svneol=native#text/plain
+conv/viewpoint-g.1 svneol=native#text/plain
 conv/viewpoint-g.c svneol=native#text/plain
 db/Cakefile -text
 db/Makefile svneol=native#text/plain
