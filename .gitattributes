@@ -14,6 +14,7 @@
 /Copyright_2001_US_Army -text
 /Copyright_2002_US_Army -text
 /INSTALL svneol=native#text/plain
+/INSTALL.pmac svneol=native#text/plain
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
