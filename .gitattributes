@@ -696,12 +696,15 @@ tools/applymap.c svneol=native#text/plain
 tools/avg4.c svneol=native#text/plain
 tools/crop.c svneol=native#text/plain
 tools/fant.c svneol=native#text/plain
+tools/font.src -text
 tools/into.c svneol=native#text/plain
+tools/makeFont.sh svneol=native#text/x-sh
 tools/mcut.c svneol=native#text/plain
 tools/mergechan.c svneol=native#text/plain
 tools/pyrlib.c svneol=native#text/plain
 tools/pyrmask.c svneol=native#text/plain
 tools/repos.c svneol=native#text/plain
+tools/rleClock.c svneol=native#text/plain
 tools/rle_box.c svneol=native#text/plain
 tools/rleaddcom.c svneol=native#text/plain
 tools/rleaddeof.c svneol=native#text/plain
