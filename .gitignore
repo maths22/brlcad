@@ -46,7 +46,6 @@ libsysv/vers.c
 libtermio/vers.c
 libwdb/vers.c
 rt/vers.c
-sample_applications/makefile
 src/libbn/vers.c
 src/libbu/vers.c
 src/libdm/vers.c
