@@ -1140,6 +1140,7 @@ liboptical/sh_scloud.c svneol=native#text/plain
 liboptical/sh_spm.c svneol=native#text/plain
 liboptical/sh_stack.c svneol=native#text/plain
 liboptical/sh_stxt.c svneol=native#text/plain
+liboptical/sh_tcl.c svneol=native#text/plain
 liboptical/sh_text.c svneol=native#text/plain
 liboptical/sh_toyota.c svneol=native#text/plain
 liboptical/sh_treetherm.c svneol=native#text/plain
