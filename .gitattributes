@@ -255,6 +255,7 @@ db/sphflake.asc svneol=native#text/plain
 db/star.asc svneol=native#text/plain
 db/tank_car.asc svneol=native#text/plain
 db/terra.asc svneol=native#text/plain
+db/terra.dsp -text svneol=CRLF#text/plain
 db/truck.asc svneol=native#text/plain
 db/wave.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
