@@ -257,9 +257,6 @@ db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
 doc/4.4-bugs.doc svneol=native#text/plain
 doc/Makefile.am svneol=native#text/plain
-doc/agreement -text
-doc/agreement_R6.0.pdf -text svneol=unset#application/pdf
-doc/agreement_R6.0.rtf svneol=native#text/rtf
 doc/anim.doc svneol=native#text/plain
 doc/benchmark.doc svneol=native#text/plain
 doc/blurb100.doc svneol=native#text/plain
