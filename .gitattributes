@@ -4111,9 +4111,6 @@ src/rttherm/std_day_1km.dat -text
 src/rttherm/test.sh svneol=native#text/x-sh
 src/rttherm/viewtherm.c svneol=native#text/plain
 src/sample_applications/.cvsignore svneol=native#text/plain
-src/sample_applications/Makefile.am svneol=native#text/plain
-src/sample_applications/debug.h svneol=native#text/plain
-src/sample_applications/fortran_example.f svneol=native#text/plain
 src/sig/.cvsignore svneol=native#text/plain
 src/sig/Makefile.am svneol=native#text/plain
 src/sig/a-d.c svneol=native#text/plain
