@@ -624,6 +624,7 @@ librt/nurb_ray.c svneol=native#text/plain
 librt/nurb_refine.c svneol=native#text/plain
 librt/nurb_solve.c svneol=native#text/plain
 librt/nurb_split.c svneol=native#text/plain
+librt/nurb_trim.c svneol=native#text/plain
 librt/nurb_util.c svneol=native#text/plain
 librt/nurb_xsplit.c svneol=native#text/plain
 librt/oslo_calc.c svneol=native#text/plain
