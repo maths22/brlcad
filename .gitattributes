@@ -3349,6 +3349,8 @@ tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
 tclscripts/util/Cakefile -text
+tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
+tclscripts/util/luniq.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
 tk/Cakefile -text
 tk/bwish.c svneol=native#text/plain
