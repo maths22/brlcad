@@ -2219,7 +2219,6 @@ src/other/libpng/KNOWNBUG -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
-src/other/libpng/ansi2knr -text svneol=unset#unset
 src/other/libpng/ansi2knr.1 svneol=native#text/plain
 src/other/libpng/ansi2knr.c svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
@@ -2240,7 +2239,6 @@ src/other/libpng/pngrio.c svneol=native#text/plain
 src/other/libpng/pngrtran.c svneol=native#text/plain
 src/other/libpng/pngrutil.c svneol=native#text/plain
 src/other/libpng/pngset.c svneol=native#text/plain
-src/other/libpng/pngtest -text
 src/other/libpng/pngtest.c svneol=native#text/plain
 src/other/libpng/pngtest.png -text svneol=unset#image/png
 src/other/libpng/pngtrans.c svneol=native#text/plain
