@@ -4390,6 +4390,8 @@ tclscripts/cad_clrpick.tcl svneol=native#text/plain
 tclscripts/cad_dialog.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
 tclscripts/fs_dialog.tk svneol=native#text/plain
+tclscripts/geometree/Cakefile -text
+tclscripts/geometree/GeometryBrowser.tcl svneol=native#text/plain
 tclscripts/helpcomm.tcl svneol=native#text/plain
 tclscripts/helplib.tcl svneol=native#text/plain
 tclscripts/hoc.tcl svneol=native#text/plain
