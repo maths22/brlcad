@@ -11,6 +11,7 @@
 bench/Cakefile -text
 bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
+bench/pretty.sh svneol=native#text/x-sh
 bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
@@ -374,6 +375,7 @@ mged/utility2.c svneol=native#text/plain
 mged/vgdev.h svneol=native#text/plain
 /mtype.sh svneol=native#text/x-sh
 /newbindir.sh svneol=native#text/x-sh
+pix/Cakefile -text
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
