@@ -509,6 +509,7 @@ misc/enigma/configure.in svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
 misc/enigma/enigma.c svneol=native#text/plain
 misc/fortran_example.f svneol=native#text/plain
+misc/libtool.m4 svneol=native#text/plain
 misc/macosx/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
 misc/macosx/Resources/Makefile.am svneol=native#text/plain
