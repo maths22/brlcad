@@ -11,7 +11,7 @@
  *	The U. S. Army Ballistic Research Laboratory
  *	Aberdeen Proving Ground, Maryland  21005-5066
  *
- *  $Header: /usr/Backup/upgrade/brlcad/brlcad/Cakefile.defs,v 11.190.2.12 2000-09-11 17:02:13 jra Exp $
+ *  $Header: /usr/Backup/upgrade/brlcad/brlcad/Cakefile.defs,v 11.190.2.13 2000-10-27 12:32:44 jra Exp $
  *
  *  For those unfamiliar with CAKE, one important hint:
  *  When a rule includes an ampersand ('&') before the colon,
@@ -905,7 +905,8 @@ $#			define	MGED_LIBES	LIBDM LIBDM_LIBES -L''XLIBDIR -lXi -lXext -lX11 -ly -L../
 #	define	HAS_TCP 1
 #	define	HAS_SYMLINKS 1
 #	if 1	/* PRODUCTION=1 */
-#		define	OPTIMIZER	-O2
+/*		Bug in O2 optimization for gcc 2.96 */
+#		define	OPTIMIZER	-O1
 #	else
 #		define	OPTIMIZER	-g
 #	endif
