@@ -373,6 +373,7 @@ librt/db_io.c svneol=native#text/plain
 librt/db_lookup.c svneol=native#text/plain
 librt/db_open.c svneol=native#text/plain
 librt/db_scan.c svneol=native#text/plain
+librt/db_tree.c svneol=native#text/plain
 librt/db_walk.c svneol=native#text/plain
 librt/debug.h svneol=native#text/plain
 librt/dir.c svneol=native#text/plain
