@@ -3907,6 +3907,7 @@ proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
 proc-db/pix2g.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
+proc-db/rawbot.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
 proc-db/sketch.c svneol=native#text/plain
 proc-db/sphflake.c svneol=native#text/plain
