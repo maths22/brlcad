@@ -615,6 +615,7 @@ util/bwscale.1 svneol=native#text/plain
 util/bwscale.c svneol=native#text/plain
 util/bwstat.1 svneol=native#text/plain
 util/bwstat.c svneol=native#text/plain
+util/dpix-pix.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
 util/dunncomm.c svneol=native#text/plain
