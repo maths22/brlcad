@@ -1681,6 +1681,7 @@ src/other/URToolkit/MANIFEST -text
 src/other/URToolkit/Makefile.am svneol=native#text/plain
 src/other/URToolkit/README svneol=native#text/plain
 src/other/URToolkit/blurb -text
+src/other/URToolkit/cnv/.cvsignore svneol=native#text/plain
 src/other/URToolkit/cnv/Makefile.am svneol=native#text/plain
 src/other/URToolkit/cnv/README svneol=native#text/plain
 src/other/URToolkit/cnv/aliastorle.c svneol=native#text/plain
@@ -1822,6 +1823,7 @@ src/other/URToolkit/man/unslice.1 svneol=native#text/plain
 src/other/URToolkit/man/urt.1 svneol=native#text/plain
 src/other/URToolkit/man/wasatchrle.1 svneol=native#text/plain
 src/other/URToolkit/patchlevel.h svneol=native#text/plain
+src/other/URToolkit/tools/.cvsignore svneol=native#text/plain
 src/other/URToolkit/tools/Makefile.am svneol=native#text/plain
 src/other/URToolkit/tools/applymap.c svneol=native#text/plain
 src/other/URToolkit/tools/avg4.c svneol=native#text/plain
