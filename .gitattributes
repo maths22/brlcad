@@ -330,6 +330,7 @@ librt/parse.c svneol=native#text/plain
 librt/plane.h svneol=native#text/plain
 librt/polylib.c svneol=native#text/plain
 librt/polyno.h svneol=native#text/plain
+librt/regionfix.c svneol=native#text/plain
 librt/roots.c svneol=native#text/plain
 librt/shoot.c svneol=native#text/plain
 librt/sqrt.gould.s svneol=native#text/plain
