@@ -300,6 +300,7 @@ util/bwrot.c svneol=native#text/plain
 util/bwscale.c svneol=native#text/plain
 util/bwstat.c svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
+util/dunncomm.c svneol=native#text/plain
 util/dunnsnap.c svneol=native#text/plain
 util/gencolor.c svneol=native#text/plain
 util/loop.1 svneol=native#text/plain
