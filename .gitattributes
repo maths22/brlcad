@@ -525,6 +525,8 @@ html/manuals/Cakefile -text
 html/manuals/Install.html svneol=native#text/html
 html/manuals/Obtain.html svneol=native#text/html
 html/manuals/Overview.html svneol=native#text/html
+html/manuals/ReleaseNotes/Rel5.0/index.html svneol=native#text/html
+html/manuals/ReleaseNotes/Rel5.0/new_cmds.html svneol=native#text/html
 html/manuals/ReleaseNotes/index.html svneol=native#text/html
 html/manuals/eagleCAD.gif -text svneol=unset#image/gif
 html/manuals/index.html svneol=native#text/html
