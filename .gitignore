@@ -344,6 +344,10 @@ src/proc-db/tube
 src/proc-db/vegitation
 src/proc-db/wall
 src/proc-db/wdb_example
+src/remrt/remrt
+src/remrt/rtsrv
+src/remrt/vers.c
+src/remrt/version
 src/rt/.deps
 src/rt/.libs
 src/rt/Makefile
@@ -388,6 +392,11 @@ src/rt/rtxray
 src/rt/rtxray_vers.c
 src/rt/vers.c
 src/rt/version
+src/rttherm/rttherm
+src/rttherm/ssamp-bw
+src/rttherm/ssampview
+src/rttherm/vers.c
+src/rttherm/version
 src/sig/.deps
 src/sig/.libs
 src/sig/Makefile
@@ -427,6 +436,12 @@ src/sig/u-d
 src/sig/u-f
 src/sig/umod
 src/sig/ustat
+src/tab/script-tab
+src/tab/script.c
+src/tab/scriptsort
+src/tab/tabinterp
+src/tab/tabsub
+src/tab/txyz-pl
 src/tclscripts/lib/tclIndex
 src/tclscripts/mged/tclIndex
 src/tclscripts/pl-dm/tclIndex
