@@ -1,12 +1,12 @@
 /.anim.*
 /.bench.*
 /.burst.*
+/.bwish.*
 /.cake*.*
 /.canon.*
 /.comgeom-g.*
 /.conv.*
 /.cvsignore
-/.cwish.*
 /.db.*
 /.fb.*
 /.fbed.*
@@ -29,7 +29,6 @@
 /.rt.*
 /.sig.*
 /.tab.*
-/.tk.*
 /.tools.*
 /.util.*
 /.vas4.*
