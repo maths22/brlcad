@@ -346,6 +346,7 @@ iges/extrudcon.c svneol=native#text/plain
 iges/extrude.c svneol=native#text/plain
 iges/findp.c svneol=native#text/plain
 iges/freetree.c svneol=native#text/plain
+iges/g-iges.1 svneol=native#text/plain
 iges/g-iges.c svneol=native#text/plain
 iges/ge6.igs -text svneol=unset#model/iges
 iges/get_att.c svneol=native#text/plain
