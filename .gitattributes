@@ -643,6 +643,7 @@ html/manuals/libbu/cmdhist_obj.html svneol=native#text/html
 html/manuals/libdm/Cakefile -text
 html/manuals/libdm/api.html svneol=native#text/html
 html/manuals/libdm/contents.html svneol=native#text/html
+html/manuals/libdm/dm_obj.html svneol=native#text/html
 html/manuals/libdm/index.html svneol=native#text/html
 html/manuals/libdm/preface.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
