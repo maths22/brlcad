@@ -1616,6 +1616,7 @@ util/dbcp.1 svneol=native#text/plain
 util/dbcp.c svneol=native#text/plain
 util/decimate.1 svneol=native#text/plain
 util/decimate.c svneol=native#text/plain
+util/double-asc.c svneol=native#text/plain
 util/dpix-pix.1 svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
