@@ -8,6 +8,7 @@
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
+/README.MacOSX svneol=native#text/plain
 /TODO svneol=native#text/plain
 anim/Makefile.am svneol=native#text/plain
 anim/anim_cascade.1 svneol=native#text/plain
