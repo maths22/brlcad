@@ -1048,6 +1048,7 @@ libbn/tabdata.c svneol=native#text/plain
 libbn/tplot.c svneol=native#text/plain
 libbn/vectfont.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
+libbn/vers.c svneol=native#text/plain
 libbn/vert_tree.c svneol=native#text/plain
 libbn/wavelet.c svneol=native#text/plain
 libbu/Cakefile -text
@@ -1103,6 +1104,7 @@ libbu/rb_walk.c svneol=native#text/plain
 libbu/redblack.3 svneol=native#text/plain
 libbu/semaphore.c svneol=native#text/plain
 libbu/units.c svneol=native#text/plain
+libbu/vers.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
 libbu/vls.c svneol=native#text/plain
 libbu/xdr.c svneol=native#text/plain
@@ -1125,6 +1127,7 @@ libdm/knob.c svneol=native#text/plain
 libdm/options.c svneol=native#text/plain
 libdm/query.c svneol=native#text/plain
 libdm/tcl.c svneol=native#text/plain
+libdm/vers.c svneol=native#text/plain
 libfb/Cakefile -text
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
@@ -1172,6 +1175,7 @@ libfb/server.c svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
 libfb/sgiselect.s svneol=native#text/plain
 libfb/tcl.c svneol=native#text/plain
+libfb/vers.c svneol=native#text/plain
 libfft/Cakefile -text
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
@@ -2037,6 +2041,7 @@ liborle/rle.c svneol=native#text/plain
 libpkg/Cakefile -text
 libpkg/pkg.c svneol=native#text/plain
 libpkg/tcl.c svneol=native#text/plain
+libpkg/vers.c svneol=native#text/plain
 libpng/ANNOUNCE -text
 libpng/CHANGES -text
 libpng/Cakefile -text
@@ -2123,6 +2128,7 @@ libpng/scripts/makevms.com svneol=native#text/plain
 libpng/scripts/pngdef.pas -text
 libpng/scripts/pngos2.def svneol=native#text/plain
 libpng/scripts/smakefile.ppc -text
+libpng/vers.c svneol=native#text/plain
 librt/Cakefile -text
 librt/bezier_2d_isect.c svneol=native#text/plain
 librt/bigE.c svneol=native#text/plain
@@ -2276,6 +2282,7 @@ librt/timerhep.c svneol=native#text/plain
 librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 librt/vdraw.c svneol=native#text/plain
+librt/vers.c svneol=native#text/plain
 librt/view_obj.c svneol=native#text/plain
 librt/vlist.c svneol=native#text/plain
 librt/vshoot.c svneol=native#text/plain
@@ -3884,6 +3891,7 @@ libwdb/skt.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/strsol.c svneol=native#text/plain
 libwdb/units.c svneol=native#text/plain
+libwdb/vers.c svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
 libz/Cakefile -text
 libz/ChangeLog svneol=native#text/plain
