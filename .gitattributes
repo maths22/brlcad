@@ -604,6 +604,7 @@ html/ReleaseNotes/Rel5.0/deprecated.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/index.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_cmds.html svneol=native#text/html
 html/ReleaseNotes/Rel5.0/new_libs.html svneol=native#text/html
+html/ReleaseNotes/Rel6.0/Cakefile -text
 html/ReleaseNotes/Rel6.0/index.html svneol=native#text/html
 html/ReleaseNotes/email2.0.html svneol=native#text/html
 html/ReleaseNotes/email3.0.html svneol=native#text/html
