@@ -2300,6 +2300,7 @@ libz/infcodes.c svneol=native#text/plain
 libz/infcodes.h svneol=native#text/plain
 libz/inffast.c svneol=native#text/plain
 libz/inffast.h svneol=native#text/plain
+libz/inffixed.h svneol=native#text/plain
 libz/inflate.c svneol=native#text/plain
 libz/inftrees.c svneol=native#text/plain
 libz/inftrees.h svneol=native#text/plain
