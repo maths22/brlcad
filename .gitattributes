@@ -266,9 +266,12 @@ db/cornell.asc svneol=native#text/plain
 db/cray.asc svneol=native#text/plain
 db/crod.asc svneol=native#text/plain
 db/cube.asc svneol=native#text/plain
+db/db.php svneol=native#text/plain
 db/demo.asc svneol=native#text/plain
 db/galileo.asc svneol=native#text/plain
 db/havoc.asc svneol=native#text/plain
+db/include/ctype.inc -text
+db/include/debug.inc -text
 db/kman.asc svneol=native#text/plain
 db/ktank.asc svneol=native#text/plain
 db/lgt-test.asc svneol=native#text/plain
