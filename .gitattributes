@@ -684,6 +684,7 @@ libbu/convert.c svneol=native#text/plain
 libbu/getopt.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libbu/ispar.c svneol=native#text/plain
 libbu/lex.c svneol=native#text/plain
 libbu/linebuf.c svneol=native#text/plain
 libbu/log.c svneol=native#text/plain
