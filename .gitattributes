@@ -289,6 +289,7 @@ rt/viewrad.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
 rt/worker.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
+sh/cray.sh svneol=native#text/x-sh
 util/Makefile svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
 util/bw-imp.c svneol=native#text/plain
