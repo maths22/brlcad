@@ -4,6 +4,7 @@
 /BUGS svneol=native#text/plain
 /COPYRIGHT -text
 /Cakefile.defs -text
+/HACKING svneol=native#text/plain
 /HISTORY -text
 /INSTALL svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
