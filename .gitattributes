@@ -1777,6 +1777,7 @@ src/other/incrTcl/itk/aclocal.m4 svneol=native#text/plain
 src/other/incrTcl/itk/demos/README svneol=native#text/plain
 src/other/incrTcl/itk/demos/itkedit -text
 src/other/incrTcl/itk/doc/Archetype.n svneol=native#text/plain
+src/other/incrTcl/itk/doc/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/doc/Toplevel.n svneol=native#text/plain
 src/other/incrTcl/itk/doc/Widget.n svneol=native#text/plain
 src/other/incrTcl/itk/doc/itk.n svneol=native#text/plain
