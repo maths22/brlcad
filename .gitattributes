@@ -3329,6 +3329,10 @@ pix/world.pix -text svneol=unset#image/x-rgb
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
+pro-engineer/text/fullhelp/helpfiles.txt svneol=native#text/plain
+pro-engineer/text/fullhelp/proe-brl.hlp -text
+pro-engineer/text/menus/intf_exprt.aux -text
+pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
