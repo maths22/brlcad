@@ -1036,6 +1036,7 @@ libbu/cmdhist.c svneol=native#text/plain
 libbu/cmdhist_obj.c svneol=native#text/plain
 libbu/color.c svneol=native#text/plain
 libbu/convert.c svneol=native#text/plain
+libbu/fast.sh svneol=native#text/x-sh
 libbu/getopt.c svneol=native#text/plain
 libbu/hist.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
