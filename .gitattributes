@@ -1,5 +1,6 @@
 * text=auto !eol
 /Cakefile -text
+/Cakefile.defs -text
 /Cakefile.lib -text
 /Cakefile.prog -text
 /Cakefile.rules -text
