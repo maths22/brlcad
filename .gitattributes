@@ -1042,7 +1042,6 @@ libdm/Cakefile -text
 libdm/clip.c svneol=native#text/plain
 libdm/cmd.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
-libdm/db_obj.c svneol=native#text/plain
 libdm/dm-Null.c svneol=native#text/plain
 libdm/dm-X.c svneol=native#text/plain
 libdm/dm-generic.c svneol=native#text/plain
@@ -1054,7 +1053,6 @@ libdm/dm-ps.c svneol=native#text/plain
 libdm/dm_obj.c svneol=native#text/plain
 libdm/fbserv_obj.c svneol=native#text/plain
 libdm/fbserv_obj.h svneol=native#text/plain
-libdm/geometry_obj.c svneol=native#text/plain
 libdm/knob.c svneol=native#text/plain
 libdm/options.c svneol=native#text/plain
 libdm/query.c svneol=native#text/plain
