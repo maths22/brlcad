@@ -207,6 +207,7 @@ util/pix-filt-ik.c svneol=native#text/plain
 util/pix-ik.c svneol=native#text/plain
 util/pix-ikr.c svneol=native#text/plain
 util/pix-lowp-ik.c svneol=native#text/plain
+util/pixbackgnd.c svneol=native#text/plain
 util/pixbustup.c svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
 util/pixfilter.c svneol=native#text/plain
