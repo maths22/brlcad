@@ -467,6 +467,7 @@ sh/newvers.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
 tab/tabinterp.c svneol=native#text/plain
+tab/txyz-pl.c svneol=native#text/plain
 util/Cakefile -text
 util/Makefile svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
