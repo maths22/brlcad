@@ -209,6 +209,7 @@ conv/g2asc.c svneol=native#text/plain
 conv/nastran-g.1 svneol=native#text/plain
 conv/nastran-g.c svneol=native#text/plain
 conv/nmg-polysolid.1 svneol=native#text/plain
+conv/nmg-polysolid.c svneol=native#text/plain
 conv/nmg-rib.1 svneol=native#text/plain
 conv/nmg-rib.c svneol=native#text/plain
 conv/nmg-sgp.c svneol=native#text/plain
