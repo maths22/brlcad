@@ -730,6 +730,7 @@ util/pixfade.c svneol=native#text/plain
 util/pixfields.c svneol=native#text/plain
 util/pixfilter.1 svneol=native#text/plain
 util/pixfilter.c svneol=native#text/plain
+util/pixhalve.c svneol=native#text/plain
 util/pixhist.1 svneol=native#text/plain
 util/pixhist.c svneol=native#text/plain
 util/pixhist3d-pl.1 svneol=native#text/plain
