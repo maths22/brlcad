@@ -1295,7 +1295,6 @@ librt/nmg_mod.c svneol=native#text/plain
 librt/nmg_plot.c svneol=native#text/plain
 librt/nmg_pr.c svneol=native#text/plain
 librt/nmg_pt_fu.c svneol=native#text/plain
-librt/nmg_rt.h svneol=native#text/plain
 librt/nmg_rt_isect.c svneol=native#text/plain
 librt/nmg_rt_segs.c svneol=native#text/plain
 librt/nmg_tri.c svneol=native#text/plain
