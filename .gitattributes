@@ -886,6 +886,8 @@ nirt/showshot.1 svneol=native#text/plain
 nirt/showshot.c svneol=native#text/plain
 nirt/str_manip.c svneol=native#text/plain
 nirt/usrfmt.h svneol=native#text/plain
+off/g-off.c svneol=native#text/plain
+off/off-g.c svneol=native#text/plain
 patch/Cakefile -text
 patch/patch-g.1 svneol=native#text/plain
 patch/patch-g.c svneol=native#text/plain
