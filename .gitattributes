@@ -2005,6 +2005,7 @@ libitcl3.2/tools/man2tcl.c svneol=native#text/plain
 libmultispectral/Cakefile -text
 libmultispectral/init.c svneol=native#text/plain
 libmultispectral/sh_temp.c svneol=native#text/plain
+libmultispectral/vers.c svneol=native#text/plain
 liboptical/Cakefile -text
 liboptical/init.c svneol=native#text/plain
 liboptical/sh_air.c svneol=native#text/plain
@@ -2035,6 +2036,7 @@ liboptical/sh_treetherm.c svneol=native#text/plain
 liboptical/sh_wood.c svneol=native#text/plain
 liboptical/sh_xxx.c svneol=native#text/plain
 liboptical/turb.c svneol=native#text/plain
+liboptical/vers.c svneol=native#text/plain
 liborle/Cakefile -text
 liborle/liborle.3 svneol=native#text/plain
 liborle/rle.c svneol=native#text/plain
