@@ -120,6 +120,7 @@ fb/fb-bw.1 svneol=native#text/plain
 fb/fb-bw.c svneol=native#text/plain
 fb/fb-cmap.1 svneol=native#text/plain
 fb/fb-cmap.c svneol=native#text/plain
+fb/fb-fb.c svneol=native#text/plain
 fb/fb-orle.1 svneol=native#text/plain
 fb/fb-orle.c svneol=native#text/plain
 fb/fb-pix.1 svneol=native#text/plain
