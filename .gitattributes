@@ -59,6 +59,7 @@ fb/Cakefile -text
 fb/bw-fb.c svneol=native#text/plain
 fb/cat-fb.1 svneol=native#text/plain
 fb/cat-fb.c svneol=native#text/plain
+fb/cmap-crunch.c svneol=native#text/plain
 fb/cmap-fb.1 svneol=native#text/plain
 fb/cmap-fb.c svneol=native#text/plain
 fb/fb-bw.c svneol=native#text/plain
@@ -67,6 +68,7 @@ fb/fb-cmap.c svneol=native#text/plain
 fb/fb-orle.1 svneol=native#text/plain
 fb/fb-orle.c svneol=native#text/plain
 fb/fb-pix.c svneol=native#text/plain
+fb/fb-rle.c svneol=native#text/plain
 fb/fbanim.c svneol=native#text/plain
 fb/fbcbars.1 svneol=native#text/plain
 fb/fbcbars.c svneol=native#text/plain
@@ -500,6 +502,7 @@ util/plline2.c svneol=native#text/plain
 util/plrot.1 svneol=native#text/plain
 util/plrot.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
+util/strdup.c svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
 vas4/Cakefile -text
 vas4/init_ik.c svneol=native#text/plain
