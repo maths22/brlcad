@@ -455,6 +455,7 @@ h/rtgeom.h svneol=native#text/plain
 h/rtlex.h svneol=native#text/plain
 h/rtlist.h svneol=native#text/plain
 h/rtstring.h svneol=native#text/plain
+h/sed4 -text
 h/shadefuncs.h svneol=native#text/plain
 h/shadework.h svneol=native#text/plain
 h/shortvect-pr.h svneol=native#text/plain
