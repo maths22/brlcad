@@ -1463,6 +1463,7 @@ tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
+tclscripts/mged/openw.tcl svneol=native#text/plain
 tclscripts/mged/raypick.tcl svneol=native#text/plain
 tclscripts/mged/sliders.tcl svneol=native#text/plain
 tclscripts/mged/solclick.tcl svneol=native#text/plain
