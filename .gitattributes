@@ -3225,6 +3225,7 @@ libtk8.3/generic/tkBitmap.c svneol=native#text/plain
 libtk8.3/generic/tkButton.c svneol=native#text/plain
 libtk8.3/generic/tkButton.h svneol=native#text/plain
 libtk8.3/generic/tkCanvArc.c svneol=native#text/plain
+libtk8.3/generic/tkCanvBezier.c svneol=native#text/plain
 libtk8.3/generic/tkCanvBmap.c svneol=native#text/plain
 libtk8.3/generic/tkCanvImg.c svneol=native#text/plain
 libtk8.3/generic/tkCanvLine.c svneol=native#text/plain
