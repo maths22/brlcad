@@ -138,6 +138,7 @@ conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.1 svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
+conv/viewpoint-g.c svneol=native#text/plain
 db/Cakefile -text
 db/Makefile svneol=native#text/plain
 db/Makefile.dist svneol=native#text/plain
