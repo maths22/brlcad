@@ -233,6 +233,7 @@ mged/clip.c svneol=native#text/plain
 mged/cmd.c svneol=native#text/plain
 mged/columns.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
+mged/dm-4d.c svneol=native#text/plain
 mged/dm-mer.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
 mged/dm-sun.c svneol=native#text/plain
