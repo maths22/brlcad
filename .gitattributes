@@ -1451,6 +1451,7 @@ tclscripts/mged/solclick.tcl svneol=native#text/plain
 tclscripts/mged/solcreate.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
+tk/tkTest.c svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
 tools/applymap.c svneol=native#text/plain
