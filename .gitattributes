@@ -1014,6 +1014,7 @@ mged/dm-4d.c svneol=native#text/plain
 mged/dm-X.c svneol=native#text/plain
 mged/dm-hp.c svneol=native#text/plain
 mged/dm-mer.c svneol=native#text/plain
+mged/dm-ogl.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
 mged/dm-ps.c svneol=native#text/plain
 mged/dm-sun.c svneol=native#text/plain
