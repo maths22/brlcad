@@ -252,6 +252,8 @@ src/liborle/vers.c
 src/liborle/version
 src/libpkg/vers.c
 src/libpkg/version
+src/librt/comb
+src/librt/nurb_example
 src/librt/vers.c
 src/librt/version
 src/libsysv/vers.c
