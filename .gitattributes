@@ -1149,6 +1149,7 @@ libfft/Cakefile -text
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
 libfft/ditsplitc.c svneol=native#text/plain
+libfft/fft.h svneol=native#text/plain
 libfft/fftc.c svneol=native#text/plain
 libfft/fftest.c svneol=native#text/plain
 libfft/fftfast.c svneol=native#text/plain
