@@ -292,8 +292,10 @@ src/other/URToolkit/cnv/graytorle
 src/other/URToolkit/cnv/painttorle
 src/other/URToolkit/cnv/rawtorle
 src/other/URToolkit/cnv/rletoabA60
+src/other/URToolkit/cnv/rletoabA62/rletoabA62
 src/other/URToolkit/cnv/rletoalias
 src/other/URToolkit/cnv/rletoascii
+src/other/URToolkit/cnv/rletogif/rletogif
 src/other/URToolkit/cnv/rletogray
 src/other/URToolkit/cnv/rletopaint
 src/other/URToolkit/cnv/rletops
@@ -307,6 +309,7 @@ src/other/URToolkit/cnv/wasatchrle
 src/other/URToolkit/cnv/xbmtorle
 src/other/URToolkit/tools/applymap
 src/other/URToolkit/tools/avg4
+src/other/URToolkit/tools/clock/rleClock
 src/other/URToolkit/tools/crop
 src/other/URToolkit/tools/fant
 src/other/URToolkit/tools/into
