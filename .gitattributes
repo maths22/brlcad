@@ -4199,6 +4199,7 @@ src/other/libz/zlib.3 svneol=native#text/plain
 src/other/libz/zlib.h svneol=native#text/plain
 src/other/libz/zutil.c svneol=native#text/plain
 src/other/libz/zutil.h svneol=native#text/plain
+src/patch/.cvsignore svneol=native#text/plain
 src/patch/Makefile.am svneol=native#text/plain
 src/patch/patch-g.1 svneol=native#text/plain
 src/patch/patch-g.c svneol=native#text/plain

@@ -317,6 +317,8 @@ src/other/incrTcl/itk/win/Release
 src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
 src/other/libpng/vers.c
+src/patch/patch-g
+src/patch/rpatch
 src/proc-db/bottest
 src/proc-db/brickwall
 src/proc-db/clutter
