@@ -1281,6 +1281,7 @@ util/loop.c svneol=native#text/plain
 util/lowp.c svneol=native#text/plain
 util/mac-pix.1 svneol=native#text/plain
 util/mac-pix.c svneol=native#text/plain
+util/msrandom.c svneol=native#text/plain
 util/op-bw.1 svneol=native#text/plain
 util/op-bw.c svneol=native#text/plain
 util/orle-pix.1 svneol=native#text/plain
