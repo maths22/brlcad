@@ -18,7 +18,15 @@ bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
 burst/Cakefile -text
+burst/Hm.c svneol=native#text/plain
+burst/Hm.h svneol=native#text/plain
+burst/HmGetc.c svneol=native#text/plain
+burst/HmGlob.c svneol=native#text/plain
 burst/Mm.h svneol=native#text/plain
+burst/Sc.c svneol=native#text/plain
+burst/Sc.h svneol=native#text/plain
+burst/Tc.c svneol=native#text/plain
+burst/Tc.h svneol=native#text/plain
 burst/ascii.h svneol=native#text/plain
 burst/burst.c svneol=native#text/plain
 burst/burst.format -text
