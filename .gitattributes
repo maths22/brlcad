@@ -510,6 +510,7 @@ util/pix-rle.c svneol=native#text/plain
 util/pixbackgnd.c svneol=native#text/plain
 util/pixbustup.c svneol=native#text/plain
 util/pixdiff.c svneol=native#text/plain
+util/pixfade.c svneol=native#text/plain
 util/pixfilter.c svneol=native#text/plain
 util/pixhist.c svneol=native#text/plain
 util/pixhist3d-pl.c svneol=native#text/plain
