@@ -239,6 +239,7 @@ h/rle_config.h svneol=native#text/plain
 h/rle_getraw.h svneol=native#text/plain
 h/rle_put.h svneol=native#text/plain
 h/rle_raw.h svneol=native#text/plain
+h/rtgeom.h svneol=native#text/plain
 h/rtlist.h svneol=native#text/plain
 h/rtstring.h svneol=native#text/plain
 h/shadefuncs.h svneol=native#text/plain
