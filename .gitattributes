@@ -252,6 +252,7 @@ proc-db/molecule.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
+rt/do.c svneol=native#text/plain
 rt/libfb-dummy.c svneol=native#text/plain
 rt/light.h svneol=native#text/plain
 rt/main.c svneol=native#text/plain
