@@ -55,8 +55,10 @@ int	xmin, ymax;
 		fastf_t		xrange = xmax - xmin;
 
 	/* Avoid page thrashing of frame buffer.			*/
+	rt_log( "ymax=%d\n", ymax );
 	ymax = adjust_Page( ymax );
 	ymin = ymax - interval;
+	rt_log( "adjusted ymax=%d ymin=%d interval=%d\n", ymax, ymin, interval );
 
 	if( ir_table == RGBPIXEL_NULL )
 		{
@@ -164,7 +166,7 @@ FILE	*fp;
 		}
 	if( ! init_Temp_To_RGB() )
 		return	0;
- 	for( ry = 0, fy = grid_sz-1; ; ry += ir_aperture, fy-- )
+ 	for( ry = 0, fy = grid_sz-1; ; ry += aperture_sz, fy-- )
 		{
 		if( fb_seek( fbiop, 0, fy ) == -1 )
 			{
@@ -173,15 +175,15 @@ FILE	*fp;
 				);
 			return	0;
 			}
-		for( rx = 0 ; rx < IR_DATA_WID; rx += ir_aperture )
+		for( rx = 0 ; rx < IR_DATA_WID; rx += aperture_sz )
 			{	int	fah;
 				int	sum = 0;
 				register int	i;
 				register int	index;
 				RGBpixel	*pixel;
-			for( i = 0; i < ir_aperture; i++ )
+			for( i = 0; i < aperture_sz; i++ )
 				{	register int	j;
-				for( j = 0; j < ir_aperture; j++ )
+				for( j = 0; j < aperture_sz; j++ )
 					{
 					if( get_IR( rx+j, ry+i, &fah, fp ) )
 						sum += fah < ir_min ? ir_min : fah;
@@ -280,14 +282,14 @@ int		temp;
 init_Temp_To_RGB()
 	{	register int	temp, i;
 		RGBpixel	rgb;
-	if( (ir_aperture = fb_getwidth( fbiop )/grid_sz) < 1 )
+	if( (aperture_sz = fb_getwidth( fbiop )/grid_sz) < 1 )
 		{
 		rt_log( "Grid too large for IR application, max. is %d.\n",
 			IR_DATA_WID
 			);
 		return	0;
 		}
-	sample_sz = Sqr( ir_aperture );
+	sample_sz = Sqr( aperture_sz );
 	if( ir_table != RGBPIXEL_NULL )
 		/* Table already initialized presumably from another view,
 			since range may differ we must create a different
@@ -317,9 +319,9 @@ register RGBpixel	*pixel;
 		register int	temp = ir_min;
 	for( p = (RGBpixel *) ir_table[0]; p <= q; p++, temp++ )
 		{
-		if(	(int) (*p)[RED] == (int) (*pixel)[RED]
-		    &&	(int) (*p)[GRN] == (int) (*pixel)[GRN]
-		    &&	(int) (*p)[BLU] == (int) (*pixel)[BLU]
+		if(	(int) p[RED] == (int) pixel[RED]
+		    &&	(int) p[GRN] == (int) pixel[GRN]
+		    &&	(int) p[BLU] == (int) pixel[BLU]
 			)
 			return	temp;
 		}

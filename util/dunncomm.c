@@ -22,16 +22,11 @@ static char RCSid[] = "@(#)$Header$ (BRL)";
 
 #include <stdio.h>
 #include <fcntl.h>
+#include <sgtty.h>
 
 #ifdef BSD
 # include <sys/time.h>
-# include <sys/ioctl.h>
-struct	sgttyb	tty;
-#define TCSETA	TIOCSETP
-#define TCGETA	TIOCGETP
-#ifndef	XTABS
-#define	XTABS	(TAB1 | TAB2)
-#endif XTABS
+# include <sys/file.h>
 #endif
 
 #ifdef SYSV
@@ -39,10 +34,9 @@ struct timeval {
 	int	tv_sec;
 	int	tv_usec;
 };
-# include <termio.h>
-struct	termio	tty;
 #endif SYSV
 
+struct	sgttyb	tty;
 int fd;
 char cmd;
 unsigned char	status[4];
@@ -60,7 +54,7 @@ dunnopen()
 	/* open the camera device */
 
 	if( (fd = open("/dev/camera", O_RDWR | O_NDELAY)) < 0 
-	     || ioctl(fd, TCGETA, &tty) < 0) {
+	     || ioctl(fd, TIOCGETP, &tty) < 0) {
 	     	printf("\007dunnopen: can't open /dev/camera\n");
 		close(fd);
 		exit(10);
@@ -68,18 +62,9 @@ dunnopen()
 	
 	/* set up the camera device */
 
-#ifdef BSD
 	tty.sg_ispeed = tty.sg_ospeed = B9600;
 	tty.sg_flags = RAW | EVENP | ODDP | XTABS;
-#endif
-#ifdef SYSV
-	tty.c_cflag = B9600 | CS7 | TAB3;
-	tty.c_lflag &= ~ICANON;		/* Raw mode */
-	tty.c_lflag &= ~ISIG;		/* Signals OFF */
-	tty.c_cc[VMIN] = 1;
-	tty.c_cc[VTIME] = 0;
-#endif
-	if( ioctl(fd, TCSETA, &tty) < 0 ) {
+	if( ioctl(fd,TIOCSETP,&tty) < 0 ) {
 		printf("\007dunnopen: error on /dev/camera setup\n");
 		exit(20);
 	}

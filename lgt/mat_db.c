@@ -50,30 +50,30 @@ Mat_Db_Entry		mat_nul_entry =
 				MF_NULL,	/* Mode flag.		*/
 				"(null)"	/* Material name.	*/
 				};
-_LOCAL_ int	get_Mat_Entry(), put_Entry();
+_LOCAL_ int	get_Entry(), put_Entry();
+_LOCAL_ int	mat_W_Open();
 
-/*	m a t _ R d _ D b ( )
-	Open material database and read entries into table,
-	return number of entries successfully read.
+/*	m a t _ O p e n _ D b ( )
+	Open file, return file pointer or NULL.
  */
-mat_Rd_Db( file )
-char	*file;
-	{	register Mat_Db_Entry	*entry;
-		register FILE		*fp;
-	if( (fp = fopen( file, "r" )) == NULL )
-		return	0;
+FILE *
+mat_Open_Db( mat_db_file )
+char	*mat_db_file;
+	{	register	Mat_Db_Entry	*entry;
+	if( (matdb_fp = fopen( mat_db_file, "r+" )) == (FILE *) NULL )
+		return	matdb_fp; /* NULL */
 	/* Mark all entries as NULL.					*/
 	for( entry = mat_db_table; entry < &mat_db_table[MAX_MAT_DB]; entry++ )
 		entry->mode_flag = MF_NULL;
-	mat_db_size = 0;
-	for(	entry = mat_db_table;
-		entry < &mat_db_table[MAX_MAT_DB]
-	     && get_Mat_Entry( entry, fp );
-		++entry
-		)
-		mat_db_size++;
-	(void) fclose( fp );
-	return	mat_db_size;
+	return	matdb_fp;
+	}
+
+/*	m a t _ C l o s e _ D b ( )
+	Close material database input file.  Return success or failure.
+ */
+mat_Close_Db()
+	{
+	return	fclose( matdb_fp );
 	}
 
 /*	m a t _ P r i n t _ D b ( )
@@ -143,44 +143,59 @@ int		material_id;
 	return	1;
 	}
 
+/*	m a t _ R d _ D b ( )
+	Read ASCII material database into table, return number of entries.
+ */
+mat_Rd_Db()
+	{	Mat_Db_Entry	*entry;
+	mat_db_size = 0;
+	for(	entry = mat_db_table;
+		entry < &mat_db_table[MAX_MAT_DB]
+	     && get_Entry( entry );
+		++entry
+		)
+		mat_db_size++;
+	return	mat_db_size;
+	}
+
+
 /*	m a t _ S a v e _ D b ( )
-	Write ASCII material database from table.
-	Return 1 for success, 0 for failure.
+	Write ASCII material database from table.  If 'file' is NULL,
+	overwrite input file, otherwise open or create 'file'.  Return success
+	or failure.
  */
 mat_Save_Db( file )
 char	*file;
 	{	register Mat_Db_Entry	*entry;
-		register FILE		*fp;
-	if( (fp = fopen( file, "w" )) == NULL )
+	if( ! mat_W_Open( file ) )
 		return	0;
-	setbuf( fp, malloc( BUFSIZ ) );
 	for(	entry = mat_db_table;
 		entry < &mat_db_table[mat_db_size]
-	     && put_Mat_Entry( entry, fp );
+	     && put_Entry( entry );
 		++entry
 		)
 		;
-	(void) fclose( fp );
 	if( entry != &mat_db_table[mat_db_size] )
 		return	0;
+	(void) fflush( matdb_fp );
 	return	1;
 	}
 
 
-/*	m a t _ E d i t _ D b _ E n t r y ( )
+/*	m a t _ P u t _ D b _ E n t r y ( )
 	Create or overwrite entry in material table.
  */
-mat_Edit_Db_Entry( id )
-int	id;
+mat_Put_Db_Entry( material_id )
+int	material_id;
 	{	register Mat_Db_Entry	*entry;
 		static char		input_buf[BUFSIZ];
 		int			red, grn, blu;
-	if( id < 0 )
+	if( material_id < 0 )
 		return	-1;
-	if( id < MAX_MAT_DB )
+	if( material_id < MAX_MAT_DB )
 		{
-		entry = &mat_db_table[id];
-		entry->id = id;
+		entry = &mat_db_table[material_id];
+		entry->id = material_id;
 		}
 	else
 		{
@@ -248,7 +263,7 @@ int	id;
 		entry->df_rgb[2] = blu;
 		}
 	entry->mode_flag = MF_USED;
-	mat_db_size = Max( mat_db_size, id+1 );
+	mat_db_size = Max( mat_db_size, material_id+1 );
 	return	1;
 	}
 
@@ -256,39 +271,38 @@ int	id;
 	Return pointer to entry indexed by id or NULL.
  */
 Mat_Db_Entry *
-mat_Get_Db_Entry( id )
-int	id;
+mat_Get_Db_Entry( material_id )
+int	material_id;
 	{
-	if( id < 0 )
+	if( material_id < 0 )
 		return	MAT_DB_NULL;
-	if( id < mat_db_size )
-		return	&mat_db_table[id];
+	if( material_id < mat_db_size )
+		return	&mat_db_table[material_id];
 	else
 		return	MAT_DB_NULL;
 	}
 
 _LOCAL_
-get_Mat_Entry( entry, fp )
+get_Entry( entry )
 register Mat_Db_Entry	*entry;
-FILE	*fp;
 	{	register char	*ptr;
 		int		items;
 		int		red, grn, blu, mode;
-	if( fgets( entry->name, MAX_MAT_NM, fp ) == NULL )
+	if( fgets( entry->name, MAX_MAT_NM, matdb_fp ) == NULL )
 		return	0;
 	ptr = &entry->name[strlen(entry->name) - 1];
 	if( *ptr == '\n' )
 		/* Read entire line.					*/
 		*ptr = '\0';
 	else	/* Skip rest of line.					*/
-		while( getc( fp ) != '\n' )
+		while( getc( matdb_fp ) != '\n' )
 			;
-	if( (items = fscanf( fp, "%d %d", &entry->id, &entry->shine )) != 2 )
+	if( (items = fscanf( matdb_fp, "%d %d", &entry->id, &entry->shine )) != 2 )
 		{
 		(void) fprintf( stderr, "Could not read integers (%d read)!\n", items );
 		return	0;
 		}
-	if(	fscanf(	fp,
+	if(	fscanf(	matdb_fp,
 #ifdef sgi
 			"%f %f %f %f %f",
 #else
@@ -305,7 +319,7 @@ FILE	*fp;
 		(void) fprintf( stderr, "Could not read floats!\n" );
 		return	0;
 		}
-	if( fscanf( fp, "%d %d %d", &red, &grn, &blu ) != 3 )
+	if( fscanf( matdb_fp, "%d %d %d", &red, &grn, &blu ) != 3 )
 		{
 		(void) fprintf( stderr, "Could not read chars!\n" );
 		return	0;
@@ -313,29 +327,28 @@ FILE	*fp;
 	entry->df_rgb[0] = red;
 	entry->df_rgb[1] = grn;
 	entry->df_rgb[2] = blu;
-	if( fscanf( fp, "%d", &mode ) != 1 )
+	if( fscanf( matdb_fp, "%d", &mode ) != 1 )
 		{
 		(void) fprintf( stderr,
-				"get_Mat_Entry(): Could not read mode_flag!\n"
+				"get_Entry(): Could not read mode_flag!\n"
 				);
 		return	0;
 		}
 	entry->mode_flag = mode;
-	while( getc( fp ) != '\n' )
+	while( getc( matdb_fp ) != '\n' )
 		; /* Gobble rest of line.				*/
 	return	1;
 	}
 
 _LOCAL_
-put_Mat_Entry( entry, fp )
+put_Entry( entry )
 register Mat_Db_Entry	*entry;
-register FILE		*fp;
 	{
 	if( entry->mode_flag == MF_NULL )
 		entry = &mat_nul_entry;
-	(void) fprintf( fp, "%s\n", entry->name );
-	(void) fprintf( fp, "%d\n%d\n", entry->id, entry->shine );
-	(void) fprintf(	fp,
+	(void) fprintf( matdb_fp, "%s\n", entry->name );
+	(void) fprintf( matdb_fp, "%d\n%d\n", entry->id, entry->shine );
+	(void) fprintf(	matdb_fp,
 			"%f\n%f\n%f\n%f\n%f\n",
 			entry->wgt_specular,
 			entry->wgt_diffuse,
@@ -343,12 +356,32 @@ register FILE		*fp;
 			entry->reflectivity,
 			entry->refrac_index
 			);
-	(void) fprintf(	fp,
+	(void) fprintf(	matdb_fp,
 			"%u %u %u\n",
 			(unsigned) entry->df_rgb[0],
 			(unsigned) entry->df_rgb[1],
 			(unsigned) entry->df_rgb[2]
 			);
-	(void) fprintf( fp, "%u\n", (unsigned) entry->mode_flag );
+	(void) fprintf( matdb_fp, "%u\n", (unsigned) entry->mode_flag );
 	return	1;
+	}
+
+_LOCAL_
+mat_W_Open( file )
+char	*file;
+	{
+	if( file != NULL )
+		{	register FILE	*fp;
+		if( (fp = fopen( file, "w+" )) == NULL )
+			return	0;
+		else
+			{
+			matdb_fp = fp;
+			setbuf( matdb_fp, malloc( BUFSIZ ) );
+			}
+		}
+	/* else default to last database accessed.			*/
+	if( matdb_fp == NULL )
+		return	0;
+	return	fseek( matdb_fp, 0L, 0 ) == 0;
 	}
