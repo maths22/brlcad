@@ -1545,6 +1545,7 @@ tclscripts/mged/help.tcl svneol=native#text/plain
 tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/illum.tcl svneol=native#text/plain
 tclscripts/mged/list.tcl svneol=native#text/plain
+tclscripts/mged/make_solid.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
 tclscripts/mged/mouse.tcl svneol=native#text/plain
