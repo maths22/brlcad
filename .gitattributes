@@ -1518,6 +1518,7 @@ tcl/tclTest.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
 tclscripts/Cakefile -text
 tclscripts/README svneol=native#text/plain
+tclscripts/bindwin.tcl svneol=native#text/plain
 tclscripts/chkexterns.tcl svneol=native#text/plain
 tclscripts/fs_dialog.tk svneol=native#text/plain
 tclscripts/helpcomm.tcl svneol=native#text/plain
