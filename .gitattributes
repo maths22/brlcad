@@ -2871,6 +2871,7 @@ tclscripts/chkexterns.tcl svneol=native#text/plain
 tclscripts/fs_dialog.tk svneol=native#text/plain
 tclscripts/helpcomm.tcl svneol=native#text/plain
 tclscripts/helplib.tcl svneol=native#text/plain
+tclscripts/hoc.tcl svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
 tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
