@@ -577,6 +577,7 @@ util/pl-X10.1.stub -text
 util/pl-X10.c svneol=native#text/plain
 util/pl-pl.1 svneol=native#text/plain
 util/pl-pl.c svneol=native#text/plain
+util/pl-ps.c svneol=native#text/plain
 util/pl-sgi.1 svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/plcolor.1 svneol=native#text/plain
