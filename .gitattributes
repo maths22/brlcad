@@ -4143,6 +4143,7 @@ pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
 pro-engineer/text/Cakefile -text
+pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
