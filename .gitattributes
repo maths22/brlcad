@@ -3184,6 +3184,7 @@ rttherm/Cakefile -text
 rttherm/pixtest.c svneol=native#text/plain
 rttherm/rttherm.1 svneol=native#text/plain
 rttherm/spectrum.c svneol=native#text/plain
+rttherm/ssamp-bw.c svneol=native#text/plain
 rttherm/ssampview.c svneol=native#text/plain
 rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/std_day_1km.dat -text
