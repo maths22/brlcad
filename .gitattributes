@@ -36,3 +36,4 @@ librt/timer42.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 rt/main.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
+util/pix-ik.c svneol=native#text/plain
