@@ -4211,6 +4211,7 @@ regress/tests.d/solids.sh svneol=native#text/x-sh
 regress/tests.d/spdi -text
 regress/tests.d/spdi.sh svneol=native#text/x-sh
 regress/tests.d/template -text
+regress/upgradeNotes.txt svneol=native#text/plain
 remrt/Cakefile -text
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
