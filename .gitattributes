@@ -4018,6 +4018,7 @@ rt/sh_tcl.c svneol=native#text/plain
 rt/shade.c svneol=native#text/plain
 rt/vers.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
+rt/view_bot_faces.c svneol=native#text/plain
 rt/viewarea.c svneol=native#text/plain
 rt/viewcell.c svneol=native#text/plain
 rt/viewcheck.c svneol=native#text/plain
