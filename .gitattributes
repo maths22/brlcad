@@ -1338,6 +1338,7 @@ librt/rt_dspline.c svneol=native#text/plain
 librt/rtlex.c svneol=native#text/plain
 librt/shoot.c svneol=native#text/plain
 librt/snoise.c svneol=native#text/plain
+librt/spectrum.c svneol=native#text/plain
 librt/sqrt.gould.s svneol=native#text/plain
 librt/sqrt.vax.s svneol=native#text/plain
 librt/storage.c svneol=native#text/plain
