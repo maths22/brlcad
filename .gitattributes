@@ -2352,7 +2352,6 @@ libtclcad/limits.h svneol=native#text/plain
 libtclcad/stdlib.h svneol=native#text/plain
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
-libtclcad/tkInt.h svneol=native#text/plain
 libtclcad/tkPort.h svneol=native#text/plain
 libtclcad/tkUnixPort.h svneol=native#text/plain
 libtclcad/unistd.h svneol=native#text/plain
