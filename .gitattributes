@@ -1600,6 +1600,7 @@ libfft/splitdit.c svneol=native#text/plain
 libfft/splitditc.c svneol=native#text/plain
 libmultispectral/Cakefile -text
 libmultispectral/init.c svneol=native#text/plain
+libmultispectral/sh_temp.c svneol=native#text/plain
 liboptical/Cakefile -text
 liboptical/init.c svneol=native#text/plain
 liboptical/sh_Nfbm.c svneol=native#text/plain
