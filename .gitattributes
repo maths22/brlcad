@@ -4188,6 +4188,7 @@ regress/ref_7d -text
 regress/ref_fbsd -text
 regress/ref_li -text
 regress/ref_m4i64 -text
+regress/status.sh svneol=native#text/x-sh
 regress/systems.d/wide -text
 regress/systems.d/wider -text
 regress/systems.d/widest -text
