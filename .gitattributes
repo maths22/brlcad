@@ -3017,6 +3017,7 @@ libz/Makefile.tc svneol=native#text/plain
 libz/Makefile.wat svneol=native#text/plain
 libz/README svneol=native#text/plain
 libz/adler32.c svneol=native#text/plain
+libz/afile -text
 libz/algorithm.doc svneol=native#text/plain
 libz/algorithm.txt svneol=native#text/plain
 libz/amiga/Makefile.pup svneol=native#text/plain
