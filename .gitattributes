@@ -36,6 +36,7 @@ librt/bool.c svneol=native#text/plain
 librt/debug.h svneol=native#text/plain
 librt/dir.c svneol=native#text/plain
 librt/g_arb.c svneol=native#text/plain
+librt/g_ars.c svneol=native#text/plain
 librt/g_ell.c svneol=native#text/plain
 librt/g_rec.c svneol=native#text/plain
 librt/g_tgc.c svneol=native#text/plain
