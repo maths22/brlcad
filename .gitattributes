@@ -1972,6 +1972,7 @@ tclscripts/hoc.tcl svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
 tclscripts/lib/.cvsignore svneol=native#text/plain
 tclscripts/lib/Cakefile -text
+tclscripts/lib/CellPlot.tcl svneol=native#text/plain
 tclscripts/lib/ColorEntry.tcl svneol=native#text/plain
 tclscripts/lib/ComboBox.tcl svneol=native#text/plain
 tclscripts/lib/Command.tcl svneol=native#text/plain
@@ -1981,6 +1982,7 @@ tclscripts/lib/Display.tcl svneol=native#text/plain
 tclscripts/lib/Dm.tcl svneol=native#text/plain
 tclscripts/lib/Drawable.tcl svneol=native#text/plain
 tclscripts/lib/Help.tcl svneol=native#text/plain
+tclscripts/lib/Legend.tcl svneol=native#text/plain
 tclscripts/lib/Mged.tcl svneol=native#text/plain
 tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 tclscripts/lib/Splash.tcl svneol=native#text/plain
