@@ -3980,7 +3980,6 @@ nirt/showshot.c svneol=native#text/plain
 nirt/str_manip.c svneol=native#text/plain
 nirt/usrfmt.h svneol=native#text/plain
 nirt/vers.c svneol=native#text/plain
-notes/README svneol=native#text/plain
 notes/regression/a-d.sh svneol=native#text/x-sh
 notes/regression/a-d.txt svneol=native#text/plain
 notes/regression/alias-pix.sh svneol=native#text/x-sh
