@@ -451,6 +451,7 @@ libwdb/Cakefile -text
 libwdb/arbn.c svneol=native#text/plain
 libwdb/ars.c svneol=native#text/plain
 libwdb/libwdb.3 svneol=native#text/plain
+libwdb/pipe.c svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/units.c svneol=native#text/plain
