@@ -555,6 +555,7 @@ pix/world.pix -text svneol=unset#image/x-rgb
 regress/Makefile.am svneol=native#text/plain
 regress/lights.sh svneol=native#text/x-sh
 regress/lights_ref.asc svneol=native#text/plain
+regress/moss.sh svneol=native#text/x-sh
 regress/mosspix.asc svneol=native#text/plain
 regress/shaders.sh svneol=native#text/x-sh
 regress/shaderspix.asc svneol=native#text/plain
