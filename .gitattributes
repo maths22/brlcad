@@ -494,6 +494,7 @@ halftone/tone_folly.c svneol=native#text/plain
 halftone/tone_simple.c svneol=native#text/plain
 halftone/tonescale.c svneol=native#text/plain
 html/manuals/Anim_Tutorial/Butler.html svneol=native#text/html
+html/manuals/Anim_Tutorial/Cakefile -text
 html/manuals/Anim_Tutorial/Lee_tux.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/Murdza.html svneol=native#text/html
 html/manuals/Anim_Tutorial/animtbl.gif -text svneol=unset#image/gif
