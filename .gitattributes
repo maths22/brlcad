@@ -985,8 +985,6 @@ src/irprep/Compile.sgi -text
 src/irprep/Makefile.am svneol=native#text/plain
 src/irprep/all_sf.1 svneol=native#text/plain
 src/irprep/all_sf.c svneol=native#text/plain
-src/irprep/display.1 svneol=native#text/plain
-src/irprep/display.c svneol=native#text/plain
 src/irprep/firpass.1 svneol=native#text/plain
 src/irprep/firpass.c svneol=native#text/plain
 src/irprep/ir-X.1 svneol=native#text/plain
@@ -1007,6 +1005,8 @@ src/irprep/see2.1 svneol=native#text/plain
 src/irprep/see2.c svneol=native#text/plain
 src/irprep/shapefact.1 svneol=native#text/plain
 src/irprep/shapefact.c svneol=native#text/plain
+src/irprep/showtherm.1 svneol=native#text/plain
+src/irprep/showtherm.c svneol=native#text/plain
 src/irprep/subroutines.c svneol=native#text/plain
 src/jack/Makefile.am svneol=native#text/plain
 src/jack/g-jack.c svneol=native#text/plain
