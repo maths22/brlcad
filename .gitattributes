@@ -277,7 +277,6 @@ db/xmp.asc svneol=native#text/plain
 doc/4.4-bugs.doc svneol=native#text/plain
 doc/Cakefile -text
 doc/agreement -text
-doc/agreement.rtf svneol=native#text/rtf
 doc/anim.doc svneol=native#text/plain
 doc/benchmark.doc svneol=native#text/plain
 doc/blurb100.doc svneol=native#text/plain
