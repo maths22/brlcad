@@ -591,6 +591,7 @@ librt/nmg_plot.c svneol=native#text/plain
 librt/nurb_basis.c svneol=native#text/plain
 librt/nurb_bezier.c svneol=native#text/plain
 librt/nurb_bound.c svneol=native#text/plain
+librt/nurb_c2.c svneol=native#text/plain
 librt/nurb_copy.c svneol=native#text/plain
 librt/nurb_diff.c svneol=native#text/plain
 librt/nurb_eval.c svneol=native#text/plain
