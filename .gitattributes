@@ -3598,6 +3598,7 @@ util/decimate.c svneol=native#text/plain
 util/double-asc.c svneol=native#text/plain
 util/dpix-pix.1 svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
+util/dsp_add.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
 util/dunncolor.c svneol=native#text/plain
 util/dunncomm.c svneol=native#text/plain
