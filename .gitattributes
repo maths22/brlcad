@@ -276,11 +276,6 @@ doc/plot3.5 svneol=native#text/plain
 doc/port.doc svneol=native#text/plain
 doc/press-release -text
 doc/regions.doc svneol=native#text/plain
-doc/rel2.0.doc svneol=native#text/plain
-doc/rel3.0.doc svneol=native#text/plain
-doc/rel3.1.doc svneol=native#text/plain
-doc/rel4.0.doc svneol=native#text/plain
-doc/rel4.4.doc svneol=native#text/plain
 doc/rounding.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
 doc/summary.doc svneol=native#text/plain
