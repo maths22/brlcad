@@ -4563,6 +4563,7 @@ tclscripts/rtwizard/examples/PictureTypeF/helpstr.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/intro.txt svneol=native#text/plain
 tclscripts/rtwizard/examples/PictureTypeF/preview.small.gif -text svneol=unset#image/gif
 tclscripts/rtwizard/examples/PictureTypeF/title.txt svneol=native#text/plain
+tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 tclscripts/util/.cvsignore svneol=native#text/plain
 tclscripts/util/Cakefile -text
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
