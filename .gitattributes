@@ -419,6 +419,11 @@ h/bu.h svneol=native#text/plain
 h/compat4.h svneol=native#text/plain
 h/conf.h svneol=native#text/plain
 h/db.h svneol=native#text/plain
+h/dm-X.h svneol=native#text/plain
+h/dm-glx.h svneol=native#text/plain
+h/dm-ogl.h svneol=native#text/plain
+h/dm-pex.h svneol=native#text/plain
+h/dm-ps.h svneol=native#text/plain
 h/externs.h svneol=native#text/plain
 h/fb.h svneol=native#text/plain
 h/forms.h svneol=native#text/plain
@@ -722,6 +727,12 @@ libbu/vls.c svneol=native#text/plain
 libcursor/Cakefile -text
 libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
+libdm/Cakefile -text
+libdm/dm-X.c svneol=native#text/plain
+libdm/dm-glx.c svneol=native#text/plain
+libdm/dm-ogl.c svneol=native#text/plain
+libdm/dm-pex.c svneol=native#text/plain
+libdm/dm-ps.c svneol=native#text/plain
 libfb/Cakefile -text
 libfb/adage.h svneol=native#text/plain
 libfb/adagecursor.h svneol=native#text/plain
