@@ -1559,6 +1559,8 @@ libitcl/confdefs.h svneol=native#text/plain
 libitcl/config/config.guess -text
 libitcl/config/config.sub -text
 libitcl/config/install-sh svneol=native#text/plain
+libitcl/config/installFile.tcl svneol=native#text/plain
+libitcl/config/mkinstalldirs -text
 libitcl/configure -text
 libitcl/configure.in svneol=native#text/plain
 libitcl/doc/README svneol=native#text/plain
