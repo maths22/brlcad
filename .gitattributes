@@ -388,6 +388,7 @@ fb/pixautosize.c svneol=native#text/plain
 fb/pixflip-fb.c svneol=native#text/plain
 fb/pl-fb.1 svneol=native#text/plain
 fb/pl-fb.c svneol=native#text/plain
+fb/png-fb.c svneol=native#text/plain
 fb/polar-fb.1 svneol=native#text/plain
 fb/polar-fb.c svneol=native#text/plain
 fb/pp-fb.1 svneol=native#text/plain
