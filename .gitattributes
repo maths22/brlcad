@@ -344,6 +344,7 @@ iges/usage.c svneol=native#text/plain
 iges/wedge.c svneol=native#text/plain
 iges/wing128.igs -text svneol=unset#model/iges
 iges/woodie.igs -text svneol=unset#model/iges
+irprep/Cakefile -text
 irprep/firpass.1 svneol=native#text/plain
 irprep/firpass.c svneol=native#text/plain
 irprep/secpass.1 svneol=native#text/plain
