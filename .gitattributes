@@ -371,6 +371,7 @@ util/pixt-ik.c svneol=native#text/plain
 util/pixtile.c svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/pldebug.c svneol=native#text/plain
+util/plgetframe.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
 util/sun-pix.c svneol=native#text/plain
 vas4/init_ik.c svneol=native#text/plain
