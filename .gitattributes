@@ -1294,6 +1294,7 @@ tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
 tclscripts/mged/raypick.tcl svneol=native#text/plain
 tclscripts/mged/solclick.tcl svneol=native#text/plain
+tclscripts/mged/solcreate.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
