@@ -63,6 +63,8 @@ misc/ltmain.sh.backup
 misc/macosx/openUp
 misc/missing
 misc/mkinstalldirs
+misc/pro-engineer/mk
+misc/pro-engineer/protk.dat
 src/anim/.deps
 src/anim/.libs
 src/anim/Makefile
