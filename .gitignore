@@ -93,6 +93,7 @@ src/conv/asc-nmg
 src/conv/asc2g
 src/conv/asc2pix
 src/conv/bot-bldxf
+src/conv/bot-raw
 src/conv/bot_shell-vtk
 src/conv/conv-vg2g
 src/conv/cy-g
@@ -115,10 +116,15 @@ src/conv/g-tankill
 src/conv/g-vrml
 src/conv/g-wave
 src/conv/g-x3d
+src/conv/g-xxx
+src/conv/g-xxx_facets
 src/conv/g2asc
+src/conv/g4-g5
+src/conv/g5-g4
 src/conv/nastran-g
 src/conv/nmg-bot
 src/conv/nmg-rib
+src/conv/nmg-sgp
 src/conv/pix2asc
 src/conv/ply-g
 src/conv/poly-bot
