@@ -475,6 +475,7 @@ h/rle_raw.h svneol=native#text/plain
 h/rtgeom.h svneol=native#text/plain
 h/rtlex.h svneol=native#text/plain
 h/rtlist.h svneol=native#text/plain
+h/rtprivate.h svneol=native#text/plain
 h/rtstring.h svneol=native#text/plain
 h/sed4 -text
 h/shadefuncs.h svneol=native#text/plain
