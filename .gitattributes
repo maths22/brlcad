@@ -3523,6 +3523,7 @@ tclscripts/mged/apply.tcl svneol=native#text/plain
 tclscripts/mged/bindings.tcl svneol=native#text/plain
 tclscripts/mged/calipers.tcl svneol=native#text/plain
 tclscripts/mged/callbacks.tcl svneol=native#text/plain
+tclscripts/mged/collaborate.tcl svneol=native#text/plain
 tclscripts/mged/color.tcl svneol=native#text/plain
 tclscripts/mged/color_scheme.tcl svneol=native#text/plain
 tclscripts/mged/comb.tcl svneol=native#text/plain
