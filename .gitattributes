@@ -168,6 +168,7 @@ libbn/symbol.c svneol=native#text/plain
 libbn/tplot.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
+libbu/vfont.c svneol=native#text/plain
 libcursor/Cakefile -text
 libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
