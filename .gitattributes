@@ -73,6 +73,7 @@ brlman/awf -text
 brlman/brlman -text
 brlman/brlman.1 svneol=native#text/plain
 btclsh/Cakefile -text
+btclsh/vers.c svneol=native#text/plain
 burst/Cakefile -text
 burst/Hm.c svneol=native#text/plain
 burst/Hm.h svneol=native#text/plain
@@ -106,6 +107,7 @@ bwish/cmd.c svneol=native#text/plain
 bwish/input.c svneol=native#text/plain
 bwish/main.c svneol=native#text/plain
 bwish/tcl.c svneol=native#text/plain
+bwish/vers.c svneol=native#text/plain
 cake/COPYING svneol=native#text/plain
 cake/Makefile svneol=native#text/plain
 cake/README svneol=native#text/plain
