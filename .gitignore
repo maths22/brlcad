@@ -291,7 +291,6 @@ src/rt/rtweight_vers.c
 src/rt/rtxray
 src/rt/rtxray_vers.c
 src/rt/version
-src/sample_applications/makefile
 src/sig/.deps
 src/sig/.libs
 src/sig/Makefile
