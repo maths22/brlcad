@@ -1520,6 +1520,7 @@ tclscripts/mged/e_id.tcl svneol=native#text/plain
 tclscripts/mged/editobj.tcl svneol=native#text/plain
 tclscripts/mged/eobjmenu.tcl svneol=native#text/plain
 tclscripts/mged/extract.tcl svneol=native#text/plain
+tclscripts/mged/grid.tcl svneol=native#text/plain
 tclscripts/mged/help.tcl svneol=native#text/plain
 tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
