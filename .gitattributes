@@ -72,6 +72,7 @@ cake/wait.h svneol=native#text/plain
 cakeaux/Makefile svneol=native#text/plain
 cakeaux/cakeinclude.c svneol=native#text/plain
 comgeom-g/3d.h svneol=native#text/plain
+comgeom-g/Cakefile -text
 comgeom-g/comgeom-g.1 svneol=native#text/plain
 comgeom-g/cvt.c svneol=native#text/plain
 comgeom-g/f2a.c svneol=native#text/plain
