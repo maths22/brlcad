@@ -843,6 +843,7 @@ rt/rtshot.1 svneol=native#text/plain
 rt/rtshot.c svneol=native#text/plain
 rt/rtwalk.1 svneol=native#text/plain
 rt/rtwalk.c svneol=native#text/plain
+rt/rtweight.1 svneol=native#text/plain
 rt/rtxray.1 svneol=native#text/plain
 rt/scat.h svneol=native#text/plain
 rt/sh_cloud.c svneol=native#text/plain
