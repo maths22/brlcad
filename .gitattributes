@@ -197,6 +197,7 @@ vdeck/Makefile svneol=native#text/plain
 vdeck/cgarbs.c svneol=native#text/plain
 vdeck/match.c svneol=native#text/plain
 vdeck/parsarg.c svneol=native#text/plain
+vdeck/std.h svneol=native#text/plain
 vdeck/vdeck.1 svneol=native#text/plain
 vdeck/vdeck.c svneol=native#text/plain
 vdeck/vextern.h svneol=native#text/plain
