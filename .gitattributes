@@ -4393,6 +4393,7 @@ tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 tclscripts/lib/RtControl.tcl svneol=native#text/plain
 tclscripts/lib/Splash.tcl svneol=native#text/plain
 tclscripts/lib/Table.tcl svneol=native#text/plain
+tclscripts/lib/TableView.tcl svneol=native#text/plain
 tclscripts/lib/View.tcl svneol=native#text/plain
 tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
