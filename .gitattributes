@@ -3373,6 +3373,7 @@ rttherm/spectrum.c svneol=native#text/plain
 rttherm/ssampview.c svneol=native#text/plain
 rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/std_day_1km.dat -text
+rttherm/test.sh svneol=native#text/x-sh
 rttherm/viewtherm.c svneol=native#text/plain
 /setup.sh svneol=native#text/x-sh
 sh/any-png.sh svneol=native#text/x-sh
