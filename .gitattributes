@@ -634,6 +634,7 @@ sig/imod.c svneol=native#text/plain
 sig/interp.c svneol=native#text/plain
 sig/smod.c svneol=native#text/plain
 sig/syn.c svneol=native#text/plain
+sig/umod.c svneol=native#text/plain
 sig/ustat.c svneol=native#text/plain
 tab/tabinterp.c svneol=native#text/plain
 tab/tabsub.c svneol=native#text/plain
