@@ -543,7 +543,6 @@ html/manuals/eagleCAD.gif -text svneol=unset#image/gif
 html/manuals/index.html svneol=native#text/html
 html/manuals/libdm/api.html svneol=native#text/html
 html/manuals/libdm/index.html svneol=native#text/html
-html/manuals/libdm/overview.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
 html/manuals/mged/animmate/anim_doc.html svneol=native#text/html
