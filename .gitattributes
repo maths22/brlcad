@@ -188,6 +188,7 @@ conv/euclid_format.c svneol=native#text/plain
 conv/euclid_unformat.c svneol=native#text/plain
 conv/fast4-g.1 svneol=native#text/plain
 conv/fast4-g.c svneol=native#text/plain
+conv/g-acad.1 svneol=native#text/plain
 conv/g-acad.c svneol=native#text/plain
 conv/g-euclid.1 svneol=native#text/plain
 conv/g-euclid.c svneol=native#text/plain
