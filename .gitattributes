@@ -19,6 +19,7 @@ fb/fbcolor.c svneol=native#text/plain
 fb/fbframe.c svneol=native#text/plain
 fb/fbgrid.1 svneol=native#text/plain
 fb/fbgrid.c svneol=native#text/plain
+fb/fbpoint.1 svneol=native#text/plain
 fb/fbpoint.c svneol=native#text/plain
 fb/fbscanplot.c svneol=native#text/plain
 fb/fbzoom.1 svneol=native#text/plain
