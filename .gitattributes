@@ -4191,6 +4191,7 @@ mged/vld_std.h svneol=native#text/plain
 mged/vmathUi.h svneol=native#text/plain
 mged/vparse.c svneol=native#text/plain
 mged/vrlink.c svneol=native#text/plain
+misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
