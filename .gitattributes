@@ -209,6 +209,7 @@ conv/g-wave.c svneol=native#text/plain
 conv/g-xxx.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
+conv/g4-g5.c svneol=native#text/plain
 conv/nastran-g.1 svneol=native#text/plain
 conv/nastran-g.c svneol=native#text/plain
 conv/nmg-polysolid.1 svneol=native#text/plain
