@@ -638,6 +638,7 @@ util/bwrot.1 svneol=native#text/plain
 util/bwrot.c svneol=native#text/plain
 util/bwscale.1 svneol=native#text/plain
 util/bwscale.c svneol=native#text/plain
+util/bwshrink.c svneol=native#text/plain
 util/bwstat.1 svneol=native#text/plain
 util/bwstat.c svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
