@@ -1547,6 +1547,7 @@ tclscripts/mged/illum.tcl svneol=native#text/plain
 tclscripts/mged/list.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
+tclscripts/mged/mouse.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
 tclscripts/mged/openw.tcl svneol=native#text/plain
 tclscripts/mged/plot.tcl svneol=native#text/plain
