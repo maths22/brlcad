@@ -397,6 +397,7 @@ rttherm/Cakefile -text
 sh/cakeinclude.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
+sh/pixread.sh svneol=native#text/x-sh
 util/Cakefile -text
 util/Makefile svneol=native#text/plain
 util/ap-pix.c svneol=native#text/plain
