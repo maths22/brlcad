@@ -1082,6 +1082,7 @@ rt/worker.c svneol=native#text/plain
 rt/wray.c svneol=native#text/plain
 rttherm/Cakefile -text
 /setup.sh svneol=native#text/x-sh
+sh/cadbug.sh svneol=native#text/x-sh
 sh/cakeinclude.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
 sh/machinetype.sh svneol=native#text/x-sh
