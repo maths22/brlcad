@@ -71,6 +71,7 @@ librt/timerunix.c svneol=native#text/plain
 librt/tree.c svneol=native#text/plain
 mged/adc.c svneol=native#text/plain
 mged/anal.c svneol=native#text/plain
+mged/arb.c svneol=native#text/plain
 mged/arbs.c svneol=native#text/plain
 mged/attach.c svneol=native#text/plain
 mged/buttons.c svneol=native#text/plain
