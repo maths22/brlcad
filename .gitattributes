@@ -1480,6 +1480,7 @@ tclscripts/mged/sliders.tcl svneol=native#text/plain
 tclscripts/mged/solclick.tcl svneol=native#text/plain
 tclscripts/mged/solcreate.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
+tclscripts/nirt/prototype.sh svneol=native#text/x-sh
 tclscripts/vmath.tcl svneol=native#text/plain
 tk/Cakefile -text
 tk/bwish.c svneol=native#text/plain
