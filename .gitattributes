@@ -4201,6 +4201,7 @@ regress/systems.d/wide -text
 regress/systems.d/wider -text
 regress/systems.d/widest -text
 regress/tests.d/build -text
+regress/tests.d/geometry -text
 regress/tests.d/library -text
 regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
 regress/tests.d/ref/shaders.pix -text svneol=unset#image/x-rgb
