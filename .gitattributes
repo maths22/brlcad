@@ -414,6 +414,7 @@ mged/plot.c svneol=native#text/plain
 mged/proc_reg.c svneol=native#text/plain
 mged/rtif.c svneol=native#text/plain
 mged/scroll.c svneol=native#text/plain
+mged/scroll.h svneol=native#text/plain
 mged/sedit.h svneol=native#text/plain
 mged/sunicon.h svneol=native#text/plain
 mged/tedit.c svneol=native#text/plain
