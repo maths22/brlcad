@@ -639,6 +639,7 @@ libbn/Makefile svneol=native#text/plain
 libbn/Makefile.loc svneol=native#text/plain
 libbn/anim.c svneol=native#text/plain
 libbn/axis.c svneol=native#text/plain
+libbn/bn_tcl.c svneol=native#text/plain
 libbn/const.c svneol=native#text/plain
 libbn/font.c svneol=native#text/plain
 libbn/fortran.c svneol=native#text/plain
