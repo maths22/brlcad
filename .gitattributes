@@ -13,6 +13,8 @@
 anim/Cakefile -text
 anim/anim_keyread.1 svneol=native#text/plain
 anim/anim_keyread.c svneol=native#text/plain
+anim/anim_lookat.1 svneol=native#text/plain
+anim/anim_lookat.c svneol=native#text/plain
 anim/anim_orient.1 svneol=native#text/plain
 anim/anim_orient.c svneol=native#text/plain
 anim/anim_script.1 svneol=native#text/plain
