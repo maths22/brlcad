@@ -41,33 +41,30 @@ static char RCSview[] = "@(#)$Header$ (BRL)";
 #include "mater.h"
 #include "raytrace.h"
 #include "fb.h"
-#include "../librt/debug.h"
+#include "./rdebug.h"
 #include "./mathtab.h"
 
 char usage[] = "\
 Usage:  rt [options] model.g objects...\n\
 Options:\n\
- -f#		Grid size in pixels, default 512, max 1024\n\
- -aAz		Azimuth in degrees\n\
- -eElev		Elevation in degrees\n\
+ -f #		Grid size in pixels, default 512, max 1024\n\
+ -a Az		Azimuth in degrees\n\
+ -e Elev	Elevation in degrees\n\
  -M		Read model2view matrix on stdin\n\
  -o model.pix	Specify output file, .pix format (default=fb)\n\
- -x#		Set debug flags\n\
- -p[#]		Perspective viewing, focal length scaling\n\
+ -x #		Set librt debug flags\n\
+ -X #		Set rt debug flags\n\
+ -p #		Perspective viewing, focal length scaling\n\
 ";
 
-FBIO	*fbp = FBIO_NULL;	/* Framebuffer handle */
+extern FBIO	*fbp;		/* Framebuffer handle */
+extern FILE	*outfp;		/* optional output file */
 
 extern int lightmodel;		/* lighting model # to use */
 extern mat_t view2model;
 extern mat_t model2view;
-extern int hex_out;		/* Output format, 0=binary, !0=hex */
 
-#define MAX_LINE	(1024*8)	/* Max pixels/line */
-/* Current arrangement is definitely non-parallel! */
-static char scanline[MAX_LINE*3];	/* 1 scanline pixel buffer, R,G,B */
-static char *pixelp;			/* pointer to first empty pixel */
-static FILE *pixfp = NULL;		/* fd of .pix file */
+extern int hex_out;		/* Output format, 0=binary, !0=hex */
 
 struct soltab *l0stp = SOLTAB_NULL;	/* ptr to light solid tab entry */
 vect_t l0color = {  1,  1,  1 };		/* White */
@@ -165,7 +162,7 @@ struct partition *PartHeadp;
 		ap->a_color[2] = (hitp->hit_normal[2] * (-.5)) + .5;
 	}
 
-	if(rt_g.debug&DEBUG_HITS)  {
+	if(rdebug&RDEBUG_HITS)  {
 		rt_pr_hit( " In", hitp );
 		rt_log("cosI0=%f, diffuse0=%f   ", cosI0, diffuse0 );
 		VPRINT("RGB", ap->a_color);
@@ -204,16 +201,19 @@ register struct application *ap;
 		p[BLU] = b;
 		fb_write( fbp, ap->a_x, ap->a_y, p, 1 );
 	}
-	if( pixfp != NULL )  {
+	if( outfp != NULL )  {
 		if( hex_out )  {
-			fprintf(pixfp, "%2.2x%2.2x%2.2x\n", r, g, b);
+			fprintf(outfp, "%2.2x%2.2x%2.2x\n", r, g, b);
 		} else {
-			*pixelp++ = r;
-			*pixelp++ = g;
-			*pixelp++ = b;
+			unsigned char p[4];
+			p[0] = r;
+			p[1] = g;
+			p[2] = b;
+			if( fwrite( (char *)p, 3, 1, outfp ) != 1 )
+				rt_bomb("pixel fwrite error");
 		}
 	}
-	if(rt_g.debug&DEBUG_HITS) rt_log("rgb=%3d,%3d,%3d\n", r,g,b);
+	if(rdebug&RDEBUG_HITS) rt_log("rgb=%3d,%3d,%3d\n", r,g,b);
 }
 
 
@@ -237,22 +237,9 @@ struct partition *PartHeadp;
 		return(0);
 	}
 	hitp = pp->pt_inhit;
-	/* XXX  This should be pushed down into materials routines */
-	RT_HIT_NORM( hitp, pp->pt_inseg->seg_stp, &(ap->a_ray) );
 
-	if(rt_g.debug&DEBUG_HITS)  {
+	if(rdebug&RDEBUG_HITS)  {
 		rt_pr_pt(pp);
-		rt_pr_hit( "colorview", pp->pt_inhit);
-	}
-
-	/* Temporary check to make sure normals are OK */
-	if( hitp->hit_normal[X] < -1.01 || hitp->hit_normal[X] > 1.01 ||
-	    hitp->hit_normal[Y] < -1.01 || hitp->hit_normal[Y] > 1.01 ||
-	    hitp->hit_normal[Z] < -1.01 || hitp->hit_normal[Z] > 1.01 )  {
-		rt_log("colorview: N=(%f,%f,%f)?\n",
-			hitp->hit_normal[X],hitp->hit_normal[Y],hitp->hit_normal[Z]);
-		VSET( ap->a_color, 1, 1, 0 );
-		return(1);
 	}
 	if( hitp->hit_dist >= INFINITY )  {
 		rt_log("colorview:  entry beyond infinity\n");
@@ -267,7 +254,7 @@ struct partition *PartHeadp;
 
 		if( pp->pt_outhit->hit_dist >= INFINITY ||
 		    ap->a_level > MAX_BOUNCE )  {
-		    	if( rt_g.debug )  {
+		    	if( rdebug&RDEBUG_SHOWERR )  {
 				VSET( ap->a_color, 9, 0, 0 );	/* RED */
 		    	} else {
 		    		VSETALL( ap->a_color, 0.18 );	/* 18% Grey */
@@ -287,15 +274,16 @@ struct partition *PartHeadp;
 		return(1);
 	}
 
-	if( rt_g.debug&DEBUG_RAYWRITE )  {
+	if( rdebug&RDEBUG_RAYWRITE )  {
 		/* Record the approach path */
-		if( hitp->hit_dist > 0.0001 )
+		if( hitp->hit_dist > 0.0001 )  {
 			wraypts( ap->a_ray.r_pt,
 				hitp->hit_point,
 				ap, stdout );
+		}
 	}
 
-	/* Check to see if we hit something special */
+	/* XXX Hack to see if we hit the light */
 	{
 		register struct soltab *stp;
 		stp = pp->pt_inseg->seg_stp;
@@ -305,11 +293,17 @@ struct partition *PartHeadp;
 		}
 	}
 
-	if( pp->pt_inflip )  {
-		VREVERSE( hitp->hit_normal, hitp->hit_normal );
-		pp->pt_inflip = 0;
-	}
-
+	/*
+	 *  Call the material-handling function.
+	 *  Note that only hit_dist is valid in pp_inhit.
+	 *  ft_uv() routines must have hit_point computed
+	 *  in advance, which is responsibility of reg_ufunc() routines.
+	 *  RT_HIT_NORM() must also be called if hit_norm is needed,
+	 *  after which pt_inflip must be handled.
+	 *  These operations have been pushed down to the individual
+	 *  material-handling functions for efficiency reasons,
+	 *  because not all materials need the normals.
+	 */
 	if( !(pp->pt_regionp->reg_ufunc) )  {
 		rt_log("colorview:  no reg_ufunc\n");
 		return(0);
@@ -325,24 +319,6 @@ struct partition *PartHeadp;
  */
 view_eol()
 {
-	register int cnt;
-	register int i;
-	if( pixfp != NULL )  {
-		if( hex_out )  return;
-		cnt = pixelp - scanline;
-		if( cnt <= 0 || cnt > sizeof(scanline) )  {
-			rt_log("corrupt pixelp=x%x, scanline=x%x, cnt=%d\n",
-				pixelp, scanline, cnt );
-			pixelp = scanline;
-			return;
-		}
-		i = fwrite( (char *)scanline, cnt, 1, pixfp );
-		if( i != 1 )  {
-			rt_log("view_eol: fwrite returned %d\n", i);
-			rt_bomb("write error");
-		}			
-		pixelp = &scanline[0];
-	}
 }
 
 /*
@@ -361,35 +337,11 @@ view_init( ap, file, obj, npts, minus_o )
 register struct application *ap;
 char *file, *obj;
 {
-	if( npts > MAX_LINE )  {
-		rt_log("view:  %d pixels/line > %d\n", npts, MAX_LINE);
-		exit(12);
-	}
 	if( minus_o )  {
 		/* Output is destined for a pixel file */
-		pixelp = &scanline[0];
+		return(0);		/* don't open framebuffer */
 	}  else  {
-		int width;
-
-		/* Output interactively to framebuffer */
-		if( npts <= 512 )
-			width = 512;
-		else {
-			if( npts <= 1024 )
-				width = 1024;
-			else
-				width = npts;
-		}
-
-		if( (fbp = fb_open( NULL, width, width )) == FBIO_NULL )  {
-			rt_log("view:  can't open frame buffer\n");
-			exit(12);
-		}
-		fb_clear( fbp, PIXEL_NULL );
-		fb_wmap( fbp, COLORMAP_NULL );
-		/* KLUDGE ALERT:  The library want zoom before window! */
-		fb_zoom( fbp, width/npts, width/npts );
-		fb_window( fbp, npts/2, npts/2 );
+		return(1);		/* open a framebuffer */
 	}
 }
 
@@ -398,14 +350,12 @@ char *file, *obj;
  *
  *  Called each time a new image is about to be done.
  */
-view_2init( ap, outfp )
+view_2init( ap )
 register struct application *ap;
-FILE *outfp;
 {
 	extern int hit_nothing();
 	vect_t temp;
 
-	pixfp = outfp;
 	ap->a_miss = hit_nothing;
 	ap->a_onehit = 1;
 
@@ -418,7 +368,7 @@ FILE *outfp;
 			VPRINT("LIGHT0 at", l0pos);
 			break;
 		}
-		if(rt_g.debug)rt_log("No explicit light\n");
+		if(rdebug&RDEBUG_SHOWERR)rt_log("No explicit light\n");
 		goto debug_lighting;
 	case 1:
 	case 2:

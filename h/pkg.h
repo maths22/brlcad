@@ -19,9 +19,9 @@ struct pkg_switch {
  */
 #define PKG_MAGIC	0x41FE
 struct pkg_header {
-	unsigned char	pkh_magic[2];		/* Ident */
-	unsigned char	pkh_type[2];		/* Message Type */
-	unsigned char	pkh_len[4];		/* Byte count of remainder */
+	unsigned short	pkg_magic;		/* Ident */
+	unsigned short	pkg_type;		/* Message Type */
+	long		pkg_len;		/* Byte count of remainder */
 };
 
 #define	PKG_STREAMLEN	4096
@@ -35,8 +35,8 @@ struct pkg_conn {
 	char		*pkc_buf;	/* start of dynamic buf */
 	char		*pkc_curpos;	/* current position in pkg_buf */
 	struct pkg_header pkc_hdr;	/* hdr of cur msg */
-	long		pkc_len;	/* pkg_len, in host order */
-	unsigned short	pkc_type;	/* pkg_type, in host order */
+#define			pkc_len		pkc_hdr.pkg_len
+#define			pkc_type	pkc_hdr.pkg_type
 	char		pkc_stream[PKG_STREAMLEN];
 	int		pkc_strpos;	/* index into stream buffer */
 };
@@ -56,10 +56,5 @@ extern int pkg_waitfor();
 extern char *pkg_bwaitfor();
 extern int pkg_get();
 extern int pkg_block();
-
-/* Data conversion routines */
-extern unsigned short pkg_gshort();
-extern unsigned long pkg_glong();
-extern char *pkg_pshort(), *pkg_plong();
 
 #endif PKG_H_SEENYET

@@ -28,7 +28,7 @@ static char RCSplastic[] = "@(#)$Header$ (BRL)";
 #include "vmath.h"
 #include "mater.h"
 #include "raytrace.h"
-#include "../librt/debug.h"
+#include "./rdebug.h"
 #include "./material.h"
 #include "./mathtab.h"
 
@@ -55,13 +55,18 @@ struct phong_specific {
 #define PL_NULL	((struct phong_specific *)0)
 
 struct matparse phong_parse[] = {
-	"shine",	(int)&(PL_NULL->shine),		"%d",
-	"specular",	(int)&(PL_NULL->wgt_specular),	"%f",
-	"diffuse",	(int)&(PL_NULL->wgt_diffuse),	"%f",
-	"transmit",	(int)&(PL_NULL->transmit),	"%f",
-	"reflect",	(int)&(PL_NULL->reflect),	"%f",
-	"ri",		(int)&(PL_NULL->refrac_index),	"%f",
-	(char *)0,	0,				(char *)0
+	"shine",	(mp_off_ty)&(PL_NULL->shine),		"%d",
+	"sh",		(mp_off_ty)&(PL_NULL->shine),		"%d",
+	"specular",	(mp_off_ty)&(PL_NULL->wgt_specular),	"%f",
+	"sp",		(mp_off_ty)&(PL_NULL->wgt_specular),	"%f",
+	"diffuse",	(mp_off_ty)&(PL_NULL->wgt_diffuse),	"%f",
+	"di",		(mp_off_ty)&(PL_NULL->wgt_diffuse),	"%f",
+	"transmit",	(mp_off_ty)&(PL_NULL->transmit),	"%f",
+	"tr",		(mp_off_ty)&(PL_NULL->transmit),	"%f",
+	"reflect",	(mp_off_ty)&(PL_NULL->reflect),		"%f",
+	"re",		(mp_off_ty)&(PL_NULL->reflect),		"%f",
+	"ri",		(mp_off_ty)&(PL_NULL->refrac_index),	"%f",
+	(char *)0,	(mp_off_ty)0,				(char *)0
 };
 
 extern int phong_render();
@@ -95,7 +100,9 @@ register struct region *rp;
 	pp->reflect = 0.0;
 	pp->refrac_index = 0.0;
 
-	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (char *)pp );
+	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (mp_off_ty)pp );
+	if(rdebug&RDEBUG_MATERIAL)
+		mlib_print(rp->reg_name, phong_parse, (mp_off_ty)pp);
 	return(1);
 }
 
@@ -119,7 +126,9 @@ register struct region *rp;
 	pp->reflect = 0.75;
 	pp->refrac_index = 0.0;
 
-	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (char *)pp );
+	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (mp_off_ty)pp );
+	if(rdebug&RDEBUG_MATERIAL)
+		mlib_print(rp->reg_name, phong_parse, (mp_off_ty)pp);
 	return(1);
 }
 
@@ -143,7 +152,9 @@ register struct region *rp;
 	pp->reflect = 0.3;
 	pp->refrac_index = 1.65;
 
-	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (char *)pp );
+	mlib_parse( rp->reg_mater.ma_matparm, phong_parse, (mp_off_ty)pp );
+	if(rdebug&RDEBUG_MATERIAL)
+		mlib_print(rp->reg_name, phong_parse, (mp_off_ty)pp);
 	return(1);
 }
 
@@ -248,8 +259,25 @@ register struct partition *pp;
 				rp->reg_mater.ma_rgb[1]/255.,
 				rp->reg_mater.ma_rgb[2]/255. );
 		} else {
-			VSET( mcolor, 1.0, 0.0, 0.0 );	/* default: red */
+			/* Default color is white (uncolored) */
+			VSETALL( mcolor, 1.0 );
 		}
+	}
+
+	/* Get surface normal for hit point */
+	RT_HIT_NORM( hitp, pp->pt_inseg->seg_stp, &(ap->a_ray) );
+
+	/* Temporary check to make sure normals are OK */
+	if( hitp->hit_normal[X] < -1.01 || hitp->hit_normal[X] > 1.01 ||
+	    hitp->hit_normal[Y] < -1.01 || hitp->hit_normal[Y] > 1.01 ||
+	    hitp->hit_normal[Z] < -1.01 || hitp->hit_normal[Z] > 1.01 )  {
+	    	VPRINT("phong_render: N", hitp->hit_normal);
+		VSET( ap->a_color, 9, 9, 0 );	/* Yellow */
+		return(1);
+	}
+	if( pp->pt_inflip )  {
+		VREVERSE( hitp->hit_normal, hitp->hit_normal );
+		pp->pt_inflip = 0;
 	}
 
 	VREVERSE( to_eye, ap->a_ray.r_dir );
@@ -265,7 +293,7 @@ register struct partition *pp;
 	Rd1 = 0;
 	if( (cosI1 = VDOT( hitp->hit_normal, to_light )) > 0.0 )  {
 		if( cosI1 > 1 )  {
-			rt_log("cosI1=%f (x%d,y%d,lvl%d)\n", cosI1,
+			rt_log("cosI1=%g (x%d,y%d,lvl%d)\n", cosI1,
 				ap->a_x, ap->a_y, ap->a_level);
 			cosI1 = 1;
 		}
@@ -276,7 +304,7 @@ register struct partition *pp;
 	d_a = 0;
 	if( (cosI2 = VDOT( hitp->hit_normal, to_eye )) > 0.0 )  {
 		if( cosI2 > 1.00001 )  {
-			rt_log("cosI2=%f (x%d,y%d,lvl%d)\n", cosI2,
+			rt_log("cosI2=%g (x%d,y%d,lvl%d)\n", cosI2,
 				ap->a_x, ap->a_y, ap->a_level);
 			cosI2 = 1;
 		}
@@ -291,15 +319,10 @@ register struct partition *pp;
 
 		/* Fire ray at light source to check for shadowing */
 		/* This SHOULD actually return an energy value */
+		sub_ap = *ap;		/* struct copy */
 		sub_ap.a_hit = light_hit;
 		sub_ap.a_miss = light_miss;
-		sub_ap.a_onehit = 1;
-		sub_ap.a_level = ap->a_level + 1;
-		sub_ap.a_x = ap->a_x;
-		sub_ap.a_y = ap->a_y;
-		sub_ap.a_rt_i = ap->a_rt_i;
-		sub_ap.a_rbeam = ap->a_rbeam;
-		sub_ap.a_diverge = ap->a_diverge;
+		sub_ap.a_level++;
 		VMOVE( sub_ap.a_ray.r_pt, hitp->hit_point );
 
 		/* Dither light pos for penumbra by +/- 0.5 light radius */
@@ -330,19 +353,19 @@ register struct partition *pp;
 		VSUB2( reflected, work, to_light );
 		if( (cosS = VDOT( reflected, to_eye )) > 0 )  {
 			if( cosS > 1 )  {
-				rt_log("cosS=%f (x%d,y%d,lvl%d)\n", cosS,
+				rt_log("cosS=%g (x%d,y%d,lvl%d)\n", cosS,
 					ap->a_x, ap->a_y, ap->a_level);
 				cosS = 1;
 			}
 			specular = ps->wgt_specular *
-				ipow(cosS,(int)ps->shine);
+				ipow(cosS, ps->shine);
 			VJOIN1( ap->a_color, ap->a_color, specular, l0color );
 		}
 	}
 
 	if( (ps->reflect <= 0 && ps->transmit <= 0) ||
 	    ap->a_level > MAX_BOUNCE )  {
-		if( rt_g.debug&DEBUG_RAYWRITE )  {
+		if( rdebug&RDEBUG_RAYWRITE )  {
 			register struct soltab *stp;
 			/* Record passing through the solid */
 			stp = pp->pt_outseg->seg_stp;
@@ -397,7 +420,7 @@ do_inside:
 		sub_ap.a_hit =  phg_rhit;
 		sub_ap.a_miss = phg_rmiss;
 		if( rt_shootray( &sub_ap ) == 0 )  {
-			if(rt_g.debug&DEBUG_HITS)rt_log("phong: Refracted ray missed '%s' -- RETRYING, lvl=%d\n",
+			if(rdebug&RDEBUG_HITS)rt_log("phong: Refracted ray missed '%s' -- RETRYING, lvl=%d\n",
 				pp->pt_inseg->seg_stp->st_name,
 				sub_ap.a_level );
 			/* Back off just a little bit, and try again */
@@ -410,20 +433,14 @@ do_inside:
 					sub_ap.a_level );
 				VPRINT("pt", sub_ap.a_ray.r_pt );
 				VPRINT("dir", sub_ap.a_ray.r_dir );
-				VSET( ap->a_color, 0, 1, 0 );	/* green */
-#ifdef never
-odebug= rt_g.debug;
-rt_g.debug = DEBUG_ALLRAYS|DEBUG_BOXING|DEBUG_SHOOT;
-rt_shootray( &sub_ap );
-rt_g.debug = odebug;
-#endif
+				VSET( ap->a_color, 0, 99, 0 );	/* green */
 				goto finish;		/* abandon hope */
 			}
 		}
 		/* NOTE: phg_rhit returns EXIT Point in sub_ap.a_uvec,
 		 *  and returns EXIT Normal in sub_ap.a_color.
 		 */
-		if( rt_g.debug&DEBUG_RAYWRITE )  {
+		if( rdebug&RDEBUG_RAYWRITE )  {
 			wraypts( sub_ap.a_ray.r_pt, sub_ap.a_uvec,
 				ap, stdout );
 		}
@@ -441,7 +458,7 @@ rt_g.debug = odebug;
 				rt_log("phong: %s Excessive internal reflection (x%d, y%d, lvl=%d)\n",
 					pp->pt_inseg->seg_stp->st_name,
 					sub_ap.a_x, sub_ap.a_y, sub_ap.a_level );
-				if(rt_g.debug) {
+				if(rdebug&RDEBUG_SHOWERR) {
 					VSET( ap->a_color, 0, 9, 0 );	/* green */
 				} else {
 					VSETALL( ap->a_color, .18 ); /* 18% grey */
@@ -453,9 +470,6 @@ rt_g.debug = odebug;
 do_exit:
 		sub_ap.a_hit =  colorview;
 		sub_ap.a_miss = hit_nothing;
-		sub_ap.a_rt_i = ap->a_rt_i;
-		sub_ap.a_rbeam = ap->a_rbeam;
-		sub_ap.a_diverge = ap->a_diverge;
 		sub_ap.a_level++;
 		(void) rt_shootray( &sub_ap );
 		VJOIN1( ap->a_color, ap->a_color,
@@ -496,19 +510,21 @@ struct partition *PartHeadp;
 	for( pp=PartHeadp->pt_forw; pp != PartHeadp; pp = pp->pt_forw )
 		if( pp->pt_outhit->hit_dist > 0.0 )  break;
 	if( pp == PartHeadp )  {
-		if(rt_g.debug&DEBUG_HITS)rt_log("phg_rhit:  no hit out front?\n");
+		if(rdebug&RDEBUG_SHOWERR)
+			rt_log("phg_rhit:  no hit out front?\n");
 		goto bad;
 	}
 	if( pp->pt_regionp != (struct region *)(ap->a_user) )  {
-		if(rt_g.debug&DEBUG_HITS)rt_log("phg_rhit:  Ray reflected within %s now in %s!\n",
-			((struct region *)(ap->a_user))->reg_name,
-			pp->pt_regionp->reg_name );
+		if(rdebug&RDEBUG_HITS)
+			rt_log("phg_rhit:  Ray reflected within %s now in %s!\n",
+				((struct region *)(ap->a_user))->reg_name,
+				pp->pt_regionp->reg_name );
 		goto bad;
 	}
 
 	hitp = pp->pt_inhit;
 	if( !NEAR_ZERO(hitp->hit_dist, 10) )  {
-/**		if(rt_g.debug&DEBUG_HITS) **/
+/**		if(rdebug&RDEBUG_HITS) **/
 		{
 			stp = pp->pt_inseg->seg_stp;
 			RT_HIT_NORM( hitp, stp, &(ap->a_ray) );
@@ -524,7 +540,7 @@ struct partition *PartHeadp;
 	stp = pp->pt_outseg->seg_stp;
 	RT_HIT_NORM( hitp, stp, &(ap->a_ray) );
 	if( hitp->hit_dist >= INFINITY )  {
-		if(rt_g.debug&DEBUG_HITS)
+		if(rdebug&RDEBUG_SHOWERR)
 			rt_log("phg_rhit:  (%g,%g) bad!\n",
 				pp->pt_inhit->hit_dist, hitp->hit_dist);
 		goto bad;
@@ -532,7 +548,8 @@ struct partition *PartHeadp;
 
 	VMOVE( ap->a_uvec, hitp->hit_point );
 	/* Safety check */
-	if( rt_g.debug && (!NEAR_ZERO(hitp->hit_normal[X], 1.001) ||
+	if( (rdebug&RDEBUG_SHOWERR) && (
+	    !NEAR_ZERO(hitp->hit_normal[X], 1.001) ||
 	    !NEAR_ZERO(hitp->hit_normal[Y], 1.001) ||
 	    !NEAR_ZERO(hitp->hit_normal[Z], 1.001) ) )  {
 	    	rt_log("phg_rhit: defective normal hitting %s\n", stp->st_name);
@@ -545,7 +562,7 @@ struct partition *PartHeadp;
 
 	/* Give serious information when problems are encountered */
 bad:
-	if(rt_g.debug&DEBUG_HITS) rt_pr_partitions( PartHeadp, "phg_rhit" );
+	if(rdebug&RDEBUG_HITS) rt_pr_partitions( PartHeadp, "phg_rhit" );
 	return(0);
 }
 
@@ -631,12 +648,16 @@ ipow( d, cnt )
 double d;
 register int cnt;
 {
-	FAST fastf_t result;
+	FAST fastf_t input, result;
 
-	if( d < 1e-8 )  return(0.0);
+	if( (input=d) < 1e-8 )  return(0.0);
+	if( cnt < 0 || cnt > 200 )  {
+		rt_log("ipow(%g,%d) bad\n", d, cnt);
+		return(d);
+	}
 	result = 1;
 	while( cnt-- > 0 )
-		result *= d;
+		result *= input;
 	return( result );
 }
 

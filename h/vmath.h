@@ -4,10 +4,8 @@
  *  This header file defines many commonly used 3D vector math macros.
  *
  *  Note that while many people in the computer graphics field use
- *  post-multiplication with row vectors (ie, vector * matrix * matrix ...)
- *  the BRL CAD system uses the more traditional representation of 
- *  column vectors (ie, ... matrix * matrix * vector).  (The matrices
- *  in these two representations are the transposes of each other). Therefore,
+ *  post-multiplication, with column vectors, the BRL CAD system
+ *  uses the more traditional representation of row vectors.  Therefore,
  *  when transforming a vector by a matrix, pre-multiplication is used, ie:
  *
  *		view_vec = model2view_mat * model_vec
@@ -21,8 +19,8 @@
  *  "delta" (translation) values in the matrix, ie:
  *
  *        x'     ( R0   R1   R2   Dx )      x
- *        y' =   ( R4   R5   R6   Dy )   *  y
- *        z'     ( R8   R9   R10  Dz )      z
+ *        y' =  (  R4   R5   R6   Dy  )  *  y
+ *        z'    (  R8   R9   R10  Dz  )     z
  *        w'     (  0    0    0   1/s)      w
  *
  *  Note -
@@ -127,17 +125,6 @@ typedef fastf_t hpoint_t[HPT_LEN];
 #define VUNITIZE(a)	{FAST double f; f = MAGNITUDE(a); \
 			if( f < 1.0e-10 ) f = 0.0; else f = 1.0/f; \
 			(a)[0] *= f; (a)[1] *= f; (a)[2] *= f; }
-
-/* Combine together several vectors, scaled by a scalar */
-#define VCOMB3(o, a,b, c,d, e,f)	{\
-	(o)[X] = (a) * (b)[X] + (c) * (d)[X] + (e) * (f)[X];\
-	(o)[Y] = (a) * (b)[Y] + (c) * (d)[Y] + (e) * (f)[Y];\
-	(o)[Z] = (a) * (b)[Z] + (c) * (d)[Z] + (e) * (f)[Z];}
-
-#define VCOMB2(o, a,b, c,d)	{\
-	(o)[X] = (a) * (b)[X] + (c) * (d)[X];\
-	(o)[Y] = (a) * (b)[Y] + (c) * (d)[Y];\
-	(o)[Z] = (a) * (b)[Z] + (c) * (d)[Z];}
 
 /* Compose vector at `a' of:
  *	Vector at `b' plus

@@ -4,12 +4,6 @@
  * $Revision$
  *
  * $Log$
- * Revision 2.2  87/04/14  20:19:12  dpk
- * Fixed casting on RunEdit call
- * 
- * Revision 2.1  84/12/31  16:43:09  dpk
- * Make CTL(Y)==CTL(R) in RunEdit() (command line editor)
- * 
  * Revision 2.0  84/12/26  16:47:08  dpk
  * System as distributed to Berkeley 26 Dec 84
  * 
@@ -298,8 +292,6 @@ LINE	*l1,
 		goal = RMargin - (RMargin / 10);
 		Eol();	/* End of line */
 		if ((curcol = calc_pos(linebuf, curchar)) == 0) {
-			if (curline->l_next == 0)
-				break;
 			SetLine(curline->l_next);	/* Skip blank lines */
 			nlines--;
 		} else if (curcol < goal) {
@@ -329,14 +321,10 @@ LINE	*l1,
 					DelNChar();
 				}
 			} else {
-				if (curline->l_next == 0)
-					break;
 				SetLine(curline->l_next);
 				nlines--;
 			}
 		} else {
-			if (curline->l_next == 0)
-				break;
 			SetLine(curline->l_next);
 			nlines--;
 		}
@@ -748,7 +736,7 @@ char	*aa, *bb, *cc;
 		if (c == '\033')	/* Again */
 			c = (*HowToRead)() | 0200;
 		while (NumArg-- > 0)
-			if ((cp = RunEdit(c, begin, cp, def, HowToRead)) == (char *)-1)
+			if ((int)(cp = RunEdit(c, begin, cp, def, HowToRead)) == -1)
 				complain("Aborted");
 
 		/* Show the change */

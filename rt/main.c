@@ -23,11 +23,14 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include <stdio.h>
+#include <math.h>
 #include "machine.h"
 #include "vmath.h"
 #include "raytrace.h"
 #include "fb.h"
 #include "./mathtab.h"
+#include "./rdebug.h"
+#include "../librt/debug.h"
 
 #ifdef HEP
 # include <synch.h>
@@ -47,14 +50,17 @@ extern void	wray(), wraypts();
 extern double	atof();
 extern char	*sbrk();
 
+int		rdebug;			/* RT program debugging (not library) */
+
 /***** Variables shared with viewing model *** */
 FBIO		*fbp = FBIO_NULL;	/* Framebuffer handle */
+FILE		*outfp = NULL;		/* optional pixel output file */
+int		hex_out = 0;		/* Binary or Hex .pix output file */
 double		AmbientIntensity = 0.4;	/* Ambient light intensity */
 double		azimuth, elevation;
 int		lightmodel;		/* Select lighting model */
 mat_t		view2model;
 mat_t		model2view;
-int		hex_out = 0;	/* Binary or Hex .pix output file */
 /***** end of sharing with viewing model *****/
 
 extern void	grid_setup();
@@ -78,8 +84,8 @@ fastf_t		zoomout=1;	/* >0 zoom out, 0..1 zoom in */
 char		*scanbuf;	/*** Output buffering, for parallelism */
 #endif
 
-/* Eventually, npsw = MAX_PSW by default */
-int		npsw = 1;		/* number of worker PSWs to run */
+int		npsw = MAX_PSW;		/* number of worker PSWs to run */
+struct resource	resource[MAX_PSW];	/* memory resources */
 /***** end variables shared with worker() */
 
 static char	*beginptr;		/* sbrk() at start of program */
@@ -88,12 +94,59 @@ static int	desiredframe = 0;
 static char	*outputfile = (char *)0;/* name of base of output file */
 static char	*framebuffer = NULL;	/* Name of framebuffer */
 
+#ifdef PARALLEL
+static int	lock_tab[12];		/* Lock usage counters */
+static char	*all_title[12] = {
+	"malloc",
+	"worker",
+	"stats",
+	"???"
+};
+
+/*
+ *			L O C K _ P R
+ */
+lock_pr()
+{
+	register int i;
+	for( i=0; i<3; i++ )  {
+		if(lock_tab[i] == 0)  continue;
+		fprintf(stderr,"%10d %s\n", lock_tab[i], all_title[i]);
+	}
+}
+#endif PARALLEL
+
+/*
+ *			R E S _ P R
+ */
+res_pr()
+{
+	register struct resource *res;
+	register int i;
+
+	res = &resource[0];
+	for( i=0; i<npsw; i++, res++ )  {
+		fprintf(stderr,"cpu%d seg  len=%10d get=%10d free=%10d\n",
+			i,
+			res->re_seglen, res->re_segget, res->re_segfree );
+		fprintf(stderr,"cpu%d part len=%10d get=%10d free=%10d\n",
+			i,
+			res->re_partlen, res->re_partget, res->re_partfree );
+		fprintf(stderr,"cpu%d bitv len=%10d get=%10d free=%10d\n",
+			i,
+			res->re_bitvlen, res->re_bitvget, res->re_bitvfree );
+	}
+}
+
+/*
+ *			G E T _ A R G S
+ */
 get_args( argc, argv )
 register char **argv;
 {
 	register int c;
 
-	while( (c=getopt( argc, argv, "SH:F:D:MA:x:s:f:a:e:l:O:o:p:P:" )) != EOF )  {
+	while( (c=getopt( argc, argv, "SH:F:D:MA:x:X:s:f:a:e:l:O:o:p:P:" )) != EOF )  {
 		switch( c )  {
 		case 'S':
 			stereo = 1;
@@ -115,7 +168,10 @@ register char **argv;
 			break;
 		case 'x':
 			sscanf( optarg, "%x", &rt_g.debug );
-			fprintf(stderr,"rt_g.debug=x%x\n", rt_g.debug);
+			fprintf(stderr,"librt rt_g.debug=x%x\n", rt_g.debug);
+		case 'X':
+			sscanf( optarg, "%x", &rdebug );
+			fprintf(stderr,"rt rdebug=x%x\n", rdebug);
 			break;
 		case 's':
 			/* Square size -- fall through */
@@ -183,7 +239,6 @@ char **argv;
 	static vect_t temp;
 	static double utime;
 	char *title_file, *title_obj;	/* name of file and first object */
-	static FILE *outfp = NULL;	/* optional pixel output file */
 	register int x,y;
 	char framename[128];		/* File name to hold current frame */
 	char outbuf[132];
@@ -206,11 +261,7 @@ char **argv;
 		exit(1);
 	}
 
-	RES_INIT( &rt_g.res_pt );
-	RES_INIT( &rt_g.res_seg );
 	RES_INIT( &rt_g.res_malloc );
-	RES_INIT( &rt_g.res_bitv );
-	RES_INIT( &rt_g.res_printf );
 	RES_INIT( &rt_g.res_worker );
 	RES_INIT( &rt_g.res_stats );
 #ifdef PARALLEL
@@ -241,15 +292,18 @@ char **argv;
 	}
 	(void)rt_read_timer( outbuf, sizeof(outbuf) );
 	fprintf(stderr,"DB WALK: %s\n", outbuf);
-	rt_prep_timer();
+#ifdef CRAY_COS
+	remark(outbuf);		/* Info for JStat */
+#endif CRAY_COS
 
 	/* Allow library to prepare itself */
+	rt_prep_timer();
 	rt_prep(rtip);
 
 	/* Initialize the material library for all regions */
 	for( regp=rtip->HeadRegion; regp != REGION_NULL; regp=regp->reg_forw )  {
 		if( mlib_setup( regp ) == 0 )  {
-			rt_log("mlib_setup failure\n");
+			rt_log("mlib_setup failure on %s\n", regp->reg_name);
 		}
 	}
 
@@ -287,12 +341,15 @@ char **argv;
 		rtip->mdl_min[Y], rtip->mdl_max[Y],
 		rtip->mdl_min[Z], rtip->mdl_max[Z] );
 
+	if(rdebug&RDEBUG_RTMEM)
+		rt_g.debug |= DEBUG_MEM;
+
 #ifdef PARALLEL
 	/* Get enough dynamic memory to keep from making malloc sbrk() */
 	for( x=0; x<npsw; x++ )  {
-		rt_get_pt();
-		rt_get_seg();
-		rt_get_bitv();
+		rt_get_pt(&resource[x]);
+		rt_get_seg(&resource[x]);
+		rt_get_bitv(&resource[x]);
 	}
 #ifdef HEP
 	/* This isn't useful with the Caltech malloc() in most systems,
@@ -304,7 +361,7 @@ char **argv;
 #ifdef HEP
 	for( x=0; x<npsw; x++ )  {
 		/* This is expensive when GEMINUS>1 */
-		Dcreate( worker );
+		Dcreate( worker, x );
 	}
 #endif HEP
 #endif PARALLEL
@@ -396,7 +453,15 @@ do_more:
 		ap.a_rbeam, ap.a_diverge );
 
 	/* initialize lighting */
-	view_2init( &ap, outfp );
+	view_2init( &ap );
+
+	rtip->nshots = 0;
+	rtip->nmiss_model = 0;
+	rtip->nmiss_tree = 0;
+	rtip->nmiss_solid = 0;
+	rtip->nmiss = 0;
+	rtip->nhits = 0;
+	rtip->rti_nrays = 0;
 
 	fflush(stdout);
 	fflush(stderr);
@@ -428,7 +493,7 @@ do_more:
 	fprintf(stderr,"Frame %d: %d rays in %.2f sec = %.2f rays/sec\n",
 		framenumber-1,
 		rtip->rti_nrays, utime, (double)(rtip->rti_nrays)/utime );
-#ifdef PARALLEL
+
 	if( outfp != NULL )  {
 #ifdef CRAY_COS
 		int status;
@@ -436,38 +501,46 @@ do_more:
 		char message[128];
 
 		strncpy( dn, outfp->ldn, sizeof(outfp->ldn) );	/* COS name */
+#endif CRAY_COS
+#ifdef PARALLEL
 		if( fwrite( scanbuf, sizeof(char), npts*npts*3, outfp ) != npts*npts*3 )  {
 			fprintf(stderr,"fwrite failure\n");
 			goto out;
 		}
-#else
-		if( write( fileno(outfp), scanbuf, npts*npts*3 ) != npts*npts*3 )  {
-			perror("pixel output write");
-			goto out;
-		}
-#endif CRAY_COS
+#endif PARALLEL
 		(void)fclose(outfp);
 		outfp = NULL;
 #ifdef CRAY_COS
 		status = 0;
-		(void)DISPOSE( &status, "DN      ", dn,
-			"TEXT    ", framename,
-			"NOWAIT  ",
-			"DF      ", "BB      " );
+		if( hex_out )  {
+			(void)DISPOSE( &status, "DN      ", dn,
+				"TEXT    ", framename,
+				"NOWAIT  " );
+		} else {
+			/* Binary out */
+			(void)DISPOSE( &status, "DN      ", dn,
+				"TEXT    ", framename,
+				"NOWAIT  ",
+				"DF      ", "BB      " );
+		}
 		sprintf(message,
-			"Dispose,dn='%s',text='%s',nowait,df=bb.  Status = 0%o (%s)",
-			dn, framename, status,
-			(status==0) ? "Good" : "---BAD---" );
+			"%s Dispose,dn='%s',text='%s'.  stat=0%o",
+			(status==0) ? "Good" : "---BAD---",
+			dn, framename, status );
 		fprintf(stderr, "%s\n", message);
 		remark(message);	/* Send to log files */
 #endif CRAY_COS
 	}
-	if( fbp )
-		fb_write( fbp, 0, 0, scanbuf, npts*npts*3 );
 
-#ifdef alliant
-	alliant_pr();
-#endif alliant
+#ifdef PARALLEL
+	/* No live fb display yet */
+	if( fbp )
+		fb_write( fbp, 0, 0, scanbuf, npts*npts );
+#endif PARALLEL
+
+#ifdef STAT_PARALLEL
+	lock_pr();
+	res_pr();
 #endif PARALLEL
 
 	if( matflag )  goto do_more;
@@ -482,62 +555,68 @@ out:
 }
 
 #ifdef cray
-#ifndef PARALLEL
-LOCKASGN(p)
+#ifdef PARALLEL
+RES_INIT(p)
+register int *p;
 {
+	register int i = p - (&rt_g.res_malloc);
+	if(rdebug&RDEBUG_PARALLEL) 
+		fprintf(stderr,"RES_INIT 0%o, i=%d, rt_g=0%o\n", p, i, &rt_g);
+	LOCKASGN(p);
+	if(rdebug&RDEBUG_PARALLEL) 
+		fprintf(stderr,"    start value = 0%o\n", *p );
 }
-LOCKON(p)
+RES_ACQUIRE(p)
+register int *p;
 {
+	register int i = p - (&rt_g.res_malloc);
+	if( i < 0 || i > 12 )  {
+		fprintf("RES_ACQUIRE(0%o)? %d?\n", p, i);
+		abort();
+	}
+	lock_tab[i]++;		/* Not interlocked */
+	if(rdebug&RDEBUG_PARALLEL) fputc( 'A'+i, stderr );
+	LOCKON(p);
+	if(rdebug&RDEBUG_PARALLEL) fputc( '0'+i, stderr );
 }
-LOCKOFF(p)
+RES_RELEASE(p)
+register int *p;
 {
+	register int i = p - (&rt_g.res_malloc);
+	if(rdebug&RDEBUG_PARALLEL) fputc( 'a'+i, stderr );
+	LOCKOFF(p);
+	if(rdebug&RDEBUG_PARALLEL) fputc( '\n', stderr);
 }
-#endif
-#endif
+#else
+RES_INIT() {}
+RES_ACQUIRE() {}
+RES_RELEASE() {}
+#endif PARALLEL
+#endif cray
 
 #ifdef sgi
-/* Horrible bug in 3.3.1 and 3.4 -- hypot ruins stack! */
-double
+/* Horrible bug in 3.3.1 and 3.4 and 3.5 -- hypot ruins stack! */
+long float
 hypot(a,b)
 double a,b;
 {
-	extern double sqrt();
 	return(sqrt(a*a+b*b));
 }
 #endif
 
 #ifdef alliant
-int alliant_tab[8];
-char *all_title[8] = {
-	"partition",
-	"seg",
-	"malloc",
-	"printf",
-	"bitv",
-	"worker",
-	"stats",
-	"???"
-};
-alliant_pr()
+RES_ACQUIRE(p)
+register int *p;		/* known to be a5 */
 {
 	register int i;
-	for( i=0; i<8; i++ )  {
-		if(alliant_tab[i] == 0)  continue;
-		fprintf(stderr,"%10d %s\n", alliant_tab[i], all_title[i]);
-	}
-}
+	i = p - (&rt_g.res_malloc);
 
-RES_ACQUIRE(p)
-register int *p;
-{
 #ifdef PARALLEL
 	asm("loop:");
-	while( *p )   {
+	do  {
 		/* Just wasting time anyways, so log it */
-		register int i;
-		i = p - (&rt_g.res_pt);
-		alliant_tab[i]++;	/* non-interlocked */
-	}
+		lock_tab[i]++;	/* non-interlocked */
+	} while( *p );
 	asm("	tas	a5@");
 	asm("	bne	loop");
 #endif

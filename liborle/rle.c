@@ -657,7 +657,7 @@ RGBpixel		*scan_buf;
 		for( i = 0; i < nseg; i++ )
 			{	register int	runlen = (runs[i+1].first-1) -
 							 runs[i].last;
-			_enc_Color_Seg( fp, i, color );
+			_encode_Seg_Color( fp, i, color );
 			/* Move along to next segment for encoding,
 				if this was not the last segment.
 			 */
@@ -713,10 +713,10 @@ register RGBpixel *endpix;
 	return	nseg;
 	}
 
-/*	_ e n c _ C o l o r _ S e g ( )
+/*	_ e n c o d e _ S e g _ C o l o r ( )
 	Encode a segment, 'seg', for specified 'color'.
  */
-_enc_Color_Seg( fp, seg, color )
+_encode_Seg_Color( fp, seg, color )
 FILE		*fp;
 register int	seg;
 register int	color;
@@ -726,14 +726,14 @@ register int	color;
 	data_p = (RGBpixel *) &((*(runs[seg].first))[color]);
 	last_p = (RGBpixel *) &((*(runs[seg].last))[color]);
 
-	_enc_Segment( fp, data_p, last_p );
+	_encode_Segment( fp, data_p, last_p );
 	return;
 	}
 
-/*	_ e n c _ S e g m e n t ( )
+/*	_ e n c o d e _ S e g m e n t ( )
 	Output code for segment.
  */
-_enc_Segment( fp, data_p, last_p )
+_encode_Segment( fp, data_p, last_p )
 FILE		*fp;
 register RGBpixel	*data_p;
 register RGBpixel	*last_p;
@@ -942,10 +942,10 @@ register int	*datum;
 	}
 
 HIDDEN
-_get_Old_Inst( fp, op, dat )
+_get_Old_Inst( fp, opcode, datum )
 register FILE	*fp;
-register int	*op;
-register int	*dat;
+register int	*opcode;
+register int	*datum;
 	{
 	static Old_Inst	instruction;
 	register char	*p;
@@ -957,10 +957,8 @@ register int	*dat;
  	SWAB( *((short *)&instruction) );
 	if( feof( fp ) )
 		return	EOF;
-#ifndef cray
-	*op = instruction.opcode;
-	*dat = instruction.datum;
-#endif
+	*opcode = instruction.opcode;
+	*datum = instruction.datum;
 	return	1;
 	}
 	

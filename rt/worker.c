@@ -17,7 +17,7 @@
  *	All rights reserved.
  */
 #ifndef lint
-static char RCSrt[] = "@(#)$Header$ (BRL)";
+static char RCSworker[] = "@(#)$Header$ (BRL)";
 #endif
 
 #include <stdio.h>
@@ -25,34 +25,35 @@ static char RCSrt[] = "@(#)$Header$ (BRL)";
 #include "vmath.h"
 #include "raytrace.h"
 #include "../rt/mathtab.h"
+#include "./rdebug.h"
 
 /***** view.c variables imported from rt.c *****/
-extern mat_t view2model;
-extern mat_t model2view;
+extern mat_t	view2model;
+extern mat_t	model2view;
 
 /***** worker.c variables imported from rt.c *****/
-extern void worker();
+extern void	worker();
 extern struct application ap;
 extern int	stereo;		/* stereo viewing */
-extern vect_t left_eye_delta;
+extern vect_t	left_eye_delta;
 extern int	hypersample;	/* number of extra rays to fire */
 extern int	perspective;	/* perspective view -vs- parallel view */
 extern vect_t	dx_model;	/* view delta-X as model-space vector */
 extern vect_t	dy_model;	/* view delta-Y as model-space vector */
 extern point_t	eye_model;	/* model-space location of eye */
 extern point_t	viewbase_model;	/* model-space location of viewplane corner */
-extern int npts;	/* # of points to shoot: x,y */
-extern mat_t Viewrotscale;
-extern mat_t toEye;
-extern fastf_t viewsize;
-extern fastf_t zoomout;
-extern int npsw;
+extern int	npts;		/* # of points to shoot: x,y */
+extern mat_t	Viewrotscale;
+extern fastf_t	viewsize;
+extern fastf_t	zoomout;
+extern int	npsw;
+extern struct resource resource[];
 
 #ifdef RTSRV
 extern char scanbuf[];
 #else
 #ifdef PARALLEL
-char *scanbuf;		/*** Output buffering, for parallelism */
+extern char *scanbuf;		/*** Output buffering, for parallelism */
 #endif
 #endif
 
@@ -75,7 +76,8 @@ struct taskcontrol {
 void
 grid_setup()
 {
-	static vect_t temp;
+	vect_t temp;
+	mat_t toEye;
 
 	/* model2view takes us to eye_model location & orientation */
 	mat_idn( toEye );
@@ -133,6 +135,9 @@ grid_setup()
  */
 do_run( a, b )
 {
+#ifdef alliant
+	register int d7;	/* known to be in d7 */
+#endif
 	int x;
 
 	cur_pixel = a;
@@ -148,14 +153,17 @@ do_run( a, b )
 	nworkers = 0;
 #ifdef cray
 	/* Create any extra worker tasks */
-
-	for( x=0; x<npsw; x++ ) {
+RES_ACQUIRE( &rt_g.res_worker );
+	for( x=1; x<npsw; x++ ) {
 		taskcontrol[x].tsk_len = 3;
 		taskcontrol[x].tsk_value = x;
-		TSKSTART( &taskcontrol[x], worker );
+		TSKSTART( &taskcontrol[x], worker, x );
 	}
+for( x=0; x<1000000; x++ ) a=x+1;	/* take time to get started */
+RES_RELEASE( &rt_g.res_worker );
+	worker(0);	/* avoid wasting this task */
 	/* Wait for them to finish */
-	for( x=0; x<npsw; x++ )  {
+	for( x=1; x<npsw; x++ )  {
 		TSKWAIT( &taskcontrol[x] );
 	}
 #endif
@@ -165,7 +173,7 @@ do_run( a, b )
 		asm("	subql		#1,d0");
 		asm("	cstart		d0");
 		asm("super_loop:");
-		worker();
+		worker(d7);		/* d7 has current index, like magic */
 		asm("	crepeat		super_loop");
 	}
 #endif
@@ -177,7 +185,7 @@ do_run( a, b )
 	/*
 	 * SERIAL case -- one CPU does all the work.
 	 */
-	worker();
+	worker(0);
 #endif
 }
 
@@ -190,7 +198,8 @@ do_run( a, b )
  *  Compute one pixel, and store it.
  */
 void
-worker()
+worker(cpu)
+int cpu;
 {
 	LOCAL struct application a;
 	LOCAL vect_t point;		/* Ref point on eye or view plane */
@@ -198,10 +207,13 @@ worker()
 	register int com;
 
 	RES_ACQUIRE( &rt_g.res_worker );
-	nworkers++;
+	com = nworkers++;
 	RES_RELEASE( &rt_g.res_worker );
 
+	a.a_resource = &resource[cpu];
+	resource[cpu].re_cpu = cpu;
 	a.a_onehit = 1;
+
 	while(1)  {
 		RES_ACQUIRE( &rt_g.res_worker );
 		com = cur_pixel++;
