@@ -477,6 +477,7 @@ halftone/tone_floyd.c svneol=native#text/plain
 halftone/tone_folly.c svneol=native#text/plain
 halftone/tone_simple.c svneol=native#text/plain
 halftone/tonescale.c svneol=native#text/plain
+html/ReleaseNotes/Cakefile -text
 html/ReleaseNotes/Rel5.0/Summary/activem.gif -text svneol=unset#image/gif
 html/ReleaseNotes/Rel5.0/Summary/activep.gif -text svneol=unset#image/gif
 html/ReleaseNotes/Rel5.0/Summary/collapse.gif -text svneol=unset#image/gif
