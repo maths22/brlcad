@@ -2948,7 +2948,7 @@ src/other/libtcl/tools/tcltk-man2html.tcl svneol=native#text/plain
 src/other/libtcl/tools/uniClass.tcl svneol=native#text/plain
 src/other/libtcl/tools/uniParse.tcl svneol=native#text/plain
 src/other/libtcl/tools/white.bmp -text svneol=unset#image/bmp
-src/other/libtcl/unix/Makefile.am svneol=native#text/plain
+src/other/libtcl/unix/Makefile.in svneol=native#text/plain
 src/other/libtcl/unix/README svneol=native#text/plain
 src/other/libtcl/unix/aclocal.m4 svneol=native#text/plain
 src/other/libtcl/unix/configure -text
