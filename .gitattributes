@@ -135,6 +135,7 @@ fbed/try.h svneol=native#text/plain
 fbserv/Cakefile -text
 fbserv/fbserv.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
+h/Cakefile -text
 h/XtndRunsv.h svneol=native#text/plain
 h/db.h svneol=native#text/plain
 h/fb.h svneol=native#text/plain
