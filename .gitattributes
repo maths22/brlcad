@@ -2092,6 +2092,7 @@ libtcl/win/winDumpExts.c svneol=native#text/plain
 libtclcad/Cakefile -text
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
+libtclhooks/tcl.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtk/Cakefile -text
