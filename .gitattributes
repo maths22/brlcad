@@ -2793,6 +2793,16 @@ libtcl8.3/win/tclWinThrd.h svneol=native#text/plain
 libtcl8.3/win/tclWinTime.c svneol=native#text/plain
 libtcl8.3/win/tclsh.ico -text svneol=unset#image/x-icon
 libtcl8.3/win/tclsh.rc -text svneol=CRLF#text/plain
+libtcl8.4/Cakefile -text
+libtcl8.4/ChangeLog svneol=native#text/plain
+libtcl8.4/ChangeLog.1999 svneol=native#text/plain
+libtcl8.4/ChangeLog.2000 svneol=native#text/plain
+libtcl8.4/ChangeLog.2001 svneol=native#text/plain
+libtcl8.4/Need_to_check -text
+libtcl8.4/README svneol=native#text/plain
+libtcl8.4/changes -text
+libtcl8.4/fix_makefile.sh svneol=native#text/x-sh
+libtcl8.4/license.terms svneol=native#text/plain
 libtclcad/Cakefile -text
 libtclcad/tclcad.c svneol=native#text/plain
 libtclcad/tkImgFmtPIX.c svneol=native#text/plain
