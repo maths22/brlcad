@@ -1420,6 +1420,7 @@ tab/tabsub.c svneol=native#text/plain
 tab/tokens.h svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
 tcl/Cakefile -text
+tcl/bwish.c svneol=native#text/plain
 tcl/tclAppInit.c svneol=native#text/plain
 tcl/tclTest.c svneol=native#text/plain
 tcl/tkAppInit.c svneol=native#text/plain
