@@ -4188,6 +4188,8 @@ regress/ref_m4i64 -text
 regress/shaders.sh svneol=native#text/x-sh
 regress/solids.sh svneol=native#text/x-sh
 regress/spdi.sh svneol=native#text/x-sh
+regress/tests.d/ref/moss.pix -text svneol=unset#image/x-rgb
+regress/tests.d/ref/solids.pix -text svneol=unset#image/x-rgb
 remrt/Cakefile -text
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
