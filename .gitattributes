@@ -179,6 +179,7 @@ conv/g-tankill.1 svneol=native#text/plain
 conv/g-tankill.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
+conv/nmg-rib.1 svneol=native#text/plain
 conv/nmg-rib.c svneol=native#text/plain
 conv/pix2asc.1 svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
