@@ -475,6 +475,16 @@ libfb/pkgswitch.c svneol=native#text/plain
 libfb/pkgtypes.h svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
 libfb/sgiselect.s svneol=native#text/plain
+libfft/Cakefile -text
+libfft/complex.h svneol=native#text/plain
+libfft/ditsplit.c svneol=native#text/plain
+libfft/ditsplitc.c svneol=native#text/plain
+libfft/fftc.c svneol=native#text/plain
+libfft/fftest.c svneol=native#text/plain
+libfft/fftfast.c svneol=native#text/plain
+libfft/ifftc.c svneol=native#text/plain
+libfft/splitdit.c svneol=native#text/plain
+libfft/splitditc.c svneol=native#text/plain
 liboptical/sh_cloud.c svneol=native#text/plain
 liboptical/sh_cook.c svneol=native#text/plain
 liboptical/sh_light.c svneol=native#text/plain
