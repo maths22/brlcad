@@ -546,6 +546,7 @@ html/manuals/libdm/contents.html svneol=native#text/html
 html/manuals/libdm/index.html svneol=native#text/html
 html/manuals/libdm/preface.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
+html/manuals/mged/Cakefile -text
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
 html/manuals/mged/animmate/anim_doc.html svneol=native#text/html
 html/manuals/mged/animmate/anim_fly.html svneol=native#text/html
