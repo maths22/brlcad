@@ -82,6 +82,7 @@ static struct cline    *cline_last_ptr; /* Pointer to last element in linked lis
 static struct wmember  group_head[11];	/* Lists of regions for groups */
 static struct wmember  hole_head;	/* List of regions used as holes (not solid parts of model) */
 static struct bu_ptbl stack;		/* Stack for traversing name_tree */
+static struct bu_ptbl tstack;		/* Stack for traversing union tree */
 
 static int		*faces=NULL;	/* one triplet per face indexing three grid points */
 static fastf_t		*thickness;	/* thickness of each face */
@@ -399,27 +400,31 @@ int group_id;
 
 				if( !ptr || ptr->region_id != reg_id )
 				{
-					bu_log( "ERROR: Can't find holes to subtract for group %d, component %d\n" , group_id , comp_id );
-					return;
+					bu_log( "WARNING: Can't find a hole/wall to subtract for group %d, component %d\n" , group_id , comp_id );
+					bu_log( "         Missing group #%d component #%d\n",
+						list_ptr->group, list_ptr->component );
 				}
-
-				bu_ptbl_reset( &stack );
-
-				while( ptr && ptr->region_id == reg_id )
+				else
 				{
+
+					bu_ptbl_reset( &stack );
+
 					while( ptr && ptr->region_id == reg_id )
 					{
-						PUSH( ptr );
-						ptr = ptr->rleft;
+						while( ptr && ptr->region_id == reg_id )
+						{
+							PUSH( ptr );
+							ptr = ptr->rleft;
+						}
+						POP( name_tree , ptr );
+						if( !ptr ||  ptr->region_id != reg_id )
+							break;
+
+						if( mk_addmember( ptr->name , head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
+							rt_bomb( "Subtract_holes: mk_addmember failed\n" );
+
+						ptr = ptr->rright;
 					}
-					POP( name_tree , ptr );
-					if( !ptr ||  ptr->region_id != reg_id )
-						break;
-
-					if( mk_addmember( ptr->name , head , WMOP_SUBTRACT ) == (struct wmember *)NULL )
-						rt_bomb( "Subtract_holes: mk_addmember failed\n" );
-
-					ptr = ptr->rright;
 				}
 
 				list_ptr = list_ptr->next;
@@ -1607,37 +1612,6 @@ do_vehicle()
 }
 
 void
-Add_to_clines( element_id , pt1 , pt2 , thick , radius )
-int element_id;
-int pt1;
-int pt2;
-fastf_t thick;
-fastf_t radius;
-{
-	struct cline *cline_ptr;
-
-	cline_ptr = (struct cline *)bu_malloc( sizeof( struct cline ) , "Add_to_clines: cline_ptr" );
-
-	cline_ptr->pt1 = pt1;
-	cline_ptr->pt2 = pt2;
-	cline_ptr->element_id = element_id;
-	cline_ptr->made = 0;
-	cline_ptr->thick = thick;
-	cline_ptr->radius = radius;
-	cline_ptr->next = (struct cline *)NULL;
-
-	if( cline_last_ptr == (struct cline *)NULL )
-		cline_root = cline_ptr;
-	else
-		cline_last_ptr->next = cline_ptr;
-
-	cline_last_ptr = cline_ptr;
-
-	if( rt_g.debug&DEBUG_MEM_FULL &&  bu_mem_barriercheck() )
-		bu_log( "ERROR: bu_mem_barriercheck failed in Add_to_clines\n" );
-}
-
-void
 do_cline()
 {
 	int element_id;
@@ -2435,20 +2409,25 @@ int type;
 
 		if( igrp >= 0 && icmp > 0 )
 		{
-			if( list_ptr )
-			{
-				list_ptr->next = (struct hole_list *)bu_malloc( sizeof( struct hole_list ) , "do_hole_wall: list_ptr" );
-				list_ptr = list_ptr->next;
-			}
+			if( igrp == group && comp == icmp )
+				bu_log( "Hole or wall card references itself (ignoring): (%s)\n", line );
 			else
 			{
-				list_ptr = (struct hole_list *)bu_malloc( sizeof( struct hole_list ) , "do_hole_wall: list_ptr" );
-				list_start = list_ptr;
-			}
+				if( list_ptr )
+				{
+					list_ptr->next = (struct hole_list *)bu_malloc( sizeof( struct hole_list ) , "do_hole_wall: list_ptr" );
+					list_ptr = list_ptr->next;
+				}
+				else
+				{
+					list_ptr = (struct hole_list *)bu_malloc( sizeof( struct hole_list ) , "do_hole_wall: list_ptr" );
+					list_start = list_ptr;
+				}
 			
-			list_ptr->group = igrp;
-			list_ptr->component = icmp;
-			list_ptr->next = (struct hole_list *)NULL;
+				list_ptr->group = igrp;
+				list_ptr->component = icmp;
+				list_ptr->next = (struct hole_list *)NULL;
+			}
 		}
 
 		col += 8;
@@ -3110,7 +3089,6 @@ Process_hole_wall()
 void
 do_chgcomp()
 {
-	int id1, id2, id3;
 
 	if( !pass )
 		return;
@@ -3309,7 +3287,10 @@ genptr_t	ptr;
 
 	comb2 = (struct rt_comb_internal *)internal2.idb_ptr;
 	RT_CK_COMB( comb2 );
-bu_log( "Fixing region %s\n", dp->d_namep );
+
+	if( debug )
+		bu_log( "Fixing region %s\n", dp->d_namep );
+
 	/* move the second tree into the first */
 	tree2 = comb2->tree;
 	comb->tree = tree2;
@@ -3342,7 +3323,13 @@ char *output_file;
 		return;
 	}
 
+	if( debug )
+		bu_log( "Rescanning file\n" );
+
 	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+
+	if( debug )
+		bu_log( "looking up 'all'\n" );
 
 	if( (dp=db_lookup( dbip, "all", 0 )) == DIR_NULL )
 	{
@@ -3350,7 +3337,14 @@ char *output_file;
 		db_close( dbip );
 		return;
 	}
+
+	if( debug )
+		bu_log( "Calling db_functree\n" );
+
 	db_functree( dbip, dp, fix_regions, 0, NULL );
+
+	if( debug )
+		bu_log( "Post-processing complete\n" );
 }
 
 void
@@ -3403,6 +3397,266 @@ char *str;
 	}
 }
 
+#define	TPUSH( ptr )	bu_ptbl_ins( &tstack , (long *)ptr )
+#define TPOP( ptr )	{ if( BU_PTBL_END( &tstack ) == 0 ) \
+				ptr = (union tree *)NULL; \
+			  else \
+			  { \
+			  	ptr = (union tree *)BU_PTBL_GET( &tstack , BU_PTBL_END( &tstack )-1 ); \
+			  	bu_ptbl_rm( &tstack , (long *)ptr ); \
+			  } \
+			}
+union tree *
+expand_tree( ptr, dbip )
+union tree *ptr;
+struct db_i *dbip;
+{
+	struct directory *dp;
+	struct rt_db_internal internal;
+	struct rt_comb_internal *comb;
+	union tree *tr_ptr, *new_tree;
+	int saw_a_union, used_node;
+	int i;
+
+	RT_CK_TREE( ptr );
+
+	switch( ptr->tr_op )
+	{
+		case OP_DB_LEAF:
+			if( (dp=db_lookup( dbip, ptr->tr_l.tl_name, LOOKUP_QUIET)) == DIR_NULL )
+			{
+				db_free_tree( ptr );
+				ptr = TREE_NULL;
+				return( TREE_NULL );
+			}
+
+			if( !(dp->d_flags & DIR_REGION) )
+				return( ptr );
+
+			/* this is a region */
+			if( rt_db_get_internal( &internal, dp, dbip, NULL ) < 0 )
+			{
+				bu_log( "Failed to get internal representation of %s\n", dp->d_namep );
+				bu_bomb( "rt_db_get_internal() Failed!!!\n" );
+			}
+
+			if( internal.idb_type != ID_COMBINATION )
+			{
+				bu_log( "%s is not a combination!!!!\n", dp->d_namep );
+				bu_bomb( "Expecting a combination!!!!\n" );
+			}
+
+			comb = (struct rt_comb_internal *)internal.idb_ptr;
+			if( !comb->region_flag )
+			{
+				bu_log( "%s is not a region!!!!\n", dp->d_namep );
+				bu_bomb( "Expecting a region!!!!\n" );
+			}
+			RT_CK_COMB( comb );
+
+			new_tree = ptr;
+			tr_ptr = comb->tree;
+			saw_a_union = 1;
+			used_node = 0;
+			while( 1 )
+			{
+				while( tr_ptr )
+				{
+					TPUSH( tr_ptr );
+					if( tr_ptr->tr_op != OP_DB_LEAF )
+						tr_ptr = tr_ptr->tr_b.tb_left;
+					else
+						tr_ptr = (union tree *)NULL;
+				}
+				TPOP( tr_ptr );
+
+				if( !tr_ptr )
+					break;
+
+				/* visit node */
+				if( tr_ptr->tr_op == OP_DB_LEAF )
+				{
+					if( saw_a_union )
+					{
+						saw_a_union = 0;
+						if( !used_node )
+						{
+							ptr->tr_l.tl_name = bu_strdup( tr_ptr->tr_l.tl_name );
+							used_node = 1;
+						}
+						else
+						{
+							BU_GETUNION( new_tree, tree );
+							new_tree->tr_b.magic = RT_TREE_MAGIC;
+							new_tree->tr_b.tb_op = OP_SUBTRACT;
+							new_tree->tr_b.tb_left = ptr;
+							BU_GETUNION( new_tree->tr_b.tb_right, tree );
+							new_tree->tr_b.tb_right->tr_l.magic = RT_TREE_MAGIC;
+							new_tree->tr_b.tb_right->tr_l.tl_op = OP_DB_LEAF;
+							new_tree->tr_b.tb_right->tr_l.tl_name = bu_strdup( tr_ptr->tr_l.tl_name );
+							ptr = new_tree;
+						}
+					}
+				}
+				else if( tr_ptr->tr_op == OP_UNION )
+					saw_a_union = 1;
+
+				if( tr_ptr->tr_op != OP_DB_LEAF )
+					tr_ptr = tr_ptr->tr_b.tb_right;
+				else
+					tr_ptr = (union tree *)NULL;
+			}
+			return( ptr );
+
+			break;
+		default:
+			/* recurse */
+			ptr->tr_b.tb_left = expand_tree( ptr->tr_b.tb_left, dbip );
+			ptr->tr_b.tb_right = expand_tree( ptr->tr_b.tb_right, dbip );
+			if( (ptr->tr_b.tb_left == TREE_NULL) && (ptr->tr_b.tb_right == TREE_NULL) )
+			{
+				ptr->tr_op = 0;
+				bu_free( (char *)ptr, "union tree" );
+				ptr = TREE_NULL;
+			}
+			else if( ptr->tr_b.tb_right == TREE_NULL )
+			{
+				if( ptr->tr_op == OP_INTERSECT )
+				{
+					/* intersection with nothing is nothing */
+					db_free_tree( ptr->tr_b.tb_left );
+					ptr->tr_op = 0;
+					bu_free( (char *)ptr, "union tree" );
+					ptr = TREE_NULL;
+				}
+				else
+				{
+					union tree *save;
+
+					/* just return the left tree */
+					save = ptr->tr_b.tb_left;
+					ptr->tr_op = 0;
+					bu_free( (char *)ptr, "union tree" );
+					ptr = save;
+				}
+			}
+			else if( ptr->tr_b.tb_left == TREE_NULL )
+			{
+				if( ptr->tr_op == OP_UNION )
+				{
+					union tree *save;
+
+					/* return the right tree */
+					save = ptr->tr_b.tb_right;
+					ptr->tr_op = 0;
+					bu_free( (char *)ptr, "union tree" );
+					ptr = save;
+				}
+				else
+				{
+					/* result is nothing */
+					db_free_tree( ptr->tr_b.tb_right );
+					ptr->tr_op = 0;
+					bu_free( (char *)ptr, "union tree" );
+					ptr = TREE_NULL;
+				}
+			}
+			return( ptr );
+			break;
+	}
+}
+
+void
+do_expansion( dbip, name )
+struct db_i *dbip;
+char *name;
+{
+	struct directory *dp;
+	struct rt_db_internal internal;
+	struct rt_comb_internal *comb;
+	struct db_full_path path;
+
+	if( (dp=db_lookup( dbip, name, LOOKUP_QUIET)) == DIR_NULL )
+		return;
+
+	if( !(dp->d_flags & DIR_REGION) )
+		return;
+
+	/* this is a region */
+	if( rt_db_get_internal( &internal, dp, dbip, NULL ) < 0 )
+	{
+		bu_log( "Failed to get internal representation of %s\n", dp->d_namep );
+		bu_bomb( "rt_db_get_internal() Failed!!!\n" );
+	}
+
+	if( internal.idb_type != ID_COMBINATION )
+	{
+		bu_log( "%s is not a combination!!!!\n", dp->d_namep );
+		bu_bomb( "Expecting a combination!!!!\n" );
+	}
+
+	comb = (struct rt_comb_internal *)internal.idb_ptr;
+	RT_CK_COMB( comb );
+
+	if( !comb->region_flag )
+	{
+		bu_log( "%s is not a region!!!!\n", dp->d_namep );
+		bu_bomb( "Expecting a region!!!!\n" );
+	}
+
+	comb->tree = expand_tree( comb->tree, dbip );
+
+	if( rt_db_put_internal( dp, dbip, &internal ) < 0 )
+	{
+		bu_log( "Failed to write region %s\n", dp->d_namep );
+		bu_bomb( "rt_db_put_internal() failed!!!\n" );
+	}
+}
+
+void
+expand_subtracted_regions( output_file )
+char *output_file;
+{
+	struct name_tree *ptr;
+	struct db_i *dbip;
+
+	bu_log( "Expanding subtracted regions please wait.....\n" );
+
+	if ((dbip = db_open( output_file , "rw")) == DBI_NULL)
+	{
+		bu_log( "Cannot open %s, post processing not completed\n", output_file );
+		return;
+	}
+	dbip->dbi_version = 4;
+
+	if( debug )
+		bu_log( "Rescanning file\n" );
+
+	db_scan(dbip, (int (*)())db_diradd, 1, NULL);
+
+	bu_ptbl_reset( &stack );
+
+	ptr = name_root;
+	while( 1 )
+	{
+		while( ptr )
+		{
+			PUSH( ptr );
+			ptr = ptr->rleft;
+		}
+		POP( name_tree , ptr );
+		if( !ptr )
+			break;
+
+		/* visit node */
+		do_expansion( dbip, ptr->name );
+
+		ptr = ptr->rright;
+	}
+
+}
+
+int
 main( argc , argv )
 int argc;
 char *argv[];
@@ -3538,11 +3792,14 @@ char *argv[];
 	if( debug )
 		List_holes();
 
-	/* post process */
 	fclose( fdout );
-	Post_process( output_file );
+
+	/* post process */
+	bu_ptbl_init( &tstack , 64, " tstack ");
+	expand_subtracted_regions( output_file );
 
 	if( !quiet )
 		bu_log( "%d components converted\n", comp_count );
 
+	return 0;
 }
