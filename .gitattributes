@@ -1193,7 +1193,6 @@ librt/bool.c svneol=native#text/plain
 librt/bundle.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
 librt/comb.c svneol=native#text/plain
-librt/complex.h svneol=native#text/plain
 librt/const.c svneol=native#text/plain
 librt/cut.c svneol=native#text/plain
 librt/db_alloc.c svneol=native#text/plain
