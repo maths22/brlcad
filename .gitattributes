@@ -666,6 +666,7 @@ libbn/log.c svneol=native#text/plain
 libbn/marker.c svneol=native#text/plain
 libbn/mat.c svneol=native#text/plain
 libbn/msr.c svneol=native#text/plain
+libbn/noise.c svneol=native#text/plain
 libbn/number.c svneol=native#text/plain
 libbn/plane.c svneol=native#text/plain
 libbn/plot3.c svneol=native#text/plain
