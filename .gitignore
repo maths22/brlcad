@@ -8,7 +8,6 @@ bench/*.pix.*
 bench/.cvsignore
 /config.*
 doc/html/manuals/mged/mged_cmd_index.html
-html/manuals/mged/mged_cmd_index.html
 libbn/vers.c
 libbu/vers.c
 libdm/vers.c
