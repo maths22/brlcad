@@ -474,6 +474,7 @@ rt/sh_stxt.c svneol=native#text/plain
 rt/sh_text.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/viewcheck.c svneol=native#text/plain
+rt/viewdummy.c svneol=native#text/plain
 rt/viewg3.c svneol=native#text/plain
 rt/viewhide.c svneol=native#text/plain
 rt/viewpp.c svneol=native#text/plain
