@@ -78,6 +78,7 @@ h/raytrace.h svneol=native#text/plain
 h/shadefuncs.h svneol=native#text/plain
 h/shadework.h svneol=native#text/plain
 h/vmath.h svneol=native#text/plain
+h/wdb.h svneol=native#text/plain
 jove/Makefile svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
 jove/jove.h svneol=native#text/plain
