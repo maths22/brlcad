@@ -74,6 +74,7 @@ libfb/if_disk.c svneol=native#text/plain
 libfb/if_ptty.c svneol=native#text/plain
 libfb/if_remote.c svneol=native#text/plain
 libfb/if_sgi.c svneol=native#text/plain
+libfb/libfb.3 svneol=native#text/plain
 libfb/pkgswitch.c svneol=native#text/plain
 libfb/pkgtypes.h svneol=native#text/plain
 liboptical/sh_cloud.c svneol=native#text/plain
