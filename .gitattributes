@@ -2047,6 +2047,7 @@ tclscripts/mged/rt.tcl svneol=native#text/plain
 tclscripts/mged/rt_script.tcl svneol=native#text/plain
 tclscripts/mged/sample.tcl svneol=native#text/plain
 tclscripts/mged/shaders.tcl svneol=native#text/plain
+tclscripts/mged/skt_ed.tcl svneol=native#text/plain
 tclscripts/mged/solclick.tcl svneol=native#text/plain
 tclscripts/mged/solcreate.tcl svneol=native#text/plain
 tclscripts/mged/solid.tcl svneol=native#text/plain
