@@ -10,6 +10,7 @@
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
 /TODO svneol=native#text/plain
+/acinclude.m4 svneol=native#text/plain
 /autogen.sh svneol=native#text/x-sh
 bench/.cvsignore svneol=native#text/plain
 bench/Makefile.am svneol=native#text/plain
