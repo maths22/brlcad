@@ -227,6 +227,7 @@ src/libfft/.libs
 src/libfft/Makefile
 src/libfft/Makefile.in
 src/libfft/fftc
+src/libfft/fftest
 src/libfft/ifftc
 src/libfft/irfft128.c
 src/libfft/irfft16.c
