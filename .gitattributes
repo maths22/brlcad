@@ -3341,6 +3341,7 @@ tclscripts/lib/Display.tcl svneol=native#text/plain
 tclscripts/lib/Dm.tcl svneol=native#text/plain
 tclscripts/lib/Drawable.tcl svneol=native#text/plain
 tclscripts/lib/Help.tcl svneol=native#text/plain
+tclscripts/lib/Legend.tcl svneol=native#text/plain
 tclscripts/lib/Mged.tcl svneol=native#text/plain
 tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 tclscripts/lib/Splash.tcl svneol=native#text/plain
