@@ -1202,6 +1202,7 @@ util/pl-sgi.1 svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
 util/pl-starbase.1 svneol=native#text/plain
 util/pl-starbase.c svneol=native#text/plain
+util/pl-tek.1 svneol=native#text/plain
 util/pl-tek.c svneol=native#text/plain
 util/plcolor.1 svneol=native#text/plain
 util/plcolor.c svneol=native#text/plain
