@@ -1,4 +1,5 @@
 * text=auto !eol
+/Acknowledgements -text
 /Cakefile -text
 /Cakefile.defs -text
 /Cakefile.lib -text
@@ -7,6 +8,7 @@
 /Copyright_1989_US_Army -text
 /Copyright_1991_US_Army -text
 /Copyright_1994_US_Army -text
+/Copyright_1995_US_Army -text
 /Makefile svneol=native#text/plain
 /Makefile.defs svneol=native#text/plain
 /Makefile.rules svneol=native#text/plain
