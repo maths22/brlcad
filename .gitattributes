@@ -1383,6 +1383,7 @@ jack/g-jack.c svneol=native#text/plain
 jack/jack-g.c svneol=native#text/plain
 jove/Cakefile -text
 jove/Makefile svneol=native#text/plain
+jove/describe.com.1 svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
 jove/jove.1 svneol=native#text/plain
 jove/jove.h svneol=native#text/plain
@@ -1406,6 +1407,7 @@ jove/jove_term.c svneol=native#text/plain
 jove/jove_tune.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
 jove/mkversion.sh svneol=native#text/x-sh
+jove/teach-jove.1 svneol=native#text/plain
 jove/teach-jove.sh svneol=native#text/x-sh
 jove/termcap.h svneol=native#text/plain
 lgt/Cakefile -text
