@@ -3113,6 +3113,7 @@ proc-db/pipetest.c svneol=native#text/plain
 proc-db/platetest.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
+proc-db/sketch.c svneol=native#text/plain
 proc-db/sphflake.c svneol=native#text/plain
 proc-db/spltest.c svneol=native#text/plain
 proc-db/tea.c svneol=native#text/plain
