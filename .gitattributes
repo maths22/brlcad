@@ -686,6 +686,12 @@ html/manuals/mged/tex-html.tcl svneol=native#text/plain
 html/manuals/shaders/Cakefile -text
 html/manuals/shaders/camo.html svneol=native#text/html
 html/manuals/small-eagleCAD.gif -text svneol=unset#image/gif
+html/release-notes/rel2.0.html svneol=native#text/html
+html/release-notes/rel3.0.html svneol=native#text/html
+html/release-notes/rel3.1.html svneol=native#text/html
+html/release-notes/rel4.0.html svneol=native#text/html
+html/release-notes/rel4.4.html svneol=native#text/html
+html/release-notes/rel5.0.html svneol=native#text/html
 iges/Cakefile -text
 iges/add_face.c svneol=native#text/plain
 iges/add_inner_shell.c svneol=native#text/plain
