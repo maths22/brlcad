@@ -4307,6 +4307,7 @@ rt/rtxray.1 svneol=native#text/plain
 rt/scat.h svneol=native#text/plain
 rt/sh_tcl.c svneol=native#text/plain
 rt/shade.c svneol=native#text/plain
+rt/vers.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/viewarea.c svneol=native#text/plain
 rt/viewcell.c svneol=native#text/plain
