@@ -80,6 +80,7 @@ fb/fbgamma.c svneol=native#text/plain
 fb/fbgrid.1 svneol=native#text/plain
 fb/fbgrid.c svneol=native#text/plain
 fb/fbhelp.1 svneol=native#text/plain
+fb/fbhelp.c svneol=native#text/plain
 fb/fblabel.c svneol=native#text/plain
 fb/fbline.1 svneol=native#text/plain
 fb/fbline.c svneol=native#text/plain
