@@ -2527,6 +2527,7 @@ libtcl8.4/mac/tclMacTime.c svneol=native#text/plain
 libtcl8.4/mac/tclMacUnix.c svneol=native#text/plain
 libtcl8.4/mac/tclMacUtil.c svneol=native#text/plain
 libtcl8.4/macosx/Makefile svneol=native#text/plain
+libtcl8.4/macosx/README svneol=native#text/plain
 libtcl8.4/macosx/Tcl.pbproj/project.pbxproj svneol=native#text/plain
 libtcl8.4/macosx/tclMacOSXBundle.c svneol=native#text/plain
 libtcl8.4/tests/README svneol=native#text/plain
