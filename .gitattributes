@@ -1024,7 +1024,6 @@ libbn/vectfont.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
 libbn/wavelet.c svneol=native#text/plain
 libbu/Cakefile -text
-libbu/asize.c svneol=native#text/plain
 libbu/association.c svneol=native#text/plain
 libbu/avs.c svneol=native#text/plain
 libbu/badmagic.c svneol=native#text/plain
