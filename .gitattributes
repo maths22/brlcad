@@ -1,4 +1,5 @@
 * text=auto !eol
+/.cvsignore svneol=native#text/plain
 /Acknowledgements -text
 /Cakefile -text
 /Cakefile.defs -text
