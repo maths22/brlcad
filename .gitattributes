@@ -736,6 +736,7 @@ rt/viewg3.c svneol=native#text/plain
 rt/viewhide.c svneol=native#text/plain
 rt/viewpp.c svneol=native#text/plain
 rt/viewrad.c svneol=native#text/plain
+rt/viewrange.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
 rt/viewscat.c svneol=native#text/plain
 rt/viewxray.c svneol=native#text/plain
