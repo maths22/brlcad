@@ -738,6 +738,7 @@ librt/nurb_plot.c svneol=native#text/plain
 librt/nurb_poly.c svneol=native#text/plain
 librt/nurb_ray.c svneol=native#text/plain
 librt/nurb_refine.c svneol=native#text/plain
+librt/nurb_reverse.c svneol=native#text/plain
 librt/nurb_solve.c svneol=native#text/plain
 librt/nurb_split.c svneol=native#text/plain
 librt/nurb_trim.c svneol=native#text/plain
