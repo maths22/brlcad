@@ -636,6 +636,7 @@ nirt/makefile svneol=native#text/plain
 nirt/nirt.c svneol=native#text/plain
 nirt/nirt.h svneol=native#text/plain
 nirt/parse_fmt.c svneol=native#text/plain
+nirt/showshot.1 svneol=native#text/plain
 nirt/showshot.c svneol=native#text/plain
 nirt/str_manip.c svneol=native#text/plain
 nirt/usrfmt.h svneol=native#text/plain
