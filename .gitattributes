@@ -663,7 +663,9 @@ html/manuals/libdm/index.html svneol=native#text/html
 html/manuals/libdm/preface.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
 html/manuals/librt/Cakefile -text
+html/manuals/librt/contents.html svneol=native#text/html
 html/manuals/librt/dg_obj.html svneol=native#text/html
+html/manuals/librt/index.html svneol=native#text/html
 html/manuals/librt/view_obj.html svneol=native#text/html
 html/manuals/librt/wdb_obj.html svneol=native#text/html
 html/manuals/mged/Cakefile -text
