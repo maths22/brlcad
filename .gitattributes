@@ -4127,7 +4127,6 @@ src/sample_applications/.cvsignore svneol=native#text/plain
 src/sample_applications/Makefile.am svneol=native#text/plain
 src/sample_applications/build_makefile.sh svneol=native#text/x-sh
 src/sample_applications/debug.h svneol=native#text/plain
-src/sample_applications/mk -text
 src/sample_applications/mk.in svneol=native#text/plain
 src/sample_applications/pl-dm.c svneol=native#text/plain
 src/sample_applications/rtexample.c svneol=native#text/plain
