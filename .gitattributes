@@ -712,6 +712,7 @@ rt/shade.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/viewcheck.c svneol=native#text/plain
 rt/viewdummy.c svneol=native#text/plain
+rt/viewfrac.c svneol=native#text/plain
 rt/viewg3.c svneol=native#text/plain
 rt/viewhide.c svneol=native#text/plain
 rt/viewpp.c svneol=native#text/plain
