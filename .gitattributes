@@ -1374,6 +1374,7 @@ src/librt/g_vol.c svneol=native#text/plain
 src/librt/g_xxx.c svneol=native#text/plain
 src/librt/global.c svneol=native#text/plain
 src/librt/htbl.c svneol=native#text/plain
+src/librt/importFg4Section.c svneol=native#text/plain
 src/librt/librt.3 svneol=native#text/plain
 src/librt/librt.dsp -text svneol=CRLF#text/plain
 src/librt/librt.dsw -text svneol=CRLF#text/plain
