@@ -920,6 +920,12 @@ libsysv/strchr.c svneol=native#text/plain
 libsysv/utils.h svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
+libtkGLX/makedescnames.sh svneol=native#text/x-sh
+libtkGLX/patchlevel.h svneol=native#text/plain
+libtkGLX/tkGLX.h svneol=native#text/plain
+libtkGLX/tkGLXCmds.c svneol=native#text/plain
+libtkGLX/tkGLXInit.c svneol=native#text/plain
+libtkGLX/tkGLXwin.c svneol=native#text/plain
 libutahrle/Cakefile -text
 libutahrle/Runput.c svneol=native#text/plain
 libutahrle/bstring.c svneol=native#text/plain
