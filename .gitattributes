@@ -4081,6 +4081,7 @@ notes/regression/d-a.txt svneol=native#text/plain
 notes/regression/pix-png.sh svneol=native#text/x-sh
 notes/regression/png-pix.sh svneol=native#text/x-sh
 notes/regression/png-pix.txt svneol=native#text/plain
+notes/regression/regression.sh svneol=native#text/x-sh
 notes/regression/template.sh svneol=native#text/x-sh
 notes/regression/testascii.txt svneol=native#text/plain
 notes/regression/testasciidouble.txt svneol=native#text/plain
