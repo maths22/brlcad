@@ -4122,6 +4122,7 @@ src/rt/viewsil.c svneol=native#text/plain
 src/rt/viewweight.c svneol=native#text/plain
 src/rt/viewxray.c svneol=native#text/plain
 src/rt/worker.c svneol=native#text/plain
+src/rttherm/Makefile.am svneol=native#text/plain
 src/rttherm/pixtest.c svneol=native#text/plain
 src/rttherm/rttherm.1 svneol=native#text/plain
 src/rttherm/spectrum.c svneol=native#text/plain
