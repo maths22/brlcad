@@ -4441,6 +4441,7 @@ tclscripts/mged/l_i1_v1_s6.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s7.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s8.gif -text svneol=unset#image/gif
 tclscripts/mged/l_i1_v1_s9.gif -text svneol=unset#image/gif
+tclscripts/mged/lgt_mat.tcl svneol=native#text/plain
 tclscripts/mged/list.tcl svneol=native#text/plain
 tclscripts/mged/make_solid.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
