@@ -402,6 +402,7 @@ fbed/try.h svneol=native#text/plain
 fbserv/Cakefile -text
 fbserv/fbserv.1 svneol=native#text/plain
 fbserv/fbserv.c svneol=native#text/plain
+g_lint/g_lint.c svneol=native#text/plain
 /gen.sh svneol=native#text/x-sh
 h/Cakefile -text
 h/XtndRunsv.h svneol=native#text/plain
