@@ -1550,6 +1550,7 @@ tclscripts/mged/openw.tcl svneol=native#text/plain
 tclscripts/mged/plot.tcl svneol=native#text/plain
 tclscripts/mged/ps.tcl svneol=native#text/plain
 tclscripts/mged/qray.tcl svneol=native#text/plain
+tclscripts/mged/ray.tcl svneol=native#text/plain
 tclscripts/mged/raypick.tcl svneol=native#text/plain
 tclscripts/mged/red.tcl svneol=native#text/plain
 tclscripts/mged/rt.tcl svneol=native#text/plain
