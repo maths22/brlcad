@@ -8,17 +8,7 @@ bench/*.pix.*
 bench/.cvsignore
 /config.*
 doc/html/manuals/mged/mged_cmd_index.html
-libbn/vers.c
-libbu/vers.c
-libdm/vers.c
-libfb/vers.c
-libmultispectral/vers.c
-liboptical/vers.c
-libpkg/vers.c
 librt/vers.c
-libsysv/vers.c
-libtermio/vers.c
-libwdb/vers.c
 src/libbn/vers.c
 src/libbu/vers.c
 src/libdm/vers.c
