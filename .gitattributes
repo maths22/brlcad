@@ -247,6 +247,7 @@ lgt/tree.h svneol=native#text/plain
 lgt/trie.c svneol=native#text/plain
 lgt/vecmath.h svneol=native#text/plain
 libbn/axis.c svneol=native#text/plain
+libbn/const.c svneol=native#text/plain
 libbn/fortran.c svneol=native#text/plain
 libbn/htester.c svneol=native#text/plain
 libbn/list.c svneol=native#text/plain
@@ -316,6 +317,7 @@ librt/Cakefile -text
 librt/anim.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
 librt/cmd.c svneol=native#text/plain
+librt/const.c svneol=native#text/plain
 librt/cut.c svneol=native#text/plain
 librt/db_alloc.c svneol=native#text/plain
 librt/db_anim.c svneol=native#text/plain
