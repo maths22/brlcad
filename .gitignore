@@ -7,6 +7,7 @@ bench/*.log
 bench/*.log.*
 bench/*.pix
 bench/*.pix.*
+bench/pixcmp
 /brlcad.spec
 /config.*
 /configure
