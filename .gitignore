@@ -84,6 +84,7 @@ src/anim/anim_turn
 src/anim/chan_add
 src/anim/chan_mult
 src/anim/chan_permute
+src/burst/burst
 src/conv/.deps
 src/conv/.libs
 src/conv/Makefile

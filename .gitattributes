@@ -635,6 +635,7 @@ src/brlman/Makefile.am svneol=native#text/plain
 src/brlman/awf -text
 src/brlman/brlman -text
 src/brlman/brlman.1 svneol=native#text/plain
+src/burst/.cvsignore svneol=native#text/plain
 src/burst/Hm.c svneol=native#text/plain
 src/burst/Hm.h svneol=native#text/plain
 src/burst/HmGetc.c svneol=native#text/plain
