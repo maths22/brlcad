@@ -1518,6 +1518,7 @@ libbu/rb_order_stats.c svneol=native#text/plain
 libbu/rb_rotate.c svneol=native#text/plain
 libbu/rb_search.c svneol=native#text/plain
 libbu/rb_walk.c svneol=native#text/plain
+libbu/redblack.3 svneol=native#text/plain
 libbu/semaphore.c svneol=native#text/plain
 libbu/units.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
