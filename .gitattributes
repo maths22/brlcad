@@ -1439,6 +1439,7 @@ src/librt/wdb_comb_std.c svneol=native#text/plain
 src/librt/wdb_obj.c svneol=native#text/plain
 src/librtserver/Makefile.am svneol=native#text/plain
 src/librtserver/rtserver.c svneol=native#text/plain
+src/librtserver/rtserverTest.c svneol=native#text/plain
 src/libsysv/.cvsignore svneol=native#text/plain
 src/libsysv/Makefile.am svneol=native#text/plain
 src/libsysv/bsdselect.c svneol=native#text/plain
