@@ -3116,7 +3116,6 @@ proc-db/pickett_fence.1 svneol=native#text/plain
 proc-db/pickett_fence.c svneol=native#text/plain
 proc-db/pipe.c svneol=native#text/plain
 proc-db/pipetest.c svneol=native#text/plain
-proc-db/platetest.c svneol=native#text/plain
 proc-db/pyramid.c svneol=native#text/plain
 proc-db/room.c svneol=native#text/plain
 proc-db/sketch.c svneol=native#text/plain
