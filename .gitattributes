@@ -67,6 +67,7 @@ libfb/fb_generic.c svneol=native#text/plain
 libfb/fb_log.c svneol=native#text/plain
 libfb/fb_paged_io.c svneol=native#text/plain
 libfb/fblocal.h svneol=native#text/plain
+libfb/getput.c svneol=native#text/plain
 libfb/if_TEMPLATE.c svneol=native#text/plain
 libfb/if_adage.c svneol=native#text/plain
 libfb/if_debug.c svneol=native#text/plain
