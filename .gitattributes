@@ -492,6 +492,7 @@ h/vectfont.h svneol=native#text/plain
 h/vfont-if.h svneol=native#text/plain
 h/vmath.h svneol=native#text/plain
 h/wdb.h svneol=native#text/plain
+h/zconf.h svneol=native#text/plain
 h/zlib.h svneol=native#text/plain
 halftone/Cakefile -text
 halftone/halftone.1 svneol=native#text/plain
