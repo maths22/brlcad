@@ -2086,6 +2086,7 @@ libpng/scripts/zlibdll.mak -text
 librt/Cakefile -text
 librt/bezier_2d_isect.c svneol=native#text/plain
 librt/bigE.c svneol=native#text/plain
+librt/binary_obj.c svneol=native#text/plain
 librt/bomb.c svneol=native#text/plain
 librt/bool.c svneol=native#text/plain
 librt/bundle.c svneol=native#text/plain
