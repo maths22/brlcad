@@ -3283,6 +3283,7 @@ tclscripts/helplib.tcl svneol=native#text/plain
 tclscripts/hoc.tcl svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
 tclscripts/lib/Cakefile -text
+tclscripts/lib/Command.tcl svneol=native#text/plain
 tclscripts/lib/Database.tcl svneol=native#text/plain
 tclscripts/lib/Display.tcl svneol=native#text/plain
 tclscripts/lib/Mged.tcl svneol=native#text/plain
