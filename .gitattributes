@@ -809,6 +809,16 @@ mged/vld_std.h svneol=native#text/plain
 mged/vrlink.c svneol=native#text/plain
 mk/mk_bolt.1 svneol=native#text/plain
 mk/mk_bolt.c svneol=native#text/plain
+mk/mk_gastank.1 svneol=native#text/plain
+mk/mk_gastank.c svneol=native#text/plain
+mk/mk_handle.1 svneol=native#text/plain
+mk/mk_handle.c svneol=native#text/plain
+mk/mk_window.1 svneol=native#text/plain
+mk/mk_window.c svneol=native#text/plain
+mk/mk_winfrm.1 svneol=native#text/plain
+mk/mk_winfrm.c svneol=native#text/plain
+mk/mk_wire.1 svneol=native#text/plain
+mk/mk_wire.c svneol=native#text/plain
 /mtype.sh svneol=native#text/x-sh
 /newbindir.sh svneol=native#text/x-sh
 nirt/Cakefile -text
