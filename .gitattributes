@@ -450,6 +450,7 @@ h/forms.h svneol=native#text/plain
 h/itcl.h svneol=native#text/plain
 h/itclInt.h svneol=native#text/plain
 h/itk.h svneol=native#text/plain
+h/libtermio.h svneol=native#text/plain
 h/machine.h svneol=native#text/plain
 h/mater.h svneol=native#text/plain
 h/msr.h svneol=native#text/plain
