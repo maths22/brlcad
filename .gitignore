@@ -32,3 +32,8 @@
 /.util.*
 /.vas4.*
 /.vdeck.*
+tclscripts/lib/tclIndex
+tclscripts/mged/tclIndex
+tclscripts/pl-dm/tclIndex
+tclscripts/tclIndex
+tclscripts/util/tclIndex

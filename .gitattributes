@@ -3273,6 +3273,7 @@ tab/tabsub.1 svneol=native#text/plain
 tab/tabsub.c svneol=native#text/plain
 tab/tokens.h svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
+tclscripts/.cvsignore svneol=native#text/plain
 tclscripts/Cakefile -text
 tclscripts/README svneol=native#text/plain
 tclscripts/ami.tcl svneol=native#text/plain
@@ -3284,6 +3285,7 @@ tclscripts/helpcomm.tcl svneol=native#text/plain
 tclscripts/helplib.tcl svneol=native#text/plain
 tclscripts/hoc.tcl svneol=native#text/plain
 tclscripts/html_library.tcl svneol=native#text/plain
+tclscripts/lib/.cvsignore svneol=native#text/plain
 tclscripts/lib/Cakefile -text
 tclscripts/lib/Command.tcl svneol=native#text/plain
 tclscripts/lib/Database.tcl svneol=native#text/plain
@@ -3297,6 +3299,7 @@ tclscripts/lib/Splash.tcl svneol=native#text/plain
 tclscripts/lib/View.tcl svneol=native#text/plain
 tclscripts/libdm.tcl svneol=native#text/plain
 tclscripts/menu_override.tcl svneol=native#text/plain
+tclscripts/mged/.cvsignore svneol=native#text/plain
 tclscripts/mged/Cakefile -text
 tclscripts/mged/adc.tcl svneol=native#text/plain
 tclscripts/mged/anim.tcl svneol=native#text/plain
@@ -3352,10 +3355,12 @@ tclscripts/mged/text.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/nirt/Cakefile -text
 tclscripts/nirt/prototype.sh svneol=native#text/x-sh
+tclscripts/pl-dm/.cvsignore svneol=native#text/plain
 tclscripts/pl-dm/Cakefile -text
 tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
+tclscripts/util/.cvsignore svneol=native#text/plain
 tclscripts/util/Cakefile -text
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 tclscripts/util/luniq.tcl svneol=native#text/plain
