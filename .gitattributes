@@ -3125,7 +3125,6 @@ mged/dm-glx.c svneol=native#text/plain
 mged/dm-hp.c svneol=native#text/plain
 mged/dm-mer.c svneol=native#text/plain
 mged/dm-ogl.c svneol=native#text/plain
-mged/dm-ogl2.c svneol=native#text/plain
 mged/dm-pex.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
 mged/dm-ps.c svneol=native#text/plain
