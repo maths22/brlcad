@@ -203,6 +203,7 @@ rt/material.c svneol=native#text/plain
 rt/material.h svneol=native#text/plain
 rt/mathtab.c svneol=native#text/plain
 rt/mathtab.h svneol=native#text/plain
+rt/rdebug.h svneol=native#text/plain
 rt/rt.1 svneol=native#text/plain
 rt/rtpp.1 svneol=native#text/plain
 rt/rtray.1 svneol=native#text/plain
