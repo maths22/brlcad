@@ -3,44 +3,36 @@
 #  @(#)$Header$ (BRL)
 
 # Ensure /bin/sh
-export PATH || (echo "This isn't sh."; sh $0 $*; kill $$)
+export PATH || (echo "This isn't sh.  Feeding myself to sh."; sh $0 $*; kill $$)
 
-eval `machinetype.sh -b`	# sets MACHINE, UNIXTYPE, HAS_TCP
-if test -f ../.util.$MACHINE/pixdiff
+MTYPE=`machinetype.sh`
+if test -f ../.util.$MTYPE/pixdiff
 then
-	PIXDIFF=../.util.$MACHINE/pixdiff
-	PIX_FB=../.util.$MACHINE/pix-fb
+	UTIL=../.util.$MTYPE
 else
 	if test -f ../util/pixdiff
 	then
-		PIXDIFF=../util/pixdiff
-		PIX_FB=../util/pix-fb
+		UTIL=../util
 	else
 		echo "Can't find pixdiff"
 		exit 1
 	fi
 fi
 
-# Alliant NFS hack
-if test x${MACHINE} = xfx
-then
-	cp ${PIXDIFF} /tmp/pixdiff
-	cp ${PIX_FB} /tmp/pix-fb
-	PIXDIFF=/tmp/pixdiff
-	PIX_FB=/tmp/pix-fb
-fi
+echo moss.pix
+$UTIL/pixdiff ../pix/moss.pix moss.pix | $UTIL/pix-fb
+echo
+echo
 
-echo +++++ moss.pix
-${PIXDIFF} ../pix/moss.pix moss.pix | ${PIX_FB}
+echo world.pix
+$UTIL/pixdiff ../pix/world.pix world.pix  | $UTIL/pix-fb
+echo
+echo
 
-echo +++++ world.pix
-${PIXDIFF} ../pix/world.pix world.pix  | ${PIX_FB}
+echo star.pix
+$UTIL/pixdiff ../pix/star.pix star.pix  | $UTIL/pix-fb
+echo
+echo
 
-echo +++++ star.pix
-${PIXDIFF} ../pix/star.pix star.pix  | ${PIX_FB}
-
-echo +++++ bldg391.pix
-${PIXDIFF} ../pix/bldg391.pix bldg391.pix  | ${PIX_FB}
-
-echo +++++ m35.pix
-${PIXDIFF} ../pix/m35.pix m35.pix  | ${PIX_FB}
+echo bldg391.pix
+$UTIL/pixdiff ../pix/bldg391.pix bldg391.pix  | $UTIL/pix-fb

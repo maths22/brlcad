@@ -5,7 +5,6 @@ SHELL=/bin/sh
 
 # -DATT for SystemV, -DBSD for Berkeley, done by machinetype.sh
 #
-# For Apollo, may need to add -Tbsd4.3
 COPTS = -DCAKEDEBUG -DYYDEBUG -DCAREFUL -D`machinetype.sh -a`
 
 BINDIR=/usr/brlcad/bin
@@ -34,8 +33,7 @@ cake:		$(OBJ) $(GOBJ)
 all:		cake lint tags
 
 install:	cake
-		-if test -f $(BINDIR)/cake; then \
-			mv -f $(BINDIR)/cake $(BINDIR)/cake.bak; fi
+		-mv -f $(BINDIR)/cake $(BINDIR)/cake.bak
 		mv cake $(BINDIR)/cake
 
 $(OBJ):		$(HDR)
