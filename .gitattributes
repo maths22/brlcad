@@ -681,7 +681,6 @@ html/manuals/mged/mged.html svneol=native#text/html
 html/manuals/mged/mged1.html svneol=native#text/html
 html/manuals/mged/mged2.html svneol=native#text/html
 html/manuals/mged/mged3.html svneol=native#text/html
-html/manuals/mged/mged_cmd_index.html svneol=native#text/html
 html/manuals/mged/mged_cmds.html svneol=native#text/html
 html/manuals/mged/mged_devel_cmds.html svneol=native#text/html
 html/manuals/mged/mged_env_vars.html svneol=native#text/html
