@@ -340,6 +340,7 @@ librt/shoot.c svneol=native#text/plain
 librt/sqrt.gould.s svneol=native#text/plain
 librt/sqrt.vax.s svneol=native#text/plain
 librt/storage.c svneol=native#text/plain
+librt/table.c svneol=native#text/plain
 librt/timer42.c svneol=native#text/plain
 librt/timer52brl.c svneol=native#text/plain
 librt/timercos.c svneol=native#text/plain
