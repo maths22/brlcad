@@ -3012,13 +3012,6 @@ src/other/libtk/bitmaps/info.bmp -text svneol=unset#image/bmp
 src/other/libtk/bitmaps/questhead.bmp -text svneol=unset#image/bmp
 src/other/libtk/bitmaps/question.bmp -text svneol=unset#image/bmp
 src/other/libtk/bitmaps/warning.bmp -text svneol=unset#image/bmp
-src/other/libtk/build/config.cache -text
-src/other/libtk/build/config.log svneol=native#text/plain
-src/other/libtk/build/config.status -text
-src/other/libtk/build/libtk8.4.dylib -text
-src/other/libtk/build/libtkstub8.4.a -text
-src/other/libtk/build/tkConfig.sh svneol=native#text/x-sh
-src/other/libtk/build/wish -text svneol=unset#unset
 src/other/libtk/changes -text
 src/other/libtk/compat/license.terms svneol=native#text/plain
 src/other/libtk/compat/limits.h svneol=native#text/plain
