@@ -2709,10 +2709,12 @@ libtcl8.4/tools/uniClass.tcl svneol=native#text/plain
 libtcl8.4/tools/uniParse.tcl svneol=native#text/plain
 libtcl8.4/tools/white.bmp -text svneol=unset#image/bmp
 libtcl8.4/unix/Makefile.am svneol=native#text/plain
+libtcl8.4/unix/Makefile.in svneol=native#text/plain
 libtcl8.4/unix/README svneol=native#text/plain
 libtcl8.4/unix/aclocal.m4 svneol=native#text/plain
 libtcl8.4/unix/configure -text
 libtcl8.4/unix/configure.in svneol=native#text/plain
+libtcl8.4/unix/dltest/Makefile.in svneol=native#text/plain
 libtcl8.4/unix/dltest/README svneol=native#text/plain
 libtcl8.4/unix/dltest/pkga.c svneol=native#text/plain
 libtcl8.4/unix/dltest/pkgb.c svneol=native#text/plain
@@ -3420,6 +3422,7 @@ libtk8.4/tests/winfo.test svneol=native#text/plain
 libtk8.4/tests/wm.test svneol=native#text/plain
 libtk8.4/tests/xmfbox.test svneol=native#text/plain
 libtk8.4/unix/Makefile.am svneol=native#text/plain
+libtk8.4/unix/Makefile.in svneol=native#text/plain
 libtk8.4/unix/README svneol=native#text/plain
 libtk8.4/unix/aclocal.m4 svneol=native#text/plain
 libtk8.4/unix/configure -text
