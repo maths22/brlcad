@@ -3787,6 +3787,7 @@ mged/vparse.c svneol=native#text/plain
 mged/vrlink.c svneol=native#text/plain
 misc/Description.txt svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
+misc/macosx/Resources/License.rtf svneol=native#text/rtf
 misc/macosx/openUp.c svneol=native#text/plain
 mk/Cakefile -text
 mk/mk_bolt.1 svneol=native#text/plain
