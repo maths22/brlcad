@@ -482,6 +482,7 @@ iges/convsurf.c svneol=native#text/plain
 iges/convtree.c svneol=native#text/plain
 iges/copytree.c svneol=native#text/plain
 iges/cyl.c svneol=native#text/plain
+iges/do_subfigs.c svneol=native#text/plain
 iges/docolor.c svneol=native#text/plain
 iges/ell.c svneol=native#text/plain
 iges/evalxform.c svneol=native#text/plain
