@@ -342,6 +342,7 @@ fb/fbfree.1 svneol=native#text/plain
 fb/fbfree.c svneol=native#text/plain
 fb/fbgamma.1 svneol=native#text/plain
 fb/fbgamma.c svneol=native#text/plain
+fb/fbgammamod.c svneol=native#text/plain
 fb/fbgrid.1 svneol=native#text/plain
 fb/fbgrid.c svneol=native#text/plain
 fb/fbhelp.1 svneol=native#text/plain
