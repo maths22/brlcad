@@ -136,6 +136,7 @@ conv/dbclean.1 svneol=native#text/plain
 conv/dbclean.sh svneol=native#text/x-sh
 conv/dxf-g.c svneol=native#text/plain
 conv/euclid-g.c svneol=native#text/plain
+conv/g-euclid.c svneol=native#text/plain
 conv/g-tankill.c svneol=native#text/plain
 conv/g2asc.1 svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
