@@ -981,12 +981,14 @@ util/pl-X.c svneol=native#text/plain
 util/pl-X10.1.stub -text
 util/pl-X10.c svneol=native#text/plain
 util/pl-asc.c svneol=native#text/plain
+util/pl-hpgl.c svneol=native#text/plain
 util/pl-pl.1 svneol=native#text/plain
 util/pl-pl.c svneol=native#text/plain
 util/pl-ps.1 svneol=native#text/plain
 util/pl-ps.c svneol=native#text/plain
 util/pl-sgi.1 svneol=native#text/plain
 util/pl-sgi.c svneol=native#text/plain
+util/pl-starbase.c svneol=native#text/plain
 util/plcolor.1 svneol=native#text/plain
 util/plcolor.c svneol=native#text/plain
 util/pldebug.1 svneol=native#text/plain
