@@ -1033,6 +1033,7 @@ proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
 remrt/Cakefile -text
 remrt/protocol.h svneol=native#text/plain
+remrt/remrt.1 svneol=native#text/plain
 remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 rt/Cakefile -text
