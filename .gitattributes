@@ -2190,6 +2190,12 @@ libz/amiga/Makefile.pup svneol=native#text/plain
 libz/amiga/Makefile.sas svneol=native#text/plain
 libz/compress.c svneol=native#text/plain
 libz/configure -text
+libz/contrib/asm386/gvmat32.asm -text
+libz/contrib/asm386/gvmat32c.c svneol=native#text/plain
+libz/contrib/asm386/mkgvmt32.bat -text svneol=CRLF#text/plain
+libz/contrib/asm386/zlibvc.def svneol=native#text/plain
+libz/contrib/asm386/zlibvc.dsp -text svneol=CRLF#text/plain
+libz/contrib/asm386/zlibvc.dsw -text svneol=CRLF#text/plain
 libz/crc32.c svneol=native#text/plain
 libz/deflate.c svneol=native#text/plain
 libz/deflate.h svneol=native#text/plain
