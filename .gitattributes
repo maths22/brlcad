@@ -1618,7 +1618,6 @@ liboptical/sh_fire.c svneol=native#text/plain
 liboptical/sh_gauss.c svneol=native#text/plain
 liboptical/sh_grass.c svneol=native#text/plain
 liboptical/sh_light.c svneol=native#text/plain
-liboptical/sh_marble.c svneol=native#text/plain
 liboptical/sh_noise.c svneol=native#text/plain
 liboptical/sh_plastic.c svneol=native#text/plain
 liboptical/sh_points.c svneol=native#text/plain
