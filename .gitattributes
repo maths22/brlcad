@@ -3543,6 +3543,7 @@ tclscripts/mged/text.tcl svneol=native#text/plain
 tclscripts/mged/titles.tcl svneol=native#text/plain
 tclscripts/nirt/Cakefile -text
 tclscripts/nirt/prototype.sh svneol=native#text/x-sh
+tclscripts/pl-dm/Cakefile -text
 tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 tclscripts/pl-dm/help.tcl svneol=native#text/plain
 tclscripts/pl-dm/menu.tcl svneol=native#text/plain
