@@ -4320,6 +4320,7 @@ sh/pixinfo.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
 sh/ranlib5.sh svneol=native#text/x-sh
+sh/rtwizard -text
 sh/sgisnap.sh svneol=native#text/x-sh
 sh/sharedliblink.sh svneol=native#text/x-sh
 sh/sharedlibvers.sh svneol=native#text/x-sh
