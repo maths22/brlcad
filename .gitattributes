@@ -1133,6 +1133,7 @@ util/bwthresh.1 svneol=native#text/plain
 util/bwthresh.c svneol=native#text/plain
 util/cv.1 svneol=native#text/plain
 util/cv.c svneol=native#text/plain
+util/decimate.c svneol=native#text/plain
 util/dpix-pix.1 svneol=native#text/plain
 util/dpix-pix.c svneol=native#text/plain
 util/dunncolor.1 svneol=native#text/plain
