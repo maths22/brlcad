@@ -3788,6 +3788,8 @@ mged/vrlink.c svneol=native#text/plain
 misc/Description.txt svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
+misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
+misc/macosx/Resources/ReadMe.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
 mk/Cakefile -text
