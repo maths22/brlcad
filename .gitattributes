@@ -637,6 +637,7 @@ librt/nmg_misc.c svneol=native#text/plain
 librt/nmg_mk.c svneol=native#text/plain
 librt/nmg_mod.c svneol=native#text/plain
 librt/nmg_plot.c svneol=native#text/plain
+librt/nmg_visit.c svneol=native#text/plain
 librt/nurb_basis.c svneol=native#text/plain
 librt/nurb_bezier.c svneol=native#text/plain
 librt/nurb_bound.c svneol=native#text/plain
