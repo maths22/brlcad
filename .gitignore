@@ -227,6 +227,8 @@ src/librt/vers.c
 src/libsysv/vers.c
 src/libtermio/vers.c
 src/libwdb/vers.c
+src/off/g-off
+src/off/off-g
 src/other/URToolkit/.deps
 src/other/URToolkit/.libs
 src/other/URToolkit/Makefile
