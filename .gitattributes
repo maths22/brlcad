@@ -277,6 +277,7 @@ fb/fbzoom.1 svneol=native#text/plain
 fb/fbzoom.c svneol=native#text/plain
 fb/gif-fb.1 svneol=native#text/plain
 fb/gif-fb.c svneol=native#text/plain
+fb/gif2fb.1 svneol=native#text/plain
 fb/gif2fb.c svneol=native#text/plain
 fb/orle-fb.1 svneol=native#text/plain
 fb/orle-fb.c svneol=native#text/plain
