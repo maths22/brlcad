@@ -2766,6 +2766,7 @@ pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
 pro-engineer/text/Cakefile -text
+pro-engineer/text/fullhelp/Cakefile -text
 pro-engineer/text/fullhelp/helpfiles.txt svneol=native#text/plain
 pro-engineer/text/fullhelp/proe-brl.hlp -text
 pro-engineer/text/menus/intf_exprt.aux -text
