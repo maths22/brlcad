@@ -485,12 +485,6 @@ include/vmath.h svneol=native#text/plain
 include/wdb.h svneol=native#text/plain
 include/zconf.h svneol=native#text/plain
 include/zlib.h svneol=native#text/plain
-librt/const.c svneol=native#text/plain
-librt/hist.c svneol=native#text/plain
-librt/plane.c svneol=native#text/plain
-librt/polylib.c svneol=native#text/plain
-librt/polyno.h svneol=native#text/plain
-librt/snoise.c svneol=native#text/plain
 misc/.cvsignore svneol=native#text/plain
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
