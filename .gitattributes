@@ -3156,6 +3156,7 @@ proc-db/tea_nmg.c svneol=native#text/plain
 proc-db/terrain.c svneol=native#text/plain
 proc-db/tube.c svneol=native#text/plain
 proc-db/wall.c svneol=native#text/plain
+proc-db/wdb_example.c svneol=native#text/plain
 remrt/Cakefile -text
 remrt/ihost.c svneol=native#text/plain
 remrt/ihost.h svneol=native#text/plain
