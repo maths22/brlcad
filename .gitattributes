@@ -1675,6 +1675,7 @@ src/other/incrTcl/INCOMPATIBLE -text
 src/other/incrTcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/README svneol=native#text/plain
 src/other/incrTcl/TODO svneol=native#text/plain
+src/other/incrTcl/doc/Makefile.am svneol=native#text/plain
 src/other/incrTcl/doc/README svneol=native#text/plain
 src/other/incrTcl/itcl/.cvsignore svneol=native#text/plain
 src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
@@ -1693,6 +1694,7 @@ src/other/incrTcl/itcl/doc/license.terms svneol=native#text/plain
 src/other/incrTcl/itcl/doc/local.n svneol=native#text/plain
 src/other/incrTcl/itcl/doc/man.macros -text
 src/other/incrTcl/itcl/doc/scope.n svneol=native#text/plain
+src/other/incrTcl/itcl/generic/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/generic/itcl.decls svneol=native#text/plain
 src/other/incrTcl/itcl/generic/itcl.h svneol=native#text/plain
 src/other/incrTcl/itcl/generic/itclDecls.h svneol=native#text/plain
@@ -1784,6 +1786,7 @@ src/other/incrTcl/itk/examples/TextDisplay.itk svneol=native#text/plain
 src/other/incrTcl/itk/examples/TextInfo.itk svneol=native#text/plain
 src/other/incrTcl/itk/examples/tclIndex -text
 src/other/incrTcl/itk/examples/viewfile -text
+src/other/incrTcl/itk/generic/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/generic/itk.decls svneol=native#text/plain
 src/other/incrTcl/itk/generic/itk.h svneol=native#text/plain
 src/other/incrTcl/itk/generic/itkDecls.h svneol=native#text/plain
@@ -1830,6 +1833,7 @@ src/other/incrTcl/makefile.bc svneol=native#text/plain
 src/other/incrTcl/makefile.vc svneol=native#text/plain
 src/other/incrTcl/rules.vc -text
 src/other/incrTcl/tcl.m4 svneol=native#text/plain
+src/other/incrTcl/tools/Makefile.am svneol=native#text/plain
 src/other/incrTcl/tools/genStubs.tcl svneol=native#text/plain
 src/other/iwidgets/CHANGES -text
 src/other/iwidgets/ChangeLog svneol=native#text/plain
