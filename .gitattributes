@@ -2843,6 +2843,7 @@ libwdb/id.c svneol=native#text/plain
 libwdb/libwdb.3 svneol=native#text/plain
 libwdb/mater.c svneol=native#text/plain
 libwdb/nmg.c svneol=native#text/plain
+libwdb/nurb.c svneol=native#text/plain
 libwdb/pipe.c svneol=native#text/plain
 libwdb/poly.c svneol=native#text/plain
 libwdb/reg.c svneol=native#text/plain
