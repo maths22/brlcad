@@ -2015,6 +2015,7 @@ libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 libtermio/Cakefile -text
 libtermio/termio.c svneol=native#text/plain
 libtk/Cakefile -text
+libtk/ChangeLog svneol=native#text/plain
 libtk/README svneol=native#text/plain
 libtk/bitmaps/error.bmp -text svneol=unset#image/bmp
 libtk/bitmaps/gray12.bmp -text svneol=unset#image/bmp
@@ -2097,9 +2098,11 @@ libtk/doc/RestrictEv.3 svneol=native#text/plain
 libtk/doc/SetAppName.3 svneol=native#text/plain
 libtk/doc/SetClass.3 svneol=native#text/plain
 libtk/doc/SetGrid.3 svneol=native#text/plain
+libtk/doc/SetOptions.3 svneol=native#text/plain
 libtk/doc/SetVisual.3 svneol=native#text/plain
 libtk/doc/StrictMotif.3 svneol=native#text/plain
 libtk/doc/TextLayout.3 svneol=native#text/plain
+libtk/doc/TkInitStubs.3 svneol=native#text/plain
 libtk/doc/Tk_Init.3 svneol=native#text/plain
 libtk/doc/Tk_Main.3 svneol=native#text/plain
 libtk/doc/WindowId.3 svneol=native#text/plain
@@ -2152,7 +2155,6 @@ libtk/doc/selection.n svneol=native#text/plain
 libtk/doc/send.n svneol=native#text/plain
 libtk/doc/text.n svneol=native#text/plain
 libtk/doc/tk.n svneol=native#text/plain
-libtk/doc/tk4.0.ps -text svneol=unset#application/postscript
 libtk/doc/tkerror.n svneol=native#text/plain
 libtk/doc/tkvars.n svneol=native#text/plain
 libtk/doc/tkwait.n svneol=native#text/plain
@@ -2164,6 +2166,8 @@ libtk/fix_makefile.sh svneol=native#text/x-sh
 libtk/generic/README svneol=native#text/plain
 libtk/generic/default.h svneol=native#text/plain
 libtk/generic/ks_names.h svneol=native#text/plain
+libtk/generic/prolog.ps -text svneol=unset#application/postscript
+libtk/generic/tk.decls svneol=native#text/plain
 libtk/generic/tk.h svneol=native#text/plain
 libtk/generic/tk3d.c svneol=native#text/plain
 libtk/generic/tk3d.h svneol=native#text/plain
@@ -2191,6 +2195,7 @@ libtk/generic/tkColor.h svneol=native#text/plain
 libtk/generic/tkConfig.c svneol=native#text/plain
 libtk/generic/tkConsole.c svneol=native#text/plain
 libtk/generic/tkCursor.c svneol=native#text/plain
+libtk/generic/tkDecls.h svneol=native#text/plain
 libtk/generic/tkEntry.c svneol=native#text/plain
 libtk/generic/tkError.c svneol=native#text/plain
 libtk/generic/tkEvent.c svneol=native#text/plain
@@ -2212,7 +2217,11 @@ libtk/generic/tkImgPPM.c svneol=native#text/plain
 libtk/generic/tkImgPhoto.c svneol=native#text/plain
 libtk/generic/tkImgUtil.c svneol=native#text/plain
 libtk/generic/tkInitScript.h svneol=native#text/plain
+libtk/generic/tkInt.decls svneol=native#text/plain
 libtk/generic/tkInt.h svneol=native#text/plain
+libtk/generic/tkIntDecls.h svneol=native#text/plain
+libtk/generic/tkIntPlatDecls.h svneol=native#text/plain
+libtk/generic/tkIntXlibDecls.h svneol=native#text/plain
 libtk/generic/tkListbox.c svneol=native#text/plain
 libtk/generic/tkMacWinMenu.c svneol=native#text/plain
 libtk/generic/tkMain.c svneol=native#text/plain
@@ -2222,9 +2231,12 @@ libtk/generic/tkMenuDraw.c svneol=native#text/plain
 libtk/generic/tkMenubutton.c svneol=native#text/plain
 libtk/generic/tkMenubutton.h svneol=native#text/plain
 libtk/generic/tkMessage.c svneol=native#text/plain
+libtk/generic/tkObj.c svneol=native#text/plain
+libtk/generic/tkOldConfig.c svneol=native#text/plain
 libtk/generic/tkOption.c svneol=native#text/plain
 libtk/generic/tkPack.c svneol=native#text/plain
 libtk/generic/tkPlace.c svneol=native#text/plain
+libtk/generic/tkPlatDecls.h svneol=native#text/plain
 libtk/generic/tkPointer.c svneol=native#text/plain
 libtk/generic/tkPort.h svneol=native#text/plain
 libtk/generic/tkRectOval.c svneol=native#text/plain
@@ -2235,6 +2247,8 @@ libtk/generic/tkScrollbar.h svneol=native#text/plain
 libtk/generic/tkSelect.c svneol=native#text/plain
 libtk/generic/tkSelect.h svneol=native#text/plain
 libtk/generic/tkSquare.c svneol=native#text/plain
+libtk/generic/tkStubInit.c svneol=native#text/plain
+libtk/generic/tkStubLib.c svneol=native#text/plain
 libtk/generic/tkTest.c svneol=native#text/plain
 libtk/generic/tkText.c svneol=native#text/plain
 libtk/generic/tkText.h svneol=native#text/plain
@@ -2317,15 +2331,18 @@ libtk/library/dialog.tcl svneol=native#text/plain
 libtk/library/entry.tcl svneol=native#text/plain
 libtk/library/focus.tcl svneol=native#text/plain
 libtk/library/images/README svneol=native#text/plain
+libtk/library/images/logo.eps -text svneol=unset#application/postscript
 libtk/library/images/logo100.gif -text svneol=unset#image/gif
 libtk/library/images/logo64.gif -text svneol=unset#image/gif
 libtk/library/images/logoLarge.gif -text svneol=unset#image/gif
 libtk/library/images/logoMed.gif -text svneol=unset#image/gif
+libtk/library/images/pwrdLogo.eps -text svneol=unset#application/postscript
 libtk/library/images/pwrdLogo100.gif -text svneol=unset#image/gif
 libtk/library/images/pwrdLogo150.gif -text svneol=unset#image/gif
 libtk/library/images/pwrdLogo175.gif -text svneol=unset#image/gif
 libtk/library/images/pwrdLogo200.gif -text svneol=unset#image/gif
 libtk/library/images/pwrdLogo75.gif -text svneol=unset#image/gif
+libtk/library/images/tai-ku.gif -text svneol=unset#image/gif
 libtk/library/license.terms svneol=native#text/plain
 libtk/library/listbox.tcl svneol=native#text/plain
 libtk/library/menu.tcl svneol=native#text/plain
@@ -2333,7 +2350,6 @@ libtk/library/msgbox.tcl svneol=native#text/plain
 libtk/library/obsolete.tcl svneol=native#text/plain
 libtk/library/optMenu.tcl svneol=native#text/plain
 libtk/library/palette.tcl svneol=native#text/plain
-libtk/library/prolog.ps -text svneol=unset#application/postscript
 libtk/library/safetk.tcl svneol=native#text/plain
 libtk/library/scale.tcl svneol=native#text/plain
 libtk/library/scrlbar.tcl svneol=native#text/plain
@@ -2356,6 +2372,7 @@ libtk/mac/tkMacBitmap.c svneol=native#text/plain
 libtk/mac/tkMacButton.c svneol=native#text/plain
 libtk/mac/tkMacClipboard.c svneol=native#text/plain
 libtk/mac/tkMacColor.c svneol=native#text/plain
+libtk/mac/tkMacConfig.c svneol=native#text/plain
 libtk/mac/tkMacCursor.c svneol=native#text/plain
 libtk/mac/tkMacCursors.r svneol=native#text/plain
 libtk/mac/tkMacDefault.h svneol=native#text/plain
@@ -2375,8 +2392,7 @@ libtk/mac/tkMacMenu.r svneol=native#text/plain
 libtk/mac/tkMacMenubutton.c svneol=native#text/plain
 libtk/mac/tkMacMenus.c svneol=native#text/plain
 libtk/mac/tkMacPort.h svneol=native#text/plain
-libtk/mac/tkMacProjects.sit.hqx -text svneol=unset#application/mac-binhex40
-libtk/mac/tkMacProlog.c svneol=native#text/plain
+libtk/mac/tkMacProjects.sea.hqx -text svneol=unset#application/mac-binhex40
 libtk/mac/tkMacRegion.c svneol=native#text/plain
 libtk/mac/tkMacResource.r svneol=native#text/plain
 libtk/mac/tkMacScale.c svneol=native#text/plain
@@ -2390,12 +2406,14 @@ libtk/mac/tkMacWm.c svneol=native#text/plain
 libtk/mac/tkMacXCursors.r svneol=native#text/plain
 libtk/mac/tkMacXStubs.c svneol=native#text/plain
 libtk/tests/README svneol=native#text/plain
-libtk/tests/all -text
+libtk/tests/all.tcl svneol=native#text/plain
 libtk/tests/arc.tcl svneol=native#text/plain
 libtk/tests/bell.test svneol=native#text/plain
 libtk/tests/bevel.tcl svneol=native#text/plain
 libtk/tests/bgerror.test svneol=native#text/plain
 libtk/tests/bind.test svneol=native#text/plain
+libtk/tests/bitmap.test svneol=native#text/plain
+libtk/tests/border.test svneol=native#text/plain
 libtk/tests/bugs.tcl svneol=native#text/plain
 libtk/tests/butGeom.tcl svneol=native#text/plain
 libtk/tests/butGeom2.tcl svneol=native#text/plain
@@ -2415,7 +2433,9 @@ libtk/tests/clrpick.test svneol=native#text/plain
 libtk/tests/cmap.tcl svneol=native#text/plain
 libtk/tests/cmds.test svneol=native#text/plain
 libtk/tests/color.test svneol=native#text/plain
-libtk/tests/defs -text
+libtk/tests/config.test svneol=native#text/plain
+libtk/tests/cursor.test svneol=native#text/plain
+libtk/tests/defs.tcl svneol=native#text/plain
 libtk/tests/entry.test svneol=native#text/plain
 libtk/tests/event.test svneol=native#text/plain
 libtk/tests/filebox.test svneol=native#text/plain
@@ -2424,6 +2444,7 @@ libtk/tests/focusTcl.test svneol=native#text/plain
 libtk/tests/font.test svneol=native#text/plain
 libtk/tests/frame.test svneol=native#text/plain
 libtk/tests/geometry.test svneol=native#text/plain
+libtk/tests/get.test svneol=native#text/plain
 libtk/tests/grid.test svneol=native#text/plain
 libtk/tests/id.test svneol=native#text/plain
 libtk/tests/image.test svneol=native#text/plain
@@ -2442,6 +2463,7 @@ libtk/tests/menu.test svneol=native#text/plain
 libtk/tests/menuDraw.test svneol=native#text/plain
 libtk/tests/menubut.test svneol=native#text/plain
 libtk/tests/msgbox.test svneol=native#text/plain
+libtk/tests/obj.test svneol=native#text/plain
 libtk/tests/oldpack.test svneol=native#text/plain
 libtk/tests/option.file1 -text
 libtk/tests/option.file2 -text
@@ -2467,38 +2489,38 @@ libtk/tests/unixButton.test svneol=native#text/plain
 libtk/tests/unixEmbed.test svneol=native#text/plain
 libtk/tests/unixFont.test svneol=native#text/plain
 libtk/tests/unixMenu.test svneol=native#text/plain
+libtk/tests/unixSelect.test svneol=native#text/plain
+libtk/tests/unixSend.test svneol=native#text/plain
 libtk/tests/unixWm.test svneol=native#text/plain
 libtk/tests/util.test svneol=native#text/plain
-libtk/tests/visual -text
 libtk/tests/visual.test svneol=native#text/plain
+libtk/tests/visual_bb.test svneol=native#text/plain
 libtk/tests/winButton.test svneol=native#text/plain
 libtk/tests/winClipboard.test svneol=native#text/plain
+libtk/tests/winDialog.test svneol=native#text/plain
 libtk/tests/winFont.test svneol=native#text/plain
 libtk/tests/winMenu.test svneol=native#text/plain
+libtk/tests/winSend.test svneol=native#text/plain
 libtk/tests/winWm.test svneol=native#text/plain
 libtk/tests/window.test svneol=native#text/plain
 libtk/tests/winfo.test svneol=native#text/plain
-libtk/unix/Makefile svneol=native#text/plain
+libtk/tests/xmfbox.test svneol=native#text/plain
 libtk/unix/Makefile.in svneol=native#text/plain
 libtk/unix/README svneol=native#text/plain
-libtk/unix/config.cache -text
-libtk/unix/config.log svneol=native#text/plain
-libtk/unix/config.status -text
 libtk/unix/configure -text
 libtk/unix/configure.in svneol=native#text/plain
 libtk/unix/install-sh svneol=native#text/plain
 libtk/unix/license.terms svneol=native#text/plain
-libtk/unix/make.out -text
 libtk/unix/mkLinks -text
 libtk/unix/porting.notes -text
 libtk/unix/porting.old -text
 libtk/unix/tkAppInit.c svneol=native#text/plain
-libtk/unix/tkConfig.sh svneol=native#text/x-sh
 libtk/unix/tkConfig.sh.in svneol=native#text/plain
 libtk/unix/tkUnix.c svneol=native#text/plain
 libtk/unix/tkUnix3d.c svneol=native#text/plain
 libtk/unix/tkUnixButton.c svneol=native#text/plain
 libtk/unix/tkUnixColor.c svneol=native#text/plain
+libtk/unix/tkUnixConfig.c svneol=native#text/plain
 libtk/unix/tkUnixCursor.c svneol=native#text/plain
 libtk/unix/tkUnixDefault.h svneol=native#text/plain
 libtk/unix/tkUnixDialog.c svneol=native#text/plain
@@ -2509,6 +2531,7 @@ libtk/unix/tkUnixFocus.c svneol=native#text/plain
 libtk/unix/tkUnixFont.c svneol=native#text/plain
 libtk/unix/tkUnixInit.c svneol=native#text/plain
 libtk/unix/tkUnixInt.h svneol=native#text/plain
+libtk/unix/tkUnixKey.c svneol=native#text/plain
 libtk/unix/tkUnixMenu.c svneol=native#text/plain
 libtk/unix/tkUnixMenubu.c svneol=native#text/plain
 libtk/unix/tkUnixPort.h svneol=native#text/plain
@@ -2518,17 +2541,106 @@ libtk/unix/tkUnixSelect.c svneol=native#text/plain
 libtk/unix/tkUnixSend.c svneol=native#text/plain
 libtk/unix/tkUnixWm.c svneol=native#text/plain
 libtk/unix/tkUnixXId.c svneol=native#text/plain
+libtk/win/Makefile.in svneol=native#text/plain
 libtk/win/README svneol=native#text/plain
+libtk/win/aclocal.m4 svneol=native#text/plain
+libtk/win/configure -text
+libtk/win/configure.in svneol=native#text/plain
 libtk/win/license.terms svneol=native#text/plain
-libtk/win/makefile.bc svneol=native#text/plain
 libtk/win/makefile.vc svneol=native#text/plain
+libtk/win/mkd.bat -text svneol=CRLF#text/plain
+libtk/win/rc/buttons.bmp -text svneol=unset#image/bmp
+libtk/win/rc/cursor00.cur -text
+libtk/win/rc/cursor02.cur -text
+libtk/win/rc/cursor04.cur -text
+libtk/win/rc/cursor06.cur -text
+libtk/win/rc/cursor08.cur -text
+libtk/win/rc/cursor0a.cur -text
+libtk/win/rc/cursor0c.cur -text
+libtk/win/rc/cursor0e.cur -text
+libtk/win/rc/cursor10.cur -text
+libtk/win/rc/cursor12.cur -text
+libtk/win/rc/cursor14.cur -text
+libtk/win/rc/cursor16.cur -text
+libtk/win/rc/cursor18.cur -text
+libtk/win/rc/cursor1a.cur -text
+libtk/win/rc/cursor1c.cur -text
+libtk/win/rc/cursor1e.cur -text
+libtk/win/rc/cursor20.cur -text
+libtk/win/rc/cursor22.cur -text
+libtk/win/rc/cursor24.cur -text
+libtk/win/rc/cursor26.cur -text
+libtk/win/rc/cursor28.cur -text
+libtk/win/rc/cursor2a.cur -text
+libtk/win/rc/cursor2c.cur -text
+libtk/win/rc/cursor2e.cur -text
+libtk/win/rc/cursor30.cur -text
+libtk/win/rc/cursor32.cur -text
+libtk/win/rc/cursor34.cur -text
+libtk/win/rc/cursor36.cur -text
+libtk/win/rc/cursor38.cur -text
+libtk/win/rc/cursor3a.cur -text
+libtk/win/rc/cursor3c.cur -text
+libtk/win/rc/cursor3e.cur -text
+libtk/win/rc/cursor40.cur -text
+libtk/win/rc/cursor42.cur -text
+libtk/win/rc/cursor44.cur -text
+libtk/win/rc/cursor46.cur -text
+libtk/win/rc/cursor48.cur -text
+libtk/win/rc/cursor4a.cur -text
+libtk/win/rc/cursor4c.cur -text
+libtk/win/rc/cursor4e.cur -text
+libtk/win/rc/cursor50.cur -text
+libtk/win/rc/cursor52.cur -text
+libtk/win/rc/cursor54.cur -text
+libtk/win/rc/cursor56.cur -text
+libtk/win/rc/cursor58.cur -text
+libtk/win/rc/cursor5a.cur -text
+libtk/win/rc/cursor5c.cur -text
+libtk/win/rc/cursor5e.cur -text
+libtk/win/rc/cursor60.cur -text
+libtk/win/rc/cursor62.cur -text
+libtk/win/rc/cursor64.cur -text
+libtk/win/rc/cursor66.cur -text
+libtk/win/rc/cursor68.cur -text
+libtk/win/rc/cursor6a.cur -text
+libtk/win/rc/cursor6c.cur -text
+libtk/win/rc/cursor6e.cur -text
+libtk/win/rc/cursor70.cur -text
+libtk/win/rc/cursor72.cur -text
+libtk/win/rc/cursor74.cur -text
+libtk/win/rc/cursor76.cur -text
+libtk/win/rc/cursor78.cur -text
+libtk/win/rc/cursor7a.cur -text
+libtk/win/rc/cursor7c.cur -text
+libtk/win/rc/cursor7e.cur -text
+libtk/win/rc/cursor80.cur -text
+libtk/win/rc/cursor82.cur -text
+libtk/win/rc/cursor84.cur -text
+libtk/win/rc/cursor86.cur -text
+libtk/win/rc/cursor88.cur -text
+libtk/win/rc/cursor8a.cur -text
+libtk/win/rc/cursor8c.cur -text
+libtk/win/rc/cursor8e.cur -text
+libtk/win/rc/cursor90.cur -text
+libtk/win/rc/cursor92.cur -text
+libtk/win/rc/cursor94.cur -text
+libtk/win/rc/cursor96.cur -text
+libtk/win/rc/cursor98.cur -text
+libtk/win/rc/tk.ico -text svneol=unset#image/x-icon
+libtk/win/rc/tk.rc -text svneol=CRLF#text/plain
+libtk/win/rc/wish.ico -text svneol=unset#image/x-icon
+libtk/win/rc/wish.rc -text svneol=CRLF#text/plain
+libtk/win/rmd.bat -text svneol=CRLF#text/plain
 libtk/win/stubs.c svneol=native#text/plain
+libtk/win/tkConfig.sh.in svneol=native#text/plain
 libtk/win/tkWin.h svneol=native#text/plain
 libtk/win/tkWin32Dll.c svneol=native#text/plain
 libtk/win/tkWin3d.c svneol=native#text/plain
 libtk/win/tkWinButton.c svneol=native#text/plain
 libtk/win/tkWinClipboard.c svneol=native#text/plain
 libtk/win/tkWinColor.c svneol=native#text/plain
+libtk/win/tkWinConfig.c svneol=native#text/plain
 libtk/win/tkWinCursor.c svneol=native#text/plain
 libtk/win/tkWinDefault.h svneol=native#text/plain
 libtk/win/tkWinDialog.c svneol=native#text/plain
@@ -2546,6 +2658,7 @@ libtk/win/tkWinPort.h svneol=native#text/plain
 libtk/win/tkWinRegion.c svneol=native#text/plain
 libtk/win/tkWinScrlbr.c svneol=native#text/plain
 libtk/win/tkWinSend.c svneol=native#text/plain
+libtk/win/tkWinTest.c svneol=native#text/plain
 libtk/win/tkWinWindow.c svneol=native#text/plain
 libtk/win/tkWinWm.c svneol=native#text/plain
 libtk/win/tkWinX.c svneol=native#text/plain
