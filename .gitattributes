@@ -3063,6 +3063,7 @@ pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
 proc-db/Makefile svneol=native#text/plain
 proc-db/apply-mdb.c svneol=native#text/plain
+proc-db/bottest.c svneol=native#text/plain
 proc-db/brickwall.c svneol=native#text/plain
 proc-db/clutter.c svneol=native#text/plain
 proc-db/common.c svneol=native#text/plain
