@@ -124,6 +124,7 @@ fb/bw-fb.1 svneol=native#text/plain
 fb/bw-fb.c svneol=native#text/plain
 fb/cat-fb.1 svneol=native#text/plain
 fb/cat-fb.c svneol=native#text/plain
+fb/cell-fb.1 svneol=native#text/plain
 fb/cell-fb.c svneol=native#text/plain
 fb/cmap-crunch.c svneol=native#text/plain
 fb/cmap-fb.1 svneol=native#text/plain
