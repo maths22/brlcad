@@ -1021,6 +1021,7 @@ libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
 libdm/Cakefile -text
 libdm/clip.c svneol=native#text/plain
+libdm/cmd.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
 libdm/dm-Null.c svneol=native#text/plain
 libdm/dm-X.c svneol=native#text/plain
