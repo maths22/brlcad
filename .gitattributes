@@ -1,4 +1,5 @@
 * text=auto !eol
+h/raytrace.h svneol=native#text/plain
 jove/Makefile svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
 jove/jove.h svneol=native#text/plain
@@ -21,3 +22,11 @@ jove/jove_temp.h svneol=native#text/plain
 jove/jove_term.c svneol=native#text/plain
 jove/jove_wind.c svneol=native#text/plain
 jove/termcap.h svneol=native#text/plain
+libbn/mat.c svneol=native#text/plain
+librt/debug.h svneol=native#text/plain
+librt/g_arb.c svneol=native#text/plain
+librt/g_ell.c svneol=native#text/plain
+librt/mat.c svneol=native#text/plain
+librt/tree.c svneol=native#text/plain
+rt/main.c svneol=native#text/plain
+rt/view.c svneol=native#text/plain
