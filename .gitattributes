@@ -3704,6 +3704,7 @@ libutahrle/scanargs.c svneol=native#text/plain
 libutahrle/vaxshort.c svneol=native#text/plain
 libutahrle/vers.c svneol=native#text/plain
 libwdb/Cakefile -text
+libwdb/Makefile.am svneol=native#text/plain
 libwdb/arbn.c svneol=native#text/plain
 libwdb/ars.c svneol=native#text/plain
 libwdb/bot.c svneol=native#text/plain
@@ -3728,7 +3729,6 @@ libwdb/skt.c svneol=native#text/plain
 libwdb/spl.c svneol=native#text/plain
 libwdb/strsol.c svneol=native#text/plain
 libwdb/units.c svneol=native#text/plain
-libwdb/vers.c svneol=native#text/plain
 libwdb/wdb.c svneol=native#text/plain
 libz/Cakefile -text
 libz/ChangeLog svneol=native#text/plain
