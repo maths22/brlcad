@@ -4705,6 +4705,7 @@ src/util/pl-X10.1.stub -text
 src/util/pl-X10.c svneol=native#text/plain
 src/util/pl-asc.1 svneol=native#text/plain
 src/util/pl-asc.c svneol=native#text/plain
+src/util/pl-dm.c svneol=native#text/plain
 src/util/pl-hpgl.1 svneol=native#text/plain
 src/util/pl-hpgl.c svneol=native#text/plain
 src/util/pl-pl.1 svneol=native#text/plain
