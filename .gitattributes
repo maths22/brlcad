@@ -20,6 +20,7 @@ burst/Cakefile -text
 burst/Mm.h svneol=native#text/plain
 burst/ascii.h svneol=native#text/plain
 burst/burst.c svneol=native#text/plain
+burst/burst.format -text
 burst/burst.h svneol=native#text/plain
 burst/error.c svneol=native#text/plain
 burst/extern.h svneol=native#text/plain
