@@ -2761,6 +2761,7 @@ pix/star.pix -text svneol=unset#image/x-rgb
 pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
+pro-engineer/Cakefile -text
 pro-engineer/install.doc svneol=native#text/plain
 pro-engineer/proe-brl.c svneol=native#text/plain
 pro-engineer/protk.dat -text
