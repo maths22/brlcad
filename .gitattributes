@@ -4321,7 +4321,6 @@ sh/pixinfo.sh svneol=native#text/x-sh
 sh/pixread.sh svneol=native#text/x-sh
 sh/pixwrite.sh svneol=native#text/x-sh
 sh/ranlib5.sh svneol=native#text/x-sh
-sh/rtwizard -text
 sh/sgisnap.sh svneol=native#text/x-sh
 sh/sharedliblink.sh svneol=native#text/x-sh
 sh/sharedlibvers.sh svneol=native#text/x-sh
@@ -4943,6 +4942,7 @@ util/query.c svneol=native#text/plain
 util/remapid.c svneol=native#text/plain
 util/rle-pix.1 svneol=native#text/plain
 util/rle-pix.c svneol=native#text/plain
+util/rtwizard -text
 util/sgi-pix.c svneol=native#text/plain
 util/strchr.c svneol=native#text/plain
 util/strdup.c svneol=native#text/plain
