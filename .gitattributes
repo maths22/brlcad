@@ -47,6 +47,7 @@ fbed/popup.h svneol=native#text/plain
 fbed/pos_pad.c svneol=native#text/plain
 fbed/prnt.c svneol=native#text/plain
 fbed/squash.c svneol=native#text/plain
+fbed/std.h svneol=native#text/plain
 fbed/try.c svneol=native#text/plain
 fbed/try.h svneol=native#text/plain
 fbserv/fbserv.c svneol=native#text/plain
