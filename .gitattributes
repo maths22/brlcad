@@ -20,6 +20,7 @@ doc/summary-mil.doc svneol=native#text/plain
 doc/tube.doc svneol=native#text/plain
 fb/Cakefile -text
 fb/bw-fb.c svneol=native#text/plain
+fb/cat-fb.c svneol=native#text/plain
 fb/cmap-fb.1 svneol=native#text/plain
 fb/cmap-fb.c svneol=native#text/plain
 fb/fb-bw.c svneol=native#text/plain
