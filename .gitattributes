@@ -4,6 +4,7 @@ conv/asc2pix.c svneol=native#text/plain
 conv/conv-vg2g.c svneol=native#text/plain
 conv/g2asc.c svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
+fb/fb-pix.c svneol=native#text/plain
 fb/fbanim.c svneol=native#text/plain
 fb/pix-fb.c svneol=native#text/plain
 h/db.h svneol=native#text/plain
