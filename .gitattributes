@@ -370,6 +370,7 @@ irprep/subroutines.c svneol=native#text/plain
 jove/Cakefile -text
 jove/Makefile svneol=native#text/plain
 jove/findcom.c svneol=native#text/plain
+jove/jove.1 svneol=native#text/plain
 jove/jove.h svneol=native#text/plain
 jove/jove_buf.c svneol=native#text/plain
 jove/jove_c.c svneol=native#text/plain
