@@ -2953,6 +2953,7 @@ src/other/libtcl/unix/README svneol=native#text/plain
 src/other/libtcl/unix/aclocal.m4 svneol=native#text/plain
 src/other/libtcl/unix/configure -text
 src/other/libtcl/unix/configure.in svneol=native#text/plain
+src/other/libtcl/unix/dltest/Makefile.in svneol=native#text/plain
 src/other/libtcl/unix/dltest/README svneol=native#text/plain
 src/other/libtcl/unix/dltest/pkga.c svneol=native#text/plain
 src/other/libtcl/unix/dltest/pkgb.c svneol=native#text/plain
