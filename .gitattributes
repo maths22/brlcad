@@ -646,6 +646,7 @@ html/manuals/libdm/index.html svneol=native#text/html
 html/manuals/libdm/preface.html svneol=native#text/html
 html/manuals/libdm/tcl.html svneol=native#text/html
 html/manuals/librt/dg_obj.html svneol=native#text/html
+html/manuals/librt/wdb_obj.html svneol=native#text/html
 html/manuals/mged/Cakefile -text
 html/manuals/mged/animmate/Cakefile -text
 html/manuals/mged/animmate/anim_cascade.html svneol=native#text/html
