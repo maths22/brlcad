@@ -225,6 +225,7 @@ conv/nmg-rib.c svneol=native#text/plain
 conv/nmg-sgp.c svneol=native#text/plain
 conv/pix2asc.1 svneol=native#text/plain
 conv/pix2asc.c svneol=native#text/plain
+conv/poly-bot.c svneol=native#text/plain
 conv/proe-g.1 svneol=native#text/plain
 conv/proe-g.c svneol=native#text/plain
 conv/stl-g.1 svneol=native#text/plain
