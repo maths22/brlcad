@@ -1560,9 +1560,6 @@ iwidgets4.0.1/win/pkg.vc -text
 jack/Makefile.am svneol=native#text/plain
 jack/g-jack.c svneol=native#text/plain
 jack/jack-g.c svneol=native#text/plain
-java/mil/army/arl/brlcad/BrlcadGeometry.java svneol=native#text/plain
-java/mil/army/arl/brlcad/BrlcadGeometryServer.java svneol=native#text/plain
-java/mil/army/arl/brlcad/Partition.java svneol=native#text/plain
 libbn/.cvsignore svneol=native#text/plain
 libbn/Makefile.am svneol=native#text/plain
 libbn/Makefile.loc svneol=native#text/plain
