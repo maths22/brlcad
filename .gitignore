@@ -260,6 +260,7 @@ src/rt/Makefile
 src/rt/Makefile.in
 src/rt/rt
 src/rt/rt_bot_faces
+src/rt/rt_bot_faces_vers.c
 src/rt/rt_simple
 src/rt/rt_simple_vers.c
 src/rt/rtarea
@@ -270,6 +271,7 @@ src/rt/rtcheck
 src/rt/rtcheck_vers.c
 src/rt/rtedge
 src/rt/rtedge_vers.c
+src/rt/rtexample
 src/rt/rtfrac
 src/rt/rtfrac_vers.c
 src/rt/rtg3
@@ -294,6 +296,7 @@ src/rt/rtweight
 src/rt/rtweight_vers.c
 src/rt/rtxray
 src/rt/rtxray_vers.c
+src/rt/vers.c
 src/rt/version
 src/sig/.deps
 src/sig/.libs
