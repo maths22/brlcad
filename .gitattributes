@@ -223,7 +223,6 @@ conv/viewpoint-g.1 svneol=native#text/plain
 conv/viewpoint-g.c svneol=native#text/plain
 /cvspolicy.txt svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
-db/Makefile.dist svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
 db/boolean-ops.asc svneol=native#text/plain
