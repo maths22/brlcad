@@ -137,6 +137,7 @@ db/moss.asc svneol=native#text/plain
 db/tank_car.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
 doc/Cakefile -text
+doc/agreement -text
 doc/benchmark.doc svneol=native#text/plain
 doc/bw.5 svneol=native#text/plain
 doc/cmap.5 svneol=native#text/plain
@@ -145,6 +146,7 @@ doc/movie.doc svneol=native#text/plain
 doc/pix.5 svneol=native#text/plain
 doc/pkg.doc svneol=native#text/plain
 doc/plot3.5 svneol=native#text/plain
+doc/press-release -text
 doc/regions.doc svneol=native#text/plain
 doc/summary-mil.doc svneol=native#text/plain
 doc/summary.doc svneol=native#text/plain
