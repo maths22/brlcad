@@ -521,6 +521,7 @@ html/manuals/Anim_Tutorial/transboth.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/transboth_sm.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/v_eqn1.gif -text svneol=unset#image/gif
 html/manuals/Anim_Tutorial/v_eqn2.gif -text svneol=unset#image/gif
+html/manuals/Cakefile -text
 html/manuals/Install.html svneol=native#text/html
 html/manuals/Obtain.html svneol=native#text/html
 html/manuals/Overview.html svneol=native#text/html
