@@ -1309,6 +1309,9 @@ iwidgets4.0.1/win/pkg.vc -text
 jack/Cakefile -text
 jack/g-jack.c svneol=native#text/plain
 jack/jack-g.c svneol=native#text/plain
+java/mil/army/arl/brlcad/BrlcadGeometry.java svneol=native#text/plain
+java/mil/army/arl/brlcad/BrlcadGeometryServer.java svneol=native#text/plain
+java/mil/army/arl/brlcad/Partition.java svneol=native#text/plain
 jove/Cakefile -text
 jove/Makefile svneol=native#text/plain
 jove/describe.com.1 svneol=native#text/plain
