@@ -531,6 +531,7 @@ h/tcl.h svneol=native#text/plain
 h/tclDecls.h svneol=native#text/plain
 h/tclInt.h svneol=native#text/plain
 h/tclIntDecls.h svneol=native#text/plain
+h/tclPlatDecls.h svneol=native#text/plain
 h/tk.h svneol=native#text/plain
 h/tkDecls.h svneol=native#text/plain
 h/vectfont.h svneol=native#text/plain
