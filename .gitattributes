@@ -9,6 +9,7 @@ BRL-CAD.pbproj/project.pbxproj svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
+/TODO svneol=native#text/plain
 anim/Makefile.am svneol=native#text/plain
 anim/anim_cascade.1 svneol=native#text/plain
 anim/anim_cascade.c svneol=native#text/plain
