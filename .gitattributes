@@ -139,6 +139,7 @@ lgt/tree.h svneol=native#text/plain
 lgt/trie.c svneol=native#text/plain
 lgt/vecmath.h svneol=native#text/plain
 libbn/axis.c svneol=native#text/plain
+libbn/fortran.c svneol=native#text/plain
 libbn/list.c svneol=native#text/plain
 libbn/log.c svneol=native#text/plain
 libbn/marker.c svneol=native#text/plain
