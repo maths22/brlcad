@@ -52,6 +52,7 @@ mged/chgview.c svneol=native#text/plain
 mged/clip.c svneol=native#text/plain
 mged/cmd.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
+mged/dm-tek.c svneol=native#text/plain
 mged/dodraw.c svneol=native#text/plain
 mged/dozoom.c svneol=native#text/plain
 mged/edarb.c svneol=native#text/plain
