@@ -471,6 +471,7 @@ rt/sh_text.c svneol=native#text/plain
 rt/view.c svneol=native#text/plain
 rt/viewcheck.c svneol=native#text/plain
 rt/viewg3.c svneol=native#text/plain
+rt/viewhide.c svneol=native#text/plain
 rt/viewpp.c svneol=native#text/plain
 rt/viewrad.c svneol=native#text/plain
 rt/viewray.c svneol=native#text/plain
