@@ -576,6 +576,7 @@ html/manuals/mged/bool.ppm -text svneol=unset#image/x-portable-pixmap
 html/manuals/mged/brlcad_glossary.html svneol=native#text/html
 html/manuals/mged/brlcad_solids.html svneol=native#text/html
 html/manuals/mged/bugs svneol=native#text/plain
+html/manuals/mged/build_def_index.sh svneol=native#text/x-sh
 html/manuals/mged/camo_mug.pix -text svneol=unset#image/x-rgb
 html/manuals/mged/cmd_line_ed.html svneol=native#text/html
 html/manuals/mged/concl.html svneol=native#text/html
