@@ -1051,6 +1051,7 @@ libbu/linebuf.c svneol=native#text/plain
 libbu/list.c svneol=native#text/plain
 libbu/log.c svneol=native#text/plain
 libbu/magic.c svneol=native#text/plain
+libbu/makefile.vc svneol=native#text/plain
 libbu/malloc.c svneol=native#text/plain
 libbu/mappedfile.c svneol=native#text/plain
 libbu/memset.c svneol=native#text/plain
