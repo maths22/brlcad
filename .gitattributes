@@ -137,6 +137,7 @@ cakeaux/gsrc.c svneol=native#text/plain
 cakeaux/later.c svneol=native#text/plain
 cakeaux/need.c svneol=native#text/plain
 cakeaux/needed.c svneol=native#text/plain
+cakeaux/pattern_s.l svneol=native#text/plain
 cakeaux/refs.c svneol=native#text/plain
 cakeaux/std.h svneol=native#text/plain
 cakeaux/subcmd.c svneol=native#text/plain
