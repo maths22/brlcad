@@ -2866,6 +2866,7 @@ rttherm/ssampview.tcl svneol=native#text/plain
 rttherm/std_day_1km.dat -text
 rttherm/test.sh svneol=native#text/x-sh
 rttherm/viewtherm.c svneol=native#text/plain
+sample_applications/Cakefile -text
 /setup.sh svneol=native#text/x-sh
 sh/any-png.sh svneol=native#text/x-sh
 sh/brlcad-check.sh svneol=native#text/x-sh
