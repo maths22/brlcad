@@ -1542,6 +1542,7 @@ tclscripts/mged/gui.tcl svneol=native#text/plain
 tclscripts/mged/help.tcl svneol=native#text/plain
 tclscripts/mged/icreate.tcl svneol=native#text/plain
 tclscripts/mged/illum.tcl svneol=native#text/plain
+tclscripts/mged/list.tcl svneol=native#text/plain
 tclscripts/mged/menu.tcl svneol=native#text/plain
 tclscripts/mged/mged.tcl svneol=native#text/plain
 tclscripts/mged/mview.tcl svneol=native#text/plain
