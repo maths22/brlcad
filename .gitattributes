@@ -341,6 +341,7 @@ libbn/sphmap.c svneol=native#text/plain
 libbn/symbol.c svneol=native#text/plain
 libbn/tplot.c svneol=native#text/plain
 libbn/vector.c svneol=native#text/plain
+libbu/convert.c svneol=native#text/plain
 libbu/htond.3 svneol=native#text/plain
 libbu/htond.c svneol=native#text/plain
 libbu/vfont.c svneol=native#text/plain
