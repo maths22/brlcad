@@ -551,6 +551,7 @@ pix/star.pix -text svneol=unset#image/x-rgb
 pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
+regress/Makefile.am svneol=native#text/plain
 regress/shaders.sh svneol=native#text/x-sh
 regress/solids.sh svneol=native#text/x-sh
 regress/spdi.sh svneol=native#text/x-sh
