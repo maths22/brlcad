@@ -52,6 +52,7 @@ fbed/fb_ik.h svneol=native#text/plain
 fbed/fbed.1 svneol=native#text/plain
 fbed/fbed.c svneol=native#text/plain
 fbed/fill_buf.c svneol=native#text/plain
+fbed/font.doc svneol=native#text/plain
 fbed/font.h svneol=native#text/plain
 fbed/getfont.c svneol=native#text/plain
 fbed/getinput.c svneol=native#text/plain
