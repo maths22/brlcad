@@ -2769,6 +2769,7 @@ pro-engineer/text/Cakefile -text
 pro-engineer/text/fullhelp/Cakefile -text
 pro-engineer/text/fullhelp/helpfiles.txt svneol=native#text/plain
 pro-engineer/text/fullhelp/proe-brl.hlp -text
+pro-engineer/text/menus/Cakefile -text
 pro-engineer/text/menus/intf_exprt.aux -text
 pro-engineer/text/usermsg.txt svneol=native#text/plain
 proc-db/Cakefile -text
