@@ -1180,6 +1180,7 @@ mged/ged.c svneol=native#text/plain
 mged/ged.h svneol=native#text/plain
 mged/ged_types.h svneol=native#text/plain
 mged/glxinit.h svneol=native#text/plain
+mged/grid.c svneol=native#text/plain
 mged/hideline.c svneol=native#text/plain
 mged/history.c svneol=native#text/plain
 mged/htmlLibraryUi.h svneol=native#text/plain
