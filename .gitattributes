@@ -1027,6 +1027,7 @@ sig/u-f.c svneol=native#text/plain
 sig/umod.c svneol=native#text/plain
 sig/ustat.c svneol=native#text/plain
 tab/Cakefile -text
+tab/tabinterp.1 svneol=native#text/plain
 tab/tabinterp.c svneol=native#text/plain
 tab/tabsub.c svneol=native#text/plain
 tab/txyz-pl.c svneol=native#text/plain
