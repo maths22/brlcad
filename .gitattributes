@@ -1239,6 +1239,7 @@ util/op-bw.1 svneol=native#text/plain
 util/op-bw.c svneol=native#text/plain
 util/orle-pix.1 svneol=native#text/plain
 util/orle-pix.c svneol=native#text/plain
+util/pcd-pix.c svneol=native#text/plain
 util/pix-alias.1 svneol=native#text/plain
 util/pix-alias.c svneol=native#text/plain
 util/pix-both-ik.c svneol=native#text/plain
