@@ -452,6 +452,7 @@ librt/nmg_inter.c svneol=native#text/plain
 librt/nmg_mesh.c svneol=native#text/plain
 librt/nmg_misc.c svneol=native#text/plain
 librt/nmg_mk.c svneol=native#text/plain
+librt/nmg_mod.c svneol=native#text/plain
 librt/nmg_plot.c svneol=native#text/plain
 librt/parse.c svneol=native#text/plain
 librt/plane.c svneol=native#text/plain
