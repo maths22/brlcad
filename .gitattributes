@@ -776,6 +776,7 @@ mged/overlay.c svneol=native#text/plain
 mged/path.c svneol=native#text/plain
 mged/plot.c svneol=native#text/plain
 mged/polyif.c svneol=native#text/plain
+mged/predictor.c svneol=native#text/plain
 mged/proc_reg.c svneol=native#text/plain
 mged/rtif.c svneol=native#text/plain
 mged/scroll.c svneol=native#text/plain
