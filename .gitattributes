@@ -72,7 +72,6 @@ brlman/awf -text
 brlman/brlman -text
 brlman/brlman.1 svneol=native#text/plain
 btclsh/vers.c svneol=native#text/plain
-burst/Cakefile -text
 burst/Hm.c svneol=native#text/plain
 burst/Hm.h svneol=native#text/plain
 burst/HmGetc.c svneol=native#text/plain
@@ -954,7 +953,6 @@ irprep/shapefact.1 svneol=native#text/plain
 irprep/shapefact.c svneol=native#text/plain
 irprep/subroutines.c svneol=native#text/plain
 iwidgets4.0.1/CHANGES -text
-iwidgets4.0.1/Cakefile -text
 iwidgets4.0.1/ChangeLog svneol=native#text/plain
 iwidgets4.0.1/Makefile.am svneol=native#text/plain
 iwidgets4.0.1/README svneol=native#text/plain
@@ -1455,7 +1453,6 @@ libcursor/cursor.c svneol=native#text/plain
 libcursor/libcursor.3 svneol=native#text/plain
 libcursor/vers.c svneol=native#text/plain
 libdm/.cvsignore svneol=native#text/plain
-libdm/Cakefile -text
 libdm/Makefile.am svneol=native#text/plain
 libdm/clip.c svneol=native#text/plain
 libdm/color.c svneol=native#text/plain
@@ -1531,7 +1528,6 @@ libfb/server.c svneol=native#text/plain
 libfb/sgicursor.h svneol=native#text/plain
 libfb/sgiselect.s svneol=native#text/plain
 libfb/tcl.c svneol=native#text/plain
-libfft/Cakefile -text
 libfft/Makefile.am svneol=native#text/plain
 libfft/complex.h svneol=native#text/plain
 libfft/ditsplit.c svneol=native#text/plain
@@ -1879,7 +1875,6 @@ libpng/scripts/pngdef.pas -text
 libpng/scripts/pngos2.def svneol=native#text/plain
 libpng/scripts/smakefile.ppc -text
 librt/.cvsignore svneol=native#text/plain
-librt/Cakefile -text
 librt/Makefile.am svneol=native#text/plain
 librt/bezier_2d_isect.c svneol=native#text/plain
 librt/bigE.c svneol=native#text/plain
@@ -2045,7 +2040,6 @@ librt/vshoot.c svneol=native#text/plain
 librt/wdb.c svneol=native#text/plain
 librt/wdb_comb_std.c svneol=native#text/plain
 librt/wdb_obj.c svneol=native#text/plain
-librtserver/Cakefile -text
 librtserver/Makefile.am svneol=native#text/plain
 librtserver/rtserver.c svneol=native#text/plain
 libsysv/.cvsignore svneol=native#text/plain
@@ -3698,7 +3692,6 @@ libutahrle/scanargs.c svneol=native#text/plain
 libutahrle/vaxshort.c svneol=native#text/plain
 libutahrle/vers.c svneol=native#text/plain
 libwdb/.cvsignore svneol=native#text/plain
-libwdb/Cakefile -text
 libwdb/Makefile.am svneol=native#text/plain
 libwdb/arbn.c svneol=native#text/plain
 libwdb/ars.c svneol=native#text/plain
@@ -4104,7 +4097,6 @@ remrt/remrt.c svneol=native#text/plain
 remrt/rtsrv.c svneol=native#text/plain
 remrt/vers.c svneol=native#text/plain
 rt/.cvsignore svneol=native#text/plain
-rt/Cakefile -text
 rt/Makefile.am svneol=native#text/plain
 rt/do.c svneol=native#text/plain
 rt/ext.h svneol=native#text/plain
