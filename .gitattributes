@@ -4762,6 +4762,13 @@ tools/unslice.c svneol=native#text/plain
 tools/urt.1 svneol=native#text/plain
 tools/wasatchrle.1 svneol=native#text/plain
 tools/wasatchrle.c svneol=native#text/plain
+unigraphics/Cakefile -text
+unigraphics/conv.h svneol=native#text/plain
+unigraphics/log.h svneol=native#text/plain
+unigraphics/ug-g.1 svneol=native#text/plain
+unigraphics/ug-g.c svneol=native#text/plain
+unigraphics/ug_misc.c svneol=native#text/plain
+unigraphics/ug_misc.h svneol=native#text/plain
 util/Cakefile -text
 util/Makefile svneol=native#text/plain
 util/Makefile.loc svneol=native#text/plain
