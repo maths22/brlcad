@@ -254,7 +254,6 @@ db/wave.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
 db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
-doc/4.4-bugs.doc svneol=native#text/plain
 doc/Makefile.am svneol=native#text/plain
 doc/anim.doc svneol=native#text/plain
 doc/benchmark.doc svneol=native#text/plain
