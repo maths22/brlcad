@@ -3416,8 +3416,6 @@ tclscripts/util/Cakefile -text
 tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 tclscripts/util/luniq.tcl svneol=native#text/plain
 tclscripts/vmath.tcl svneol=native#text/plain
-tk/Cakefile -text
-tk/bwish.c svneol=native#text/plain
 tools/Cakefile -text
 tools/applymap.1 svneol=native#text/plain
 tools/applymap.c svneol=native#text/plain
