@@ -60,6 +60,7 @@ misc/depcomp
 misc/install-sh
 misc/ltmain.sh
 misc/ltmain.sh.backup
+misc/macosx/openUp
 misc/missing
 misc/mkinstalldirs
 src/anim/.deps
