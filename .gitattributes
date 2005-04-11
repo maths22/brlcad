@@ -517,6 +517,7 @@ misc/fortran_example.f svneol=native#text/plain
 misc/libtool.m4 svneol=native#text/plain
 misc/macosx/.cvsignore svneol=native#text/plain
 misc/macosx/Makefile.am svneol=native#text/plain
+misc/macosx/README svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
 misc/macosx/Resources/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
