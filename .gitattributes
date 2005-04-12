@@ -57,6 +57,7 @@ db/woodsman.asc svneol=native#text/plain
 db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
 doc/Makefile.am svneol=native#text/plain
+doc/README.IRIX svneol=native#text/plain
 doc/README.MacOSX svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
