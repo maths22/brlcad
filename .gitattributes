@@ -20,7 +20,6 @@ bench/pretty.sh svneol=native#text/x-sh
 bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
-/brlcad.spec.in svneol=native#text/plain
 /configure.ac svneol=native#text/plain
 db/.cvsignore svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
@@ -503,6 +502,7 @@ misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/Makefile.am svneol=native#text/plain
 misc/batch-indent-region.el -text
+misc/brlcad.spec.in svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
 misc/enigma/Makefile.am svneol=native#text/plain
