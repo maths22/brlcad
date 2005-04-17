@@ -493,6 +493,7 @@ librt/polyno.h svneol=native#text/plain
 librt/snoise.c svneol=native#text/plain
 m4/Makefile.am svneol=native#text/plain
 m4/cache.m4 svneol=native#text/plain
+m4/flags.m4 svneol=native#text/plain
 m4/mkdirp.m4 svneol=native#text/plain
 m4/restore.m4 svneol=native#text/plain
 m4/retry.m4 svneol=native#text/plain
