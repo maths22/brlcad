@@ -380,6 +380,9 @@ src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
 src/other/iwidgets/iwidgets.tcl
 src/other/iwidgets/pkgIndex.tcl
+src/other/jove/findcom
+src/other/jove/jove
+src/other/jove/teach-jove
 src/other/jove/tune.c
 src/other/jove/version.c
 src/other/jove/version.number
