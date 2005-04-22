@@ -8,7 +8,6 @@ bench/*.log.*
 bench/*.pix
 bench/*.pix.*
 bench/pixcmp
-/brlcad.spec
 /config.*
 /configure
 db/Makefile
@@ -54,6 +53,7 @@ misc/COPYING.backup
 misc/INSTALL.backup
 misc/Makefile
 misc/Makefile.in
+misc/brlcad.spec
 misc/compile
 misc/config.guess
 misc/config.guess.backup
