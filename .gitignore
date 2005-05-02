@@ -42,9 +42,9 @@ db/xmp.g
 doc/html/manuals/mged/mged_cmd_index.html
 include/Makefile
 include/Makefile.in
+include/brlcad_config.h
+include/brlcad_config.h.in
 include/brlcad_version.h
-include/config.h
-include/config.h.in
 include/stamp-h1
 include/version
 librt/vers.c
