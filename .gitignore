@@ -7,6 +7,7 @@ bench/*.log
 bench/*.log.*
 bench/*.pix
 bench/*.pix.*
+bench/benchmark
 bench/pixcmp
 /config.*
 /configure
