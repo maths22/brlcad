@@ -621,6 +621,7 @@ src/adrt/doc/ShaderRef.txt svneol=native#text/plain
 src/adrt/doc/binary_spec.txt svneol=native#text/plain
 src/adrt/igvt/Makefile.am svneol=native#text/plain
 src/adrt/igvt/igvt.h svneol=native#text/plain
+src/adrt/igvt/igvt_struct.h svneol=native#text/plain
 src/adrt/igvt/master/Makefile.am svneol=native#text/plain
 src/adrt/igvt/master/SDLMain.h svneol=native#text/plain
 src/adrt/igvt/master/dispatcher.c svneol=native#text/plain
