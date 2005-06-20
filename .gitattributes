@@ -634,6 +634,7 @@ src/adrt/igvt/observer/Makefile.am svneol=native#text/plain
 src/adrt/igvt/observer/main.c svneol=native#text/plain
 src/adrt/igvt/observer/observer.c svneol=native#text/plain
 src/adrt/igvt/observer/observer.h svneol=native#text/plain
+src/adrt/igvt/observer/splash.h svneol=native#text/plain
 src/adrt/igvt/slave/Makefile.am svneol=native#text/plain
 src/adrt/igvt/slave/main.c svneol=native#text/plain
 src/adrt/igvt/slave/slave.c svneol=native#text/plain
