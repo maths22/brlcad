@@ -505,6 +505,7 @@ misc/.cvsignore svneol=native#text/plain
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/Makefile.am svneol=native#text/plain
+misc/Makefile.defs svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad.spec.in svneol=native#text/plain
 misc/cvs2cl.pl svneol=native#text/plain
