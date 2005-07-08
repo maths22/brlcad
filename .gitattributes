@@ -546,6 +546,7 @@ misc/pro-engineer/usermsg.txt svneol=native#text/plain
 misc/vfont/Makefile.am svneol=native#text/plain
 misc/vfont/fix.6r -text svneol=unset#unset
 misc/vfont/nonie.r.12 -text svneol=unset#unset
+misc/win32-msvc/brlcad.dsw -text svneol=CRLF#text/plain
 misc/win32-msvc/vers.vbs svneol=native#text/plain
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
