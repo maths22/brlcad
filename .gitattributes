@@ -1562,7 +1562,6 @@ src/librt/htbl.c svneol=native#text/plain
 src/librt/importFg4Section.c svneol=native#text/plain
 src/librt/librt.3 svneol=native#text/plain
 src/librt/librt.dsp -text svneol=CRLF#text/plain
-src/librt/librt.opt -text svneol=unset#unset
 src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
