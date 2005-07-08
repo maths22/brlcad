@@ -112,6 +112,7 @@ src/conv/euclid_format
 src/conv/euclid_unformat
 src/conv/fast4-g
 src/conv/g-acad
+src/conv/g-adrt
 src/conv/g-dxf
 src/conv/g-euclid
 src/conv/g-euclid1
