@@ -737,6 +737,7 @@ src/adrt/libutil/rand.c svneol=native#text/plain
 src/adrt/libutil/rand.h svneol=native#text/plain
 src/adrt/libutil/umath.c svneol=native#text/plain
 src/adrt/libutil/umath.h svneol=native#text/plain
+src/adrt/misc/Makefile.am svneol=native#text/plain
 src/adrt/misc/coherency.c svneol=native#text/plain
 src/adrt/misc/rename.pl svneol=native#text/plain
 src/adrt/rise/Makefile.am svneol=native#text/plain
