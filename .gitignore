@@ -69,6 +69,12 @@ misc/missing
 misc/mkinstalldirs
 misc/pro-engineer/mk
 misc/pro-engineer/protk.dat
+src/adrt/ivat/master/ivat_master
+src/adrt/ivat/observer/ivat_observer
+src/adrt/ivat/slave/ivat_slave
+src/adrt/rise/master/rise_master
+src/adrt/rise/observer/rise_observer
+src/adrt/rise/slave/rise_slave
 src/anim/.deps
 src/anim/.libs
 src/anim/Makefile
