@@ -714,7 +714,6 @@ src/adrt/libutil/umath.c svneol=native#text/plain
 src/adrt/libutil/umath.h svneol=native#text/plain
 src/adrt/misc/Makefile.am svneol=native#text/plain
 src/adrt/misc/coherency.c svneol=native#text/plain
-src/adrt/misc/ivat.png -text svneol=unset#image/png
 src/adrt/misc/rename.pl svneol=native#text/plain
 src/adrt/rise/Makefile.am svneol=native#text/plain
 src/adrt/rise/master/.cvsignore svneol=native#text/plain
