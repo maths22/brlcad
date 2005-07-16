@@ -16,7 +16,6 @@ bench/Makefile.am svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
 bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
-bench/pretty.sh svneol=native#text/x-sh
 bench/recheck.sh svneol=native#text/x-sh
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
