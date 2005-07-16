@@ -552,6 +552,7 @@ misc/win32-msvc/vers.vbs svneol=native#text/plain
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
 pix/bldg391.pix -text svneol=unset#image/x-rgb
+pix/cube.rt svneol=native#text/x-sh
 pix/golf_ball.pix -text svneol=unset#image/x-rgb
 pix/lgt1.pix -text svneol=unset#image/x-rgb
 pix/lgt2.pix -text svneol=unset#image/x-rgb
