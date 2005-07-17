@@ -91,6 +91,8 @@ src/anim/anim_turn
 src/anim/chan_add
 src/anim/chan_mult
 src/anim/chan_permute
+src/brlman/awf
+src/brlman/brlman
 src/burst/burst
 src/bwish/btclsh
 src/bwish/bwish
