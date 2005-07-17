@@ -778,7 +778,7 @@ src/anim/chan_mult.c svneol=native#text/plain
 src/anim/chan_permute.1 svneol=native#text/plain
 src/anim/chan_permute.c svneol=native#text/plain
 src/brlman/Makefile.am svneol=native#text/plain
-src/brlman/awf -text
+src/brlman/awf.in svneol=native#text/plain
 src/brlman/brlman -text
 src/brlman/brlman.1 svneol=native#text/plain
 src/burst/.cvsignore svneol=native#text/plain
