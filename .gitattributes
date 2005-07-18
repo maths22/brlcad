@@ -473,6 +473,7 @@ include/tclInt.h svneol=native#text/plain
 include/tclIntDecls.h svneol=native#text/plain
 include/tclIntPlatDecls.h svneol=native#text/plain
 include/tclPlatDecls.h svneol=native#text/plain
+include/tclcad.h svneol=native#text/plain
 include/tk.h svneol=native#text/plain
 include/tkDecls.h svneol=native#text/plain
 include/tkInt.h svneol=native#text/plain
