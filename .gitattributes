@@ -5022,6 +5022,7 @@ src/util/png_info.1 svneol=native#text/plain
 src/util/png_info.c svneol=native#text/plain
 src/util/query.1 svneol=native#text/plain
 src/util/query.c svneol=native#text/plain
+src/util/remapid.1 svneol=native#text/plain
 src/util/remapid.c svneol=native#text/plain
 src/util/rle-pix.1 svneol=native#text/plain
 src/util/rle-pix.c svneol=native#text/plain
