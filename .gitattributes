@@ -1258,7 +1258,6 @@ src/libbn/font.c svneol=native#text/plain
 src/libbn/fortran.c svneol=native#text/plain
 src/libbn/htester.c svneol=native#text/plain
 src/libbn/libbn.dsp -text svneol=CRLF#text/plain
-src/libbn/libbn.ncb -text svneol=unset#unset
 src/libbn/libplot3.3 svneol=native#text/plain
 src/libbn/list.c svneol=native#text/plain
 src/libbn/marker.c svneol=native#text/plain
