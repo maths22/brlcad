@@ -4,6 +4,7 @@
 /BUGS svneol=native#text/plain
 /COPYING svneol=native#text/plain
 /ChangeLog svneol=native#text/plain
+/Doxyfile -text
 /HACKING svneol=native#text/plain
 /INSTALL svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
