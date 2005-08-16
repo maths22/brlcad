@@ -897,6 +897,7 @@ src/conv/euclid-g.1 svneol=native#text/plain
 src/conv/euclid-g.c svneol=native#text/plain
 src/conv/euclid_format.c svneol=native#text/plain
 src/conv/euclid_unformat.c svneol=native#text/plain
+src/conv/example_geom.c svneol=native#text/plain
 src/conv/fast4-g.1 svneol=native#text/plain
 src/conv/fast4-g.c svneol=native#text/plain
 src/conv/g-acad.1 svneol=native#text/plain
