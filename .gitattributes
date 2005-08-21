@@ -4,7 +4,6 @@
 /BUGS svneol=native#text/plain
 /COPYING svneol=native#text/plain
 /ChangeLog svneol=native#text/plain
-/Doxyfile -text
 /HACKING svneol=native#text/plain
 /INSTALL svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
@@ -505,6 +504,7 @@ m4/search.m4 svneol=native#text/plain
 misc/.cvsignore svneol=native#text/plain
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
+misc/Doxyfile -text
 misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
 misc/batch-indent-region.el -text
