@@ -1653,7 +1653,6 @@ src/libsysv/cname.h svneol=native#text/plain
 src/libsysv/engine.c svneol=native#text/plain
 src/libsysv/getopt.c svneol=native#text/plain
 src/libsysv/libsysv.dsp -text svneol=CRLF#text/plain
-src/libsysv/linebuf.c svneol=native#text/plain
 src/libsysv/memset.c svneol=native#text/plain
 src/libsysv/redata.c svneol=native#text/plain
 src/libsysv/regcomp.c svneol=native#text/plain
