@@ -1663,6 +1663,7 @@ src/libsysv/regex2.h svneol=native#text/plain
 src/libsysv/regexec.c svneol=native#text/plain
 src/libsysv/regfree.c svneol=native#text/plain
 src/libsysv/strchr.c svneol=native#text/plain
+src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
 src/libsysv/utils.h svneol=native#text/plain
 src/libtclcad/.cvsignore svneol=native#text/plain
