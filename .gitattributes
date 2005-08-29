@@ -394,7 +394,6 @@ include/XtndRunsv.h svneol=native#text/plain
 include/anim.h svneol=native#text/plain
 include/bn.h svneol=native#text/plain
 include/brlcad.h svneol=native#text/plain
-include/brlregex.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/colorquant.h svneol=native#text/plain
