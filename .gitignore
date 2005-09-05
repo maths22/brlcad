@@ -197,6 +197,7 @@ src/fbed/fbed
 src/fbserv/fbserv
 src/gtools/g_diff
 src/gtools/g_lint
+src/gtools/g_qa
 src/gtools/solshoot
 src/gtools/testfree
 src/halftone/halftone
