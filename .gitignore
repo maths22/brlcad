@@ -50,6 +50,7 @@ include/stamp-h1
 include/version
 librt/vers.c
 /libtool
+/ltmain.sh
 misc/COPYING.backup
 misc/INSTALL.backup
 misc/Makefile
@@ -71,6 +72,7 @@ misc/pro-engineer/mk
 misc/pro-engineer/protk.dat
 misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
+/so_locations
 src/adrt/rise/master/rise_master
 src/adrt/rise/observer/rise_observer
 src/adrt/rise/slave/rise_slave
