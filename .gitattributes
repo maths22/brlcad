@@ -415,6 +415,7 @@ include/dm_color.h svneol=native#text/plain
 include/dm_xvars.h svneol=native#text/plain
 include/exit_status.h svneol=native#text/plain
 include/fb.h svneol=native#text/plain
+include/fbio.h svneol=native#text/plain
 include/fbserv_obj.h svneol=native#text/plain
 include/forms.h svneol=native#text/plain
 include/itcl.h svneol=native#text/plain
