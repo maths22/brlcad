@@ -550,6 +550,7 @@ misc/vfont/nonie.r.12 -text svneol=unset#unset
 misc/win32-msvc/.cvsignore svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
+misc/win32-msvc/Dll/brlcad.rc -text svneol=CRLF#text/plain
 misc/win32-msvc/Makefile.am svneol=native#text/plain
 misc/win32-msvc/brlcad.dsw -text svneol=CRLF#text/plain
 misc/win32-msvc/vers.vbs svneol=native#text/plain
