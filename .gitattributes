@@ -200,7 +200,6 @@ doc/html/manuals/Install.html svneol=native#text/html
 doc/html/manuals/Makefile.am svneol=native#text/plain
 doc/html/manuals/Obtain.html svneol=native#text/html
 doc/html/manuals/Overview.html svneol=native#text/html
-doc/html/manuals/ReleaseNotes/Makefile.am svneol=native#text/plain
 doc/html/manuals/cadwidgets/Command.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Database.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Db.html svneol=native#text/html
