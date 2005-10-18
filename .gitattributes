@@ -61,7 +61,6 @@ doc/README.IRIX svneol=native#text/plain
 doc/README.Linux svneol=native#text/plain
 doc/README.MacOSX svneol=native#text/plain
 doc/README.Solaris svneol=native#text/plain
-doc/README.WIN32 svneol=native#text/plain
 doc/README.Windows svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
