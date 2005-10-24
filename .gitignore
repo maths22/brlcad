@@ -74,6 +74,7 @@ misc/win32-msvc/Dll/brlcad.plg
 misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
 /so_locations
+src/adrt/bench/adrt_bench
 src/adrt/rise/master/rise_master
 src/adrt/rise/observer/rise_observer
 src/adrt/rise/slave/rise_slave
