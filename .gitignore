@@ -140,6 +140,15 @@ src/conv/g-xxx_facets
 src/conv/g2asc
 src/conv/g4-g5
 src/conv/g5-g4
+src/conv/iges/.deps
+src/conv/iges/.libs
+src/conv/iges/Makefile
+src/conv/iges/Makefile.in
+src/conv/iges/g-iges
+src/conv/iges/g-iges-vers.c
+src/conv/iges/iges-g
+src/conv/iges/iges-g-vers.c
+src/conv/iges/version
 src/conv/jack/g-jack
 src/conv/jack/jack-g
 src/conv/nastran-g
