@@ -102,7 +102,6 @@ src/brlman/brlman
 src/burst/burst
 src/bwish/btclsh
 src/bwish/bwish
-src/comgeom-g/comgeom-g
 src/conv/.deps
 src/conv/.libs
 src/conv/Makefile
@@ -113,6 +112,7 @@ src/conv/asc2pix
 src/conv/bot-bldxf
 src/conv/bot-raw
 src/conv/bot_shell-vtk
+src/conv/comgeom/comgeom-g
 src/conv/conv-vg2g
 src/conv/cy-g
 src/conv/dbupgrade
@@ -140,10 +140,16 @@ src/conv/g-xxx_facets
 src/conv/g2asc
 src/conv/g4-g5
 src/conv/g5-g4
+src/conv/jack/g-jack
+src/conv/jack/jack-g
 src/conv/nastran-g
 src/conv/nmg-bot
 src/conv/nmg-rib
 src/conv/nmg-sgp
+src/conv/off/g-off
+src/conv/off/off-g
+src/conv/patch/patch-g
+src/conv/patch/rpatch
 src/conv/pix2asc
 src/conv/ply-g
 src/conv/poly-bot
@@ -226,8 +232,6 @@ src/irprep/irdisp
 src/irprep/secpass
 src/irprep/shapefact
 src/irprep/showtherm
-src/jack/g-jack
-src/jack/jack-g
 src/lgt/lgt
 src/libbn/libbn.plg
 src/libbn/vers.c
@@ -301,8 +305,6 @@ src/nirt/nirt
 src/nirt/showshot
 src/nirt/vers.c
 src/nirt/version
-src/off/g-off
-src/off/off-g
 src/other/URToolkit/.deps
 src/other/URToolkit/.libs
 src/other/URToolkit/Makefile
@@ -414,8 +416,6 @@ src/other/libtk/library/pkgIndex.tcl
 src/other/libtk/unix/tkConfig.sh
 src/other/libtk/wish
 src/other/libtk/wish.static
-src/patch/patch-g
-src/patch/rpatch
 src/proc-db/bottest
 src/proc-db/brickwall
 src/proc-db/clutter
