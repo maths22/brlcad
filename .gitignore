@@ -211,15 +211,6 @@ src/gtools/g_qa
 src/gtools/solshoot
 src/gtools/testfree
 src/halftone/halftone
-src/iges/.deps
-src/iges/.libs
-src/iges/Makefile
-src/iges/Makefile.in
-src/iges/g-iges
-src/iges/g-iges-vers.c
-src/iges/iges-g
-src/iges/iges-g-vers.c
-src/iges/version
 src/irprep/.deps
 src/irprep/.libs
 src/irprep/Makefile
