@@ -4741,6 +4741,7 @@ src/tclscripts/mged/overlap.tcl svneol=native#text/plain
 src/tclscripts/mged/pattern.tcl svneol=native#text/plain
 src/tclscripts/mged/pattern_gui.tcl svneol=native#text/plain
 src/tclscripts/mged/plot.tcl svneol=native#text/plain
+src/tclscripts/mged/points.tcl svneol=native#text/plain
 src/tclscripts/mged/prj_add.tcl svneol=native#text/plain
 src/tclscripts/mged/ps.tcl svneol=native#text/plain
 src/tclscripts/mged/qray.tcl svneol=native#text/plain
