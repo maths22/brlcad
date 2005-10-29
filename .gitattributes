@@ -1827,6 +1827,7 @@ src/mged/muves.c svneol=native#text/plain
 src/mged/objdir.h svneol=native#text/plain
 src/mged/overlay.c svneol=native#text/plain
 src/mged/plot.c svneol=native#text/plain
+src/mged/points/.cvsignore svneol=native#text/plain
 src/mged/points/Makefile.am svneol=native#text/plain
 src/mged/points/count.c svneol=native#text/plain
 src/mged/points/count.h svneol=native#text/plain

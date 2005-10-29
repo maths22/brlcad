@@ -293,6 +293,9 @@ src/libwdb/version
 src/mged/cad_boundp
 src/mged/cad_parea
 src/mged/mged
+src/mged/points/points_parse.c
+src/mged/points/points_parse.h
+src/mged/points/points_scan.c
 src/mged/vers.c
 src/mged/version
 src/mk/mk_bolt
