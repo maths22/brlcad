@@ -839,7 +839,6 @@ src/burst/Makefile.am svneol=native#text/plain
 src/burst/Mm.h svneol=native#text/plain
 src/burst/Sc.c svneol=native#text/plain
 src/burst/Sc.h svneol=native#text/plain
-src/burst/Tc.c svneol=native#text/plain
 src/burst/Tc.h svneol=native#text/plain
 src/burst/ascii.h svneol=native#text/plain
 src/burst/burst.c svneol=native#text/plain
