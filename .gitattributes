@@ -1702,6 +1702,7 @@ src/libsysv/regfree.c svneol=native#text/plain
 src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
+src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
 src/libsysv/utils.h svneol=native#text/plain
 src/libtclcad/.cvsignore svneol=native#text/plain
