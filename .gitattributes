@@ -1282,7 +1282,6 @@ src/lgt/reflect.c svneol=native#text/plain
 src/lgt/resource.c svneol=native#text/plain
 src/lgt/screen.h svneol=native#text/plain
 src/lgt/sgi_dep.c svneol=native#text/plain
-src/lgt/strtok.c svneol=native#text/plain
 src/lgt/texture.c svneol=native#text/plain
 src/lgt/texture.h svneol=native#text/plain
 src/lgt/tree.h svneol=native#text/plain
