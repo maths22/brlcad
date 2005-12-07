@@ -14,7 +14,6 @@
 bench/.cvsignore svneol=native#text/plain
 bench/Makefile.am svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
-bench/perf.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
 bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
