@@ -3902,7 +3902,6 @@ src/other/libtcl/unix/.cvsignore svneol=native#text/plain
 src/other/libtcl/unix/Makefile.am svneol=native#text/plain
 src/other/libtcl/unix/README svneol=native#text/plain
 src/other/libtcl/unix/aclocal.m4 svneol=native#text/plain
-src/other/libtcl/unix/dltest/Makefile.in svneol=native#text/plain
 src/other/libtcl/unix/dltest/README svneol=native#text/plain
 src/other/libtcl/unix/dltest/pkga.c svneol=native#text/plain
 src/other/libtcl/unix/dltest/pkgb.c svneol=native#text/plain
