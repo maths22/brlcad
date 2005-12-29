@@ -569,6 +569,7 @@ misc/win32-msvc/Dll/brlcad.rc -text svneol=CRLF#text/plain
 misc/win32-msvc/Makefile.am svneol=native#text/plain
 misc/win32-msvc/brlcad.dsw -text svneol=CRLF#text/plain
 misc/win32-msvc/vers.vbs svneol=native#text/plain
+misc/win32-msvc7/Makefile.am svneol=native#text/plain
 misc/win32-msvc7/all/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/all/all.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/asc2g/.cvsignore svneol=native#text/plain
