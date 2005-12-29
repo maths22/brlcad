@@ -5699,6 +5699,7 @@ src/tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
+src/tclscripts/sdialogs/.cvsignore svneol=native#text/plain
 src/tclscripts/sdialogs/Makefile.am svneol=native#text/plain
 src/tclscripts/sdialogs/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/Makefile.am svneol=native#text/plain
@@ -5707,6 +5708,7 @@ src/tclscripts/sdialogs/scripts/listdialog.itk svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/stddlgs.tcl svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/tclIndex -text
 src/tclscripts/sdialogs/sdialogs.tcl svneol=native#text/plain
+src/tclscripts/swidgets/.cvsignore svneol=native#text/plain
 src/tclscripts/swidgets/Makefile.am svneol=native#text/plain
 src/tclscripts/swidgets/images/Makefile.am svneol=native#text/plain
 src/tclscripts/swidgets/images/closed.gif -text svneol=unset#image/gif

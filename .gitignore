@@ -652,6 +652,10 @@ src/tclscripts/rtwizard/lib/pkgIndex.tcl
 src/tclscripts/rtwizard/lib/tclIndex
 src/tclscripts/rtwizard/pkgIndex.tcl
 src/tclscripts/rtwizard/tclIndex
+src/tclscripts/sdialogs/pkgIndex.tcl
+src/tclscripts/sdialogs/tclIndex
+src/tclscripts/swidgets/pkgIndex.tcl
+src/tclscripts/swidgets/tclIndex
 src/tclscripts/tclIndex
 src/tclscripts/util/pkgIndex.tcl
 src/tclscripts/util/tclIndex
