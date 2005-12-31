@@ -1378,8 +1378,6 @@ src/halftone/tone_floyd.c svneol=native#text/plain
 src/halftone/tone_folly.c svneol=native#text/plain
 src/halftone/tone_simple.c svneol=native#text/plain
 src/halftone/tonescale.c svneol=native#text/plain
-src/iges/g-iges-vers_win.c svneol=native#text/plain
-src/iges/iges-g-vers_win.c svneol=native#text/plain
 src/irprep/.cvsignore svneol=native#text/plain
 src/irprep/Compile.sgi -text
 src/irprep/Makefile.am svneol=native#text/plain
