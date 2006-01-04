@@ -2303,6 +2303,7 @@ src/other/blt/cf/config.sub -text
 src/other/blt/cf/install-sh svneol=native#text/plain
 src/other/blt/cf/install.sh svneol=native#text/x-sh
 src/other/blt/cf/ldAix -text
+src/other/blt/demos/Makefile.am svneol=native#text/plain
 src/other/blt/demos/Makefile.vc svneol=native#text/plain
 src/other/blt/demos/barchart1.tcl svneol=native#text/plain
 src/other/blt/demos/barchart2.tcl svneol=native#text/plain
@@ -2316,6 +2317,7 @@ src/other/blt/demos/bgexec4.tcl svneol=native#text/plain
 src/other/blt/demos/bgexec5.tcl svneol=native#text/plain
 src/other/blt/demos/bitmap.tcl svneol=native#text/plain
 src/other/blt/demos/bitmap2.tcl svneol=native#text/plain
+src/other/blt/demos/bitmaps/Makefile.am svneol=native#text/plain
 src/other/blt/demos/bitmaps/face.xbm -text svneol=unset#image/x-xbitmap
 src/other/blt/demos/bitmaps/fish/left.xbm -text svneol=unset#image/x-xbitmap
 src/other/blt/demos/bitmaps/fish/left1.xbm -text svneol=unset#image/x-xbitmap
@@ -2648,6 +2650,7 @@ src/other/blt/src/tkConsole.c svneol=native#text/plain
 src/other/blt/src/tkFrame.c svneol=native#text/plain
 src/other/blt/src/tkMenubutton.c svneol=native#text/plain
 src/other/blt/src/tkScrollbar.c svneol=native#text/plain
+src/other/blt/win/Makefile.am svneol=native#text/plain
 src/other/blt/win/README svneol=native#text/plain
 src/other/blt/win/X11/X.h svneol=native#text/plain
 src/other/blt/win/X11/Xatom.h svneol=native#text/plain
