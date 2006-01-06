@@ -1366,6 +1366,7 @@ src/gtools/g_lint.1 svneol=native#text/plain
 src/gtools/g_lint.c svneol=native#text/plain
 src/gtools/g_qa.1 svneol=native#text/plain
 src/gtools/g_qa.c svneol=native#text/plain
+src/gtools/g_transfer.c svneol=native#text/plain
 src/gtools/solshoot.c svneol=native#text/plain
 src/gtools/testfree.c svneol=native#text/plain
 src/halftone/.cvsignore svneol=native#text/plain
