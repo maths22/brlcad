@@ -507,6 +507,7 @@ m4/Makefile.am svneol=native#text/plain
 m4/args.m4 svneol=native#text/plain
 m4/cache.m4 svneol=native#text/plain
 m4/compiler.m4 svneol=native#text/plain
+m4/epsilon.m4 svneol=native#text/plain
 m4/mkdirp.m4 svneol=native#text/plain
 m4/restore.m4 svneol=native#text/plain
 m4/retry.m4 svneol=native#text/plain
