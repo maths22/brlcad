@@ -1709,6 +1709,7 @@ src/librt/db5_types.c svneol=native#text/plain
 src/librt/db_alloc.c svneol=native#text/plain
 src/librt/db_anim.c svneol=native#text/plain
 src/librt/db_comb.c svneol=native#text/plain
+src/librt/db_flags.c svneol=native#text/plain
 src/librt/db_io.c svneol=native#text/plain
 src/librt/db_lookup.c svneol=native#text/plain
 src/librt/db_match.c svneol=native#text/plain
