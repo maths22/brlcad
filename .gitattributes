@@ -2843,7 +2843,6 @@ src/other/iwidgets/ChangeLog svneol=native#text/plain
 src/other/iwidgets/Makefile.am svneol=native#text/plain
 src/other/iwidgets/README svneol=native#text/plain
 src/other/iwidgets/aclocal.m4 svneol=native#text/plain
-src/other/iwidgets/configure -text
 src/other/iwidgets/configure.in svneol=native#text/plain
 src/other/iwidgets/demos/buttonbox -text
 src/other/iwidgets/demos/calendar -text
@@ -4924,7 +4923,6 @@ src/other/libz/algorithm.txt svneol=native#text/plain
 src/other/libz/amiga/Makefile.pup svneol=native#text/plain
 src/other/libz/amiga/Makefile.sas svneol=native#text/plain
 src/other/libz/compress.c svneol=native#text/plain
-src/other/libz/configure -text
 src/other/libz/contrib/README.contrib svneol=native#text/plain
 src/other/libz/contrib/gzappend/gzappend.c svneol=native#text/plain
 src/other/libz/contrib/iostream/test.cpp svneol=native#text/plain
