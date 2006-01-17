@@ -4991,7 +4991,6 @@ src/other/tkimg/base/ChangeLog svneol=native#text/plain
 src/other/tkimg/base/Makefile.am svneol=native#text/plain
 src/other/tkimg/base/README svneol=native#text/plain
 src/other/tkimg/base/aclocal.m4 svneol=native#text/plain
-src/other/tkimg/base/configure -text
 src/other/tkimg/base/configure.in svneol=native#text/plain
 src/other/tkimg/base/pkgIndex.tcl.in svneol=native#text/plain
 src/other/tkimg/base/tclconfig/README.txt svneol=native#text/plain
