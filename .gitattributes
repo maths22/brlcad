@@ -4655,7 +4655,6 @@ src/other/libtk/unix/.cvsignore svneol=native#text/plain
 src/other/libtk/unix/Makefile.am svneol=native#text/plain
 src/other/libtk/unix/README svneol=native#text/plain
 src/other/libtk/unix/aclocal.m4 svneol=native#text/plain
-src/other/libtk/unix/configure -text
 src/other/libtk/unix/install-sh svneol=native#text/plain
 src/other/libtk/unix/license.terms svneol=native#text/plain
 src/other/libtk/unix/mkLinks -text
@@ -4691,7 +4690,6 @@ src/other/libtk/unix/tkUnixXId.c svneol=native#text/plain
 src/other/libtk/win/README svneol=native#text/plain
 src/other/libtk/win/aclocal.m4 svneol=native#text/plain
 src/other/libtk/win/buildall.vc.bat -text svneol=CRLF#text/plain
-src/other/libtk/win/configure -text
 src/other/libtk/win/configure.in svneol=native#text/plain
 src/other/libtk/win/lamp.bmp -text svneol=unset#image/bmp
 src/other/libtk/win/license.terms svneol=native#text/plain
