@@ -3929,7 +3929,6 @@ src/other/libtcl/tests/winPipe.test svneol=native#text/plain
 src/other/libtcl/tests/winTime.test svneol=native#text/plain
 src/other/libtcl/tools/README svneol=native#text/plain
 src/other/libtcl/tools/checkLibraryDoc.tcl svneol=native#text/plain
-src/other/libtcl/tools/configure -text
 src/other/libtcl/tools/configure.in svneol=native#text/plain
 src/other/libtcl/tools/cvtEOL.tcl svneol=native#text/plain
 src/other/libtcl/tools/eolFix.tcl svneol=native#text/plain
@@ -3997,7 +3996,6 @@ src/other/libtcl/win/aclocal.m4 svneol=native#text/plain
 src/other/libtcl/win/buildall.vc.bat -text svneol=CRLF#text/plain
 src/other/libtcl/win/cat.c svneol=native#text/plain
 src/other/libtcl/win/coffbase.txt svneol=native#text/plain
-src/other/libtcl/win/configure -text
 src/other/libtcl/win/configure.in svneol=native#text/plain
 src/other/libtcl/win/license.terms svneol=native#text/plain
 src/other/libtcl/win/makefile.bc svneol=native#text/plain
