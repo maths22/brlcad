@@ -1618,7 +1618,6 @@ src/libfb/libfb.3 svneol=native#text/plain
 src/libfb/libfb.dsp -text svneol=CRLF#text/plain
 src/libfb/nilcursor.h svneol=native#text/plain
 src/libfb/oglcursor.h svneol=native#text/plain
-src/libfb/pkgswitch.c svneol=native#text/plain
 src/libfb/sgicursor.h svneol=native#text/plain
 src/libfb/sgiselect.s svneol=native#text/plain
 src/libfb/tcl.c svneol=native#text/plain
