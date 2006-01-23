@@ -1934,7 +1934,6 @@ src/mged/cad_parea.c svneol=native#text/plain
 src/mged/chgmodel.c svneol=native#text/plain
 src/mged/chgtree.c svneol=native#text/plain
 src/mged/chgview.c svneol=native#text/plain
-src/mged/clip.c svneol=native#text/plain
 src/mged/clone.c svneol=native#text/plain
 src/mged/cmd.c svneol=native#text/plain
 src/mged/cmd.h svneol=native#text/plain
