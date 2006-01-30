@@ -1686,6 +1686,7 @@ src/libpkg/Makefile.am svneol=native#text/plain
 src/libpkg/libpkg.dsp -text svneol=CRLF#text/plain
 src/libpkg/pkg.c svneol=native#text/plain
 src/libpkg/tcl.c svneol=native#text/plain
+src/libpkg/tpkg.c svneol=native#text/plain
 src/libpkg/vers_win.c svneol=native#text/plain
 src/librt/.cvsignore svneol=native#text/plain
 src/librt/Makefile.am svneol=native#text/plain
