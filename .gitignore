@@ -368,6 +368,7 @@ src/liboptical/vers.c
 src/liboptical/version
 src/liborle/vers.c
 src/liborle/version
+src/libpkg/tpkg
 src/libpkg/vers.c
 src/libpkg/version
 src/librt/comb
