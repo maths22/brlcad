@@ -1069,6 +1069,7 @@ src/conv/cy-g.1 svneol=native#text/plain
 src/conv/cy-g.c svneol=native#text/plain
 src/conv/dbclean.1 svneol=native#text/plain
 src/conv/dbclean.sh svneol=native#text/x-sh
+src/conv/dbupgrade.1 svneol=native#text/plain
 src/conv/dbupgrade.c svneol=native#text/plain
 src/conv/dxf-g.1 svneol=native#text/plain
 src/conv/dxf-g.c svneol=native#text/plain
