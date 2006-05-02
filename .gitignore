@@ -227,6 +227,7 @@ src/conv/g-obj
 src/conv/g-shell.rect
 src/conv/g-stl
 src/conv/g-tankill
+src/conv/g-var
 src/conv/g-vrml
 src/conv/g-x3d
 src/conv/g-xxx
