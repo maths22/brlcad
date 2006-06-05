@@ -2308,6 +2308,7 @@ src/other/blt/NEWS svneol=native#text/plain
 src/other/blt/PROBLEMS -text
 src/other/blt/README svneol=native#text/plain
 src/other/blt/blt.mak -text
+src/other/blt/cf/Makefile.am svneol=native#text/plain
 src/other/blt/cf/config.guess -text
 src/other/blt/cf/config.sub -text
 src/other/blt/cf/install-sh svneol=native#text/plain
@@ -2454,10 +2455,12 @@ src/other/blt/demos/tour.tcl svneol=native#text/plain
 src/other/blt/demos/treeview1.tcl svneol=native#text/plain
 src/other/blt/demos/winop1.tcl svneol=native#text/plain
 src/other/blt/demos/winop2.tcl svneol=native#text/plain
+src/other/blt/examples/Makefile.am svneol=native#text/plain
 src/other/blt/examples/calendar.tcl svneol=native#text/plain
 src/other/blt/examples/form.tcl svneol=native#text/plain
 src/other/blt/examples/pareto.tcl svneol=native#text/plain
 src/other/blt/html/BLT.html svneol=native#text/html
+src/other/blt/html/Makefile.am svneol=native#text/plain
 src/other/blt/html/Makefile.vc svneol=native#text/plain
 src/other/blt/html/barchart.html svneol=native#text/html
 src/other/blt/html/beep.html svneol=native#text/html
@@ -2517,6 +2520,7 @@ src/other/blt/man/Blt_TreeGetToken.man3 svneol=native#text/plain
 src/other/blt/man/Blt_TreeName.man3 svneol=native#text/plain
 src/other/blt/man/Blt_TreeNodeId.man3 svneol=native#text/plain
 src/other/blt/man/Blt_TreeReleaseToken.man3 svneol=native#text/plain
+src/other/blt/man/Makefile.am svneol=native#text/plain
 src/other/blt/man/barchart.mann svneol=native#text/plain
 src/other/blt/man/beep.mann svneol=native#text/plain
 src/other/blt/man/bgexec.mann svneol=native#text/plain
