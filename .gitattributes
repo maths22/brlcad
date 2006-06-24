@@ -560,6 +560,7 @@ misc/pro-engineer/proe_brl_error.res svneol=native#text/plain
 misc/pro-engineer/proe_brl_gen_error.res svneol=native#text/plain
 misc/pro-engineer/protk.dat.in svneol=native#text/plain
 misc/pro-engineer/usermsg.txt svneol=native#text/plain
+misc/rcs2log -text
 misc/vfont/Makefile.am svneol=native#text/plain
 misc/vfont/fix.6r -text svneol=unset#unset
 misc/vfont/nonie.r.12 -text svneol=unset#unset
