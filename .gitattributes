@@ -392,6 +392,7 @@ doc/mged.tr svneol=native#text/plain
 doc/mk.tr svneol=native#text/plain
 doc/movie.txt svneol=native#text/plain
 doc/old-mged.tr svneol=native#text/plain
+doc/pad_file.xml.in svneol=native#text/plain
 doc/pix.5 svneol=native#text/plain
 doc/pkg.tr svneol=native#text/plain
 doc/plot3.5 svneol=native#text/plain
