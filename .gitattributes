@@ -1030,6 +1030,7 @@ src/bwish/cmd.c svneol=native#text/plain
 src/bwish/input.c svneol=native#text/plain
 src/bwish/main.c svneol=native#text/plain
 src/bwish/tcl.c svneol=native#text/plain
+src/canon/.cvsignore svneol=native#text/plain
 src/canon/Makefile.am svneol=native#text/plain
 src/canon/asize.c svneol=native#text/plain
 src/canon/canon.h svneol=native#text/plain

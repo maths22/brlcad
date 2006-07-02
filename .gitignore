@@ -197,6 +197,11 @@ src/brlman/brlman
 src/burst/burst
 src/bwish/btclsh
 src/bwish/bwish
+src/canon/canonize
+src/canon/ipuscan
+src/canon/ipustat
+src/canon/pix-ipu
+src/canon/png-ipu
 src/conv/.deps
 src/conv/.libs
 src/conv/Makefile
