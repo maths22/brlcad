@@ -1036,7 +1036,6 @@ src/canon/canon.h svneol=native#text/plain
 src/canon/canonize.1 svneol=native#text/plain
 src/canon/canonize.c svneol=native#text/plain
 src/canon/canonlib.c svneol=native#text/plain
-src/canon/canonserver.c svneol=native#text/plain
 src/canon/chore.h svneol=native#text/plain
 src/canon/ipuscan.c svneol=native#text/plain
 src/canon/ipustat.c svneol=native#text/plain
