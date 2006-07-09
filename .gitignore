@@ -42,6 +42,7 @@ db/woodsman.g
 db/world.g
 db/xmp.g
 doc/html/manuals/mged/mged_cmd_index.html
+doc/pad_file.xml
 include/Makefile
 include/Makefile.in
 include/brlcad_config.h

@@ -55,6 +55,7 @@ db/wave.asc svneol=native#text/plain
 db/woodsman.asc svneol=native#text/plain
 db/world.asc svneol=native#text/plain
 db/xmp.asc svneol=native#text/plain
+doc/.cvsignore svneol=native#text/plain
 doc/IDEAS -text
 doc/Makefile.am svneol=native#text/plain
 doc/README.AIX svneol=native#text/plain
