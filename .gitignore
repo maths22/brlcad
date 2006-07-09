@@ -712,6 +712,7 @@ src/util/gencolor
 src/util/hd
 src/util/imgdims
 src/util/loop
+src/util/lowp
 src/util/mac-pix
 src/util/msrandom
 src/util/mst
