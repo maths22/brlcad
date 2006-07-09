@@ -1043,7 +1043,6 @@ src/canon/canonlib.c svneol=native#text/plain
 src/canon/chore.h svneol=native#text/plain
 src/canon/ipuscan.c svneol=native#text/plain
 src/canon/ipustat.c svneol=native#text/plain
-src/canon/mread.c svneol=native#text/plain
 src/canon/pix-ipu.c svneol=native#text/plain
 src/canon/png-ipu.c svneol=native#text/plain
 src/conv/.cvsignore svneol=native#text/plain
