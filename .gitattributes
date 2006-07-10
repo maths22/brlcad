@@ -1532,7 +1532,6 @@ src/libbu/log.c svneol=native#text/plain
 src/libbu/magic.c svneol=native#text/plain
 src/libbu/malloc.c svneol=native#text/plain
 src/libbu/mappedfile.c svneol=native#text/plain
-src/libbu/memset.c svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
 src/libbu/mro.c svneol=native#text/plain
 src/libbu/observer.c svneol=native#text/plain
