@@ -1871,7 +1871,6 @@ src/libsysv/bsdselect.c svneol=native#text/plain
 src/libsysv/cclass.h svneol=native#text/plain
 src/libsysv/cname.h svneol=native#text/plain
 src/libsysv/engine.c svneol=native#text/plain
-src/libsysv/getopt.c svneol=native#text/plain
 src/libsysv/libsysv.dsp -text svneol=CRLF#text/plain
 src/libsysv/memset.c svneol=native#text/plain
 src/libsysv/redata.c svneol=native#text/plain
