@@ -986,9 +986,12 @@ src/anim/chan_permute.c svneol=native#text/plain
 src/archer/Makefile.am svneol=native#text/plain
 src/archer/archer -text
 src/archer/archer.bat -text svneol=CRLF#text/plain
+src/archer/plugins/Command/Makefile.am svneol=native#text/plain
 src/archer/plugins/Command/README svneol=native#text/plain
+src/archer/plugins/Core/Makefile.am svneol=native#text/plain
 src/archer/plugins/Core/README svneol=native#text/plain
 src/archer/plugins/Makefile.am svneol=native#text/plain
+src/archer/plugins/Utility/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/README svneol=native#text/plain
 src/archer/plugins/Wizards/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizardIA.tcl svneol=native#text/plain
