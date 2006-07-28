@@ -1262,6 +1262,7 @@ src/external/ProEngineer/proe_brl_error.res svneol=native#text/plain
 src/external/ProEngineer/proe_brl_gen_error.res svneol=native#text/plain
 src/external/ProEngineer/protk.dat.in svneol=native#text/plain
 src/external/ProEngineer/usermsg.txt svneol=native#text/plain
+src/external/README svneol=native#text/plain
 src/fb/.cvsignore svneol=native#text/plain
 src/fb/Makefile.am svneol=native#text/plain
 src/fb/bw-fb.1 svneol=native#text/plain
