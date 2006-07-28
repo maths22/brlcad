@@ -1246,6 +1246,7 @@ src/conv/tankill-g.c svneol=native#text/plain
 src/conv/viewpoint-g.1 svneol=native#text/plain
 src/conv/viewpoint-g.c svneol=native#text/plain
 src/external/Makefile.am svneol=native#text/plain
+src/external/ProEngineer/.cvsignore svneol=native#text/plain
 src/external/ProEngineer/Makefile.am svneol=native#text/plain
 src/external/ProEngineer/install.doc svneol=native#text/plain
 src/external/ProEngineer/mk.in svneol=native#text/plain
