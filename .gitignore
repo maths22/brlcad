@@ -70,8 +70,6 @@ misc/ltmain.sh.backup
 misc/macosx/openUp
 misc/missing
 misc/mkinstalldirs
-misc/pro-engineer/mk
-misc/pro-engineer/protk.dat
 misc/win32-msvc/Dll/brlcad.plg
 misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
