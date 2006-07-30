@@ -758,6 +758,7 @@ sh/footer.sh svneol=native#text/x-sh
 sh/header.sh svneol=native#text/x-sh
 sh/indent.sh svneol=native#text/x-sh
 sh/ldAix.sh svneol=native#text/x-sh
+sh/lines.sh svneol=native#text/x-sh
 sh/make_bz2.sh svneol=native#text/x-sh
 sh/make_deb.sh svneol=native#text/x-sh
 sh/make_dmg.sh svneol=native#text/x-sh
