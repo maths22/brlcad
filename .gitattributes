@@ -1379,7 +1379,6 @@ src/fbserv/.cvsignore svneol=native#text/plain
 src/fbserv/Makefile.am svneol=native#text/plain
 src/fbserv/fbserv.1 svneol=native#text/plain
 src/fbserv/fbserv.c svneol=native#text/plain
-src/fbserv/fbserv_win.c svneol=native#text/plain
 src/fbserv/server.c svneol=native#text/plain
 src/gtools/.cvsignore svneol=native#text/plain
 src/gtools/Makefile.am svneol=native#text/plain
