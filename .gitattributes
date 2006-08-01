@@ -1585,6 +1585,7 @@ src/libdm/dm-ogl_win.c svneol=native#text/plain
 src/libdm/dm-pex.c svneol=native#text/plain
 src/libdm/dm-plot.c svneol=native#text/plain
 src/libdm/dm-ps.c svneol=native#text/plain
+src/libdm/dm-wgl.c svneol=native#text/plain
 src/libdm/dm_obj.c svneol=native#text/plain
 src/libdm/knob.c svneol=native#text/plain
 src/libdm/libdm.dsp -text svneol=CRLF#text/plain
