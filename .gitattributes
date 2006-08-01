@@ -1598,7 +1598,6 @@ src/libfb/adage.h svneol=native#text/plain
 src/libfb/adagecursor.h svneol=native#text/plain
 src/libfb/adageframe.h svneol=native#text/plain
 src/libfb/asize.c svneol=native#text/plain
-src/libfb/compress.c svneol=native#text/plain
 src/libfb/dmdfb.h svneol=native#text/plain
 src/libfb/fb_generic.c svneol=native#text/plain
 src/libfb/fb_log.c svneol=native#text/plain
