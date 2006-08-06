@@ -58,6 +58,7 @@ db/xmp.asc svneol=native#text/plain
 doc/.cvsignore svneol=native#text/plain
 doc/IDEAS -text
 doc/Makefile.am svneol=native#text/plain
+doc/PROJECTS -text
 doc/README.AIX svneol=native#text/plain
 doc/README.BSD svneol=native#text/plain
 doc/README.IRIX svneol=native#text/plain
