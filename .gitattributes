@@ -1611,7 +1611,6 @@ src/libfb/fblocal.h svneol=native#text/plain
 src/libfb/fbserv_obj.c svneol=native#text/plain
 src/libfb/fbserv_obj_win32.c svneol=native#text/plain
 src/libfb/getput.c svneol=native#text/plain
-src/libfb/if_4d-old.c svneol=native#text/plain
 src/libfb/if_4d.c svneol=native#text/plain
 src/libfb/if_TEMPLATE.c svneol=native#text/plain
 src/libfb/if_X.c svneol=native#text/plain
