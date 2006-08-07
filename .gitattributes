@@ -1624,7 +1624,6 @@ src/libfb/if_disk.c svneol=native#text/plain
 src/libfb/if_mem.c svneol=native#text/plain
 src/libfb/if_null.c svneol=native#text/plain
 src/libfb/if_ogl.c svneol=native#text/plain
-src/libfb/if_ogl_win32.c svneol=native#text/plain
 src/libfb/if_ptty.c svneol=native#text/plain
 src/libfb/if_rat.c svneol=native#text/plain
 src/libfb/if_remote.c svneol=native#text/plain
