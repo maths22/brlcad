@@ -1630,6 +1630,7 @@ src/libfb/if_sgi.c svneol=native#text/plain
 src/libfb/if_sgiw.c svneol=native#text/plain
 src/libfb/if_stack.c svneol=native#text/plain
 src/libfb/if_sun.c svneol=native#text/plain
+src/libfb/if_tk.c svneol=native#text/plain
 src/libfb/if_ts.c svneol=native#text/plain
 src/libfb/if_ug.c svneol=native#text/plain
 src/libfb/if_wgl.c svneol=native#text/plain
