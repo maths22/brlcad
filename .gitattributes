@@ -3310,6 +3310,7 @@ src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
 src/other/libregex/cname.h svneol=native#text/plain
 src/other/libregex/engine.c svneol=native#text/plain
+src/other/libregex/libregex.dsp -text svneol=CRLF#text/plain
 src/other/libregex/regcomp.c svneol=native#text/plain
 src/other/libregex/regerror.c svneol=native#text/plain
 src/other/libregex/regex2.h svneol=native#text/plain
