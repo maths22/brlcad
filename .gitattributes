@@ -1862,6 +1862,7 @@ src/librt/timercos.c svneol=native#text/plain
 src/librt/timerhep.c svneol=native#text/plain
 src/librt/timerunix.c svneol=native#text/plain
 src/librt/track.c svneol=native#text/plain
+src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
 src/librt/vdraw.c svneol=native#text/plain
 src/librt/vers_win.c svneol=native#text/plain
