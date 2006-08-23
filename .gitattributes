@@ -5231,6 +5231,7 @@ src/tclscripts/Makefile.am svneol=native#text/plain
 src/tclscripts/README svneol=native#text/plain
 src/tclscripts/ami.tcl svneol=native#text/plain
 src/tclscripts/ampi.tcl svneol=native#text/plain
+src/tclscripts/archer/.cvsignore svneol=native#text/plain
 src/tclscripts/archer/Arb4EditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Arb5EditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Arb6EditFrame.tcl svneol=native#text/plain

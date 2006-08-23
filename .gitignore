@@ -648,6 +648,8 @@ src/tab/scriptsort
 src/tab/tabinterp
 src/tab/tabsub
 src/tab/txyz-pl
+src/tclscripts/archer/pkgIndex.tcl
+src/tclscripts/archer/tclIndex
 src/tclscripts/geometree/pkgIndex.tcl
 src/tclscripts/geometree/tclIndex
 src/tclscripts/lib/pkgIndex.tcl
