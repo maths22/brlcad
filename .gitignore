@@ -339,6 +339,7 @@ src/lgt/lgt
 src/libbn/libbn.plg
 src/libbn/vers.c
 src/libbn/version
+src/libbu/htester
 src/libbu/libbu.plg
 src/libbu/vers.c
 src/libbu/version
