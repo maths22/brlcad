@@ -5575,6 +5575,7 @@ src/tclscripts/mged/edit_solid_int.tcl svneol=native#text/plain
 src/tclscripts/mged/editmenu.tcl svneol=native#text/plain
 src/tclscripts/mged/editobj.tcl svneol=native#text/plain
 src/tclscripts/mged/eobjmenu.tcl svneol=native#text/plain
+src/tclscripts/mged/expand_comb_tree.tcl svneol=native#text/plain
 src/tclscripts/mged/extract.tcl svneol=native#text/plain
 src/tclscripts/mged/font.tcl svneol=native#text/plain
 src/tclscripts/mged/g2asc.tcl svneol=native#text/plain
