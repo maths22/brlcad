@@ -50,7 +50,6 @@ include/brlcad_config.h.in
 include/brlcad_version.h
 include/stamp-h1
 include/version
-librt/vers.c
 /libtool
 /ltmain.sh
 misc/COPYING.backup
