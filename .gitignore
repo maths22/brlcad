@@ -1,4 +1,7 @@
+/.cdtproject
 /.deps
+/.project
+/.settings
 /Makefile
 /Makefile.in
 /aclocal.m4
