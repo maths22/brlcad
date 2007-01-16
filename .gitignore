@@ -527,6 +527,7 @@ src/other/libtk/library/pkgIndex.tcl
 src/other/libtk/unix/tkConfig.sh
 src/other/libtk/wish
 src/other/libtk/wish.static
+src/other/libz/libz.plg
 src/other/openNURBS/opennurbs.plg
 src/proc-db/bottest
 src/proc-db/brickwall

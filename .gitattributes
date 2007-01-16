@@ -4941,6 +4941,7 @@ src/other/libutahrle/rle_skiprow.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.c svneol=native#text/plain
 src/other/libutahrle/vaxshort.c svneol=native#text/plain
+src/other/libz/.cvsignore svneol=native#text/plain
 src/other/libz/ChangeLog svneol=native#text/plain
 src/other/libz/FAQ -text
 src/other/libz/INDEX -text
@@ -4993,6 +4994,7 @@ src/other/libz/inflate.c svneol=native#text/plain
 src/other/libz/inflate.h svneol=native#text/plain
 src/other/libz/inftrees.c svneol=native#text/plain
 src/other/libz/inftrees.h svneol=native#text/plain
+src/other/libz/libz.dsp -text svneol=CRLF#text/plain
 src/other/libz/minigzip.c svneol=native#text/plain
 src/other/libz/msdos/Makefile.bor svneol=native#text/plain
 src/other/libz/msdos/Makefile.dj2 svneol=native#text/plain
