@@ -5775,6 +5775,8 @@ src/tclscripts/fs_dialog.tk svneol=native#text/plain
 src/tclscripts/geometree/GeometryBrowser.tcl svneol=native#text/plain
 src/tclscripts/geometree/Makefile.am svneol=native#text/plain
 src/tclscripts/geometree/geometree.tcl svneol=native#text/plain
+src/tclscripts/geometree/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/geometree/tclIndex -text
 src/tclscripts/helpcomm.tcl svneol=native#text/plain
 src/tclscripts/helplib.tcl svneol=native#text/plain
 src/tclscripts/hoc.tcl svneol=native#text/plain
@@ -5800,6 +5802,8 @@ src/tclscripts/lib/Table.tcl svneol=native#text/plain
 src/tclscripts/lib/TableView.tcl svneol=native#text/plain
 src/tclscripts/lib/View.tcl svneol=native#text/plain
 src/tclscripts/lib/ViewAxesControl.tcl svneol=native#text/plain
+src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/lib/tclIndex -text
 src/tclscripts/libdm.tcl svneol=native#text/plain
 src/tclscripts/menu_override.tcl svneol=native#text/plain
 src/tclscripts/mged/Makefile.am svneol=native#text/plain
@@ -5915,16 +5919,22 @@ src/tclscripts/mged/skt_ed.tcl svneol=native#text/plain
 src/tclscripts/mged/solclick.tcl svneol=native#text/plain
 src/tclscripts/mged/solcreate.tcl svneol=native#text/plain
 src/tclscripts/mged/solid.tcl svneol=native#text/plain
+src/tclscripts/mged/tclIndex -text
 src/tclscripts/mged/text.tcl svneol=native#text/plain
 src/tclscripts/mged/titles.tcl svneol=native#text/plain
 src/tclscripts/mged/tree.tcl svneol=native#text/plain
 src/tclscripts/mouse.tcl svneol=native#text/plain
 src/tclscripts/nirt/Makefile.am svneol=native#text/plain
+src/tclscripts/nirt/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/nirt/prototype.sh svneol=native#text/x-sh
+src/tclscripts/nirt/tclIndex -text
+src/tclscripts/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/Makefile.am svneol=native#text/plain
 src/tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/help.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/menu.tcl svneol=native#text/plain
+src/tclscripts/pl-dm/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/pl-dm/tclIndex -text
 src/tclscripts/rtwizard/Makefile.am svneol=native#text/plain
 src/tclscripts/rtwizard/examples/Makefile.am svneol=native#text/plain
 src/tclscripts/rtwizard/examples/PictureTypeA/Makefile.am svneol=native#text/plain
@@ -5984,7 +5994,11 @@ src/tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
+src/tclscripts/rtwizard/lib/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/rtwizard/lib/tclIndex -text
+src/tclscripts/rtwizard/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
+src/tclscripts/rtwizard/tclIndex -text
 src/tclscripts/sdialogs/Makefile.am svneol=native#text/plain
 src/tclscripts/sdialogs/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/Makefile.am svneol=native#text/plain
@@ -5993,6 +6007,7 @@ src/tclscripts/sdialogs/scripts/listdialog.itk svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/stddlgs.tcl svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/tclIndex -text
 src/tclscripts/sdialogs/sdialogs.tcl svneol=native#text/plain
+src/tclscripts/sdialogs/tclIndex -text
 src/tclscripts/swidgets/Makefile.am svneol=native#text/plain
 src/tclscripts/swidgets/images/Makefile.am svneol=native#text/plain
 src/tclscripts/swidgets/images/closed.gif -text svneol=unset#image/gif
@@ -6010,9 +6025,13 @@ src/tclscripts/swidgets/scripts/togglearrow.itk svneol=native#text/plain
 src/tclscripts/swidgets/scripts/tooltip.itk svneol=native#text/plain
 src/tclscripts/swidgets/scripts/tree.itk svneol=native#text/plain
 src/tclscripts/swidgets/swidgets.tcl svneol=native#text/plain
+src/tclscripts/swidgets/tclIndex -text
+src/tclscripts/tclIndex -text
 src/tclscripts/util/Makefile.am svneol=native#text/plain
 src/tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 src/tclscripts/util/luniq.tcl svneol=native#text/plain
+src/tclscripts/util/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/util/tclIndex -text
 src/tclscripts/vmath.tcl svneol=native#text/plain
 src/util/.cvsignore svneol=native#text/plain
 src/util/Makefile.am svneol=native#text/plain
