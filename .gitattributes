@@ -329,8 +329,8 @@ doc/html/manuals/mged/cmd_line_ed.html svneol=native#text/html
 doc/html/manuals/mged/concl.html svneol=native#text/html
 doc/html/manuals/mged/contents.html svneol=native#text/html
 doc/html/manuals/mged/coord-axes.gif -text svneol=unset#image/gif
-doc/html/manuals/mged/cup -text
 doc/html/manuals/mged/cup.g -text
+doc/html/manuals/mged/cup.sh svneol=native#text/x-sh
 doc/html/manuals/mged/cup_and_mug.gif -text svneol=unset#image/gif
 doc/html/manuals/mged/cup_and_mug_small.gif -text svneol=unset#image/gif
 doc/html/manuals/mged/cup_out+in.gif -text svneol=unset#image/gif
