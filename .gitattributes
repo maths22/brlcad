@@ -384,6 +384,7 @@ doc/html/manuals/small-eagleCAD.ico -text svneol=unset#image/x-icon
 doc/hypot.txt svneol=native#text/plain
 doc/irprep.tr svneol=native#text/plain
 doc/legal/Makefile.am svneol=native#text/plain
+doc/legal/bdl.txt svneol=native#text/plain
 doc/legal/bsd.txt svneol=native#text/plain
 doc/legal/gfdl.txt svneol=native#text/plain
 doc/legal/gpl.txt svneol=native#text/plain
