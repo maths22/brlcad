@@ -783,6 +783,7 @@ sh/show.sh svneol=native#text/x-sh
 sh/shtool -text
 sh/tracker.sh svneol=native#text/x-sh
 sh/vers.sh svneol=native#text/x-sh
+sh/ws.sh svneol=native#text/x-sh
 src/Makefile.am svneol=native#text/plain
 src/README svneol=native#text/plain
 src/adrt/AUTHORS svneol=native#text/plain
