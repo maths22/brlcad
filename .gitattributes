@@ -1795,6 +1795,7 @@ src/librt/librt.dsp -text svneol=CRLF#text/plain
 src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
+src/librt/mirror.c svneol=native#text/plain
 src/librt/mkbundle.c svneol=native#text/plain
 src/librt/nirt.c svneol=native#text/plain
 src/librt/nmg_bool.c svneol=native#text/plain
