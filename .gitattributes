@@ -467,7 +467,6 @@ include/regex.h svneol=native#text/plain
 include/rle.h svneol=native#text/plain
 include/rle_code.h svneol=native#text/plain
 include/rle_config.h svneol=native#text/plain
-include/rle_getraw.h svneol=native#text/plain
 include/rle_put.h svneol=native#text/plain
 include/rle_raw.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
