@@ -5162,6 +5162,7 @@ src/other/libz/inflate.c svneol=native#text/plain
 src/other/libz/inflate.h svneol=native#text/plain
 src/other/libz/inftrees.c svneol=native#text/plain
 src/other/libz/inftrees.h svneol=native#text/plain
+src/other/libz/libz.dsp -text svneol=CRLF#text/plain
 src/other/libz/make_vms.com svneol=native#text/plain
 src/other/libz/minigzip.c svneol=native#text/plain
 src/other/libz/msdos/Makefile.bor svneol=native#text/plain
