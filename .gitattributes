@@ -1016,6 +1016,7 @@ src/canon/ipustat.c svneol=native#text/plain
 src/canon/pix-ipu.c svneol=native#text/plain
 src/canon/png-ipu.c svneol=native#text/plain
 src/conv/.cvsignore svneol=native#text/plain
+src/conv/Formats.csv svneol=native#text/plain
 src/conv/Makefile.am svneol=native#text/plain
 src/conv/asc-nmg.1 svneol=native#text/plain
 src/conv/asc-nmg.c svneol=native#text/plain
