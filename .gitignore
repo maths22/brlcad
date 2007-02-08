@@ -56,8 +56,6 @@ include/version
 librt/vers.c
 /libtool
 /ltmain.sh
-misc/COPYING.backup
-misc/INSTALL.backup
 misc/Makefile
 misc/Makefile.in
 misc/brlcad.spec
