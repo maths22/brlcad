@@ -500,7 +500,6 @@ misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad.spec.in svneol=native#text/plain
-misc/cvs2cl.pl svneol=native#text/plain
 misc/doxygen_structure -text
 misc/enigma/COPYING svneol=native#text/plain
 misc/enigma/Makefile.am svneol=native#text/plain
