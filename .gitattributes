@@ -1856,6 +1856,7 @@ src/librtserver/rtserver.c svneol=native#text/plain
 src/librtserver/rtserverTest.c svneol=native#text/plain
 src/libsysv/.cvsignore svneol=native#text/plain
 src/libsysv/Makefile.am svneol=native#text/plain
+src/libsysv/basename.c svneol=native#text/plain
 src/libsysv/bsdselect.c svneol=native#text/plain
 src/libsysv/libsysv.dsp -text svneol=CRLF#text/plain
 src/libsysv/memset.c svneol=native#text/plain
