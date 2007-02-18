@@ -546,6 +546,7 @@ src/other/libz/libz.plg
 src/other/libz/minigzip
 src/other/openNURBS/opennurbs.plg
 src/proc-db/bottest
+src/proc-db/brep_cube
 src/proc-db/brickwall
 src/proc-db/clutter
 src/proc-db/contours
