@@ -1499,6 +1499,7 @@ src/libbu/cmdhist.c svneol=native#text/plain
 src/libbu/cmdhist_obj.c svneol=native#text/plain
 src/libbu/color.c svneol=native#text/plain
 src/libbu/convert.c svneol=native#text/plain
+src/libbu/dirname.c svneol=native#text/plain
 src/libbu/fopen_uniq.c svneol=native#text/plain
 src/libbu/getopt.c svneol=native#text/plain
 src/libbu/hash.c svneol=native#text/plain
