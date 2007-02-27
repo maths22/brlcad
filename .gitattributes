@@ -1865,6 +1865,7 @@ src/libsysv/redata.c svneol=native#text/plain
 src/libsysv/regex.c svneol=native#text/plain
 src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
+src/libsysv/strlcpy.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
