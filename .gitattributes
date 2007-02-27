@@ -1698,6 +1698,7 @@ src/librt/binary_obj.c svneol=native#text/plain
 src/librt/bomb.c svneol=native#text/plain
 src/librt/bool.c svneol=native#text/plain
 src/librt/bot.h svneol=native#text/plain
+src/librt/brep_test.cpp svneol=native#text/plain
 src/librt/bundle.c svneol=native#text/plain
 src/librt/cmd.c svneol=native#text/plain
 src/librt/comb.c svneol=native#text/plain
