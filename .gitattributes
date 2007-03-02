@@ -3175,8 +3175,9 @@ src/other/iwidgets/win/makefile.vc svneol=native#text/plain
 src/other/iwidgets/win/pkg.vc -text
 src/other/jove/.cvsignore svneol=native#text/plain
 src/other/jove/Makefile.am svneol=native#text/plain
-src/other/jove/describe.com.1 svneol=native#text/plain
+src/other/jove/describe.com svneol=native#text/plain
 src/other/jove/findcom.c svneol=native#text/plain
+src/other/jove/jove-tutorial -text
 src/other/jove/jove.1 svneol=native#text/plain
 src/other/jove/jove.h svneol=native#text/plain
 src/other/jove/jove_buf.c svneol=native#text/plain
@@ -3199,9 +3200,7 @@ src/other/jove/jove_term.c svneol=native#text/plain
 src/other/jove/jove_tune.c svneol=native#text/plain
 src/other/jove/jove_wind.c svneol=native#text/plain
 src/other/jove/mkversion.sh svneol=native#text/x-sh
-src/other/jove/teach-jove.1 svneol=native#text/plain
 src/other/jove/teach-jove.in svneol=native#text/plain
-src/other/jove/teach-jove.sh svneol=native#text/x-sh
 src/other/jove/termcap.h svneol=native#text/plain
 src/other/libpng/.cvsignore svneol=native#text/plain
 src/other/libpng/ANNOUNCE -text
