@@ -501,6 +501,10 @@ misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
 misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
+misc/archlinux/Makefile.am svneol=native#text/plain
+misc/archlinux/PKGBUILD.in svneol=native#text/plain
+misc/archlinux/brlcad.install.in svneol=native#text/plain
+misc/archlinux/brlcad.sh.in svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad.spec.in svneol=native#text/plain
 misc/doxygen_structure -text
