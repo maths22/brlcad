@@ -534,13 +534,6 @@ src/other/jove/version.c
 src/other/jove/version.number
 src/other/libpng/pngtest
 src/other/libpng/vers.c
-src/other/libtcl/tclsh
-src/other/libtcl/tclsh.static
-src/other/libtcl/unix/tclConfig.sh
-src/other/libtk/library/pkgIndex.tcl
-src/other/libtk/unix/tkConfig.sh
-src/other/libtk/wish
-src/other/libtk/wish.static
 src/other/libz/example
 src/other/libz/libz.plg
 src/other/libz/minigzip
