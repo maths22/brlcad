@@ -58,6 +58,9 @@ librt/vers.c
 /ltmain.sh
 misc/Makefile
 misc/Makefile.in
+misc/archlinux/PKGBUILD
+misc/archlinux/brlcad.install
+misc/archlinux/brlcad.sh
 misc/brlcad.spec
 misc/compile
 misc/config.guess

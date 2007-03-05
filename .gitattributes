@@ -501,6 +501,7 @@ misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
 misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
+misc/archlinux/.cvsignore svneol=native#text/plain
 misc/archlinux/Makefile.am svneol=native#text/plain
 misc/archlinux/PKGBUILD.in svneol=native#text/plain
 misc/archlinux/brlcad.install.in svneol=native#text/plain
