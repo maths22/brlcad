@@ -5312,7 +5312,6 @@ src/other/tcl/tools/white.bmp -text svneol=unset#image/bmp
 src/other/tcl/unix/Makefile.in svneol=native#text/plain
 src/other/tcl/unix/README svneol=native#text/plain
 src/other/tcl/unix/aclocal.m4 svneol=native#text/plain
-src/other/tcl/unix/configure -text
 src/other/tcl/unix/configure.in svneol=native#text/plain
 src/other/tcl/unix/dltest/Makefile.in svneol=native#text/plain
 src/other/tcl/unix/dltest/README svneol=native#text/plain
@@ -5969,7 +5968,6 @@ src/other/tk/tests/xmfbox.test svneol=native#text/plain
 src/other/tk/unix/Makefile.in svneol=native#text/plain
 src/other/tk/unix/README svneol=native#text/plain
 src/other/tk/unix/aclocal.m4 svneol=native#text/plain
-src/other/tk/unix/configure -text
 src/other/tk/unix/configure.in svneol=native#text/plain
 src/other/tk/unix/install-sh svneol=native#text/plain
 src/other/tk/unix/installManPage svneol=native#text/plain
