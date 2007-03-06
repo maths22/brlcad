@@ -1497,6 +1497,7 @@ src/libbu/Makefile.am svneol=native#text/plain
 src/libbu/association.c svneol=native#text/plain
 src/libbu/avs.c svneol=native#text/plain
 src/libbu/badmagic.c svneol=native#text/plain
+src/libbu/basename.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
 src/libbu/bomb.c svneol=native#text/plain
 src/libbu/brlcad_path.c svneol=native#text/plain
