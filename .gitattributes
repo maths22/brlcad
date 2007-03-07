@@ -6219,7 +6219,6 @@ src/proc-db/globe.c svneol=native#text/plain
 src/proc-db/kurt.c svneol=native#text/plain
 src/proc-db/molecule.c svneol=native#text/plain
 src/proc-db/nmgmodel.c svneol=native#text/plain
-src/proc-db/nmgxplode.c svneol=native#text/plain
 src/proc-db/patches.h svneol=native#text/plain
 src/proc-db/picket_fence.1 svneol=native#text/plain
 src/proc-db/picket_fence.c svneol=native#text/plain
