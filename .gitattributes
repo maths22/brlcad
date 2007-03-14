@@ -3399,6 +3399,7 @@ src/other/libregex/utils.h svneol=native#text/plain
 src/other/libtermlib/Makefile.am svneol=native#text/plain
 src/other/libtermlib/libterm.h svneol=native#text/plain
 src/other/libtermlib/termcap.c svneol=native#text/plain
+src/other/libtermlib/termcap.src -text
 src/other/libtermlib/tgoto.c svneol=native#text/plain
 src/other/libtermlib/tputs.c svneol=native#text/plain
 src/other/libutahrle/Makefile.am svneol=native#text/plain
