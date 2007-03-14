@@ -3398,15 +3398,11 @@ src/other/libregex/regfree.c svneol=native#text/plain
 src/other/libregex/utils.h svneol=native#text/plain
 src/other/libtermlib/.cvsignore svneol=native#text/plain
 src/other/libtermlib/Makefile.am svneol=native#text/plain
-src/other/libtermlib/pathnames.h svneol=native#text/plain
-src/other/libtermlib/termcap.3 svneol=native#text/plain
 src/other/libtermlib/termcap.c svneol=native#text/plain
 src/other/libtermlib/termcap.h svneol=native#text/plain
 src/other/libtermlib/termcap.src -text
-src/other/libtermlib/termcap_private.h svneol=native#text/plain
 src/other/libtermlib/tgoto.c svneol=native#text/plain
 src/other/libtermlib/tputs.c svneol=native#text/plain
-src/other/libtermlib/tputws.c svneol=native#text/plain
 src/other/libutahrle/Makefile.am svneol=native#text/plain
 src/other/libutahrle/Runput.c svneol=native#text/plain
 src/other/libutahrle/buildmap.3 svneol=native#text/plain
