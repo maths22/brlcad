@@ -538,6 +538,7 @@ src/other/jove/version.c
 src/other/jove/version.number
 src/other/libpng/pngtest
 src/other/libpng/vers.c
+src/other/libtermlib/termcap
 src/other/libz/example
 src/other/libz/libz.plg
 src/other/libz/minigzip

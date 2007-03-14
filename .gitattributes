@@ -3396,6 +3396,7 @@ src/other/libregex/regex2.h svneol=native#text/plain
 src/other/libregex/regexec.c svneol=native#text/plain
 src/other/libregex/regfree.c svneol=native#text/plain
 src/other/libregex/utils.h svneol=native#text/plain
+src/other/libtermlib/.cvsignore svneol=native#text/plain
 src/other/libtermlib/Makefile.am svneol=native#text/plain
 src/other/libtermlib/pathnames.h svneol=native#text/plain
 src/other/libtermlib/termcap.3 svneol=native#text/plain
