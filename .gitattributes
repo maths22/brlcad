@@ -166,6 +166,7 @@ doc/html/ReleaseNotes/email4.0.html svneol=native#text/html
 doc/html/ReleaseNotes/email4.4.html svneol=native#text/html
 doc/html/ReleaseNotes/email5.0.html svneol=native#text/html
 doc/html/ReleaseNotes/index.html svneol=native#text/html
+doc/html/bookmarks.html svneol=native#text/html
 doc/html/manuals/Anim_Tutorial/Lee_tux.gif -text svneol=unset#image/gif
 doc/html/manuals/Anim_Tutorial/Makefile.am svneol=native#text/plain
 doc/html/manuals/Anim_Tutorial/animtbl.gif -text svneol=unset#image/gif
