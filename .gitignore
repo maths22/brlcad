@@ -556,6 +556,7 @@ src/other/tk/unix/configure
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
 src/proc-db/bottest
+src/proc-db/breap_simple
 src/proc-db/brep_cube
 src/proc-db/brickwall
 src/proc-db/clutter
