@@ -1516,6 +1516,7 @@ src/libbu/htester.c svneol=native#text/plain
 src/libbu/htond.3 svneol=native#text/plain
 src/libbu/htond.c svneol=native#text/plain
 src/libbu/htonf.c svneol=native#text/plain
+src/libbu/image.c svneol=native#text/plain
 src/libbu/ispar.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
 src/libbu/libbu.3 svneol=native#text/plain
