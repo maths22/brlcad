@@ -505,6 +505,7 @@ misc/archlinux/PKGBUILD.in svneol=native#text/plain
 misc/archlinux/brlcad.install.in svneol=native#text/plain
 misc/archlinux/brlcad.sh.in svneol=native#text/plain
 misc/batch-indent-region.el -text
+misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
 misc/doxygen_structure -text
 misc/enigma/.cvsignore svneol=native#text/plain
