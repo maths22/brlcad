@@ -537,6 +537,7 @@ misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
+misc/nsis/Makefile.am svneol=native#text/plain
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
 misc/nsis/copying.txt svneol=native#text/plain
