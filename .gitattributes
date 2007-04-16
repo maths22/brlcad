@@ -544,6 +544,7 @@ misc/nsis/copying.txt svneol=native#text/plain
 misc/nsis/header.bmp -text svneol=unset#image/bmp
 misc/nsis/side.bmp -text svneol=unset#image/bmp
 misc/nsis/uninstall.ico -text svneol=unset#image/x-icon
+misc/pkgconfig/.cvsignore svneol=native#text/plain
 misc/pkgconfig/Makefile.am svneol=native#text/plain
 misc/pkgconfig/bn.pc.in svneol=native#text/plain
 misc/pkgconfig/brlcad.pc.in svneol=native#text/plain
