@@ -356,8 +356,6 @@ src/libbu/htester
 src/libbu/libbu.plg
 src/libcursor/vers.c
 src/libcursor/version
-src/libdm/vers.c
-src/libdm/version
 src/libfft/.deps
 src/libfft/.libs
 src/libfft/Makefile
