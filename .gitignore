@@ -378,8 +378,6 @@ src/libfft/rfft512.c
 src/libfft/rfft64.c
 src/liboptical/vers.c
 src/liboptical/version
-src/liborle/vers.c
-src/liborle/version
 src/libpkg/tpkg
 src/libpkg/vers.c
 src/libpkg/version
