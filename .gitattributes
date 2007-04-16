@@ -410,11 +410,21 @@ include/anim.h svneol=native#text/plain
 include/bn.h svneol=native#text/plain
 include/brep.h svneol=native#text/plain
 include/brlcad.h svneol=native#text/plain
+include/brlcad_version.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
 include/compat4.h svneol=native#text/plain
 include/conf.h svneol=native#text/plain
+include/conf/COUNT -text
+include/conf/DATE -text
+include/conf/HOST -text
+include/conf/MAJOR -text
+include/conf/MINOR -text
+include/conf/Makefile.am svneol=native#text/plain
+include/conf/PATCH -text
+include/conf/PATH -text
+include/conf/USER -text
 include/config_win.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
@@ -1509,6 +1519,7 @@ src/libbn/tabdata.c svneol=native#text/plain
 src/libbn/tplot.c svneol=native#text/plain
 src/libbn/vectfont.c svneol=native#text/plain
 src/libbn/vector.c svneol=native#text/plain
+src/libbn/vers.c svneol=native#text/plain
 src/libbn/vers_win.c svneol=native#text/plain
 src/libbn/vert_tree.c svneol=native#text/plain
 src/libbn/wavelet.c svneol=native#text/plain
@@ -1571,6 +1582,7 @@ src/libbu/redblack.3 svneol=native#text/plain
 src/libbu/semaphore.c svneol=native#text/plain
 src/libbu/stat.c svneol=native#text/plain
 src/libbu/units.c svneol=native#text/plain
+src/libbu/vers.c svneol=native#text/plain
 src/libbu/vers_win.c svneol=native#text/plain
 src/libbu/vfont.c svneol=native#text/plain
 src/libbu/vls.c svneol=native#text/plain
@@ -1650,6 +1662,7 @@ src/libfb/oglcursor.h svneol=native#text/plain
 src/libfb/sgicursor.h svneol=native#text/plain
 src/libfb/sgiselect.s svneol=native#text/plain
 src/libfb/tcl.c svneol=native#text/plain
+src/libfb/vers.c svneol=native#text/plain
 src/libfb/vers_win.c svneol=native#text/plain
 src/libfft/.cvsignore svneol=native#text/plain
 src/libfft/Makefile.am svneol=native#text/plain
@@ -1876,6 +1889,7 @@ src/librt/track.c svneol=native#text/plain
 src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
 src/librt/vdraw.c svneol=native#text/plain
+src/librt/vers.c svneol=native#text/plain
 src/librt/vers_win.c svneol=native#text/plain
 src/librt/view_obj.c svneol=native#text/plain
 src/librt/vlist.c svneol=native#text/plain

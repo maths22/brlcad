@@ -50,9 +50,6 @@ include/Makefile
 include/Makefile.in
 include/brlcad_config.h
 include/brlcad_config.h.in
-include/brlcad_version.h
-include/stamp-h1
-include/version
 librt/vers.c
 /libtool
 /ltmain.sh
@@ -358,18 +355,12 @@ src/irprep/shapefact
 src/irprep/showtherm
 src/lgt/lgt
 src/libbn/libbn.plg
-src/libbn/vers.c
-src/libbn/version
 src/libbu/htester
 src/libbu/libbu.plg
-src/libbu/vers.c
-src/libbu/version
 src/libcursor/vers.c
 src/libcursor/version
 src/libdm/vers.c
 src/libdm/version
-src/libfb/vers.c
-src/libfb/version
 src/libfft/.deps
 src/libfft/.libs
 src/libfft/Makefile
@@ -405,8 +396,6 @@ src/librt/brep_test
 src/librt/comb
 src/librt/librt.plg
 src/librt/nurb_example
-src/librt/vers.c
-src/librt/version
 src/libsysv/libsysv.plg
 src/libsysv/vers.c
 src/libsysv/version
