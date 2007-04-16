@@ -376,8 +376,6 @@ src/libfft/rfft256.c
 src/libfft/rfft32.c
 src/libfft/rfft512.c
 src/libfft/rfft64.c
-src/libmultispectral/vers.c
-src/libmultispectral/version
 src/liboptical/vers.c
 src/liboptical/version
 src/liborle/vers.c
