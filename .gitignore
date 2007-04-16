@@ -263,10 +263,7 @@ src/conv/iges/.libs
 src/conv/iges/Makefile
 src/conv/iges/Makefile.in
 src/conv/iges/g-iges
-src/conv/iges/g-iges-vers.c
 src/conv/iges/iges-g
-src/conv/iges/iges-g-vers.c
-src/conv/iges/version
 src/conv/jack/g-jack
 src/conv/jack/jack-g
 src/conv/nastran-g
