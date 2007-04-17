@@ -401,8 +401,6 @@ src/mk/mk_winfrm
 src/mk/mk_wire
 src/nirt/nirt
 src/nirt/showshot
-src/nirt/vers.c
-src/nirt/version
 src/other/URToolkit/.deps
 src/other/URToolkit/.libs
 src/other/URToolkit/Makefile
