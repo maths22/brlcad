@@ -553,8 +553,6 @@ src/proc-db/wall
 src/proc-db/wdb_example
 src/remrt/remrt
 src/remrt/rtsrv
-src/remrt/vers.c
-src/remrt/version
 src/rt/.deps
 src/rt/.libs
 src/rt/Makefile
