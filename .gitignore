@@ -95,6 +95,7 @@ misc/mkinstalldirs
 misc/pkgconfig/*.pc
 misc/py-compile
 misc/win32-msvc/Dll/brlcad.plg
+misc/win32-msvc/aPrep/aPrep.plg
 misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
 misc/win32-msvc7/all/Debug
