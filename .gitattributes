@@ -2068,7 +2068,6 @@ src/mged/usepen.c svneol=native#text/plain
 src/mged/utility1.c svneol=native#text/plain
 src/mged/utility2.c svneol=native#text/plain
 src/mged/vdraw.c svneol=native#text/plain
-src/mged/vers_win.c svneol=native#text/plain
 src/mged/vgdev.h svneol=native#text/plain
 src/mged/vld_std.h svneol=native#text/plain
 src/mged/vmathUi.h svneol=native#text/plain
