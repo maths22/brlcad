@@ -1947,7 +1947,6 @@ src/libwdb/spl.c svneol=native#text/plain
 src/libwdb/strsol.c svneol=native#text/plain
 src/libwdb/submodel.c svneol=native#text/plain
 src/libwdb/units.c svneol=native#text/plain
-src/libwdb/vers_win.c svneol=native#text/plain
 src/libwdb/vol.c svneol=native#text/plain
 src/libwdb/wdb.c svneol=native#text/plain
 src/mged/.cvsignore svneol=native#text/plain

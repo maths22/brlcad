@@ -387,8 +387,6 @@ src/libsysv/libsysv.plg
 src/libtermio/vers.c
 src/libtermio/version
 src/libwdb/libwdb.plg
-src/libwdb/vers.c
-src/libwdb/version
 src/mged/cad_boundp
 src/mged/cad_parea
 src/mged/mged
