@@ -416,15 +416,10 @@ include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
 include/compat4.h svneol=native#text/plain
 include/conf.h svneol=native#text/plain
-include/conf/COUNT -text
-include/conf/DATE -text
-include/conf/HOST -text
 include/conf/MAJOR -text
 include/conf/MINOR -text
 include/conf/Makefile.am svneol=native#text/plain
 include/conf/PATCH -text
-include/conf/PATH -text
-include/conf/USER -text
 include/config_win.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
