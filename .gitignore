@@ -50,6 +50,11 @@ include/Makefile
 include/Makefile.in
 include/brlcad_config.h
 include/brlcad_config.h.in
+include/conf/COUNT
+include/conf/DATE
+include/conf/HOST
+include/conf/PATH
+include/conf/USER
 librt/vers.c
 /libtool
 /ltmain.sh
