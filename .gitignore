@@ -379,8 +379,6 @@ src/libfft/rfft64.c
 src/liboptical/vers.c
 src/liboptical/version
 src/libpkg/tpkg
-src/libpkg/vers.c
-src/libpkg/version
 src/librt/brep_test
 src/librt/comb
 src/librt/librt.plg
