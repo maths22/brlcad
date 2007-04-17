@@ -384,8 +384,6 @@ src/librt/comb
 src/librt/librt.plg
 src/librt/nurb_example
 src/libsysv/libsysv.plg
-src/libsysv/vers.c
-src/libsysv/version
 src/libtclcad/vers.c
 src/libtclcad/version
 src/libtermio/vers.c

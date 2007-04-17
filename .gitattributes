@@ -1906,7 +1906,6 @@ src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
-src/libsysv/vers_win.c svneol=native#text/plain
 src/libtclcad/.cvsignore svneol=native#text/plain
 src/libtclcad/Makefile.am svneol=native#text/plain
 src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
