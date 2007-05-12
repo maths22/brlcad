@@ -1557,6 +1557,7 @@ src/libbu/htond.c svneol=native#text/plain
 src/libbu/htonf.c svneol=native#text/plain
 src/libbu/image.c svneol=native#text/plain
 src/libbu/ispar.c svneol=native#text/plain
+src/libbu/kill.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
 src/libbu/libbu.3 svneol=native#text/plain
 src/libbu/libbu.dsp -text svneol=CRLF#text/plain
