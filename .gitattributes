@@ -1532,6 +1532,7 @@ src/libbu/.cvsignore svneol=native#text/plain
 src/libbu/Makefile.am svneol=native#text/plain
 src/libbu/association.c svneol=native#text/plain
 src/libbu/avs.c svneol=native#text/plain
+src/libbu/backtrace.c svneol=native#text/plain
 src/libbu/badmagic.c svneol=native#text/plain
 src/libbu/basename.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
