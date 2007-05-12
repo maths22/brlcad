@@ -1573,6 +1573,7 @@ src/libbu/observer.c svneol=native#text/plain
 src/libbu/parallel.c svneol=native#text/plain
 src/libbu/parse.c svneol=native#text/plain
 src/libbu/printb.c svneol=native#text/plain
+src/libbu/process.c svneol=native#text/plain
 src/libbu/ptbl.c svneol=native#text/plain
 src/libbu/rb_create.c svneol=native#text/plain
 src/libbu/rb_delete.c svneol=native#text/plain
