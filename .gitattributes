@@ -7113,7 +7113,6 @@ src/util/azel.c svneol=native#text/plain
 src/util/bary.1 svneol=native#text/plain
 src/util/bary.c svneol=native#text/plain
 src/util/binfo.c svneol=native#text/plain
-src/util/bombardier.c svneol=native#text/plain
 src/util/brlcad.1 svneol=native#text/plain
 src/util/buffer.1 svneol=native#text/plain
 src/util/buffer.c svneol=native#text/plain
