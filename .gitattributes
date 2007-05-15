@@ -698,6 +698,7 @@ misc/win32-msvc7/rtcheck/rtcheck.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/rtedge/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/rtedge/Makefile.am svneol=native#text/plain
 misc/win32-msvc7/rtedge/rtedge.vcproj -text svneol=CRLF#text/plain
+misc/win32-msvc7/rtg3/rtg3.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/stl2g/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/stl2g/Makefile.am svneol=native#text/plain
 misc/win32-msvc7/stl2g/stl2g.vcproj -text svneol=CRLF#text/plain
