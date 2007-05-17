@@ -1133,6 +1133,7 @@ src/conv/g5-g4.c svneol=native#text/plain
 src/conv/iges/.cvsignore svneol=native#text/plain
 src/conv/iges/BrepHandler.cpp svneol=native#text/plain
 src/conv/iges/Makefile.am svneol=native#text/plain
+src/conv/iges/PullbackCurve.cpp svneol=native#text/plain
 src/conv/iges/PullbackCurve.h svneol=native#text/plain
 src/conv/iges/add_face.c svneol=native#text/plain
 src/conv/iges/add_face.cpp svneol=native#text/plain
