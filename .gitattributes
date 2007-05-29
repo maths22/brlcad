@@ -1871,6 +1871,7 @@ src/librt/nurb_trim.c svneol=native#text/plain
 src/librt/nurb_trim_util.c svneol=native#text/plain
 src/librt/nurb_util.c svneol=native#text/plain
 src/librt/nurb_xsplit.c svneol=native#text/plain
+src/librt/opennurbs_ext.cpp svneol=native#text/plain
 src/librt/oslo_calc.c svneol=native#text/plain
 src/librt/oslo_map.c svneol=native#text/plain
 src/librt/parse.c svneol=native#text/plain
