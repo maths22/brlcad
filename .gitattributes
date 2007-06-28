@@ -1629,6 +1629,7 @@ src/libdm/dm-ps.c svneol=native#text/plain
 src/libdm/dm-tk.c svneol=native#text/plain
 src/libdm/dm-wgl.c svneol=native#text/plain
 src/libdm/dm_obj.c svneol=native#text/plain
+src/libdm/focus.c svneol=native#text/plain
 src/libdm/knob.c svneol=native#text/plain
 src/libdm/libdm.dsp -text svneol=CRLF#text/plain
 src/libdm/options.c svneol=native#text/plain
