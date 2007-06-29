@@ -1411,6 +1411,7 @@ src/fbserv/fbserv.c svneol=native#text/plain
 src/fbserv/server.c svneol=native#text/plain
 src/gtools/.cvsignore svneol=native#text/plain
 src/gtools/Makefile.am svneol=native#text/plain
+src/gtools/beset/.cvsignore svneol=native#text/plain
 src/gtools/beset/Makefile.am svneol=native#text/plain
 src/gtools/beset/beset.c svneol=native#text/plain
 src/gtools/beset/beset.h svneol=native#text/plain

@@ -341,6 +341,7 @@ src/fb/rle-fb
 src/fb/spm-fb
 src/fbed/fbed
 src/fbserv/fbserv
+src/gtools/beset/beset
 src/gtools/g_diff
 src/gtools/g_lint
 src/gtools/g_qa
