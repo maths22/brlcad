@@ -32,6 +32,7 @@ db/ktank.g
 db/lgt-test.g
 db/m35.g
 db/moss.g
+db/operators.g
 db/pic.g
 db/prim.g
 db/sphflake.g
