@@ -1891,7 +1891,6 @@ src/libtclcad/Makefile.am svneol=native#text/plain
 src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
 src/libtclcad/tclcadTkSetup.c svneol=native#text/plain
-src/libtclcad/tkCanvBezier.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/.cvsignore svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
