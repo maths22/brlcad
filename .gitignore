@@ -534,6 +534,7 @@ src/other/tk/unix/autom4te.cache
 src/other/tk/unix/config.log
 src/other/tk/unix/config.status
 src/other/tk/unix/configure
+src/other/tk/unix/libtclstub8.5.*
 src/other/tk/unix/libtk8.5.*
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
