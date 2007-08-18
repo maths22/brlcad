@@ -1603,7 +1603,6 @@ src/libfb/fb_obj.c svneol=native#text/plain
 src/libfb/fb_paged_io.c svneol=native#text/plain
 src/libfb/fb_rect.c svneol=native#text/plain
 src/libfb/fb_util.c svneol=native#text/plain
-src/libfb/fblocal.h svneol=native#text/plain
 src/libfb/fbserv_obj.c svneol=native#text/plain
 src/libfb/fbserv_obj_win32.c svneol=native#text/plain
 src/libfb/getput.c svneol=native#text/plain
