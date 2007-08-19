@@ -512,9 +512,7 @@ misc/archlinux/.cvsignore svneol=native#text/plain
 misc/archlinux/Makefile.am svneol=native#text/plain
 misc/archlinux/PKGBUILD.in svneol=native#text/plain
 misc/archlinux/PKGBUILD.static -text
-misc/archlinux/brlcad.install -text
 misc/archlinux/brlcad.install.in svneol=native#text/plain
-misc/archlinux/brlcad.sh svneol=native#text/x-sh
 misc/archlinux/brlcad.sh.in svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
