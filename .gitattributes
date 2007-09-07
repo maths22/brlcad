@@ -1651,7 +1651,6 @@ src/libfb/tcl.c svneol=native#text/plain
 src/libfb/vers.c svneol=native#text/plain
 src/libfft/.cvsignore svneol=native#text/plain
 src/libfft/Makefile.am svneol=native#text/plain
-src/libfft/complex.h svneol=native#text/plain
 src/libfft/ditsplit.c svneol=native#text/plain
 src/libfft/ditsplitc.c svneol=native#text/plain
 src/libfft/fft.h svneol=native#text/plain
