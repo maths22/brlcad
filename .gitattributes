@@ -6514,7 +6514,6 @@ src/sig/a-d.c svneol=native#text/plain
 src/sig/butter.c svneol=native#text/plain
 src/sig/bw-d.c svneol=native#text/plain
 src/sig/c-d.c svneol=native#text/plain
-src/sig/complex.h svneol=native#text/plain
 src/sig/coswin.c svneol=native#text/plain
 src/sig/d-a.c svneol=native#text/plain
 src/sig/d-bw.c svneol=native#text/plain
