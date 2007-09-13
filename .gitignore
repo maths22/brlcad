@@ -57,7 +57,6 @@ include/conf/HOST
 include/conf/PATH
 include/conf/USER
 include/stamp-h1
-librt/vers.c
 /libtool
 /ltmain.sh
 misc/Makefile
