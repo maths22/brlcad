@@ -2505,7 +2505,7 @@ src/other/blt/library/dragdrop.tcl svneol=native#text/plain
 src/other/blt/library/graph.tcl svneol=native#text/plain
 src/other/blt/library/hierbox.tcl svneol=native#text/plain
 src/other/blt/library/hiertable.tcl svneol=native#text/plain
-src/other/blt/library/pkgIndex.tcl svneol=native#text/plain
+src/other/blt/library/pkgIndex.tcl.in svneol=native#text/plain
 src/other/blt/library/tabnotebook.tcl svneol=native#text/plain
 src/other/blt/library/tabset.tcl svneol=native#text/plain
 src/other/blt/library/tclIndex -text
