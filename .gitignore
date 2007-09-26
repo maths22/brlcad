@@ -482,6 +482,7 @@ src/other/URToolkit/tools/to8
 src/other/URToolkit/tools/tobw
 src/other/URToolkit/tools/unexp
 src/other/URToolkit/tools/unslice
+src/other/blt/library/pkgIndex.tcl
 src/other/incrTcl/*.00?
 src/other/incrTcl/*.dsp
 src/other/incrTcl/*.dsw

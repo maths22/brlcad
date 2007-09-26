@@ -2490,6 +2490,7 @@ src/other/blt/html/treeview.html svneol=native#text/html
 src/other/blt/html/vector.html svneol=native#text/html
 src/other/blt/html/watch.html svneol=native#text/html
 src/other/blt/html/winop.html svneol=native#text/html
+src/other/blt/library/.cvsignore svneol=native#text/plain
 src/other/blt/library/Makefile.am svneol=native#text/plain
 src/other/blt/library/Makefile.vc svneol=native#text/plain
 src/other/blt/library/ZoomStack.itcl svneol=native#text/plain
