@@ -516,6 +516,7 @@ misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
+misc/debian/.cvsignore svneol=native#text/plain
 misc/debian/Makefile.am svneol=native#text/plain
 misc/debian/README svneol=native#text/plain
 misc/debian/README.Debian svneol=native#text/plain

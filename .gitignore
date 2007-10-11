@@ -72,6 +72,7 @@ misc/config.guess
 misc/config.guess.backup
 misc/config.sub
 misc/config.sub.backup
+misc/debian/changelog
 misc/depcomp
 misc/enigma/aclocal.m4
 misc/enigma/autom4te.cache
