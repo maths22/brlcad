@@ -1196,6 +1196,7 @@ src/conv/iges/usage.c svneol=native#text/plain
 src/conv/iges/wedge.c svneol=native#text/plain
 src/conv/iges/wing128.igs -text svneol=unset#model/iges
 src/conv/iges/woodie.igs -text svneol=unset#model/iges
+src/conv/intaval-g.py svneol=native#text/plain
 src/conv/jack/.cvsignore svneol=native#text/plain
 src/conv/jack/Makefile.am svneol=native#text/plain
 src/conv/jack/g-jack.c svneol=native#text/plain
