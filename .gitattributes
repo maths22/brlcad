@@ -540,6 +540,7 @@ misc/enigma/README svneol=native#text/plain
 misc/enigma/configure.ac svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
 misc/enigma/enigma.c svneol=native#text/plain
+misc/flawfinder -text
 misc/fortran_example.f svneol=native#text/plain
 misc/libtool.m4 svneol=native#text/plain
 misc/macosx/.cvsignore svneol=native#text/plain
@@ -710,6 +711,7 @@ pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 regress/Makefile.am svneol=native#text/plain
+regress/flawfinder.sh svneol=native#text/x-sh
 regress/gqa.sh svneol=native#text/x-sh
 regress/iges.sh svneol=native#text/x-sh
 regress/lights.sh svneol=native#text/x-sh
