@@ -646,6 +646,7 @@ misc/win32-msvc7/libpkg/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/libpkg/libpkg.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libpng/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/libpng/libpng.vcproj -text svneol=CRLF#text/plain
+misc/win32-msvc7/libregex/libregex.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/librt/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/librt/librt.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libsysv/.cvsignore svneol=native#text/plain
