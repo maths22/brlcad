@@ -777,7 +777,6 @@ src/adrt/bench/Makefile.am svneol=native#text/plain
 src/adrt/bench/bench.c svneol=native#text/plain
 src/adrt/bench/bench.h svneol=native#text/plain
 src/adrt/bench/main.c svneol=native#text/plain
-src/adrt/config.h svneol=native#text/plain
 src/adrt/configure.ac svneol=native#text/plain
 src/adrt/doc/ChangeLog svneol=native#text/plain
 src/adrt/doc/Makefile.am svneol=native#text/plain
