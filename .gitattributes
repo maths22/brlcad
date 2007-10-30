@@ -2848,6 +2848,18 @@ src/other/incrTcl/rules.vc -text
 src/other/incrTcl/tcl.m4 svneol=native#text/plain
 src/other/incrTcl/tools/Makefile.am svneol=native#text/plain
 src/other/incrTcl/tools/genStubs.tcl svneol=native#text/plain
+src/other/intaval/.cvsignore svneol=native#text/plain
+src/other/intaval/Makefile.am svneol=native#text/plain
+src/other/intaval/glob.h svneol=native#text/plain
+src/other/intaval/read_dra.cpp svneol=native#text/plain
+src/other/intaval/read_dra.h svneol=native#text/plain
+src/other/intaval/readme.txt svneol=native#text/plain
+src/other/intaval/regtab.cpp svneol=native#text/plain
+src/other/intaval/regtab.h svneol=native#text/plain
+src/other/intaval/tgf-g.cpp svneol=native#text/plain
+src/other/intaval/tgf2g.dsp -text svneol=CRLF#text/plain
+src/other/intaval/write_brl.cpp svneol=native#text/plain
+src/other/intaval/write_brl.h svneol=native#text/plain
 src/other/iwidgets/.cvsignore svneol=native#text/plain
 src/other/iwidgets/CHANGES -text
 src/other/iwidgets/ChangeLog svneol=native#text/plain
