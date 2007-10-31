@@ -110,6 +110,8 @@ misc/win32-msvc7/brlcad/brlcad.ncb
 misc/win32-msvc7/brlcad/brlcad.suo
 misc/win32-msvc7/dbupgrade/Debug
 misc/win32-msvc7/dbupgrade/Release
+misc/win32-msvc7/dxf2g/Debug
+misc/win32-msvc7/dxf2g/Release
 misc/win32-msvc7/fast42g/Debug
 misc/win32-msvc7/fast42g/Release
 misc/win32-msvc7/fb2pix/Debug
@@ -122,6 +124,8 @@ misc/win32-msvc7/fbserv/Debug
 misc/win32-msvc7/fbserv/Release
 misc/win32-msvc7/g2asc/Debug
 misc/win32-msvc7/g2asc/Release
+misc/win32-msvc7/g2dxf/Debug
+misc/win32-msvc7/g2dxf/Release
 misc/win32-msvc7/g2iges/Debug
 misc/win32-msvc7/g2iges/Release
 misc/win32-msvc7/g2stl/Debug
