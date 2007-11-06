@@ -4246,6 +4246,7 @@ src/other/tcl/generic/tclCompExpr.c svneol=native#text/plain
 src/other/tcl/generic/tclCompile.c svneol=native#text/plain
 src/other/tcl/generic/tclCompile.h svneol=native#text/plain
 src/other/tcl/generic/tclConfig.c svneol=native#text/plain
+src/other/tcl/generic/tclDTrace.d -text
 src/other/tcl/generic/tclDate.c svneol=native#text/plain
 src/other/tcl/generic/tclDecls.h svneol=native#text/plain
 src/other/tcl/generic/tclDictObj.c svneol=native#text/plain
@@ -4676,6 +4677,7 @@ src/other/tcl/library/tzdata/America/Indiana/Indianapolis -text
 src/other/tcl/library/tzdata/America/Indiana/Knox -text
 src/other/tcl/library/tzdata/America/Indiana/Marengo -text
 src/other/tcl/library/tzdata/America/Indiana/Petersburg -text
+src/other/tcl/library/tzdata/America/Indiana/Tell_City -text
 src/other/tcl/library/tzdata/America/Indiana/Vevay -text
 src/other/tcl/library/tzdata/America/Indiana/Vincennes -text
 src/other/tcl/library/tzdata/America/Indiana/Winamac -text
@@ -5195,6 +5197,7 @@ src/other/tcl/macosx/Tcl.xcode/default.pbxuser -text
 src/other/tcl/macosx/Tcl.xcode/project.pbxproj svneol=native#text/plain
 src/other/tcl/macosx/Tcl.xcodeproj/default.pbxuser -text
 src/other/tcl/macosx/Tcl.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/tcl/macosx/Tclsh-Info.plist.in svneol=native#text/plain
 src/other/tcl/macosx/configure -text
 src/other/tcl/macosx/configure.ac svneol=native#text/plain
 src/other/tcl/macosx/license.terms svneol=native#text/plain
