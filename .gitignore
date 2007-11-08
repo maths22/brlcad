@@ -734,7 +734,7 @@ src/util/dunncolor
 src/util/dunnsnap
 src/util/files-tape
 src/util/gencolor
-src/util/hd
+src/util/hex
 src/util/imgdims
 src/util/loop
 src/util/lowp
