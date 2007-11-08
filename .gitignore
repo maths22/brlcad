@@ -554,6 +554,7 @@ src/proc-db/contours
 src/proc-db/fence
 src/proc-db/globe
 src/proc-db/kurt
+src/proc-db/masonry
 src/proc-db/molecule
 src/proc-db/nmgmodel
 src/proc-db/picket_fence
@@ -572,7 +573,6 @@ src/proc-db/terrain
 src/proc-db/torii
 src/proc-db/tube
 src/proc-db/vegitation
-src/proc-db/wall
 src/proc-db/wdb_example
 src/remrt/remrt
 src/remrt/rtsrv
