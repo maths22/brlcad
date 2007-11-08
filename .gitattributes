@@ -694,6 +694,7 @@ misc/win32-msvc7/tkstub/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/tkstub/tkstub.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/wish/.cvsignore svneol=native#text/plain
 misc/win32-msvc7/wish/wish.vcproj -text svneol=CRLF#text/plain
+misc/win32-msvc8/asc2g/asc2g.vcproj -text svneol=CRLF#text/plain
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
 pix/bldg391.pix -text svneol=unset#image/x-rgb
