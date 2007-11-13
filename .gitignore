@@ -514,6 +514,7 @@ src/other/incrTcl/itk/win/Debug
 src/other/incrTcl/itk/win/Release
 src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
+src/other/intaval/tgf-g
 src/other/intaval/tgf2g.plg
 src/other/iwidgets/iwidgets.tcl
 src/other/iwidgets/pkgIndex.tcl
