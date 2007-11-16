@@ -57,6 +57,7 @@ include/conf/HOST
 include/conf/PATH
 include/conf/USER
 include/stamp-h1
+/install.*.log
 librt/vers.c
 /libtool
 /ltmain.sh
