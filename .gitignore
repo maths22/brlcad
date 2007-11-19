@@ -622,6 +622,7 @@ src/rt/rtxray
 src/rt/rtxray_vers.c
 src/rt/vers.c
 src/rt/version
+src/rttherm/pixtest
 src/rttherm/rttherm
 src/rttherm/ssamp-bw
 src/rttherm/ssampview
