@@ -532,6 +532,13 @@ src/other/libz/example
 src/other/libz/libz.plg
 src/other/libz/minigzip
 src/other/openNURBS/opennurbs.plg
+src/other/tcl/unix/AUTHORS
+src/other/tcl/unix/COPYING
+src/other/tcl/unix/ChangeLog
+src/other/tcl/unix/INSTALL
+src/other/tcl/unix/NEWS
+src/other/tcl/unix/Tcl-Info.plist
+src/other/tcl/unix/Tclsh-Info.plist
 src/other/tcl/unix/autom4te.cache
 src/other/tcl/unix/config.log
 src/other/tcl/unix/config.status
@@ -539,6 +546,13 @@ src/other/tcl/unix/configure
 src/other/tcl/unix/libtcl8.5.*
 src/other/tcl/unix/tclConfig.sh
 src/other/tcl/unix/tclsh
+src/other/tk/unix/AUTHORS
+src/other/tk/unix/COPYING
+src/other/tk/unix/ChangeLog
+src/other/tk/unix/INSTALL
+src/other/tk/unix/NEWS
+src/other/tk/unix/Tk-Info.plist
+src/other/tk/unix/Wish-Info.plist
 src/other/tk/unix/autom4te.cache
 src/other/tk/unix/config.log
 src/other/tk/unix/config.status
