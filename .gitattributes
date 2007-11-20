@@ -1921,7 +1921,6 @@ src/librt/opennurbs_ext.cpp svneol=native#text/plain
 src/librt/oslo_calc.c svneol=native#text/plain
 src/librt/oslo_map.c svneol=native#text/plain
 src/librt/parse.c svneol=native#text/plain
-src/librt/plane.h svneol=native#text/plain
 src/librt/pmalloc.c svneol=native#text/plain
 src/librt/pr.c svneol=native#text/plain
 src/librt/prep.c svneol=native#text/plain
