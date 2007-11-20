@@ -5186,7 +5186,6 @@ src/other/tcl/library/tzdata/W-SU -text
 src/other/tcl/library/tzdata/WET -text
 src/other/tcl/library/tzdata/Zulu -text
 src/other/tcl/library/word.tcl svneol=native#text/plain
-src/other/tcl/libtcl_nil.a -text
 src/other/tcl/libtommath/bn_fast_s_mp_mul_digs.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_fast_s_mp_sqr.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_add.c svneol=native#text/plain
