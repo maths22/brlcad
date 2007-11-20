@@ -582,6 +582,7 @@ src/rt/.deps
 src/rt/.libs
 src/rt/Makefile
 src/rt/Makefile.in
+src/rt/reshoot
 src/rt/rt
 src/rt/rt_bot_faces
 src/rt/rt_bot_faces_vers.c
