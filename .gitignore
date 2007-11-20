@@ -605,7 +605,6 @@ src/rt/rtsil
 src/rt/rtwalk
 src/rt/rtweight
 src/rt/rtxray
-src/rt/version
 src/rttherm/pixtest
 src/rttherm/rttherm
 src/rttherm/ssamp-bw
