@@ -298,6 +298,7 @@ src/conv/proe-g
 src/conv/stl-g
 src/conv/tankill-g
 src/conv/viewpoint-g
+src/conv/walk_example
 src/external/ProEngineer/mk
 src/external/ProEngineer/protk.dat
 src/fb/.deps
