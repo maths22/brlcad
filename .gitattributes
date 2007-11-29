@@ -754,7 +754,6 @@ misc/win32-msvc8/rtxray/rtxray.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/stl2g/stl2g.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/tclpipe/tclpipe.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/tclsh/library/installTree.tcl svneol=native#text/plain
-misc/win32-msvc8/tclsh/library/treeInit.sh svneol=native#text/x-sh
 misc/win32-msvc8/tclsh/tclsh.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/tclstub/tclstub.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/tkimg/tkimg.vcproj -text svneol=CRLF#text/plain
