@@ -1403,6 +1403,7 @@ src/fb/gif-fb.1 svneol=native#text/plain
 src/fb/gif-fb.c svneol=native#text/plain
 src/fb/gif2fb.1 svneol=native#text/plain
 src/fb/gif2fb.c svneol=native#text/plain
+src/fb/ioutil.c svneol=native#text/plain
 src/fb/orle-fb.1 svneol=native#text/plain
 src/fb/orle-fb.c svneol=native#text/plain
 src/fb/pix-fb.1 svneol=native#text/plain
