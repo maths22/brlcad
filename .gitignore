@@ -460,6 +460,7 @@ src/other/URToolkit/tools/rleaddcom
 src/other/URToolkit/tools/rlebg
 src/other/URToolkit/tools/rlebox
 src/other/URToolkit/tools/rlecat
+src/other/URToolkit/tools/rleccube
 src/other/URToolkit/tools/rlecomp
 src/other/URToolkit/tools/rledither
 src/other/URToolkit/tools/rleflip
