@@ -420,7 +420,6 @@ include/brlcad_version.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
-include/compat4.h svneol=native#text/plain
 include/conf.h svneol=native#text/plain
 include/conf/.cvsignore svneol=native#text/plain
 include/conf/MAJOR -text
