@@ -6664,6 +6664,7 @@ src/tclscripts/archer/Arb6EditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Arb7EditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Arb8EditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Archer.tcl svneol=native#text/plain
+src/tclscripts/archer/ArcherCore.tcl svneol=native#text/plain
 src/tclscripts/archer/BotEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/CombEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/EhyEditFrame.tcl svneol=native#text/plain
