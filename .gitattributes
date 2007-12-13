@@ -1972,6 +1972,7 @@ src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/.cvsignore svneol=native#text/plain
 src/libtclcad/Makefile.am svneol=native#text/plain
 src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
+src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
 src/libtclcad/tclcadTkSetup.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
