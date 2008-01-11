@@ -579,7 +579,7 @@ misc/win32-msvc/Dll/Makefile.am svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.dsp -text svneol=CRLF#text/plain
-misc/win32-msvc/Dll/brlcad.rc -text svneol=CRLF#text/plain
+misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/Makefile.am svneol=native#text/plain
 misc/win32-msvc/aPrep/.cvsignore svneol=native#text/plain
 misc/win32-msvc/aPrep/Makefile.am svneol=native#text/plain
@@ -1063,7 +1063,7 @@ src/anim/chan_permute.1 svneol=native#text/plain
 src/anim/chan_permute.c svneol=native#text/plain
 src/archer/Makefile.am svneol=native#text/plain
 src/archer/archer -text
-src/archer/archer.bat -text svneol=CRLF#text/plain
+src/archer/archer.bat svneol=CRLF#text/plain eol=crlf
 src/archer/plugins/Commands/Makefile.am svneol=native#text/plain
 src/archer/plugins/Commands/README svneol=native#text/plain
 src/archer/plugins/Core/Makefile.am svneol=native#text/plain
