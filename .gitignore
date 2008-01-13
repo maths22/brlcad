@@ -202,6 +202,8 @@ misc/win32-msvc7/wish/Debug
 misc/win32-msvc7/wish/Release
 /so_locations
 src/adrt/bench/adrt_bench
+src/adrt/isst/master/isst_master
+src/adrt/isst/slave/isst_slave
 src/adrt/rise/master/rise_master
 src/adrt/rise/observer/rise_observer
 src/adrt/rise/slave/rise_slave
