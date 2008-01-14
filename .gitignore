@@ -207,6 +207,7 @@ src/adrt/isst/slave/isst_slave
 src/adrt/rise/master/rise_master
 src/adrt/rise/observer/rise_observer
 src/adrt/rise/slave/rise_slave
+src/adrt/slave/isst_slave
 src/anim/.deps
 src/anim/.libs
 src/anim/Makefile
