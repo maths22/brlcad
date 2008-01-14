@@ -737,6 +737,7 @@ src/util/dsp_add
 src/util/dunncolor
 src/util/dunnsnap
 src/util/files-tape
+src/util/fix_polysolids
 src/util/gencolor
 src/util/hex
 src/util/imgdims
