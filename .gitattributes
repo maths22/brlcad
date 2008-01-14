@@ -7284,7 +7284,6 @@ src/util/pix-bw.1 svneol=native#text/plain
 src/util/pix-bw.c svneol=native#text/plain
 src/util/pix-bw3.1 svneol=native#text/plain
 src/util/pix-bw3.c svneol=native#text/plain
-src/util/pix-ci.c svneol=native#text/plain
 src/util/pix-filt-ik.c svneol=native#text/plain
 src/util/pix-ik.c svneol=native#text/plain
 src/util/pix-ikr.c svneol=native#text/plain
