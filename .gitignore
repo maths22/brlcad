@@ -568,6 +568,7 @@ src/other/tk/unix/wish
 src/proc-db/bottest
 src/proc-db/brep_cube
 src/proc-db/brep_simple
+src/proc-db/breplicator
 src/proc-db/brickwall
 src/proc-db/clutter
 src/proc-db/contours
