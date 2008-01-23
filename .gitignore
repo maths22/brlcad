@@ -603,6 +603,8 @@ src/rt/.libs
 src/rt/Makefile
 src/rt/Makefile.in
 src/rt/hurt
+src/rt/libremrt.*
+src/rt/librttherm.*
 src/rt/reshoot
 src/rt/rt
 src/rt/rt_bot_faces
