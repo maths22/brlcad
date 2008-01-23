@@ -1930,7 +1930,6 @@ src/libwdb/mater.c svneol=native#text/plain
 src/libwdb/nmg.c svneol=native#text/plain
 src/libwdb/nurb.c svneol=native#text/plain
 src/libwdb/pipe.c svneol=native#text/plain
-src/libwdb/poly.c svneol=native#text/plain
 src/libwdb/reg.c svneol=native#text/plain
 src/libwdb/reg4.c svneol=native#text/plain
 src/libwdb/skt.c svneol=native#text/plain
