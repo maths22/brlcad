@@ -3972,10 +3972,7 @@ src/other/tcl/compat/strncasecmp.c svneol=native#text/plain
 src/other/tcl/compat/strstr.c svneol=native#text/plain
 src/other/tcl/compat/strtod.c svneol=native#text/plain
 src/other/tcl/compat/strtol.c svneol=native#text/plain
-src/other/tcl/compat/strtoll.c svneol=native#text/plain
 src/other/tcl/compat/strtoul.c svneol=native#text/plain
-src/other/tcl/compat/strtoull.c svneol=native#text/plain
-src/other/tcl/compat/tmpnam.c svneol=native#text/plain
 src/other/tcl/compat/unistd.h svneol=native#text/plain
 src/other/tcl/compat/waitpid.c svneol=native#text/plain
 src/other/tcl/doc/Access.3 svneol=native#text/plain
@@ -4255,7 +4252,6 @@ src/other/tcl/generic/tclLiteral.c svneol=native#text/plain
 src/other/tcl/generic/tclLoad.c svneol=native#text/plain
 src/other/tcl/generic/tclLoadNone.c svneol=native#text/plain
 src/other/tcl/generic/tclMain.c svneol=native#text/plain
-src/other/tcl/generic/tclMathOp.c svneol=native#text/plain
 src/other/tcl/generic/tclNamesp.c svneol=native#text/plain
 src/other/tcl/generic/tclNotify.c svneol=native#text/plain
 src/other/tcl/generic/tclObj.c svneol=native#text/plain
@@ -5359,7 +5355,6 @@ src/other/tcl/unix/dltest/pkgb.c svneol=native#text/plain
 src/other/tcl/unix/dltest/pkgc.c svneol=native#text/plain
 src/other/tcl/unix/dltest/pkgd.c svneol=native#text/plain
 src/other/tcl/unix/dltest/pkge.c svneol=native#text/plain
-src/other/tcl/unix/dltest/pkgf.c svneol=native#text/plain
 src/other/tcl/unix/dltest/pkgua.c svneol=native#text/plain
 src/other/tcl/unix/install-sh svneol=native#text/plain
 src/other/tcl/unix/installManPage svneol=native#text/plain
@@ -5394,7 +5389,7 @@ src/other/tcl/unix/tclXtTest.c svneol=native#text/plain
 src/other/tcl/win/Makefile.in svneol=native#text/plain
 src/other/tcl/win/README svneol=native#text/plain
 src/other/tcl/win/aclocal.m4 svneol=native#text/plain
-src/other/tcl/win/buildall.vc.bat -text svneol=CRLF#text/plain
+src/other/tcl/win/buildall.vc.bat svneol=CRLF#text/plain eol=crlf
 src/other/tcl/win/cat.c svneol=native#text/plain
 src/other/tcl/win/coffbase.txt svneol=native#text/plain
 src/other/tcl/win/configure -text
@@ -5405,11 +5400,11 @@ src/other/tcl/win/makefile.vc svneol=native#text/plain
 src/other/tcl/win/nmakehlp.c svneol=native#text/plain
 src/other/tcl/win/rules.vc -text
 src/other/tcl/win/stub16.c svneol=native#text/plain
-src/other/tcl/win/tcl.dsp -text svneol=CRLF#text/plain
-src/other/tcl/win/tcl.dsw -text svneol=CRLF#text/plain
+src/other/tcl/win/tcl.dsp svneol=CRLF#text/plain eol=crlf
+src/other/tcl/win/tcl.dsw svneol=CRLF#text/plain eol=crlf
 src/other/tcl/win/tcl.hpj.in svneol=native#text/plain
 src/other/tcl/win/tcl.m4 svneol=native#text/plain
-src/other/tcl/win/tcl.rc -text svneol=CRLF#text/plain
+src/other/tcl/win/tcl.rc svneol=CRLF#text/plain eol=crlf
 src/other/tcl/win/tclAppInit.c svneol=native#text/plain
 src/other/tcl/win/tclConfig.sh.in svneol=native#text/plain
 src/other/tcl/win/tclWin32Dll.c svneol=native#text/plain
@@ -5433,7 +5428,7 @@ src/other/tcl/win/tclWinThrd.c svneol=native#text/plain
 src/other/tcl/win/tclWinThrd.h svneol=native#text/plain
 src/other/tcl/win/tclWinTime.c svneol=native#text/plain
 src/other/tcl/win/tclsh.ico -text svneol=unset#image/x-icon
-src/other/tcl/win/tclsh.rc -text svneol=CRLF#text/plain
+src/other/tcl/win/tclsh.rc svneol=CRLF#text/plain eol=crlf
 src/other/tk/ChangeLog svneol=native#text/plain
 src/other/tk/ChangeLog.2002 svneol=native#text/plain
 src/other/tk/ChangeLog.2004 svneol=native#text/plain
