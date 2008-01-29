@@ -5462,6 +5462,7 @@ src/other/tk/doc/ConfigWidg.3 svneol=native#text/plain
 src/other/tk/doc/ConfigWind.3 svneol=native#text/plain
 src/other/tk/doc/CoordToWin.3 svneol=native#text/plain
 src/other/tk/doc/CrtCmHdlr.3 svneol=native#text/plain
+src/other/tk/doc/CrtConsoleChan.3 -text
 src/other/tk/doc/CrtErrHdlr.3 svneol=native#text/plain
 src/other/tk/doc/CrtGenHdlr.3 svneol=native#text/plain
 src/other/tk/doc/CrtImgType.3 svneol=native#text/plain
@@ -5783,6 +5784,7 @@ src/other/tk/library/demos/button.tcl svneol=native#text/plain
 src/other/tk/library/demos/check.tcl svneol=native#text/plain
 src/other/tk/library/demos/clrpick.tcl svneol=native#text/plain
 src/other/tk/library/demos/colors.tcl svneol=native#text/plain
+src/other/tk/library/demos/combo.tcl -text
 src/other/tk/library/demos/cscroll.tcl svneol=native#text/plain
 src/other/tk/library/demos/ctext.tcl svneol=native#text/plain
 src/other/tk/library/demos/dialog1.tcl svneol=native#text/plain
@@ -5816,6 +5818,7 @@ src/other/tk/library/demos/ixset -text
 src/other/tk/library/demos/label.tcl svneol=native#text/plain
 src/other/tk/library/demos/labelframe.tcl svneol=native#text/plain
 src/other/tk/library/demos/license.terms svneol=native#text/plain
+src/other/tk/library/demos/mclist.tcl -text
 src/other/tk/library/demos/menu.tcl svneol=native#text/plain
 src/other/tk/library/demos/menubu.tcl svneol=native#text/plain
 src/other/tk/library/demos/msgbox.tcl svneol=native#text/plain
@@ -5838,10 +5841,18 @@ src/other/tk/library/demos/style.tcl svneol=native#text/plain
 src/other/tk/library/demos/tclIndex -text
 src/other/tk/library/demos/tcolor -text
 src/other/tk/library/demos/text.tcl svneol=native#text/plain
+src/other/tk/library/demos/textpeer.tcl -text
 src/other/tk/library/demos/timer -text
+src/other/tk/library/demos/toolbar.tcl -text
+src/other/tk/library/demos/tree.tcl -text
 src/other/tk/library/demos/ttk_demo.tcl svneol=native#text/plain
 src/other/tk/library/demos/ttk_iconlib.tcl svneol=native#text/plain
 src/other/tk/library/demos/ttk_repeater.tcl svneol=native#text/plain
+src/other/tk/library/demos/ttkbut.tcl -text
+src/other/tk/library/demos/ttkmenu.tcl -text
+src/other/tk/library/demos/ttknote.tcl -text
+src/other/tk/library/demos/ttkpane.tcl -text
+src/other/tk/library/demos/ttkprogress.tcl -text
 src/other/tk/library/demos/twind.tcl svneol=native#text/plain
 src/other/tk/library/demos/unicodeout.tcl svneol=native#text/plain
 src/other/tk/library/demos/vscale.tcl svneol=native#text/plain
@@ -5868,6 +5879,7 @@ src/other/tk/library/menu.tcl svneol=native#text/plain
 src/other/tk/library/mkpsenc.tcl svneol=native#text/plain
 src/other/tk/library/msgbox.tcl svneol=native#text/plain
 src/other/tk/library/msgs/cs.msg svneol=native#text/plain
+src/other/tk/library/msgs/da.msg -text
 src/other/tk/library/msgs/de.msg svneol=native#text/plain
 src/other/tk/library/msgs/el.msg svneol=native#text/plain
 src/other/tk/library/msgs/en.msg svneol=native#text/plain
@@ -5875,6 +5887,7 @@ src/other/tk/library/msgs/en_gb.msg svneol=native#text/plain
 src/other/tk/library/msgs/eo.msg svneol=native#text/plain
 src/other/tk/library/msgs/es.msg svneol=native#text/plain
 src/other/tk/library/msgs/fr.msg svneol=native#text/plain
+src/other/tk/library/msgs/hu.msg -text
 src/other/tk/library/msgs/it.msg svneol=native#text/plain
 src/other/tk/library/msgs/nl.msg svneol=native#text/plain
 src/other/tk/library/msgs/pl.msg svneol=native#text/plain
@@ -6114,6 +6127,7 @@ src/other/tk/tests/xmfbox.test svneol=native#text/plain
 src/other/tk/unix/Makefile.in svneol=native#text/plain
 src/other/tk/unix/README svneol=native#text/plain
 src/other/tk/unix/aclocal.m4 svneol=native#text/plain
+src/other/tk/unix/configure -text
 src/other/tk/unix/configure.in svneol=native#text/plain
 src/other/tk/unix/install-sh svneol=native#text/plain
 src/other/tk/unix/installManPage svneol=native#text/plain
@@ -6152,13 +6166,13 @@ src/other/tk/unix/tkUnixXId.c svneol=native#text/plain
 src/other/tk/win/Makefile.in svneol=native#text/plain
 src/other/tk/win/README svneol=native#text/plain
 src/other/tk/win/aclocal.m4 svneol=native#text/plain
-src/other/tk/win/buildall.vc.bat -text svneol=CRLF#text/plain
+src/other/tk/win/buildall.vc.bat svneol=CRLF#text/plain eol=crlf
 src/other/tk/win/configure -text
 src/other/tk/win/configure.in svneol=native#text/plain
 src/other/tk/win/license.terms svneol=native#text/plain
 src/other/tk/win/makefile.bc svneol=native#text/plain
 src/other/tk/win/makefile.vc svneol=native#text/plain
-src/other/tk/win/mkd.bat -text svneol=CRLF#text/plain
+src/other/tk/win/mkd.bat svneol=CRLF#text/plain eol=crlf
 src/other/tk/win/nmakehlp.c svneol=native#text/plain
 src/other/tk/win/rc/buttons.bmp -text svneol=unset#image/bmp
 src/other/tk/win/rc/cursor00.cur -text
@@ -6241,11 +6255,11 @@ src/other/tk/win/rc/cursor98.cur -text
 src/other/tk/win/rc/cursor9a.cur -text
 src/other/tk/win/rc/lamp.bmp -text svneol=unset#image/bmp
 src/other/tk/win/rc/tk.ico -text svneol=unset#image/x-icon
-src/other/tk/win/rc/tk.rc -text svneol=CRLF#text/plain
-src/other/tk/win/rc/tk_base.rc -text svneol=CRLF#text/plain
+src/other/tk/win/rc/tk.rc svneol=CRLF#text/plain eol=crlf
+src/other/tk/win/rc/tk_base.rc svneol=CRLF#text/plain eol=crlf
 src/other/tk/win/rc/wish.ico -text svneol=unset#image/x-icon
-src/other/tk/win/rc/wish.rc -text svneol=CRLF#text/plain
-src/other/tk/win/rmd.bat -text svneol=CRLF#text/plain
+src/other/tk/win/rc/wish.rc svneol=CRLF#text/plain eol=crlf
+src/other/tk/win/rmd.bat svneol=CRLF#text/plain eol=crlf
 src/other/tk/win/rules.vc -text
 src/other/tk/win/stubs.c svneol=native#text/plain
 src/other/tk/win/tcl.m4 svneol=native#text/plain
