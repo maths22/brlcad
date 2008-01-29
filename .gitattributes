@@ -953,7 +953,6 @@ src/adrt/scripts/drawBSP.py svneol=native#text/plain
 src/adrt/scripts/makemovie.pl svneol=native#text/plain
 src/adrt/scripts/ptcloud.c svneol=native#text/plain
 src/adrt/scripts/ptcloud.py svneol=native#text/plain
-src/adrt/scripts/shiva.sh svneol=native#text/x-sh
 src/adrt/slave/Makefile.am svneol=native#text/plain
 src/adrt/slave/load.c svneol=native#text/plain
 src/adrt/slave/load.h svneol=native#text/plain
