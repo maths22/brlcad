@@ -5601,7 +5601,6 @@ src/other/tk/doc/ttk_Theme.3 svneol=native#text/plain
 src/other/tk/doc/ttk_button.n svneol=native#text/plain
 src/other/tk/doc/ttk_checkbutton.n svneol=native#text/plain
 src/other/tk/doc/ttk_combobox.n svneol=native#text/plain
-src/other/tk/doc/ttk_dialog.n svneol=native#text/plain
 src/other/tk/doc/ttk_entry.n svneol=native#text/plain
 src/other/tk/doc/ttk_frame.n svneol=native#text/plain
 src/other/tk/doc/ttk_image.n svneol=native#text/plain
@@ -5676,7 +5675,6 @@ src/other/tk/generic/tkImgGIF.c svneol=native#text/plain
 src/other/tk/generic/tkImgPPM.c svneol=native#text/plain
 src/other/tk/generic/tkImgPhoto.c svneol=native#text/plain
 src/other/tk/generic/tkImgUtil.c svneol=native#text/plain
-src/other/tk/generic/tkInitScript.h svneol=native#text/plain
 src/other/tk/generic/tkInt.decls svneol=native#text/plain
 src/other/tk/generic/tkInt.h svneol=native#text/plain
 src/other/tk/generic/tkIntDecls.h svneol=native#text/plain
@@ -5709,7 +5707,6 @@ src/other/tk/generic/tkScrollbar.h svneol=native#text/plain
 src/other/tk/generic/tkSelect.c svneol=native#text/plain
 src/other/tk/generic/tkSelect.h svneol=native#text/plain
 src/other/tk/generic/tkSquare.c svneol=native#text/plain
-src/other/tk/generic/tkStubImg.c svneol=native#text/plain
 src/other/tk/generic/tkStubInit.c svneol=native#text/plain
 src/other/tk/generic/tkStubLib.c svneol=native#text/plain
 src/other/tk/generic/tkStyle.c svneol=native#text/plain
@@ -5845,9 +5842,6 @@ src/other/tk/library/demos/textpeer.tcl -text
 src/other/tk/library/demos/timer -text
 src/other/tk/library/demos/toolbar.tcl -text
 src/other/tk/library/demos/tree.tcl -text
-src/other/tk/library/demos/ttk_demo.tcl svneol=native#text/plain
-src/other/tk/library/demos/ttk_iconlib.tcl svneol=native#text/plain
-src/other/tk/library/demos/ttk_repeater.tcl svneol=native#text/plain
 src/other/tk/library/demos/ttkbut.tcl -text
 src/other/tk/library/demos/ttkmenu.tcl -text
 src/other/tk/library/demos/ttknote.tcl -text
@@ -5915,11 +5909,8 @@ src/other/tk/library/ttk/classicTheme.tcl svneol=native#text/plain
 src/other/tk/library/ttk/combobox.tcl svneol=native#text/plain
 src/other/tk/library/ttk/cursors.tcl svneol=native#text/plain
 src/other/tk/library/ttk/defaults.tcl svneol=native#text/plain
-src/other/tk/library/ttk/dialog.tcl svneol=native#text/plain
 src/other/tk/library/ttk/entry.tcl svneol=native#text/plain
 src/other/tk/library/ttk/fonts.tcl svneol=native#text/plain
-src/other/tk/library/ttk/icons.tcl svneol=native#text/plain
-src/other/tk/library/ttk/keynav.tcl svneol=native#text/plain
 src/other/tk/library/ttk/menubutton.tcl svneol=native#text/plain
 src/other/tk/library/ttk/notebook.tcl svneol=native#text/plain
 src/other/tk/library/ttk/panedwindow.tcl svneol=native#text/plain
@@ -6094,7 +6085,6 @@ src/other/tk/tests/ttk/entry.test svneol=native#text/plain
 src/other/tk/tests/ttk/image.test svneol=native#text/plain
 src/other/tk/tests/ttk/labelframe.test svneol=native#text/plain
 src/other/tk/tests/ttk/layout.test svneol=native#text/plain
-src/other/tk/tests/ttk/misc.test svneol=native#text/plain
 src/other/tk/tests/ttk/notebook.test svneol=native#text/plain
 src/other/tk/tests/ttk/panedwindow.test svneol=native#text/plain
 src/other/tk/tests/ttk/progressbar.test svneol=native#text/plain
