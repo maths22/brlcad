@@ -761,6 +761,7 @@ misc/win32-msvc8/tkimg/tkimg.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkimgpng/tkimgpng.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/vg2g/vg2g.vcproj -text
+misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
 misc/win32-msvc8/wish/wish.vcproj svneol=CRLF#text/plain eol=crlf
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
