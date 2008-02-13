@@ -1519,7 +1519,6 @@ src/lgt/mat_db.h svneol=native#text/plain
 src/lgt/octree.c svneol=native#text/plain
 src/lgt/prnt.c svneol=native#text/plain
 src/lgt/reflect.c svneol=native#text/plain
-src/lgt/resource.c svneol=native#text/plain
 src/lgt/screen.h svneol=native#text/plain
 src/lgt/sgi_dep.c svneol=native#text/plain
 src/lgt/texture.c svneol=native#text/plain
