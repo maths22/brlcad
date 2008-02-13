@@ -6497,7 +6497,6 @@ src/rt/rtwalk.1 svneol=native#text/plain
 src/rt/rtwalk.c svneol=native#text/plain
 src/rt/rtweight.1 svneol=native#text/plain
 src/rt/rtxray.1 svneol=native#text/plain
-src/rt/scat.h svneol=native#text/plain
 src/rt/sh_tcl.c svneol=native#text/plain
 src/rt/view.c svneol=native#text/plain
 src/rt/view_bot_faces.c svneol=native#text/plain
