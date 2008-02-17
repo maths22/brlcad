@@ -1574,6 +1574,7 @@ src/libbu/color.c svneol=native#text/plain
 src/libbu/convert.c svneol=native#text/plain
 src/libbu/crashreport.c svneol=native#text/plain
 src/libbu/dirname.c svneol=native#text/plain
+src/libbu/endian.c svneol=native#text/plain
 src/libbu/fchmod.c svneol=native#text/plain
 src/libbu/fgets.c svneol=native#text/plain
 src/libbu/fopen_uniq.c svneol=native#text/plain
