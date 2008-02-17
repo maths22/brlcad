@@ -592,7 +592,7 @@ misc/win32-msvc7/libBLT/libBLT.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libItcl/libItcl.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libItk/libItk.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libbn/libbn.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libbu/libbu.vcproj -text svneol=CRLF#text/plain
+misc/win32-msvc7/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc7/libdm/libdm.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/libfb/libfb.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/liboptical/liboptical.vcproj -text svneol=CRLF#text/plain
@@ -1591,7 +1591,7 @@ src/libbu/ispar.c svneol=native#text/plain
 src/libbu/kill.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
 src/libbu/libbu.3 svneol=native#text/plain
-src/libbu/libbu.dsp -text svneol=CRLF#text/plain
+src/libbu/libbu.dsp svneol=CRLF#text/plain eol=crlf
 src/libbu/linebuf.c svneol=native#text/plain
 src/libbu/list.c svneol=native#text/plain
 src/libbu/log.c svneol=native#text/plain
