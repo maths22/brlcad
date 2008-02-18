@@ -7319,6 +7319,6 @@ src/vdeck/vextern.h svneol=native#text/plain
 src/vdeck/vproc.c svneol=native#text/plain
 src/vfont/Makefile.am svneol=native#text/plain
 src/vfont/fix.6r -text svneol=unset#unset
-src/vfont/font.h svneol=native#text/plain
 src/vfont/getfont.c svneol=native#text/plain
 src/vfont/nonie.r.12 -text svneol=unset#unset
+src/vfont/vfont.h svneol=native#text/plain
