@@ -626,6 +626,7 @@ misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
 misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
 misc/win32-msvc8/bot2raw/bot2raw.vcproj -text
 misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
+misc/win32-msvc8/breplicator/breplicator.vcproj -text
 misc/win32-msvc8/brlcad/brlcad.sln eol=crlf
 misc/win32-msvc8/btclsh/btclsh.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/bw2fb/bw2fb.vcproj svneol=CRLF#text/plain eol=crlf
@@ -718,6 +719,7 @@ misc/win32-msvc8/nirt/nirt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/nmg2bot/nmg2bot.vcproj -text
 misc/win32-msvc8/nmg2rib/nmg2rib.vcproj -text
 misc/win32-msvc8/nmg2sgp/nmg2sgp.vcproj -text
+misc/win32-msvc8/opennurbs/opennurbs.vcproj -text
 misc/win32-msvc8/orle2fb/orle2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pix2asc/pix2asc.vcproj -text
 misc/win32-msvc8/pix2bw/pix2bw.vcproj -text
