@@ -546,7 +546,9 @@ src/other/tcl/unix/autom4te.cache
 src/other/tcl/unix/config.log
 src/other/tcl/unix/config.status
 src/other/tcl/unix/configure
+src/other/tcl/unix/libtcl.*
 src/other/tcl/unix/libtcl8.5.*
+src/other/tcl/unix/libtclstub.*
 src/other/tcl/unix/libtclstub8.5.*
 src/other/tcl/unix/tclConfig.sh
 src/other/tcl/unix/tclsh
