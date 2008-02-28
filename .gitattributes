@@ -408,6 +408,7 @@ doc/tube.txt svneol=native#text/plain
 include/Makefile.am svneol=native#text/plain
 include/RtServerImpl.h svneol=native#text/plain
 include/anim.h svneol=native#text/plain
+include/bio.h svneol=native#text/plain
 include/bn.h svneol=native#text/plain
 include/brep.h svneol=native#text/plain
 include/brlcad.h svneol=native#text/plain
