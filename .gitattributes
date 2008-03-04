@@ -425,6 +425,7 @@ include/conf/make.vbs svneol=native#text/plain
 include/config_win.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
+include/dg.h -text
 include/dm-Null.h svneol=native#text/plain
 include/dm-X.h svneol=native#text/plain
 include/dm-glx.h svneol=native#text/plain
