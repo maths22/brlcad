@@ -1091,6 +1091,8 @@ src/canon/ipuscan.c svneol=native#text/plain
 src/canon/ipustat.c svneol=native#text/plain
 src/canon/pix-ipu.c svneol=native#text/plain
 src/canon/png-ipu.c svneol=native#text/plain
+src/conv/3dm/3dm-g.cpp -text
+src/conv/3dm/Makefile.am -text
 src/conv/Formats.csv svneol=native#text/plain
 src/conv/Makefile.am svneol=native#text/plain
 src/conv/asc-nmg.1 svneol=native#text/plain
