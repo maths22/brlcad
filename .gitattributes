@@ -1151,7 +1151,6 @@ mged/concat.c svneol=native#text/plain
 mged/dir.c svneol=native#text/plain
 mged/dm-4d.c svneol=native#text/plain
 mged/dm-X.c svneol=native#text/plain
-mged/dm-glX.c svneol=native#text/plain
 mged/dm-glx.c svneol=native#text/plain
 mged/dm-hp.c svneol=native#text/plain
 mged/dm-mer.c svneol=native#text/plain
