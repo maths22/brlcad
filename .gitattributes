@@ -3934,7 +3934,6 @@ mged/dm-ogl.c svneol=native#text/plain
 mged/dm-plot.c svneol=native#text/plain
 mged/dm-ps.c svneol=native#text/plain
 mged/dm_old/dm-4d.c svneol=native#text/plain
-mged/dm_old/dm-glX.c svneol=native#text/plain
 mged/dm_old/dm-glx.c svneol=native#text/plain
 mged/dm_old/dm-hp.c svneol=native#text/plain
 mged/dm_old/dm-mer.c svneol=native#text/plain
