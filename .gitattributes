@@ -425,7 +425,7 @@ include/conf/make.vbs svneol=native#text/plain
 include/config_win.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
-include/dg.h -text
+include/dg.h svneol=native#text/plain
 include/dm-Null.h svneol=native#text/plain
 include/dm-X.h svneol=native#text/plain
 include/dm-glx.h svneol=native#text/plain
@@ -6449,7 +6449,7 @@ src/proc-db/tea.c svneol=native#text/plain
 src/proc-db/tea.h svneol=native#text/plain
 src/proc-db/tea_nmg.c svneol=native#text/plain
 src/proc-db/terrain.c svneol=native#text/plain
-src/proc-db/tire.c -text
+src/proc-db/tire.c svneol=native#text/plain
 src/proc-db/torii.c svneol=native#text/plain
 src/proc-db/tube.c svneol=native#text/plain
 src/proc-db/vegitation.c svneol=native#text/plain
