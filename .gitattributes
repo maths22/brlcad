@@ -417,6 +417,7 @@ include/bu.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
 include/conf.h svneol=native#text/plain
+include/conf/CMakeLists.txt -text
 include/conf/MAJOR -text
 include/conf/MINOR -text
 include/conf/Makefile.am svneol=native#text/plain
@@ -560,15 +561,13 @@ misc/pkgconfig/pkg.pc.in svneol=native#text/plain
 misc/pkgconfig/rt.pc.in svneol=native#text/plain
 misc/pkgconfig/wdb.pc.in svneol=native#text/plain
 misc/rcs2log -text
+misc/win32-msvc/CMakeLists.txt -text
+misc/win32-msvc/Dll/CMakeLists.txt -text
 misc/win32-msvc/Dll/Makefile.am svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
-misc/win32-msvc/Dll/brlcad.dsp -text svneol=CRLF#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/Makefile.am svneol=native#text/plain
-misc/win32-msvc/aPrep/Makefile.am svneol=native#text/plain
-misc/win32-msvc/aPrep/aPrep.dsp -text svneol=CRLF#text/plain
-misc/win32-msvc/brlcad.dsw -text svneol=CRLF#text/plain
 misc/win32-msvc7/Makefile.am svneol=native#text/plain
 misc/win32-msvc7/all/all.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc7/asc2g/asc2g.vcproj -text svneol=CRLF#text/plain
@@ -1524,6 +1523,7 @@ src/lgt/texture.h svneol=native#text/plain
 src/lgt/tree.h svneol=native#text/plain
 src/lgt/trie.c svneol=native#text/plain
 src/lgt/vecmath.h svneol=native#text/plain
+src/libbn/CMakeLists.txt -text
 src/libbn/Makefile.am svneol=native#text/plain
 src/libbn/anim.c svneol=native#text/plain
 src/libbn/axis.c svneol=native#text/plain
@@ -1532,7 +1532,6 @@ src/libbn/complex.c svneol=native#text/plain
 src/libbn/const.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
 src/libbn/fortran.c svneol=native#text/plain
-src/libbn/libbn.dsp -text svneol=CRLF#text/plain
 src/libbn/libplot3.3 svneol=native#text/plain
 src/libbn/list.c svneol=native#text/plain
 src/libbn/marker.c svneol=native#text/plain
@@ -1555,6 +1554,7 @@ src/libbn/vector.c svneol=native#text/plain
 src/libbn/vers.c svneol=native#text/plain
 src/libbn/vert_tree.c svneol=native#text/plain
 src/libbn/wavelet.c svneol=native#text/plain
+src/libbu/CMakeLists.txt -text
 src/libbu/Makefile.am svneol=native#text/plain
 src/libbu/association.c svneol=native#text/plain
 src/libbu/avs.c svneol=native#text/plain
@@ -1589,7 +1589,6 @@ src/libbu/ispar.c svneol=native#text/plain
 src/libbu/kill.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
 src/libbu/libbu.3 svneol=native#text/plain
-src/libbu/libbu.dsp svneol=CRLF#text/plain eol=crlf
 src/libbu/linebuf.c svneol=native#text/plain
 src/libbu/list.c svneol=native#text/plain
 src/libbu/log.c svneol=native#text/plain
@@ -1757,6 +1756,7 @@ src/libpkg/pkg.c svneol=native#text/plain
 src/libpkg/tcl.c svneol=native#text/plain
 src/libpkg/tpkg.c svneol=native#text/plain
 src/libpkg/vers.c svneol=native#text/plain
+src/librt/CMakeLists.txt -text
 src/librt/Makefile.am svneol=native#text/plain
 src/librt/bezier_2d_isect.c svneol=native#text/plain
 src/librt/bigE.c svneol=native#text/plain
@@ -1832,7 +1832,6 @@ src/librt/global.c svneol=native#text/plain
 src/librt/htbl.c svneol=native#text/plain
 src/librt/importFg4Section.c svneol=native#text/plain
 src/librt/librt.3 svneol=native#text/plain
-src/librt/librt.dsp -text svneol=CRLF#text/plain
 src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
@@ -1922,8 +1921,8 @@ src/librt/wdb_obj.c svneol=native#text/plain
 src/librtserver/Makefile.am svneol=native#text/plain
 src/librtserver/rtserver.c svneol=native#text/plain
 src/librtserver/rtserverTest.c svneol=native#text/plain
+src/libsysv/CMakeLists.txt -text
 src/libsysv/Makefile.am svneol=native#text/plain
-src/libsysv/libsysv.dsp -text svneol=CRLF#text/plain
 src/libsysv/memset.c svneol=native#text/plain
 src/libsysv/redata.c svneol=native#text/plain
 src/libsysv/regex.c svneol=native#text/plain
@@ -1942,6 +1941,7 @@ src/libtermio/Makefile.am svneol=native#text/plain
 src/libtermio/libtermio.dsp -text svneol=CRLF#text/plain
 src/libtermio/termio.c svneol=native#text/plain
 src/libtermio/termio_win32.c svneol=native#text/plain
+src/libwdb/CMakeLists.txt -text
 src/libwdb/Makefile.am svneol=native#text/plain
 src/libwdb/arbn.c svneol=native#text/plain
 src/libwdb/ars.c svneol=native#text/plain
@@ -1956,7 +1956,6 @@ src/libwdb/export.c svneol=native#text/plain
 src/libwdb/extr.c svneol=native#text/plain
 src/libwdb/id.c svneol=native#text/plain
 src/libwdb/libwdb.3 svneol=native#text/plain
-src/libwdb/libwdb.dsp -text svneol=CRLF#text/plain
 src/libwdb/mater.c svneol=native#text/plain
 src/libwdb/nmg.c svneol=native#text/plain
 src/libwdb/nurb.c svneol=native#text/plain
@@ -3435,11 +3434,11 @@ src/other/libpng/scripts/pngw32.def svneol=native#text/plain
 src/other/libpng/scripts/pngw32.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/scripts/smakefile.ppc -text
 src/other/libpng/test-pngtest.sh svneol=native#text/x-sh
+src/other/libregex/CMakeLists.txt -text
 src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
 src/other/libregex/cname.h svneol=native#text/plain
 src/other/libregex/engine.c svneol=native#text/plain
-src/other/libregex/libregex.dsp -text svneol=CRLF#text/plain
 src/other/libregex/regcomp.c svneol=native#text/plain
 src/other/libregex/regerror.c svneol=native#text/plain
 src/other/libregex/regex2.h svneol=native#text/plain
@@ -3536,6 +3535,7 @@ src/other/libutahrle/rle_skiprow.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.c svneol=native#text/plain
 src/other/libutahrle/vaxshort.c svneol=native#text/plain
+src/other/libz/CMakeLists.txt -text
 src/other/libz/ChangeLog svneol=native#text/plain
 src/other/libz/FAQ -text
 src/other/libz/INDEX -text
@@ -3694,7 +3694,6 @@ src/other/libz/inflate.c svneol=native#text/plain
 src/other/libz/inflate.h svneol=native#text/plain
 src/other/libz/inftrees.c svneol=native#text/plain
 src/other/libz/inftrees.h svneol=native#text/plain
-src/other/libz/libz.dsp -text svneol=CRLF#text/plain
 src/other/libz/make_vms.com svneol=native#text/plain
 src/other/libz/minigzip.c svneol=native#text/plain
 src/other/libz/msdos/Makefile.bor svneol=native#text/plain
@@ -3733,6 +3732,7 @@ src/other/libz/zlib.3 svneol=native#text/plain
 src/other/libz/zlib.h svneol=native#text/plain
 src/other/libz/zutil.c svneol=native#text/plain
 src/other/libz/zutil.h svneol=native#text/plain
+src/other/openNURBS/CMakeLists.txt -text
 src/other/openNURBS/Makefile.am svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.cpp svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.vcproj -text svneol=CRLF#text/plain
@@ -3759,7 +3759,6 @@ src/other/openNURBS/example_write/example_write.cpp svneol=native#text/plain
 src/other/openNURBS/example_write/example_write.vcproj -text svneol=CRLF#text/plain
 src/other/openNURBS/example_write/example_write_vc60.dsp -text svneol=CRLF#text/plain
 src/other/openNURBS/faq.txt svneol=native#text/plain
-src/other/openNURBS/opennurbs.dsp -text svneol=CRLF#text/plain
 src/other/openNURBS/opennurbs.h svneol=native#text/plain
 src/other/openNURBS/opennurbs.rc -text svneol=CRLF#text/plain
 src/other/openNURBS/opennurbs.sln -text svneol=CRLF#unset

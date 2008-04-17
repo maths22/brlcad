@@ -171,9 +171,6 @@ misc/win32-msvc/Dll/brlcad.plg
 misc/win32-msvc/Dll/brlcadrc_defines.h
 misc/win32-msvc/Makefile
 misc/win32-msvc/Makefile.in
-misc/win32-msvc/aPrep/Makefile
-misc/win32-msvc/aPrep/Makefile.in
-misc/win32-msvc/aPrep/aPrep.plg
 misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
 misc/win32-msvc7/Makefile
