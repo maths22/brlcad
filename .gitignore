@@ -275,6 +275,7 @@ misc/win32-msvc7/wish/Debug
 misc/win32-msvc7/wish/Release
 misc/win32-msvc8/Makefile
 misc/win32-msvc8/Makefile.in
+misc/ylwrap
 pix/Makefile
 pix/Makefile.in
 regress/Makefile
