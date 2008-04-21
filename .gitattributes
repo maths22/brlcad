@@ -42,6 +42,7 @@ db/m35.asc svneol=native#text/plain
 db/moss.asc svneol=native#text/plain
 db/operators.asc svneol=native#text/plain
 db/pic.asc svneol=native#text/plain
+db/pinewood.asc -text
 db/prim.asc svneol=native#text/plain
 db/sphflake.asc svneol=native#text/plain
 db/star.asc svneol=native#text/plain
