@@ -1740,7 +1740,6 @@ src/librt/db_path.c svneol=native#text/plain
 src/librt/db_scan.c svneol=native#text/plain
 src/librt/db_tree.c svneol=native#text/plain
 src/librt/db_walk.c svneol=native#text/plain
-src/librt/debug.h svneol=native#text/plain
 src/librt/dir.c svneol=native#text/plain
 src/librt/dspline.c svneol=native#text/plain
 src/librt/fixpt.h svneol=native#text/plain
