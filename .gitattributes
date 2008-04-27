@@ -650,6 +650,7 @@ misc/win32-msvc8/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libdm/libdm.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libfb/libfb.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/libged/libged.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/liboptical/liboptical.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/liborle/liborle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpkg/libpkg.vcproj svneol=CRLF#text/plain eol=crlf
@@ -1653,6 +1654,9 @@ src/libfft/fftfast.c svneol=native#text/plain
 src/libfft/ifftc.c svneol=native#text/plain
 src/libfft/splitdit.c svneol=native#text/plain
 src/libfft/splitditc.c svneol=native#text/plain
+src/libged/dg_obj.c svneol=native#text/plain
+src/libged/view_obj.c svneol=native#text/plain
+src/libged/wdb_obj.c svneol=native#text/plain
 src/libmultispectral/Makefile.am svneol=native#text/plain
 src/libmultispectral/init.c svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
@@ -1736,7 +1740,6 @@ src/librt/db_scan.c svneol=native#text/plain
 src/librt/db_tree.c svneol=native#text/plain
 src/librt/db_walk.c svneol=native#text/plain
 src/librt/debug.h svneol=native#text/plain
-src/librt/dg_obj.c svneol=native#text/plain
 src/librt/dir.c svneol=native#text/plain
 src/librt/dspline.c svneol=native#text/plain
 src/librt/fixpt.h svneol=native#text/plain
@@ -1859,12 +1862,10 @@ src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
 src/librt/vdraw.c svneol=native#text/plain
 src/librt/vers.c svneol=native#text/plain
-src/librt/view_obj.c svneol=native#text/plain
 src/librt/vlist.c svneol=native#text/plain
 src/librt/vshoot.c svneol=native#text/plain
 src/librt/wdb.c svneol=native#text/plain
 src/librt/wdb_comb_std.c svneol=native#text/plain
-src/librt/wdb_obj.c svneol=native#text/plain
 src/librtserver/Makefile.am svneol=native#text/plain
 src/librtserver/rtserver.c svneol=native#text/plain
 src/librtserver/rtserverTest.c svneol=native#text/plain
