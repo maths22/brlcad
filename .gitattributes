@@ -1654,6 +1654,7 @@ src/libfft/fftfast.c svneol=native#text/plain
 src/libfft/ifftc.c svneol=native#text/plain
 src/libfft/splitdit.c svneol=native#text/plain
 src/libfft/splitditc.c svneol=native#text/plain
+src/libged/Makefile.am svneol=native#text/plain
 src/libged/dg_obj.c svneol=native#text/plain
 src/libged/view_obj.c svneol=native#text/plain
 src/libged/wdb_obj.c svneol=native#text/plain
