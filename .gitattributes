@@ -1475,7 +1475,6 @@ src/libbn/anim.c svneol=native#text/plain
 src/libbn/axis.c svneol=native#text/plain
 src/libbn/bn_tcl.c svneol=native#text/plain
 src/libbn/complex.c svneol=native#text/plain
-src/libbn/const.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
 src/libbn/fortran.c svneol=native#text/plain
 src/libbn/globals.c svneol=native#text/plain
