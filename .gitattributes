@@ -1573,6 +1573,7 @@ src/libbu/temp.c svneol=native#text/plain
 src/libbu/units.c svneol=native#text/plain
 src/libbu/vers.c svneol=native#text/plain
 src/libbu/vfont.c svneol=native#text/plain
+src/libbu/vlb.c -text
 src/libbu/vls.c svneol=native#text/plain
 src/libbu/whereis.c svneol=native#text/plain
 src/libbu/which.c svneol=native#text/plain
