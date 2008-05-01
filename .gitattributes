@@ -1968,8 +1968,6 @@ src/mged/facedef.c svneol=native#text/plain
 src/mged/fbserv.c svneol=native#text/plain
 src/mged/fbserv.h svneol=native#text/plain
 src/mged/fbserv_win32.c svneol=native#text/plain
-src/mged/ged.c svneol=native#text/plain
-src/mged/ged.h svneol=native#text/plain
 src/mged/grid.c svneol=native#text/plain
 src/mged/hideline.c svneol=native#text/plain
 src/mged/history.c svneol=native#text/plain
@@ -1984,7 +1982,9 @@ src/mged/menu.h svneol=native#text/plain
 src/mged/mgdev.h svneol=native#text/plain
 src/mged/mged.1 svneol=native#text/plain
 src/mged/mged.bat svneol=CRLF#text/plain eol=crlf
-src/mged/mged.dsp -text svneol=CRLF#text/plain
+src/mged/mged.c svneol=native#text/plain
+src/mged/mged.dsp svneol=CRLF#text/plain eol=crlf
+src/mged/mged.h svneol=native#text/plain
 src/mged/mged_dm.h svneol=native#text/plain
 src/mged/mged_solid.h svneol=native#text/plain
 src/mged/mgedtcl.h svneol=native#text/plain
