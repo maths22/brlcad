@@ -36,8 +36,10 @@ db/include/Makefile.in
 db/kman.g
 db/ktank.g
 db/lgt-test.g
+db/lockfile
 db/m35.g
 db/moss.g
+db/operators.asc2g
 db/operators.g
 db/pic.g
 db/pinewood.g
