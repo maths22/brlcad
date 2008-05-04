@@ -562,7 +562,6 @@ misc/pkgconfig/optical.pc.in svneol=native#text/plain
 misc/pkgconfig/pkg.pc.in svneol=native#text/plain
 misc/pkgconfig/rt.pc.in svneol=native#text/plain
 misc/pkgconfig/wdb.pc.in svneol=native#text/plain
-misc/rcs2log -text
 misc/win32-msvc/CMakeLists.txt -text
 misc/win32-msvc/Dll/BrlcadCore.rc -text
 misc/win32-msvc/Dll/CMakeLists.txt -text
