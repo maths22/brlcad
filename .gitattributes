@@ -1863,7 +1863,6 @@ src/librt/timer42.c svneol=native#text/plain
 src/librt/timer52brl.c svneol=native#text/plain
 src/librt/timerhep.c svneol=native#text/plain
 src/librt/timerunix.c svneol=native#text/plain
-src/librt/track.c svneol=native#text/plain
 src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
 src/librt/vers.c svneol=native#text/plain
