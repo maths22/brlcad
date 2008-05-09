@@ -79,6 +79,8 @@ doc/cmap.5 svneol=native#text/plain
 doc/cvs.txt svneol=native#text/plain
 doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
+doc/docbook/Makefile.am svneol=native#text/plain
+doc/docbook/oed/Makefile.am svneol=native#text/plain
 doc/docbook/oed/README svneol=native#text/plain
 doc/docbook/oed/lollipop.png -text
 doc/docbook/oed/oed.xml svneol=native#text/plain
