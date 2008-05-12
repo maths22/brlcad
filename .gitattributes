@@ -1690,6 +1690,7 @@ src/libged/vdraw.c svneol=native#text/plain
 src/libged/view_obj.c svneol=native#text/plain
 src/libged/wdb_comb_std.c svneol=native#text/plain
 src/libged/wdb_obj.c svneol=native#text/plain
+src/libged/wmater.c svneol=native#text/plain
 src/libmultispectral/Makefile.am svneol=native#text/plain
 src/libmultispectral/init.c svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
