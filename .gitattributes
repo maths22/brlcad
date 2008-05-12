@@ -1679,6 +1679,7 @@ src/libged/bigE.c svneol=native#text/plain
 src/libged/dg_obj.c svneol=native#text/plain
 src/libged/globals.c svneol=native#text/plain
 src/libged/importFg4Section.c svneol=native#text/plain
+src/libged/item.c svneol=native#text/plain
 src/libged/log.c svneol=native#text/plain
 src/libged/mirror.c svneol=native#text/plain
 src/libged/nirt.c svneol=native#text/plain
