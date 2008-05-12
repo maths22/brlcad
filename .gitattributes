@@ -1684,6 +1684,7 @@ src/libged/mirror.c svneol=native#text/plain
 src/libged/nirt.c svneol=native#text/plain
 src/libged/qray.c svneol=native#text/plain
 src/libged/qray.h svneol=native#text/plain
+src/libged/rmater.c svneol=native#text/plain
 src/libged/tcl.c svneol=native#text/plain
 src/libged/track.c svneol=native#text/plain
 src/libged/vdraw.c svneol=native#text/plain
