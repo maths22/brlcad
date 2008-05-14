@@ -1056,6 +1056,7 @@ src/canon/ipustat.c svneol=native#text/plain
 src/canon/pix-ipu.c svneol=native#text/plain
 src/canon/png-ipu.c svneol=native#text/plain
 src/conv/3dm/3dm-g.cpp svneol=native#text/plain
+src/conv/3dm/CMakeLists.txt svneol=native#text/plain
 src/conv/3dm/Makefile.am svneol=native#text/plain
 src/conv/Formats.csv svneol=native#text/plain
 src/conv/Makefile.am svneol=native#text/plain
