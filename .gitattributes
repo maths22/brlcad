@@ -1804,6 +1804,7 @@ src/librt/g_extrude.c svneol=native#text/plain
 src/librt/g_grip.c svneol=native#text/plain
 src/librt/g_half.c svneol=native#text/plain
 src/librt/g_hf.c svneol=native#text/plain
+src/librt/g_hyp.c svneol=native#text/plain
 src/librt/g_metaball.c svneol=native#text/plain
 src/librt/g_nmg.c svneol=native#text/plain
 src/librt/g_nurb.c svneol=native#text/plain
