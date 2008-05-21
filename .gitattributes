@@ -6461,6 +6461,7 @@ src/rt/ext.h svneol=native#text/plain
 src/rt/hurt.c svneol=native#text/plain
 src/rt/libfb-dummy.c svneol=native#text/plain
 src/rt/main.c svneol=native#text/plain
+src/rt/mlt_def.h svneol=native#text/plain
 src/rt/opt.c svneol=native#text/plain
 src/rt/rad.h svneol=native#text/plain
 src/rt/read-rtlog.c svneol=native#text/plain
