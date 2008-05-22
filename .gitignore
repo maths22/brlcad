@@ -58,6 +58,14 @@ doc/Makefile
 doc/Makefile.in
 doc/book/Makefile
 doc/book/Makefile.in
+doc/docbook/.deps
+doc/docbook/.libs
+doc/docbook/Makefile
+doc/docbook/Makefile.in
+doc/docbook/oed/.deps
+doc/docbook/oed/.libs
+doc/docbook/oed/Makefile
+doc/docbook/oed/Makefile.in
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
@@ -564,6 +572,10 @@ src/libfft/rfft256.c
 src/libfft/rfft32.c
 src/libfft/rfft512.c
 src/libfft/rfft64.c
+src/libged/.deps
+src/libged/.libs
+src/libged/Makefile
+src/libged/Makefile.in
 src/libmultispectral/.deps
 src/libmultispectral/.libs
 src/libmultispectral/Makefile
@@ -645,6 +657,10 @@ src/nirt/.libs
 src/nirt/Makefile
 src/nirt/Makefile.in
 src/nirt/nirt
+src/nirt/sfiles/.deps
+src/nirt/sfiles/.libs
+src/nirt/sfiles/Makefile
+src/nirt/sfiles/Makefile.in
 src/nirt/showshot
 src/other/Makefile
 src/other/Makefile.in
