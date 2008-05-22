@@ -1909,8 +1909,6 @@ src/librtserver/rtserverTest.c svneol=native#text/plain
 src/libsysv/CMakeLists.txt -text
 src/libsysv/Makefile.am svneol=native#text/plain
 src/libsysv/memset.c svneol=native#text/plain
-src/libsysv/redata.c svneol=native#text/plain
-src/libsysv/regex.c svneol=native#text/plain
 src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
