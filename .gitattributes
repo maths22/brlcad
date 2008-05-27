@@ -1678,6 +1678,7 @@ src/libfft/splitdit.c svneol=native#text/plain
 src/libfft/splitditc.c svneol=native#text/plain
 src/libged/CMakeLists.txt svneol=native#text/plain
 src/libged/Makefile.am svneol=native#text/plain
+src/libged/arced.c svneol=native#text/plain
 src/libged/bigE.c svneol=native#text/plain
 src/libged/comb_color.c svneol=native#text/plain
 src/libged/dg_obj.c svneol=native#text/plain
