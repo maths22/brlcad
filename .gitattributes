@@ -1686,6 +1686,7 @@ src/libged/dg_obj.c svneol=native#text/plain
 src/libged/edcomb.c svneol=native#text/plain
 src/libged/editit.c svneol=native#text/plain
 src/libged/edmater.c svneol=native#text/plain
+src/libged/ged_private.h svneol=native#text/plain
 src/libged/get_obj_bounds.c svneol=native#text/plain
 src/libged/globals.c svneol=native#text/plain
 src/libged/importFg4Section.c svneol=native#text/plain
