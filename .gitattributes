@@ -6657,6 +6657,7 @@ src/rt/viewedge.c svneol=native#text/plain
 src/rt/viewfrac.c svneol=native#text/plain
 src/rt/viewg3.c svneol=native#text/plain
 src/rt/viewhide.c svneol=native#text/plain
+src/rt/viewmlt.c svneol=native#text/plain
 src/rt/viewpp.c svneol=native#text/plain
 src/rt/viewrad.c svneol=native#text/plain
 src/rt/viewrange.c svneol=native#text/plain
