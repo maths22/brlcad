@@ -712,6 +712,7 @@ misc/win32-msvc8/rtedge/rtedge.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtfrac/rtfrac.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtg3/rtg3.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rthide/rthide.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/rtmlt/rtmlt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtpp/rtpp.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtrad/rtrad.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtrange/rtrange.vcproj svneol=CRLF#text/plain eol=crlf
