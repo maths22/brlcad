@@ -829,7 +829,6 @@ misc/win32-msvc9/libutahrle/libutahrle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/libwdb/libwdb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/libz/libz.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/mged/mged.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc9/mlt/mlt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/nastran2g/nastran2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/nirt/nirt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/nmg2bot/nmg2bot.vcproj svneol=CRLF#text/plain eol=crlf
@@ -859,6 +858,7 @@ misc/win32-msvc9/rtedge/rtedge.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rtfrac/rtfrac.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rtg3/rtg3.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rthide/rthide.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc9/rtmlt/rtmlt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rtpp/rtpp.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rtrad/rtrad.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rtrange/rtrange.vcproj svneol=CRLF#text/plain eol=crlf
