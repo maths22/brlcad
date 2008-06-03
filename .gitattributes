@@ -871,6 +871,7 @@ misc/win32-msvc9/spm2fb/spm2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/stl2g/stl2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/tankill2g/tankill2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/tclpipe/tclpipe.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc9/tclsh/library/installTree.tcl svneol=native#text/plain
 misc/win32-msvc9/tclsh/tclsh.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/tclstub/tclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/tkimg/tkimg.vcproj svneol=CRLF#text/plain eol=crlf
