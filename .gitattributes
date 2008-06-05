@@ -957,10 +957,7 @@ sh/ws.sh svneol=native#text/x-sh
 src/Makefile.am svneol=native#text/plain
 src/README svneol=native#text/plain
 src/adrt/AUTHORS svneol=native#text/plain
-src/adrt/COPYING svneol=native#text/plain
-src/adrt/Doxyfile -text
 src/adrt/Makefile.am svneol=native#text/plain
-src/adrt/NEWS svneol=native#text/plain
 src/adrt/README svneol=native#text/plain
 src/adrt/adrt.h svneol=native#text/plain
 src/adrt/adrt_struct.h svneol=native#text/plain
