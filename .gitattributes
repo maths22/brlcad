@@ -1833,6 +1833,7 @@ src/libged/arced.c svneol=native#text/plain
 src/libged/bigE.c svneol=native#text/plain
 src/libged/comb_color.c svneol=native#text/plain
 src/libged/dg_obj.c svneol=native#text/plain
+src/libged/draw.c svneol=native#text/plain
 src/libged/edcomb.c svneol=native#text/plain
 src/libged/editit.c svneol=native#text/plain
 src/libged/edmater.c svneol=native#text/plain
