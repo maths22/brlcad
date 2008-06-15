@@ -595,7 +595,12 @@ src/liborle/.deps
 src/liborle/.libs
 src/liborle/Makefile
 src/liborle/Makefile.in
+src/libpc/.deps
 src/libpc/.libs
+src/libpc/Makefile
+src/libpc/Makefile.in
+src/libpc/pc_test
+src/libpc/solver_test
 src/libpkg/.deps
 src/libpkg/.libs
 src/libpkg/Makefile
