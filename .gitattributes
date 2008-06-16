@@ -852,6 +852,7 @@ misc/win32-msvc9/png2fb/png2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/polar2fb/polar2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/poly2bot/poly2bot.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/pp2fb/pp2fb.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc9/remrt/remrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rle2fb/rle2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rt/rt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/rt_bot_faces/rt_bot_faces.vcproj svneol=CRLF#text/plain eol=crlf
