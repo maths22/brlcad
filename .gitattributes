@@ -80,23 +80,24 @@ doc/cvs.txt svneol=native#text/plain
 doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
 doc/docbook/Makefile.am svneol=native#text/plain
-doc/docbook/oed/Makefile.am svneol=native#text/plain
-doc/docbook/oed/README svneol=native#text/plain
-doc/docbook/oed/lollipop.png -text
-doc/docbook/oed/oed.xml svneol=native#text/plain
-doc/docbook/oed/oed_0001.png -text
-doc/docbook/oed/oed_0002.png -text
-doc/docbook/oed/oed_0003.png -text
-doc/docbook/oed/oed_0004.png -text
-doc/docbook/oed/oed_0005.png -text
-doc/docbook/oed/oed_0006.png -text
-doc/docbook/oed/oed_0007.png -text
-doc/docbook/oed/oed_0008.png -text
-doc/docbook/oed/oed_0009.png -text
-doc/docbook/oed/oed_0010.png -text
-doc/docbook/oed/oed_0011.png -text
-doc/docbook/oed/oed_0012.png -text
-doc/docbook/oed/oed_examples.asc svneol=native#text/plain
+doc/docbook/tutorials/Makefile.am svneol=native#text/plain
+doc/docbook/tutorials/oed/Makefile.am svneol=native#text/plain
+doc/docbook/tutorials/oed/README svneol=native#text/plain
+doc/docbook/tutorials/oed/lollipop.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed.xml svneol=native#text/xml
+doc/docbook/tutorials/oed/oed_0001.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0002.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0003.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0004.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0005.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0006.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0007.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0008.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0009.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0010.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0011.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_0012.png -text svneol=unset#image/png
+doc/docbook/tutorials/oed/oed_examples.asc svneol=native#text/plain
 doc/ged.tr svneol=native#text/plain
 doc/history.txt svneol=native#text/plain
 doc/html/Makefile.am svneol=native#text/plain
