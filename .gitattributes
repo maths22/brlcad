@@ -71,7 +71,6 @@ doc/anim.txt svneol=native#text/plain
 doc/archer_ack.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
 doc/book/Makefile.am svneol=native#text/plain
-doc/book/VolumeII.xml svneol=native#text/xml
 doc/book/VolumeIV.xml svneol=native#text/xml
 doc/brep.txt svneol=native#text/plain
 doc/bw.5 svneol=native#text/plain
