@@ -108,6 +108,7 @@ doc/docbook/lessons/mged/learning_viewing_options_images/truck_front.png -text s
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_left.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_rear.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_right.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/using_insert_command.xml svneol=native#text/xml
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/calstblx.dtd svneol=native#text/plain
