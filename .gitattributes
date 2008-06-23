@@ -87,6 +87,14 @@ doc/docbook/lessons/mged/assigning_material_properties_and_raytracing.xml svneol
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/commandwindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/fb_overlay_mode.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/raytracedshapes.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet.xml svneol=native#text/xml
+doc/docbook/lessons/mged/creating_a_goblet_images/base_subtracted_vol.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/goblet1stsphere.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/gobletbase.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/gobletbasestembasin.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/gobletstem.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/rtgoblet.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_a_goblet_images/rtgobletaz_35el_25.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes.xml svneol=native#text/xml
 doc/docbook/lessons/mged/creating_primitive_shapes_images/commandwindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes_images/graphicswindow.png -text svneol=unset#image/png
