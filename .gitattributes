@@ -3231,6 +3231,7 @@ src/libged/illum.c svneol=native#text/plain
 src/libged/importFg4Section.c svneol=native#text/plain
 src/libged/item.c svneol=native#text/plain
 src/libged/log.c svneol=native#text/plain
+src/libged/ls.c svneol=native#text/plain
 src/libged/make.c svneol=native#text/plain
 src/libged/make_name.c svneol=native#text/plain
 src/libged/mater.c svneol=native#text/plain
