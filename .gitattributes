@@ -91,6 +91,7 @@ doc/docbook/lessons/mged/creating_primitive_shapes.xml svneol=native#text/xml
 doc/docbook/lessons/mged/creating_primitive_shapes_images/commandwindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes_images/graphicswindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes_images/terminal.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/learning_boolean_expressions.xml svneol=native#text/xml
 doc/docbook/lessons/mged/learning_boolean_expressions_images/combinationeditor.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_boolean_expressions_images/intersectionspheres.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_boolean_expressions_images/raytraceddome.png -text svneol=unset#image/png
