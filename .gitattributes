@@ -157,6 +157,16 @@ doc/docbook/lessons/mged/mug_through_gui_images/mug_gui_finished_raytraced.png -
 doc/docbook/lessons/mged/mug_through_gui_images/mug_handle_frontview.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/mug_through_gui_images/mug_handle_topview.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/mug_through_gui_images/mug_rim_frontview.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d.xml svneol=native#text/xml
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_comb_ed_checker.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_complete_front.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_design.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_raytraced_overlay.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_tabletop_base_candle_front.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_tabletop_base_front.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_tabletop_eto1_rcc_wireframe_front.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_tabletop_eto1_wireframe_front.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_tabletop_wireframe_front.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/refining_mug.xml svneol=native#text/xml
 doc/docbook/lessons/mged/refining_mug_images/mug_raytraced_norim.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/refining_mug_images/mug_raytraced_rim.png -text svneol=unset#image/png
