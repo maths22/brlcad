@@ -158,6 +158,15 @@ doc/docbook/lessons/mged/mug_through_gui_images/mug_handle_frontview.png -text s
 doc/docbook/lessons/mged/mug_through_gui_images/mug_handle_topview.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/mug_through_gui_images/mug_rim_frontview.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/placing_shapes_in_3d.xml svneol=native#text/xml
+doc/docbook/lessons/mged/placing_shapes_in_3d_2.xml svneol=native#text/xml
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_base_sphere_topview.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_multipane.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_spheres_az35el25.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_spheres_frontview.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_spheres_raytraced.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/candle_spheres_topview.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/primitive_editor.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/placing_shapes_in_3d_2_images/primitive_selection_dropdown.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_comb_ed_checker.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_complete_front.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/placing_shapes_in_3d_images/candle_design.png -text svneol=unset#image/png
