@@ -100,6 +100,13 @@ doc/docbook/lessons/mged/creating_primitive_shapes_images/commandwindow.png -tex
 doc/docbook/lessons/mged/creating_primitive_shapes_images/graphicswindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes_images/terminal.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/goblet_material_properties.xml svneol=native#text/xml
+doc/docbook/lessons/mged/goblet_material_properties2.xml svneol=native#text/xml
+doc/docbook/lessons/mged/goblet_material_properties2_images/comb_editor_window_mater_prop.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/goblet_material_properties2_images/goblet_combeditor.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/goblet_material_properties2_images/goblet_reflectivity_1.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/goblet_material_properties2_images/goblet_reflectivity_2.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/goblet_material_properties2_images/refractive_index.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/goblet_material_properties2_images/spec_vs_diff_reflectivity.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/goblet_material_properties_images/goblet_complete_window.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/goblet_material_properties_images/goblet_mater_complete.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/goblet_material_properties_images/goblet_mirror.png -text svneol=unset#image/png
