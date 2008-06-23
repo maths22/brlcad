@@ -95,6 +95,8 @@ doc/docbook/lessons/mged/creating_a_goblet_images/gobletbasestembasin.png -text 
 doc/docbook/lessons/mged/creating_a_goblet_images/gobletstem.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_a_goblet_images/rtgoblet.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_a_goblet_images/rtgobletaz_35el_25.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/creating_mug.xml svneol=native#text/xml
+doc/docbook/lessons/mged/creating_mug_images/mug_wireframe.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes.xml svneol=native#text/xml
 doc/docbook/lessons/mged/creating_primitive_shapes_images/commandwindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/creating_primitive_shapes_images/graphicswindow.png -text svneol=unset#image/png
