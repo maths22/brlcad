@@ -82,6 +82,7 @@ doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/book/README svneol=native#text/plain
 doc/docbook/book/book.xml svneol=native#text/xml
 doc/docbook/book/tutorial_series/VolumeII.xml svneol=native#text/xml
+doc/docbook/book/tutorial_series/book_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing.xml svneol=native#text/xml
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/commandwindow.png -text svneol=unset#image/png
