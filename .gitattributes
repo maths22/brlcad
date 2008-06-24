@@ -164,6 +164,15 @@ doc/docbook/lessons/mged/learning_viewing_options_images/truck_front.png -text s
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_left.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_rear.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/learning_viewing_options_images/truck_right.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures.xml svneol=native#text/xml
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_casecut_raytrace.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_cut_raytrace.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_cut_wireframe.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_default_components_props.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_new_design.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_transparent.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_wireframe_circ_board.png -text svneol=unset#image/png
+doc/docbook/lessons/mged/modeling_techniques_and_structures_images/radio_with_mater_props.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/mug_through_gui.xml svneol=native#text/xml
 doc/docbook/lessons/mged/mug_through_gui_images/cyls_frontview.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/mug_through_gui_images/mug_gui_finished_raytraced.png -text svneol=unset#image/png
