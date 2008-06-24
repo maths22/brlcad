@@ -62,6 +62,10 @@ doc/docbook/.deps
 doc/docbook/.libs
 doc/docbook/Makefile
 doc/docbook/Makefile.in
+doc/docbook/tutorials/Makefile
+doc/docbook/tutorials/Makefile.in
+doc/docbook/tutorials/oed/Makefile
+doc/docbook/tutorials/oed/Makefile.in
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
@@ -1026,6 +1030,7 @@ src/rt/rtexample
 src/rt/rtfrac
 src/rt/rtg3
 src/rt/rthide
+src/rt/rtmlt
 src/rt/rtpp
 src/rt/rtrad
 src/rt/rtrange
