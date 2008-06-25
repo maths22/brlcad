@@ -3362,6 +3362,7 @@ src/liborle/liborle.3 svneol=native#text/plain
 src/liborle/rle.c svneol=native#text/plain
 src/libpc/Makefile.am svneol=native#text/plain
 src/libpc/pcBasic.h svneol=native#text/plain
+src/libpc/pcConstraint.h svneol=native#text/plain
 src/libpc/pcInterval.h svneol=native#text/plain
 src/libpc/pcNetwork.h svneol=native#text/plain
 src/libpc/pcVariable.h svneol=native#text/plain
