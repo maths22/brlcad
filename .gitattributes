@@ -3306,6 +3306,7 @@ src/libged/pathsum.c svneol=native#text/plain
 src/libged/put.c svneol=native#text/plain
 src/libged/qray.c svneol=native#text/plain
 src/libged/qray.h svneol=native#text/plain
+src/libged/report.c svneol=native#text/plain
 src/libged/rmater.c svneol=native#text/plain
 src/libged/rt.c svneol=native#text/plain
 src/libged/set_outputHandler.c svneol=native#text/plain
