@@ -3480,6 +3480,7 @@ src/librt/primitives/hyp/hyp.c svneol=native#text/plain
 src/librt/primitives/metaball/metaball.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_bool.c svneol=native#text/plain
+src/librt/primitives/nmg/nmg_brep.cpp svneol=native#text/plain
 src/librt/primitives/nmg/nmg_ck.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_class.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_eval.c svneol=native#text/plain
