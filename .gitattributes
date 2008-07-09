@@ -2890,6 +2890,7 @@ src/conv/nmg-sgp.c svneol=native#text/plain
 src/conv/off/Makefile.am svneol=native#text/plain
 src/conv/off/g-off.c svneol=native#text/plain
 src/conv/off/off-g.c svneol=native#text/plain
+src/conv/patch/CMakeLists.txt svneol=native#text/plain
 src/conv/patch/Makefile.am svneol=native#text/plain
 src/conv/patch/patch-g.1 svneol=native#text/plain
 src/conv/patch/patch-g.c svneol=native#text/plain
