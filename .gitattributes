@@ -3450,6 +3450,7 @@ src/libpc/pcBasic.h svneol=native#text/plain
 src/libpc/pcConstraint.h svneol=native#text/plain
 src/libpc/pcInterval.h svneol=native#text/plain
 src/libpc/pcNetwork.h svneol=native#text/plain
+src/libpc/pcParser.h svneol=native#text/plain
 src/libpc/pcSolver.h svneol=native#text/plain
 src/libpc/pcVariable.h svneol=native#text/plain
 src/libpc/pc_constraint.h svneol=native#text/plain
