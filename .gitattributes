@@ -3387,6 +3387,7 @@ src/libged/set_uplotOutputMode.c svneol=native#text/plain
 src/libged/shader.c svneol=native#text/plain
 src/libged/size.c svneol=native#text/plain
 src/libged/slew.c svneol=native#text/plain
+src/libged/tra.c svneol=native#text/plain
 src/libged/trace.c svneol=native#text/plain
 src/libged/track.c svneol=native#text/plain
 src/libged/tree.c svneol=native#text/plain
