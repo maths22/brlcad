@@ -1587,6 +1587,7 @@ doc/docbook/tutorials/pipes/pipe_images/inline6.png -text svneol=unset#image/png
 doc/docbook/tutorials/pipes/pipe_images/inline7.png -text svneol=unset#image/png
 doc/docbook/tutorials/pipes/pipe_images/inline8.png -text svneol=unset#image/png
 doc/docbook/tutorials/pipes/pipes.xml svneol=native#text/xml
+doc/docbook/tutorials/projection_shader/projection_shader.xml svneol=native#text/xml
 doc/docbook/tutorials/projection_shader/projection_shader_images/figure1.png -text svneol=unset#image/png
 doc/docbook/tutorials/projection_shader/projection_shader_images/figure2.png -text svneol=unset#image/png
 doc/docbook/tutorials/projection_shader/projection_shader_images/figure3.png -text svneol=unset#image/png
