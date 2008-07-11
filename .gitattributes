@@ -234,6 +234,7 @@ doc/docbook/lessons/mged/refining_mug.xml svneol=native#text/xml
 doc/docbook/lessons/mged/refining_mug_images/mug_raytraced_norim.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/refining_mug_images/mug_raytraced_rim.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/using_insert_command.xml svneol=native#text/xml
+doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/calstblx.dtd svneol=native#text/plain
