@@ -1551,6 +1551,7 @@ doc/docbook/tutorials/build_region/build_region_images/figure1.png -text svneol=
 doc/docbook/tutorials/build_region/build_region_images/figure2.png -text svneol=unset#image/png
 doc/docbook/tutorials/build_region/build_region_images/figure3.png -text svneol=unset#image/png
 doc/docbook/tutorials/build_region/build_region_images/figure4.png -text svneol=unset#image/png
+doc/docbook/tutorials/ebm_primitive/ebm_primitive.xml svneol=native#text/xml
 doc/docbook/tutorials/ebm_primitive/ebm_primitive_images/figure1.png -text svneol=unset#image/png
 doc/docbook/tutorials/ebm_primitive/ebm_primitive_images/figure2.png -text svneol=unset#image/png
 doc/docbook/tutorials/ebm_primitive/ebm_primitive_images/figure3.png -text svneol=unset#image/png
