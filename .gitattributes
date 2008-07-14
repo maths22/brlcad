@@ -1540,6 +1540,7 @@ doc/docbook/resources/standard/xsl/xhtml/verbatim.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/xref.xsl svneol=native#text/xml
 doc/docbook/system/mged/mged_commands.xml svneol=native#text/xml
 doc/docbook/tutorials/Makefile.am svneol=native#text/plain
+doc/docbook/tutorials/build_pattern/build_pattern.xml svneol=native#text/xml
 doc/docbook/tutorials/build_pattern/build_pattern_images/figure1.png -text svneol=unset#image/png
 doc/docbook/tutorials/build_pattern/build_pattern_images/figure2.png -text svneol=unset#image/png
 doc/docbook/tutorials/build_pattern/build_pattern_images/figure3.png -text svneol=unset#image/png
