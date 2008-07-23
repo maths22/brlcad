@@ -3548,6 +3548,7 @@ src/liborle/liborle.3 svneol=native#text/plain
 src/liborle/rle.c svneol=native#text/plain
 src/libpc/Makefile.am svneol=native#text/plain
 src/libpc/pcBasic.h svneol=native#text/plain
+src/libpc/pcConstraint.cpp svneol=native#text/plain
 src/libpc/pcConstraint.h svneol=native#text/plain
 src/libpc/pcGenerator.cpp svneol=native#text/plain
 src/libpc/pcGenerator.h svneol=native#text/plain
