@@ -3705,6 +3705,7 @@ src/librt/primitives/submodel/submodel.c svneol=native#text/plain
 src/librt/primitives/superell/superell.c svneol=native#text/plain
 src/librt/primitives/tgc/tgc.c svneol=native#text/plain
 src/librt/primitives/tor/tor.c svneol=native#text/plain
+src/librt/primitives/tor/tor_brep.cpp svneol=native#text/plain
 src/librt/primitives/vol/vol.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.h svneol=native#text/plain
