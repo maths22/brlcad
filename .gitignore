@@ -108,11 +108,6 @@ m4/Makefile
 m4/Makefile.in
 misc/Makefile
 misc/Makefile.in
-misc/archlinux/Makefile
-misc/archlinux/Makefile.in
-misc/archlinux/PKGBUILD
-misc/archlinux/brlcad.install
-misc/archlinux/brlcad.sh
 misc/brlcad-config
 misc/brlcad.spec
 misc/compile
