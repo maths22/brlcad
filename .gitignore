@@ -119,17 +119,6 @@ misc/depcomp
 misc/install-sh
 misc/ltmain.sh
 misc/ltmain.sh.backup
-misc/macosx/.deps
-misc/macosx/.libs
-misc/macosx/Makefile
-misc/macosx/Makefile.in
-misc/macosx/Resources/Makefile
-misc/macosx/Resources/Makefile.in
-misc/macosx/Resources/ReadMe.rtfd/Makefile
-misc/macosx/Resources/ReadMe.rtfd/Makefile.in
-misc/macosx/Resources/Welcome.rtfd/Makefile
-misc/macosx/Resources/Welcome.rtfd/Makefile.in
-misc/macosx/openUp
 misc/missing
 misc/mkinstalldirs
 misc/nsis/Makefile

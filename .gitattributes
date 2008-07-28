@@ -552,11 +552,11 @@ misc/macosx/Makefile.am svneol=native#text/plain
 misc/macosx/README svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
 misc/macosx/Resources/Makefile.am svneol=native#text/plain
-misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
+misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
-misc/macosx/Resources/Welcome.rtfd/.typeAttributes.dict -text
+misc/macosx/Resources/Welcome.rtfd/.typeAttributes.dict svneol=native#text/plain
 misc/macosx/Resources/Welcome.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
