@@ -121,8 +121,6 @@ misc/ltmain.sh
 misc/ltmain.sh.backup
 misc/missing
 misc/mkinstalldirs
-misc/nsis/Makefile
-misc/nsis/Makefile.in
 misc/pkgconfig/*.pc
 misc/pkgconfig/Makefile
 misc/pkgconfig/Makefile.in
