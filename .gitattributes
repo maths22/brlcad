@@ -581,89 +581,38 @@ misc/pkgconfig/pkg.pc.in svneol=native#text/plain
 misc/pkgconfig/rt.pc.in svneol=native#text/plain
 misc/pkgconfig/wdb.pc.in svneol=native#text/plain
 misc/rcs2log -text
-misc/win32-msvc/CMakeLists.txt -text
-misc/win32-msvc/Dll/CMakeLists.txt -text
+misc/win32-msvc/CMakeLists.txt svneol=native#text/plain
+misc/win32-msvc/Dll/BrlcadCore.rc svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc/Dll/CMakeLists.txt svneol=native#text/plain
 misc/win32-msvc/Dll/Makefile.am svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/Makefile.am svneol=native#text/plain
-misc/win32-msvc7/Makefile.am svneol=native#text/plain
-misc/win32-msvc7/all/all.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/asc2g/asc2g.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/brlcad/brlcad.sln -text svneol=CRLF#unset
-misc/win32-msvc7/dbupgrade/dbupgrade.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/dxf2g/dxf2g.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/fast42g/fast42g.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/fb2pix/fb2pix.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/fb2png/fb2png.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/fbclear/fbclear.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/fbserv/fbserv.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/g2asc/g2asc.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/g2dxf/g2dxf.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/g2iges/g2iges.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/g2stl/g2stl.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/iges2g/iges2g.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/itclstub/itclstub.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/itkstub/itkstub.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libBLT/libBLT.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libItcl/libItcl.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libItk/libItk.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libbn/libbn.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc7/libdm/libdm.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libfb/libfb.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/liboptical/liboptical.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libpkg/libpkg.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libpng/libpng.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libregex/libregex.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/librt/librt.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libsysv/libsysv.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libtcl/libtcl.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libtclcad/libtclcad.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libtk/libtk.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libwdb/libwdb.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/libz/libz.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/mged/mged.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/nirt/nirt.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/pix2fb/pix2fb.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/png2fb/png2fb.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/rt/rt.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/rtcheck/rtcheck.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/rtedge/rtedge.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/rtg3/rtg3.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/stl2g/stl2g.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tclpipe/tclpipe.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tclsh/tclsh.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tclstub/tclstub.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tkimg/tkimg.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tkimgpng/tkimgpng.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/tkstub/tkstub.vcproj -text svneol=CRLF#text/plain
-misc/win32-msvc7/wish/wish.vcproj -text svneol=CRLF#text/plain
 misc/win32-msvc8/Makefile.am svneol=native#text/plain
 misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
-misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
-misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
-misc/win32-msvc8/bot2raw/bot2raw.vcproj -text
-misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
-misc/win32-msvc8/breplicator/breplicator.vcproj -text
-misc/win32-msvc8/brlcad/brlcad.sln eol=crlf
+misc/win32-msvc8/asc2nmg/asc2nmg.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/asc2pix/asc2pix.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/bot2raw/bot2raw.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/breplicator/breplicator.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/brlcad/brlcad.sln svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/btclsh/btclsh.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/bw2fb/bw2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/bw2pix/bw2pix.vcproj -text
+misc/win32-msvc8/bw2pix/bw2pix.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/bwish/bwish.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/bwmod/bwmod.vcproj -text
+misc/win32-msvc8/bwmod/bwmod.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/cat2fb/cat2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/cell2fb/cell2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/cmap2fb/cmap2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/cy2g/cy2g.vcproj -text
+misc/win32-msvc8/cy2g/cy2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/dbupgrade/dbupgrade.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/dxf2g/dxf2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/enf2g/enf2g.vcproj -text
-misc/win32-msvc8/euclid2g/euclid2g.vcproj -text
-misc/win32-msvc8/euclid_format/euclid_format.vcproj -text
-misc/win32-msvc8/euclid_unformat/euclid_unformat.vcproj -text
+misc/win32-msvc8/enf2g/enf2g.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/euclid2g/euclid2g.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/euclid_format/euclid_format.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/euclid_unformat/euclid_unformat.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fast42g/fast42g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fb2bw/fb2bw.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fb2cmap/fb2cmap.vcproj svneol=CRLF#text/plain eol=crlf
@@ -692,24 +641,24 @@ misc/win32-msvc8/fbscanplot/fbscanplot.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fbserv/fbserv.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fbstretch/fbstretch.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fbzoom/fbzoom.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2acad/g2acad.vcproj -text
-misc/win32-msvc8/g2adrt/g2adrt.vcproj -text
+misc/win32-msvc8/g2acad/g2acad.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2adrt/g2adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2asc/g2asc.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2dxf/g2dxf.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2euclid/g2euclid.vcproj -text
-misc/win32-msvc8/g2euclid1/g2euclid1.vcproj -text
+misc/win32-msvc8/g2euclid/g2euclid.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2euclid1/g2euclid1.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2iges/g2iges.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2nff/g2nff.vcproj -text
-misc/win32-msvc8/g2nmg/g2nmg.vcproj -text
-misc/win32-msvc8/g2obj/g2obj.vcproj -text
-misc/win32-msvc8/g2shellrect/g2shellrect.vcproj -text
+misc/win32-msvc8/g2nff/g2nff.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2nmg/g2nmg.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2obj/g2obj.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2shellrect/g2shellrect.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2stl/g2stl.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2tankill/g2tankill.vcproj -text
-misc/win32-msvc8/g2var/g2var.vcproj -text
-misc/win32-msvc8/g2vrml/g2vrml.vcproj -text
-misc/win32-msvc8/g2x3d/g2x3d.vcproj -text
-misc/win32-msvc8/g42g5/g42g5.vcproj -text
-misc/win32-msvc8/g52g4/g52g4.vcproj -text
+misc/win32-msvc8/g2tankill/g2tankill.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2var/g2var.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2vrml/g2vrml.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g2x3d/g2x3d.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g42g5/g42g5.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g52g4/g52g4.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/gif2fb/gif2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/itclstub/itclstub.vcproj svneol=CRLF#text/plain eol=crlf
@@ -721,6 +670,7 @@ misc/win32-msvc8/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libdm/libdm.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libfb/libfb.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/libged/libged.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/liboptical/liboptical.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/liborle/liborle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpkg/libpkg.vcproj svneol=CRLF#text/plain eol=crlf
@@ -735,24 +685,24 @@ misc/win32-msvc8/libutahrle/libutahrle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libwdb/libwdb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libz/libz.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/mged/mged.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/nastran2g/nastran2g.vcproj -text
+misc/win32-msvc8/nastran2g/nastran2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/nirt/nirt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/nmg2bot/nmg2bot.vcproj -text
-misc/win32-msvc8/nmg2rib/nmg2rib.vcproj -text
-misc/win32-msvc8/nmg2sgp/nmg2sgp.vcproj -text
-misc/win32-msvc8/opennurbs/opennurbs.vcproj -text
+misc/win32-msvc8/nmg2bot/nmg2bot.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/nmg2rib/nmg2rib.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/nmg2sgp/nmg2sgp.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/opennurbs/opennurbs.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/orle2fb/orle2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pix2asc/pix2asc.vcproj -text
-misc/win32-msvc8/pix2bw/pix2bw.vcproj -text
+misc/win32-msvc8/pix2asc/pix2asc.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/pix2bw/pix2bw.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pix2fb/pix2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pixautosize/pixautosize.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pixflip2fb/pixflip2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pixmatte/pixmatte.vcproj -text
+misc/win32-msvc8/pixmatte/pixmatte.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pl2fb/pl2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/ply2g/ply2g.vcproj -text
+misc/win32-msvc8/ply2g/ply2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/png2fb/png2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/polar2fb/polar2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/poly2bot/poly2bot.vcproj -text
+misc/win32-msvc8/poly2bot/poly2bot.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pp2fb/pp2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rle2fb/rle2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rt/rt.vcproj svneol=CRLF#text/plain eol=crlf
@@ -773,7 +723,7 @@ misc/win32-msvc8/rtweight/rtweight.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/rtxray/rtxray.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/spm2fb/spm2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/stl2g/stl2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tankill2g/tankill2g.vcproj -text
+misc/win32-msvc8/tankill2g/tankill2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tclpipe/tclpipe.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tclsh/library/installTree.tcl svneol=native#text/plain
 misc/win32-msvc8/tclsh/tclsh.vcproj svneol=CRLF#text/plain eol=crlf
@@ -781,8 +731,8 @@ misc/win32-msvc8/tclstub/tclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkimg/tkimg.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkimgpng/tkimgpng.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/vg2g/vg2g.vcproj -text
-misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
+misc/win32-msvc8/vg2g/vg2g.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/wish/wish.vcproj svneol=CRLF#text/plain eol=crlf
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain

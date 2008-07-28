@@ -1,4 +1,4 @@
-# $Id$
+# $Id: Makefile.am 31160 2008-05-22 02:37:12Z brlcad $
 
 EXTRA_DIST= \
 	asc2g/asc2g.vcproj \
@@ -81,6 +81,7 @@ EXTRA_DIST= \
 	libbu/libbu.vcproj \
 	libdm/libdm.vcproj \
 	libfb/libfb.vcproj \
+	libged/libged.vcproj \
 	liboptical/liboptical.vcproj \
 	liborle/liborle.vcproj \
 	libpkg/libpkg.vcproj \

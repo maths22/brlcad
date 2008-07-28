@@ -29,7 +29,7 @@
  *      IABG mbH
  *      Einsteinstr. 20, 85521 Ottobrunn, Germany
  *
- * $Id$
+ * $Id: TclDummies.c 29890 2008-01-11 19:34:35Z brlcad $
  */
 
 #define STATIC_BUILD
