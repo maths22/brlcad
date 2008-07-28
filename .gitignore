@@ -121,9 +121,6 @@ misc/ltmain.sh
 misc/ltmain.sh.backup
 misc/missing
 misc/mkinstalldirs
-misc/pkgconfig/*.pc
-misc/pkgconfig/Makefile
-misc/pkgconfig/Makefile.in
 misc/py-compile
 misc/win32-msvc/Dll/Makefile
 misc/win32-msvc/Dll/Makefile.in
