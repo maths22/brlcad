@@ -1057,6 +1057,7 @@ src/canon/png-ipu.c svneol=native#text/plain
 src/conv/3dm/3dm-g.cpp svneol=native#text/plain
 src/conv/3dm/CMakeLists.txt svneol=native#text/plain
 src/conv/3dm/Makefile.am svneol=native#text/plain
+src/conv/CMakeLists.txt svneol=native#text/plain
 src/conv/Formats.csv svneol=native#text/plain
 src/conv/Makefile.am svneol=native#text/plain
 src/conv/asc-nmg.1 svneol=native#text/plain
