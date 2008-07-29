@@ -2092,6 +2092,7 @@ src/nirt/sfiles/Makefile.am svneol=native#text/plain
 src/nirt/sfiles/csv-gap.nrt svneol=native#text/plain
 src/nirt/sfiles/csv.nrt svneol=native#text/plain
 src/nirt/sfiles/default.nrt svneol=native#text/plain
+src/nirt/sfiles/entryexit.nrt svneol=native#text/plain
 src/nirt/sfiles/gap1.nrt svneol=native#text/plain
 src/nirt/sfiles/gap2.nrt svneol=native#text/plain
 src/nirt/showshot.1 svneol=native#text/plain
