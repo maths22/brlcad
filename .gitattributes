@@ -480,7 +480,6 @@ include/plastic.h svneol=native#text/plain
 include/plot3.h svneol=native#text/plain
 include/raytrace.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
-include/regex.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
 include/rtprivate.h svneol=native#text/plain
 include/rtserver.h svneol=native#text/plain
@@ -580,7 +579,6 @@ misc/pkgconfig/optical.pc.in svneol=native#text/plain
 misc/pkgconfig/pkg.pc.in svneol=native#text/plain
 misc/pkgconfig/rt.pc.in svneol=native#text/plain
 misc/pkgconfig/wdb.pc.in svneol=native#text/plain
-misc/rcs2log -text
 misc/win32-msvc/CMakeLists.txt svneol=native#text/plain
 misc/win32-msvc/Dll/BrlcadCore.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/Dll/CMakeLists.txt svneol=native#text/plain
@@ -6570,7 +6568,6 @@ src/sig/u-d.c svneol=native#text/plain
 src/sig/u-f.c svneol=native#text/plain
 src/sig/umod.c svneol=native#text/plain
 src/sig/ustat.c svneol=native#text/plain
-src/srclistnew.txt svneol=native#text/plain
 src/tab/Makefile.am svneol=native#text/plain
 src/tab/script-tab.c svneol=native#text/plain
 src/tab/script.l svneol=native#text/plain
