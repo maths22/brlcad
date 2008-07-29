@@ -3841,7 +3841,6 @@ src/mged/mged.c svneol=native#text/plain
 src/mged/mged.dsp svneol=CRLF#text/plain eol=crlf
 src/mged/mged.h svneol=native#text/plain
 src/mged/mged_dm.h svneol=native#text/plain
-src/mged/mged_solid.h svneol=native#text/plain
 src/mged/mgedtcl.h svneol=native#text/plain
 src/mged/mover.c svneol=native#text/plain
 src/mged/muves.c svneol=native#text/plain
