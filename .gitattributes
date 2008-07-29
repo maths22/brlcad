@@ -6475,7 +6475,6 @@ src/rt/reshoot.c svneol=native#text/plain
 src/rt/rt.1 svneol=native#text/plain
 src/rt/rt.dsp svneol=CRLF#text/plain eol=crlf
 src/rt/rt_bot_faces.1 svneol=native#text/plain
-src/rt/rt_simple.c svneol=native#text/plain
 src/rt/rtarea.1 svneol=native#text/plain
 src/rt/rtcheck.1 svneol=native#text/plain
 src/rt/rtedge.1 svneol=native#text/plain
