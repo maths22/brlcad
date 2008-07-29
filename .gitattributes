@@ -3413,6 +3413,7 @@ src/libged/keep.c svneol=native#text/plain
 src/libged/keypoint.c svneol=native#text/plain
 src/libged/kill.c svneol=native#text/plain
 src/libged/killall.c svneol=native#text/plain
+src/libged/killrefs.c svneol=native#text/plain
 src/libged/killtree.c svneol=native#text/plain
 src/libged/list.c svneol=native#text/plain
 src/libged/log.c svneol=native#text/plain
