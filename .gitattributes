@@ -19,6 +19,7 @@ bench/run.sh svneol=native#text/x-sh
 bench/try.sh svneol=native#text/x-sh
 bench/viewdiff.sh svneol=native#text/x-sh
 /configure.ac svneol=native#text/plain
+/current_successful_compile_rev.txt svneol=native#text/plain
 db/Makefile.am svneol=native#text/plain
 db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
