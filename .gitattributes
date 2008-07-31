@@ -6177,7 +6177,6 @@ src/other/intaval/readme.txt svneol=native#text/plain
 src/other/intaval/regtab.cpp svneol=native#text/plain
 src/other/intaval/regtab.h svneol=native#text/plain
 src/other/intaval/tgf-g.cpp svneol=native#text/plain
-src/other/intaval/tgf2g.dsp -text svneol=CRLF#text/plain
 src/other/intaval/write_brl.cpp svneol=native#text/plain
 src/other/intaval/write_brl.h svneol=native#text/plain
 src/other/iwidgets/CHANGES -text
