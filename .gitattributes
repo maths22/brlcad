@@ -3554,6 +3554,7 @@ src/liborle/Makefile.am svneol=native#text/plain
 src/liborle/liborle.3 svneol=native#text/plain
 src/liborle/rle.c svneol=native#text/plain
 src/libpc/Makefile.am svneol=native#text/plain
+src/libpc/TODO svneol=native#text/plain
 src/libpc/pcBasic.h svneol=native#text/plain
 src/libpc/pcConstraint.cpp svneol=native#text/plain
 src/libpc/pcConstraint.h svneol=native#text/plain
