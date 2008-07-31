@@ -577,7 +577,6 @@ misc/pkgconfig/libfb.pc.in svneol=native#text/plain
 misc/pkgconfig/libfft.pc.in svneol=native#text/plain
 misc/pkgconfig/libmultispectral.pc.in svneol=native#text/plain
 misc/pkgconfig/liboptical.pc.in svneol=native#text/plain
-misc/pkgconfig/libpc.pc.in svneol=native#text/plain
 misc/pkgconfig/libpkg.pc.in svneol=native#text/plain
 misc/pkgconfig/librt.pc.in svneol=native#text/plain
 misc/pkgconfig/libwdb.pc.in svneol=native#text/plain
