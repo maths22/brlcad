@@ -99,6 +99,7 @@ include/conf/HOST
 include/conf/Makefile
 include/conf/Makefile.in
 include/conf/PATH
+include/conf/TS
 include/conf/USER
 include/stamp-h1
 /install.*.log
