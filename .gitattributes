@@ -3561,6 +3561,7 @@ src/libpc/pcConstraint.h svneol=native#text/plain
 src/libpc/pcGenerator.cpp svneol=native#text/plain
 src/libpc/pcGenerator.h svneol=native#text/plain
 src/libpc/pcInterval.h svneol=native#text/plain
+src/libpc/pcNetwork.cpp svneol=native#text/plain
 src/libpc/pcNetwork.h svneol=native#text/plain
 src/libpc/pcPCSet.cpp svneol=native#text/plain
 src/libpc/pcPCSet.h svneol=native#text/plain
