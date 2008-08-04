@@ -384,6 +384,12 @@ src/conv/iges/Makefile.in
 src/conv/iges/g-iges
 src/conv/iges/iges
 src/conv/iges/iges-g
+src/conv/intaval/.deps
+src/conv/intaval/.libs
+src/conv/intaval/Makefile
+src/conv/intaval/Makefile.in
+src/conv/intaval/tgf-g
+src/conv/intaval/tgf2g.plg
 src/conv/jack/.deps
 src/conv/jack/.libs
 src/conv/jack/Makefile
@@ -847,12 +853,6 @@ src/other/incrTcl/itk/win/nmakehlp.exe
 src/other/incrTcl/itk/win/nmakehlp.obj
 src/other/incrTcl/tools/Makefile
 src/other/incrTcl/tools/Makefile.in
-src/other/intaval/.deps
-src/other/intaval/.libs
-src/other/intaval/Makefile
-src/other/intaval/Makefile.in
-src/other/intaval/tgf-g
-src/other/intaval/tgf2g.plg
 src/other/iwidgets/Makefile
 src/other/iwidgets/Makefile.in
 src/other/iwidgets/doc/Makefile
