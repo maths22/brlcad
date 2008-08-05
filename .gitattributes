@@ -2120,6 +2120,8 @@ misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
 misc/win32-msvc8/bot2raw/bot2raw.vcproj -text
 misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
 misc/win32-msvc8/bottest/bottest.vcproj svneol=native#text/plain
+misc/win32-msvc8/brep_cube/brep_cube.vcproj svneol=native#text/plain
+misc/win32-msvc8/brep_simple/brep_simple.vcproj svneol=native#text/plain
 misc/win32-msvc8/breplicator/breplicator.vcproj -text
 misc/win32-msvc8/brickwall/brickwall.vcproj svneol=native#text/plain
 misc/win32-msvc8/brlcad/brlcad.sln eol=crlf
