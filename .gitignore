@@ -608,6 +608,7 @@ src/libpc/Makefile
 src/libpc/Makefile.in
 src/libpc/pc_test
 src/libpc/solver_test
+src/libpc/vm_test
 src/libpkg/.deps
 src/libpkg/.libs
 src/libpkg/Makefile
