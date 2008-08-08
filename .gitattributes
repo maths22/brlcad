@@ -4778,6 +4778,7 @@ src/other/boost/detail/bad_weak_ptr.hpp svneol=native#text/plain
 src/other/boost/detail/call_traits.hpp svneol=native#text/plain
 src/other/boost/detail/compressed_pair.hpp svneol=native#text/plain
 src/other/boost/detail/endian.hpp svneol=native#text/plain
+src/other/boost/detail/extended_integer.hpp svneol=native#text/plain
 src/other/boost/detail/indirect_traits.hpp svneol=native#text/plain
 src/other/boost/detail/interlocked.hpp svneol=native#text/plain
 src/other/boost/detail/is_function_ref_tester.hpp svneol=native#text/plain
