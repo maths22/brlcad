@@ -3861,6 +3861,7 @@ src/libwdb/bot.c svneol=native#text/plain
 src/libwdb/brep.cpp svneol=native#text/plain
 src/libwdb/brep_stub.c svneol=native#text/plain
 src/libwdb/cline.c svneol=native#text/plain
+src/libwdb/constraint.c svneol=native#text/plain
 src/libwdb/dsp.c svneol=native#text/plain
 src/libwdb/dynamic_geometry.c svneol=native#text/plain
 src/libwdb/ebm.c svneol=native#text/plain
