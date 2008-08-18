@@ -3672,6 +3672,7 @@ src/libpc/pcVCSet.cpp svneol=native#text/plain
 src/libpc/pcVCSet.h svneol=native#text/plain
 src/libpc/pcVariable.cpp svneol=native#text/plain
 src/libpc/pcVariable.h svneol=native#text/plain
+src/libpc/pc_constraints.c svneol=native#text/plain
 src/libpc/pc_main.c svneol=native#text/plain
 src/libpc/solver_test.cpp svneol=native#text/plain
 src/libpc/vm_test.cpp svneol=native#text/plain
