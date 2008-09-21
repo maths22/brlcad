@@ -2491,6 +2491,8 @@ pix/toilet.pix -text svneol=unset#image/x-rgb
 pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 regress/Makefile.am svneol=native#text/plain
+regress/fastgen.sh svneol=native#text/x-sh
+regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
 regress/flawfinder.sh svneol=native#text/x-sh
 regress/gqa.sh svneol=native#text/x-sh
 regress/iges.sh svneol=native#text/x-sh
