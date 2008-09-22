@@ -2125,6 +2125,7 @@ misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
 misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
 misc/win32-msvc8/bot2raw/bot2raw.vcproj -text
+misc/win32-msvc8/bot_dump/bot_dump.vcproj svneol=native#text/plain
 misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
 misc/win32-msvc8/bottest/bottest.vcproj svneol=native#text/plain
 misc/win32-msvc8/brep_cube/brep_cube.vcproj svneol=native#text/plain
@@ -2808,7 +2809,7 @@ src/conv/asc2g.c svneol=native#text/plain
 src/conv/asc2pix.c svneol=native#text/plain
 src/conv/bot-bldxf.c svneol=native#text/plain
 src/conv/bot-raw.c svneol=native#text/plain
-src/conv/bot-stl.c svneol=native#text/plain
+src/conv/bot_dump.c svneol=native#text/plain
 src/conv/bot_shell-vtk.1 svneol=native#text/plain
 src/conv/bot_shell-vtk.c svneol=native#text/plain
 src/conv/comgeom/3d.h svneol=native#text/plain
