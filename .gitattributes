@@ -6804,11 +6804,14 @@ src/other/iwidgets/tests/watch.test svneol=native#text/plain
 src/other/iwidgets/win/iwidgets.tcl svneol=native#text/plain
 src/other/iwidgets/win/makefile.vc svneol=native#text/plain
 src/other/iwidgets/win/pkg.vc -text
+src/other/jove/BUGS svneol=native#text/plain
 src/other/jove/Makefile.am svneol=native#text/plain
+src/other/jove/README svneol=native#text/plain
 src/other/jove/describe.com svneol=native#text/plain
 src/other/jove/findcom.c svneol=native#text/plain
 src/other/jove/jove-tutorial -text
 src/other/jove/jove.1 svneol=native#text/plain
+src/other/jove/jove.emacs svneol=native#text/plain
 src/other/jove/jove.h svneol=native#text/plain
 src/other/jove/jove_buf.c svneol=native#text/plain
 src/other/jove/jove_c.c svneol=native#text/plain
