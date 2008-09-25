@@ -1543,7 +1543,6 @@ doc/docbook/system/man1/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/alias-pix.xml svneol=native#text/plain
 doc/docbook/system/man1/all_sf.xml svneol=native#text/plain
 doc/docbook/system/man1/search.xml svneol=native#text/plain
-doc/docbook/system/mged/mged_commands.xml svneol=native#text/xml
 doc/docbook/tutorials/Makefile.am svneol=native#text/plain
 doc/docbook/tutorials/build_pattern/build_pattern.xml svneol=native#text/xml
 doc/docbook/tutorials/build_pattern/build_pattern_images/figure1.png -text svneol=unset#image/png
