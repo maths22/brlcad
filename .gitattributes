@@ -164,6 +164,7 @@ doc/docbook/books/tutorial_series/Makefile.am svneol=native#text/plain
 doc/docbook/books/tutorial_series/VolumeII.xml svneol=native#text/plain
 doc/docbook/books/tutorial_series/VolumeIII.xml svneol=native#text/plain
 doc/docbook/books/tutorial_series/book_authors.xml svneol=native#text/plain
+doc/docbook/books/tutorial_series/volumeIII_images/Makefile.am svneol=native#text/plain
 doc/docbook/books/tutorial_series/volumeIII_images/figure1.png -text
 doc/docbook/books/tutorial_series/volumeIII_images/figure10.png -text
 doc/docbook/books/tutorial_series/volumeIII_images/figure11.png -text
