@@ -195,6 +195,8 @@ doc/docbook/books/tutorial_series/volumeIII_images/primitive4.png -text
 doc/docbook/books/tutorial_series/volumeIII_images/primitive5.png -text
 doc/docbook/books/tutorial_series/volumeIII_images/primitive6.png -text
 doc/docbook/catalog.xml svneol=native#text/xml
+doc/docbook/lessons/Makefile.am svneol=native#text/plain
+doc/docbook/lessons/mged/Makefile.am svneol=native#text/plain
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing.xml svneol=native#text/xml
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/commandwindow.png -text svneol=unset#image/png
 doc/docbook/lessons/mged/assigning_material_properties_and_raytracing_images/fb_overlay_mode.png -text svneol=unset#image/png
