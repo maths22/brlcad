@@ -584,6 +584,7 @@ src/libged/.deps
 src/libged/.libs
 src/libged/Makefile
 src/libged/Makefile.in
+src/libged/TAGS
 src/libmultispectral/.deps
 src/libmultispectral/.libs
 src/libmultispectral/Makefile
