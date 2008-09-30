@@ -81,7 +81,9 @@ doc/description.txt svneol=native#text/plain
 doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
 doc/docbook/articles/Makefile.am svneol=native#text/plain
+doc/docbook/articles/build_pattern/Makefile.am svneol=native#text/plain
 doc/docbook/articles/build_pattern/build_pattern.xml svneol=native#text/plain
+doc/docbook/articles/build_pattern/build_pattern_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/build_pattern/build_pattern_images/figure1.png -text
 doc/docbook/articles/build_pattern/build_pattern_images/figure2.png -text
 doc/docbook/articles/build_pattern/build_pattern_images/figure3.png -text
@@ -89,16 +91,22 @@ doc/docbook/articles/build_pattern/build_pattern_images/figure4.png -text
 doc/docbook/articles/build_pattern/build_pattern_images/figure5.png -text
 doc/docbook/articles/build_pattern/build_pattern_images/figure6.png -text
 doc/docbook/articles/build_pattern/build_pattern_images/inline1.png -text
+doc/docbook/articles/build_region/Makefile.am svneol=native#text/plain
 doc/docbook/articles/build_region/build_region.xml svneol=native#text/plain
+doc/docbook/articles/build_region/build_region_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/build_region/build_region_images/figure1.png -text
 doc/docbook/articles/build_region/build_region_images/figure2.png -text
 doc/docbook/articles/build_region/build_region_images/figure3.png -text
 doc/docbook/articles/build_region/build_region_images/figure4.png -text
+doc/docbook/articles/ebm_primitive/Makefile.am svneol=native#text/plain
 doc/docbook/articles/ebm_primitive/ebm_primitive.xml svneol=native#text/plain
+doc/docbook/articles/ebm_primitive/ebm_primitive_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure1.png -text
 doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure2.png -text
 doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure3.png -text
+doc/docbook/articles/mgedrc/Makefile.am svneol=native#text/plain
 doc/docbook/articles/mgedrc/mgedrc.xml svneol=native#text/plain
+doc/docbook/articles/mgedrc/mgedrc_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/mgedrc/mgedrc_images/figure2.png -text
 doc/docbook/articles/mgedrc/mgedrc_images/figure3.png -text
 doc/docbook/articles/oed/Makefile.am svneol=native#text/plain
@@ -119,6 +127,8 @@ doc/docbook/articles/oed/oed_images/oed_0009.png -text svneol=unset#image/png
 doc/docbook/articles/oed/oed_images/oed_0010.png -text svneol=unset#image/png
 doc/docbook/articles/oed/oed_images/oed_0011.png -text svneol=unset#image/png
 doc/docbook/articles/oed/oed_images/oed_0012.png -text svneol=unset#image/png
+doc/docbook/articles/pipes/Makefile.am svneol=native#text/plain
+doc/docbook/articles/pipes/pipe_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/pipes/pipe_images/figure1.png -text
 doc/docbook/articles/pipes/pipe_images/figure2.png -text
 doc/docbook/articles/pipes/pipe_images/figure3.png -text
@@ -133,7 +143,9 @@ doc/docbook/articles/pipes/pipe_images/inline6.png -text
 doc/docbook/articles/pipes/pipe_images/inline7.png -text
 doc/docbook/articles/pipes/pipe_images/inline8.png -text
 doc/docbook/articles/pipes/pipes.xml svneol=native#text/plain
+doc/docbook/articles/projection_shader/Makefile.am svneol=native#text/plain
 doc/docbook/articles/projection_shader/projection_shader.xml svneol=native#text/plain
+doc/docbook/articles/projection_shader/projection_shader_images/Makefile.am svneol=native#text/plain
 doc/docbook/articles/projection_shader/projection_shader_images/figure1.png -text
 doc/docbook/articles/projection_shader/projection_shader_images/figure2.png -text
 doc/docbook/articles/projection_shader/projection_shader_images/figure3.png -text
