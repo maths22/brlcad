@@ -103,21 +103,22 @@ doc/docbook/articles/mgedrc/mgedrc_images/figure2.png -text
 doc/docbook/articles/mgedrc/mgedrc_images/figure3.png -text
 doc/docbook/articles/oed/Makefile.am svneol=native#text/plain
 doc/docbook/articles/oed/README svneol=native#text/plain
-doc/docbook/articles/oed/lollipop.png -text
 doc/docbook/articles/oed/oed.xml svneol=native#text/plain
-doc/docbook/articles/oed/oed_0001.png -text
-doc/docbook/articles/oed/oed_0002.png -text
-doc/docbook/articles/oed/oed_0003.png -text
-doc/docbook/articles/oed/oed_0004.png -text
-doc/docbook/articles/oed/oed_0005.png -text
-doc/docbook/articles/oed/oed_0006.png -text
-doc/docbook/articles/oed/oed_0007.png -text
-doc/docbook/articles/oed/oed_0008.png -text
-doc/docbook/articles/oed/oed_0009.png -text
-doc/docbook/articles/oed/oed_0010.png -text
-doc/docbook/articles/oed/oed_0011.png -text
-doc/docbook/articles/oed/oed_0012.png -text
 doc/docbook/articles/oed/oed_examples.asc svneol=native#text/plain
+doc/docbook/articles/oed/oed_images/Makefile.am svneol=native#text/plain
+doc/docbook/articles/oed/oed_images/lollipop.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0001.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0002.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0003.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0004.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0005.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0006.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0007.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0008.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0009.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0010.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0011.png -text svneol=unset#image/png
+doc/docbook/articles/oed/oed_images/oed_0012.png -text svneol=unset#image/png
 doc/docbook/articles/pipes/pipe_images/figure1.png -text
 doc/docbook/articles/pipes/pipe_images/figure2.png -text
 doc/docbook/articles/pipes/pipe_images/figure3.png -text
