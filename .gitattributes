@@ -153,24 +153,26 @@ doc/docbook/articles/projection_shader/projection_shader_images/figure4.png -tex
 doc/docbook/articles/projection_shader/projection_shader_images/figure5.png -text
 doc/docbook/articles/projection_shader/projection_shader_images/figure6.png -text
 doc/docbook/articles/projection_shader/projection_shader_images/figure7.png -text
+doc/docbook/articles/tire/Makefile.am svneol=native#text/plain
 doc/docbook/articles/tire/README svneol=native#text/plain
 doc/docbook/articles/tire/tire.xml svneol=native#text/plain
-doc/docbook/articles/tire/tire_0001.png -text
-doc/docbook/articles/tire/tire_0002.png -text
-doc/docbook/articles/tire/tire_0003.png -text
-doc/docbook/articles/tire/tire_0004.png -text
-doc/docbook/articles/tire/tire_0005.png -text
-doc/docbook/articles/tire/tire_0006.png -text
-doc/docbook/articles/tire/tire_0007.png -text
-doc/docbook/articles/tire/tire_0008.png -text
-doc/docbook/articles/tire/tire_0009.png -text
-doc/docbook/articles/tire/tire_0010.png -text
-doc/docbook/articles/tire/tire_0011.png -text
-doc/docbook/articles/tire/tire_0012.png -text
-doc/docbook/articles/tire/tire_0012.svg -text svneol=unset#image/svg%2Bxml
-doc/docbook/articles/tire/tire_0013.png -text
-doc/docbook/articles/tire/tire_0013.svg -text svneol=unset#image/svg%2Bxml
-doc/docbook/articles/tire/tire_0014.png -text
+doc/docbook/articles/tire/tire_images/Makefile.am svneol=native#text/plain
+doc/docbook/articles/tire/tire_images/tire_0001.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0002.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0003.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0004.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0005.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0006.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0007.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0008.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0009.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0010.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0011.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0012.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0012.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/articles/tire/tire_images/tire_0013.png -text svneol=unset#image/png
+doc/docbook/articles/tire/tire_images/tire_0013.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/articles/tire/tire_images/tire_0014.png -text svneol=unset#image/png
 doc/docbook/books/Makefile.am svneol=native#text/plain
 doc/docbook/books/README svneol=native#text/plain
 doc/docbook/books/tutorial_series/Makefile.am svneol=native#text/plain
