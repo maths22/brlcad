@@ -338,7 +338,7 @@ src/conv/asc-nmg
 src/conv/asc2g
 src/conv/asc2pix
 src/conv/bot-bldxf
-src/conv/bot-raw
+src/conv/bot_dump
 src/conv/bot_shell-vtk
 src/conv/comgeom/.deps
 src/conv/comgeom/.libs

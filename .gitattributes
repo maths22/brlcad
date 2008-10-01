@@ -2155,7 +2155,6 @@ misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
 misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
-misc/win32-msvc8/bot2raw/bot2raw.vcproj -text
 misc/win32-msvc8/bot_dump/bot_dump.vcproj svneol=native#text/plain
 misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
 misc/win32-msvc8/bottest/bottest.vcproj svneol=native#text/plain
@@ -2332,7 +2331,6 @@ misc/win32-msvc9/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/asc2nmg/asc2nmg.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/asc2pix/asc2pix.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/bot2bldxf/bot2bldxf.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc9/bot2raw/bot2raw.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/bot_shell2vtk/bot_shell2vtk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/bottest/bottest.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/brep_cube/brep_cube.vcproj svneol=CRLF#text/plain eol=crlf
@@ -2839,7 +2837,6 @@ src/conv/asc-nmg.c svneol=native#text/plain
 src/conv/asc2g.c svneol=native#text/plain
 src/conv/asc2pix.c svneol=native#text/plain
 src/conv/bot-bldxf.c svneol=native#text/plain
-src/conv/bot-raw.c svneol=native#text/plain
 src/conv/bot_dump.c svneol=native#text/plain
 src/conv/bot_shell-vtk.1 svneol=native#text/plain
 src/conv/bot_shell-vtk.c svneol=native#text/plain
