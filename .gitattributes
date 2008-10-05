@@ -10969,7 +10969,6 @@ src/vdeck/std.h svneol=native#text/plain
 src/vdeck/vdeck.1 svneol=native#text/plain
 src/vdeck/vdeck.c svneol=native#text/plain
 src/vdeck/vextern.h svneol=native#text/plain
-src/vdeck/vproc.c svneol=native#text/plain
 src/vfont/Makefile.am svneol=native#text/plain
 src/vfont/fix.6r -text svneol=unset#unset
 src/vfont/getfont.c svneol=native#text/plain
