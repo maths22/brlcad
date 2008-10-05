@@ -4064,7 +4064,6 @@ src/mged/set.c svneol=native#text/plain
 src/mged/setup.c svneol=native#text/plain
 src/mged/share.c svneol=native#text/plain
 src/mged/solids_on_ray.c svneol=native#text/plain
-src/mged/sunicon.h svneol=native#text/plain
 src/mged/tedit.c svneol=native#text/plain
 src/mged/titles.c svneol=native#text/plain
 src/mged/titles.h svneol=native#text/plain
