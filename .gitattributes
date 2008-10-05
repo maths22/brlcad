@@ -4042,7 +4042,6 @@ src/mged/mged_dm.h svneol=native#text/plain
 src/mged/mgedtcl.h svneol=native#text/plain
 src/mged/mover.c svneol=native#text/plain
 src/mged/muves.c svneol=native#text/plain
-src/mged/objdir.h svneol=native#text/plain
 src/mged/overlay.c svneol=native#text/plain
 src/mged/plot.c svneol=native#text/plain
 src/mged/points/Makefile.am svneol=native#text/plain
