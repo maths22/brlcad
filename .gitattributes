@@ -4014,7 +4014,6 @@ src/mged/doevent.c svneol=native#text/plain
 src/mged/dozoom.c svneol=native#text/plain
 src/mged/edarb.c svneol=native#text/plain
 src/mged/edars.c svneol=native#text/plain
-src/mged/editobjGui.h svneol=native#text/plain
 src/mged/edpipe.c svneol=native#text/plain
 src/mged/edsol.c svneol=native#text/plain
 src/mged/facedef.c svneol=native#text/plain
