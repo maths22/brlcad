@@ -1665,6 +1665,7 @@ doc/docbook/system/man1/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/en/alias-pix.xml svneol=native#text/xml
 doc/docbook/system/man1/en/all_sf.xml svneol=native#text/xml
+doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/search.xml svneol=native#text/xml
 doc/ged.tr svneol=native#text/plain
 doc/history.txt svneol=native#text/plain
