@@ -3506,6 +3506,7 @@ src/libged/binary.c svneol=native#text/plain
 src/libged/blast.c svneol=native#text/plain
 src/libged/bot_condense.c svneol=native#text/plain
 src/libged/bot_decimate.c svneol=native#text/plain
+src/libged/bot_dump.c svneol=native#text/plain
 src/libged/bot_face_fuse.c svneol=native#text/plain
 src/libged/bot_face_sort.c svneol=native#text/plain
 src/libged/bot_merge.c svneol=native#text/plain
