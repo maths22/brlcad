@@ -10625,6 +10625,7 @@ src/tclscripts/mged/l_i1_v1_s9.gif -text svneol=unset#image/gif
 src/tclscripts/mged/lgt_mat.tcl svneol=native#text/plain
 src/tclscripts/mged/list.tcl svneol=native#text/plain
 src/tclscripts/mged/make_solid.tcl svneol=native#text/plain
+src/tclscripts/mged/man.tcl svneol=native#text/plain
 src/tclscripts/mged/menu.tcl svneol=native#text/plain
 src/tclscripts/mged/mged.tcl svneol=native#text/plain
 src/tclscripts/mged/mgedrc.tcl svneol=native#text/plain
