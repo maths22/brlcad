@@ -1670,6 +1670,7 @@ doc/docbook/system/man1/en/all_sf.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
+doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/search.xml svneol=native#text/xml
 doc/docbook/system/man1/mged_cmd_template.xml svneol=native#text/xml
 doc/ged.tr svneol=native#text/plain
