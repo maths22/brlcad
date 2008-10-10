@@ -9979,6 +9979,7 @@ src/other/tk/xlib/xgc.c svneol=native#text/plain
 src/other/tk/xlib/ximage.c svneol=native#text/plain
 src/other/tk/xlib/xutil.c svneol=native#text/plain
 src/other/tkhtml3/COPYRIGHT svneol=native#text/plain
+src/other/tkhtml3/Makefile.in svneol=native#text/plain
 src/other/tkhtml3/README svneol=native#text/plain
 src/other/tkhtml3/aclocal.m4 svneol=native#text/plain
 src/other/tkhtml3/configure.in svneol=native#text/plain
