@@ -2885,6 +2885,7 @@ src/conv/dxf/Makefile.am svneol=native#text/plain
 src/conv/dxf/bot-bldxf.c svneol=native#text/plain
 src/conv/dxf/dxf-g.1 svneol=native#text/plain
 src/conv/dxf/dxf-g.c svneol=native#text/plain
+src/conv/dxf/dxf.h svneol=native#text/plain
 src/conv/dxf/g-dxf.1 svneol=native#text/plain
 src/conv/dxf/g-dxf.c svneol=native#text/plain
 src/conv/enf-g.1 svneol=native#text/plain
