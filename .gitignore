@@ -361,6 +361,9 @@ src/conv/conv-vg2g
 src/conv/cy-g
 src/conv/dbupgrade
 src/conv/dxf-g
+src/conv/dxf/bot-bldxf
+src/conv/dxf/dxf-g
+src/conv/dxf/g-dxf
 src/conv/enf-g
 src/conv/euclid-g
 src/conv/euclid_format
