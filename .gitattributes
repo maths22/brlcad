@@ -3571,6 +3571,7 @@ src/libged/hide.c svneol=native#text/plain
 src/libged/how.c svneol=native#text/plain
 src/libged/illum.c svneol=native#text/plain
 src/libged/importFg4Section.c svneol=native#text/plain
+src/libged/inside.c svneol=native#text/plain
 src/libged/instance.c svneol=native#text/plain
 src/libged/isize.c svneol=native#text/plain
 src/libged/item.c svneol=native#text/plain
