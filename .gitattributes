@@ -3670,6 +3670,7 @@ src/libged/tra.c svneol=native#text/plain
 src/libged/trace.c svneol=native#text/plain
 src/libged/track.c svneol=native#text/plain
 src/libged/tree.c svneol=native#text/plain
+src/libged/typein.c svneol=native#text/plain
 src/libged/unhide.c svneol=native#text/plain
 src/libged/units.c svneol=native#text/plain
 src/libged/v2m_point.c svneol=native#text/plain
