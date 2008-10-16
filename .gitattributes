@@ -1668,6 +1668,7 @@ doc/docbook/system/man1/en/Introduction.html svneol=native#text/html
 doc/docbook/system/man1/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/en/alias-pix.xml svneol=native#text/xml
 doc/docbook/system/man1/en/all_sf.xml svneol=native#text/xml
+doc/docbook/system/man1/en/anim_cascade.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
