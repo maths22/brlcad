@@ -3625,6 +3625,7 @@ src/libged/pmodel2view.c svneol=native#text/plain
 src/libged/pov.c svneol=native#text/plain
 src/libged/prcolor.c svneol=native#text/plain
 src/libged/prefix.c svneol=native#text/plain
+src/libged/ps.c svneol=native#text/plain
 src/libged/push.c svneol=native#text/plain
 src/libged/put.c svneol=native#text/plain
 src/libged/put_comb.c svneol=native#text/plain
