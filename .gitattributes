@@ -3627,6 +3627,7 @@ src/libged/perspective.c svneol=native#text/plain
 src/libged/plot.c svneol=native#text/plain
 src/libged/pmat.c svneol=native#text/plain
 src/libged/pmodel2view.c svneol=native#text/plain
+src/libged/png.c svneol=native#text/plain
 src/libged/pov.c svneol=native#text/plain
 src/libged/prcolor.c svneol=native#text/plain
 src/libged/prefix.c svneol=native#text/plain
