@@ -3276,7 +3276,6 @@ src/gtools/g_qa.1 svneol=native#text/plain
 src/gtools/g_qa.c svneol=native#text/plain
 src/gtools/g_transfer.c svneol=native#text/plain
 src/gtools/solshoot.c svneol=native#text/plain
-src/gtools/testfree.c svneol=native#text/plain
 src/halftone/Makefile.am svneol=native#text/plain
 src/halftone/halftone.1 svneol=native#text/plain
 src/halftone/main.c svneol=native#text/plain
