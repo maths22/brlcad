@@ -66,6 +66,7 @@ doc/docbook/articles/build_pattern/en/*.html
 doc/docbook/articles/build_region/en/*.html
 doc/docbook/articles/ebm_primitive/en/*.html
 doc/docbook/articles/mgedrc/en/*.html
+doc/docbook/articles/nirt/en/nirt.html
 doc/docbook/articles/oed/en/*.html
 doc/docbook/articles/pipes/en/*.html
 doc/docbook/articles/projection_shader/en/*.html
