@@ -4085,7 +4085,6 @@ src/mged/htmlLibraryUi.h svneol=native#text/plain
 src/mged/inside.c svneol=native#text/plain
 src/mged/joints.h svneol=native#text/plain
 src/mged/mater.c svneol=native#text/plain
-src/mged/memalloc.c svneol=native#text/plain
 src/mged/menu.c svneol=native#text/plain
 src/mged/menu.h svneol=native#text/plain
 src/mged/mgdev.h svneol=native#text/plain
