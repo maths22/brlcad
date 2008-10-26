@@ -186,6 +186,8 @@ doc/docbook/lessons/mged/en/Makefile
 doc/docbook/lessons/mged/en/Makefile.in
 doc/docbook/system/Makefile
 doc/docbook/system/Makefile.in
+doc/docbook/system/man1/Makefile
+doc/docbook/system/man1/Makefile.in
 doc/docbook/system/man1/en/*.1
 doc/docbook/system/man1/en/*.html
 doc/docbook/system/man1/en/*.pdf
