@@ -7014,7 +7014,7 @@ src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
 src/other/libpng/depcomp -text
 src/other/libpng/example.c svneol=native#text/plain
 src/other/libpng/install-sh svneol=native#text/plain
-src/other/libpng/libpng-1.2.25.txt -text
+src/other/libpng/libpng-1.2.32.txt svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
 src/other/libpng/libpngpf.3 svneol=native#text/plain
 src/other/libpng/ltmain.sh svneol=native#text/x-sh
