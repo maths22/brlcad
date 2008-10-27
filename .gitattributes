@@ -1709,6 +1709,7 @@ doc/docbook/system/man1/en/anim_fly.xml svneol=native#text/xml
 doc/docbook/system/man1/en/anim_hardtrack.xml svneol=native#text/xml
 doc/docbook/system/man1/en/anim_keyread.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
+doc/docbook/system/man1/en/g_qa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
