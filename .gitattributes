@@ -1710,6 +1710,7 @@ doc/docbook/system/man1/en/anim_hardtrack.xml svneol=native#text/xml
 doc/docbook/system/man1/en/anim_keyread.xml svneol=native#text/xml
 doc/docbook/system/man1/en/anim_lookat.xml svneol=native#text/xml
 doc/docbook/system/man1/en/anim_offset.xml svneol=native#text/xml
+doc/docbook/system/man1/en/anim_orient.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g_qa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
