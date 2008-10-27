@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="g2dxf"
-	ProjectGUID="{44390B3D-EEE6-4806-B4CF-B6FAF29526C8}"
-	Keyword="Win32Proj"
+	Name="libgcv"
+	ProjectGUID="{1D505749-0F4C-4A47-8B06-8EBAA502451D}"
+	RootNamespace="libgcv"
 	>
 	<Platforms>
 		<Platform
@@ -19,10 +19,12 @@
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			OutputDirectory=".\$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory=".\$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="2"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			>
 			<Tool
@@ -39,23 +41,32 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\$(PlatformName)\$(ConfigurationName)/libgcv.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../../../include;../../../src/other/tcl/generic"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;TCL_THREADS=1;__win32;BRLCAD_DLL;HAVE_CONFIG_H;BRLCADBUILD;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="../../../include;../../../src/libgcv;../../../src/other/libregex;../../../src/other/tcl/generic;../../../src/other/tcl/win;../../../src/other/libz;../../../src/other/opennurbs;../../../src/other/tnt;../../../src/other/libpng"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__win32;ON_DLL_IMPORTS;GCV_EXPORT_DLL;BRLCAD_DLL;HAVE_CONFIG_H;BRLCADBUILD;NEW_TOPS_BEHAVIOR;OBJ_BREP=1;TCL_THREADS=1;_RT_DECL_IFREE;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.pch"
 				AssemblerListingLocation=".\$(PlatformName)\$(ConfigurationName)/"
 				ObjectFile=".\$(PlatformName)\$(ConfigurationName)/"
 				ProgramDataBaseFileName=".\$(PlatformName)\$(ConfigurationName)/"
 				WarningLevel="3"
+				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="0"
 				CompileAs="0"
@@ -65,22 +76,22 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libbu.lib libbn.lib libsysv.lib librt.lib libwdb.lib tcl85.lib libgcv.lib"
-				OutputFile="$(PlatformName)\$(ConfigurationName)/g-dxf.exe"
+				AdditionalDependencies="libbu.lib libbn.lib libsysv.lib libregex.lib opennurbs.lib librt.lib libpng.lib ws2_32.lib"
+				OutputFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="../../../brlcadInstall/lib"
 				GenerateDebugInformation="false"
-				ProgramDatabaseFile=".\$(PlatformName)\$(ConfigurationName)/g2dxf.pdb"
-				SubSystem="1"
-				OptimizeReferences="0"
-				EnableCOMDATFolding="0"
+				ProgramDatabaseFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.pdb"
+				ImportLibrary=".\$(PlatformName)\$(ConfigurationName)/libgcv.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -106,16 +117,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; ..\..\..\brlcadInstall\bin"
+				CommandLine="copy &quot;$(TargetPath)&quot; ..\..\..\brlcadInstall\bin&#x0D;&#x0A;copy &quot;$(TargetDir)&quot;libgcv.lib ..\..\..\brlcadInstall\lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
-			CharacterSet="2"
+			ConfigurationType="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -131,24 +140,32 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
 				TargetEnvironment="3"
+				TypeLibraryName=".\$(PlatformName)\$(ConfigurationName)/libgcv.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../../../include;../../../src/other/tcl/generic"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;TCL_THREADS=1;__win32;BRLCAD_DLL;HAVE_CONFIG_H;BRLCADBUILD;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="../../../include;../../../src/libgcv;../../../src/other/tcl/generic;../../../src/other/tcl/win;../../../src/other/libz;../../../src/other/opennurbs;../../../src/other/tnt;../../../src/other/libpng"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;__win32;ON_DLL_IMPORTS;GCV_EXPORT_DLL;BRLCAD_DLL;HAVE_CONFIG_H;BRLCADBUILD;NEW_TOPS_BEHAVIOR;OBJ_BREP=1;TCL_THREADS=1;_RT_DECL_IFREE;_CRT_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.pch"
 				AssemblerListingLocation=".\$(PlatformName)\$(ConfigurationName)/"
 				ObjectFile=".\$(PlatformName)\$(ConfigurationName)/"
 				ProgramDataBaseFileName=".\$(PlatformName)\$(ConfigurationName)/"
 				WarningLevel="3"
+				SuppressStartupBanner="true"
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="0"
 				CompileAs="0"
@@ -164,17 +181,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libbu.lib libbn.lib libsysv.lib librt.lib libwdb.lib tcl85.lib"
-				OutputFile="$(PlatformName)\$(ConfigurationName)/g-dxf.exe"
+				AdditionalDependencies="libbu.lib libbn.lib libsysv.lib libregex.lib opennurbs.lib librt.lib libpng.lib ws2_32.lib"
+				OutputFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../../../brlcadInstall$(PlatformName)/lib"
+				AdditionalLibraryDirectories="../../../brlcadInstall/lib"
 				GenerateDebugInformation="false"
-				ProgramDatabaseFile=".\$(PlatformName)\$(ConfigurationName)/g2dxf.pdb"
-				SubSystem="1"
-				OptimizeReferences="0"
-				EnableCOMDATFolding="0"
-				TargetMachine="17"
+				ProgramDatabaseFile=".\$(PlatformName)\$(ConfigurationName)/libgcv.pdb"
+				ImportLibrary=".\$(PlatformName)\$(ConfigurationName)/libgcv.lib"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -199,7 +214,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; ..\..\..\brlcadInstall$(PlatformName)\bin"
+				CommandLine="copy &quot;$(TargetPath)&quot; ..\..\..\brlcadInstall$(PlatformName)\bin&#x0D;&#x0A;copy &quot;$(TargetDir)&quot;libgcv.lib ..\..\..\brlcadInstall$(PlatformName)\lib&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -208,24 +223,21 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat;f90;for;f;fpp"
 			>
 			<File
-				RelativePath="..\..\..\src\conv\dxf\g-dxf.c"
+				RelativePath="..\..\..\src\libgcv\region_end.c"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			Filter="h;hpp;hxx;hm;inl;fi;fd"
 			>
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 		</Filter>
 	</Files>
