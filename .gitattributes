@@ -3700,6 +3700,7 @@ src/libged/rot.c svneol=native#text/plain
 src/libged/rot_point.c svneol=native#text/plain
 src/libged/rotate_about.c svneol=native#text/plain
 src/libged/rotate_arb_face.c svneol=native#text/plain
+src/libged/rrt.c svneol=native#text/plain
 src/libged/rt.c svneol=native#text/plain
 src/libged/rtabort.c svneol=native#text/plain
 src/libged/rtcheck.c svneol=native#text/plain
