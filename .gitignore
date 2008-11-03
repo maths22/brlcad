@@ -480,6 +480,10 @@ src/conv/conv-vg2g
 src/conv/cy-g
 src/conv/dbupgrade
 src/conv/dxf-g
+src/conv/dxf/.deps
+src/conv/dxf/.libs
+src/conv/dxf/Makefile
+src/conv/dxf/Makefile.in
 src/conv/dxf/bot-bldxf
 src/conv/dxf/dxf-g
 src/conv/dxf/g-dxf
@@ -716,7 +720,8 @@ src/libfft/rfft512.c
 src/libfft/rfft64.c
 src/libgcv/.deps
 src/libgcv/.libs
-src/libgcv/Makefile*
+src/libgcv/Makefile
+src/libgcv/Makefile.in
 src/libged/.deps
 src/libged/.libs
 src/libged/Makefile
