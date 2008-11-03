@@ -714,6 +714,9 @@ src/libfft/rfft256.c
 src/libfft/rfft32.c
 src/libfft/rfft512.c
 src/libfft/rfft64.c
+src/libgcv/.deps
+src/libgcv/.libs
+src/libgcv/Makefile*
 src/libged/.deps
 src/libged/.libs
 src/libged/Makefile
