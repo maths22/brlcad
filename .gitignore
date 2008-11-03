@@ -1137,6 +1137,7 @@ src/proc-db/fence
 src/proc-db/globe
 src/proc-db/kurt
 src/proc-db/masonry
+src/proc-db/metaball
 src/proc-db/molecule
 src/proc-db/nmgmodel
 src/proc-db/picket_fence
