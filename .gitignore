@@ -1088,6 +1088,7 @@ src/other/tk/unix/libtkstub.*
 src/other/tk/unix/libtkstub8.5.*
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
+src/other/tkhtml3/Makefile
 src/other/tkhtml3/autom4te.cache
 src/other/tkhtml3/config.log
 src/other/tkhtml3/config.status
