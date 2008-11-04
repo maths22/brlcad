@@ -1,4 +1,4 @@
-# $Id: Makefile.am 30974 2008-05-04 04:37:42Z brlcad $
+# $Id: Makefile.am 31234 2008-05-30 02:14:57Z andrecastelo $
 
 SUBDIRS = \
 	archlinux \
@@ -8,7 +8,8 @@ SUBDIRS = \
 	nsis \
 	pkgconfig \
 	win32-msvc \
-	win32-msvc8
+	win32-msvc8 \
+	win32-msvc9
 
 sample_applicationsdir = $(SAMPLE_APPLICATIONS_DIR)
 sample_applications_DATA = fortran_example.f
