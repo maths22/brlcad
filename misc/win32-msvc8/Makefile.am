@@ -1,4 +1,3 @@
-# $Id: Makefile.am 33063 2008-10-25 13:57:00Z brlcad $
 
 EXTRA_DIST= \
 	asc2g/asc2g.vcproj \

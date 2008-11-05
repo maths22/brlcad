@@ -1,4 +1,3 @@
-# $Id: Makefile.am 31332 2008-06-06 14:54:00Z d_rossberg $
 
 EXTRA_DIST = \
 	BrlcadCore.def \

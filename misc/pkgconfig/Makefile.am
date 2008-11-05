@@ -1,4 +1,3 @@
-# $Id: Makefile.am 32931 2008-10-13 21:54:10Z brlcad $
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \

@@ -1,4 +1,3 @@
-# $Id: Makefile.am 31234 2008-05-30 02:14:57Z andrecastelo $
 
 SUBDIRS = \
 	archlinux \
