@@ -3741,6 +3741,7 @@ src/libged/solids_on_ray.c svneol=native#text/plain
 src/libged/summary.c svneol=native#text/plain
 src/libged/sync.c svneol=native#text/plain
 src/libged/tables.c svneol=native#text/plain
+src/libged/tire.c svneol=native#text/plain
 src/libged/title.c svneol=native#text/plain
 src/libged/tol.c svneol=native#text/plain
 src/libged/tops.c svneol=native#text/plain
