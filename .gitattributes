@@ -2949,6 +2949,7 @@ src/conv/dbclean.1 svneol=native#text/plain
 src/conv/dbclean.sh svneol=native#text/x-sh
 src/conv/dbupgrade.1 svneol=native#text/plain
 src/conv/dbupgrade.c svneol=native#text/plain
+src/conv/dem-g.c svneol=native#text/plain
 src/conv/dxf/CMakeLists.txt svneol=native#text/plain
 src/conv/dxf/Makefile.am svneol=native#text/plain
 src/conv/dxf/bot-bldxf.c svneol=native#text/plain
