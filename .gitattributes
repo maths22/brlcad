@@ -2857,6 +2857,7 @@ src/archer/plugins/Utility/README svneol=native#text/plain
 src/archer/plugins/Wizards/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/Makefile.am svneol=native#text/plain
+src/archer/plugins/Wizards/tankwizard/TankWizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/TankWizardIA.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/images/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/images/tank.png -text svneol=unset#image/png
