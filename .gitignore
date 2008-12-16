@@ -429,6 +429,10 @@ src/archer/plugins/Utility/Makefile
 src/archer/plugins/Utility/Makefile.in
 src/archer/plugins/Wizards/Makefile
 src/archer/plugins/Wizards/Makefile.in
+src/archer/plugins/Wizards/tankwizard/Makefile
+src/archer/plugins/Wizards/tankwizard/Makefile.in
+src/archer/plugins/Wizards/tankwizard/images/Makefile
+src/archer/plugins/Wizards/tankwizard/images/Makefile.in
 src/archer/plugins/Wizards/tankwizardIA/Makefile
 src/archer/plugins/Wizards/tankwizardIA/Makefile.in
 src/archer/plugins/Wizards/tankwizardIA/images/Makefile
