@@ -433,10 +433,6 @@ src/archer/plugins/Wizards/tankwizard/Makefile
 src/archer/plugins/Wizards/tankwizard/Makefile.in
 src/archer/plugins/Wizards/tankwizard/images/Makefile
 src/archer/plugins/Wizards/tankwizard/images/Makefile.in
-src/archer/plugins/Wizards/tankwizardIA/Makefile
-src/archer/plugins/Wizards/tankwizardIA/Makefile.in
-src/archer/plugins/Wizards/tankwizardIA/images/Makefile
-src/archer/plugins/Wizards/tankwizardIA/images/Makefile.in
 src/brlman/Makefile
 src/brlman/Makefile.in
 src/brlman/awf
