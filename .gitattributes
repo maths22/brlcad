@@ -1741,6 +1741,7 @@ doc/docbook/system/man1/en/c.xml svneol=native#text/xml
 doc/docbook/system/man1/en/cat.xml svneol=native#text/xml
 doc/docbook/system/man1/en/center.xml svneol=native#text/xml
 doc/docbook/system/man1/en/color.xml svneol=native#text/xml
+doc/docbook/system/man1/en/comb_color.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g_qa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
