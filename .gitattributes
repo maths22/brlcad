@@ -1738,6 +1738,7 @@ doc/docbook/system/man1/en/bot_vertex_fuse.xml svneol=native#text/xml
 doc/docbook/system/man1/en/build_region.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
 doc/docbook/system/man1/en/c.xml svneol=native#text/xml
+doc/docbook/system/man1/en/cat.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g_qa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
