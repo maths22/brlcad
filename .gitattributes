@@ -1733,6 +1733,7 @@ doc/docbook/system/man1/en/bev.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bot_condense.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bot_decimate.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bot_face_fuse.xml svneol=native#text/xml
+doc/docbook/system/man1/en/bot_face_sort.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bwscale.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g_qa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
