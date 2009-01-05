@@ -4082,7 +4082,6 @@ src/libwdb/vol.c svneol=native#text/plain
 src/libwdb/wdb.c svneol=native#text/plain
 src/mged/Makefile.am svneol=native#text/plain
 src/mged/adc.c svneol=native#text/plain
-src/mged/anal.c svneol=native#text/plain
 src/mged/animedit.c svneol=native#text/plain
 src/mged/arbs.c svneol=native#text/plain
 src/mged/attach.c svneol=native#text/plain
