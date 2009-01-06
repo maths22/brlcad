@@ -3418,7 +3418,6 @@ src/libbn/wavelet.c svneol=native#text/plain
 src/libbu/CMakeLists.txt svneol=native#text/plain
 src/libbu/Makefile.am svneol=native#text/plain
 src/libbu/argv.c svneol=native#text/plain
-src/libbu/association.c svneol=native#text/plain
 src/libbu/avs.c svneol=native#text/plain
 src/libbu/backtrace.c svneol=native#text/plain
 src/libbu/badmagic.c svneol=native#text/plain
