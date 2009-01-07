@@ -10241,7 +10241,6 @@ src/proc-db/tea.c svneol=native#text/plain
 src/proc-db/tea.h svneol=native#text/plain
 src/proc-db/tea_nmg.c svneol=native#text/plain
 src/proc-db/terrain.c svneol=native#text/plain
-src/proc-db/tire.1 -text
 src/proc-db/tire.c svneol=native#text/plain
 src/proc-db/torii.c svneol=native#text/plain
 src/proc-db/tube.c svneol=native#text/plain
