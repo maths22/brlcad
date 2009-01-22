@@ -341,12 +341,6 @@ src/adrt/bench/Makefile.in
 src/adrt/bench/adrt_bench
 src/adrt/doc/Makefile
 src/adrt/doc/Makefile.in
-src/adrt/isst/Makefile
-src/adrt/isst/Makefile.in
-src/adrt/libcommon/.deps
-src/adrt/libcommon/.libs
-src/adrt/libcommon/Makefile
-src/adrt/libcommon/Makefile.in
 src/adrt/librender/.deps
 src/adrt/librender/.libs
 src/adrt/librender/Makefile
