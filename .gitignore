@@ -1119,14 +1119,14 @@ src/proc-db/breplicator
 src/proc-db/brickwall
 src/proc-db/clutter
 src/proc-db/contours
-src/proc-db/fence
 src/proc-db/globe
+src/proc-db/human
 src/proc-db/kurt
+src/proc-db/lens
 src/proc-db/masonry
 src/proc-db/metaball
 src/proc-db/molecule
 src/proc-db/nmgmodel
-src/proc-db/picket_fence
 src/proc-db/pipe
 src/proc-db/pipetest
 src/proc-db/pix2g
