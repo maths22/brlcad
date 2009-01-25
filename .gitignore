@@ -427,6 +427,8 @@ src/archer/plugins/Wizards/tankwizard/Makefile
 src/archer/plugins/Wizards/tankwizard/Makefile.in
 src/archer/plugins/Wizards/tankwizard/images/Makefile
 src/archer/plugins/Wizards/tankwizard/images/Makefile.in
+src/archer/plugins/Wizards/tirewizard/Makefile
+src/archer/plugins/Wizards/tirewizard/Makefile.in
 src/brlman/Makefile
 src/brlman/Makefile.in
 src/brlman/awf
