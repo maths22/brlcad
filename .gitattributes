@@ -2639,6 +2639,7 @@ regress/main.sh svneol=native#text/x-sh
 regress/master_fetch.sh svneol=native#text/x-sh
 regress/master_prep.sh svneol=native#text/x-sh
 regress/mged.sh svneol=native#text/x-sh
+regress/mged_test.sh svneol=native#text/x-sh
 regress/moss.sh svneol=native#text/x-sh
 regress/mosspix.asc svneol=native#text/plain
 regress/nightly.sh svneol=native#text/x-sh
