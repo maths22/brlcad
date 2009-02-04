@@ -357,10 +357,6 @@ src/adrt/libtienet/.deps
 src/adrt/libtienet/.libs
 src/adrt/libtienet/Makefile
 src/adrt/libtienet/Makefile.in
-src/adrt/libutil/.deps
-src/adrt/libutil/.libs
-src/adrt/libutil/Makefile
-src/adrt/libutil/Makefile.in
 src/adrt/master/.deps
 src/adrt/master/.libs
 src/adrt/master/Makefile
