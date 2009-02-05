@@ -3844,6 +3844,7 @@ src/libpc/pcGenerator.cpp svneol=native#text/plain
 src/libpc/pcGenerator.h svneol=native#text/plain
 src/libpc/pcInterval.h svneol=native#text/plain
 src/libpc/pcMathGrammar.h svneol=native#text/plain
+src/libpc/pcMathLF.h svneol=native#text/plain
 src/libpc/pcMathVM.cpp svneol=native#text/plain
 src/libpc/pcMathVM.h svneol=native#text/plain
 src/libpc/pcNetwork.cpp svneol=native#text/plain
