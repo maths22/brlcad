@@ -408,6 +408,7 @@ src/conv/comgeom/comgeom-g
 src/conv/conv-vg2g
 src/conv/cy-g
 src/conv/dbupgrade
+src/conv/dem-g
 src/conv/dxf-g
 src/conv/dxf/.deps
 src/conv/dxf/.libs
