@@ -2639,7 +2639,6 @@ regress/main.sh svneol=native#text/x-sh
 regress/master_fetch.sh svneol=native#text/x-sh
 regress/master_prep.sh svneol=native#text/x-sh
 regress/mged.sh svneol=native#text/x-sh
-regress/mged/.mged.tcl.swp -text
 regress/mged/3ptarb.tcl svneol=native#text/plain
 regress/mged/arb.tcl svneol=native#text/plain
 regress/mged/clone.tcl svneol=native#text/plain
