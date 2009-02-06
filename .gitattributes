@@ -2331,6 +2331,7 @@ misc/win32-msvc8/g2vrml/g2vrml.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2x3d/g2x3d.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g42g5/g42g5.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g52g4/g52g4.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/g_qa/g_qa.vcproj svneol=native#text/plain
 misc/win32-msvc8/gif2fb/gif2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/globe/globe.vcproj svneol=native#text/plain
 misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
@@ -2638,6 +2639,7 @@ regress/main.sh svneol=native#text/x-sh
 regress/master_fetch.sh svneol=native#text/x-sh
 regress/master_prep.sh svneol=native#text/x-sh
 regress/mged.sh svneol=native#text/x-sh
+regress/mged_test.sh svneol=native#text/x-sh
 regress/moss.sh svneol=native#text/x-sh
 regress/mosspix.asc svneol=native#text/plain
 regress/nightly.sh svneol=native#text/x-sh
