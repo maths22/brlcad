@@ -2640,6 +2640,7 @@ regress/master_fetch.sh svneol=native#text/x-sh
 regress/master_prep.sh svneol=native#text/x-sh
 regress/mged.sh svneol=native#text/x-sh
 regress/mged/3ptarb.mged svneol=native#text/plain
+regress/mged/Makefile.am svneol=native#text/plain
 regress/mged/arb.mged svneol=native#text/plain
 regress/mged/build_region.mged svneol=native#text/plain
 regress/mged/clone.mged svneol=native#text/plain
