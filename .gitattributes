@@ -2662,6 +2662,7 @@ regress/mged/mged.tcl svneol=native#text/plain
 regress/mged/mirror.mged svneol=native#text/plain
 regress/mged/mv.mged svneol=native#text/plain
 regress/mged/mvall.mged svneol=native#text/plain
+regress/mged/oed.mged svneol=native#text/plain
 regress/mged/prefix.mged svneol=native#text/plain
 regress/mged/r.mged svneol=native#text/plain
 regress/mged/regression_resources.tcl svneol=native#text/plain
