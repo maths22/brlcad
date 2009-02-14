@@ -8465,7 +8465,9 @@ src/other/tcl/library/tzdata/America/Argentina/Jujuy -text
 src/other/tcl/library/tzdata/America/Argentina/La_Rioja -text
 src/other/tcl/library/tzdata/America/Argentina/Mendoza -text
 src/other/tcl/library/tzdata/America/Argentina/Rio_Gallegos -text
+src/other/tcl/library/tzdata/America/Argentina/Salta svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Argentina/San_Juan -text
+src/other/tcl/library/tzdata/America/Argentina/San_Luis svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Argentina/Tucuman -text
 src/other/tcl/library/tzdata/America/Argentina/Ushuaia -text
 src/other/tcl/library/tzdata/America/Aruba -text
@@ -8543,6 +8545,7 @@ src/other/tcl/library/tzdata/America/Louisville -text
 src/other/tcl/library/tzdata/America/Maceio -text
 src/other/tcl/library/tzdata/America/Managua -text
 src/other/tcl/library/tzdata/America/Manaus -text
+src/other/tcl/library/tzdata/America/Marigot svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Martinique -text
 src/other/tcl/library/tzdata/America/Mazatlan -text
 src/other/tcl/library/tzdata/America/Mendoza -text
@@ -8578,11 +8581,13 @@ src/other/tcl/library/tzdata/America/Regina -text
 src/other/tcl/library/tzdata/America/Resolute -text
 src/other/tcl/library/tzdata/America/Rio_Branco -text
 src/other/tcl/library/tzdata/America/Rosario -text
+src/other/tcl/library/tzdata/America/Santarem svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Santiago -text
 src/other/tcl/library/tzdata/America/Santo_Domingo -text
 src/other/tcl/library/tzdata/America/Sao_Paulo -text
 src/other/tcl/library/tzdata/America/Scoresbysund -text
 src/other/tcl/library/tzdata/America/Shiprock -text
+src/other/tcl/library/tzdata/America/St_Barthelemy svneol=native#text/plain
 src/other/tcl/library/tzdata/America/St_Johns -text
 src/other/tcl/library/tzdata/America/St_Kitts -text
 src/other/tcl/library/tzdata/America/St_Lucia -text
@@ -8640,6 +8645,7 @@ src/other/tcl/library/tzdata/Asia/Dubai -text
 src/other/tcl/library/tzdata/Asia/Dushanbe -text
 src/other/tcl/library/tzdata/Asia/Gaza -text
 src/other/tcl/library/tzdata/Asia/Harbin -text
+src/other/tcl/library/tzdata/Asia/Ho_Chi_Minh svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Hong_Kong -text
 src/other/tcl/library/tzdata/Asia/Hovd -text
 src/other/tcl/library/tzdata/Asia/Irkutsk -text
@@ -8652,6 +8658,7 @@ src/other/tcl/library/tzdata/Asia/Kamchatka -text
 src/other/tcl/library/tzdata/Asia/Karachi -text
 src/other/tcl/library/tzdata/Asia/Kashgar -text
 src/other/tcl/library/tzdata/Asia/Katmandu -text
+src/other/tcl/library/tzdata/Asia/Kolkata svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Krasnoyarsk -text
 src/other/tcl/library/tzdata/Asia/Kuala_Lumpur -text
 src/other/tcl/library/tzdata/Asia/Kuching -text
@@ -9062,6 +9069,7 @@ src/other/tcl/tests/basic.test svneol=native#text/plain
 src/other/tcl/tests/binary.test svneol=native#text/plain
 src/other/tcl/tests/case.test svneol=native#text/plain
 src/other/tcl/tests/chan.test svneol=native#text/plain
+src/other/tcl/tests/chanio.test svneol=native#text/plain
 src/other/tcl/tests/clock.test svneol=native#text/plain
 src/other/tcl/tests/cmdAH.test svneol=native#text/plain
 src/other/tcl/tests/cmdIL.test svneol=native#text/plain
@@ -9211,6 +9219,7 @@ src/other/tcl/tools/man2html.tcl svneol=native#text/plain
 src/other/tcl/tools/man2html1.tcl svneol=native#text/plain
 src/other/tcl/tools/man2html2.tcl svneol=native#text/plain
 src/other/tcl/tools/man2tcl.c svneol=native#text/plain
+src/other/tcl/tools/mkdepend.tcl svneol=native#text/plain
 src/other/tcl/tools/regexpTestLib.tcl svneol=native#text/plain
 src/other/tcl/tools/tcl.hpj.in svneol=native#text/plain
 src/other/tcl/tools/tcl.wse.in svneol=native#text/plain
@@ -9488,6 +9497,7 @@ src/other/tk/doc/ttk_notebook.n svneol=native#text/plain
 src/other/tk/doc/ttk_panedwindow.n svneol=native#text/plain
 src/other/tk/doc/ttk_progressbar.n svneol=native#text/plain
 src/other/tk/doc/ttk_radiobutton.n svneol=native#text/plain
+src/other/tk/doc/ttk_scale.n svneol=native#text/plain
 src/other/tk/doc/ttk_scrollbar.n svneol=native#text/plain
 src/other/tk/doc/ttk_separator.n svneol=native#text/plain
 src/other/tk/doc/ttk_sizegrip.n svneol=native#text/plain
@@ -9688,6 +9698,7 @@ src/other/tk/library/demos/images/tcllogo.gif -text svneol=unset#image/gif
 src/other/tk/library/demos/images/teapot.ppm -text svneol=unset#image/x-portable-pixmap
 src/other/tk/library/demos/items.tcl svneol=native#text/plain
 src/other/tk/library/demos/ixset -text
+src/other/tk/library/demos/knightstour.tcl svneol=native#text/plain
 src/other/tk/library/demos/label.tcl svneol=native#text/plain
 src/other/tk/library/demos/labelframe.tcl svneol=native#text/plain
 src/other/tk/library/demos/license.terms svneol=native#text/plain
