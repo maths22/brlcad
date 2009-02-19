@@ -2850,6 +2850,7 @@ src/adrt/libtienet/Makefile.am svneol=native#text/plain
 src/adrt/libtienet/load.c svneol=native#text/plain
 src/adrt/libtienet/load.h svneol=native#text/plain
 src/adrt/libtienet/load_MySQL.c svneol=native#text/plain
+src/adrt/libtienet/load_g.c svneol=native#text/plain
 src/adrt/libtienet/tienet.h svneol=native#text/plain
 src/adrt/libtienet/tienet_define.h svneol=native#text/plain
 src/adrt/libtienet/tienet_master.c svneol=native#text/plain
