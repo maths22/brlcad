@@ -7089,12 +7089,8 @@ src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
 src/other/libpng/Y2KINFO -text
-src/other/libpng/aclocal.m4 svneol=native#text/plain
 src/other/libpng/autogen.sh svneol=native#text/x-sh
-src/other/libpng/config.guess -text
 src/other/libpng/config.h.in svneol=native#text/plain
-src/other/libpng/config.sub -text
-src/other/libpng/configure -text
 src/other/libpng/configure.ac svneol=native#text/plain
 src/other/libpng/contrib/gregbook/COPYING svneol=native#text/plain
 src/other/libpng/contrib/gregbook/LICENSE -text
@@ -7165,15 +7161,11 @@ src/other/libpng/contrib/visupng/VisualPng.png -text svneol=unset#image/png
 src/other/libpng/contrib/visupng/VisualPng.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/contrib/visupng/cexcept.h svneol=native#text/plain
 src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
-src/other/libpng/depcomp -text
 src/other/libpng/example.c svneol=native#text/plain
-src/other/libpng/install-sh svneol=native#text/plain
-src/other/libpng/libpng-1.2.32.txt svneol=native#text/plain
+src/other/libpng/libpng-1.2.35.txt svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
 src/other/libpng/libpngpf.3 svneol=native#text/plain
 src/other/libpng/ltmain.sh svneol=native#text/x-sh
-src/other/libpng/missing -text
-src/other/libpng/mkinstalldirs -text
 src/other/libpng/png.5 svneol=native#text/plain
 src/other/libpng/png.c svneol=native#text/plain
 src/other/libpng/png.h svneol=native#text/plain
