@@ -10323,7 +10323,6 @@ src/proc-db/brep_simple.cpp svneol=native#text/plain
 src/proc-db/breplicator.cpp -text
 src/proc-db/brickwall.c svneol=native#text/plain
 src/proc-db/clutter.c svneol=native#text/plain
-src/proc-db/coil.c svneol=native#text/plain
 src/proc-db/common.c svneol=native#text/plain
 src/proc-db/contours.c svneol=native#text/plain
 src/proc-db/ducks.h svneol=native#text/plain
@@ -10433,6 +10432,7 @@ src/rttherm/viewtherm.c svneol=native#text/plain
 src/shapes/Makefile.am svneol=native#text/plain
 src/shapes/bolt.1 svneol=native#text/plain
 src/shapes/bolt.c svneol=native#text/plain
+src/shapes/coil.c svneol=native#text/plain
 src/shapes/fence.c svneol=native#text/plain
 src/shapes/fence.h svneol=native#text/plain
 src/shapes/gastank.1 svneol=native#text/plain
