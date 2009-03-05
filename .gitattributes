@@ -2185,6 +2185,7 @@ misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
 misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
+misc/NIST_DENSITIES svneol=native#text/plain
 misc/archlinux/Makefile.am svneol=native#text/plain
 misc/archlinux/PKGBUILD svneol=native#text/plain
 misc/archlinux/brlcad.install svneol=native#text/plain
