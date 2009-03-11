@@ -7936,6 +7936,7 @@ src/other/step/src/cldai/impconv.hh svneol=native#text/plain
 src/other/step/src/cldai/imptypes.hh svneol=native#text/plain
 src/other/step/src/cldai/sdaiApplication_instance_set.cc svneol=native#text/plain
 src/other/step/src/cldai/sdaiApplication_instance_set.h svneol=native#text/plain
+src/other/step/src/cldai/sdaiDaObject.cc svneol=native#text/plain
 src/other/step/src/cldai/sdaiDaObject.h svneol=native#text/plain
 src/other/step/src/cldai/sdaiEntity_extent.cc svneol=native#text/plain
 src/other/step/src/cldai/sdaiEntity_extent.h svneol=native#text/plain
