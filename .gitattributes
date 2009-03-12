@@ -10004,6 +10004,7 @@ src/other/tk/tests/window.test svneol=native#text/plain
 src/other/tk/tests/winfo.test svneol=native#text/plain
 src/other/tk/tests/wm.test svneol=native#text/plain
 src/other/tk/tests/xmfbox.test svneol=native#text/plain
+src/other/tk/unix/Makefile.in svneol=native#text/plain
 src/other/tk/unix/README svneol=native#text/plain
 src/other/tk/unix/aclocal.m4 svneol=native#text/plain
 src/other/tk/unix/configure.in svneol=native#text/plain
