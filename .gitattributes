@@ -8354,7 +8354,6 @@ src/other/step/INSTALL svneol=native#text/plain
 src/other/step/Makefile.am svneol=native#text/plain
 src/other/step/NEWS svneol=native#text/plain
 src/other/step/README svneol=native#text/plain
-src/other/step/autogen.sh svneol=native#text/x-sh
 src/other/step/config/README svneol=native#text/plain
 src/other/step/config/mkProbe.current svneol=native#text/plain
 src/other/step/config/mkProbe.current.in svneol=native#text/plain
