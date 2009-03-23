@@ -2961,7 +2961,6 @@ src/archer/plugins/Wizards/tirewizard/TireWizard.tcl svneol=native#text/plain
 src/archer/plugins/utility.tcl svneol=native#text/plain
 src/archer/plugins/wizards.tcl svneol=native#text/plain
 src/brlman/Makefile.am svneol=native#text/plain
-src/brlman/awf.in svneol=native#text/plain
 src/brlman/brlman.1 svneol=native#text/plain
 src/brlman/brlman.in svneol=native#text/plain
 src/burst/Hm.c svneol=native#text/plain
