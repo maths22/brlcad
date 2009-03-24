@@ -80,6 +80,7 @@ doc/cmap.5 svneol=native#text/plain
 doc/cvs.txt svneol=native#text/plain
 doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
+doc/docbook/BRL-CAD_db_format.xml svneol=native#text/xml
 doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
 doc/docbook/articles/Makefile.am svneol=native#text/plain
