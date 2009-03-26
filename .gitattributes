@@ -3462,7 +3462,6 @@ src/lgt/texture.c svneol=native#text/plain
 src/lgt/texture.h svneol=native#text/plain
 src/lgt/tree.h svneol=native#text/plain
 src/lgt/trie.c svneol=native#text/plain
-src/lgt/vecmath.h svneol=native#text/plain
 src/libbn/CMakeLists.txt svneol=native#text/plain
 src/libbn/Makefile.am svneol=native#text/plain
 src/libbn/anim.c svneol=native#text/plain
