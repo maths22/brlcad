@@ -2344,10 +2344,10 @@ misc/win32-msvc8/g2vrml/g2vrml.vcproj -text
 misc/win32-msvc8/g2x3d/g2x3d.vcproj -text
 misc/win32-msvc8/g42g5/g42g5.vcproj -text
 misc/win32-msvc8/g52g4/g52g4.vcproj -text
-misc/win32-msvc8/g_diff/g_qa.vcproj svneol=native#text/plain
-misc/win32-msvc8/g_lint/g_qa.vcproj svneol=native#text/plain
+misc/win32-msvc8/g_diff/g_diff.vcproj svneol=native#text/plain
+misc/win32-msvc8/g_lint/g_lint.vcproj svneol=native#text/plain
 misc/win32-msvc8/g_qa/g_qa.vcproj svneol=native#text/plain
-misc/win32-msvc8/g_transfer/g_qa.vcproj svneol=native#text/plain
+misc/win32-msvc8/g_transfer/g_transfer.vcproj svneol=native#text/plain
 misc/win32-msvc8/gif2fb/gif2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/globe/globe.vcproj svneol=native#text/plain
 misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
