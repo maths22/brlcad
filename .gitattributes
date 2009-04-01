@@ -2354,7 +2354,6 @@ misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/itclstub/itclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/itkstub/itkstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/kurt/kurt.vcproj svneol=native#text/plain
-misc/win32-msvc8/libBLT/libBLT.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libItcl/libItcl.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libItk/libItk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
@@ -2530,7 +2529,6 @@ misc/win32-msvc9/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/itclstub/itclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/itkstub/itkstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/kurt/kurt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc9/libBLT/libBLT.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/libItcl/libItcl.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/libItk/libItk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc9/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
