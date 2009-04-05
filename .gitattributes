@@ -2749,6 +2749,7 @@ regress/solids.sh svneol=native#text/x-sh
 regress/solidspix.asc svneol=native#text/plain
 regress/spdi.sh svneol=native#text/x-sh
 regress/spdipix.asc svneol=native#text/plain
+regress/testlib.c svneol=native#text/plain
 regress/weight.sh svneol=native#text/x-sh
 sh/Makefile.am svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
