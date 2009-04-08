@@ -11325,6 +11325,7 @@ src/tclscripts/mged/bot_face_select.tcl svneol=native#text/plain
 src/tclscripts/mged/build_region.tcl svneol=native#text/plain
 src/tclscripts/mged/calipers.tcl svneol=native#text/plain
 src/tclscripts/mged/callbacks.tcl svneol=native#text/plain
+src/tclscripts/mged/clear.tcl svneol=native#text/plain
 src/tclscripts/mged/collaborate.tcl svneol=native#text/plain
 src/tclscripts/mged/color.tcl svneol=native#text/plain
 src/tclscripts/mged/color_scheme.tcl svneol=native#text/plain
