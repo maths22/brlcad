@@ -1184,6 +1184,7 @@ src/shapes/.libs
 src/shapes/Makefile
 src/shapes/Makefile.in
 src/shapes/bolt
+src/shapes/coil
 src/shapes/fence
 src/shapes/gastank
 src/shapes/handle
