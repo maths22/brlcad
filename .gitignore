@@ -362,8 +362,6 @@ src/adrt/master/.libs
 src/adrt/master/Makefile
 src/adrt/master/Makefile.in
 src/adrt/master/adrt_master
-src/adrt/misc/Makefile
-src/adrt/misc/Makefile.in
 src/adrt/rise/Makefile
 src/adrt/rise/Makefile.in
 src/adrt/rise/master/.deps
