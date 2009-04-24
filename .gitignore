@@ -449,6 +449,7 @@ src/canon/pix-ipu
 src/canon/png-ipu
 src/conv/.deps
 src/conv/.libs
+src/conv/3dm-g
 src/conv/3dm/.deps
 src/conv/3dm/.libs
 src/conv/3dm/3dm-g
@@ -460,8 +461,11 @@ src/conv/asc-nmg
 src/conv/asc2g
 src/conv/asc2pix
 src/conv/bot-bldxf
+src/conv/bot-raw
+src/conv/bot-stl
 src/conv/bot_dump
 src/conv/bot_shell-vtk
+src/conv/comgeom-g
 src/conv/comgeom/.deps
 src/conv/comgeom/.libs
 src/conv/comgeom/Makefile
@@ -489,9 +493,11 @@ src/conv/g-adrt
 src/conv/g-dxf
 src/conv/g-euclid
 src/conv/g-euclid1
+src/conv/g-jack
 src/conv/g-nff
 src/conv/g-nmg
 src/conv/g-obj
+src/conv/g-off
 src/conv/g-shell.rect
 src/conv/g-stl
 src/conv/g-tankill
@@ -526,12 +532,14 @@ src/conv/nastran-g
 src/conv/nmg-bot
 src/conv/nmg-rib
 src/conv/nmg-sgp
+src/conv/off-g
 src/conv/off/.deps
 src/conv/off/.libs
 src/conv/off/Makefile
 src/conv/off/Makefile.in
 src/conv/off/g-off
 src/conv/off/off-g
+src/conv/patch-g
 src/conv/patch/.deps
 src/conv/patch/.libs
 src/conv/patch/Makefile
@@ -542,6 +550,7 @@ src/conv/pix2asc
 src/conv/ply-g
 src/conv/poly-bot
 src/conv/proe-g
+src/conv/rpatch
 src/conv/stl-g
 src/conv/tankill-g
 src/conv/viewpoint-g
