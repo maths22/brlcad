@@ -3612,7 +3612,6 @@ src/libfb/fb_paged_io.c svneol=native#text/plain
 src/libfb/fb_rect.c svneol=native#text/plain
 src/libfb/fb_util.c svneol=native#text/plain
 src/libfb/fbserv_obj.c svneol=native#text/plain
-src/libfb/getput.c svneol=native#text/plain
 src/libfb/if_4d.c svneol=native#text/plain
 src/libfb/if_TEMPLATE.c svneol=native#text/plain
 src/libfb/if_X.c svneol=native#text/plain
@@ -3637,7 +3636,7 @@ src/libfb/if_ts.c svneol=native#text/plain
 src/libfb/if_ug.c svneol=native#text/plain
 src/libfb/if_wgl.c svneol=native#text/plain
 src/libfb/libfb.3 svneol=native#text/plain
-src/libfb/libfb.dsp -text svneol=CRLF#text/plain
+src/libfb/libfb.dsp svneol=CRLF#text/plain eol=crlf
 src/libfb/nilcursor.h svneol=native#text/plain
 src/libfb/oglcursor.h svneol=native#text/plain
 src/libfb/sgicursor.h svneol=native#text/plain
