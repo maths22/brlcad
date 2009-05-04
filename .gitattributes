@@ -3831,6 +3831,7 @@ src/libged/rtcheck.c svneol=native#text/plain
 src/libged/savekey.c svneol=native#text/plain
 src/libged/saveview.c svneol=native#text/plain
 src/libged/scale.c svneol=native#text/plain
+src/libged/scale_ell.c svneol=native#text/plain
 src/libged/search.c svneol=native#text/plain
 src/libged/search.h svneol=native#text/plain
 src/libged/set_output_script.c svneol=native#text/plain
