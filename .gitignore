@@ -31,16 +31,20 @@ db/crod.g
 db/cube.g
 db/demo.g
 db/galileo.g
+db/goliath.g
 db/havoc.g
 db/include/Makefile
 db/include/Makefile.in
 db/kman.g
 db/ktank.g
 db/lgt-test.g
+db/lockfile
 db/m35.g
 db/moss.g
+db/operators.asc2g
 db/operators.g
 db/pic.g
+db/pinewood.g
 db/prim.g
 db/sphflake.g
 db/star.g
@@ -254,6 +258,7 @@ misc/ltmain.sh
 misc/ltmain.sh.backup
 misc/missing
 misc/mkinstalldirs
+misc/pkgconfig/*.pc
 misc/py-compile
 misc/win32-msvc9/Makefile
 misc/win32-msvc9/Makefile.in
@@ -459,6 +464,7 @@ src/conv/intaval/Makefile
 src/conv/intaval/Makefile.in
 src/conv/intaval/tgf-g
 src/conv/intaval/tgf2g.plg
+src/conv/jack-g
 src/conv/jack/.deps
 src/conv/jack/.libs
 src/conv/jack/Makefile
@@ -1097,6 +1103,7 @@ src/rt/rtexample
 src/rt/rtfrac
 src/rt/rtg3
 src/rt/rthide
+src/rt/rtmlt
 src/rt/rtpp
 src/rt/rtrad
 src/rt/rtrange
