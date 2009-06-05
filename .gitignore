@@ -354,10 +354,6 @@ src/adrt/libtie/.deps
 src/adrt/libtie/.libs
 src/adrt/libtie/Makefile
 src/adrt/libtie/Makefile.in
-src/adrt/libtienet/.deps
-src/adrt/libtienet/.libs
-src/adrt/libtienet/Makefile
-src/adrt/libtienet/Makefile.in
 src/adrt/master/.deps
 src/adrt/master/.libs
 src/adrt/master/Makefile
