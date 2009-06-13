@@ -3053,7 +3053,6 @@ src/conv/fast4-g.1 svneol=native#text/plain
 src/conv/fast4-g.c svneol=native#text/plain
 src/conv/g-acad.1 svneol=native#text/plain
 src/conv/g-acad.c svneol=native#text/plain
-src/conv/g-adrt.c svneol=native#text/plain
 src/conv/g-nff.1 svneol=native#text/plain
 src/conv/g-nff.c svneol=native#text/plain
 src/conv/g-obj.1 svneol=native#text/plain
