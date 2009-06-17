@@ -3745,6 +3745,7 @@ src/libged/loadview.c svneol=native#text/plain
 src/libged/log.c svneol=native#text/plain
 src/libged/lookat.c svneol=native#text/plain
 src/libged/ls.c svneol=native#text/plain
+src/libged/lscon.c svneol=native#text/plain
 src/libged/lt.c svneol=native#text/plain
 src/libged/m2v_point.c svneol=native#text/plain
 src/libged/make.c svneol=native#text/plain
