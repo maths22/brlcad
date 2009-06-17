@@ -66,6 +66,7 @@ doc/docbook/Makefile
 doc/docbook/Makefile.in
 doc/docbook/articles/Makefile
 doc/docbook/articles/Makefile.in
+doc/docbook/articles/build_pattern/*.html
 doc/docbook/articles/build_pattern/Makefile
 doc/docbook/articles/build_pattern/Makefile.in
 doc/docbook/articles/build_pattern/build_pattern_images/Makefile
@@ -74,6 +75,7 @@ doc/docbook/articles/build_pattern/en/*.html
 doc/docbook/articles/build_pattern/en/*.pdf
 doc/docbook/articles/build_pattern/en/Makefile
 doc/docbook/articles/build_pattern/en/Makefile.in
+doc/docbook/articles/build_region/*.html
 doc/docbook/articles/build_region/Makefile
 doc/docbook/articles/build_region/Makefile.in
 doc/docbook/articles/build_region/build_region_images/Makefile
@@ -82,6 +84,7 @@ doc/docbook/articles/build_region/en/*.html
 doc/docbook/articles/build_region/en/*.pdf
 doc/docbook/articles/build_region/en/Makefile
 doc/docbook/articles/build_region/en/Makefile.in
+doc/docbook/articles/ebm_primitive/*.html
 doc/docbook/articles/ebm_primitive/Makefile
 doc/docbook/articles/ebm_primitive/Makefile.in
 doc/docbook/articles/ebm_primitive/ebm_primitive_images/Makefile
@@ -90,6 +93,7 @@ doc/docbook/articles/ebm_primitive/en/*.html
 doc/docbook/articles/ebm_primitive/en/*.pdf
 doc/docbook/articles/ebm_primitive/en/Makefile
 doc/docbook/articles/ebm_primitive/en/Makefile.in
+doc/docbook/articles/mgedrc/*.html
 doc/docbook/articles/mgedrc/Makefile
 doc/docbook/articles/mgedrc/Makefile.in
 doc/docbook/articles/mgedrc/en/*.html
@@ -106,6 +110,7 @@ doc/docbook/articles/nirt/en/Makefile
 doc/docbook/articles/nirt/en/Makefile.in
 doc/docbook/articles/nirt/nirt_images/Makefile
 doc/docbook/articles/nirt/nirt_images/Makefile.in
+doc/docbook/articles/oed/*.html
 doc/docbook/articles/oed/Makefile
 doc/docbook/articles/oed/Makefile.in
 doc/docbook/articles/oed/en/*.html
@@ -114,6 +119,7 @@ doc/docbook/articles/oed/en/Makefile
 doc/docbook/articles/oed/en/Makefile.in
 doc/docbook/articles/oed/oed_images/Makefile
 doc/docbook/articles/oed/oed_images/Makefile.in
+doc/docbook/articles/pipes/*.html
 doc/docbook/articles/pipes/Makefile
 doc/docbook/articles/pipes/Makefile.in
 doc/docbook/articles/pipes/en/*.html
@@ -122,6 +128,7 @@ doc/docbook/articles/pipes/en/Makefile
 doc/docbook/articles/pipes/en/Makefile.in
 doc/docbook/articles/pipes/pipe_images/Makefile
 doc/docbook/articles/pipes/pipe_images/Makefile.in
+doc/docbook/articles/projection_shader/*.html
 doc/docbook/articles/projection_shader/Makefile
 doc/docbook/articles/projection_shader/Makefile.in
 doc/docbook/articles/projection_shader/en/*.html
@@ -130,6 +137,7 @@ doc/docbook/articles/projection_shader/en/Makefile
 doc/docbook/articles/projection_shader/en/Makefile.in
 doc/docbook/articles/projection_shader/projection_shader_images/Makefile
 doc/docbook/articles/projection_shader/projection_shader_images/Makefile.in
+doc/docbook/articles/tire/*.html
 doc/docbook/articles/tire/Makefile
 doc/docbook/articles/tire/Makefile.in
 doc/docbook/articles/tire/en/*.html
@@ -140,6 +148,7 @@ doc/docbook/articles/tire/tire_images/Makefile
 doc/docbook/articles/tire/tire_images/Makefile.in
 doc/docbook/books/Makefile
 doc/docbook/books/Makefile.in
+doc/docbook/books/tutorial_series/*.html
 doc/docbook/books/tutorial_series/Makefile
 doc/docbook/books/tutorial_series/Makefile.in
 doc/docbook/books/tutorial_series/en/*.html
@@ -150,6 +159,8 @@ doc/docbook/books/tutorial_series/volumeIII_images/Makefile
 doc/docbook/books/tutorial_series/volumeIII_images/Makefile.in
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
+doc/docbook/lessons/mged/*.html
+doc/docbook/lessons/mged/*_images
 doc/docbook/lessons/mged/L001_imgs/Makefile
 doc/docbook/lessons/mged/L001_imgs/Makefile.in
 doc/docbook/lessons/mged/L002_imgs/Makefile
@@ -188,6 +199,8 @@ doc/docbook/lessons/mged/en/Makefile
 doc/docbook/lessons/mged/en/Makefile.in
 doc/docbook/system/Makefile
 doc/docbook/system/Makefile.in
+doc/docbook/system/man1/*.1
+doc/docbook/system/man1/*.html
 doc/docbook/system/man1/Makefile
 doc/docbook/system/man1/Makefile.in
 doc/docbook/system/man1/en/*.1
@@ -195,6 +208,7 @@ doc/docbook/system/man1/en/*.html
 doc/docbook/system/man1/en/*.pdf
 doc/docbook/system/man1/en/Makefile
 doc/docbook/system/man1/en/Makefile.in
+doc/docbook/tutorials
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
@@ -325,6 +339,8 @@ pix/Makefile
 pix/Makefile.in
 regress/Makefile
 regress/Makefile.in
+regress/mged/Makefile
+regress/mged/Makefile.in
 sh/Makefile
 sh/Makefile.in
 /so_locations
