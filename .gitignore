@@ -1067,6 +1067,9 @@ src/other/step/include/exppp/Makefile
 src/other/step/include/exppp/Makefile.in
 src/other/step/include/express/Makefile
 src/other/step/include/express/Makefile.in
+src/other/step/include/scl_config.h
+src/other/step/include/scl_config.h.in
+src/other/step/include/stamp-h1
 src/other/step/libtool
 src/other/step/m4/Makefile
 src/other/step/m4/Makefile.in
