@@ -3670,6 +3670,7 @@ src/libged/bot_split.c svneol=native#text/plain
 src/libged/bot_sync.c svneol=native#text/plain
 src/libged/bot_vertex_fuse.c svneol=native#text/plain
 src/libged/cat.c svneol=native#text/plain
+src/libged/cc.c svneol=native#text/plain
 src/libged/center.c svneol=native#text/plain
 src/libged/clip.c svneol=native#text/plain
 src/libged/clone.c svneol=native#text/plain
