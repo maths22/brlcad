@@ -2340,7 +2340,6 @@ misc/win32-msvc8/fbstretch/fbstretch.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fbzoom/fbzoom.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/fence/fence.vcproj svneol=native#text/plain
 misc/win32-msvc8/g2acad/g2acad.vcproj -text
-misc/win32-msvc8/g2adrt/g2adrt.vcproj -text
 misc/win32-msvc8/g2asc/g2asc.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2dxf/g2dxf.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/g2euclid/g2euclid.vcproj -text
