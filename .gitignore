@@ -332,8 +332,6 @@ misc/win32-msvc/brlcad.ncb
 misc/win32-msvc/brlcad.opt
 misc/win32-msvc8/Makefile
 misc/win32-msvc8/Makefile.in
-misc/win32-msvc9/Makefile
-misc/win32-msvc9/Makefile.in
 misc/ylwrap
 pix/Makefile
 pix/Makefile.in
