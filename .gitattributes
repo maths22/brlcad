@@ -3479,6 +3479,7 @@ src/libged/arced.c svneol=native#text/plain
 src/libged/arot.c svneol=native#text/plain
 src/libged/attr.c svneol=native#text/plain
 src/libged/autoview.c svneol=native#text/plain
+src/libged/bbsize.c svneol=native#text/plain
 src/libged/bev.c svneol=native#text/plain
 src/libged/bigE.c svneol=native#text/plain
 src/libged/blast.c svneol=native#text/plain
