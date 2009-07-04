@@ -365,10 +365,6 @@ src/adrt/librender/.deps
 src/adrt/librender/.libs
 src/adrt/librender/Makefile
 src/adrt/librender/Makefile.in
-src/adrt/libtexture/.deps
-src/adrt/libtexture/.libs
-src/adrt/libtexture/Makefile
-src/adrt/libtexture/Makefile.in
 src/adrt/libtie/.deps
 src/adrt/libtie/.libs
 src/adrt/libtie/Makefile
