@@ -4126,7 +4126,6 @@ src/nirt/dist_def.c svneol=native#text/plain
 src/nirt/if.c svneol=native#text/plain
 src/nirt/interact.c svneol=native#text/plain
 src/nirt/nirt.c svneol=native#text/plain
-src/nirt/nirt.dsp -text svneol=CRLF#text/plain
 src/nirt/nirt.h svneol=native#text/plain
 src/nirt/parse_fmt.c svneol=native#text/plain
 src/nirt/read_mat.c svneol=native#text/plain
