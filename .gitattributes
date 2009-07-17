@@ -2712,7 +2712,6 @@ src/adrt/scripts/ptcloud.py svneol=native#text/plain
 src/adrt/slave/g-adrt.c svneol=native#text/plain
 src/adrt/slave/load.c svneol=native#text/plain
 src/adrt/slave/load.h svneol=native#text/plain
-src/adrt/slave/load_MySQL.c svneol=native#text/plain
 src/adrt/slave/load_g.c svneol=native#text/plain
 src/adrt/slave/slave.c svneol=native#text/plain
 src/adrt/slave/slave.h svneol=native#text/plain
