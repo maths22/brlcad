@@ -10721,6 +10721,8 @@ src/proc-db/sgi.sh -text
 src/proc-db/sketch.c svneol=native#text/plain
 src/proc-db/sphflake.c svneol=native#text/plain
 src/proc-db/spltest.c svneol=native#text/plain
+src/proc-db/surfaceintersect.cpp svneol=native#text/plain
+src/proc-db/surfaceintersect.h svneol=native#text/plain
 src/proc-db/tea.c svneol=native#text/plain
 src/proc-db/tea.h svneol=native#text/plain
 src/proc-db/tea_nmg.c svneol=native#text/plain
