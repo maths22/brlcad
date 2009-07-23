@@ -1732,6 +1732,7 @@ doc/docbook/system/man1/en/arot.xml svneol=native#text/xml
 doc/docbook/system/man1/en/attach.xml svneol=native#text/xml
 doc/docbook/system/man1/en/attr.xml svneol=native#text/xml
 doc/docbook/system/man1/en/autoview.xml svneol=native#text/xml
+doc/docbook/system/man1/en/bbsize.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bev.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bo.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bolt.xml svneol=native#text/xml
