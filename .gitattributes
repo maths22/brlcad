@@ -2635,7 +2635,6 @@ src/adrt/adrt_struct.h svneol=native#text/plain
 src/adrt/bench/bench.c svneol=native#text/plain
 src/adrt/bench/bench.h svneol=native#text/plain
 src/adrt/bench/main.c svneol=native#text/plain
-src/adrt/doc/ChangeLog svneol=native#text/plain
 src/adrt/doc/binary_spec.txt svneol=native#text/plain
 src/adrt/librender/camera.c svneol=native#text/plain
 src/adrt/librender/camera.h svneol=native#text/plain
