@@ -2742,6 +2742,7 @@ src/archer/plugins/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/README svneol=native#text/plain
 src/archer/plugins/Wizards/Makefile.am svneol=native#text/plain
+src/archer/plugins/Wizards/humanwizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/tankwizard/TankWizard.tcl svneol=native#text/plain
