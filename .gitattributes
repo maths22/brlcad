@@ -2741,6 +2741,7 @@ src/archer/plugins/Core/README svneol=native#text/plain
 src/archer/plugins/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/README svneol=native#text/plain
+src/archer/plugins/Wizards/Makefile svneol=native#text/plain
 src/archer/plugins/Wizards/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/humanwizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/humanwizard/Makefile.am svneol=native#text/plain
