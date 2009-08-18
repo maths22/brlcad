@@ -3536,6 +3536,7 @@ src/libged/grid2view_lu.c svneol=native#text/plain
 src/libged/group.c svneol=native#text/plain
 src/libged/hide.c svneol=native#text/plain
 src/libged/how.c svneol=native#text/plain
+src/libged/human.c svneol=native#text/plaint
 src/libged/illum.c svneol=native#text/plain
 src/libged/importFg4Section.c svneol=native#text/plain
 src/libged/inside.c svneol=native#text/plain
