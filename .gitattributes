@@ -3908,6 +3908,7 @@ src/librt/primitives/nmg/nmg_inter.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_junk.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_manif.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_mesh.c svneol=native#text/plain
+src/librt/primitives/nmg/nmg_mirror.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_misc.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_mk.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_mod.c svneol=native#text/plain
