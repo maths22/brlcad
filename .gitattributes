@@ -3838,6 +3838,7 @@ src/librt/primitives/arb8/arb8.c svneol=native#text/plain
 src/librt/primitives/arb8/arb8_brep.cpp svneol=native#text/plain
 src/librt/primitives/arb8/arb8_mirror.c svneol=native#text/plain
 src/librt/primitives/arbn/arbn.c svneol=native#text/plain
+src/librt/primitives/arbn/arbn_mirror.c svneol=native#text/plain
 src/librt/primitives/ars/ars.c svneol=native#text/plain
 src/librt/primitives/bot/bot.c svneol=native#text/plain
 src/librt/primitives/bot/g_bot_include.c svneol=native#text/plain
