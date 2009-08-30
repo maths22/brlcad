@@ -3874,6 +3874,7 @@ src/librt/primitives/bspline/nurb_xsplit.c svneol=native#text/plain
 src/librt/primitives/cline/cline.c svneol=native#text/plain
 src/librt/primitives/dsp/dsp.c svneol=native#text/plain
 src/librt/primitives/ebm/ebm.c svneol=native#text/plain
+src/librt/primitives/ebm/ebm_mirror.c svneol=native#text/plain
 src/librt/primitives/ehy/ehy.c svneol=native#text/plain
 src/librt/primitives/ell/ell.c svneol=native#text/plain
 src/librt/primitives/ell/ell_brep.cpp svneol=native#text/plain
