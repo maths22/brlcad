@@ -3794,6 +3794,7 @@ src/librt/brep_test.cpp svneol=native#text/plain
 src/librt/bundle.c svneol=native#text/plain
 src/librt/cmd.c svneol=native#text/plain
 src/librt/comb.c svneol=native#text/plain
+src/librt/comb_mirror.c svneol=native#text/plain
 src/librt/constraint.c svneol=native#text/plain
 src/librt/cut.c svneol=native#text/plain
 src/librt/db5_alloc.c svneol=native#text/plain
