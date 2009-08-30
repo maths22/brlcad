@@ -3926,6 +3926,7 @@ src/librt/primitives/rec/rec.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.h svneol=native#text/plain
 src/librt/primitives/rhc/rhc.c svneol=native#text/plain
+src/librt/primitives/rhc/rhc_mirror.c svneol=native#text/plain
 src/librt/primitives/rpc/rpc.c svneol=native#text/plain
 src/librt/primitives/rpc/rpc_mirror.c svneol=native#text/plain
 src/librt/primitives/sketch/sketch.c svneol=native#text/plain
