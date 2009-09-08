@@ -3957,6 +3957,7 @@ src/librt/primitives/tor/tor.c svneol=native#text/plain
 src/librt/primitives/tor/tor_brep.cpp svneol=native#text/plain
 src/librt/primitives/tor/tor_mirror.c svneol=native#text/plain
 src/librt/primitives/vol/vol.c svneol=native#text/plain
+src/librt/primitives/vol/vol_brep.cpp svneol=native#text/plain
 src/librt/primitives/vol/vol_mirror.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.h svneol=native#text/plain
