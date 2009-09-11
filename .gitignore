@@ -352,11 +352,6 @@ src/adrt/Makefile
 src/adrt/Makefile.in
 src/adrt/adrt_master
 src/adrt/adrt_slave
-src/adrt/bench/.deps
-src/adrt/bench/.libs
-src/adrt/bench/Makefile
-src/adrt/bench/Makefile.in
-src/adrt/bench/adrt_bench
 src/adrt/isst
 src/adrt/libcommon
 src/adrt/librender/.deps
@@ -375,8 +370,6 @@ src/adrt/master/Makefile
 src/adrt/master/Makefile.in
 src/adrt/master/adrt_master
 src/adrt/misc
-src/adrt/scripts/Makefile
-src/adrt/scripts/Makefile.in
 src/adrt/slave/.deps
 src/adrt/slave/.libs
 src/adrt/slave/Makefile
