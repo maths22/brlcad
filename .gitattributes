@@ -3875,6 +3875,7 @@ src/librt/primitives/ell/ell.c svneol=native#text/plain
 src/librt/primitives/ell/ell_brep.cpp svneol=native#text/plain
 src/librt/primitives/ell/ell_mirror.c svneol=native#text/plain
 src/librt/primitives/epa/epa.c svneol=native#text/plain
+src/librt/primitives/epa/epa_brep.cpp svneol=native#text/plain
 src/librt/primitives/epa/epa_mirror.c svneol=native#text/plain
 src/librt/primitives/eto/eto.c svneol=native#text/plain
 src/librt/primitives/eto/eto_brep.cpp svneol=native#text/plain
