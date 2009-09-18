@@ -3921,6 +3921,7 @@ src/librt/primitives/nmg/nmg_visit.c svneol=native#text/plain
 src/librt/primitives/part/part.c svneol=native#text/plain
 src/librt/primitives/part/part_mirror.c svneol=native#text/plain
 src/librt/primitives/pipe/pipe.c svneol=native#text/plain
+src/librt/primitives/pipe/pipe_brep.cpp svneol=native#text/plain
 src/librt/primitives/pipe/pipe_mirror.c svneol=native#text/plain
 src/librt/primitives/pnts/pnts.c svneol=native#text/plain
 src/librt/primitives/poly/poly.c svneol=native#text/plain
