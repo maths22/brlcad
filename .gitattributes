@@ -2685,7 +2685,6 @@ src/adrt/master/compnet.c svneol=native#text/plain
 src/adrt/master/compnet.h svneol=native#text/plain
 src/adrt/master/dispatcher.c svneol=native#text/plain
 src/adrt/master/dispatcher.h svneol=native#text/plain
-src/adrt/master/main.c svneol=native#text/plain
 src/adrt/master/master.c svneol=native#text/plain
 src/adrt/master/master.h svneol=native#text/plain
 src/adrt/master/tienet_master.c svneol=native#text/plain
