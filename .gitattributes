@@ -3931,6 +3931,7 @@ src/librt/primitives/poly/poly_mirror.c svneol=native#text/plain
 src/librt/primitives/rec/rec.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.h svneol=native#text/plain
+src/librt/primitives/revolve/revolve_brep.cpp svneol=native#text/plain
 src/librt/primitives/rhc/rhc.c svneol=native#text/plain
 src/librt/primitives/rhc/rhc_brep.cpp svneol=native#text/plain
 src/librt/primitives/rhc/rhc_mirror.c svneol=native#text/plain
