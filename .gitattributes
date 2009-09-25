@@ -2691,7 +2691,6 @@ src/adrt/master/tienet_master.c svneol=native#text/plain
 src/adrt/master/tienet_master.h svneol=native#text/plain
 src/adrt/slave/slave.c svneol=native#text/plain
 src/adrt/slave/slave.h svneol=native#text/plain
-src/adrt/slave/smain.c svneol=native#text/plain
 src/adrt/slave/tienet_slave.c svneol=native#text/plain
 src/adrt/slave/tienet_slave.h svneol=native#text/plain
 src/anim/Makefile.am svneol=native#text/plain
