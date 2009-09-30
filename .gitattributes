@@ -3842,6 +3842,7 @@ src/librt/primitives/bspline/bspline_mirror.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_basis.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_bezier.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_bound.c svneol=native#text/plain
+src/librt/primitives/bspline/nurb_brep.cpp svneol=native#text/plain
 src/librt/primitives/bspline/nurb_c2.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_copy.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_diff.c svneol=native#text/plain
