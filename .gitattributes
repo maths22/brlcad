@@ -11214,6 +11214,7 @@ src/tclscripts/mged/combmenu.tcl svneol=native#text/plain
 src/tclscripts/mged/cycle.tcl svneol=native#text/plain
 src/tclscripts/mged/dbfindtree.tcl svneol=native#text/plain
 src/tclscripts/mged/dbupgrade.tcl svneol=native#text/plain
+src/tclscripts/mged/dmtype.tcl svneol=native#text/plain
 src/tclscripts/mged/e_id.tcl svneol=native#text/plain
 src/tclscripts/mged/edit_menu.tcl svneol=native#text/plain
 src/tclscripts/mged/edit_solid.tcl svneol=native#text/plain
