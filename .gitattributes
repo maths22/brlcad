@@ -3857,6 +3857,7 @@ src/libged/form.c svneol=native#text/plain
 src/libged/fracture.c svneol=native#text/plain
 src/libged/ged.c svneol=native#text/plain
 src/libged/ged_private.h svneol=native#text/plain
+src/libged/ged_util.c svneol=native#text/plain
 src/libged/get.c svneol=native#text/plain
 src/libged/get_autoview.c svneol=native#text/plain
 src/libged/get_comb.c svneol=native#text/plain
