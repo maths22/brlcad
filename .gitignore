@@ -1023,10 +1023,7 @@ src/other/tcl/unix/config.status
 src/other/tcl/unix/configure
 src/other/tcl/unix/dltest/Makefile
 src/other/tcl/unix/dltest/Makefile.in
-src/other/tcl/unix/libtcl.*
-src/other/tcl/unix/libtcl8.5.*
-src/other/tcl/unix/libtclstub.*
-src/other/tcl/unix/libtclstub8.5.*
+src/other/tcl/unix/libtcl*
 src/other/tcl/unix/tclConfig.sh
 src/other/tcl/unix/tclsh
 src/other/tk/Makefile
