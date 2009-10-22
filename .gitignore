@@ -279,6 +279,8 @@ src/archer/plugins/Utility/Makefile
 src/archer/plugins/Utility/Makefile.in
 src/archer/plugins/Wizards/Makefile
 src/archer/plugins/Wizards/Makefile.in
+src/archer/plugins/Wizards/humanwizard/Makefile
+src/archer/plugins/Wizards/humanwizard/Makefile.in
 src/archer/plugins/Wizards/tankwizard/Makefile
 src/archer/plugins/Wizards/tankwizard/Makefile.in
 src/archer/plugins/Wizards/tankwizard/images/Makefile
@@ -289,6 +291,7 @@ src/brlman/Makefile
 src/brlman/Makefile.in
 src/brlman/awf
 src/brlman/brlman
+src/brlman/brlman.sh
 src/burst/.deps
 src/burst/.libs
 src/burst/Makefile
