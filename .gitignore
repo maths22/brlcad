@@ -974,6 +974,9 @@ src/other/step/src/exppp/exppp
 src/other/step/src/express/.deps
 src/other/step/src/express/Makefile
 src/other/step/src/express/Makefile.in
+src/other/step/src/express/expparse.c
+src/other/step/src/express/expparse.h
+src/other/step/src/express/expscan.c
 src/other/step/src/express/fedex
 src/other/step/src/express/symlink
 src/other/step/src/fedex_plus/.deps
