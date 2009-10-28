@@ -3727,6 +3727,7 @@ src/libged/adjust.c svneol=native#text/plain
 src/libged/ae2dir.c svneol=native#text/plain
 src/libged/aet.c svneol=native#text/plain
 src/libged/analyze.c svneol=native#text/plain
+src/libged/annotate.c svneol=native#text/plain
 src/libged/arb.c svneol=native#text/plain
 src/libged/arced.c svneol=native#text/plain
 src/libged/arot.c svneol=native#text/plain
