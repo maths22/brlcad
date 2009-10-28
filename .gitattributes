@@ -4279,7 +4279,6 @@ src/libtclcad/ged_obj.c svneol=native#text/plain
 src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
-src/libtclcad/tclcadTkSetup.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
 src/libtermio/libtermio.dsp -text svneol=CRLF#text/plain
