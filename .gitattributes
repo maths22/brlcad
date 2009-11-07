@@ -11813,6 +11813,7 @@ src/util/pix-orle.1 svneol=native#text/plain
 src/util/pix-orle.c svneol=native#text/plain
 src/util/pix-png.1 svneol=native#text/plain
 src/util/pix-png.c svneol=native#text/plain
+src/util/pix-ppm.1 svneol=native#text/plain
 src/util/pix-ppm.c svneol=native#text/plain
 src/util/pix-ps.1 svneol=native#text/plain
 src/util/pix-ps.c svneol=native#text/plain
