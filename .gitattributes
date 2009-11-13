@@ -11375,6 +11375,7 @@ src/tclscripts/archer/images/Themes/Windows/checkpoint.png -text svneol=unset#im
 src/tclscripts/archer/images/Themes/Windows/closeall.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/combination.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/command.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Windows/compErase.png -text
 src/tclscripts/archer/images/Themes/Windows/compSelect.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/configure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/edit_copy.png -text svneol=unset#image/png
