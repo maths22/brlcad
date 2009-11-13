@@ -80,321 +80,259 @@ doc/cmap.5 svneol=native#text/plain
 doc/cvs.txt svneol=native#text/plain
 doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
-doc/docbook/BRL-CAD_db_format.xml svneol=native#text/xml
 doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
-doc/docbook/articles/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_pattern/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_pattern/build_pattern_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_pattern/build_pattern_images/figure1.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/figure2.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/figure3.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/figure4.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/figure5.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/figure6.png -text
-doc/docbook/articles/build_pattern/build_pattern_images/inline1.png -text
-doc/docbook/articles/build_pattern/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_pattern/en/build_pattern.xml svneol=native#text/xml
-doc/docbook/articles/build_region/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_region/build_region_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_region/build_region_images/figure1.png -text
-doc/docbook/articles/build_region/build_region_images/figure2.png -text
-doc/docbook/articles/build_region/build_region_images/figure3.png -text
-doc/docbook/articles/build_region/build_region_images/figure4.png -text
-doc/docbook/articles/build_region/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/build_region/en/build_region.xml svneol=native#text/xml
-doc/docbook/articles/ebm_primitive/Makefile.am svneol=native#text/plain
-doc/docbook/articles/ebm_primitive/ebm_primitive_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure1.png -text
-doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure2.png -text
-doc/docbook/articles/ebm_primitive/ebm_primitive_images/figure3.png -text
-doc/docbook/articles/ebm_primitive/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/ebm_primitive/en/ebm_primitive.xml svneol=native#text/xml
-doc/docbook/articles/mgedrc/Makefile.am svneol=native#text/plain
-doc/docbook/articles/mgedrc/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/mgedrc/en/mgedrc.xml svneol=native#text/xml
-doc/docbook/articles/mgedrc/mgedrc_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/mgedrc/mgedrc_images/figure2.png -text
-doc/docbook/articles/mgedrc/mgedrc_images/figure3.png -text
-doc/docbook/articles/nirt/Makefile.am svneol=native#text/plain
-doc/docbook/articles/nirt/README svneol=native#text/plain
-doc/docbook/articles/nirt/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/nirt/en/nirt.xml svneol=native#text/xml
-doc/docbook/articles/nirt/fo_custom.xsl svneol=native#text/xml
-doc/docbook/articles/nirt/nirt_example.g -text
-doc/docbook/articles/nirt/nirt_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/nirt/nirt_images/advanced_formatting_attr.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/advanced_formatting_attr2.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/csvexample.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/csvexample2.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_advanced.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-b_view_window_3.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineup-all.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineup-gap-nopurple.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineup-gap.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineup-overlap.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineup-region.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt-lineupaxis_3.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_grid1.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_query1.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_view_left_and_right_1.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_view_left_and_right_2.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_view_window_3.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_nirt_view_window_initial.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_air.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_basename.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_both.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_color_list.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_color_set.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_colors.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_echo.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/mged_qrcp_mouse.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/nirt_example.png -text svneol=unset#image/png
-doc/docbook/articles/nirt/nirt_images/nirt_region1.png -text svneol=unset#image/png
-doc/docbook/articles/oed/Makefile.am svneol=native#text/plain
-doc/docbook/articles/oed/README svneol=native#text/plain
-doc/docbook/articles/oed/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/oed/en/oed.xml svneol=native#text/xml
-doc/docbook/articles/oed/oed_examples.asc svneol=native#text/plain
-doc/docbook/articles/oed/oed_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/oed/oed_images/lollipop.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0001.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0002.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0003.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0004.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0005.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0006.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0007.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0008.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0009.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0010.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0011.png -text svneol=unset#image/png
-doc/docbook/articles/oed/oed_images/oed_0012.png -text svneol=unset#image/png
-doc/docbook/articles/pipes/Makefile.am svneol=native#text/plain
-doc/docbook/articles/pipes/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/pipes/en/pipes.xml svneol=native#text/xml
-doc/docbook/articles/pipes/pipe_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/pipes/pipe_images/figure1.png -text
-doc/docbook/articles/pipes/pipe_images/figure2.png -text
-doc/docbook/articles/pipes/pipe_images/figure3.png -text
-doc/docbook/articles/pipes/pipe_images/figure4.png -text
-doc/docbook/articles/pipes/pipe_images/figure5.png -text
-doc/docbook/articles/pipes/pipe_images/inline1.png -text
-doc/docbook/articles/pipes/pipe_images/inline2.png -text
-doc/docbook/articles/pipes/pipe_images/inline3.png -text
-doc/docbook/articles/pipes/pipe_images/inline4.png -text
-doc/docbook/articles/pipes/pipe_images/inline5.png -text
-doc/docbook/articles/pipes/pipe_images/inline6.png -text
-doc/docbook/articles/pipes/pipe_images/inline7.png -text
-doc/docbook/articles/pipes/pipe_images/inline8.png -text
-doc/docbook/articles/projection_shader/Makefile.am svneol=native#text/plain
-doc/docbook/articles/projection_shader/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/projection_shader/en/projection_shader.xml svneol=native#text/xml
-doc/docbook/articles/projection_shader/projection_shader_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/projection_shader/projection_shader_images/figure1.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure2.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure3.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure4.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure5.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure6.png -text
-doc/docbook/articles/projection_shader/projection_shader_images/figure7.png -text
-doc/docbook/articles/tire/Makefile.am svneol=native#text/plain
-doc/docbook/articles/tire/README svneol=native#text/plain
-doc/docbook/articles/tire/en/Makefile.am svneol=native#text/plain
-doc/docbook/articles/tire/en/tire.xml svneol=native#text/xml
-doc/docbook/articles/tire/tire_images/Makefile.am svneol=native#text/plain
-doc/docbook/articles/tire/tire_images/tire_0001.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0002.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0003.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0004.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0005.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0006.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0007.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0008.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0009.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0010.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0011.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0012.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0012.svg -text svneol=unset#image/svg%2Bxml
-doc/docbook/articles/tire/tire_images/tire_0013.png -text svneol=unset#image/png
-doc/docbook/articles/tire/tire_images/tire_0013.svg -text svneol=unset#image/svg%2Bxml
-doc/docbook/articles/tire/tire_images/tire_0014.png -text svneol=unset#image/png
-doc/docbook/books/Makefile.am svneol=native#text/plain
+doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
+doc/docbook/articles/en/build_region.xml svneol=native#text/xml
+doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
+doc/docbook/articles/en/images/build_pattern_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_pattern_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_region_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_region_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_region_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/build_region_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/ebm_primitive_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/ebm_primitive_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/ebm_primitive_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/mgedrc_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/mgedrc_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig08.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig09.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig10.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig11.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig12.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig13.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig14.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig15.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig16.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig17.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig18.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig19.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig20.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig21.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig22.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig23.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/nirt_fig24.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig08.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig09.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig10.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig11.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig12.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/oed_fig13.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig08.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig09.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig10.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig11.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig12.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/pipes_fig13.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/projection_shader_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig01.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig02.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig03.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig04.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig05.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig06.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig07.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig08.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig09.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig10.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig11.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig12.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig12.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/articles/en/images/tire_fig13.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/images/tire_fig13.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/articles/en/images/tire_fig14.docpng -text svneol=unset#image/png
+doc/docbook/articles/en/mgedrc.xml svneol=native#text/xml
+doc/docbook/articles/en/nirt.xml svneol=native#text/xml
+doc/docbook/articles/en/oed.xml svneol=native#text/xml
+doc/docbook/articles/en/pipes.xml svneol=native#text/xml
+doc/docbook/articles/en/projection_shader.xml svneol=native#text/xml
+doc/docbook/articles/en/tire.xml svneol=native#text/xml
 doc/docbook/books/README svneol=native#text/plain
-doc/docbook/books/tutorial_series/Makefile.am svneol=native#text/plain
-doc/docbook/books/tutorial_series/book_authors.xml svneol=native#text/plain
-doc/docbook/books/tutorial_series/en/Makefile.am svneol=native#text/plain
-doc/docbook/books/tutorial_series/en/VolumeII.xml svneol=native#text/xml
-doc/docbook/books/tutorial_series/en/VolumeIII.xml svneol=native#text/xml
-doc/docbook/books/tutorial_series/volumeIII_images/Makefile.am svneol=native#text/plain
-doc/docbook/books/tutorial_series/volumeIII_images/figure1.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure10.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure11.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure12.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure13.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure14.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure15.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure16.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure17.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure18.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure19.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure2.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure3.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure4.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure5.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure6.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure7.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure8.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/figure9.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/inline1.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/inline2.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/inline3.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/invalidarbs.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive1.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive2.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive3.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive4.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive5.png -text
-doc/docbook/books/tutorial_series/volumeIII_images/primitive6.png -text
+doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
+doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
+doc/docbook/books/en/images/tutorial_series_volIII_fig01.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig02.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig03.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig04.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig05.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig06.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig07.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig08.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig09.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig10.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig11.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig12.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig13.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig14.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig15.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig16.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig17.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig18.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig19.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig20.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig21.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig22.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig23.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig24.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig25.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig26.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig27.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig28.docpng -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_fig29.docpng -text svneol=unset#image/png
+doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
-doc/docbook/lessons/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L001_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L001_imgs/commandwindow.png -text
-doc/docbook/lessons/mged/L001_imgs/graphicswindow.png -text
-doc/docbook/lessons/mged/L001_imgs/terminal.png -text
-doc/docbook/lessons/mged/L002_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L002_imgs/coordsys.png -text
-doc/docbook/lessons/mged/L002_imgs/defaultradio.png -text
-doc/docbook/lessons/mged/L002_imgs/flower_zoomin.jpg -text
-doc/docbook/lessons/mged/L002_imgs/flower_zoomout.jpg -text
-doc/docbook/lessons/mged/L002_imgs/multipane.png -text
-doc/docbook/lessons/mged/L002_imgs/radio_35_25.png -text
-doc/docbook/lessons/mged/L002_imgs/radio_front.png -text
-doc/docbook/lessons/mged/L002_imgs/radio_right.png -text
-doc/docbook/lessons/mged/L002_imgs/radio_top.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_0_0_14.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_270_-90.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_270_90.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_35_0.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_35_25.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_35_60.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_35_90.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_front.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_left.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_rear.png -text
-doc/docbook/lessons/mged/L002_imgs/truck_right.png -text
-doc/docbook/lessons/mged/L004_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L004_imgs/commandwindow.png -text
-doc/docbook/lessons/mged/L004_imgs/fb_overlay_mode.png -text
-doc/docbook/lessons/mged/L004_imgs/raytracedshapes.png -text
-doc/docbook/lessons/mged/L005_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L005_imgs/combinationeditor.png -text
-doc/docbook/lessons/mged/L005_imgs/intersectionspheres.png -text
-doc/docbook/lessons/mged/L005_imgs/raytraceddome.png -text
-doc/docbook/lessons/mged/L005_imgs/raytracedpart1.png -text
-doc/docbook/lessons/mged/L005_imgs/raytracedpart2.png -text
-doc/docbook/lessons/mged/L005_imgs/raytracedpart3.png -text
-doc/docbook/lessons/mged/L005_imgs/subtractionspheres.png -text
-doc/docbook/lessons/mged/L005_imgs/twoprimitivespheres.png -text
-doc/docbook/lessons/mged/L005_imgs/unionspheres.png -text
-doc/docbook/lessons/mged/L006_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L006_imgs/base_subtracted_vol.png -text
-doc/docbook/lessons/mged/L006_imgs/goblet1stsphere.png -text
-doc/docbook/lessons/mged/L006_imgs/gobletbase.png -text
-doc/docbook/lessons/mged/L006_imgs/gobletbasestembasin.png -text
-doc/docbook/lessons/mged/L006_imgs/gobletstem.png -text
-doc/docbook/lessons/mged/L006_imgs/rtgoblet.png -text
-doc/docbook/lessons/mged/L006_imgs/rtgobletaz_35el_25.png -text
-doc/docbook/lessons/mged/L007_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L007_imgs/goblet_complete_window.png -text
-doc/docbook/lessons/mged/L007_imgs/goblet_mater_complete.png -text
-doc/docbook/lessons/mged/L007_imgs/goblet_mirror.png -text
-doc/docbook/lessons/mged/L007_imgs/goblet_semitransparent.png -text
-doc/docbook/lessons/mged/L008_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L008_imgs/comb_editor_window_mater_prop.png -text
-doc/docbook/lessons/mged/L008_imgs/goblet_combeditor.png -text
-doc/docbook/lessons/mged/L008_imgs/goblet_reflectivity_1.png -text
-doc/docbook/lessons/mged/L008_imgs/goblet_reflectivity_2.png -text
-doc/docbook/lessons/mged/L008_imgs/refractive_index.png -text
-doc/docbook/lessons/mged/L008_imgs/spec_vs_diff_reflectivity.png -text
-doc/docbook/lessons/mged/L009_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L009_imgs/globe_base_box_raytraced.png -text
-doc/docbook/lessons/mged/L009_imgs/globe_base_box_wireframe.png -text
-doc/docbook/lessons/mged/L009_imgs/globe_inside_outside_box.png -text
-doc/docbook/lessons/mged/L009_imgs/globe_outside_display_box.png -text
-doc/docbook/lessons/mged/L009_imgs/globe_raytraced.png -text
-doc/docbook/lessons/mged/L009_imgs/globe_wireframe.png -text
-doc/docbook/lessons/mged/L010_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L010_imgs/mug_wireframe.png -text
-doc/docbook/lessons/mged/L011_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L011_imgs/mug_raytraced_norim.png -text
-doc/docbook/lessons/mged/L011_imgs/mug_raytraced_rim.png -text
-doc/docbook/lessons/mged/L012_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L012_imgs/cyls_frontview.png -text
-doc/docbook/lessons/mged/L012_imgs/mug_gui_finished_raytraced.png -text
-doc/docbook/lessons/mged/L012_imgs/mug_handle_frontview.png -text
-doc/docbook/lessons/mged/L012_imgs/mug_handle_topview.png -text
-doc/docbook/lessons/mged/L012_imgs/mug_rim_frontview.png -text
-doc/docbook/lessons/mged/L013_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L013_imgs/candle_comb_ed_checker.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_complete_front.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_design.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_raytraced_overlay.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_tabletop_base_candle_front.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_tabletop_base_front.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_tabletop_eto1_rcc_wireframe_front.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_tabletop_eto1_wireframe_front.png -text
-doc/docbook/lessons/mged/L013_imgs/candle_tabletop_wireframe_front.png -text
-doc/docbook/lessons/mged/L014_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L014_imgs/candle_base_sphere_topview.png -text
-doc/docbook/lessons/mged/L014_imgs/candle_multipane.png -text
-doc/docbook/lessons/mged/L014_imgs/candle_spheres_az35el25.png -text
-doc/docbook/lessons/mged/L014_imgs/candle_spheres_frontview.png -text
-doc/docbook/lessons/mged/L014_imgs/candle_spheres_raytraced.png -text
-doc/docbook/lessons/mged/L014_imgs/candle_spheres_topview.png -text
-doc/docbook/lessons/mged/L014_imgs/primitive_editor.png -text
-doc/docbook/lessons/mged/L014_imgs/primitive_selection_dropdown.png -text
-doc/docbook/lessons/mged/L015_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L015_imgs/cameo_shader.png -text
-doc/docbook/lessons/mged/L015_imgs/prim_ed_wheel_well.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_2nd_wheel_wheel_place.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_ambient_lighting.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_cab1s.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_cab_body.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_cab_cutoff.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_default_lighting.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_design.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_multipane_1stwheel.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_wheel_wells_wireframe.png -text
-doc/docbook/lessons/mged/L015_imgs/truck_wheels.png -text
-doc/docbook/lessons/mged/L016_imgs/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/L016_imgs/radio_casecut_raytrace.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_cut_raytrace.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_cut_wireframe.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_default_components_props.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_new_design.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_transparent.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_wireframe_circ_board.png -text
-doc/docbook/lessons/mged/L016_imgs/radio_with_mater_props.png -text
-doc/docbook/lessons/mged/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/en/Makefile.am svneol=native#text/plain
-doc/docbook/lessons/mged/en/assign_mat_prop_rt.xml svneol=native#text/plain
-doc/docbook/lessons/mged/en/creating_a_goblet.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/creating_mug.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/creating_primitive_shapes.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/creating_toy_truck.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/globe_in_display_box.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/goblet_material_properties.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/goblet_material_properties2.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/learning_boolean_expressions.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/learning_viewing_options.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/mod_tech_struct.xml svneol=native#text/plain
-doc/docbook/lessons/mged/en/mug_through_gui.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/placing_shapes_in_3d.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/placing_shapes_in_3d_2.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/refining_mug.xml svneol=native#text/xml
-doc/docbook/lessons/mged/en/using_insert_command.xml svneol=native#text/xml
+doc/docbook/lessons/en/images/mged01_commandwindow.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged01_graphicswindow.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged01_terminal.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_coordsys.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_defaultradio.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_flower_zooomin.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_flower_zooomout.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_multipane.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_radio_35_25.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_radio_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_radio_right.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_radio_top.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_0_0_14.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_270_-90.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_270_90.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_35_0.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_35_25.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_35_60.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_35_90.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_left.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_rear.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_truck_right.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged04_commandwindow.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged04_fb_overlay_mode.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged04_raytracedshapes.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_combinationeditor.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_intersectionspheres.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_raytraceddome.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_raytracedpart1.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_raytracedpart2.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_raytracedpart3.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_subtractionspheres.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_twoprimitivespheres.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged05_unionspheres.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_base_substracted_vol.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_goblet1stsphere.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_gobletbase.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_gobletbasestembasin.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_gobletstem.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_rtgoblet.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged06_rtgobletaz_35_el_25.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged07_goblet_complete_window.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged07_goblet_mater_complete.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged07_goblet_mirror.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged07_goblet_semitransparent.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_comb_editor_window_mater_prop.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_goblet_combeditor.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_goblet_reflectivity_1.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_goblet_reflectivity_2.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_refractive_index.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged08_spec_vs_diff_reflectivity.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_base_box_raytraced.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_base_box_wireframe.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_inside_outside_box.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_outside_display_box.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_raytraced.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged09_globe_wireframe.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged10_mug_wireframe.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged11_mug_raytraced_norim.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged11_mug_raytraced_rim.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged12_cyls_frontview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged12_mug_gui_finished_raytraced.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged12_mug_handle_frontview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged12_mug_handle_topview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged12_mug_rim_frontview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_comb_ed_checker.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_complete_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_design.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_raytraced_overlay.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_tabletop_base_candle_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_tabletop_base_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_tabletop_eto1_rcc_wireframe_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_tabletop_eto1_wireframe_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged13_candle_tabletop_wireframe_front.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_base_sphere_topview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_multipane.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_spheres_az35el25.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_spheres_frontview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_spheres_raytraced.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_candle_spheres_topview.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_primitive_editor.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged14_primitive_selection_dropdown.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_cameo_shader.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_prim_ed_wheel_well.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_2nd_wheel_wheel_place.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_ambient_lighting.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_cab1s.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_cab_body.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_cab_cutoff.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_default_lighting.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_design.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_multipane_1stwheel.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_wheel_wells_wireframe.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged15_truck_wheels.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_casecut_raytrace.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_cut_raytrace.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_cut_wireframe.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_default_components_props.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_new_design.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_transparent.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_wireframe_circ_board.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_with_mater_props.docpng -text svneol=unset#image/png
+doc/docbook/lessons/en/mged01_creating_primitive_shapes.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged02_learning_viewing_options.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged03_using_insert_command.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged04_assign_mat_prop_rt.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged05_learning_boolean_expressions.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged06_creating_a_goblet.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged07_goblet_material_properties.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged08_goblet_material_properties2.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged09_globe_in_display_box.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged10_creating_mug.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged11_refining_mug.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged12_mug_through_gui.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged13_placing_shapes_in_3d.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged14_placing_shapes_in_3d_2.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged15_creating_a_toy_truck.xml svneol=native#text/xml
+doc/docbook/lessons/en/mged16_mod_tech_struct.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
@@ -1699,15 +1637,13 @@ doc/docbook/resources/standard/xsl/xhtml/titlepage.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/toc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/verbatim.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/xref.xsl svneol=native#text/xml
-doc/docbook/system/Makefile.am svneol=native#text/plain
-doc/docbook/system/man1/Makefile.am svneol=native#text/plain
+doc/docbook/specifications/en/BRL_CAD_g_format_V5.xml svneol=native#text/xml
 doc/docbook/system/man1/README svneol=native#text/plain
 doc/docbook/system/man1/en/3ptarb.xml svneol=native#text/plain
 doc/docbook/system/man1/en/B.xml svneol=native#text/xml
 doc/docbook/system/man1/en/E.xml svneol=native#text/xml
 doc/docbook/system/man1/en/Introduction.xml svneol=native#text/xml
 doc/docbook/system/man1/en/M.xml svneol=native#text/xml
-doc/docbook/system/man1/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/en/Z.xml svneol=native#text/xml
 doc/docbook/system/man1/en/adc.xml svneol=native#text/xml
 doc/docbook/system/man1/en/ae.xml svneol=native#text/xml
@@ -2145,6 +2081,7 @@ include/dm-wgl.h svneol=native#text/plain
 include/dm.h svneol=native#text/plain
 include/dm_color.h svneol=native#text/plain
 include/dm_xvars.h svneol=native#text/plain
+include/dvec.h svneol=native#text/plain
 include/fb.h svneol=native#text/plain
 include/fbio.h svneol=native#text/plain
 include/fbmsg.h svneol=native#text/plain
@@ -2181,7 +2118,6 @@ include/spm.h svneol=native#text/plain
 include/sysv.h svneol=native#text/plain
 include/tclcad.h svneol=native#text/plain
 include/vectfont.h svneol=native#text/plain
-include/vector.h svneol=native#text/plain
 include/vector_fpu.h svneol=native#text/plain
 include/vector_x86.h svneol=native#text/plain
 include/vfont-if.h svneol=native#text/plain
@@ -2685,14 +2621,12 @@ src/adrt/master/compnet.c svneol=native#text/plain
 src/adrt/master/compnet.h svneol=native#text/plain
 src/adrt/master/dispatcher.c svneol=native#text/plain
 src/adrt/master/dispatcher.h svneol=native#text/plain
-src/adrt/master/main.c svneol=native#text/plain
 src/adrt/master/master.c svneol=native#text/plain
 src/adrt/master/master.h svneol=native#text/plain
 src/adrt/master/tienet_master.c svneol=native#text/plain
 src/adrt/master/tienet_master.h svneol=native#text/plain
 src/adrt/slave/slave.c svneol=native#text/plain
 src/adrt/slave/slave.h svneol=native#text/plain
-src/adrt/slave/smain.c svneol=native#text/plain
 src/adrt/slave/tienet_slave.c svneol=native#text/plain
 src/adrt/slave/tienet_slave.h svneol=native#text/plain
 src/anim/Makefile.am svneol=native#text/plain
@@ -2729,6 +2663,9 @@ src/archer/plugins/Core/README svneol=native#text/plain
 src/archer/plugins/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/Makefile.am svneol=native#text/plain
 src/archer/plugins/Utility/README svneol=native#text/plain
+src/archer/plugins/Utility/attrGroupsDisplayUtilityP.tcl svneol=native#text/plain
+src/archer/plugins/Utility/attrGroupsDisplayUtilityP/AttrGroupsDisplayUtilityP.tcl svneol=native#text/plain
+src/archer/plugins/Utility/attrGroupsDisplayUtilityP/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/humanwizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/humanwizard/HumanWizard.tcl svneol=native#text/plain
@@ -3005,11 +2942,360 @@ src/conv/proe-g.1 svneol=native#text/plain
 src/conv/proe-g.c svneol=native#text/plain
 src/conv/step/AdvancedBrepShapeRepresentation.cpp svneol=native#text/plain
 src/conv/step/AdvancedBrepShapeRepresentation.h svneol=native#text/plain
+src/conv/step/AdvancedFace.cpp svneol=native#text/plain
+src/conv/step/AdvancedFace.h svneol=native#text/plain
+src/conv/step/AmountOfSubstanceContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/AmountOfSubstanceContextDependentUnit.h svneol=native#text/plain
+src/conv/step/AmountOfSubstanceConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/AmountOfSubstanceConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/AmountOfSubstanceSiUnit.cpp svneol=native#text/plain
+src/conv/step/AmountOfSubstanceSiUnit.h svneol=native#text/plain
+src/conv/step/AmountOfSubstanceUnit.cpp svneol=native#text/plain
+src/conv/step/AmountOfSubstanceUnit.h svneol=native#text/plain
+src/conv/step/AreaContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/AreaContextDependentUnit.h svneol=native#text/plain
+src/conv/step/AreaConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/AreaConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/AreaSiUnit.cpp svneol=native#text/plain
+src/conv/step/AreaSiUnit.h svneol=native#text/plain
+src/conv/step/AreaUnit.cpp svneol=native#text/plain
+src/conv/step/AreaUnit.h svneol=native#text/plain
+src/conv/step/Axis1Placement.cpp svneol=native#text/plain
+src/conv/step/Axis1Placement.h svneol=native#text/plain
+src/conv/step/Axis2Placement.cpp svneol=native#text/plain
+src/conv/step/Axis2Placement.h svneol=native#text/plain
+src/conv/step/Axis2Placement2D.cpp svneol=native#text/plain
+src/conv/step/Axis2Placement2D.h svneol=native#text/plain
+src/conv/step/Axis2Placement3D.cpp svneol=native#text/plain
+src/conv/step/Axis2Placement3D.h svneol=native#text/plain
 src/conv/step/BRLCADWrapper.cpp svneol=native#text/plain
 src/conv/step/BRLCADWrapper.h svneol=native#text/plain
+src/conv/step/BSplineCurve.cpp svneol=native#text/plain
+src/conv/step/BSplineCurve.h svneol=native#text/plain
+src/conv/step/BSplineCurveWithKnots.cpp svneol=native#text/plain
+src/conv/step/BSplineCurveWithKnots.h svneol=native#text/plain
+src/conv/step/BSplineSurface.cpp svneol=native#text/plain
+src/conv/step/BSplineSurface.h svneol=native#text/plain
+src/conv/step/BSplineSurfaceWithKnots.cpp svneol=native#text/plain
+src/conv/step/BSplineSurfaceWithKnots.h svneol=native#text/plain
+src/conv/step/BezierCurve.cpp svneol=native#text/plain
+src/conv/step/BezierCurve.h svneol=native#text/plain
+src/conv/step/BezierSurface.cpp svneol=native#text/plain
+src/conv/step/BezierSurface.h svneol=native#text/plain
+src/conv/step/BoundaryCurve.cpp svneol=native#text/plain
+src/conv/step/BoundaryCurve.h svneol=native#text/plain
+src/conv/step/BoundedCurve.cpp svneol=native#text/plain
+src/conv/step/BoundedCurve.h svneol=native#text/plain
+src/conv/step/BoundedPCurve.cpp svneol=native#text/plain
+src/conv/step/BoundedPCurve.h svneol=native#text/plain
+src/conv/step/BoundedSurface.cpp svneol=native#text/plain
+src/conv/step/BoundedSurface.h svneol=native#text/plain
+src/conv/step/BoundedSurfaceCurve.cpp svneol=native#text/plain
+src/conv/step/BoundedSurfaceCurve.h svneol=native#text/plain
+src/conv/step/CartesianPoint.cpp svneol=native#text/plain
+src/conv/step/CartesianPoint.h svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator.cpp svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator.h svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator2D.cpp svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator2D.h svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator3D.cpp svneol=native#text/plain
+src/conv/step/CartesianTransformationOperator3D.h svneol=native#text/plain
+src/conv/step/Circle.cpp svneol=native#text/plain
+src/conv/step/Circle.h svneol=native#text/plain
+src/conv/step/ClosedShell.cpp svneol=native#text/plain
+src/conv/step/ClosedShell.h svneol=native#text/plain
+src/conv/step/CompositeCurve.cpp svneol=native#text/plain
+src/conv/step/CompositeCurve.h svneol=native#text/plain
+src/conv/step/CompositeCurveOnSurface.cpp svneol=native#text/plain
+src/conv/step/CompositeCurveOnSurface.h svneol=native#text/plain
+src/conv/step/CompositeCurveSegment.cpp svneol=native#text/plain
+src/conv/step/CompositeCurveSegment.h svneol=native#text/plain
+src/conv/step/Conic.cpp svneol=native#text/plain
+src/conv/step/Conic.h svneol=native#text/plain
+src/conv/step/ConicalSurface.cpp svneol=native#text/plain
+src/conv/step/ConicalSurface.h svneol=native#text/plain
+src/conv/step/ConnectedFaceSet.cpp svneol=native#text/plain
+src/conv/step/ConnectedFaceSet.h svneol=native#text/plain
+src/conv/step/ContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/ContextDependentUnit.h svneol=native#text/plain
+src/conv/step/ConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/ConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/Curve.cpp svneol=native#text/plain
+src/conv/step/Curve.h svneol=native#text/plain
+src/conv/step/CurveBoundedSurface.cpp svneol=native#text/plain
+src/conv/step/CurveBoundedSurface.h svneol=native#text/plain
+src/conv/step/CurveReplica.cpp svneol=native#text/plain
+src/conv/step/CurveReplica.h svneol=native#text/plain
+src/conv/step/CylindricalSurface.cpp svneol=native#text/plain
+src/conv/step/CylindricalSurface.h svneol=native#text/plain
+src/conv/step/DefinitionalRepresentation.cpp svneol=native#text/plain
+src/conv/step/DefinitionalRepresentation.h svneol=native#text/plain
+src/conv/step/DerivedUnit.cpp svneol=native#text/plain
+src/conv/step/DerivedUnit.h svneol=native#text/plain
+src/conv/step/DerivedUnitElement.cpp svneol=native#text/plain
+src/conv/step/DerivedUnitElement.h svneol=native#text/plain
+src/conv/step/DimensionalExponents.cpp svneol=native#text/plain
+src/conv/step/DimensionalExponents.h svneol=native#text/plain
+src/conv/step/Direction.cpp svneol=native#text/plain
+src/conv/step/Direction.h svneol=native#text/plain
+src/conv/step/Edge.cpp svneol=native#text/plain
+src/conv/step/Edge.h svneol=native#text/plain
+src/conv/step/EdgeCurve.cpp svneol=native#text/plain
+src/conv/step/EdgeCurve.h svneol=native#text/plain
+src/conv/step/EdgeLoop.cpp svneol=native#text/plain
+src/conv/step/EdgeLoop.h svneol=native#text/plain
+src/conv/step/ElectricCurrentContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/ElectricCurrentContextDependentUnit.h svneol=native#text/plain
+src/conv/step/ElectricCurrentConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/ElectricCurrentConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/ElectricCurrentSiUnit.cpp svneol=native#text/plain
+src/conv/step/ElectricCurrentSiUnit.h svneol=native#text/plain
+src/conv/step/ElectricCurrentUnit.cpp svneol=native#text/plain
+src/conv/step/ElectricCurrentUnit.h svneol=native#text/plain
+src/conv/step/ElementarySurface.cpp svneol=native#text/plain
+src/conv/step/ElementarySurface.h svneol=native#text/plain
+src/conv/step/Ellipse.cpp svneol=native#text/plain
+src/conv/step/Ellipse.h svneol=native#text/plain
+src/conv/step/Face.cpp svneol=native#text/plain
+src/conv/step/Face.h svneol=native#text/plain
+src/conv/step/FaceBound.cpp svneol=native#text/plain
+src/conv/step/FaceBound.h svneol=native#text/plain
+src/conv/step/FaceOuterBound.cpp svneol=native#text/plain
+src/conv/step/FaceOuterBound.h svneol=native#text/plain
+src/conv/step/FaceSurface.cpp svneol=native#text/plain
+src/conv/step/FaceSurface.h svneol=native#text/plain
+src/conv/step/Factory.cpp svneol=native#text/plain
+src/conv/step/Factory.h svneol=native#text/plain
+src/conv/step/FoundedItem.cpp svneol=native#text/plain
+src/conv/step/FoundedItem.h svneol=native#text/plain
+src/conv/step/FunctionallyDefinedTransformation.cpp svneol=native#text/plain
+src/conv/step/FunctionallyDefinedTransformation.h svneol=native#text/plain
+src/conv/step/GeometricRepresentationContext.cpp svneol=native#text/plain
+src/conv/step/GeometricRepresentationContext.h svneol=native#text/plain
+src/conv/step/GeometricRepresentationItem.cpp svneol=native#text/plain
+src/conv/step/GeometricRepresentationItem.h svneol=native#text/plain
+src/conv/step/GlobalUncertaintyAssignedContext.cpp svneol=native#text/plain
+src/conv/step/GlobalUncertaintyAssignedContext.h svneol=native#text/plain
+src/conv/step/GlobalUnitAssignedContext.cpp svneol=native#text/plain
+src/conv/step/GlobalUnitAssignedContext.h svneol=native#text/plain
+src/conv/step/Hyperbola.cpp svneol=native#text/plain
+src/conv/step/Hyperbola.h svneol=native#text/plain
+src/conv/step/IntersectionCurve.cpp svneol=native#text/plain
+src/conv/step/IntersectionCurve.h svneol=native#text/plain
+src/conv/step/LengthContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/LengthContextDependentUnit.h svneol=native#text/plain
+src/conv/step/LengthConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/LengthConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/LengthMeasureWithUnit.cpp svneol=native#text/plain
+src/conv/step/LengthMeasureWithUnit.h svneol=native#text/plain
+src/conv/step/LengthSiUnit.cpp svneol=native#text/plain
+src/conv/step/LengthSiUnit.h svneol=native#text/plain
+src/conv/step/LengthUnit.cpp svneol=native#text/plain
+src/conv/step/LengthUnit.h svneol=native#text/plain
+src/conv/step/Line.cpp svneol=native#text/plain
+src/conv/step/Line.h svneol=native#text/plain
+src/conv/step/LocalUnits.cpp svneol=native#text/plain
+src/conv/step/LocalUnits.h svneol=native#text/plain
+src/conv/step/Loop.cpp svneol=native#text/plain
+src/conv/step/Loop.h svneol=native#text/plain
+src/conv/step/LuminousIntensityContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/LuminousIntensityContextDependentUnit.h svneol=native#text/plain
+src/conv/step/LuminousIntensityConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/LuminousIntensityConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/LuminousIntensitySiUnit.cpp svneol=native#text/plain
+src/conv/step/LuminousIntensitySiUnit.h svneol=native#text/plain
+src/conv/step/LuminousIntensityUnit.cpp svneol=native#text/plain
+src/conv/step/LuminousIntensityUnit.h svneol=native#text/plain
 src/conv/step/Makefile.am svneol=native#text/plain
+src/conv/step/ManifoldSolidBrep.cpp svneol=native#text/plain
+src/conv/step/ManifoldSolidBrep.h svneol=native#text/plain
+src/conv/step/MassContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/MassContextDependentUnit.h svneol=native#text/plain
+src/conv/step/MassConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/MassConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/MassSiUnit.cpp svneol=native#text/plain
+src/conv/step/MassSiUnit.h svneol=native#text/plain
+src/conv/step/MassUnit.cpp svneol=native#text/plain
+src/conv/step/MassUnit.h svneol=native#text/plain
+src/conv/step/MeasureValue.cpp svneol=native#text/plain
+src/conv/step/MeasureValue.h svneol=native#text/plain
+src/conv/step/MeasureWithUnit.cpp svneol=native#text/plain
+src/conv/step/MeasureWithUnit.h svneol=native#text/plain
+src/conv/step/NamedUnit.cpp svneol=native#text/plain
+src/conv/step/NamedUnit.h svneol=native#text/plain
+src/conv/step/OffsetCurve2D.cpp svneol=native#text/plain
+src/conv/step/OffsetCurve2D.h svneol=native#text/plain
+src/conv/step/OffsetCurve3D.cpp svneol=native#text/plain
+src/conv/step/OffsetCurve3D.h svneol=native#text/plain
+src/conv/step/OffsetSurface.cpp svneol=native#text/plain
+src/conv/step/OffsetSurface.h svneol=native#text/plain
+src/conv/step/OpenNurbsInterfaces.cpp svneol=native#text/plain
+src/conv/step/OrientedEdge.cpp svneol=native#text/plain
+src/conv/step/OrientedEdge.h svneol=native#text/plain
+src/conv/step/PCurve.cpp svneol=native#text/plain
+src/conv/step/PCurve.h svneol=native#text/plain
+src/conv/step/PCurveOrSurface.cpp svneol=native#text/plain
+src/conv/step/PCurveOrSurface.h svneol=native#text/plain
+src/conv/step/Parabola.cpp svneol=native#text/plain
+src/conv/step/Parabola.h svneol=native#text/plain
+src/conv/step/ParametricRepresentationContext.cpp svneol=native#text/plain
+src/conv/step/ParametricRepresentationContext.h svneol=native#text/plain
+src/conv/step/Path.cpp svneol=native#text/plain
+src/conv/step/Path.h svneol=native#text/plain
+src/conv/step/Placement.cpp svneol=native#text/plain
+src/conv/step/Placement.h svneol=native#text/plain
+src/conv/step/Plane.cpp svneol=native#text/plain
+src/conv/step/Plane.h svneol=native#text/plain
+src/conv/step/PlaneAngleContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/PlaneAngleContextDependentUnit.h svneol=native#text/plain
+src/conv/step/PlaneAngleConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/PlaneAngleConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/PlaneAngleMeasureWithUnit.cpp svneol=native#text/plain
+src/conv/step/PlaneAngleMeasureWithUnit.h svneol=native#text/plain
+src/conv/step/PlaneAngleSiUnit.cpp svneol=native#text/plain
+src/conv/step/PlaneAngleSiUnit.h svneol=native#text/plain
+src/conv/step/PlaneAngleUnit.cpp svneol=native#text/plain
+src/conv/step/PlaneAngleUnit.h svneol=native#text/plain
+src/conv/step/Point.cpp svneol=native#text/plain
+src/conv/step/Point.h svneol=native#text/plain
+src/conv/step/Polyline.cpp svneol=native#text/plain
+src/conv/step/Polyline.h svneol=native#text/plain
+src/conv/step/PullbackCurve.cpp svneol=native#text/plain
+src/conv/step/PullbackCurve.h svneol=native#text/plain
+src/conv/step/QuasiUniformCurve.cpp svneol=native#text/plain
+src/conv/step/QuasiUniformCurve.h svneol=native#text/plain
+src/conv/step/QuasiUniformSurface.cpp svneol=native#text/plain
+src/conv/step/QuasiUniformSurface.h svneol=native#text/plain
+src/conv/step/RatioContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/RatioContextDependentUnit.h svneol=native#text/plain
+src/conv/step/RatioConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/RatioConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/RatioSiUnit.cpp svneol=native#text/plain
+src/conv/step/RatioSiUnit.h svneol=native#text/plain
+src/conv/step/RatioUnit.cpp svneol=native#text/plain
+src/conv/step/RatioUnit.h svneol=native#text/plain
+src/conv/step/RationalBSplineCurve.cpp svneol=native#text/plain
+src/conv/step/RationalBSplineCurve.h svneol=native#text/plain
+src/conv/step/RationalBSplineCurveWithKnots.cpp svneol=native#text/plain
+src/conv/step/RationalBSplineCurveWithKnots.h svneol=native#text/plain
+src/conv/step/RationalBSplineSurface.cpp svneol=native#text/plain
+src/conv/step/RationalBSplineSurface.h svneol=native#text/plain
+src/conv/step/RationalBSplineSurfaceWithKnots.cpp svneol=native#text/plain
+src/conv/step/RationalBSplineSurfaceWithKnots.h svneol=native#text/plain
+src/conv/step/RationalBezierCurve.cpp svneol=native#text/plain
+src/conv/step/RationalBezierCurve.h svneol=native#text/plain
+src/conv/step/RationalBezierSurface.cpp svneol=native#text/plain
+src/conv/step/RationalBezierSurface.h svneol=native#text/plain
+src/conv/step/RationalQuasiUniformCurve.cpp svneol=native#text/plain
+src/conv/step/RationalQuasiUniformCurve.h svneol=native#text/plain
+src/conv/step/RationalQuasiUniformSurface.cpp svneol=native#text/plain
+src/conv/step/RationalQuasiUniformSurface.h svneol=native#text/plain
+src/conv/step/RationalUniformCurve.cpp svneol=native#text/plain
+src/conv/step/RationalUniformCurve.h svneol=native#text/plain
+src/conv/step/RationalUniformSurface.cpp svneol=native#text/plain
+src/conv/step/RationalUniformSurface.h svneol=native#text/plain
+src/conv/step/RectangularCompositeSurface.cpp svneol=native#text/plain
+src/conv/step/RectangularCompositeSurface.h svneol=native#text/plain
+src/conv/step/RectangularTrimmedSurface.cpp svneol=native#text/plain
+src/conv/step/RectangularTrimmedSurface.h svneol=native#text/plain
+src/conv/step/Representation.cpp svneol=native#text/plain
+src/conv/step/Representation.h svneol=native#text/plain
+src/conv/step/RepresentationContext.cpp svneol=native#text/plain
+src/conv/step/RepresentationContext.h svneol=native#text/plain
+src/conv/step/RepresentationItem.cpp svneol=native#text/plain
+src/conv/step/RepresentationItem.h svneol=native#text/plain
+src/conv/step/STEPEntity.cpp svneol=native#text/plain
+src/conv/step/STEPEntity.h svneol=native#text/plain
 src/conv/step/STEPWrapper.cpp svneol=native#text/plain
 src/conv/step/STEPWrapper.h svneol=native#text/plain
+src/conv/step/SdaiAll.cc svneol=native#text/plain
+src/conv/step/SdaiCONFIG_CONTROL_DESIGN.cc svneol=native#text/plain
+src/conv/step/SdaiCONFIG_CONTROL_DESIGN.h svneol=native#text/plain
+src/conv/step/SdaiCONFIG_CONTROL_DESIGN.init.cc svneol=native#text/plain
+src/conv/step/Sdaiclasses.h svneol=native#text/plain
+src/conv/step/SeamCurve.cpp svneol=native#text/plain
+src/conv/step/SeamCurve.h svneol=native#text/plain
+src/conv/step/ShapeRepresentation.cpp svneol=native#text/plain
+src/conv/step/ShapeRepresentation.h svneol=native#text/plain
+src/conv/step/SiUnit.cpp svneol=native#text/plain
+src/conv/step/SiUnit.h svneol=native#text/plain
+src/conv/step/SolidAngleContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/SolidAngleContextDependentUnit.h svneol=native#text/plain
+src/conv/step/SolidAngleConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/SolidAngleConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/SolidAngleSiUnit.cpp svneol=native#text/plain
+src/conv/step/SolidAngleSiUnit.h svneol=native#text/plain
+src/conv/step/SolidAngleUnit.cpp svneol=native#text/plain
+src/conv/step/SolidAngleUnit.h svneol=native#text/plain
+src/conv/step/SolidModel.cpp svneol=native#text/plain
+src/conv/step/SolidModel.h svneol=native#text/plain
+src/conv/step/SphericalSurface.cpp svneol=native#text/plain
+src/conv/step/SphericalSurface.h svneol=native#text/plain
+src/conv/step/Surface.cpp svneol=native#text/plain
+src/conv/step/Surface.h svneol=native#text/plain
+src/conv/step/SurfaceCurve.cpp svneol=native#text/plain
+src/conv/step/SurfaceCurve.h svneol=native#text/plain
+src/conv/step/SurfaceOfLinearExtrusion.cpp svneol=native#text/plain
+src/conv/step/SurfaceOfLinearExtrusion.h svneol=native#text/plain
+src/conv/step/SurfaceOfRevolution.cpp svneol=native#text/plain
+src/conv/step/SurfaceOfRevolution.h svneol=native#text/plain
+src/conv/step/SurfacePatch.cpp svneol=native#text/plain
+src/conv/step/SurfacePatch.h svneol=native#text/plain
+src/conv/step/SurfaceReplica.cpp svneol=native#text/plain
+src/conv/step/SurfaceReplica.h svneol=native#text/plain
+src/conv/step/SweptSurface.cpp svneol=native#text/plain
+src/conv/step/SweptSurface.h svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureContextDependentUnit.h svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureSiUnit.cpp svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureSiUnit.h svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureUnit.cpp svneol=native#text/plain
+src/conv/step/ThermodynamicTemperatureUnit.h svneol=native#text/plain
+src/conv/step/TimeContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/TimeContextDependentUnit.h svneol=native#text/plain
+src/conv/step/TimeConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/TimeConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/TimeSiUnit.cpp svneol=native#text/plain
+src/conv/step/TimeSiUnit.h svneol=native#text/plain
+src/conv/step/TimeUnit.cpp svneol=native#text/plain
+src/conv/step/TimeUnit.h svneol=native#text/plain
+src/conv/step/TopologicalRepresentationItem.cpp svneol=native#text/plain
+src/conv/step/TopologicalRepresentationItem.h svneol=native#text/plain
+src/conv/step/ToroidalSurface.cpp svneol=native#text/plain
+src/conv/step/ToroidalSurface.h svneol=native#text/plain
+src/conv/step/TrimmedCurve.cpp svneol=native#text/plain
+src/conv/step/TrimmedCurve.h svneol=native#text/plain
+src/conv/step/TrimmingSelect.cpp svneol=native#text/plain
+src/conv/step/TrimmingSelect.h svneol=native#text/plain
+src/conv/step/UncertaintyMeasureWithUnit.cpp svneol=native#text/plain
+src/conv/step/UncertaintyMeasureWithUnit.h svneol=native#text/plain
+src/conv/step/UniformCurve.cpp svneol=native#text/plain
+src/conv/step/UniformCurve.h svneol=native#text/plain
+src/conv/step/UniformSurface.cpp svneol=native#text/plain
+src/conv/step/UniformSurface.h svneol=native#text/plain
+src/conv/step/Unit.cpp svneol=native#text/plain
+src/conv/step/Unit.h svneol=native#text/plain
+src/conv/step/Vector.cpp svneol=native#text/plain
+src/conv/step/Vector.h svneol=native#text/plain
+src/conv/step/Vertex.cpp svneol=native#text/plain
+src/conv/step/Vertex.h svneol=native#text/plain
+src/conv/step/VertexLoop.cpp svneol=native#text/plain
+src/conv/step/VertexLoop.h svneol=native#text/plain
+src/conv/step/VertexPoint.cpp svneol=native#text/plain
+src/conv/step/VertexPoint.h svneol=native#text/plain
+src/conv/step/VolumeContextDependentUnit.cpp svneol=native#text/plain
+src/conv/step/VolumeContextDependentUnit.h svneol=native#text/plain
+src/conv/step/VolumeConversionBasedUnit.cpp svneol=native#text/plain
+src/conv/step/VolumeConversionBasedUnit.h svneol=native#text/plain
+src/conv/step/VolumeSiUnit.cpp svneol=native#text/plain
+src/conv/step/VolumeSiUnit.h svneol=native#text/plain
+src/conv/step/VolumeUnit.cpp svneol=native#text/plain
+src/conv/step/VolumeUnit.h svneol=native#text/plain
+src/conv/step/compstructs.cc svneol=native#text/plain
+src/conv/step/schema.cc svneol=native#text/plain
+src/conv/step/schema.h svneol=native#text/plain
 src/conv/step/step-g.cpp svneol=native#text/plain
 src/conv/stl/g-stl.1 svneol=native#text/plain
 src/conv/stl/g-stl.c svneol=native#text/plain
@@ -3444,6 +3730,7 @@ src/libged/adjust.c svneol=native#text/plain
 src/libged/ae2dir.c svneol=native#text/plain
 src/libged/aet.c svneol=native#text/plain
 src/libged/analyze.c svneol=native#text/plain
+src/libged/annotate.c svneol=native#text/plain
 src/libged/arb.c svneol=native#text/plain
 src/libged/arced.c svneol=native#text/plain
 src/libged/arot.c svneol=native#text/plain
@@ -3510,6 +3797,7 @@ src/libged/form.c svneol=native#text/plain
 src/libged/fracture.c svneol=native#text/plain
 src/libged/ged.c svneol=native#text/plain
 src/libged/ged_private.h svneol=native#text/plain
+src/libged/ged_util.c svneol=native#text/plain
 src/libged/get.c svneol=native#text/plain
 src/libged/get_autoview.c svneol=native#text/plain
 src/libged/get_comb.c svneol=native#text/plain
@@ -3839,11 +4127,12 @@ src/librt/primitives/bot/g_bot_include.c svneol=native#text/plain
 src/librt/primitives/brep/brep.cpp svneol=native#text/plain
 src/librt/primitives/brep/brep_debug.cpp svneol=native#text/plain
 src/librt/primitives/brep/brep_debug.h svneol=native#text/plain
-src/librt/primitives/bspline/bspline.c svneol=native#text/plain
+src/librt/primitives/bspline/bspline.cpp svneol=native#text/plain
 src/librt/primitives/bspline/bspline_mirror.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_basis.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_bezier.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_bound.c svneol=native#text/plain
+src/librt/primitives/bspline/nurb_brep.cpp svneol=native#text/plain
 src/librt/primitives/bspline/nurb_c2.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_copy.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_diff.c svneol=native#text/plain
@@ -3866,6 +4155,7 @@ src/librt/primitives/bspline/nurb_util.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_xsplit.c svneol=native#text/plain
 src/librt/primitives/cline/cline.c svneol=native#text/plain
 src/librt/primitives/dsp/dsp.c svneol=native#text/plain
+src/librt/primitives/dsp/dsp_brep.cpp svneol=native#text/plain
 src/librt/primitives/dsp/dsp_mirror.c svneol=native#text/plain
 src/librt/primitives/ebm/ebm.c svneol=native#text/plain
 src/librt/primitives/ebm/ebm_brep.cpp svneol=native#text/plain
@@ -3890,6 +4180,7 @@ src/librt/primitives/half/half.c svneol=native#text/plain
 src/librt/primitives/half/half_mirror.c svneol=native#text/plain
 src/librt/primitives/hf/hf.c svneol=native#text/plain
 src/librt/primitives/hyp/hyp.c svneol=native#text/plain
+src/librt/primitives/hyp/hyp_brep.cpp svneol=native#text/plain
 src/librt/primitives/hyp/hyp_mirror.c svneol=native#text/plain
 src/librt/primitives/metaball/metaball.c svneol=native#text/plain
 src/librt/primitives/mirror.c svneol=native#text/plain
@@ -3918,6 +4209,7 @@ src/librt/primitives/nmg/nmg_pt_fu.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_rt_isect.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_rt_segs.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_tri.c svneol=native#text/plain
+src/librt/primitives/nmg/nmg_tri_mc.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_visit.c svneol=native#text/plain
 src/librt/primitives/part/part.c svneol=native#text/plain
 src/librt/primitives/part/part_mirror.c svneol=native#text/plain
@@ -3991,7 +4283,6 @@ src/libtclcad/ged_obj.c svneol=native#text/plain
 src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
-src/libtclcad/tclcadTkSetup.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
 src/libtermio/libtermio.dsp -text svneol=CRLF#text/plain
@@ -4082,7 +4373,6 @@ src/mged/mged.c svneol=native#text/plain
 src/mged/mged.dsp svneol=CRLF#text/plain eol=crlf
 src/mged/mged.h svneol=native#text/plain
 src/mged/mged_dm.h svneol=native#text/plain
-src/mged/mgedtcl.h svneol=native#text/plain
 src/mged/mover.c svneol=native#text/plain
 src/mged/muves.c svneol=native#text/plain
 src/mged/overlay.c svneol=native#text/plain
@@ -10731,8 +11021,11 @@ src/proc-db/ducks.h svneol=native#text/plain
 src/proc-db/globe.c svneol=native#text/plain
 src/proc-db/kurt.c svneol=native#text/plain
 src/proc-db/lens.c svneol=native#text/plain
+src/proc-db/makebuilding/makebuilding.c svneol=native#text/plain
 src/proc-db/masonry.c svneol=native#text/plain
 src/proc-db/metaball.c svneol=native#text/plain
+src/proc-db/mkbuilding.c svneol=native#text/plain
+src/proc-db/mkbuilding.h svneol=native#text/plain
 src/proc-db/molecule.c svneol=native#text/plain
 src/proc-db/nmgmodel.c svneol=native#text/plain
 src/proc-db/patches.h svneol=native#text/plain
@@ -10862,13 +11155,11 @@ src/sig/dfft.c svneol=native#text/plain
 src/sig/dmod.c svneol=native#text/plain
 src/sig/dpeak.c svneol=native#text/plain
 src/sig/dsel.c svneol=native#text/plain
-src/sig/dstat.c svneol=native#text/plain
+src/sig/dstats.c svneol=native#text/plain
 src/sig/dwin.c svneol=native#text/plain
 src/sig/f-d.c svneol=native#text/plain
 src/sig/f-i.c svneol=native#text/plain
 src/sig/fhor.c svneol=native#text/plain
-src/sig/fhor2.c svneol=native#text/plain
-src/sig/fhor3.c svneol=native#text/plain
 src/sig/hamwin.c svneol=native#text/plain
 src/sig/i-a.c svneol=native#text/plain
 src/sig/i-d.c svneol=native#text/plain
@@ -10876,7 +11167,7 @@ src/sig/i-f.c svneol=native#text/plain
 src/sig/ihist.c svneol=native#text/plain
 src/sig/imod.c svneol=native#text/plain
 src/sig/interp.c svneol=native#text/plain
-src/sig/istat.c svneol=native#text/plain
+src/sig/istats.c svneol=native#text/plain
 src/sig/smod.c svneol=native#text/plain
 src/sig/syn.c svneol=native#text/plain
 src/sig/u-a.c svneol=native#text/plain
@@ -10884,7 +11175,7 @@ src/sig/u-bw.c svneol=native#text/plain
 src/sig/u-d.c svneol=native#text/plain
 src/sig/u-f.c svneol=native#text/plain
 src/sig/umod.c svneol=native#text/plain
-src/sig/ustat.c svneol=native#text/plain
+src/sig/ustats.c svneol=native#text/plain
 src/tab/Makefile.am svneol=native#text/plain
 src/tab/script-tab.c svneol=native#text/plain
 src/tab/script.l svneol=native#text/plain
@@ -11213,6 +11504,7 @@ src/tclscripts/mged/combmenu.tcl svneol=native#text/plain
 src/tclscripts/mged/cycle.tcl svneol=native#text/plain
 src/tclscripts/mged/dbfindtree.tcl svneol=native#text/plain
 src/tclscripts/mged/dbupgrade.tcl svneol=native#text/plain
+src/tclscripts/mged/dmtype.tcl svneol=native#text/plain
 src/tclscripts/mged/e_id.tcl svneol=native#text/plain
 src/tclscripts/mged/edit_menu.tcl svneol=native#text/plain
 src/tclscripts/mged/edit_solid.tcl svneol=native#text/plain
@@ -11521,6 +11813,7 @@ src/util/pix-orle.1 svneol=native#text/plain
 src/util/pix-orle.c svneol=native#text/plain
 src/util/pix-png.1 svneol=native#text/plain
 src/util/pix-png.c svneol=native#text/plain
+src/util/pix-ppm.1 svneol=native#text/plain
 src/util/pix-ppm.c svneol=native#text/plain
 src/util/pix-ps.1 svneol=native#text/plain
 src/util/pix-ps.c svneol=native#text/plain
