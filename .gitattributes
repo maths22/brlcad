@@ -11234,6 +11234,7 @@ src/tclscripts/archer/images/Themes/Crystal/checkpoint.png -text svneol=unset#im
 src/tclscripts/archer/images/Themes/Crystal/closeall.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/combination.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/command.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal/compErase.png -text
 src/tclscripts/archer/images/Themes/Crystal/compSelect.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/configure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/edit_copy.png -text svneol=unset#image/png
