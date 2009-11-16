@@ -3640,6 +3640,7 @@ src/libcursor/Makefile.am svneol=native#text/plain
 src/libcursor/cursor.c svneol=native#text/plain
 src/libcursor/libcursor.3 svneol=native#text/plain
 src/libdm/Makefile.am svneol=native#text/plain
+src/libdm/TODO svneol=native#text/plain
 src/libdm/adc.c svneol=native#text/plain
 src/libdm/axes.c svneol=native#text/plain
 src/libdm/clip.c svneol=native#text/plain
