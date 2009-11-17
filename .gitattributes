@@ -214,6 +214,7 @@ doc/docbook/books/en/images/tutorial_series_volIII_fig28.docpng -text svneol=uns
 doc/docbook/books/en/images/tutorial_series_volIII_fig29.docpng -text svneol=unset#image/png
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
+doc/docbook/fop.xconf.in svneol=native#text/plain
 doc/docbook/lessons/en/images/mged01_commandwindow.docpng -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged01_graphicswindow.docpng -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged01_terminal.docpng -text svneol=unset#image/png
