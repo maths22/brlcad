@@ -11293,6 +11293,7 @@ src/tclscripts/archer/images/Themes/Crystal/revert.png -text svneol=unset#image/
 src/tclscripts/archer/images/Themes/Crystal/run.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/save.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/view_left_right_small.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal/view_obj_select.png -text
 src/tclscripts/archer/images/Themes/Crystal/view_rotate.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/view_scale.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/view_select.png -text svneol=unset#image/png
@@ -11363,6 +11364,7 @@ src/tclscripts/archer/images/Themes/Crystal_Large/revert.png -text svneol=unset#
 src/tclscripts/archer/images/Themes/Crystal_Large/run.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/save.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_left_right_small.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal_Large/view_obj_select.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/view_rotate.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_scale.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_select.png -text svneol=unset#image/png
@@ -11434,6 +11436,7 @@ src/tclscripts/archer/images/Themes/Windows/revert.png -text svneol=unset#image/
 src/tclscripts/archer/images/Themes/Windows/run.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/save.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/view_left_right_small.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Windows/view_obj_select.png -text
 src/tclscripts/archer/images/Themes/Windows/view_rotate.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/view_scale.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/view_select.png -text svneol=unset#image/png
