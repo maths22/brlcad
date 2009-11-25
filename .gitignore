@@ -60,15 +60,12 @@ doc/Makefile
 doc/Makefile.in
 doc/book/Makefile
 doc/book/Makefile.in
-doc/docbook/.deps
-doc/docbook/.libs
-doc/docbook/Makefile
-doc/docbook/Makefile.in
 doc/docbook/articles/Makefile
 doc/docbook/articles/Makefile.in
 doc/docbook/articles/build_pattern
 doc/docbook/articles/build_region
 doc/docbook/articles/ebm_primitive
+doc/docbook/articles/en/*.html
 doc/docbook/articles/mgedrc
 doc/docbook/articles/nirt
 doc/docbook/articles/oed
@@ -77,10 +74,14 @@ doc/docbook/articles/projection_shader
 doc/docbook/articles/tire
 doc/docbook/books/Makefile
 doc/docbook/books/Makefile.in
+doc/docbook/books/en/*.html
 doc/docbook/books/tutorial_series
+doc/docbook/fop.xconf
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
+doc/docbook/lessons/en/*.html
 doc/docbook/lessons/mged
+doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile
 doc/docbook/system/Makefile.in
 doc/docbook/system/man1/*.1
@@ -89,9 +90,6 @@ doc/docbook/system/man1/Makefile
 doc/docbook/system/man1/Makefile.in
 doc/docbook/system/man1/en/*.1
 doc/docbook/system/man1/en/*.html
-doc/docbook/system/man1/en/*.pdf
-doc/docbook/system/man1/en/Makefile
-doc/docbook/system/man1/en/Makefile.in
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
@@ -366,6 +364,7 @@ src/conv/fast4-g
 src/conv/g-acad
 src/conv/g-adrt
 src/conv/g-dxf
+src/conv/g-egg
 src/conv/g-euclid
 src/conv/g-euclid1
 src/conv/g-jack
@@ -408,6 +407,7 @@ src/conv/nastran-g
 src/conv/nmg-bot
 src/conv/nmg-rib
 src/conv/nmg-sgp
+src/conv/obj-g
 src/conv/off-g
 src/conv/off/.deps
 src/conv/off/.libs
@@ -430,6 +430,7 @@ src/conv/rpatch
 src/conv/step/.deps
 src/conv/step/Makefile
 src/conv/step/Makefile.in
+src/conv/step/step-g
 src/conv/stl-g
 src/conv/tankill-g
 src/conv/viewpoint-g
@@ -936,6 +937,7 @@ src/other/step/misc/depcomp
 src/other/step/misc/install-sh
 src/other/step/misc/ltmain.sh
 src/other/step/misc/missing
+src/other/step/misc/mkinstalldirs
 src/other/step/misc/ylwrap
 src/other/step/src/.deps
 src/other/step/src/Makefile
@@ -1093,6 +1095,7 @@ src/proc-db/brickwall
 src/proc-db/clutter
 src/proc-db/coil
 src/proc-db/contours
+src/proc-db/csgbrep
 src/proc-db/fence
 src/proc-db/globe
 src/proc-db/human
@@ -1100,6 +1103,7 @@ src/proc-db/kurt
 src/proc-db/lens
 src/proc-db/masonry
 src/proc-db/metaball
+src/proc-db/mkbuilding
 src/proc-db/molecule
 src/proc-db/nmgmodel
 src/proc-db/picket_fence
@@ -1112,6 +1116,7 @@ src/proc-db/room
 src/proc-db/sketch
 src/proc-db/sphflake
 src/proc-db/spltest
+src/proc-db/surfaceintersect
 src/proc-db/tea
 src/proc-db/tea_nmg
 src/proc-db/terrain
@@ -1176,6 +1181,7 @@ src/shapes/coil
 src/shapes/fence
 src/shapes/gastank
 src/shapes/handle
+src/shapes/human
 src/shapes/picket_fence
 src/shapes/tire
 src/shapes/window
@@ -1193,6 +1199,7 @@ src/sig/d-bw
 src/sig/d-f
 src/sig/d-i
 src/sig/d-u
+src/sig/d2-c
 src/sig/damdf
 src/sig/dauto
 src/sig/dauto2
@@ -1203,6 +1210,7 @@ src/sig/dmod
 src/sig/dpeak
 src/sig/dsel
 src/sig/dstat
+src/sig/dstats
 src/sig/dwin
 src/sig/f-d
 src/sig/f-i
@@ -1213,6 +1221,8 @@ src/sig/i-f
 src/sig/ihist
 src/sig/imod
 src/sig/istat
+src/sig/istats
+src/sig/smod
 src/sig/syn
 src/sig/u-a
 src/sig/u-bw
@@ -1220,6 +1230,7 @@ src/sig/u-d
 src/sig/u-f
 src/sig/umod
 src/sig/ustat
+src/sig/ustats
 src/tab/.deps
 src/tab/.libs
 src/tab/Makefile
