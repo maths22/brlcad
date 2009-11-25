@@ -2655,6 +2655,7 @@ src/anim/chan_mult.c svneol=native#text/plain
 src/anim/chan_permute.1 svneol=native#text/plain
 src/anim/chan_permute.c svneol=native#text/plain
 src/archer/Makefile.am svneol=native#text/plain
+src/archer/TODO svneol=native#text/plain
 src/archer/archer -text
 src/archer/archer.bat svneol=CRLF#text/plain eol=crlf
 src/archer/plugins/Commands/Makefile.am svneol=native#text/plain
