@@ -2655,6 +2655,7 @@ src/anim/chan_mult.c svneol=native#text/plain
 src/anim/chan_permute.1 svneol=native#text/plain
 src/anim/chan_permute.c svneol=native#text/plain
 src/archer/Makefile.am svneol=native#text/plain
+src/archer/TODO svneol=native#text/plain
 src/archer/archer -text
 src/archer/archer.bat svneol=CRLF#text/plain eol=crlf
 src/archer/plugins/Commands/Makefile.am svneol=native#text/plain
@@ -10877,8 +10878,12 @@ src/other/tk/xlib/xdraw.c svneol=native#text/plain
 src/other/tk/xlib/xgc.c svneol=native#text/plain
 src/other/tk/xlib/ximage.c svneol=native#text/plain
 src/other/tk/xlib/xutil.c svneol=native#text/plain
-src/other/tkhtml3/COPYRIGHT svneol=native#text/plain
+src/other/tkhtml3/AUTHORS svneol=native#text/plain
+src/other/tkhtml3/COPYING svneol=native#text/plain
+src/other/tkhtml3/ChangeLog svneol=native#text/plain
+src/other/tkhtml3/INSTALL svneol=native#text/plain
 src/other/tkhtml3/Makefile.in svneol=native#text/plain
+src/other/tkhtml3/NEWS svneol=native#text/plain
 src/other/tkhtml3/README svneol=native#text/plain
 src/other/tkhtml3/aclocal.m4 svneol=native#text/plain
 src/other/tkhtml3/configure.in svneol=native#text/plain
