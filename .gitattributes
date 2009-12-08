@@ -82,6 +82,7 @@ doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
 doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
+doc/docbook/articles/en/Makefile.am svneol=native#text/plain
 doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
 doc/docbook/articles/en/build_region.xml svneol=native#text/xml
 doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
@@ -183,6 +184,7 @@ doc/docbook/articles/en/tire.xml svneol=native#text/xml
 doc/docbook/books/README svneol=native#text/plain
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
+doc/docbook/books/en/Makefile.am svneol=native#text/plain
 doc/docbook/books/en/images/tutorial_series_volIII_fig01.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig02.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig03.png -text
@@ -215,6 +217,7 @@ doc/docbook/books/en/images/tutorial_series_volIII_fig29.png -text
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
 doc/docbook/fop.xconf.in svneol=native#text/plain
+doc/docbook/lessons/en/Makefile.am svneol=native#text/plain
 doc/docbook/lessons/en/images/mged01_commandwindow.png -text
 doc/docbook/lessons/en/images/mged01_graphicswindow.png -text
 doc/docbook/lessons/en/images/mged01_terminal.png -text
@@ -1640,12 +1643,14 @@ doc/docbook/resources/standard/xsl/xhtml/toc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/verbatim.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/xref.xsl svneol=native#text/xml
 doc/docbook/specifications/en/BRL_CAD_g_format_V5.xml svneol=native#text/xml
+doc/docbook/specifications/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/README svneol=native#text/plain
 doc/docbook/system/man1/en/3ptarb.xml svneol=native#text/plain
 doc/docbook/system/man1/en/B.xml svneol=native#text/xml
 doc/docbook/system/man1/en/E.xml svneol=native#text/xml
 doc/docbook/system/man1/en/Introduction.xml svneol=native#text/xml
 doc/docbook/system/man1/en/M.xml svneol=native#text/xml
+doc/docbook/system/man1/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man1/en/Z.xml svneol=native#text/xml
 doc/docbook/system/man1/en/adc.xml svneol=native#text/xml
 doc/docbook/system/man1/en/ae.xml svneol=native#text/xml
