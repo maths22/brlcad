@@ -334,6 +334,7 @@ doc/docbook/lessons/en/mged13_placing_shapes_in_3d.xml svneol=native#text/xml
 doc/docbook/lessons/en/mged14_placing_shapes_in_3d_2.xml svneol=native#text/xml
 doc/docbook/lessons/en/mged15_creating_a_toy_truck.xml svneol=native#text/xml
 doc/docbook/lessons/en/mged16_mod_tech_struct.xml svneol=native#text/xml
+doc/docbook/lessons/es/mged01_creating_primitive_shapes.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
