@@ -4317,6 +4317,7 @@ src/libwdb/extr.c svneol=native#text/plain
 src/libwdb/id.c svneol=native#text/plain
 src/libwdb/libwdb.3 svneol=native#text/plain
 src/libwdb/mater.c svneol=native#text/plain
+src/libwdb/metaball.c svneol=native#text/plain
 src/libwdb/nmg.c svneol=native#text/plain
 src/libwdb/nurb.c svneol=native#text/plain
 src/libwdb/pipe.c svneol=native#text/plain
