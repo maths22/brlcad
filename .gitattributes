@@ -1867,7 +1867,6 @@ doc/html/manuals/Install.html svneol=native#text/html
 doc/html/manuals/Makefile.am svneol=native#text/plain
 doc/html/manuals/Obtain.html svneol=native#text/html
 doc/html/manuals/Overview.html svneol=native#text/html
-doc/html/manuals/archer/Archer_Documentation.chm -text
 doc/html/manuals/archer/Makefile.am svneol=native#text/plain
 doc/html/manuals/archer/archer.ico -text svneol=unset#image/x-icon
 doc/html/manuals/cadwidgets/Command.html svneol=native#text/html
