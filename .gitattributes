@@ -10932,7 +10932,6 @@ src/other/tkpng/ChangeLog svneol=native#text/plain
 src/other/tkpng/Makefile.in svneol=native#text/plain
 src/other/tkpng/README svneol=native#text/plain
 src/other/tkpng/aclocal.m4 svneol=native#text/plain
-src/other/tkpng/configure svneol=native#text/plain
 src/other/tkpng/configure.in svneol=native#text/plain
 src/other/tkpng/generic/tkImgPNG.c svneol=native#text/plain
 src/other/tkpng/generic/tkImgPNGInit.c svneol=native#text/plain
