@@ -10929,6 +10929,7 @@ src/other/tkhtml3/tclconfig/README.txt svneol=native#text/plain
 src/other/tkhtml3/tclconfig/install-sh svneol=native#text/plain
 src/other/tkhtml3/tclconfig/tcl.m4 svneol=native#text/plain
 src/other/tkpng/ChangeLog svneol=native#text/plain
+src/other/tkpng/Makefile.in svneol=native#text/plain
 src/other/tkpng/README svneol=native#text/plain
 src/other/tkpng/aclocal.m4 svneol=native#text/plain
 src/other/tkpng/configure svneol=native#text/plain
