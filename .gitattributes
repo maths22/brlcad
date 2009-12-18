@@ -4181,6 +4181,7 @@ src/librt/primitives/hf/hf.c svneol=native#text/plain
 src/librt/primitives/hyp/hyp.c svneol=native#text/plain
 src/librt/primitives/hyp/hyp_brep.cpp svneol=native#text/plain
 src/librt/primitives/hyp/hyp_mirror.c svneol=native#text/plain
+src/librt/primitives/metaball/mc_table.h svneol=native#text/plain
 src/librt/primitives/metaball/metaball.c svneol=native#text/plain
 src/librt/primitives/metaball/metaball.h svneol=native#text/plain
 src/librt/primitives/metaball/metaball_tri.c svneol=native#text/plain
