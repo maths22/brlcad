@@ -7881,6 +7881,7 @@ src/other/libz/zlib.3 svneol=native#text/plain
 src/other/libz/zlib.h svneol=native#text/plain
 src/other/libz/zutil.c svneol=native#text/plain
 src/other/libz/zutil.h svneol=native#text/plain
+src/other/openNURBS/BRL-CAD_changes.txt svneol=native#text/plain
 src/other/openNURBS/CMakeLists.txt svneol=native#text/plain
 src/other/openNURBS/Makefile.am svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.cpp svneol=native#text/plain
