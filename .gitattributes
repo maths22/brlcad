@@ -2232,6 +2232,7 @@ misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/Makefile.am svneol=native#text/plain
 misc/win32-msvc8/Makefile.am svneol=native#text/plain
+misc/win32-msvc8/adrt/adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
