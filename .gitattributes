@@ -7886,23 +7886,18 @@ src/other/openNURBS/Makefile.am svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.cpp svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_brep/example_brep.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_brep/example_brep_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_dump/example_dump.cpp svneol=native#text/plain
 src/other/openNURBS/example_dump/example_dump.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_dump/example_dump.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_dump/example_dump_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_gl/example_gl.cpp svneol=native#text/plain
 src/other/openNURBS/example_gl/example_gl.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_gl/example_gl.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_gl/example_gl_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_read/example_read.cpp svneol=native#text/plain
 src/other/openNURBS/example_read/example_read.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_read/example_read.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_read/example_read_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_roundtrip/example_roundtrip.cpp svneol=native#text/plain
 src/other/openNURBS/example_roundtrip/example_roundtrip.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_roundtrip/example_roundtrip.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_roundtrip/example_roundtrip_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_userdata/example_ud.cpp svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_ud.h svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_userdata.cpp svneol=native#text/plain
@@ -7913,10 +7908,8 @@ src/other/openNURBS/example_write/example_texture.bmp -text svneol=unset#image/b
 src/other/openNURBS/example_write/example_write.cpp svneol=native#text/plain
 src/other/openNURBS/example_write/example_write.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_write/example_write.xcodeproj/project.pbxproj svneol=native#text/plain
-src/other/openNURBS/example_write/example_write_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/faq.txt svneol=native#text/plain
 src/other/openNURBS/license.txt svneol=native#text/plain
-src/other/openNURBS/modified_to_orig.diff svneol=native#text/plain
 src/other/openNURBS/opennurbs.h svneol=native#text/plain
 src/other/openNURBS/opennurbs.rc svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/opennurbs.sln eol=crlf
@@ -7941,7 +7934,13 @@ src/other/openNURBS/opennurbs_archive.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_array.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_array.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_array_defs.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_base32.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_base32.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_base64.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_base64.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_basic.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_beam.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_beam.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_bezier.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_bezier.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_beziervolume.cpp svneol=native#text/plain
@@ -7958,6 +7957,7 @@ src/other/openNURBS/opennurbs_brep_extrude.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_io.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_isvalid.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_kinky.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_brep_region.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_tools.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_v2valid.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_circle.cpp svneol=native#text/plain
@@ -8022,6 +8022,8 @@ src/other/openNURBS/opennurbs_linecurve.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_linestyle.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_linetype.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_linetype.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_lookup.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_lookup.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_mapchan.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_massprop.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_massprop.h svneol=native#text/plain
@@ -8037,6 +8039,7 @@ src/other/openNURBS/opennurbs_memory_new.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_memory_util.c svneol=native#text/plain
 src/other/openNURBS/opennurbs_mesh.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_mesh.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_mesh_ngon.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_mesh_tools.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_morph.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_nurbscurve.cpp svneol=native#text/plain
@@ -8070,18 +8073,27 @@ src/other/openNURBS/opennurbs_pointgrid.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_pointgrid.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_polycurve.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_polycurve.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_polyedgecurve.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_polyedgecurve.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_polyline.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_polyline.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_polylinecurve.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_polylinecurve.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_precompiledheader.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_quaternion.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_quaternion.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_rand.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_rand.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_rendering.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_revsurface.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_revsurface.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_rtree.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_rtree.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_sort.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_sphere.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_sphere.h svneol=native#text/plain
-src/other/openNURBS/opennurbs_static_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/opennurbs_staticlib.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/opennurbs_staticlib_linking_pragmas.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_string.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_string.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_sum.cpp svneol=native#text/plain
@@ -8102,8 +8114,6 @@ src/other/openNURBS/opennurbs_userdata.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_userdata.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_uuid.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_uuid.h svneol=native#text/plain
-src/other/openNURBS/opennurbs_vc60.dsp svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/opennurbs_vc60.dsw svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/opennurbs_version.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_viewport.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_viewport.h svneol=native#text/plain
