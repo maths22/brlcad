@@ -2321,7 +2321,6 @@ misc/win32-msvc8/kurt/kurt.vcproj svneol=native#text/plain
 misc/win32-msvc8/libItcl/libItcl.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libItk/libItk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libbu/adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libdm/libdm.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libfb/libfb.vcproj svneol=CRLF#text/plain eol=crlf
