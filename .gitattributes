@@ -7914,6 +7914,7 @@ src/other/openNURBS/example_write/example_write.vcproj svneol=CRLF#text/plain eo
 src/other/openNURBS/example_write/example_write.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_write/example_write_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/faq.txt svneol=native#text/plain
+src/other/openNURBS/license.txt svneol=native#text/plain
 src/other/openNURBS/modified_to_orig.diff svneol=native#text/plain
 src/other/openNURBS/opennurbs.h svneol=native#text/plain
 src/other/openNURBS/opennurbs.rc svneol=CRLF#text/plain eol=crlf
