@@ -2150,6 +2150,7 @@ m4/stage.m4 svneol=native#text/plain
 misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
+misc/GQA_SAMPLE_DENSITIES svneol=native#text/plain
 misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
 misc/NIST_DENSITIES svneol=native#text/plain
