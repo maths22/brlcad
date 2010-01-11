@@ -2459,6 +2459,7 @@ regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
 regress/flawfinder.sh svneol=native#text/x-sh
 regress/gqa.sh svneol=native#text/x-sh
 regress/iges.sh svneol=native#text/x-sh
+regress/library.sh svneol=native#text/x-sh
 regress/lights.sh svneol=native#text/x-sh
 regress/lights_ref.asc svneol=native#text/plain
 regress/main.sh svneol=native#text/x-sh
