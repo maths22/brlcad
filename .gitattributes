@@ -4338,6 +4338,7 @@ src/librt/primitives/eto/eto_mirror.c svneol=native#text/plain
 src/librt/primitives/extrude/extrude.c svneol=native#text/plain
 src/librt/primitives/extrude/extrude_brep.cpp svneol=native#text/plain
 src/librt/primitives/fixpt.h svneol=native#text/plain
+src/librt/primitives/generic.c svneol=native#text/plain
 src/librt/primitives/grip/grip.c svneol=native#text/plain
 src/librt/primitives/grip/grip_mirror.c svneol=native#text/plain
 src/librt/primitives/half/half.c svneol=native#text/plain
