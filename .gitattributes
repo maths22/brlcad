@@ -2318,17 +2318,6 @@ misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
-misc/debian/Makefile.am svneol=native#text/plain
-misc/debian/README svneol=native#text/plain
-misc/debian/README.Debian svneol=native#text/plain
-misc/debian/changelog.in svneol=native#text/plain
-misc/debian/compat -text
-misc/debian/control -text
-misc/debian/copyright -text
-misc/debian/dirs -text
-misc/debian/docs -text
-misc/debian/files -text
-misc/debian/rules -text
 misc/doxygen_structure -text
 misc/enigma/AUTHORS svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain

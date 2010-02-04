@@ -162,9 +162,6 @@ misc/config.guess
 misc/config.guess.backup
 misc/config.sub
 misc/config.sub.backup
-misc/debian/Makefile
-misc/debian/Makefile.in
-misc/debian/changelog
 misc/depcomp
 misc/doxygen_output
 misc/enigma/.deps
