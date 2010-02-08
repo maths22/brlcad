@@ -207,8 +207,7 @@ misc/pkgconfig/Makefile.in
 misc/py-compile
 misc/win32-msvc/Dll/Makefile
 misc/win32-msvc/Dll/Makefile.in
-misc/win32-msvc/Dll/brlcad.plg
-misc/win32-msvc/Dll/brlcadrc_defines.h
+misc/win32-msvc/Dll/brlcadversion.h
 misc/win32-msvc/Makefile
 misc/win32-msvc/Makefile.in
 misc/win32-msvc/brlcad.ncb
