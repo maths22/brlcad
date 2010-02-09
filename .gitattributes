@@ -11800,6 +11800,7 @@ src/tclscripts/pl-dm/menu.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/tclIndex -text
 src/tclscripts/rtwizard/Makefile.am svneol=native#text/plain
+src/tclscripts/rtwizard/RaytraceWizard.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/examples/Makefile.am svneol=native#text/plain
 src/tclscripts/rtwizard/examples/PictureTypeA/Makefile.am svneol=native#text/plain
 src/tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
@@ -11861,7 +11862,6 @@ src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
 src/tclscripts/rtwizard/lib/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/tclIndex -text
 src/tclscripts/rtwizard/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/tclIndex -text
 src/tclscripts/sdialogs/Makefile.am svneol=native#text/plain
 src/tclscripts/sdialogs/pkgIndex.tcl svneol=native#text/plain
