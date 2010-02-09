@@ -11862,6 +11862,8 @@ src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
 src/tclscripts/rtwizard/lib/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/tclIndex -text
 src/tclscripts/rtwizard/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/rtwizard/rtwizard.bat svneol=CRLF#text/plain eol=crlf
+src/tclscripts/rtwizard/rtwizard.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/tclIndex -text
 src/tclscripts/sdialogs/Makefile.am svneol=native#text/plain
 src/tclscripts/sdialogs/pkgIndex.tcl svneol=native#text/plain
@@ -12110,8 +12112,6 @@ src/util/remapid.c svneol=native#text/plain
 src/util/rle-pix.1 svneol=native#text/plain
 src/util/rle-pix.c svneol=native#text/plain
 src/util/roots_example.c svneol=native#text/plain
-src/util/rtwizard.bat -text
-src/util/rtwizard.tcl svneol=native#text/plain
 src/util/sgi-pix.c svneol=native#text/plain
 src/util/sun-pix.1 svneol=native#text/plain
 src/util/sun-pix.c svneol=native#text/plain
