@@ -1862,6 +1862,7 @@ doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtcheck.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtedge.xml svneol=native#text/xml
+doc/docbook/system/man1/en/rtwizard.xml svneol=native#text/xml
 doc/docbook/system/man1/en/savekey.xml svneol=native#text/xml
 doc/docbook/system/man1/en/saveview.xml svneol=native#text/xml
 doc/docbook/system/man1/en/sca.xml svneol=native#text/xml
