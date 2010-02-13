@@ -80,6 +80,9 @@ doc/docbook/fop.xconf
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
 doc/docbook/lessons/en/*.html
+doc/docbook/lessons/en/*.pdf
+doc/docbook/lessons/es/*.html
+doc/docbook/lessons/es/*.pdf
 doc/docbook/lessons/mged
 doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile
@@ -90,6 +93,13 @@ doc/docbook/system/man1/Makefile
 doc/docbook/system/man1/Makefile.in
 doc/docbook/system/man1/en/*.1
 doc/docbook/system/man1/en/*.html
+doc/docbook/system/man1/en/*.pdf
+doc/docbook/system/man3/en/*.3
+doc/docbook/system/man3/en/*.html
+doc/docbook/system/man3/en/*.pdf
+doc/docbook/system/mann/en/*.html
+doc/docbook/system/mann/en/*.nged
+doc/docbook/system/mann/en/*.pdf
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
