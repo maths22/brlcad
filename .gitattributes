@@ -3695,6 +3695,7 @@ src/lgt/tree.h svneol=native#text/plain
 src/lgt/trie.c svneol=native#text/plain
 src/libanalyze/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/Makefile.am svneol=native#text/plain
+src/libanalyze/density.c svneol=native#text/plain
 src/libanalyze/overlaps.c svneol=native#text/plain
 src/libbn/CMakeLists.txt svneol=native#text/plain
 src/libbn/Makefile.am svneol=native#text/plain
