@@ -4498,7 +4498,6 @@ src/mged/columns.c svneol=native#text/plain
 src/mged/comb_bool.h svneol=native#text/plain
 src/mged/comb_bool_parse.y svneol=native#text/plain
 src/mged/comb_bool_scan.l svneol=native#text/plain
-src/mged/concat.c svneol=native#text/plain
 src/mged/dir.c svneol=native#text/plain
 src/mged/dm-X.c svneol=native#text/plain
 src/mged/dm-generic.c svneol=native#text/plain
