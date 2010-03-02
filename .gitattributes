@@ -4222,6 +4222,7 @@ src/libpkg/tpkg.c svneol=native#text/plain
 src/libpkg/vers.c svneol=native#text/plain
 src/librt/CMakeLists.txt svneol=native#text/plain
 src/librt/Makefile.am svneol=native#text/plain
+src/librt/attributes.c svneol=native#text/plain
 src/librt/bezier_2d_isect.c svneol=native#text/plain
 src/librt/binunif/binunif.c svneol=native#text/plain
 src/librt/binunif/db5_bin.c svneol=native#text/plain
