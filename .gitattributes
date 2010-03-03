@@ -4382,6 +4382,7 @@ src/librt/primitives/obj_plot.c svneol=native#text/plain
 src/librt/primitives/obj_prep.c svneol=native#text/plain
 src/librt/primitives/obj_print.c svneol=native#text/plain
 src/librt/primitives/obj_shot.c svneol=native#text/plain
+src/librt/primitives/obj_tess.c svneol=native#text/plain
 src/librt/primitives/obj_uv.c svneol=native#text/plain
 src/librt/primitives/obj_vshot.c svneol=native#text/plain
 src/librt/primitives/part/part.c svneol=native#text/plain
