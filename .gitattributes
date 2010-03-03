@@ -2277,6 +2277,7 @@ include/plastic.h svneol=native#text/plain
 include/plot3.h svneol=native#text/plain
 include/raytrace.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
+include/rtfunc.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
 include/rtprivate.h svneol=native#text/plain
 include/rtserver.h svneol=native#text/plain
