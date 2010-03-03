@@ -4379,6 +4379,7 @@ src/librt/primitives/obj_norm.c svneol=native#text/plain
 src/librt/primitives/obj_prep.c svneol=native#text/plain
 src/librt/primitives/obj_print.c svneol=native#text/plain
 src/librt/primitives/obj_shot.c svneol=native#text/plain
+src/librt/primitives/obj_uv.c svneol=native#text/plain
 src/librt/primitives/part/part.c svneol=native#text/plain
 src/librt/primitives/part/part_mirror.c svneol=native#text/plain
 src/librt/primitives/pipe/pipe.c svneol=native#text/plain
