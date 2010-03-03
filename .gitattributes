@@ -4378,6 +4378,7 @@ src/librt/primitives/nmg/nmg_visit.c svneol=native#text/plain
 src/librt/primitives/obj_curve.c svneol=native#text/plain
 src/librt/primitives/obj_export.c svneol=native#text/plain
 src/librt/primitives/obj_free.c svneol=native#text/plain
+src/librt/primitives/obj_ifree.c svneol=native#text/plain
 src/librt/primitives/obj_import.c svneol=native#text/plain
 src/librt/primitives/obj_norm.c svneol=native#text/plain
 src/librt/primitives/obj_plot.c svneol=native#text/plain
