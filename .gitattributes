@@ -4375,6 +4375,7 @@ src/librt/primitives/nmg/nmg_rt_segs.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_tri.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_tri_mc.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_visit.c svneol=native#text/plain
+src/librt/primitives/obj_curve.c svneol=native#text/plain
 src/librt/primitives/obj_norm.c svneol=native#text/plain
 src/librt/primitives/obj_prep.c svneol=native#text/plain
 src/librt/primitives/obj_print.c svneol=native#text/plain
