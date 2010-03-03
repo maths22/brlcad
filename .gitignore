@@ -649,9 +649,9 @@ src/librt/.libs
 src/librt/Makefile
 src/librt/Makefile.in
 src/librt/brep_test
-src/librt/comb
 src/librt/librt.plg
 src/librt/nurb_example
+src/librt/prcomb
 src/librtserver/.deps
 src/librtserver/.libs
 src/librtserver/Makefile
