@@ -3491,7 +3491,6 @@ src/external/ProEngineer/protk.dat.in svneol=native#text/plain
 src/external/ProEngineer/usermsg.txt svneol=native#text/plain
 src/external/ProEngineer/win32-msvc8/proe-brl-3.0/proe-brl-3.0.vcproj svneol=native#text/plain
 src/external/ProEngineer/win32-msvc8/proe-brl-4.0/proe-brl-4.0.vcproj svneol=native#text/plain
-src/external/ProEngineer/win32-msvc8/proe-brl-4.0/proe-brl.vcproj svneol=native#text/plain
 src/external/ProEngineer/win32-msvc8/proe-brl-5.0/proe-brl-5.0.vcproj svneol=native#text/plain
 src/external/ProEngineer/win32-msvc8/proe/proe.sln svneol=native#text/plain
 src/external/README svneol=native#text/plain
