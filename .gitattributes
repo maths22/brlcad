@@ -11779,6 +11779,7 @@ src/tclscripts/mged/menu.tcl svneol=native#text/plain
 src/tclscripts/mged/mged.tcl svneol=native#text/plain
 src/tclscripts/mged/mgedrc.tcl svneol=native#text/plain
 src/tclscripts/mged/mike-dedication.txt svneol=native#text/plain
+src/tclscripts/mged/mike-tux.png -text svneol=unset#image/png
 src/tclscripts/mged/mike-tux.ppm -text svneol=unset#image/x-portable-pixmap
 src/tclscripts/mged/mike.tcl svneol=native#text/plain
 src/tclscripts/mged/mouse.tcl svneol=native#text/plain
