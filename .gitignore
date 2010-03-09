@@ -610,6 +610,7 @@ src/libfft/rfft256.c
 src/libfft/rfft32.c
 src/libfft/rfft512.c
 src/libfft/rfft64.c
+src/libgcv/*.loT
 src/libgcv/.deps
 src/libgcv/.libs
 src/libgcv/Makefile
