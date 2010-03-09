@@ -1062,8 +1062,10 @@ src/other/tk/unix/config.status
 src/other/tk/unix/configure
 src/other/tk/unix/libtclstub8.5.*
 src/other/tk/unix/libtk*
+src/other/tk/unix/tk8.5.rsrc
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
+src/other/tk/unix/wish8.5.rsrc
 src/other/tkhtml3/Makefile
 src/other/tkhtml3/aclocal.m4
 src/other/tkhtml3/autom4te.cache
