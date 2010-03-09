@@ -1065,6 +1065,7 @@ src/other/tk/unix/libtk*
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
 src/other/tkhtml3/Makefile
+src/other/tkhtml3/aclocal.m4
 src/other/tkhtml3/autom4te.cache
 src/other/tkhtml3/config.log
 src/other/tkhtml3/config.status
@@ -1075,7 +1076,14 @@ src/other/tkhtml3/htmldefaultstyle.c
 src/other/tkhtml3/htmltokens.c
 src/other/tkhtml3/htmltokens.h
 src/other/tkhtml3/libTkhtml*
+src/other/tkhtml3/libtool
 src/other/tkhtml3/pkgIndex.tcl
+src/other/tkhtml3/tclconfig/config.guess
+src/other/tkhtml3/tclconfig/config.sub
+src/other/tkhtml3/tclconfig/install-sh
+src/other/tkhtml3/tclconfig/ltmain.sh
+src/other/tkhtml3/tclconfig/missing
+src/other/tkhtml3/tclconfig/mkinstalldirs
 src/other/tkhtml3/tkhtml.n
 src/other/tkimg/.deps
 src/other/tkimg/.libs
