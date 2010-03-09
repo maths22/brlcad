@@ -2266,7 +2266,6 @@ include/magic.h svneol=native#text/plain
 include/mater.h svneol=native#text/plain
 include/nmg.h svneol=native#text/plain
 include/nurb.h svneol=native#text/plain
-include/on_nurb.h svneol=native#text/plain
 include/opennurbs_ext.h svneol=native#text/plain
 include/optical.h svneol=native#text/plain
 include/orle.h svneol=native#text/plain
