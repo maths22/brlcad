@@ -2298,7 +2298,6 @@ include/wdb.h svneol=native#text/plain
 m4/Makefile.am svneol=native#text/plain
 m4/args.m4 svneol=native#text/plain
 m4/ax_boost_base.m4 svneol=native#text/plain
-m4/ax_compare_version.m4 svneol=native#text/plain
 m4/cache.m4 svneol=native#text/plain
 m4/compiler.m4 svneol=native#text/plain
 m4/epsilon.m4 svneol=native#text/plain
