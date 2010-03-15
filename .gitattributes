@@ -11571,7 +11571,10 @@ src/tclscripts/archer/images/Themes/Crystal_Large/folder_open_small.png -text sv
 src/tclscripts/archer/images/Themes/Crystal_Large/folder_open_small_disabled.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_clear.png -text
+src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_interlay.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_off.png -text
+src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_overlay.png -text
+src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_underlay.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/global_undo.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/measure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/object_undo.png -text svneol=unset#image/png
