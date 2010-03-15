@@ -11493,6 +11493,8 @@ src/tclscripts/archer/images/Themes/Crystal/folder_closed_small_disabled.png -te
 src/tclscripts/archer/images/Themes/Crystal/folder_open.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/folder_open_small.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/folder_open_small_disabled.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal/framebuffer.png -text
+src/tclscripts/archer/images/Themes/Crystal/framebuffer_clear.png -text
 src/tclscripts/archer/images/Themes/Crystal/global_undo.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/measure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/object_undo.png -text svneol=unset#image/png
@@ -11525,6 +11527,8 @@ src/tclscripts/archer/images/Themes/Crystal/primitive_sph.png -text svneol=unset
 src/tclscripts/archer/images/Themes/Crystal/primitive_superell.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/primitive_tgc.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/primitive_tor.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal/raytrace.png -text
+src/tclscripts/archer/images/Themes/Crystal/raytrace_abort.png -text
 src/tclscripts/archer/images/Themes/Crystal/refresh.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/revert.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal/run.png -text svneol=unset#image/png
@@ -11638,6 +11642,8 @@ src/tclscripts/archer/images/Themes/Windows/folder_closed_small.png -text svneol
 src/tclscripts/archer/images/Themes/Windows/folder_closed_small_disabled.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/folder_open_small.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/folder_open_small_disabled.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Windows/framebuffer.png -text
+src/tclscripts/archer/images/Themes/Windows/framebuffer_clear.png -text
 src/tclscripts/archer/images/Themes/Windows/global_undo.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/measure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/object_undo.png -text svneol=unset#image/png
@@ -11670,6 +11676,8 @@ src/tclscripts/archer/images/Themes/Windows/primitive_sph.png -text svneol=unset
 src/tclscripts/archer/images/Themes/Windows/primitive_superell.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/primitive_tgc.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/primitive_tor.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Windows/raytrace.png -text
+src/tclscripts/archer/images/Themes/Windows/raytrace_abort.png -text
 src/tclscripts/archer/images/Themes/Windows/refresh.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/revert.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Windows/run.png -text svneol=unset#image/png
