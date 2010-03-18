@@ -3914,6 +3914,7 @@ src/libgcv/NOTES svneol=native#text/plain
 src/libgcv/obj/Makefile.am svneol=native#text/plain
 src/libgcv/obj/obj_grammar.y svneol=native#text/plain
 src/libgcv/obj/obj_grammar.yy svneol=native#text/plain
+src/libgcv/obj/obj_parser.c svneol=native#text/plain
 src/libgcv/obj/obj_parser.cc svneol=native#text/plain
 src/libgcv/obj/obj_parser.h svneol=native#text/plain
 src/libgcv/obj/obj_parser_state.h svneol=native#text/plain
