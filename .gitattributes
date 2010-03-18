@@ -11549,9 +11549,8 @@ src/tclscripts/archer/images/Themes/Crystal_Large/checkpoint.png -text svneol=un
 src/tclscripts/archer/images/Themes/Crystal_Large/closeall.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/combination.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/command.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/compErase.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/compExclude.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/compSelect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal_Large/component_erase.png -text
+src/tclscripts/archer/images/Themes/Crystal_Large/component_pick.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/configure.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/edit_copy.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/edit_cut.png -text svneol=unset#image/png
@@ -11612,11 +11611,11 @@ src/tclscripts/archer/images/Themes/Crystal_Large/refresh.png -text svneol=unset
 src/tclscripts/archer/images/Themes/Crystal_Large/revert.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/run.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/save.png -text svneol=unset#image/png
+src/tclscripts/archer/images/Themes/Crystal_Large/view_center.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/view_left_right_small.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_obj_select.png -text
 src/tclscripts/archer/images/Themes/Crystal_Large/view_rotate.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_select.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_top_bottom_small.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/view_translate.png -text svneol=unset#image/png
 src/tclscripts/archer/images/Themes/Crystal_Large/wizard.png -text svneol=unset#image/png
