@@ -3917,6 +3917,7 @@ src/libgcv/obj/obj_grammar.yy svneol=native#text/plain
 src/libgcv/obj/obj_parser.c svneol=native#text/plain
 src/libgcv/obj/obj_parser.cc svneol=native#text/plain
 src/libgcv/obj/obj_parser.h svneol=native#text/plain
+src/libgcv/obj/obj_parser.h.orig svneol=native#text/plain
 src/libgcv/obj/obj_parser_state.h svneol=native#text/plain
 src/libgcv/obj/obj_rules.l svneol=native#text/plain
 src/libgcv/obj/obj_rules.ll svneol=native#text/plain
