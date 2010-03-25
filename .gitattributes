@@ -3123,6 +3123,7 @@ src/conv/nmg/nmg-rib.1 svneol=native#text/plain
 src/conv/nmg/nmg-rib.c svneol=native#text/plain
 src/conv/nmg/nmg-sgp.c svneol=native#text/plain
 src/conv/obj-g.c svneol=native#text/plain
+src/conv/obj-g_new.c svneol=native#text/plain
 src/conv/off/g-off.c svneol=native#text/plain
 src/conv/off/off-g.c svneol=native#text/plain
 src/conv/patch/patch-g.1 svneol=native#text/plain
