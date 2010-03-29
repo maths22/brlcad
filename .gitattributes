@@ -1889,6 +1889,7 @@ doc/docbook/system/mann/en/apropos.xml svneol=native#text/xml
 doc/docbook/system/mann/en/attr.xml svneol=native#text/xml
 doc/docbook/system/mann/en/cat.xml svneol=native#text/xml
 doc/docbook/system/mann/en/cp.xml svneol=native#text/xml
+doc/docbook/system/mann/en/put_comb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/summary.xml svneol=native#text/xml
 doc/docbook/system/mann/en/sv.xml svneol=native#text/xml
 doc/docbook/system/mann/en/sync.xml svneol=native#text/xml
