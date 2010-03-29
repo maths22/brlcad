@@ -1903,6 +1903,7 @@ doc/docbook/system/mann/en/translate.xml svneol=native#text/xml
 doc/docbook/system/mann/en/tree.xml svneol=native#text/xml
 doc/docbook/system/mann/en/units.xml svneol=native#text/xml
 doc/docbook/system/mann/en/vars.xml svneol=native#text/xml
+doc/docbook/system/mann/en/vdraw.xml svneol=native#text/xml
 doc/docbook/system/mann/en/view.xml svneol=native#text/xml
 doc/docbook/system/mann/en/viewsize.xml svneol=native#text/xml
 doc/docbook/system/mann/en/vnirt.xml svneol=native#text/xml
