@@ -3594,6 +3594,7 @@ src/fb/fbscanplot.1 svneol=native#text/plain
 src/fb/fbscanplot.c svneol=native#text/plain
 src/fb/fbstretch.1 svneol=native#text/plain
 src/fb/fbstretch.c svneol=native#text/plain
+src/fb/fbthreadtest.c svneol=native#text/plain
 src/fb/fbzoom.1 svneol=native#text/plain
 src/fb/fbzoom.c svneol=native#text/plain
 src/fb/gif-fb.1 svneol=native#text/plain
