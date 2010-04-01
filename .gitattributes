@@ -11858,6 +11858,7 @@ src/tclscripts/mged/qray.tcl svneol=native#text/plain
 src/tclscripts/mged/ray.tcl svneol=native#text/plain
 src/tclscripts/mged/raypick.tcl svneol=native#text/plain
 src/tclscripts/mged/reid.tcl svneol=native#text/plain
+src/tclscripts/mged/remap_mater.tcl svneol=native#text/plain
 src/tclscripts/mged/remat.tcl svneol=native#text/plain
 src/tclscripts/mged/rt.tcl svneol=native#text/plain
 src/tclscripts/mged/rt_script.tcl svneol=native#text/plain
