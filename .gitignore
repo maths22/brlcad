@@ -80,6 +80,9 @@ doc/docbook/fop.xconf
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
 doc/docbook/lessons/en/*.html
+doc/docbook/lessons/en/*.pdf
+doc/docbook/lessons/es/*.html
+doc/docbook/lessons/es/*.pdf
 doc/docbook/lessons/mged
 doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile
@@ -90,6 +93,13 @@ doc/docbook/system/man1/Makefile
 doc/docbook/system/man1/Makefile.in
 doc/docbook/system/man1/en/*.1
 doc/docbook/system/man1/en/*.html
+doc/docbook/system/man1/en/*.pdf
+doc/docbook/system/man3/en/*.3
+doc/docbook/system/man3/en/*.html
+doc/docbook/system/man3/en/*.pdf
+doc/docbook/system/mann/en/*.html
+doc/docbook/system/mann/en/*.nged
+doc/docbook/system/mann/en/*.pdf
 doc/html/Makefile
 doc/html/Makefile.in
 doc/html/ReleaseNotes/Makefile
@@ -162,9 +172,6 @@ misc/config.guess
 misc/config.guess.backup
 misc/config.sub
 misc/config.sub.backup
-misc/debian/Makefile
-misc/debian/Makefile.in
-misc/debian/changelog
 misc/depcomp
 misc/doxygen_output
 misc/enigma/.deps
@@ -210,8 +217,7 @@ misc/pkgconfig/Makefile.in
 misc/py-compile
 misc/win32-msvc/Dll/Makefile
 misc/win32-msvc/Dll/Makefile.in
-misc/win32-msvc/Dll/brlcad.plg
-misc/win32-msvc/Dll/brlcadrc_defines.h
+misc/win32-msvc/Dll/brlcadversion.h
 misc/win32-msvc/Makefile
 misc/win32-msvc/Makefile.in
 misc/win32-msvc/brlcad.ncb
@@ -604,6 +610,7 @@ src/libfft/rfft256.c
 src/libfft/rfft32.c
 src/libfft/rfft512.c
 src/libfft/rfft64.c
+src/libgcv/*.loT
 src/libgcv/.deps
 src/libgcv/.libs
 src/libgcv/Makefile
@@ -643,9 +650,9 @@ src/librt/.libs
 src/librt/Makefile
 src/librt/Makefile.in
 src/librt/brep_test
-src/librt/comb
 src/librt/librt.plg
 src/librt/nurb_example
+src/librt/prcomb
 src/librtserver/.deps
 src/librtserver/.libs
 src/librtserver/Makefile
@@ -1045,8 +1052,10 @@ src/other/tk/unix/config.status
 src/other/tk/unix/configure
 src/other/tk/unix/libtclstub8.5.*
 src/other/tk/unix/libtk*
+src/other/tk/unix/tk8.5.rsrc
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
+src/other/tk/unix/wish8.5.rsrc
 src/other/tkhtml3/Makefile
 src/other/tkhtml3/autom4te.cache
 src/other/tkhtml3/config.log
