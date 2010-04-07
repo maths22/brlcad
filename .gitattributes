@@ -7617,16 +7617,13 @@ src/other/jove/teach-jove.in svneol=native#text/plain
 src/other/jove/termcap.h svneol=native#text/plain
 src/other/libpng/ANNOUNCE -text
 src/other/libpng/CHANGES -text
-src/other/libpng/INSTALL svneol=native#text/plain
+src/other/libpng/CMakeLists.txt svneol=native#text/plain
 src/other/libpng/KNOWNBUG -text
 src/other/libpng/LICENSE -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
 src/other/libpng/Y2KINFO -text
-src/other/libpng/autogen.sh svneol=native#text/x-sh
-src/other/libpng/config.h.in svneol=native#text/plain
-src/other/libpng/configure.ac svneol=native#text/plain
 src/other/libpng/contrib/gregbook/COPYING svneol=native#text/plain
 src/other/libpng/contrib/gregbook/LICENSE -text
 src/other/libpng/contrib/gregbook/Makefile.mingw32 svneol=native#text/plain
@@ -7644,19 +7641,24 @@ src/other/libpng/contrib/gregbook/rpng-win.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/rpng-x.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/rpng2-win.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/rpng2-x.c svneol=native#text/plain
-src/other/libpng/contrib/gregbook/toucan.png -text svneol=unset#image/png
 src/other/libpng/contrib/gregbook/wpng.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/writepng.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/writepng.h svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/README svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/gather.sh svneol=native#text/x-sh
+src/other/libpng/contrib/pngminim/decoder/makefile svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/makefile.std svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/pngusr.h svneol=native#text/plain
 src/other/libpng/contrib/pngminim/encoder/README svneol=native#text/plain
 src/other/libpng/contrib/pngminim/encoder/dummy_inflate.c svneol=native#text/plain
 src/other/libpng/contrib/pngminim/encoder/gather.sh svneol=native#text/x-sh
+src/other/libpng/contrib/pngminim/encoder/makefile svneol=native#text/plain
 src/other/libpng/contrib/pngminim/encoder/makefile.std svneol=native#text/plain
 src/other/libpng/contrib/pngminim/encoder/pngusr.h svneol=native#text/plain
+src/other/libpng/contrib/pngminim/preader/README svneol=native#text/plain
+src/other/libpng/contrib/pngminim/preader/gather.sh svneol=native#text/x-sh
+src/other/libpng/contrib/pngminim/preader/makefile svneol=native#text/plain
+src/other/libpng/contrib/pngminim/preader/pngusr.h svneol=native#text/plain
 src/other/libpng/contrib/pngminus/README svneol=native#text/plain
 src/other/libpng/contrib/pngminus/makefile.std svneol=native#text/plain
 src/other/libpng/contrib/pngminus/makefile.tc3 svneol=native#text/plain
@@ -7669,50 +7671,28 @@ src/other/libpng/contrib/pngminus/pngminus.sh svneol=native#text/x-sh
 src/other/libpng/contrib/pngminus/pnm2png.bat svneol=CRLF#text/plain eol=crlf
 src/other/libpng/contrib/pngminus/pnm2png.c svneol=native#text/plain
 src/other/libpng/contrib/pngminus/pnm2png.sh svneol=native#text/x-sh
-src/other/libpng/contrib/pngsuite/README svneol=native#text/plain
-src/other/libpng/contrib/pngsuite/basn0g01.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn0g02.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn0g04.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn0g08.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn0g16.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn2c08.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn2c16.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn3p01.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn3p02.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn3p04.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn3p08.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn4a08.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn4a16.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn6a08.png -text svneol=unset#image/png
-src/other/libpng/contrib/pngsuite/basn6a16.png -text svneol=unset#image/png
 src/other/libpng/contrib/visupng/PngFile.c svneol=native#text/plain
 src/other/libpng/contrib/visupng/PngFile.h svneol=native#text/plain
 src/other/libpng/contrib/visupng/README.txt svneol=native#text/plain
 src/other/libpng/contrib/visupng/VisualPng.c svneol=native#text/plain
 src/other/libpng/contrib/visupng/VisualPng.dsp svneol=CRLF#text/plain eol=crlf
-src/other/libpng/contrib/visupng/VisualPng.dsw svneol=CRLF#text/plain eol=crlf
-src/other/libpng/contrib/visupng/VisualPng.ico -text svneol=unset#image/x-icon
-src/other/libpng/contrib/visupng/VisualPng.png -text svneol=unset#image/png
-src/other/libpng/contrib/visupng/VisualPng.rc svneol=CRLF#text/plain eol=crlf
-src/other/libpng/contrib/visupng/cexcept.h svneol=native#text/plain
-src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
 src/other/libpng/libpng-1.2.35.txt svneol=native#text/plain
+src/other/libpng/libpng-1.4.1.txt svneol=native#text/plain
+src/other/libpng/libpng-config.in svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
+src/other/libpng/libpng.pc.in svneol=native#text/plain
 src/other/libpng/libpngpf.3 svneol=native#text/plain
-src/other/libpng/ltmain.sh svneol=native#text/x-sh
 src/other/libpng/png.5 svneol=native#text/plain
 src/other/libpng/png.c svneol=native#text/plain
 src/other/libpng/png.h svneol=native#text/plain
-src/other/libpng/pngbar.jpg -text svneol=unset#image/jpeg
-src/other/libpng/pngbar.png -text svneol=unset#image/png
 src/other/libpng/pngconf.h svneol=native#text/plain
 src/other/libpng/pngerror.c svneol=native#text/plain
 src/other/libpng/pnggccrd.c svneol=native#text/plain
 src/other/libpng/pngget.c svneol=native#text/plain
 src/other/libpng/pngmem.c svneol=native#text/plain
-src/other/libpng/pngnow.png -text svneol=unset#image/png
 src/other/libpng/pngpread.c svneol=native#text/plain
+src/other/libpng/pngpriv.h svneol=native#text/plain
 src/other/libpng/pngread.c svneol=native#text/plain
 src/other/libpng/pngrio.c svneol=native#text/plain
 src/other/libpng/pngrtran.c svneol=native#text/plain
@@ -7741,7 +7721,6 @@ src/other/libpng/projects/cbuilder5/zlib.readme.txt svneol=native#text/plain
 src/other/libpng/projects/netware.txt svneol=native#text/plain
 src/other/libpng/projects/visualc6/README.txt svneol=native#text/plain
 src/other/libpng/projects/visualc6/libpng.dsp svneol=CRLF#text/plain eol=crlf
-src/other/libpng/projects/visualc6/libpng.dsw svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/visualc6/pngtest.dsp svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/visualc71/PRJ0041.mak -text
 src/other/libpng/projects/visualc71/README.txt svneol=native#text/plain
@@ -7751,10 +7730,12 @@ src/other/libpng/projects/visualc71/libpng.vcproj svneol=CRLF#text/plain eol=crl
 src/other/libpng/projects/visualc71/pngtest.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/visualc71/zlib.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/wince.txt svneol=native#text/plain
+src/other/libpng/projects/xcode/Info.plist svneol=native#text/plain
+src/other/libpng/projects/xcode/README.txt svneol=native#text/plain
+src/other/libpng/projects/xcode/libpng.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/libpng/scripts/CMakeLists.txt svneol=native#text/plain
-src/other/libpng/scripts/SCOPTIONS.ppc -text
+src/other/libpng/scripts/README.txt svneol=native#text/plain
 src/other/libpng/scripts/descrip.mms -text
-src/other/libpng/scripts/libpng-config-body.in svneol=native#text/plain
 src/other/libpng/scripts/libpng-config-head.in svneol=native#text/plain
 src/other/libpng/scripts/libpng-config.in svneol=native#text/plain
 src/other/libpng/scripts/libpng.icc -text
@@ -7769,6 +7750,7 @@ src/other/libpng/scripts/makefile.atari svneol=native#text/plain
 src/other/libpng/scripts/makefile.bc32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.beos svneol=native#text/plain
 src/other/libpng/scripts/makefile.bor svneol=native#text/plain
+src/other/libpng/scripts/makefile.cegcc svneol=native#text/plain
 src/other/libpng/scripts/makefile.cygwin svneol=native#text/plain
 src/other/libpng/scripts/makefile.darwin svneol=native#text/plain
 src/other/libpng/scripts/makefile.dec svneol=native#text/plain
@@ -7805,11 +7787,13 @@ src/other/libpng/scripts/makefile.vcawin32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.vcwin32 svneol=native#text/plain
 src/other/libpng/scripts/makefile.watcom svneol=native#text/plain
 src/other/libpng/scripts/makevms.com svneol=native#text/plain
+src/other/libpng/scripts/png32ce.def svneol=native#text/plain
 src/other/libpng/scripts/pngos2.def svneol=native#text/plain
 src/other/libpng/scripts/pngw32.def svneol=native#text/plain
 src/other/libpng/scripts/pngw32.rc svneol=CRLF#text/plain eol=crlf
+src/other/libpng/scripts/pngwin.def svneol=native#text/plain
+src/other/libpng/scripts/pngwin.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/scripts/smakefile.ppc -text
-src/other/libpng/test-pngtest.sh svneol=native#text/x-sh
 src/other/libregex/CMakeLists.txt svneol=native#text/plain
 src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
