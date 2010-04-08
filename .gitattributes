@@ -7677,7 +7677,6 @@ src/other/libpng/contrib/visupng/README.txt svneol=native#text/plain
 src/other/libpng/contrib/visupng/VisualPng.c svneol=native#text/plain
 src/other/libpng/contrib/visupng/VisualPng.dsp svneol=CRLF#text/plain eol=crlf
 src/other/libpng/example.c svneol=native#text/plain
-src/other/libpng/libpng-1.2.35.txt svneol=native#text/plain
 src/other/libpng/libpng-1.4.1.txt svneol=native#text/plain
 src/other/libpng/libpng-config.in svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
