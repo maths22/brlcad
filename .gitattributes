@@ -11895,6 +11895,7 @@ src/tclscripts/mged/garbage_collect.tcl svneol=native#text/plain
 src/tclscripts/mged/get_regions.tcl svneol=native#text/plain
 src/tclscripts/mged/grid.tcl svneol=native#text/plain
 src/tclscripts/mged/help.tcl svneol=native#text/plain
+src/tclscripts/mged/helpbrowse.tcl svneol=native#text/plain
 src/tclscripts/mged/helpdevel.tcl svneol=native#text/plain
 src/tclscripts/mged/icreate.tcl svneol=native#text/plain
 src/tclscripts/mged/illum.tcl svneol=native#text/plain
