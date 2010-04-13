@@ -8097,29 +8097,22 @@ src/other/openNURBS/CMakeLists.txt svneol=native#text/plain
 src/other/openNURBS/Makefile.am svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.cpp svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_brep/example_brep.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_dump/example_dump.cpp svneol=native#text/plain
 src/other/openNURBS/example_dump/example_dump.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_dump/example_dump.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_gl/example_gl.cpp svneol=native#text/plain
 src/other/openNURBS/example_gl/example_gl.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_gl/example_gl.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_read/example_read.cpp svneol=native#text/plain
 src/other/openNURBS/example_read/example_read.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_read/example_read.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_roundtrip/example_roundtrip.cpp svneol=native#text/plain
 src/other/openNURBS/example_roundtrip/example_roundtrip.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_roundtrip/example_roundtrip.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_ud.cpp svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_ud.h svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_userdata.cpp svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_userdata.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_userdata/example_userdata.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_userdata_vc60.dsp svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_write/example_texture.bmp -text svneol=unset#image/bmp
 src/other/openNURBS/example_write/example_write.cpp svneol=native#text/plain
 src/other/openNURBS/example_write/example_write.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_write/example_write.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/openNURBS/faq.txt svneol=native#text/plain
 src/other/openNURBS/license.txt svneol=native#text/plain
 src/other/openNURBS/opennurbs.h svneol=native#text/plain
