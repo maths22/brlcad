@@ -11728,6 +11728,10 @@ src/tclscripts/archer/images/hyp.png -text
 src/tclscripts/archer/images/hyp_intersect.png -text
 src/tclscripts/archer/images/hyp_subtract.png -text
 src/tclscripts/archer/images/hyp_union.png -text
+src/tclscripts/archer/images/invalid.png -text svneol=unset#image/png
+src/tclscripts/archer/images/invalid_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/invalid_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/invalid_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/measure.png -text
 src/tclscripts/archer/images/nmg.png -text
 src/tclscripts/archer/images/nmg_intersect.png -text
