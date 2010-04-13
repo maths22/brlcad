@@ -11739,6 +11739,10 @@ src/tclscripts/archer/images/open.png -text
 src/tclscripts/archer/images/openf.gif -text svneol=unset#image/gif
 src/tclscripts/archer/images/option_text.png -text
 src/tclscripts/archer/images/option_tree.png -text
+src/tclscripts/archer/images/other.png -text svneol=unset#image/png
+src/tclscripts/archer/images/other_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/other_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/other_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/pane_blank.png -text
 src/tclscripts/archer/images/pane_collapse.png -text
 src/tclscripts/archer/images/pane_expand.png -text
