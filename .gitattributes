@@ -11084,6 +11084,7 @@ src/other/tk/win/ttkWinMonitor.c svneol=native#text/plain
 src/other/tk/win/ttkWinTheme.c svneol=native#text/plain
 src/other/tk/win/ttkWinXPTheme.c svneol=native#text/plain
 src/other/tk/win/winMain.c svneol=native#text/plain
+src/other/tk/win/wish.exe.manifest svneol=native#text/plain
 src/other/tk/win/wish.exe.manifest.in svneol=native#text/plain
 src/other/tk/xlib/X11/X.h svneol=native#text/plain
 src/other/tk/xlib/X11/Xatom.h svneol=native#text/plain
