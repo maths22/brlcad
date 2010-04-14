@@ -4596,6 +4596,7 @@ src/mged/grid.c svneol=native#text/plain
 src/mged/hideline.c svneol=native#text/plain
 src/mged/history.c svneol=native#text/plain
 src/mged/htmlLibraryUi.h svneol=native#text/plain
+src/mged/info.c svneol=native#text/plain
 src/mged/joints.h svneol=native#text/plain
 src/mged/mater.c svneol=native#text/plain
 src/mged/menu.c svneol=native#text/plain
