@@ -11642,6 +11642,10 @@ src/tclscripts/archer/images/air.png -text
 src/tclscripts/archer/images/air_intersect.png -text
 src/tclscripts/archer/images/air_subtract.png -text
 src/tclscripts/archer/images/air_union.png -text
+src/tclscripts/archer/images/airregion.png -text svneol=unset#image/png
+src/tclscripts/archer/images/airregion_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/airregion_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/airregion_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/arb8.png -text
 src/tclscripts/archer/images/arb8_intersect.png -text
 src/tclscripts/archer/images/arb8_subtract.png -text
@@ -11657,6 +11661,10 @@ src/tclscripts/archer/images/ars.png -text
 src/tclscripts/archer/images/ars_intersect.png -text
 src/tclscripts/archer/images/ars_subtract.png -text
 src/tclscripts/archer/images/ars_union.png -text
+src/tclscripts/archer/images/assembly.png -text svneol=unset#image/png
+src/tclscripts/archer/images/assembly_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/assembly_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/assembly_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/blank.png -text
 src/tclscripts/archer/images/bot.png -text
 src/tclscripts/archer/images/bot_intersect.png -text
