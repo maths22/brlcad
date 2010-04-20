@@ -183,6 +183,7 @@ doc/docbook/articles/en/pipes.xml svneol=native#text/xml
 doc/docbook/articles/en/projection_shader.xml svneol=native#text/xml
 doc/docbook/articles/en/tire.xml svneol=native#text/xml
 doc/docbook/books/README svneol=native#text/plain
+doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeI.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
 doc/docbook/books/en/Makefile.am svneol=native#text/plain
@@ -217,6 +218,13 @@ doc/docbook/books/en/images/tutorial_series_volIII_fig28.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig29.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig30.png -text svneol=unset#image/png
 doc/docbook/books/en/images/tutorial_series_volIII_table_image_1.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig01.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig02.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig03.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig04.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig05.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig06.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig07.png -text svneol=unset#image/png
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
 doc/docbook/fop.xconf.in svneol=native#text/plain
