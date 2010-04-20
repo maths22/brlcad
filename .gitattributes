@@ -2234,6 +2234,7 @@ doc/html/manuals/shaders/Makefile.am svneol=native#text/plain
 doc/html/manuals/shaders/camo.html svneol=native#text/html
 doc/html/manuals/small-eagleCAD.gif -text svneol=unset#image/gif
 doc/html/manuals/small-eagleCAD.ico -text svneol=unset#image/x-icon
+doc/html/toc.html svneol=native#text/html
 doc/hypot.txt svneol=native#text/plain
 doc/irprep.tr svneol=native#text/plain
 doc/legal/Makefile.am svneol=native#text/plain
