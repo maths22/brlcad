@@ -323,8 +323,12 @@ doc/docbook/lessons/en/images/mged15_truck_wheels.png -text
 doc/docbook/lessons/en/images/mged16_radio_casecut_raytrace.png -text
 doc/docbook/lessons/en/images/mged16_radio_cut_raytrace.png -text
 doc/docbook/lessons/en/images/mged16_radio_cut_wireframe.png -text
+doc/docbook/lessons/en/images/mged16_radio_cutaways.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged16_radio_default_components_props.png -text
 doc/docbook/lessons/en/images/mged16_radio_new_design.png -text
+doc/docbook/lessons/en/images/mged16_radio_structure_1.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_structure_2.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_structure_3.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged16_radio_transparent.png -text
 doc/docbook/lessons/en/images/mged16_radio_wireframe_circ_board.png -text
 doc/docbook/lessons/en/images/mged16_radio_with_mater_props.png -text
