@@ -60,6 +60,8 @@ doc/Makefile
 doc/Makefile.in
 doc/book/Makefile
 doc/book/Makefile.in
+doc/docbook/Makefile
+doc/docbook/Makefile.in
 doc/docbook/articles/Makefile
 doc/docbook/articles/Makefile.in
 doc/docbook/articles/build_pattern
@@ -240,6 +242,7 @@ src/.libs
 src/Makefile
 src/Makefile.in
 src/adrt/.deps
+src/adrt/.libs
 src/adrt/Makefile
 src/adrt/Makefile.in
 src/adrt/adrt_master
@@ -296,6 +299,8 @@ src/archer/plugins/Makefile
 src/archer/plugins/Makefile.in
 src/archer/plugins/Utility/Makefile
 src/archer/plugins/Utility/Makefile.in
+src/archer/plugins/Utility/attrGroupsDisplayUtilityP/Makefile
+src/archer/plugins/Utility/attrGroupsDisplayUtilityP/Makefile.in
 src/archer/plugins/Wizards/Makefile
 src/archer/plugins/Wizards/Makefile.in
 src/archer/plugins/Wizards/humanwizard/Makefile
@@ -439,6 +444,7 @@ src/conv/poly-bot
 src/conv/proe-g
 src/conv/rpatch
 src/conv/step/.deps
+src/conv/step/.libs
 src/conv/step/Makefile
 src/conv/step/Makefile.in
 src/conv/step/step-g
@@ -495,6 +501,7 @@ src/fb/fbline
 src/fb/fbpoint
 src/fb/fbscanplot
 src/fb/fbstretch
+src/fb/fbthreadtest
 src/fb/fbzoom
 src/fb/gif-fb
 src/fb/gif2fb
@@ -565,6 +572,10 @@ src/lgt/.libs
 src/lgt/Makefile
 src/lgt/Makefile.in
 src/lgt/lgt
+src/libanalyze/.deps
+src/libanalyze/.libs
+src/libanalyze/Makefile
+src/libanalyze/Makefile.in
 src/libbn/.deps
 src/libbn/.libs
 src/libbn/Makefile
@@ -615,6 +626,9 @@ src/libgcv/.deps
 src/libgcv/.libs
 src/libgcv/Makefile
 src/libgcv/Makefile.in
+src/libgcv/obj/.deps
+src/libgcv/obj/Makefile
+src/libgcv/obj/Makefile.in
 src/libged/.deps
 src/libged/.libs
 src/libged/Makefile
@@ -966,9 +980,11 @@ src/other/step/src/clSchemas/example/.deps
 src/other/step/src/clSchemas/example/Makefile
 src/other/step/src/clSchemas/example/Makefile.in
 src/other/step/src/cldai/.deps
+src/other/step/src/cldai/.libs
 src/other/step/src/cldai/Makefile
 src/other/step/src/cldai/Makefile.in
 src/other/step/src/cleditor/.deps
+src/other/step/src/cleditor/.libs
 src/other/step/src/cleditor/Makefile
 src/other/step/src/cleditor/Makefile.in
 src/other/step/src/clivfasd/.deps
@@ -981,16 +997,20 @@ src/other/step/src/clprobe-ui/.deps
 src/other/step/src/clprobe-ui/Makefile
 src/other/step/src/clprobe-ui/Makefile.in
 src/other/step/src/clstepcore/.deps
+src/other/step/src/clstepcore/.libs
 src/other/step/src/clstepcore/Makefile
 src/other/step/src/clstepcore/Makefile.in
 src/other/step/src/clutils/.deps
+src/other/step/src/clutils/.libs
 src/other/step/src/clutils/Makefile
 src/other/step/src/clutils/Makefile.in
 src/other/step/src/exppp/.deps
+src/other/step/src/exppp/.libs
 src/other/step/src/exppp/Makefile
 src/other/step/src/exppp/Makefile.in
 src/other/step/src/exppp/exppp
 src/other/step/src/express/.deps
+src/other/step/src/express/.libs
 src/other/step/src/express/Makefile
 src/other/step/src/express/Makefile.in
 src/other/step/src/express/expparse.c
@@ -999,6 +1019,7 @@ src/other/step/src/express/expscan.c
 src/other/step/src/express/fedex
 src/other/step/src/express/symlink
 src/other/step/src/fedex_plus/.deps
+src/other/step/src/fedex_plus/.libs
 src/other/step/src/fedex_plus/Makefile
 src/other/step/src/fedex_plus/Makefile.in
 src/other/step/src/fedex_plus/fedex_idl
@@ -1067,6 +1088,7 @@ src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
 src/other/tk/unix/wish8.5.rsrc
 src/other/tkhtml3/Makefile
+src/other/tkhtml3/Makefile.in
 src/other/tkhtml3/aclocal.m4
 src/other/tkhtml3/autom4te.cache
 src/other/tkhtml3/config.log
@@ -1087,6 +1109,10 @@ src/other/tkhtml3/tclconfig/ltmain.sh
 src/other/tkhtml3/tclconfig/missing
 src/other/tkhtml3/tclconfig/mkinstalldirs
 src/other/tkhtml3/tkhtml.n
+src/other/tkpng/.deps
+src/other/tkpng/.libs
+src/other/tkpng/Makefile
+src/other/tkpng/Makefile.in
 src/other/tnt/Makefile
 src/other/tnt/Makefile.in
 src/proc-db/.deps
@@ -1268,6 +1294,8 @@ src/tclscripts/geometree/Makefile
 src/tclscripts/geometree/Makefile.in
 src/tclscripts/geometree/pkgIndex.tcl
 src/tclscripts/geometree/tclIndex
+src/tclscripts/hv3/Makefile
+src/tclscripts/hv3/Makefile.in
 src/tclscripts/lib/Makefile
 src/tclscripts/lib/Makefile.in
 src/tclscripts/lib/pkgIndex.tcl
@@ -1305,6 +1333,7 @@ src/tclscripts/rtwizard/lib/Makefile.in
 src/tclscripts/rtwizard/lib/pkgIndex.tcl
 src/tclscripts/rtwizard/lib/tclIndex
 src/tclscripts/rtwizard/pkgIndex.tcl
+src/tclscripts/rtwizard/rtwizard
 src/tclscripts/rtwizard/tclIndex
 src/tclscripts/sdialogs/Makefile
 src/tclscripts/sdialogs/Makefile.in
