@@ -100,6 +100,7 @@ doc/docbook/articles/en/images/build_region_fig04.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig01.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig02.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig03.png -text
+doc/docbook/articles/en/images/mgedrc_fig01.png -text svneol=unset#image/png
 doc/docbook/articles/en/images/mgedrc_fig02.png -text
 doc/docbook/articles/en/images/mgedrc_fig03.png -text
 doc/docbook/articles/en/images/nirt_fig01.png -text
@@ -225,8 +226,8 @@ doc/docbook/lessons/en/images/mged01_graphicswindow.png -text
 doc/docbook/lessons/en/images/mged01_terminal.png -text
 doc/docbook/lessons/en/images/mged02_coordsys.png -text
 doc/docbook/lessons/en/images/mged02_defaultradio.png -text
-doc/docbook/lessons/en/images/mged02_flower_zooomin.png -text
-doc/docbook/lessons/en/images/mged02_flower_zooomout.png -text
+doc/docbook/lessons/en/images/mged02_flower_zoomin.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_flower_zoomout.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged02_multipane.png -text
 doc/docbook/lessons/en/images/mged02_radio_35_25.png -text
 doc/docbook/lessons/en/images/mged02_radio_front.png -text
@@ -243,6 +244,10 @@ doc/docbook/lessons/en/images/mged02_truck_front.png -text
 doc/docbook/lessons/en/images/mged02_truck_left.png -text
 doc/docbook/lessons/en/images/mged02_truck_rear.png -text
 doc/docbook/lessons/en/images/mged02_truck_right.png -text
+doc/docbook/lessons/en/images/mged03_shapes_in_command.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_shapes_make_command.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_wireframe_sph.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_wireframe_sph_rcc.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged04_commandwindow.png -text
 doc/docbook/lessons/en/images/mged04_fb_overlay_mode.png -text
 doc/docbook/lessons/en/images/mged04_raytracedshapes.png -text
