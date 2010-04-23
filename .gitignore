@@ -80,6 +80,9 @@ doc/docbook/fop.xconf
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
 doc/docbook/lessons/en/*.html
+doc/docbook/lessons/en/*.pdf
+doc/docbook/lessons/es/*.html
+doc/docbook/lessons/es/*.pdf
 doc/docbook/lessons/mged
 doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile

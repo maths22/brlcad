@@ -100,6 +100,7 @@ doc/docbook/articles/en/images/build_region_fig04.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig01.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig02.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig03.png -text
+doc/docbook/articles/en/images/mgedrc_fig01.png -text svneol=unset#image/png
 doc/docbook/articles/en/images/mgedrc_fig02.png -text
 doc/docbook/articles/en/images/mgedrc_fig03.png -text
 doc/docbook/articles/en/images/nirt_fig01.png -text
@@ -182,6 +183,7 @@ doc/docbook/articles/en/pipes.xml svneol=native#text/xml
 doc/docbook/articles/en/projection_shader.xml svneol=native#text/xml
 doc/docbook/articles/en/tire.xml svneol=native#text/xml
 doc/docbook/books/README svneol=native#text/plain
+doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeI.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
 doc/docbook/books/en/Makefile.am svneol=native#text/plain
@@ -214,6 +216,15 @@ doc/docbook/books/en/images/tutorial_series_volIII_fig26.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig27.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig28.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig29.png -text
+doc/docbook/books/en/images/tutorial_series_volIII_fig30.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volIII_table_image_1.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig01.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig02.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig03.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig04.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig05.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig06.png -text svneol=unset#image/png
+doc/docbook/books/en/images/tutorial_series_volI_fig07.png -text svneol=unset#image/png
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/catalog.xml svneol=native#text/xml
 doc/docbook/fop.xconf.in svneol=native#text/plain
@@ -223,8 +234,8 @@ doc/docbook/lessons/en/images/mged01_graphicswindow.png -text
 doc/docbook/lessons/en/images/mged01_terminal.png -text
 doc/docbook/lessons/en/images/mged02_coordsys.png -text
 doc/docbook/lessons/en/images/mged02_defaultradio.png -text
-doc/docbook/lessons/en/images/mged02_flower_zooomin.png -text
-doc/docbook/lessons/en/images/mged02_flower_zooomout.png -text
+doc/docbook/lessons/en/images/mged02_flower_zoomin.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged02_flower_zoomout.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged02_multipane.png -text
 doc/docbook/lessons/en/images/mged02_radio_35_25.png -text
 doc/docbook/lessons/en/images/mged02_radio_front.png -text
@@ -241,6 +252,10 @@ doc/docbook/lessons/en/images/mged02_truck_front.png -text
 doc/docbook/lessons/en/images/mged02_truck_left.png -text
 doc/docbook/lessons/en/images/mged02_truck_rear.png -text
 doc/docbook/lessons/en/images/mged02_truck_right.png -text
+doc/docbook/lessons/en/images/mged03_shapes_in_command.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_shapes_make_command.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_wireframe_sph.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged03_wireframe_sph_rcc.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged04_commandwindow.png -text
 doc/docbook/lessons/en/images/mged04_fb_overlay_mode.png -text
 doc/docbook/lessons/en/images/mged04_raytracedshapes.png -text
@@ -253,7 +268,7 @@ doc/docbook/lessons/en/images/mged05_raytracedpart3.png -text
 doc/docbook/lessons/en/images/mged05_subtractionspheres.png -text
 doc/docbook/lessons/en/images/mged05_twoprimitivespheres.png -text
 doc/docbook/lessons/en/images/mged05_unionspheres.png -text
-doc/docbook/lessons/en/images/mged06_base_substracted_vol.png -text
+doc/docbook/lessons/en/images/mged06_base_subtracted_vol.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged06_goblet1stsphere.png -text
 doc/docbook/lessons/en/images/mged06_gobletbase.png -text
 doc/docbook/lessons/en/images/mged06_gobletbasestembasin.png -text
@@ -316,8 +331,12 @@ doc/docbook/lessons/en/images/mged15_truck_wheels.png -text
 doc/docbook/lessons/en/images/mged16_radio_casecut_raytrace.png -text
 doc/docbook/lessons/en/images/mged16_radio_cut_raytrace.png -text
 doc/docbook/lessons/en/images/mged16_radio_cut_wireframe.png -text
+doc/docbook/lessons/en/images/mged16_radio_cutaways.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged16_radio_default_components_props.png -text
 doc/docbook/lessons/en/images/mged16_radio_new_design.png -text
+doc/docbook/lessons/en/images/mged16_radio_structure_1.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_structure_2.png -text svneol=unset#image/png
+doc/docbook/lessons/en/images/mged16_radio_structure_3.png -text svneol=unset#image/png
 doc/docbook/lessons/en/images/mged16_radio_transparent.png -text
 doc/docbook/lessons/en/images/mged16_radio_wireframe_circ_board.png -text
 doc/docbook/lessons/en/images/mged16_radio_with_mater_props.png -text
