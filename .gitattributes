@@ -3892,7 +3892,7 @@ src/libdm/focus.c svneol=native#text/plain
 src/libdm/grid.c svneol=native#text/plain
 src/libdm/knob.c svneol=native#text/plain
 src/libdm/labels.c svneol=native#text/plain
-src/libdm/libdm.dsp -text svneol=CRLF#text/plain
+src/libdm/libdm.dsp svneol=CRLF#text/plain eol=crlf
 src/libdm/options.c svneol=native#text/plain
 src/libdm/query.c svneol=native#text/plain
 src/libdm/rect.c svneol=native#text/plain
@@ -4218,7 +4218,7 @@ src/libmultispectral/init.c svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
 src/liboptical/Makefile.am svneol=native#text/plain
 src/liboptical/init.c svneol=native#text/plain
-src/liboptical/liboptical.dsp -text svneol=CRLF#text/plain
+src/liboptical/liboptical.dsp svneol=CRLF#text/plain eol=crlf
 src/liboptical/material.c svneol=native#text/plain
 src/liboptical/photonmap.c svneol=native#text/plain
 src/liboptical/refract.c svneol=native#text/plain
@@ -4286,7 +4286,7 @@ src/libpc/pc_main.c svneol=native#text/plain
 src/libpc/solver_test.cpp svneol=native#text/plain
 src/libpc/vm_test.cpp svneol=native#text/plain
 src/libpkg/Makefile.am svneol=native#text/plain
-src/libpkg/libpkg.dsp -text svneol=CRLF#text/plain
+src/libpkg/libpkg.dsp svneol=CRLF#text/plain eol=crlf
 src/libpkg/pkg.c svneol=native#text/plain
 src/libpkg/tcl.c svneol=native#text/plain
 src/libpkg/tpkg.c svneol=native#text/plain
@@ -4536,12 +4536,12 @@ src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/Makefile.am svneol=native#text/plain
 src/libtclcad/ged_obj.c svneol=native#text/plain
-src/libtclcad/libtclcad.dsp -text svneol=CRLF#text/plain
+src/libtclcad/libtclcad.dsp svneol=CRLF#text/plain eol=crlf
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
-src/libtermio/libtermio.dsp -text svneol=CRLF#text/plain
+src/libtermio/libtermio.dsp svneol=CRLF#text/plain eol=crlf
 src/libtermio/termio.c svneol=native#text/plain
 src/libtermio/termio_win32.c svneol=native#text/plain
 src/libwdb/CMakeLists.txt svneol=native#text/plain
@@ -7204,7 +7204,7 @@ src/other/incrTcl/itcl/win/dllEntryPoint.c svneol=native#text/plain
 src/other/incrTcl/itcl/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itcl/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itcl/win/nmakehlp.c svneol=native#text/plain
-src/other/incrTcl/itcl/win/rc/itcl.rc -text svneol=CRLF#text/plain
+src/other/incrTcl/itcl/win/rc/itcl.rc svneol=CRLF#text/plain eol=crlf
 src/other/incrTcl/itcl/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/itk/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/aclocal.m4 svneol=native#text/plain
@@ -7268,7 +7268,7 @@ src/other/incrTcl/itk/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itk/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itk/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
-src/other/incrTcl/itk/win/rc/itk.rc -text svneol=CRLF#text/plain
+src/other/incrTcl/itk/win/rc/itk.rc svneol=CRLF#text/plain eol=crlf
 src/other/incrTcl/itk/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/license.terms svneol=native#text/plain
 src/other/incrTcl/makefile.bc svneol=native#text/plain
@@ -7962,7 +7962,7 @@ src/other/libz/contrib/delphi/readme.txt svneol=native#text/plain
 src/other/libz/contrib/delphi/zlibd32.mak -text
 src/other/libz/contrib/dotzlib/DotZLib.build -text
 src/other/libz/contrib/dotzlib/DotZLib.chm -text
-src/other/libz/contrib/dotzlib/DotZLib.sln -text svneol=CRLF#unset
+src/other/libz/contrib/dotzlib/DotZLib.sln eol=crlf
 src/other/libz/contrib/dotzlib/DotZLib/AssemblyInfo.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/ChecksumImpl.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/CircularBuffer.cs svneol=native#text/plain
@@ -7995,16 +7995,16 @@ src/other/libz/contrib/iostream3/test.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.h svneol=native#text/plain
 src/other/libz/contrib/masm686/match.asm -text
-src/other/libz/contrib/masmx64/bld_ml64.bat -text svneol=CRLF#text/plain
+src/other/libz/contrib/masmx64/bld_ml64.bat svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/masmx64/gvmat64.asm -text
 src/other/libz/contrib/masmx64/inffas8664.c svneol=native#text/plain
 src/other/libz/contrib/masmx64/inffasx64.asm -text
 src/other/libz/contrib/masmx64/readme.txt svneol=native#text/plain
-src/other/libz/contrib/masmx86/bld_ml32.bat -text svneol=CRLF#text/plain
+src/other/libz/contrib/masmx86/bld_ml32.bat svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/masmx86/gvmat32.asm -text
 src/other/libz/contrib/masmx86/gvmat32c.c svneol=native#text/plain
 src/other/libz/contrib/masmx86/inffas32.asm -text
-src/other/libz/contrib/masmx86/mkasm.bat -text svneol=CRLF#text/plain
+src/other/libz/contrib/masmx86/mkasm.bat svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/masmx86/readme.txt svneol=native#text/plain
 src/other/libz/contrib/minizip/ChangeLogUnzip svneol=native#text/plain
 src/other/libz/contrib/minizip/Makefile svneol=native#text/plain
@@ -8034,23 +8034,23 @@ src/other/libz/contrib/testzlib/testzlib.txt svneol=native#text/plain
 src/other/libz/contrib/untgz/Makefile.msc svneol=native#text/plain
 src/other/libz/contrib/untgz/untgz.c svneol=native#text/plain
 src/other/libz/contrib/vstudio/readme.txt svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc7/miniunz.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc7/minizip.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc7/testzlib.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc7/zlib.rc -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc7/zlibstat.vcproj -text svneol=CRLF#text/plain
+src/other/libz/contrib/vstudio/vc7/miniunz.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc7/minizip.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc7/testzlib.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc7/zlib.rc svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc7/zlibstat.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/vstudio/vc7/zlibvc.def svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc7/zlibvc.sln -text svneol=CRLF#unset
-src/other/libz/contrib/vstudio/vc7/zlibvc.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/miniunz.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/minizip.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/testzlib.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/testzlibdll.vcproj -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/zlib.rc -text svneol=CRLF#text/plain
-src/other/libz/contrib/vstudio/vc8/zlibstat.vcproj -text svneol=CRLF#text/plain
+src/other/libz/contrib/vstudio/vc7/zlibvc.sln eol=crlf
+src/other/libz/contrib/vstudio/vc7/zlibvc.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/miniunz.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/minizip.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/testzlib.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/testzlibdll.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/zlib.rc svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc8/zlibstat.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/vstudio/vc8/zlibvc.def svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc8/zlibvc.sln -text svneol=CRLF#unset
-src/other/libz/contrib/vstudio/vc8/zlibvc.vcproj -text svneol=CRLF#text/plain
+src/other/libz/contrib/vstudio/vc8/zlibvc.sln eol=crlf
+src/other/libz/contrib/vstudio/vc8/zlibvc.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libz/crc32.c svneol=native#text/plain
 src/other/libz/crc32.h svneol=native#text/plain
 src/other/libz/deflate.c svneol=native#text/plain
@@ -8091,10 +8091,10 @@ src/other/libz/old/visual-basic.txt svneol=native#text/plain
 src/other/libz/old/zlib.html svneol=native#text/html
 src/other/libz/projects/README.projects svneol=native#text/plain
 src/other/libz/projects/visualc6/README.txt svneol=native#text/plain
-src/other/libz/projects/visualc6/example.dsp -text svneol=CRLF#text/plain
-src/other/libz/projects/visualc6/minigzip.dsp -text svneol=CRLF#text/plain
-src/other/libz/projects/visualc6/zlib.dsp -text svneol=CRLF#text/plain
-src/other/libz/projects/visualc6/zlib.dsw -text svneol=CRLF#text/plain
+src/other/libz/projects/visualc6/example.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/projects/visualc6/minigzip.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/projects/visualc6/zlib.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/projects/visualc6/zlib.dsw svneol=CRLF#text/plain eol=crlf
 src/other/libz/qnx/package.qpg svneol=native#text/xml
 src/other/libz/trees.c svneol=native#text/plain
 src/other/libz/trees.h svneol=native#text/plain
@@ -8106,7 +8106,7 @@ src/other/libz/win32/Makefile.gcc svneol=native#text/plain
 src/other/libz/win32/Makefile.msc svneol=native#text/plain
 src/other/libz/win32/VisualC.txt svneol=native#text/plain
 src/other/libz/win32/zlib.def svneol=native#text/plain
-src/other/libz/win32/zlib1.rc -text svneol=CRLF#text/plain
+src/other/libz/win32/zlib1.rc svneol=CRLF#text/plain eol=crlf
 src/other/libz/zconf.h svneol=native#text/plain
 src/other/libz/zconf.in.h svneol=native#text/plain
 src/other/libz/zlib.3 svneol=native#text/plain
@@ -11267,7 +11267,7 @@ src/rt/rad.h svneol=native#text/plain
 src/rt/read-rtlog.c svneol=native#text/plain
 src/rt/reshoot.1 svneol=native#text/plain
 src/rt/reshoot.c svneol=native#text/plain
-src/rt/rt.dsp -text svneol=CRLF#text/plain
+src/rt/rt.dsp svneol=CRLF#text/plain eol=crlf
 src/rt/rt_bot_faces.1 svneol=native#text/plain
 src/rt/rtexample.c svneol=native#text/plain
 src/rt/rtg3.1 svneol=native#text/plain
