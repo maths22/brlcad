@@ -9086,6 +9086,7 @@ src/other/tcl/generic/tclTimer.c svneol=native#text/plain
 src/other/tcl/generic/tclTomMath.decls svneol=native#text/plain
 src/other/tcl/generic/tclTomMath.h svneol=native#text/plain
 src/other/tcl/generic/tclTomMathDecls.h svneol=native#text/plain
+src/other/tcl/generic/tclTomMathInt.h svneol=native#text/plain
 src/other/tcl/generic/tclTomMathInterface.c svneol=native#text/plain
 src/other/tcl/generic/tclTrace.c svneol=native#text/plain
 src/other/tcl/generic/tclUniData.c svneol=native#text/plain
@@ -9581,6 +9582,7 @@ src/other/tcl/library/tzdata/Asia/Kabul -text
 src/other/tcl/library/tzdata/Asia/Kamchatka -text
 src/other/tcl/library/tzdata/Asia/Karachi -text
 src/other/tcl/library/tzdata/Asia/Kashgar -text
+src/other/tcl/library/tzdata/Asia/Kathmandu svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Katmandu -text
 src/other/tcl/library/tzdata/Asia/Kolkata svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Krasnoyarsk -text
@@ -9594,6 +9596,7 @@ src/other/tcl/library/tzdata/Asia/Makassar -text
 src/other/tcl/library/tzdata/Asia/Manila -text
 src/other/tcl/library/tzdata/Asia/Muscat -text
 src/other/tcl/library/tzdata/Asia/Nicosia -text
+src/other/tcl/library/tzdata/Asia/Novokuznetsk svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Novosibirsk -text
 src/other/tcl/library/tzdata/Asia/Omsk -text
 src/other/tcl/library/tzdata/Asia/Oral -text
@@ -10427,6 +10430,7 @@ src/other/tk/doc/ttk_separator.n svneol=native#text/plain
 src/other/tk/doc/ttk_sizegrip.n svneol=native#text/plain
 src/other/tk/doc/ttk_style.n svneol=native#text/plain
 src/other/tk/doc/ttk_treeview.n svneol=native#text/plain
+src/other/tk/doc/ttk_vsapi.n svneol=native#text/plain
 src/other/tk/doc/ttk_widget.n svneol=native#text/plain
 src/other/tk/doc/winfo.n svneol=native#text/plain
 src/other/tk/doc/wish.1 svneol=native#text/plain
@@ -10732,6 +10736,7 @@ src/other/tk/library/ttk/sizegrip.tcl svneol=native#text/plain
 src/other/tk/library/ttk/treeview.tcl svneol=native#text/plain
 src/other/tk/library/ttk/ttk.tcl svneol=native#text/plain
 src/other/tk/library/ttk/utils.tcl svneol=native#text/plain
+src/other/tk/library/ttk/vistaTheme.tcl svneol=native#text/plain
 src/other/tk/library/ttk/winTheme.tcl svneol=native#text/plain
 src/other/tk/library/ttk/xpTheme.tcl svneol=native#text/plain
 src/other/tk/library/unsupported.tcl svneol=native#text/plain
@@ -10904,6 +10909,7 @@ src/other/tk/tests/ttk/treetags.test svneol=native#text/plain
 src/other/tk/tests/ttk/treeview.test svneol=native#text/plain
 src/other/tk/tests/ttk/ttk.test svneol=native#text/plain
 src/other/tk/tests/ttk/validate.test svneol=native#text/plain
+src/other/tk/tests/ttk/vsapi.test svneol=native#text/plain
 src/other/tk/tests/unixButton.test svneol=native#text/plain
 src/other/tk/tests/unixEmbed.test svneol=native#text/plain
 src/other/tk/tests/unixFont.test svneol=native#text/plain
