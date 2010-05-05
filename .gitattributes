@@ -2801,7 +2801,6 @@ src/adrt/librender/flat.c svneol=native#text/plain
 src/adrt/librender/flos.c svneol=native#text/plain
 src/adrt/librender/grid.c svneol=native#text/plain
 src/adrt/librender/hit.c svneol=native#text/plain
-src/adrt/librender/hit.h svneol=native#text/plain
 src/adrt/librender/normal.c svneol=native#text/plain
 src/adrt/librender/path.c svneol=native#text/plain
 src/adrt/librender/phong.c svneol=native#text/plain
