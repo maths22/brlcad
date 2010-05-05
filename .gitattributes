@@ -2288,6 +2288,7 @@ include/bu.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
 include/conf.h svneol=native#text/plain
+include/conf/BrlcadConfig.tmpl svneol=native#text/plain
 include/conf/CMakeLists.txt svneol=native#text/plain
 include/conf/MAJOR -text
 include/conf/MINOR -text
