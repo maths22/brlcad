@@ -11825,6 +11825,10 @@ src/tclscripts/archer/images/sketch.png -text
 src/tclscripts/archer/images/sketch_intersect.png -text
 src/tclscripts/archer/images/sketch_subtract.png -text
 src/tclscripts/archer/images/sketch_union.png -text
+src/tclscripts/archer/images/sph.png -text
+src/tclscripts/archer/images/sph_intersect.png -text
+src/tclscripts/archer/images/sph_subtract.png -text
+src/tclscripts/archer/images/sph_union.png -text
 src/tclscripts/archer/images/tgc.png -text
 src/tclscripts/archer/images/tgc_intersect.png -text
 src/tclscripts/archer/images/tgc_subtract.png -text
