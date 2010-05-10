@@ -11659,6 +11659,22 @@ src/tclscripts/archer/images/airregion.png -text svneol=unset#image/png
 src/tclscripts/archer/images/airregion_intersect.png -text svneol=unset#image/png
 src/tclscripts/archer/images/airregion_subtract.png -text svneol=unset#image/png
 src/tclscripts/archer/images/airregion_union.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb4.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb4_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb4_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb4_union.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb5.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb5_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb5_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb5_union.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb6.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb6_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb6_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb6_union.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb7.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb7_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb7_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/arb7_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/arb8.png -text
 src/tclscripts/archer/images/arb8_intersect.png -text
 src/tclscripts/archer/images/arb8_subtract.png -text
