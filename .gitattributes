@@ -4155,6 +4155,7 @@ src/libged/size.c svneol=native#text/plain
 src/libged/slew.c svneol=native#text/plain
 src/libged/solids_on_ray.c svneol=native#text/plain
 src/libged/sphgroup.c svneol=native#text/plain
+src/libged/subtype.c svneol=native#text/plain
 src/libged/summary.c svneol=native#text/plain
 src/libged/sync.c svneol=native#text/plain
 src/libged/tables.c svneol=native#text/plain
