@@ -11207,6 +11207,7 @@ src/other/togl/GL/glext.h svneol=native#text/plain
 src/other/togl/GL/glxext.h svneol=native#text/plain
 src/other/togl/GL/wglext.h svneol=native#text/plain
 src/other/togl/LICENSE svneol=native#text/plain
+src/other/togl/Makefile.in svneol=native#text/plain
 src/other/togl/README svneol=native#text/plain
 src/other/togl/README.bin svneol=native#text/plain
 src/other/togl/README.stubs svneol=native#text/plain
