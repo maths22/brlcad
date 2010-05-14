@@ -11889,6 +11889,11 @@ src/tclscripts/archer/images/other_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/pane_blank.png -text
 src/tclscripts/archer/images/pane_collapse.png -text
 src/tclscripts/archer/images/pane_expand.png -text
+src/tclscripts/archer/images/part.png -text
+src/tclscripts/archer/images/part_intersect.png -text
+src/tclscripts/archer/images/part_labeled.png -text
+src/tclscripts/archer/images/part_subtract.png -text
+src/tclscripts/archer/images/part_union.png -text
 src/tclscripts/archer/images/pipe.png -text
 src/tclscripts/archer/images/pipe_intersect.png -text
 src/tclscripts/archer/images/pipe_labeled.png -text svneol=unset#image/png
