@@ -3708,6 +3708,7 @@ src/irprep/showtherm.c svneol=native#text/plain
 src/irprep/subroutines.c svneol=native#text/plain
 src/isst/Makefile.am svneol=native#text/plain
 src/isst/gears.tcl svneol=native#text/plain
+src/isst/isst.h svneol=native#text/plain
 src/isst/isst_tcltk.c svneol=native#text/plain
 src/java/Makefile.am svneol=native#text/plain
 src/java/mil/Makefile.am svneol=native#text/plain
