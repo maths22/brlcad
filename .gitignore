@@ -626,9 +626,9 @@ src/libgcv/.deps
 src/libgcv/.libs
 src/libgcv/Makefile
 src/libgcv/Makefile.in
-src/libgcv/obj/.deps
-src/libgcv/obj/Makefile
-src/libgcv/obj/Makefile.in
+src/libgcv/wfobj/.deps
+src/libgcv/wfobj/Makefile
+src/libgcv/wfobj/Makefile.in
 src/libged/.deps
 src/libged/.libs
 src/libged/Makefile
