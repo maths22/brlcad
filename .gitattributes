@@ -68,6 +68,7 @@ doc/README.MacOSX svneol=native#text/plain
 doc/README.Solaris svneol=native#text/plain
 doc/README.VAX svneol=native#text/plain
 doc/README.Windows svneol=native#text/plain
+doc/STARTERS svneol=native#text/plain
 doc/TODO.BREP svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/archer_ack.txt svneol=native#text/plain
