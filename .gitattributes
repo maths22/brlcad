@@ -4245,6 +4245,7 @@ src/liboptical/sh_stack.c svneol=native#text/plain
 src/liboptical/sh_stxt.c svneol=native#text/plain
 src/liboptical/sh_tcl.c svneol=native#text/plain
 src/liboptical/sh_text.c svneol=native#text/plain
+src/liboptical/sh_toon.c svneol=native#text/plain
 src/liboptical/sh_toyota.c svneol=native#text/plain
 src/liboptical/sh_treetherm.c svneol=native#text/plain
 src/liboptical/sh_wood.c svneol=native#text/plain
