@@ -12400,7 +12400,6 @@ src/util/mac-pix.c svneol=native#text/plain
 src/util/morphedit.1 svneol=native#text/plain
 src/util/morphedit.tcl svneol=native#text/plain
 src/util/msrandom.c svneol=native#text/plain
-src/util/mst.c svneol=native#text/plain
 src/util/orle-pix.1 svneol=native#text/plain
 src/util/orle-pix.c svneol=native#text/plain
 src/util/pc_test.c svneol=native#text/plain
