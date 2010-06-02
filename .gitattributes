@@ -12385,7 +12385,6 @@ src/util/dunncolor.c svneol=native#text/plain
 src/util/dunncomm.c svneol=native#text/plain
 src/util/dunnsnap.1 svneol=native#text/plain
 src/util/dunnsnap.c svneol=native#text/plain
-src/util/files-tape.c svneol=native#text/plain
 src/util/fix_polysolids.c svneol=native#text/plain
 src/util/gencolor.1 svneol=native#text/plain
 src/util/gencolor.c svneol=native#text/plain
