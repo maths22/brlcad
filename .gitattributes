@@ -12528,7 +12528,6 @@ src/util/remapid.c svneol=native#text/plain
 src/util/rle-pix.1 svneol=native#text/plain
 src/util/rle-pix.c svneol=native#text/plain
 src/util/roots_example.c svneol=native#text/plain
-src/util/sgi-pix.c svneol=native#text/plain
 src/util/sun-pix.1 svneol=native#text/plain
 src/util/sun-pix.c svneol=native#text/plain
 src/util/terrain.1 svneol=native#text/plain
