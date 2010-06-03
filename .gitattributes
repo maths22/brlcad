@@ -2276,6 +2276,7 @@ doc/plot3.5 svneol=native#text/plain
 doc/regions.txt svneol=native#text/plain
 doc/rounding.txt svneol=native#text/plain
 doc/sun.txt svneol=native#text/plain
+doc/tool_categories.txt svneol=native#text/plain
 doc/tube.txt svneol=native#text/plain
 include/Makefile.am svneol=native#text/plain
 include/RtServerImpl.h svneol=native#text/plain
