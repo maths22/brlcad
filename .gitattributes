@@ -3854,6 +3854,7 @@ src/libbu/rb_search.c svneol=native#text/plain
 src/libbu/rb_walk.c svneol=native#text/plain
 src/libbu/redblack.3 svneol=native#text/plain
 src/libbu/semaphore.c svneol=native#text/plain
+src/libbu/simd.c svneol=native#text/plain
 src/libbu/stat.c svneol=native#text/plain
 src/libbu/str.c svneol=native#text/plain
 src/libbu/tcl.c svneol=native#text/plain
