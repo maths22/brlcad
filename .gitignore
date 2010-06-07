@@ -1115,6 +1115,8 @@ src/other/tkpng/Makefile
 src/other/tkpng/Makefile.in
 src/other/tnt/Makefile
 src/other/tnt/Makefile.in
+src/other/togl/autom4te.cache
+src/other/togl/configure
 src/proc-db/.deps
 src/proc-db/.libs
 src/proc-db/Makefile
