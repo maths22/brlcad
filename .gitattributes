@@ -2303,6 +2303,7 @@ doc/legal/lgpl.txt svneol=native#text/plain
 doc/mater.txt svneol=native#text/plain
 doc/matrix.txt svneol=native#text/plain
 doc/mged.sh svneol=native#text/plain
+doc/mged.tar.gz -text
 doc/mk.tr svneol=native#text/plain
 doc/movie.txt svneol=native#text/plain
 doc/old-mged.tr svneol=native#text/plain
