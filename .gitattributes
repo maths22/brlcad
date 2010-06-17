@@ -11891,6 +11891,19 @@ src/tclscripts/archer/images/command.png -text
 src/tclscripts/archer/images/component_erase.png -text
 src/tclscripts/archer/images/component_pick.png -text
 src/tclscripts/archer/images/configure.png -text
+src/tclscripts/archer/images/cycle_az.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_el.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_kx.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_ky.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_kz.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_s.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_sx.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_sy.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_sz.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_tw.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_tx.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_ty.png -text svneol=unset#image/png
+src/tclscripts/archer/images/cycle_tz.png -text svneol=unset#image/png
 src/tclscripts/archer/images/dsp.png -text
 src/tclscripts/archer/images/dsp_intersect.png -text
 src/tclscripts/archer/images/dsp_labeled.png -text svneol=unset#image/png
