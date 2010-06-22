@@ -11565,6 +11565,7 @@ src/proc-db/lens.c svneol=native#text/plain
 src/proc-db/makebuilding/makebuilding.c svneol=native#text/plain
 src/proc-db/masonry.c svneol=native#text/plain
 src/proc-db/metaball.c svneol=native#text/plain
+src/proc-db/metaballs.pl svneol=native#text/plain
 src/proc-db/mkbuilding.c svneol=native#text/plain
 src/proc-db/mkbuilding.h svneol=native#text/plain
 src/proc-db/molecule.c svneol=native#text/plain
