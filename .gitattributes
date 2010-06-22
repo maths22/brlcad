@@ -4210,6 +4210,7 @@ src/libged/color.c svneol=native#text/plain
 src/libged/comb.c svneol=native#text/plain
 src/libged/comb_color.c svneol=native#text/plain
 src/libged/comb_std.c svneol=native#text/plain
+src/libged/combmem.c svneol=native#text/plain
 src/libged/concat.c svneol=native#text/plain
 src/libged/copy.c svneol=native#text/plain
 src/libged/copyeval.c svneol=native#text/plain
