@@ -410,6 +410,12 @@ doc/docbook/lessons/es/images/mged08_goblet_reflectivity_1.png -text
 doc/docbook/lessons/es/images/mged08_goblet_reflectivity_2.png -text
 doc/docbook/lessons/es/images/mged08_refractive_index.png -text
 doc/docbook/lessons/es/images/mged08_spec_vs_diff_reflectivity.png -text
+doc/docbook/lessons/es/images/mged09_globe_base_box_raytraced.png -text
+doc/docbook/lessons/es/images/mged09_globe_base_box_wireframe.png -text
+doc/docbook/lessons/es/images/mged09_globe_inside_outside_box.png -text
+doc/docbook/lessons/es/images/mged09_globe_outside_display_box.png -text
+doc/docbook/lessons/es/images/mged09_globe_raytraced.png -text
+doc/docbook/lessons/es/images/mged09_globe_wireframe.png -text
 doc/docbook/lessons/es/images/mged10_mug_wireframe.png -text
 doc/docbook/lessons/es/images/mged11_mug_raytraced_norim.png -text
 doc/docbook/lessons/es/images/mged11_mug_raytraced_rim.png -text
@@ -443,6 +449,7 @@ doc/docbook/lessons/es/mged05_expresiones_booleanas.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged06_crear_una_copa.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged07_prop_materiales_copa.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged08_prop_materiales_copa2.xml svneol=native#text/xml
+doc/docbook/lessons/es/mged09_esfera_en_caja_exhibidora.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged10_crear_taza.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged11_refinar_taza.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged12_taza_desde_gui.xml svneol=native#text/xml
