@@ -441,6 +441,18 @@ doc/docbook/lessons/es/images/mged14_candle_spheres_raytraced.png -text
 doc/docbook/lessons/es/images/mged14_candle_spheres_topview.png -text
 doc/docbook/lessons/es/images/mged14_primitive_editor.png -text
 doc/docbook/lessons/es/images/mged14_primitive_selection_dropdown.png -text
+doc/docbook/lessons/es/images/mged15_cameo_shader.png -text
+doc/docbook/lessons/es/images/mged15_prim_ed_wheel_well.png -text
+doc/docbook/lessons/es/images/mged15_truck_2nd_wheel_wheel_place.png -text
+doc/docbook/lessons/es/images/mged15_truck_ambient_lighting.png -text
+doc/docbook/lessons/es/images/mged15_truck_cab1s.png -text
+doc/docbook/lessons/es/images/mged15_truck_cab_body.png -text
+doc/docbook/lessons/es/images/mged15_truck_cab_cutoff.png -text
+doc/docbook/lessons/es/images/mged15_truck_default_lighting.png -text
+doc/docbook/lessons/es/images/mged15_truck_design.png -text
+doc/docbook/lessons/es/images/mged15_truck_multipane_1stwheel.png -text
+doc/docbook/lessons/es/images/mged15_truck_wheel_wells_wireframe.png -text
+doc/docbook/lessons/es/images/mged15_truck_wheels.png -text
 doc/docbook/lessons/es/mged01_crear_figuras_primitivas.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged02_opciones_vistas.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged03_utilizar_comando_in.xml svneol=native#text/xml
@@ -455,6 +467,7 @@ doc/docbook/lessons/es/mged11_refinar_taza.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged12_taza_desde_gui.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged13_ubicar_figuras_en_3d.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged14_ubicar_figuras_en_3d_2.xml svneol=native#text/xml
+doc/docbook/lessons/es/mged15_crear_camion_de_juguete.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
