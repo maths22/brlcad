@@ -1782,6 +1782,7 @@ doc/docbook/system/man1/en/db.xml svneol=native#text/xml
 doc/docbook/system/man1/en/gqa.xml svneol=native#text/xml
 doc/docbook/system/man1/en/mged.xml svneol=native#text/xml
 doc/docbook/system/man1/en/nirt.xml svneol=native#text/xml
+doc/docbook/system/man1/en/obj-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtcheck.xml svneol=native#text/xml
