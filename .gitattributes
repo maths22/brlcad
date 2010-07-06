@@ -453,6 +453,18 @@ doc/docbook/lessons/es/images/mged15_truck_design.png -text
 doc/docbook/lessons/es/images/mged15_truck_multipane_1stwheel.png -text
 doc/docbook/lessons/es/images/mged15_truck_wheel_wells_wireframe.png -text
 doc/docbook/lessons/es/images/mged15_truck_wheels.png -text
+doc/docbook/lessons/es/images/mged16_radio_casecut_raytrace.png -text
+doc/docbook/lessons/es/images/mged16_radio_cut_raytrace.png -text
+doc/docbook/lessons/es/images/mged16_radio_cut_wireframe.png -text
+doc/docbook/lessons/es/images/mged16_radio_cutaways.png -text svneol=unset#image/png
+doc/docbook/lessons/es/images/mged16_radio_default_components_props.png -text
+doc/docbook/lessons/es/images/mged16_radio_new_design.png -text
+doc/docbook/lessons/es/images/mged16_radio_structure_1.png -text svneol=unset#image/png
+doc/docbook/lessons/es/images/mged16_radio_structure_2.png -text svneol=unset#image/png
+doc/docbook/lessons/es/images/mged16_radio_structure_3.png -text svneol=unset#image/png
+doc/docbook/lessons/es/images/mged16_radio_transparent.png -text
+doc/docbook/lessons/es/images/mged16_radio_wireframe_circ_board.png -text
+doc/docbook/lessons/es/images/mged16_radio_with_mater_props.png -text
 doc/docbook/lessons/es/mged01_crear_figuras_primitivas.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged02_opciones_vistas.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged03_utilizar_comando_in.xml svneol=native#text/xml
@@ -468,6 +480,7 @@ doc/docbook/lessons/es/mged12_taza_desde_gui.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged13_ubicar_figuras_en_3d.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged14_ubicar_figuras_en_3d_2.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged15_crear_camion_de_juguete.xml svneol=native#text/xml
+doc/docbook/lessons/es/mged16_mod_tech_struct.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
