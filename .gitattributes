@@ -2873,8 +2873,6 @@ misc/win32-msvc8/tea_nmg/tea_nmg.vcproj svneol=native#text/plain
 misc/win32-msvc8/terrain/terrain.vcproj svneol=native#text/plain
 misc/win32-msvc8/tire/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkhtml/tkhtml.vcproj svneol=native#text/plain
-misc/win32-msvc8/tkimg/tkimg.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tkimgpng/tkimgpng.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tkpng/tkpng.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/torii/torii.vcproj svneol=native#text/plain
