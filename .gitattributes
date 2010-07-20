@@ -2724,6 +2724,7 @@ misc/win32-msvc8/cat2fb/cat2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/cell2fb/cell2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/clutter/clutter.vcproj svneol=native#text/plain
 misc/win32-msvc8/cmap2fb/cmap2fb.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/coil/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/contours/contours.vcproj svneol=native#text/plain
 misc/win32-msvc8/cy2g/cy2g.vcproj -text
 misc/win32-msvc8/dbupgrade/dbupgrade.vcproj svneol=CRLF#text/plain eol=crlf
