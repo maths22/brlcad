@@ -2706,6 +2706,7 @@ misc/win32-msvc8/adrt/adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
+misc/win32-msvc8/bolt/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
 misc/win32-msvc8/bot_dump/bot_dump.vcproj svneol=native#text/plain
 misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
@@ -2783,8 +2784,11 @@ misc/win32-msvc8/g_diff/g_diff.vcproj svneol=native#text/plain
 misc/win32-msvc8/g_lint/g_lint.vcproj svneol=native#text/plain
 misc/win32-msvc8/g_qa/g_qa.vcproj svneol=native#text/plain
 misc/win32-msvc8/g_transfer/g_transfer.vcproj svneol=native#text/plain
+misc/win32-msvc8/gastank/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/gif2fb/gif2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/globe/globe.vcproj svneol=native#text/plain
+misc/win32-msvc8/handle/tire.vcproj svneol=native#text/plain
+misc/win32-msvc8/human/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/itclstub/itclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/itkstub/itkstub.vcproj svneol=CRLF#text/plain eol=crlf
@@ -2882,6 +2886,9 @@ misc/win32-msvc8/vegitation/vegitation.vcproj svneol=native#text/plain
 misc/win32-msvc8/vg2g/vg2g.vcproj -text
 misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
 misc/win32-msvc8/wdb_example/wdb_example.vcproj svneol=native#text/plain
+misc/win32-msvc8/window/tire.vcproj svneol=native#text/plain
+misc/win32-msvc8/window_frame/tire.vcproj svneol=native#text/plain
+misc/win32-msvc8/wire/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/wish/wish.vcproj svneol=CRLF#text/plain eol=crlf
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
