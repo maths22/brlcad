@@ -2883,7 +2883,7 @@ misc/win32-msvc8/tkpng/tkpng.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/torii/torii.vcproj svneol=native#text/plain
 misc/win32-msvc8/tube/tube.vcproj svneol=native#text/plain
-misc/win32-msvc8/vegitation/vegitation.vcproj svneol=native#text/plain
+misc/win32-msvc8/vegetation/vegetation.vcproj svneol=native#text/plain
 misc/win32-msvc8/vg2g/vg2g.vcproj -text
 misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
 misc/win32-msvc8/wdb_example/wdb_example.vcproj svneol=native#text/plain
@@ -11652,8 +11652,8 @@ src/proc-db/tea_nmg.c svneol=native#text/plain
 src/proc-db/terrain.c svneol=native#text/plain
 src/proc-db/torii.c svneol=native#text/plain
 src/proc-db/tube.c svneol=native#text/plain
-src/proc-db/vegitation.c svneol=native#text/plain
-src/proc-db/vegitation.h svneol=native#text/plain
+src/proc-db/vegetation.c svneol=native#text/plain
+src/proc-db/vegetation.h svneol=native#text/plain
 src/proc-db/wdb_example.c svneol=native#text/plain
 src/remrt/Makefile.am svneol=native#text/plain
 src/remrt/ihost.c svneol=native#text/plain
