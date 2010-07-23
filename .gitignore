@@ -301,6 +301,8 @@ src/archer/plugins/Utility/Makefile
 src/archer/plugins/Utility/Makefile.in
 src/archer/plugins/Utility/attrGroupsDisplayUtilityP/Makefile
 src/archer/plugins/Utility/attrGroupsDisplayUtilityP/Makefile.in
+src/archer/plugins/Utility/botUtilityP/Makefile
+src/archer/plugins/Utility/botUtilityP/Makefile.in
 src/archer/plugins/Wizards/Makefile
 src/archer/plugins/Wizards/Makefile.in
 src/archer/plugins/Wizards/humanwizard/Makefile
@@ -1310,6 +1312,8 @@ src/tclscripts/archer/images/Themes/Windows/Makefile
 src/tclscripts/archer/images/Themes/Windows/Makefile.in
 src/tclscripts/archer/pkgIndex.tcl
 src/tclscripts/archer/tclIndex
+src/tclscripts/boteditor/Makefile
+src/tclscripts/boteditor/Makefile.in
 src/tclscripts/geometree/Makefile
 src/tclscripts/geometree/Makefile.in
 src/tclscripts/geometree/pkgIndex.tcl
