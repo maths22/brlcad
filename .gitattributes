@@ -12329,10 +12329,8 @@ src/tclscripts/archer/images/wizard.png -text
 src/tclscripts/archer/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/archer/tabwindow.itk svneol=native#text/plain
 src/tclscripts/archer/tclIndex -text
-src/tclscripts/botutility/Makefile.am svneol=native#text/plain
-src/tclscripts/botutility/botutility.tcl svneol=native#text/plain
-src/tclscripts/botutility/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/botutility/tclIndex svneol=native#text/plain
+src/tclscripts/boteditor/Makefile.am svneol=native#text/plain
+src/tclscripts/boteditor/botEditor.tcl svneol=native#text/plain
 src/tclscripts/cad_clrpick.tcl svneol=native#text/plain
 src/tclscripts/cad_dialog.tcl svneol=native#text/plain
 src/tclscripts/chkexterns.tcl svneol=native#text/plain
