@@ -12330,6 +12330,7 @@ src/tclscripts/archer/tabwindow.itk svneol=native#text/plain
 src/tclscripts/archer/tclIndex -text
 src/tclscripts/boteditor/Makefile.am svneol=native#text/plain
 src/tclscripts/boteditor/botEditor.tcl svneol=native#text/plain
+src/tclscripts/boteditor/botPropertyBox.tcl svneol=native#text/plain
 src/tclscripts/cad_clrpick.tcl svneol=native#text/plain
 src/tclscripts/cad_dialog.tcl svneol=native#text/plain
 src/tclscripts/chkexterns.tcl svneol=native#text/plain
