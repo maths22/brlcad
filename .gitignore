@@ -1529,8 +1529,17 @@ src/other/tktable/ltmain.sh
 src/other/tktable/so_locations
 src/other/tnt/Makefile
 src/other/tnt/Makefile.in
+src/other/togl/.deps
+src/other/togl/Makefile
+src/other/togl/Makefile.in
+src/other/togl/aclocal.m4
 src/other/togl/autom4te.cache
+src/other/togl/config.*
 src/other/togl/configure
+src/other/togl/install.*.log
+src/other/togl/libtool
+src/other/togl/ltmain.sh
+src/other/togl/so_locations
 src/proc-db/.deps
 src/proc-db/.libs
 src/proc-db/Makefile
