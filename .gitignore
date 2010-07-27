@@ -1541,6 +1541,7 @@ src/other/togl/install.*.log
 src/other/togl/libtool
 src/other/togl/ltmain.sh
 src/other/togl/so_locations
+src/proc-db/*.g
 src/proc-db/.deps
 src/proc-db/.libs
 src/proc-db/Makefile
@@ -1575,6 +1576,7 @@ src/proc-db/room
 src/proc-db/sketch
 src/proc-db/sphflake
 src/proc-db/spltest
+src/proc-db/spring
 src/proc-db/surfaceintersect
 src/proc-db/tea
 src/proc-db/tea_nmg
