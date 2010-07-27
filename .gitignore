@@ -1516,6 +1516,17 @@ src/other/tkpng/.deps
 src/other/tkpng/.libs
 src/other/tkpng/Makefile
 src/other/tkpng/Makefile.in
+src/other/tktable/.deps
+src/other/tktable/Makefile
+src/other/tktable/Makefile.in
+src/other/tktable/aclocal.m4
+src/other/tktable/autom4te.cache
+src/other/tktable/config.*
+src/other/tktable/configure
+src/other/tktable/install.*.log
+src/other/tktable/libtool
+src/other/tktable/ltmain.sh
+src/other/tktable/so_locations
 src/other/tnt/Makefile
 src/other/tnt/Makefile.in
 src/other/togl/autom4te.cache
