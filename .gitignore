@@ -255,14 +255,19 @@ misc/win32-msvc8/breplicator/Win32
 misc/win32-msvc8/brickwall/*.user
 misc/win32-msvc8/brickwall/Win32
 misc/win32-msvc8/brlcad/*.user
+misc/win32-msvc8/brlcad/Release
 misc/win32-msvc8/brlcad/Win32
+misc/win32-msvc8/brlcad/brlcad.ncb
+misc/win32-msvc8/brlcad/brlcad.suo
 misc/win32-msvc8/btclsh/*.user
+misc/win32-msvc8/btclsh/Release
 misc/win32-msvc8/btclsh/Win32
 misc/win32-msvc8/bw2fb/*.user
 misc/win32-msvc8/bw2fb/Win32
 misc/win32-msvc8/bw2pix/*.user
 misc/win32-msvc8/bw2pix/Win32
 misc/win32-msvc8/bwish/*.user
+misc/win32-msvc8/bwish/Release
 misc/win32-msvc8/bwish/Win32
 misc/win32-msvc8/bwmod/*.user
 misc/win32-msvc8/bwmod/Win32
@@ -279,6 +284,7 @@ misc/win32-msvc8/coil/Win32
 misc/win32-msvc8/contours/*.user
 misc/win32-msvc8/contours/Win32
 misc/win32-msvc8/cy2g/*.user
+misc/win32-msvc8/cy2g/Release
 misc/win32-msvc8/cy2g/Win32
 misc/win32-msvc8/dbupgrade/*.user
 misc/win32-msvc8/dbupgrade/Win32
@@ -473,6 +479,7 @@ misc/win32-msvc8/nmg2sgp/Win32
 misc/win32-msvc8/nmgmodel/*.user
 misc/win32-msvc8/nmgmodel/Win32
 misc/win32-msvc8/opennurbs/*.user
+misc/win32-msvc8/opennurbs/Release
 misc/win32-msvc8/opennurbs/Win32
 misc/win32-msvc8/orle2fb/*.user
 misc/win32-msvc8/orle2fb/Win32
