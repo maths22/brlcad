@@ -1288,6 +1288,7 @@ src/other/libpng/libpng14.pc
 src/other/libpng/libtool
 src/other/libpng/ltmain.sh
 src/other/libpng/missing
+src/other/libpng/mkinstalldirs
 src/other/libpng/stamp-h1
 src/other/libregex/.deps
 src/other/libregex/.libs
