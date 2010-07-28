@@ -12140,6 +12140,7 @@ src/tclscripts/archer/images/combination.png -text
 src/tclscripts/archer/images/command.png -text
 src/tclscripts/archer/images/component_erase.png -text
 src/tclscripts/archer/images/component_pick.png -text
+src/tclscripts/archer/images/component_select.png -text
 src/tclscripts/archer/images/configure.png -text
 src/tclscripts/archer/images/cycle_az.png -text svneol=unset#image/png
 src/tclscripts/archer/images/cycle_el.png -text svneol=unset#image/png
