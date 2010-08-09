@@ -99,6 +99,8 @@ doc/docbook/system/man1/en/*.pdf
 doc/docbook/system/man3/en/*.3
 doc/docbook/system/man3/en/*.html
 doc/docbook/system/man3/en/*.pdf
+doc/docbook/system/man5/en/gattributes.5
+doc/docbook/system/man5/en/gattributes.html
 doc/docbook/system/mann/en/*.html
 doc/docbook/system/mann/en/*.nged
 doc/docbook/system/mann/en/*.pdf
