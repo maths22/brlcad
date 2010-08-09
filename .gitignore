@@ -1054,7 +1054,9 @@ src/librt/Makefile
 src/librt/Makefile.in
 src/librt/brep_test
 src/librt/librt.plg
+src/librt/namegen
 src/librt/nurb_example
+src/librt/parsetest
 src/librt/prcomb
 src/librtserver/.deps
 src/librtserver/.libs
