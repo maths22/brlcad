@@ -923,6 +923,7 @@ src/gtools/g_diff
 src/gtools/g_lint
 src/gtools/g_qa
 src/gtools/g_transfer
+src/gtools/remapid
 src/gtools/solshoot
 src/gtools/testfree
 src/halftone/.deps
@@ -1289,6 +1290,7 @@ src/other/libpng/install-sh
 src/other/libpng/libpng-config
 src/other/libpng/libpng.pc
 src/other/libpng/libpng.sym
+src/other/libpng/libpng.vers
 src/other/libpng/libpng14-config
 src/other/libpng/libpng14.pc
 src/other/libpng/libtool
@@ -1531,9 +1533,12 @@ src/other/tktable/autom4te.cache
 src/other/tktable/config.*
 src/other/tktable/configure
 src/other/tktable/install.*.log
+src/other/tktable/libTktable2.10.so
 src/other/tktable/libtool
 src/other/tktable/ltmain.sh
+src/other/tktable/pkgIndex.tcl
 src/other/tktable/so_locations
+src/other/tktable/tkTable.tcl.h
 src/other/tnt/Makefile
 src/other/tnt/Makefile.in
 src/other/togl/.deps
@@ -1590,6 +1595,7 @@ src/proc-db/terrain
 src/proc-db/tire
 src/proc-db/torii
 src/proc-db/tube
+src/proc-db/vegetation
 src/proc-db/vegitation
 src/proc-db/wdb_example
 src/remrt/.deps
@@ -1909,6 +1915,7 @@ src/util/png-bw
 src/util/png-pix
 src/util/png_info
 src/util/query
+src/util/random
 src/util/remapid
 src/util/rle-pix
 src/util/roots_example
