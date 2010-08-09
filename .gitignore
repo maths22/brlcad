@@ -1019,6 +1019,10 @@ src/libged/.libs
 src/libged/Makefile
 src/libged/Makefile.in
 src/libged/TAGS
+src/libicv/.deps
+src/libicv/.libs
+src/libicv/Makefile
+src/libicv/Makefile.in
 src/libmultispectral/.deps
 src/libmultispectral/.libs
 src/libmultispectral/Makefile
