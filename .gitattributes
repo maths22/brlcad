@@ -4232,6 +4232,7 @@ src/libged/bev.c svneol=native#text/plain
 src/libged/bigE.c svneol=native#text/plain
 src/libged/blast.c svneol=native#text/plain
 src/libged/bo.c svneol=native#text/plain
+src/libged/bot.c svneol=native#text/plain
 src/libged/bot_condense.c svneol=native#text/plain
 src/libged/bot_decimate.c svneol=native#text/plain
 src/libged/bot_dump.c svneol=native#text/plain
