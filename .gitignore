@@ -1508,11 +1508,6 @@ src/other/tkhtml3/autom4te.cache
 src/other/tkhtml3/config.log
 src/other/tkhtml3/config.status
 src/other/tkhtml3/configure
-src/other/tkhtml3/cssprop.c
-src/other/tkhtml3/cssprop.h
-src/other/tkhtml3/htmldefaultstyle.c
-src/other/tkhtml3/htmltokens.c
-src/other/tkhtml3/htmltokens.h
 src/other/tkhtml3/libTkhtml*
 src/other/tkhtml3/libtool
 src/other/tkhtml3/pkgIndex.tcl
