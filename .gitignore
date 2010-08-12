@@ -1518,6 +1518,7 @@ src/other/tkhtml3/libtool
 src/other/tkhtml3/pkgIndex.tcl
 src/other/tkhtml3/tclconfig/config.guess
 src/other/tkhtml3/tclconfig/config.sub
+src/other/tkhtml3/tclconfig/depcomp
 src/other/tkhtml3/tclconfig/install-sh
 src/other/tkhtml3/tclconfig/ltmain.sh
 src/other/tkhtml3/tclconfig/missing
