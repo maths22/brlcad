@@ -2578,7 +2578,6 @@ include/gcv.h svneol=native#text/plain
 include/ged.h svneol=native#text/plain
 include/libtermio.h svneol=native#text/plain
 include/light.h svneol=native#text/plain
-include/machine.h svneol=native#text/plain
 include/magic.h svneol=native#text/plain
 include/mater.h svneol=native#text/plain
 include/nmg.h svneol=native#text/plain
