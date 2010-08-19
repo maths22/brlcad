@@ -843,8 +843,6 @@ src/external/Cubit/.deps
 src/external/Cubit/.libs
 src/external/Cubit/Makefile
 src/external/Cubit/Makefile.in
-src/external/EndgameFramework/Makefile
-src/external/EndgameFramework/Makefile.in
 src/external/Makefile
 src/external/Makefile.in
 src/external/ProEngineer/.deps

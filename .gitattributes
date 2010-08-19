@@ -3794,7 +3794,6 @@ src/conv/viewpoint-g.c svneol=native#text/plain
 src/conv/walk_example.c svneol=native#text/plain
 src/external/Cubit/Makefile.am svneol=native#text/plain
 src/external/Cubit/g-sat.cpp svneol=native#text/plain
-src/external/EndgameFramework/Makefile.am svneol=native#text/plain
 src/external/Makefile.am svneol=native#text/plain
 src/external/ProEngineer/INSTALL.txt svneol=native#text/plain
 src/external/ProEngineer/Makefile.am svneol=native#text/plain
