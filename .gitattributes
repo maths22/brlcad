@@ -4562,7 +4562,6 @@ src/librt/attributes.c svneol=native#text/plain
 src/librt/bezier_2d_isect.c svneol=native#text/plain
 src/librt/binunif/binunif.c svneol=native#text/plain
 src/librt/binunif/db5_bin.c svneol=native#text/plain
-src/librt/bomb.c svneol=native#text/plain
 src/librt/bool.c svneol=native#text/plain
 src/librt/brep_test.cpp svneol=native#text/plain
 src/librt/bundle.c svneol=native#text/plain
