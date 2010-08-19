@@ -1926,10 +1926,6 @@ src/util/ttcp
 src/util/wavelet
 src/util/xyz-pl
 src/util/yuv-pix
-src/vas4/.deps
-src/vas4/.libs
-src/vas4/Makefile
-src/vas4/Makefile.in
 src/vdeck/.deps
 src/vdeck/.libs
 src/vdeck/Makefile
