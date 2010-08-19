@@ -3914,7 +3914,6 @@ src/fbed/fb_ik.h svneol=native#text/plain
 src/fbed/fbed.1 svneol=native#text/plain
 src/fbed/fbed.c svneol=native#text/plain
 src/fbed/fill_buf.c svneol=native#text/plain
-src/fbed/font.doc svneol=native#text/plain
 src/fbed/getinput.c svneol=native#text/plain
 src/fbed/glob.c svneol=native#text/plain
 src/fbed/popup.h svneol=native#text/plain
