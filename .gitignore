@@ -1499,6 +1499,8 @@ src/other/tk/unix/tk8.5.rsrc
 src/other/tk/unix/tkConfig.sh
 src/other/tk/unix/wish
 src/other/tk/unix/wish8.5.rsrc
+src/other/tkhtml/.deps
+src/other/tkhtml/.libs
 src/other/tkhtml/Makefile
 src/other/tkhtml/Makefile.in
 src/other/tkhtml/aclocal.m4
