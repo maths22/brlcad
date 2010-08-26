@@ -2325,7 +2325,6 @@ doc/html/manuals/mged/mged_gui.html svneol=native#text/html
 doc/html/manuals/mged/mged_tcl_vars.html svneol=native#text/html
 doc/html/manuals/mged/mug -text
 doc/html/manuals/mged/mug.gif -text svneol=unset#image/gif
-doc/html/manuals/mged/mug.jpg -text svneol=unset#image/jpeg
 doc/html/manuals/mged/mug_camo -text
 doc/html/manuals/mged/mug_camo.gif -text svneol=unset#image/gif
 doc/html/manuals/mged/mug_camo.jpg -text svneol=unset#image/jpeg
