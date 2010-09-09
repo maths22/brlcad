@@ -2892,6 +2892,7 @@ misc/win32-msvc8/tire/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkhtml/tkhtml.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkpng/tkpng.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/tktable/tktable.vcproj svneol=native#text/plain
 misc/win32-msvc8/torii/torii.vcproj svneol=native#text/plain
 misc/win32-msvc8/tube/tube.vcproj svneol=native#text/plain
 misc/win32-msvc8/vegetation/vegetation.vcproj svneol=native#text/plain
