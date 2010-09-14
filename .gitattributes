@@ -2622,7 +2622,6 @@ m4/patch.m4 svneol=native#text/plain
 m4/prefix.m4 svneol=native#text/plain
 m4/search.m4 svneol=native#text/plain
 m4/stage.m4 svneol=native#text/plain
-misc/Cakefile.defs -text
 misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
 misc/GQA_SAMPLE_DENSITIES svneol=native#text/plain
