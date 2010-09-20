@@ -1508,6 +1508,12 @@ src/other/tkhtml/autom4te.cache
 src/other/tkhtml/config.log
 src/other/tkhtml/config.status
 src/other/tkhtml/configure
+src/other/tkhtml/cssprop.c
+src/other/tkhtml/cssprop.h
+src/other/tkhtml/cssprop.tcl
+src/other/tkhtml/htmldefaultstyle.c
+src/other/tkhtml/htmltokens.c
+src/other/tkhtml/htmltokens.h
 src/other/tkhtml/libTkhtml*
 src/other/tkhtml/libtool
 src/other/tkhtml/pkgIndex.tcl
@@ -1519,6 +1525,7 @@ src/other/tkhtml/tclconfig/ltmain.sh
 src/other/tkhtml/tclconfig/missing
 src/other/tkhtml/tclconfig/mkinstalldirs
 src/other/tkhtml/tkhtml.n
+src/other/tkhtml/tokenlist.txt
 src/other/tkpng/.deps
 src/other/tkpng/.libs
 src/other/tkpng/Makefile
