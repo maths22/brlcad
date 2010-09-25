@@ -2611,7 +2611,6 @@ include/vfont-if.h svneol=native#text/plain
 include/vmath.h svneol=native#text/plain
 include/wdb.h svneol=native#text/plain
 m4/Makefile.am svneol=native#text/plain
-m4/OpenGL.m4 svneol=native#text/plain
 m4/args.m4 svneol=native#text/plain
 m4/ax_boost_base.m4 svneol=native#text/plain
 m4/cache.m4 svneol=native#text/plain
