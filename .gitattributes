@@ -2885,7 +2885,6 @@ misc/win32-msvc8/tclsh/tclsh.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tclstub/tclstub.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/tea/tea.vcproj svneol=native#text/plain
 misc/win32-msvc8/tea_nmg/tea_nmg.vcproj svneol=native#text/plain
-misc/win32-msvc8/terrain/terrain.vcproj svneol=native#text/plain
 misc/win32-msvc8/tire/tire.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkhtml/tkhtml.vcproj svneol=native#text/plain
 misc/win32-msvc8/tkpng/tkpng.vcproj svneol=native#text/plain
@@ -2896,6 +2895,7 @@ misc/win32-msvc8/tube/tube.vcproj svneol=native#text/plain
 misc/win32-msvc8/vegetation/vegetation.vcproj svneol=native#text/plain
 misc/win32-msvc8/vg2g/vg2g.vcproj -text
 misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
+misc/win32-msvc8/wavy/wavy.vcproj svneol=native#text/plain
 misc/win32-msvc8/wdb_example/wdb_example.vcproj svneol=native#text/plain
 misc/win32-msvc8/window/window.vcproj svneol=native#text/plain
 misc/win32-msvc8/window_frame/window_frame.vcproj svneol=native#text/plain

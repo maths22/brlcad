@@ -581,8 +581,6 @@ misc/win32-msvc8/tea/*.user
 misc/win32-msvc8/tea/Win32
 misc/win32-msvc8/tea_nmg/*.user
 misc/win32-msvc8/tea_nmg/Win32
-misc/win32-msvc8/terrain/*.user
-misc/win32-msvc8/terrain/Win32
 misc/win32-msvc8/tire/*.user
 misc/win32-msvc8/tire/Win32
 misc/win32-msvc8/tkhtml/*.user
@@ -601,6 +599,8 @@ misc/win32-msvc8/vg2g/*.user
 misc/win32-msvc8/vg2g/Win32
 misc/win32-msvc8/viewpoint2g/*.user
 misc/win32-msvc8/viewpoint2g/Win32
+misc/win32-msvc8/wavy/*.user
+misc/win32-msvc8/wavy/Win32
 misc/win32-msvc8/wdb_example/*.user
 misc/win32-msvc8/wdb_example/Win32
 misc/win32-msvc8/window/*.user
