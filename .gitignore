@@ -1598,12 +1598,10 @@ src/proc-db/spring
 src/proc-db/surfaceintersect
 src/proc-db/tea
 src/proc-db/tea_nmg
-src/proc-db/terrain
 src/proc-db/tire
 src/proc-db/torii
 src/proc-db/tube
 src/proc-db/vegetation
-src/proc-db/vegitation
 src/proc-db/wavy
 src/proc-db/wdb_example
 src/remrt/.deps
