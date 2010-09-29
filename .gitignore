@@ -176,6 +176,8 @@ misc/config.guess
 misc/config.guess.backup
 misc/config.sub
 misc/config.sub.backup
+misc/debian/Makefile
+misc/debian/Makefile.in
 misc/depcomp
 misc/doxygen_output
 misc/enigma/.deps
@@ -1602,6 +1604,7 @@ src/proc-db/torii
 src/proc-db/tube
 src/proc-db/vegetation
 src/proc-db/vegitation
+src/proc-db/wavy
 src/proc-db/wdb_example
 src/remrt/.deps
 src/remrt/.libs
