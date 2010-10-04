@@ -11818,6 +11818,7 @@ src/tclscripts/archer/ArcherCore.tcl svneol=native#text/plain
 src/tclscripts/archer/AttrGroupsDisplayUtility.tcl svneol=native#text/plain
 src/tclscripts/archer/BotUtility.tcl svneol=native#text/plain
 src/tclscripts/archer/CombEditFrame.tcl svneol=native#text/plain
+src/tclscripts/archer/DataUtils.tcl svneol=native#text/plain
 src/tclscripts/archer/EhyEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/EllEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/EpaEditFrame.tcl svneol=native#text/plain
