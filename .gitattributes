@@ -2635,7 +2635,6 @@ misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
-misc/debian/Makefile.am svneol=native#text/plain
 misc/debian/brlcad-bin.docs svneol=native#text/plain
 misc/debian/brlcad-bin.install svneol=native#text/plain
 misc/debian/brlcad-bin.lintian-overrides svneol=native#text/plain
@@ -2677,7 +2676,6 @@ misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
-misc/nsis/Makefile.am svneol=native#text/plain
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
 misc/nsis/header.bmp -text svneol=unset#image/bmp
@@ -2709,7 +2707,6 @@ misc/win32-msvc/Dll/Makefile.am svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc/Makefile.am svneol=native#text/plain
 misc/win32-msvc8/3dm2g/3dm2g.vcproj svneol=native#text/plain
 misc/win32-msvc8/Makefile.am svneol=native#text/plain
 misc/win32-msvc8/adrt/adrt.vcproj svneol=CRLF#text/plain eol=crlf
