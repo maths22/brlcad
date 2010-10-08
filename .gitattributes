@@ -2702,7 +2702,6 @@ misc/win32-msvc/CMakeLists.txt svneol=native#text/plain
 misc/win32-msvc/Dll/BrlcadCore.def svneol=native#text/plain
 misc/win32-msvc/Dll/BrlcadCore.rc -text
 misc/win32-msvc/Dll/CMakeLists.txt svneol=native#text/plain
-misc/win32-msvc/Dll/Makefile.am svneol=native#text/plain
 misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
