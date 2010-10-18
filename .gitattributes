@@ -3138,6 +3138,7 @@ src/anim/anim_track.c svneol=native#text/plain
 src/anim/anim_turn.1 svneol=native#text/plain
 src/anim/anim_turn.c svneol=native#text/plain
 src/anim/cattrack.c svneol=native#text/plain
+src/anim/cattrack.h svneol=native#text/plain
 src/anim/chan_add.c svneol=native#text/plain
 src/anim/chan_mult.1 svneol=native#text/plain
 src/anim/chan_mult.c svneol=native#text/plain
