@@ -4049,6 +4049,7 @@ src/libbn/symbol.c svneol=native#text/plain
 src/libbn/tabdata.c svneol=native#text/plain
 src/libbn/tcl.c svneol=native#text/plain
 src/libbn/tplot.c svneol=native#text/plain
+src/libbn/ulp.c svneol=native#text/plain
 src/libbn/vectfont.c svneol=native#text/plain
 src/libbn/vector.c svneol=native#text/plain
 src/libbn/vers.c svneol=native#text/plain
