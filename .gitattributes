@@ -3236,7 +3236,6 @@ src/conv/comgeom/3d.h svneol=native#text/plain
 src/conv/comgeom/comgeom-g.1 svneol=native#text/plain
 src/conv/comgeom/cvt.c svneol=native#text/plain
 src/conv/comgeom/f2a.c svneol=native#text/plain
-src/conv/comgeom/ged_types.h svneol=native#text/plain
 src/conv/comgeom/mat.c svneol=native#text/plain
 src/conv/comgeom/read.c svneol=native#text/plain
 src/conv/comgeom/region.c svneol=native#text/plain
