@@ -3032,6 +3032,7 @@ sh/Makefile.am svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
 sh/cadbug.sh svneol=native#text/x-sh
 sh/cmakecheck.sh svneol=native#text/x-sh
+sh/conversion.sh svneol=native#text/x-sh
 sh/copyright.sh svneol=native#text/x-sh
 sh/cray.sh svneol=native#text/x-sh
 sh/elapsed.sh svneol=native#text/x-sh
