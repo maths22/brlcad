@@ -12409,6 +12409,7 @@ src/tclscripts/mged/asc2g.tcl svneol=native#text/plain
 src/tclscripts/mged/attr_edit.tcl svneol=native#text/plain
 src/tclscripts/mged/bindings.tcl svneol=native#text/plain
 src/tclscripts/mged/bot_face_select.tcl svneol=native#text/plain
+src/tclscripts/mged/botedit.tcl svneol=native#text/plain
 src/tclscripts/mged/bots.tcl svneol=native#text/plain
 src/tclscripts/mged/build_region.tcl svneol=native#text/plain
 src/tclscripts/mged/calipers.tcl svneol=native#text/plain
