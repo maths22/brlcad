@@ -1598,6 +1598,7 @@ src/proc-db/spring
 src/proc-db/surfaceintersect
 src/proc-db/tea
 src/proc-db/tea_nmg
+src/proc-db/terrain
 src/proc-db/tire
 src/proc-db/torii
 src/proc-db/tube
