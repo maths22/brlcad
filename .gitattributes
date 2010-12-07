@@ -2840,6 +2840,7 @@ misc/win32-msvc8/pix2bw/pix2bw.vcproj -text
 misc/win32-msvc8/pix2fb/pix2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pix2g/pix2g.vcproj svneol=native#text/plain
 misc/win32-msvc8/pixautosize/pixautosize.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/pixcmp/pixcmp.vcproj svneol=native#text/plain
 misc/win32-msvc8/pixflip2fb/pixflip2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pixmatte/pixmatte.vcproj -text
 misc/win32-msvc8/pl2fb/pl2fb.vcproj svneol=CRLF#text/plain eol=crlf
