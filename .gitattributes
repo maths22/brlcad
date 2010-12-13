@@ -4794,6 +4794,7 @@ src/librt/timerhep.c svneol=native#text/plain
 src/librt/timerunix.c svneol=native#text/plain
 src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
+src/librt/uvpoints.cpp svneol=native#text/plain
 src/librt/vers.c svneol=native#text/plain
 src/librt/vlist.c svneol=native#text/plain
 src/librt/vshoot.c svneol=native#text/plain
