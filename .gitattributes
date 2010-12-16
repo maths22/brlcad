@@ -4069,6 +4069,7 @@ src/libbu/badmagic.c svneol=native#text/plain
 src/libbu/basename.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
 src/libbu/bomb.c svneol=native#text/plain
+src/libbu/booleanize.c svneol=native#text/plain
 src/libbu/brlcad_path.c svneol=native#text/plain
 src/libbu/cmd.c svneol=native#text/plain
 src/libbu/cmdhist.c svneol=native#text/plain
