@@ -10736,6 +10736,7 @@ src/other/tk/doc/ttk_scale.n svneol=native#text/plain
 src/other/tk/doc/ttk_scrollbar.n svneol=native#text/plain
 src/other/tk/doc/ttk_separator.n svneol=native#text/plain
 src/other/tk/doc/ttk_sizegrip.n svneol=native#text/plain
+src/other/tk/doc/ttk_spinbox.n svneol=native#text/plain
 src/other/tk/doc/ttk_style.n svneol=native#text/plain
 src/other/tk/doc/ttk_treeview.n svneol=native#text/plain
 src/other/tk/doc/ttk_vsapi.n svneol=native#text/plain
@@ -10970,6 +10971,7 @@ src/other/tk/library/demos/ttkmenu.tcl -text
 src/other/tk/library/demos/ttknote.tcl -text
 src/other/tk/library/demos/ttkpane.tcl -text
 src/other/tk/library/demos/ttkprogress.tcl -text
+src/other/tk/library/demos/ttkscale.tcl svneol=native#text/plain
 src/other/tk/library/demos/twind.tcl svneol=native#text/plain
 src/other/tk/library/demos/unicodeout.tcl svneol=native#text/plain
 src/other/tk/library/demos/vscale.tcl svneol=native#text/plain
@@ -11041,6 +11043,7 @@ src/other/tk/library/ttk/progress.tcl svneol=native#text/plain
 src/other/tk/library/ttk/scale.tcl svneol=native#text/plain
 src/other/tk/library/ttk/scrollbar.tcl svneol=native#text/plain
 src/other/tk/library/ttk/sizegrip.tcl svneol=native#text/plain
+src/other/tk/library/ttk/spinbox.tcl svneol=native#text/plain
 src/other/tk/library/ttk/treeview.tcl svneol=native#text/plain
 src/other/tk/library/ttk/ttk.tcl svneol=native#text/plain
 src/other/tk/library/ttk/utils.tcl svneol=native#text/plain
@@ -11204,6 +11207,7 @@ src/other/tk/tests/textTag.test svneol=native#text/plain
 src/other/tk/tests/textWind.test svneol=native#text/plain
 src/other/tk/tests/tk.test svneol=native#text/plain
 src/other/tk/tests/ttk/all.tcl svneol=native#text/plain
+src/other/tk/tests/ttk/checkbutton.test svneol=native#text/plain
 src/other/tk/tests/ttk/combobox.test svneol=native#text/plain
 src/other/tk/tests/ttk/entry.test svneol=native#text/plain
 src/other/tk/tests/ttk/image.test svneol=native#text/plain
@@ -11212,7 +11216,9 @@ src/other/tk/tests/ttk/layout.test svneol=native#text/plain
 src/other/tk/tests/ttk/notebook.test svneol=native#text/plain
 src/other/tk/tests/ttk/panedwindow.test svneol=native#text/plain
 src/other/tk/tests/ttk/progressbar.test svneol=native#text/plain
+src/other/tk/tests/ttk/radiobutton.test svneol=native#text/plain
 src/other/tk/tests/ttk/scrollbar.test svneol=native#text/plain
+src/other/tk/tests/ttk/spinbox.test svneol=native#text/plain
 src/other/tk/tests/ttk/treetags.test svneol=native#text/plain
 src/other/tk/tests/ttk/treeview.test svneol=native#text/plain
 src/other/tk/tests/ttk/ttk.test svneol=native#text/plain
