@@ -9701,6 +9701,7 @@ src/other/tcl/library/tzdata/America/Asuncion -text
 src/other/tcl/library/tzdata/America/Atikokan -text
 src/other/tcl/library/tzdata/America/Atka -text
 src/other/tcl/library/tzdata/America/Bahia -text
+src/other/tcl/library/tzdata/America/Bahia_Banderas svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Barbados -text
 src/other/tcl/library/tzdata/America/Belem -text
 src/other/tcl/library/tzdata/America/Belize -text
@@ -9773,6 +9774,7 @@ src/other/tcl/library/tzdata/America/Managua -text
 src/other/tcl/library/tzdata/America/Manaus -text
 src/other/tcl/library/tzdata/America/Marigot svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Martinique -text
+src/other/tcl/library/tzdata/America/Matamoros svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Mazatlan -text
 src/other/tcl/library/tzdata/America/Mendoza -text
 src/other/tcl/library/tzdata/America/Menominee -text
@@ -9791,6 +9793,7 @@ src/other/tcl/library/tzdata/America/Nome -text
 src/other/tcl/library/tzdata/America/Noronha -text
 src/other/tcl/library/tzdata/America/North_Dakota/Center -text
 src/other/tcl/library/tzdata/America/North_Dakota/New_Salem -text
+src/other/tcl/library/tzdata/America/Ojinaga svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Panama -text
 src/other/tcl/library/tzdata/America/Pangnirtung -text
 src/other/tcl/library/tzdata/America/Paramaribo -text
@@ -9807,6 +9810,7 @@ src/other/tcl/library/tzdata/America/Regina -text
 src/other/tcl/library/tzdata/America/Resolute -text
 src/other/tcl/library/tzdata/America/Rio_Branco -text
 src/other/tcl/library/tzdata/America/Rosario -text
+src/other/tcl/library/tzdata/America/Santa_Isabel svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Santarem svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Santiago -text
 src/other/tcl/library/tzdata/America/Santo_Domingo -text
@@ -9835,6 +9839,7 @@ src/other/tcl/library/tzdata/America/Yellowknife -text
 src/other/tcl/library/tzdata/Antarctica/Casey -text
 src/other/tcl/library/tzdata/Antarctica/Davis -text
 src/other/tcl/library/tzdata/Antarctica/DumontDUrville -text
+src/other/tcl/library/tzdata/Antarctica/Macquarie svneol=native#text/plain
 src/other/tcl/library/tzdata/Antarctica/Mawson -text
 src/other/tcl/library/tzdata/Antarctica/McMurdo -text
 src/other/tcl/library/tzdata/Antarctica/Palmer -text
@@ -10123,6 +10128,7 @@ src/other/tcl/library/tzdata/PST8PDT -text
 src/other/tcl/library/tzdata/Pacific/Apia -text
 src/other/tcl/library/tzdata/Pacific/Auckland -text
 src/other/tcl/library/tzdata/Pacific/Chatham -text
+src/other/tcl/library/tzdata/Pacific/Chuuk svneol=native#text/plain
 src/other/tcl/library/tzdata/Pacific/Easter -text
 src/other/tcl/library/tzdata/Pacific/Efate -text
 src/other/tcl/library/tzdata/Pacific/Enderbury -text
@@ -10148,6 +10154,7 @@ src/other/tcl/library/tzdata/Pacific/Noumea -text
 src/other/tcl/library/tzdata/Pacific/Pago_Pago -text
 src/other/tcl/library/tzdata/Pacific/Palau -text
 src/other/tcl/library/tzdata/Pacific/Pitcairn -text
+src/other/tcl/library/tzdata/Pacific/Pohnpei svneol=native#text/plain
 src/other/tcl/library/tzdata/Pacific/Ponape -text
 src/other/tcl/library/tzdata/Pacific/Port_Moresby -text
 src/other/tcl/library/tzdata/Pacific/Rarotonga -text
