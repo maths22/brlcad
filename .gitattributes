@@ -12410,6 +12410,7 @@ src/tclscripts/lib/RtControl.tcl svneol=native#text/plain
 src/tclscripts/lib/Splash.tcl svneol=native#text/plain
 src/tclscripts/lib/Table.tcl svneol=native#text/plain
 src/tclscripts/lib/TableView.tcl svneol=native#text/plain
+src/tclscripts/lib/TkTable.tcl svneol=native#text/plain
 src/tclscripts/lib/View.tcl svneol=native#text/plain
 src/tclscripts/lib/ViewAxesControl.tcl svneol=native#text/plain
 src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
