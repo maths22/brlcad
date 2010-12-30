@@ -2707,7 +2707,6 @@ misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/3dm2g/3dm2g.vcproj svneol=native#text/plain
 misc/win32-msvc8/Makefile.am svneol=native#text/plain
-misc/win32-msvc8/adrt/adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
@@ -2812,10 +2811,12 @@ misc/win32-msvc8/liborle/liborle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpkg/libpkg.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpng/libpng.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libregex/libregex.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/librender/librender.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/librt/librt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libsysv/libsysv.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtcl/libtcl.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtclcad/libtclcad.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/libtie/libtie.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtk/libtk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libutahrle/libutahrle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libwdb/libwdb.vcproj svneol=CRLF#text/plain eol=crlf
