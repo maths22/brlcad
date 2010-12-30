@@ -7929,6 +7929,7 @@ src/other/libpng/LICENSE -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
+src/other/libpng/autogen.sh svneol=native#text/x-sh
 src/other/libpng/configure.ac svneol=native#text/plain
 src/other/libpng/contrib/gregbook/COPYING svneol=native#text/plain
 src/other/libpng/contrib/gregbook/LICENSE -text
@@ -8016,12 +8017,11 @@ src/other/libpng/contrib/visupng/VisualPng.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/contrib/visupng/cexcept.h svneol=native#text/plain
 src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
-src/other/libpng/libpng-1.4.3.txt svneol=native#text/plain
+src/other/libpng/libpng-1.4.5.txt svneol=native#text/plain
 src/other/libpng/libpng-config.in svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
 src/other/libpng/libpng.pc.in svneol=native#text/plain
 src/other/libpng/libpngpf.3 svneol=native#text/plain
-src/other/libpng/new_push_process_row.c svneol=native#text/plain
 src/other/libpng/png.5 svneol=native#text/plain
 src/other/libpng/png.c svneol=native#text/plain
 src/other/libpng/png.h svneol=native#text/plain
@@ -8063,7 +8063,6 @@ src/other/libpng/projects/vstudio/readme.txt svneol=native#text/plain
 src/other/libpng/projects/vstudio/vstudio.sln svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/vstudio/zlib.props svneol=native#text/plain
 src/other/libpng/projects/vstudio/zlib/zlib.vcxproj svneol=CRLF#text/plain eol=crlf
-src/other/libpng/projects/xcode/Info.plist svneol=native#text/plain
 src/other/libpng/projects/xcode/README.txt svneol=native#text/plain
 src/other/libpng/projects/xcode/libpng.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/libpng/scripts/README.txt svneol=native#text/plain
