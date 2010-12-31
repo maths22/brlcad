@@ -8251,9 +8251,7 @@ src/other/libz/CMakeLists.txt svneol=native#text/plain
 src/other/libz/ChangeLog svneol=native#text/plain
 src/other/libz/FAQ -text
 src/other/libz/INDEX -text
-src/other/libz/Makefile svneol=native#text/plain
 src/other/libz/Makefile.am svneol=native#text/plain
-src/other/libz/Makefile.in svneol=native#text/plain
 src/other/libz/README svneol=native#text/plain
 src/other/libz/adler32.c svneol=native#text/plain
 src/other/libz/amiga/Makefile.pup svneol=native#text/plain
