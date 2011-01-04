@@ -1725,14 +1725,6 @@ src/tclscripts/archer/Makefile
 src/tclscripts/archer/Makefile.in
 src/tclscripts/archer/images/Makefile
 src/tclscripts/archer/images/Makefile.in
-src/tclscripts/archer/images/Themes/Crystal/Makefile
-src/tclscripts/archer/images/Themes/Crystal/Makefile.in
-src/tclscripts/archer/images/Themes/Crystal_Large/Makefile
-src/tclscripts/archer/images/Themes/Crystal_Large/Makefile.in
-src/tclscripts/archer/images/Themes/Makefile
-src/tclscripts/archer/images/Themes/Makefile.in
-src/tclscripts/archer/images/Themes/Windows/Makefile
-src/tclscripts/archer/images/Themes/Windows/Makefile.in
 src/tclscripts/archer/pkgIndex.tcl
 src/tclscripts/archer/tclIndex
 src/tclscripts/boteditor/Makefile
