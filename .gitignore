@@ -1201,8 +1201,6 @@ src/other/URToolkit/tools/to8
 src/other/URToolkit/tools/tobw
 src/other/URToolkit/tools/unexp
 src/other/URToolkit/tools/unslice
-src/other/awf/Makefile
-src/other/awf/Makefile.in
 src/other/incrTcl/*.00?
 src/other/incrTcl/*.dsp
 src/other/incrTcl/*.dsw
