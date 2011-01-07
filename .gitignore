@@ -638,10 +638,6 @@ src/adrt/librender/.deps
 src/adrt/librender/.libs
 src/adrt/librender/Makefile
 src/adrt/librender/Makefile.in
-src/adrt/libtie/.deps
-src/adrt/libtie/.libs
-src/adrt/libtie/Makefile
-src/adrt/libtie/Makefile.in
 src/adrt/libtienet
 src/adrt/libutil
 src/adrt/master/.deps
@@ -1078,6 +1074,10 @@ src/libtermio/Makefile
 src/libtermio/Makefile.in
 src/libtermio/vers.c
 src/libtermio/version
+src/libtie/.deps
+src/libtie/.libs
+src/libtie/Makefile
+src/libtie/Makefile.in
 src/libwdb/.deps
 src/libwdb/.libs
 src/libwdb/Makefile
