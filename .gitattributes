@@ -3111,6 +3111,7 @@ src/adrt/libtie/tie1.c svneol=native#text/plain
 src/adrt/libtie/tie_kdtree.c svneol=native#text/plain
 src/adrt/libtie/tie_kdtree0.c svneol=native#text/plain
 src/adrt/libtie/tie_kdtree1.c svneol=native#text/plain
+src/adrt/libtie/tieprivate.h svneol=native#text/plain
 src/adrt/load.c svneol=native#text/plain
 src/adrt/load.h svneol=native#text/plain
 src/adrt/load_g.c svneol=native#text/plain
