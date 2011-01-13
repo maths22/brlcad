@@ -1740,10 +1740,6 @@ src/tclscripts/lib/tclIndex
 src/tclscripts/mged/Makefile
 src/tclscripts/mged/Makefile.in
 src/tclscripts/mged/tclIndex
-src/tclscripts/nirt/Makefile
-src/tclscripts/nirt/Makefile.in
-src/tclscripts/nirt/pkgIndex.tcl
-src/tclscripts/nirt/tclIndex
 src/tclscripts/pkgIndex.tcl
 src/tclscripts/pl-dm/Makefile
 src/tclscripts/pl-dm/Makefile.in

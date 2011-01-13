@@ -12363,10 +12363,6 @@ src/tclscripts/mged/titles.tcl svneol=native#text/plain
 src/tclscripts/mged/tree.tcl svneol=native#text/plain
 src/tclscripts/mged/xclone.tcl -text
 src/tclscripts/mouse.tcl svneol=native#text/plain
-src/tclscripts/nirt/Makefile.am svneol=native#text/plain
-src/tclscripts/nirt/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/nirt/prototype.sh svneol=native#text/x-sh
-src/tclscripts/nirt/tclIndex -text
 src/tclscripts/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/Makefile.am svneol=native#text/plain
 src/tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
