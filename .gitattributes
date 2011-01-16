@@ -2656,6 +2656,7 @@ misc/enigma/Makefile.am svneol=native#text/plain
 misc/enigma/NEWS svneol=native#text/plain
 misc/enigma/README svneol=native#text/plain
 misc/enigma/configure.ac svneol=native#text/plain
+misc/enigma/crypt.c svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
 misc/enigma/enigma.c svneol=native#text/plain
 misc/flawfinder -text
