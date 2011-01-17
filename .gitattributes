@@ -11484,6 +11484,7 @@ src/other/tkpng/README svneol=native#text/plain
 src/other/tkpng/generic/tkImgPNG.c svneol=native#text/plain
 src/other/tkpng/generic/tkImgPNGInit.c svneol=native#text/plain
 src/other/tkpng/license.terms svneol=native#text/plain
+src/other/tkpng/pkgIndex.tcl.in svneol=native#text/plain
 src/other/tktable/ChangeLog svneol=native#text/plain
 src/other/tktable/Makefile.in svneol=native#text/plain
 src/other/tktable/README.blt svneol=native#text/plain
