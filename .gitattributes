@@ -7452,7 +7452,6 @@ src/other/incrTcl/itcl/tests/protection.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/scope.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/tclIndex -text
 src/other/incrTcl/itcl/win/dllEntryPoint.c svneol=native#text/plain
-src/other/incrTcl/itcl/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itcl/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itcl/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itcl/win/rc/itcl.rc svneol=CRLF#text/plain eol=crlf
@@ -7493,17 +7492,8 @@ src/other/incrTcl/itk/library/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/library/Toplevel.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/Widget.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/itk.tcl svneol=native#text/plain
-src/other/incrTcl/itk/library/pkgIndex.tcl svneol=native#text/plain
 src/other/incrTcl/itk/library/tclIndex -text
 src/other/incrTcl/itk/license.terms svneol=native#text/plain
-src/other/incrTcl/itk/mac/MW_ItkHeader.pch -text
-src/other/incrTcl/itk/mac/itkMacApplication.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacLibrary.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacResource.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacTclCode.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkStaticApplication.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/pkgIndex.tcl svneol=native#text/plain
-src/other/incrTcl/itk/mac/tclIndex -text
 src/other/incrTcl/itk/pkgIndex.tcl.in svneol=native#text/plain
 src/other/incrTcl/itk/tests/all -text
 src/other/incrTcl/itk/tests/all.tcl svneol=native#text/plain
@@ -7515,7 +7505,6 @@ src/other/incrTcl/itk/tests/public.test svneol=native#text/plain
 src/other/incrTcl/itk/tests/toplevel.test svneol=native#text/plain
 src/other/incrTcl/itk/tests/widget.test svneol=native#text/plain
 src/other/incrTcl/itk/win/dllEntryPoint.c svneol=native#text/plain
-src/other/incrTcl/itk/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itk/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itk/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
