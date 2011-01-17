@@ -7435,6 +7435,13 @@ src/other/incrTcl/itcl/tests/old/inherit.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/tclIndex -text
 src/other/incrTcl/itcl/tests/old/testlib.tcl svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/toaster.test svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Appliance.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Hazard.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Outlet.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/SmartToaster.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Toaster.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/tclIndex svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/usualway.tcl svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/uplevel.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/upvar.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/protection.test svneol=native#text/plain
