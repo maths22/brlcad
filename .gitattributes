@@ -2553,6 +2553,7 @@ include/conf/Makefile.am svneol=native#text/plain
 include/conf/PATCH -text
 include/conf/make.vbs svneol=native#text/plain
 include/config_win.h svneol=native#text/plain
+include/config_win_cmake.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
 include/dg.h svneol=native#text/plain
