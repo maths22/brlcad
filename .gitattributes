@@ -7511,7 +7511,6 @@ src/other/incrTcl/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
 src/other/incrTcl/itk/win/rc/itk.rc -text svneol=CRLF#text/plain
 src/other/incrTcl/itk/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/license.terms svneol=native#text/plain
-src/other/incrTcl/makefile.bc svneol=native#text/plain
 src/other/incrTcl/makefile.vc svneol=native#text/plain
 src/other/incrTcl/rules.vc -text
 src/other/incrTcl/tcl.m4 svneol=native#text/plain
