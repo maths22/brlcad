@@ -7524,7 +7524,8 @@ src/other/incrTcl/itk/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/license.terms svneol=native#text/plain
 src/other/incrTcl/makefile.vc svneol=native#text/plain
 src/other/incrTcl/rules.vc -text
-src/other/incrTcl/tcl.m4 svneol=native#text/plain
+src/other/incrTcl/tclconfig/install-sh svneol=native#text/plain
+src/other/incrTcl/tclconfig/tcl.m4 svneol=native#text/plain
 src/other/incrTcl/tools/Makefile.am svneol=native#text/plain
 src/other/incrTcl/tools/genStubs.tcl svneol=native#text/plain
 src/other/iwidgets/CHANGES svneol=native#text/native
