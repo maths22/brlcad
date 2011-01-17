@@ -481,6 +481,7 @@ doc/docbook/lessons/es/mged13_ubicar_figuras_en_3d.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged14_ubicar_figuras_en_3d_2.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged15_crear_camion_de_juguete.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged16_mod_tech_struct.xml svneol=native#text/xml
+doc/docbook/log4j.properties svneol=native#text/plain
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
 doc/docbook/resources/standard/dtd/README svneol=native#text/plain
