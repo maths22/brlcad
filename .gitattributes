@@ -7519,7 +7519,7 @@ src/other/incrTcl/itk/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itk/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itk/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
-src/other/incrTcl/itk/win/rc/itk.rc -text svneol=CRLF#text/plain
+src/other/incrTcl/itk/win/rc/itk.rc svneol=CRLF#text/plain eol=crlf
 src/other/incrTcl/itk/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/license.terms svneol=native#text/plain
 src/other/incrTcl/makefile.vc svneol=native#text/plain
