@@ -12112,6 +12112,7 @@ src/tclscripts/archer/images/view_scale.png -text
 src/tclscripts/archer/images/view_top_bottom_small.png -text
 src/tclscripts/archer/images/view_translate.png -text
 src/tclscripts/archer/images/wizard.png -text
+src/tclscripts/archer/itk_redefines.tcl svneol=native#text/plain
 src/tclscripts/archer/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/archer/tabwindow.itk svneol=native#text/plain
 src/tclscripts/archer/tclIndex -text
