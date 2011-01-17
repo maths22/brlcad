@@ -7492,6 +7492,7 @@ src/other/incrTcl/itk/library/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itk/library/Toplevel.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/Widget.itk svneol=native#text/plain
 src/other/incrTcl/itk/library/itk.tcl svneol=native#text/plain
+src/other/incrTcl/itk/library/pkgIndex.tcl svneol=native#text/plain
 src/other/incrTcl/itk/library/tclIndex -text
 src/other/incrTcl/itk/license.terms svneol=native#text/plain
 src/other/incrTcl/itk/pkgIndex.tcl.in svneol=native#text/plain
