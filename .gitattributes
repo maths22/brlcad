@@ -4803,7 +4803,6 @@ src/librt/regionfix.c svneol=native#text/plain
 src/librt/roots.c svneol=native#text/plain
 src/librt/shoot.c svneol=native#text/plain
 src/librt/spectrum.c svneol=native#text/plain
-src/librt/storage.c svneol=native#text/plain
 src/librt/tcl.c svneol=native#text/plain
 src/librt/timer-nt.c svneol=native#text/plain
 src/librt/timer42.c svneol=native#text/plain
