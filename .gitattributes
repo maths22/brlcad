@@ -4933,7 +4933,6 @@ src/mged/points/process.c svneol=native#text/plain
 src/mged/points/process.h svneol=native#text/plain
 src/mged/polyif.c svneol=native#text/plain
 src/mged/predictor.c svneol=native#text/plain
-src/mged/qray.c svneol=native#text/plain
 src/mged/qray.h svneol=native#text/plain
 src/mged/rect.c svneol=native#text/plain
 src/mged/red.c svneol=native#text/plain
