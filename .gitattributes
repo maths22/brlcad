@@ -2596,7 +2596,6 @@ include/raytrace.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
 include/rtfunc.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
-include/rtprivate.h svneol=native#text/plain
 include/rtserver.h svneol=native#text/plain
 include/sed4 -text
 include/shadefuncs.h svneol=native#text/plain
@@ -11700,6 +11699,7 @@ src/rt/rtexample.c svneol=native#text/plain
 src/rt/rtg3.1 svneol=native#text/plain
 src/rt/rthide.1 svneol=native#text/plain
 src/rt/rtpp.1 svneol=native#text/plain
+src/rt/rtprivate.h svneol=native#text/plain
 src/rt/rtrange.1 svneol=native#text/plain
 src/rt/rtray.1 svneol=native#text/plain
 src/rt/rtregis.1 svneol=native#text/plain
