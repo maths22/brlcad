@@ -7871,7 +7871,6 @@ src/other/jove/jove_temp.h svneol=native#text/plain
 src/other/jove/jove_term.c svneol=native#text/plain
 src/other/jove/jove_tune.c svneol=native#text/plain
 src/other/jove/jove_wind.c svneol=native#text/plain
-src/other/jove/mkversion.sh svneol=native#text/x-sh
 src/other/jove/teach-jove.in svneol=native#text/plain
 src/other/jove/termcap.h svneol=native#text/plain
 src/other/libpng/ANNOUNCE -text
