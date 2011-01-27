@@ -58,8 +58,6 @@ db/world.g
 db/xmp.g
 doc/Makefile
 doc/Makefile.in
-doc/book/Makefile
-doc/book/Makefile.in
 doc/docbook/Makefile
 doc/docbook/Makefile.in
 doc/docbook/articles/Makefile

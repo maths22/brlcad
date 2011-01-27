@@ -73,7 +73,6 @@ doc/TODO.BREP svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/archer_ack.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
-doc/book/Makefile.am svneol=native#text/plain
 doc/brep.txt svneol=native#text/plain
 doc/bw.5 svneol=native#text/plain
 doc/cmap.5 svneol=native#text/plain
