@@ -2179,8 +2179,6 @@ doc/html/manuals/Install.html svneol=native#text/html
 doc/html/manuals/Makefile.am svneol=native#text/plain
 doc/html/manuals/Obtain.html svneol=native#text/html
 doc/html/manuals/Overview.html svneol=native#text/html
-doc/html/manuals/archer/Makefile.am svneol=native#text/plain
-doc/html/manuals/archer/archer.ico -text svneol=unset#image/x-icon
 doc/html/manuals/cadwidgets/Command.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Database.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Db.html svneol=native#text/html
@@ -2677,6 +2675,7 @@ misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
+misc/nsis/archer.ico -text
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
 misc/nsis/header.bmp -text svneol=unset#image/bmp

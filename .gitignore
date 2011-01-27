@@ -118,8 +118,6 @@ doc/html/manuals/Anim_Tutorial/Makefile
 doc/html/manuals/Anim_Tutorial/Makefile.in
 doc/html/manuals/Makefile
 doc/html/manuals/Makefile.in
-doc/html/manuals/archer/Makefile
-doc/html/manuals/archer/Makefile.in
 doc/html/manuals/cadwidgets/Makefile
 doc/html/manuals/cadwidgets/Makefile.in
 doc/html/manuals/libbu/Makefile
