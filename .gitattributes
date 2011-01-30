@@ -529,6 +529,7 @@ doc/docbook/resources/standard/xsl/RELEASE-NOTES.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/TODO svneol=native#text/plain
 doc/docbook/resources/standard/xsl/VERSION svneol=native#text/plain
 doc/docbook/resources/standard/xsl/catalog.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/addns.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/common/af.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/am.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/ar.xml svneol=native#text/xml
