@@ -73,8 +73,6 @@ doc/TODO.BREP svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/archer_ack.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
-doc/book/Makefile.am svneol=native#text/plain
-doc/book/VolumeIV.xml svneol=native#text/xml
 doc/brep.txt svneol=native#text/plain
 doc/bw.5 svneol=native#text/plain
 doc/cmap.5 svneol=native#text/plain
@@ -187,6 +185,7 @@ doc/docbook/books/README svneol=native#text/plain
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeI.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
+doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIV.xml svneol=native#text/xml
 doc/docbook/books/en/Makefile.am svneol=native#text/plain
 doc/docbook/books/en/images/tutorial_series_volIII_fig01.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig02.png -text
@@ -227,7 +226,6 @@ doc/docbook/books/en/images/tutorial_series_volI_fig05.png -text svneol=unset#im
 doc/docbook/books/en/images/tutorial_series_volI_fig06.png -text svneol=unset#image/png
 doc/docbook/books/en/images/tutorial_series_volI_fig07.png -text svneol=unset#image/png
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
-doc/docbook/catalog.xml svneol=native#text/xml
 doc/docbook/fop.xconf.in svneol=native#text/plain
 doc/docbook/lessons/en/Makefile.am svneol=native#text/plain
 doc/docbook/lessons/en/images/mged01_commandwindow.png -text
@@ -481,40 +479,8 @@ doc/docbook/lessons/es/mged13_ubicar_figuras_en_3d.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged14_ubicar_figuras_en_3d_2.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged15_crear_camion_de_juguete.xml svneol=native#text/xml
 doc/docbook/lessons/es/mged16_mod_tech_struct.xml svneol=native#text/xml
+doc/docbook/log4j.properties svneol=native#text/plain
 doc/docbook/resources/README svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ChangeLog svneol=native#text/plain
-doc/docbook/resources/standard/dtd/README svneol=native#text/plain
-doc/docbook/resources/standard/dtd/calstblx.dtd svneol=native#text/plain
-doc/docbook/resources/standard/dtd/catalog.xml svneol=native#text/xml
-doc/docbook/resources/standard/dtd/dbcentx.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/dbgenent.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/dbhierx.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/dbnotnx.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/dbpoolx.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/docbook.cat svneol=native#text/plain
-doc/docbook/resources/standard/dtd/docbookx.dtd svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/README svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamsa.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamsb.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamsc.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamsn.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamso.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isoamsr.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isobox.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isocyr1.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isocyr2.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isodia.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isogrk1.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isogrk2.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isogrk3.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isogrk4.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isolat1.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isolat2.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isonum.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isopub.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/ent/isotech.ent svneol=native#text/plain
-doc/docbook/resources/standard/dtd/htmltblx.mod svneol=native#text/plain
-doc/docbook/resources/standard/dtd/soextblx.dtd svneol=native#text/plain
 doc/docbook/resources/standard/xsl/AUTHORS svneol=native#text/plain
 doc/docbook/resources/standard/xsl/BUGS svneol=native#text/plain
 doc/docbook/resources/standard/xsl/COPYING svneol=native#text/plain
@@ -529,14 +495,18 @@ doc/docbook/resources/standard/xsl/RELEASE-NOTES.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/TODO svneol=native#text/plain
 doc/docbook/resources/standard/xsl/VERSION svneol=native#text/plain
 doc/docbook/resources/standard/xsl/catalog.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/addns.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/common/af.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/am.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/ar.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/as.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/ast.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/autoidx-kimber.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/autoidx-kosek.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/az.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/bg.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/bn.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/bn_in.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/bs.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/ca.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/charmap.xml svneol=native#text/xml
@@ -567,10 +537,13 @@ doc/docbook/resources/standard/xsl/common/hr.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/hu.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/id.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/insertfile.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/is.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/it.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/ja.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/ka.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/kn.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/ko.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/ky.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/l10n.dtd svneol=native#text/plain
 doc/docbook/resources/standard/xsl/common/l10n.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/l10n.xsl svneol=native#text/xml
@@ -578,8 +551,11 @@ doc/docbook/resources/standard/xsl/common/la.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/labels.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/lt.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/lv.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/ml.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/mn.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/mr.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/nb.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/nds.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/nl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/nn.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/olink.xsl svneol=native#text/xml
@@ -606,6 +582,7 @@ doc/docbook/resources/standard/xsl/common/ta.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/table.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/targetdatabase.dtd svneol=native#text/plain
 doc/docbook/resources/standard/xsl/common/targets.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/te.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/th.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/titles.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/tl.xml svneol=native#text/xml
@@ -615,6 +592,7 @@ doc/docbook/resources/standard/xsl/common/utility.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/utility.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/vi.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/xh.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/common/zh.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/zh_cn.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/common/zh_tw.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/docsrc/authors.xml svneol=native#text/xml
@@ -626,6 +604,7 @@ doc/docbook/resources/standard/xsl/docsrc/reference.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/docsrc/reference.xml.included svneol=native#text/plain
 doc/docbook/resources/standard/xsl/docsrc/warranty.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/eclipse/eclipse.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/eclipse/eclipse3.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/eclipse/profile-eclipse.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/extensions/README.LIBXSLT svneol=native#text/plain
 doc/docbook/resources/standard/xsl/extensions/docbook.py svneol=native#text/plain
@@ -688,14 +667,22 @@ doc/docbook/resources/standard/xsl/fo/toc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/fo/verbatim.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/fo/xep.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/fo/xref.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/README svneol=native#text/plain
 doc/docbook/resources/standard/xsl/highlighting/c-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/common.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/cpp-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/csharp-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/delphi-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/ini-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/java-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/javascript-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/m2-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/myxml-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/perl-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/php-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/python-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/ruby-hl.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/highlighting/tcl-hl.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/highlighting/xslthl-config.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/admon.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/annotations.xsl svneol=native#text/xml
@@ -709,6 +696,7 @@ doc/docbook/resources/standard/xsl/html/biblio.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/block.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/callout.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/changebars.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/html/chunk-changebars.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/html/chunk-code.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/chunk-common.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/chunk.xsl svneol=native#text/xml
@@ -717,6 +705,7 @@ doc/docbook/resources/standard/xsl/html/chunkfast.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/chunktoc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/component.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/division.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/html/docbook.css.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/docbook.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/ebnf.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/html/footnote.xsl svneol=native#text/xml
@@ -828,6 +817,15 @@ doc/docbook/resources/standard/xsl/images/caution.gif -text svneol=unset#image/g
 doc/docbook/resources/standard/xsl/images/caution.png -text svneol=unset#image/png
 doc/docbook/resources/standard/xsl/images/caution.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/resources/standard/xsl/images/caution.tif -text svneol=unset#image/tiff
+doc/docbook/resources/standard/xsl/images/colorsvg/caution.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/home.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/important.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/next.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/note.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/prev.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/tip.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/up.svg -text svneol=unset#image/svg%2Bxml
+doc/docbook/resources/standard/xsl/images/colorsvg/warning.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/resources/standard/xsl/images/draft.png -text svneol=unset#image/png
 doc/docbook/resources/standard/xsl/images/home.gif -text svneol=unset#image/gif
 doc/docbook/resources/standard/xsl/images/home.png -text svneol=unset#image/png
@@ -927,6 +925,7 @@ doc/docbook/resources/standard/xsl/params/body.font.size.xml svneol=native#text/
 doc/docbook/resources/standard/xsl/params/body.margin.bottom.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/body.margin.top.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/body.start.indent.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/bookmarks.collapse.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/bridgehead.in.toc.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/bullet.image.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/callout.defaultcolumn.xml svneol=native#text/xml
@@ -988,12 +987,16 @@ doc/docbook/resources/standard/xsl/params/css.stylesheet.dir.xml svneol=native#t
 doc/docbook/resources/standard/xsl/params/css.stylesheet.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/current.docid.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/currentpage.marker.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/custom.css.source.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/default.float.class.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/default.image.width.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/default.table.frame.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/default.table.rules.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/default.table.width.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/default.units.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/dingbat.font.family.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/docbook.css.link.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/docbook.css.source.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/double.sided.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/draft.mode.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/draft.watermark.image.xml svneol=native#text/xml
@@ -1009,11 +1012,14 @@ doc/docbook/resources/standard/xsl/params/eclipse.plugin.name.xml svneol=native#
 doc/docbook/resources/standard/xsl/params/eclipse.plugin.provider.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/editedby.enabled.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/email.delimiters.enabled.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/email.mailto.enabled.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/emphasis.propagates.style.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/entry.propagates.style.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/epub.autolabel.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/equation.number.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/equation.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/example.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/exsl.node.set.available.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/feedback.href.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/feedback.link.text.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/feedback.with.ids.xml svneol=native#text/xml
@@ -1048,6 +1054,7 @@ doc/docbook/resources/standard/xsl/params/formal.title.properties.xml svneol=nat
 doc/docbook/resources/standard/xsl/params/funcsynopsis.decoration.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/funcsynopsis.style.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/function.parens.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/generate.css.header.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/generate.id.attributes.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/generate.index.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/generate.legalnotice.link.xml svneol=native#text/xml
@@ -1059,9 +1066,14 @@ doc/docbook/resources/standard/xsl/params/generate.toc.xml svneol=native#text/xm
 doc/docbook/resources/standard/xsl/params/glossary.as.blocks.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossary.collection.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossary.sort.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/glossdef.block.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/glossdef.list.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/glossentry.list.item.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossentry.show.acronym.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glosslist.as.blocks.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossterm.auto.link.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/glossterm.block.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/glossterm.list.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossterm.separation.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/glossterm.width.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/graphic.default.extension.xml svneol=native#text/xml
@@ -1079,6 +1091,7 @@ doc/docbook/resources/standard/xsl/params/headers.on.blank.pages.xml svneol=nati
 doc/docbook/resources/standard/xsl/params/hidetoc.image.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/highlight.default.language.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/highlight.source.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/highlight.xslthl.config.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/home.image.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/html.append.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/html.base.xml svneol=native#text/xml
@@ -1150,6 +1163,7 @@ doc/docbook/resources/standard/xsl/params/ignore.image.scaling.xml svneol=native
 doc/docbook/resources/standard/xsl/params/img.src.path.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/index.div.title.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/index.entry.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/index.links.to.section.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/index.method.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/index.number.separator.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/index.on.role.xml svneol=native#text/xml
@@ -1189,6 +1203,7 @@ doc/docbook/resources/standard/xsl/params/link.mailto.url.xml svneol=native#text
 doc/docbook/resources/standard/xsl/params/list.block.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/list.block.spacing.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/list.item.spacing.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/make.clean.html.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/make.graphic.viewport.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/make.index.markup.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/make.single.year.ranges.xml svneol=native#text/xml
@@ -1223,6 +1238,7 @@ doc/docbook/resources/standard/xsl/params/man.indent.verbatims.xml svneol=native
 doc/docbook/resources/standard/xsl/params/man.indent.width.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/man.justify.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/man.output.base.dir.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/man.output.better.ps.enabled.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/man.output.encoding.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/man.output.in.separate.dir.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/man.output.lang.in.name.enabled.xml svneol=native#text/xml
@@ -1256,6 +1272,7 @@ doc/docbook/resources/standard/xsl/params/menuchoice.separator.xml svneol=native
 doc/docbook/resources/standard/xsl/params/minus.image.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/monospace.font.family.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/monospace.properties.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/monospace.verbatim.font.width.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/monospace.verbatim.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/multiframe.bottom.bgcolor.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/multiframe.navigation.height.xml svneol=native#text/xml
@@ -1513,9 +1530,11 @@ doc/docbook/resources/standard/xsl/params/variablelist.as.blocks.xml svneol=nati
 doc/docbook/resources/standard/xsl/params/variablelist.as.table.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/variablelist.max.termlength.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/variablelist.term.break.after.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/variablelist.term.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/variablelist.term.separator.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/verbatim.properties.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/wordml.template.xml svneol=native#text/xml
+doc/docbook/resources/standard/xsl/params/writing.mode.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/xbCollapsibleLists.js.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/xbDOM.js.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/params/xbLibrary.js.xml svneol=native#text/xml
@@ -1683,6 +1702,7 @@ doc/docbook/resources/standard/xsl/xhtml-1_1/biblio.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/block.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/callout.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/changebars.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/xhtml-1_1/chunk-changebars.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/xhtml-1_1/chunk-code.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/chunk-common.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/chunk.xsl svneol=native#text/xml
@@ -1691,6 +1711,7 @@ doc/docbook/resources/standard/xsl/xhtml-1_1/chunkfast.xsl svneol=native#text/xm
 doc/docbook/resources/standard/xsl/xhtml-1_1/chunktoc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/component.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/division.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/xhtml-1_1/docbook.css.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/docbook.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/ebnf.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml-1_1/footnote.xsl svneol=native#text/xml
@@ -1740,6 +1761,7 @@ doc/docbook/resources/standard/xsl/xhtml/biblio.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/block.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/callout.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/changebars.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/xhtml/chunk-changebars.xsl svneol=native#text/plain
 doc/docbook/resources/standard/xsl/xhtml/chunk-code.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/chunk-common.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/chunk.xsl svneol=native#text/xml
@@ -1748,6 +1770,7 @@ doc/docbook/resources/standard/xsl/xhtml/chunkfast.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/chunktoc.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/component.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/division.xsl svneol=native#text/xml
+doc/docbook/resources/standard/xsl/xhtml/docbook.css.xml svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/docbook.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/ebnf.xsl svneol=native#text/xml
 doc/docbook/resources/standard/xsl/xhtml/footnote.xsl svneol=native#text/xml
@@ -1801,10 +1824,8 @@ doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtcheck.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtedge.xml svneol=native#text/xml
 doc/docbook/system/man1/en/tire.xml svneol=native#text/xml
-doc/docbook/system/man1/mged_cmd_template.xml svneol=native#text/xml
 doc/docbook/system/man3/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man3/en/libfb.xml svneol=native#text/xml
-doc/docbook/system/man3/mged_cmd_template.xml svneol=native#text/xml
 doc/docbook/system/man5/en/Makefile.am svneol=native#text/plain
 doc/docbook/system/man5/en/gattributes.xml svneol=native#text/plain
 doc/docbook/system/mann/en/3ptarb.xml svneol=native#text/plain
@@ -2040,6 +2061,7 @@ doc/docbook/system/mann/en/wmater.xml svneol=native#text/plain
 doc/docbook/system/mann/en/x.xml svneol=native#text/plain
 doc/docbook/system/mann/en/xpush.xml svneol=native#text/plain
 doc/docbook/system/mann/en/zoom.xml svneol=native#text/plain
+doc/docbook/system/mann/mged_cmd_template.xml svneol=native#text/xml
 doc/ged.tr svneol=native#text/plain
 doc/history.txt svneol=native#text/plain
 doc/html/Makefile.am svneol=native#text/plain
@@ -2178,8 +2200,6 @@ doc/html/manuals/Install.html svneol=native#text/html
 doc/html/manuals/Makefile.am svneol=native#text/plain
 doc/html/manuals/Obtain.html svneol=native#text/html
 doc/html/manuals/Overview.html svneol=native#text/html
-doc/html/manuals/archer/Makefile.am svneol=native#text/plain
-doc/html/manuals/archer/archer.ico -text svneol=unset#image/x-icon
 doc/html/manuals/cadwidgets/Command.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Database.html svneol=native#text/html
 doc/html/manuals/cadwidgets/Db.html svneol=native#text/html
@@ -2552,6 +2572,7 @@ include/conf/Makefile.am svneol=native#text/plain
 include/conf/PATCH -text
 include/conf/make.vbs svneol=native#text/plain
 include/config_win.h svneol=native#text/plain
+include/config_win_cmake.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
 include/dg.h svneol=native#text/plain
@@ -2573,6 +2594,7 @@ include/fb.h svneol=native#text/plain
 include/fbio.h svneol=native#text/plain
 include/fbmsg.h svneol=native#text/plain
 include/fbserv_obj.h svneol=native#text/plain
+include/fft.h svneol=native#text/plain
 include/gcv.h svneol=native#text/plain
 include/ged.h svneol=native#text/plain
 include/libtermio.h svneol=native#text/plain
@@ -2581,7 +2603,6 @@ include/magic.h svneol=native#text/plain
 include/mater.h svneol=native#text/plain
 include/nmg.h svneol=native#text/plain
 include/nurb.h svneol=native#text/plain
-include/opennurbs_ext.h svneol=native#text/plain
 include/optical.h svneol=native#text/plain
 include/orle.h svneol=native#text/plain
 include/pc.h svneol=native#text/plain
@@ -2594,7 +2615,6 @@ include/raytrace.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
 include/rtfunc.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
-include/rtprivate.h svneol=native#text/plain
 include/rtserver.h svneol=native#text/plain
 include/sed4 -text
 include/shadefuncs.h svneol=native#text/plain
@@ -2635,19 +2655,34 @@ misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
 misc/debian/Makefile.am svneol=native#text/plain
-misc/debian/brlcad-bin.docs svneol=native#text/plain
-misc/debian/brlcad-bin.install svneol=native#text/plain
-misc/debian/brlcad-bin.lintian-overrides svneol=native#text/plain
-misc/debian/brlcad-data.install svneol=native#text/plain
-misc/debian/brlcad-dev.install svneol=native#text/plain
-misc/debian/brlcad-doc.install svneol=native#text/plain
+misc/debian/application-x-brlcad-extension.png -text svneol=unset#image/png
+misc/debian/application-x-brlcad-extension.xml svneol=native#text/xml
+misc/debian/brlcad-archer.desktop svneol=native#text/plain
+misc/debian/brlcad-archer.png -text svneol=unset#image/png
+misc/debian/brlcad-db.desktop svneol=native#text/plain
+misc/debian/brlcad-db.png -text svneol=unset#image/png
+misc/debian/brlcad-doc-animation.desktop svneol=native#text/plain
+misc/debian/brlcad-doc-mged.desktop svneol=native#text/plain
+misc/debian/brlcad-doc.desktop svneol=native#text/plain
+misc/debian/brlcad-doc.directory svneol=native#text/plain
+misc/debian/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/brlcad-mged.desktop svneol=native#text/plain
+misc/debian/brlcad-rtwizard.desktop svneol=native#text/plain
+misc/debian/brlcad.directory svneol=native#text/plain
+misc/debian/brlcad.docs svneol=native#text/plain
+misc/debian/brlcad.install svneol=native#text/plain
+misc/debian/brlcad.menu svneol=native#text/plain
+misc/debian/brlcad.png -text svneol=unset#image/png
+misc/debian/brlcad.postinst svneol=native#text/x-sh
+misc/debian/brlcad.postrm svneol=native#text/x-sh
+misc/debian/brlcad.sh svneol=native#text/x-sh
 misc/debian/changelog svneol=native#text/plain
 misc/debian/compat svneol=native#text/plain
 misc/debian/control svneol=native#text/plain
 misc/debian/copyright svneol=native#text/plain
 misc/debian/rules svneol=native#text/plain
 misc/debian/source/format svneol=native#text/plain
-misc/debian/watch svneol=native#text/plain
+misc/debian/source/include-binaries svneol=native#text/plain
 misc/doxygen_structure -text
 misc/enigma/AUTHORS svneol=native#text/plain
 misc/enigma/COPYING svneol=native#text/plain
@@ -2657,6 +2692,7 @@ misc/enigma/Makefile.am svneol=native#text/plain
 misc/enigma/NEWS svneol=native#text/plain
 misc/enigma/README svneol=native#text/plain
 misc/enigma/configure.ac svneol=native#text/plain
+misc/enigma/crypt.c svneol=native#text/plain
 misc/enigma/enigma.1 svneol=native#text/plain
 misc/enigma/enigma.c svneol=native#text/plain
 misc/flawfinder -text
@@ -2676,6 +2712,7 @@ misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
+misc/nsis/archer.ico -text
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
 misc/nsis/header.bmp -text svneol=unset#image/bmp
@@ -2708,7 +2745,6 @@ misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/3dm2g/3dm2g.vcproj svneol=native#text/plain
 misc/win32-msvc8/Makefile.am svneol=native#text/plain
-misc/win32-msvc8/adrt/adrt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
 misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
@@ -2813,10 +2849,12 @@ misc/win32-msvc8/liborle/liborle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpkg/libpkg.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libpng/libpng.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libregex/libregex.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/librender/librender.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/librt/librt.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libsysv/libsysv.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtcl/libtcl.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtclcad/libtclcad.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/libtie/libtie.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libtk/libtk.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libutahrle/libutahrle.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/libwdb/libwdb.vcproj svneol=CRLF#text/plain eol=crlf
@@ -2840,6 +2878,7 @@ misc/win32-msvc8/pix2bw/pix2bw.vcproj -text
 misc/win32-msvc8/pix2fb/pix2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pix2g/pix2g.vcproj svneol=native#text/plain
 misc/win32-msvc8/pixautosize/pixautosize.vcproj svneol=CRLF#text/plain eol=crlf
+misc/win32-msvc8/pixblend/pixblend.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pixcmp/pixcmp.vcproj svneol=native#text/plain
 misc/win32-msvc8/pixflip2fb/pixflip2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/pixmatte/pixmatte.vcproj -text
@@ -3105,7 +3144,12 @@ src/adrt/librender/texture_perlin.c svneol=native#text/plain
 src/adrt/librender/texture_stack.c svneol=native#text/plain
 src/adrt/libtie/tie.c svneol=native#text/plain
 src/adrt/libtie/tie.h svneol=native#text/plain
+src/adrt/libtie/tie0.c svneol=native#text/plain
+src/adrt/libtie/tie1.c svneol=native#text/plain
 src/adrt/libtie/tie_kdtree.c svneol=native#text/plain
+src/adrt/libtie/tie_kdtree0.c svneol=native#text/plain
+src/adrt/libtie/tie_kdtree1.c svneol=native#text/plain
+src/adrt/libtie/tieprivate.h svneol=native#text/plain
 src/adrt/load.c svneol=native#text/plain
 src/adrt/load.h svneol=native#text/plain
 src/adrt/load_g.c svneol=native#text/plain
@@ -3279,8 +3323,8 @@ src/conv/g-nff.1 svneol=native#text/plain
 src/conv/g-nff.c svneol=native#text/plain
 src/conv/g-obj.1 svneol=native#text/plain
 src/conv/g-obj.c svneol=native#text/plain
-src/conv/g-shell.rect.1 svneol=native#text/plain
-src/conv/g-shell.rect.c svneol=native#text/plain
+src/conv/g-shell-rect.1 svneol=native#text/plain
+src/conv/g-shell-rect.c svneol=native#text/plain
 src/conv/g-var.1 svneol=native#text/plain
 src/conv/g-var.c svneol=native#text/plain
 src/conv/g-vrml.1 svneol=native#text/plain
@@ -4030,6 +4074,8 @@ src/libbn/CMakeLists.txt svneol=native#text/plain
 src/libbn/Makefile.am svneol=native#text/plain
 src/libbn/anim.c svneol=native#text/plain
 src/libbn/axis.c svneol=native#text/plain
+src/libbn/bntester.c svneol=native#text/plain
+src/libbn/bntester.dat svneol=native#text/plain
 src/libbn/complex.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
 src/libbn/fortran.c svneol=native#text/plain
@@ -4068,6 +4114,7 @@ src/libbu/badmagic.c svneol=native#text/plain
 src/libbu/basename.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
 src/libbu/bomb.c svneol=native#text/plain
+src/libbu/booleanize.c svneol=native#text/plain
 src/libbu/brlcad_path.c svneol=native#text/plain
 src/libbu/cmd.c svneol=native#text/plain
 src/libbu/cmdhist.c svneol=native#text/plain
@@ -4130,6 +4177,8 @@ src/libbu/stat.c svneol=native#text/plain
 src/libbu/str.c svneol=native#text/plain
 src/libbu/tcl.c svneol=native#text/plain
 src/libbu/temp.c svneol=native#text/plain
+src/libbu/timer.c svneol=native#text/plain
+src/libbu/timetester.c svneol=native#text/plain
 src/libbu/uce-dirent.h svneol=native#text/plain
 src/libbu/units.c svneol=native#text/plain
 src/libbu/vers.c svneol=native#text/plain
@@ -4200,7 +4249,6 @@ src/libfb/vers.c svneol=native#text/plain
 src/libfft/Makefile.am svneol=native#text/plain
 src/libfft/ditsplit.c svneol=native#text/plain
 src/libfft/ditsplitc.c svneol=native#text/plain
-src/libfft/fft.h svneol=native#text/plain
 src/libfft/fftc.c svneol=native#text/plain
 src/libfft/fftest.c svneol=native#text/plain
 src/libfft/fftfast.c svneol=native#text/plain
@@ -4423,6 +4471,7 @@ src/libged/scale_rpc.c svneol=native#text/plain
 src/libged/scale_superell.c svneol=native#text/plain
 src/libged/scale_tgc.c svneol=native#text/plain
 src/libged/scale_tor.c svneol=native#text/plain
+src/libged/screengrab.c svneol=native#text/plain
 src/libged/search.c svneol=native#text/plain
 src/libged/search.h svneol=native#text/plain
 src/libged/select.c svneol=native#text/plain
@@ -4571,6 +4620,7 @@ src/libpkg/vers.c svneol=native#text/plain
 src/librt/CMakeLists.txt svneol=native#text/plain
 src/librt/Makefile.am svneol=native#text/plain
 src/librt/attributes.c svneol=native#text/plain
+src/librt/bbox.c svneol=native#text/plain
 src/librt/bezier_2d_isect.c svneol=native#text/plain
 src/librt/binunif/binunif.c svneol=native#text/plain
 src/librt/binunif/db5_bin.c svneol=native#text/plain
@@ -4590,7 +4640,9 @@ src/librt/db5_scan.c svneol=native#text/plain
 src/librt/db5_types.c svneol=native#text/plain
 src/librt/db_alloc.c svneol=native#text/plain
 src/librt/db_anim.c svneol=native#text/plain
+src/librt/db_corrupt.c svneol=native#text/plain
 src/librt/db_flags.c svneol=native#text/plain
+src/librt/db_flip.c svneol=native#text/plain
 src/librt/db_inmem.c svneol=native#text/plain
 src/librt/db_io.c svneol=native#text/plain
 src/librt/db_lookup.c svneol=native#text/plain
@@ -4606,6 +4658,7 @@ src/librt/fortray.c svneol=native#text/plain
 src/librt/globals.c svneol=native#text/plain
 src/librt/htbl.c svneol=native#text/plain
 src/librt/librt.3 svneol=native#text/plain
+src/librt/librt_private.h svneol=native#text/plain
 src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
@@ -4613,6 +4666,7 @@ src/librt/mkbundle.c svneol=native#text/plain
 src/librt/namegen.c svneol=native#text/plain
 src/librt/nurb_example.c svneol=native#text/plain
 src/librt/opennurbs_ext.cpp svneol=native#text/plain
+src/librt/opennurbs_ext.h svneol=native#text/plain
 src/librt/oslo_calc.c svneol=native#text/plain
 src/librt/oslo_map.c svneol=native#text/plain
 src/librt/parse.c svneol=native#text/plain
@@ -4786,7 +4840,6 @@ src/librt/regionfix.c svneol=native#text/plain
 src/librt/roots.c svneol=native#text/plain
 src/librt/shoot.c svneol=native#text/plain
 src/librt/spectrum.c svneol=native#text/plain
-src/librt/storage.c svneol=native#text/plain
 src/librt/tcl.c svneol=native#text/plain
 src/librt/timer-nt.c svneol=native#text/plain
 src/librt/timer42.c svneol=native#text/plain
@@ -4795,6 +4848,7 @@ src/librt/timerhep.c svneol=native#text/plain
 src/librt/timerunix.c svneol=native#text/plain
 src/librt/transform.c svneol=native#text/plain
 src/librt/tree.c svneol=native#text/plain
+src/librt/uvpoints.cpp svneol=native#text/plain
 src/librt/vers.c svneol=native#text/plain
 src/librt/vlist.c svneol=native#text/plain
 src/librt/vshoot.c svneol=native#text/plain
@@ -4917,7 +4971,6 @@ src/mged/points/process.c svneol=native#text/plain
 src/mged/points/process.h svneol=native#text/plain
 src/mged/polyif.c svneol=native#text/plain
 src/mged/predictor.c svneol=native#text/plain
-src/mged/qray.c svneol=native#text/plain
 src/mged/qray.h svneol=native#text/plain
 src/mged/rect.c svneol=native#text/plain
 src/mged/red.c svneol=native#text/plain
@@ -5164,18 +5217,6 @@ src/other/URToolkit/tools/to8.c svneol=native#text/plain
 src/other/URToolkit/tools/tobw.c svneol=native#text/plain
 src/other/URToolkit/tools/unexp.c svneol=native#text/plain
 src/other/URToolkit/tools/unslice.c svneol=native#text/plain
-src/other/awf/AWF_COPYRIGHT -text
-src/other/awf/Makefile.am svneol=native#text/plain
-src/other/awf/awf.1 svneol=native#text/plain
-src/other/awf/common -text
-src/other/awf/dev.dumb -text
-src/other/awf/mac.man svneol=native#text/plain
-src/other/awf/mac.ms svneol=native#text/plain
-src/other/awf/pass1 -text
-src/other/awf/pass2.base -text
-src/other/awf/pass2.man svneol=native#text/plain
-src/other/awf/pass2.ms svneol=native#text/plain
-src/other/awf/pass3 -text
 src/other/boost/LICENSE_1_0.txt svneol=native#text/plain
 src/other/boost/algorithm/string/case_conv.hpp svneol=native#text/plain
 src/other/boost/algorithm/string/compare.hpp svneol=native#text/plain
@@ -7354,52 +7395,15 @@ src/other/incrTcl/INCOMPATIBLE -text
 src/other/incrTcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/README svneol=native#text/plain
 src/other/incrTcl/TODO svneol=native#text/plain
-src/other/incrTcl/compat/8.4/default.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/ks_names.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/regcustom.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/regerrs.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/regex.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/regguts.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tcl.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclCompile.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclIO.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclInitScript.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclInt.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclIntDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclIntPlatDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclMath.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclPlatDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclPort.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tclRegexp.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tk.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tk3d.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkButton.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkCanvas.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkColor.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkEntry.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkFileFilter.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkFont.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkInitScript.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkInt.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkIntDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkIntPlatDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkIntXlibDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkMenu.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkMenubutton.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkPlatDecls.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkPort.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkScale.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkScrollbar.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkSelect.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkText.h svneol=native#text/plain
-src/other/incrTcl/compat/8.4/tkUndo.h svneol=native#text/plain
 src/other/incrTcl/doc/Makefile.am svneol=native#text/plain
 src/other/incrTcl/doc/README svneol=native#text/plain
 src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
 src/other/incrTcl/itcl/aclocal.m4 svneol=native#text/plain
+src/other/incrTcl/itcl/doc/Class.3 svneol=native#text/plain
+src/other/incrTcl/itcl/doc/List.3 svneol=native#text/plain
 src/other/incrTcl/itcl/doc/Makefile.am svneol=native#text/plain
+src/other/incrTcl/itcl/doc/Object.3 svneol=native#text/plain
+src/other/incrTcl/itcl/doc/Preserve.3 svneol=native#text/plain
 src/other/incrTcl/itcl/doc/RegisterC.3 svneol=native#text/plain
 src/other/incrTcl/itcl/doc/Stack.3 svneol=native#text/plain
 src/other/incrTcl/itcl/doc/body.n svneol=native#text/plain
@@ -7471,13 +7475,19 @@ src/other/incrTcl/itcl/tests/old/inherit.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/tclIndex -text
 src/other/incrTcl/itcl/tests/old/testlib.tcl svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/toaster.test svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Appliance.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Hazard.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Outlet.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/SmartToaster.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/Toaster.tcl svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/tclIndex svneol=native#text/plain
+src/other/incrTcl/itcl/tests/old/toasters/usualway.tcl svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/uplevel.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/old/upvar.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/protection.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/scope.test svneol=native#text/plain
 src/other/incrTcl/itcl/tests/tclIndex -text
 src/other/incrTcl/itcl/win/dllEntryPoint.c svneol=native#text/plain
-src/other/incrTcl/itcl/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itcl/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itcl/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itcl/win/rc/itcl.rc svneol=CRLF#text/plain eol=crlf
@@ -7521,14 +7531,6 @@ src/other/incrTcl/itk/library/itk.tcl svneol=native#text/plain
 src/other/incrTcl/itk/library/pkgIndex.tcl svneol=native#text/plain
 src/other/incrTcl/itk/library/tclIndex -text
 src/other/incrTcl/itk/license.terms svneol=native#text/plain
-src/other/incrTcl/itk/mac/MW_ItkHeader.pch -text
-src/other/incrTcl/itk/mac/itkMacApplication.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacLibrary.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacResource.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkMacTclCode.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/itkStaticApplication.r svneol=native#text/plain
-src/other/incrTcl/itk/mac/pkgIndex.tcl svneol=native#text/plain
-src/other/incrTcl/itk/mac/tclIndex -text
 src/other/incrTcl/itk/pkgIndex.tcl.in svneol=native#text/plain
 src/other/incrTcl/itk/tests/all -text
 src/other/incrTcl/itk/tests/all.tcl svneol=native#text/plain
@@ -7540,47 +7542,46 @@ src/other/incrTcl/itk/tests/public.test svneol=native#text/plain
 src/other/incrTcl/itk/tests/toplevel.test svneol=native#text/plain
 src/other/incrTcl/itk/tests/widget.test svneol=native#text/plain
 src/other/incrTcl/itk/win/dllEntryPoint.c svneol=native#text/plain
-src/other/incrTcl/itk/win/makefile.bc svneol=native#text/plain
 src/other/incrTcl/itk/win/makefile.vc svneol=native#text/plain
 src/other/incrTcl/itk/win/nmakehlp.c svneol=native#text/plain
 src/other/incrTcl/itk/win/rc/itk.ico -text svneol=unset#image/x-icon
 src/other/incrTcl/itk/win/rc/itk.rc svneol=CRLF#text/plain eol=crlf
 src/other/incrTcl/itk/win/toaster.bmp -text svneol=unset#image/bmp
 src/other/incrTcl/license.terms svneol=native#text/plain
-src/other/incrTcl/makefile.bc svneol=native#text/plain
 src/other/incrTcl/makefile.vc svneol=native#text/plain
 src/other/incrTcl/rules.vc -text
-src/other/incrTcl/tcl.m4 svneol=native#text/plain
+src/other/incrTcl/tclconfig/install-sh svneol=native#text/plain
+src/other/incrTcl/tclconfig/tcl.m4 svneol=native#text/plain
 src/other/incrTcl/tools/Makefile.am svneol=native#text/plain
 src/other/incrTcl/tools/genStubs.tcl svneol=native#text/plain
-src/other/iwidgets/CHANGES -text
+src/other/iwidgets/CHANGES svneol=native#text/native
 src/other/iwidgets/ChangeLog svneol=native#text/plain
 src/other/iwidgets/Makefile.am svneol=native#text/plain
 src/other/iwidgets/README svneol=native#text/plain
 src/other/iwidgets/aclocal.m4 svneol=native#text/plain
 src/other/iwidgets/configure.in svneol=native#text/plain
-src/other/iwidgets/demos/buttonbox -text
-src/other/iwidgets/demos/calendar -text
-src/other/iwidgets/demos/canvasprintbox -text
-src/other/iwidgets/demos/canvasprintdialog -text
-src/other/iwidgets/demos/catalog -text
-src/other/iwidgets/demos/checkbox -text
-src/other/iwidgets/demos/combobox -text
-src/other/iwidgets/demos/dateentry -text
-src/other/iwidgets/demos/datefield -text
+src/other/iwidgets/demos/buttonbox svneol=native#text/native
+src/other/iwidgets/demos/calendar svneol=native#text/native
+src/other/iwidgets/demos/canvasprintbox svneol=native#text/native
+src/other/iwidgets/demos/canvasprintdialog svneol=native#text/native
+src/other/iwidgets/demos/catalog svneol=native#text/native
+src/other/iwidgets/demos/checkbox svneol=native#text/native
+src/other/iwidgets/demos/combobox svneol=native#text/native
+src/other/iwidgets/demos/dateentry svneol=native#text/native
+src/other/iwidgets/demos/datefield svneol=native#text/native
 src/other/iwidgets/demos/demo.html svneol=native#text/html
-src/other/iwidgets/demos/dialog -text
-src/other/iwidgets/demos/dialogshell -text
-src/other/iwidgets/demos/disjointlistbox -text
-src/other/iwidgets/demos/entryfield -text
-src/other/iwidgets/demos/extbutton -text
-src/other/iwidgets/demos/extfileselectionbox -text
-src/other/iwidgets/demos/extfileselectiondialog -text
-src/other/iwidgets/demos/feedback -text
-src/other/iwidgets/demos/fileselectionbox -text
-src/other/iwidgets/demos/fileselectiondialog -text
-src/other/iwidgets/demos/finddialog -text
-src/other/iwidgets/demos/hierarchy -text
+src/other/iwidgets/demos/dialog svneol=native#text/native
+src/other/iwidgets/demos/dialogshell svneol=native#text/native
+src/other/iwidgets/demos/disjointlistbox svneol=native#text/native
+src/other/iwidgets/demos/entryfield svneol=native#text/native
+src/other/iwidgets/demos/extbutton svneol=native#text/native
+src/other/iwidgets/demos/extfileselectionbox svneol=native#text/native
+src/other/iwidgets/demos/extfileselectiondialog svneol=native#text/native
+src/other/iwidgets/demos/feedback svneol=native#text/native
+src/other/iwidgets/demos/fileselectionbox svneol=native#text/native
+src/other/iwidgets/demos/fileselectiondialog svneol=native#text/native
+src/other/iwidgets/demos/finddialog svneol=native#text/native
+src/other/iwidgets/demos/hierarchy svneol=native#text/native
 src/other/iwidgets/demos/html/buttonbox.n.html svneol=native#text/html
 src/other/iwidgets/demos/html/calendar.n.html svneol=native#text/html
 src/other/iwidgets/demos/html/canvasprintbox.n.html svneol=native#text/html
@@ -7634,7 +7635,7 @@ src/other/iwidgets/demos/html/timeentry.n.html svneol=native#text/html
 src/other/iwidgets/demos/html/timefield.n.html svneol=native#text/html
 src/other/iwidgets/demos/html/toolbar.n.html svneol=native#text/html
 src/other/iwidgets/demos/html/watch.n.html svneol=native#text/html
-src/other/iwidgets/demos/hyperhelp -text
+src/other/iwidgets/demos/hyperhelp svneol=native#text/native
 src/other/iwidgets/demos/images/box.xbm -text svneol=unset#image/x-xbitmap
 src/other/iwidgets/demos/images/clear.gif -text svneol=unset#image/gif
 src/other/iwidgets/demos/images/close.gif -text svneol=unset#image/gif
@@ -7657,37 +7658,37 @@ src/other/iwidgets/demos/images/save.gif -text svneol=unset#image/gif
 src/other/iwidgets/demos/images/select.gif -text svneol=unset#image/gif
 src/other/iwidgets/demos/images/text.xbm -text svneol=unset#image/x-xbitmap
 src/other/iwidgets/demos/iwidgets.gif -text svneol=unset#image/gif
-src/other/iwidgets/demos/labeledframe -text
-src/other/iwidgets/demos/labeledwidget -text
-src/other/iwidgets/demos/mainwindow -text
-src/other/iwidgets/demos/menubar -text
-src/other/iwidgets/demos/messagebox -text
-src/other/iwidgets/demos/messagedialog -text
-src/other/iwidgets/demos/notebook -text
-src/other/iwidgets/demos/optionmenu -text
-src/other/iwidgets/demos/panedwindow -text
-src/other/iwidgets/demos/promptdialog -text
-src/other/iwidgets/demos/pushbutton -text
-src/other/iwidgets/demos/radiobox -text
-src/other/iwidgets/demos/scopedobject -text
-src/other/iwidgets/demos/scrolledcanvas -text
-src/other/iwidgets/demos/scrolledframe -text
-src/other/iwidgets/demos/scrolledhtml -text
-src/other/iwidgets/demos/scrolledlistbox -text
-src/other/iwidgets/demos/scrolledtext -text
-src/other/iwidgets/demos/selectionbox -text
-src/other/iwidgets/demos/selectiondialog -text
-src/other/iwidgets/demos/shell -text
-src/other/iwidgets/demos/spindate -text
-src/other/iwidgets/demos/spinint -text
-src/other/iwidgets/demos/spinner -text
-src/other/iwidgets/demos/spintime -text
-src/other/iwidgets/demos/tabnotebook -text
-src/other/iwidgets/demos/tabset -text
-src/other/iwidgets/demos/timeentry -text
-src/other/iwidgets/demos/timefield -text
-src/other/iwidgets/demos/toolbar -text
-src/other/iwidgets/demos/watch -text
+src/other/iwidgets/demos/labeledframe svneol=native#text/native
+src/other/iwidgets/demos/labeledwidget svneol=native#text/native
+src/other/iwidgets/demos/mainwindow svneol=native#text/native
+src/other/iwidgets/demos/menubar svneol=native#text/native
+src/other/iwidgets/demos/messagebox svneol=native#text/native
+src/other/iwidgets/demos/messagedialog svneol=native#text/native
+src/other/iwidgets/demos/notebook svneol=native#text/native
+src/other/iwidgets/demos/optionmenu svneol=native#text/native
+src/other/iwidgets/demos/panedwindow svneol=native#text/native
+src/other/iwidgets/demos/promptdialog svneol=native#text/native
+src/other/iwidgets/demos/pushbutton svneol=native#text/native
+src/other/iwidgets/demos/radiobox svneol=native#text/native
+src/other/iwidgets/demos/scopedobject svneol=native#text/native
+src/other/iwidgets/demos/scrolledcanvas svneol=native#text/native
+src/other/iwidgets/demos/scrolledframe svneol=native#text/native
+src/other/iwidgets/demos/scrolledhtml svneol=native#text/native
+src/other/iwidgets/demos/scrolledlistbox svneol=native#text/native
+src/other/iwidgets/demos/scrolledtext svneol=native#text/native
+src/other/iwidgets/demos/selectionbox svneol=native#text/native
+src/other/iwidgets/demos/selectiondialog svneol=native#text/native
+src/other/iwidgets/demos/shell svneol=native#text/native
+src/other/iwidgets/demos/spindate svneol=native#text/native
+src/other/iwidgets/demos/spinint svneol=native#text/native
+src/other/iwidgets/demos/spinner svneol=native#text/native
+src/other/iwidgets/demos/spintime svneol=native#text/native
+src/other/iwidgets/demos/tabnotebook svneol=native#text/native
+src/other/iwidgets/demos/tabset svneol=native#text/native
+src/other/iwidgets/demos/timeentry svneol=native#text/native
+src/other/iwidgets/demos/timefield svneol=native#text/native
+src/other/iwidgets/demos/toolbar svneol=native#text/native
+src/other/iwidgets/demos/watch svneol=native#text/native
 src/other/iwidgets/doc/Makefile.am svneol=native#text/plain
 src/other/iwidgets/doc/buttonbox.n svneol=native#text/plain
 src/other/iwidgets/doc/calendar.n svneol=native#text/plain
@@ -7715,11 +7716,11 @@ src/other/iwidgets/doc/iwidgets.ps -text svneol=unset#application/postscript
 src/other/iwidgets/doc/labeledframe.n svneol=native#text/plain
 src/other/iwidgets/doc/labeledwidget.n svneol=native#text/plain
 src/other/iwidgets/doc/mainwindow.n svneol=native#text/plain
-src/other/iwidgets/doc/man.macros -text
+src/other/iwidgets/doc/man.macros svneol=native#text/native
 src/other/iwidgets/doc/menubar.n svneol=native#text/plain
 src/other/iwidgets/doc/messagebox.n svneol=native#text/plain
 src/other/iwidgets/doc/messagedialog.n svneol=native#text/plain
-src/other/iwidgets/doc/mkitclman -text
+src/other/iwidgets/doc/mkitclman svneol=native#text/native
 src/other/iwidgets/doc/notebook.n svneol=native#text/plain
 src/other/iwidgets/doc/optionmenu.n svneol=native#text/plain
 src/other/iwidgets/doc/panedwindow.n svneol=native#text/plain
@@ -7743,7 +7744,7 @@ src/other/iwidgets/doc/tabnotebook.n svneol=native#text/plain
 src/other/iwidgets/doc/tabset.n svneol=native#text/plain
 src/other/iwidgets/doc/timeentry.n svneol=native#text/plain
 src/other/iwidgets/doc/timefield.n svneol=native#text/plain
-src/other/iwidgets/doc/tk2html -text
+src/other/iwidgets/doc/tk2html svneol=native#text/native
 src/other/iwidgets/doc/tk2html.awk svneol=native#text/plain
 src/other/iwidgets/doc/tk2html.perl svneol=native#text/plain
 src/other/iwidgets/doc/tk2html2.awk svneol=native#text/plain
@@ -7803,17 +7804,17 @@ src/other/iwidgets/generic/spinner.itk svneol=native#text/plain
 src/other/iwidgets/generic/spintime.itk svneol=native#text/plain
 src/other/iwidgets/generic/tabnotebook.itk svneol=native#text/plain
 src/other/iwidgets/generic/tabset.itk svneol=native#text/plain
-src/other/iwidgets/generic/tclIndex -text
+src/other/iwidgets/generic/tclIndex svneol=native#text/native
 src/other/iwidgets/generic/timeentry.itk svneol=native#text/plain
 src/other/iwidgets/generic/timefield.itk svneol=native#text/plain
 src/other/iwidgets/generic/toolbar.itk svneol=native#text/plain
 src/other/iwidgets/generic/unknownimage.gif -text svneol=unset#image/gif
 src/other/iwidgets/generic/watch.itk svneol=native#text/plain
 src/other/iwidgets/incoming/README svneol=native#text/plain
-src/other/iwidgets/incoming/demos/buttoncage -text
-src/other/iwidgets/incoming/demos/collapsablewidget -text
+src/other/iwidgets/incoming/demos/buttoncage svneol=native#text/native
+src/other/iwidgets/incoming/demos/collapsablewidget svneol=native#text/native
 src/other/iwidgets/incoming/doc/collapsablewidget.n svneol=native#text/plain
-src/other/iwidgets/incoming/doc/man.macros -text
+src/other/iwidgets/incoming/doc/man.macros svneol=native#text/native
 src/other/iwidgets/incoming/src/buttoncage.itk svneol=native#text/plain
 src/other/iwidgets/incoming/src/collapsablewidget.itk svneol=native#text/plain
 src/other/iwidgets/iwidgets.tcl.in svneol=native#text/plain
@@ -7821,8 +7822,9 @@ src/other/iwidgets/license.terms svneol=native#text/plain
 src/other/iwidgets/outgoing/README svneol=native#text/plain
 src/other/iwidgets/pkgIndex.tcl svneol=native#text/plain
 src/other/iwidgets/pkgIndex.tcl.in svneol=native#text/plain
-src/other/iwidgets/tcl.m4 svneol=native#text/plain
-src/other/iwidgets/tests/all -text
+src/other/iwidgets/tclconfig/install-sh svneol=native#text/plain
+src/other/iwidgets/tclconfig/tcl.m4 svneol=native#text/plain
+src/other/iwidgets/tests/all svneol=native#text/native
 src/other/iwidgets/tests/all.tcl svneol=native#text/plain
 src/other/iwidgets/tests/buttonbox.test svneol=native#text/plain
 src/other/iwidgets/tests/calendar.test svneol=native#text/plain
@@ -7832,7 +7834,7 @@ src/other/iwidgets/tests/checkbox.test svneol=native#text/plain
 src/other/iwidgets/tests/combobox.test svneol=native#text/plain
 src/other/iwidgets/tests/dateentry.test svneol=native#text/plain
 src/other/iwidgets/tests/datefield.test svneol=native#text/plain
-src/other/iwidgets/tests/defs -text
+src/other/iwidgets/tests/defs svneol=native#text/native
 src/other/iwidgets/tests/dialog.test svneol=native#text/plain
 src/other/iwidgets/tests/dialogshell.test svneol=native#text/plain
 src/other/iwidgets/tests/disjointlistbox.test svneol=native#text/plain
@@ -7880,7 +7882,7 @@ src/other/iwidgets/tests/usual.test svneol=native#text/plain
 src/other/iwidgets/tests/watch.test svneol=native#text/plain
 src/other/iwidgets/win/iwidgets.tcl svneol=native#text/plain
 src/other/iwidgets/win/makefile.vc svneol=native#text/plain
-src/other/iwidgets/win/pkg.vc -text
+src/other/iwidgets/win/pkg.vc svneol=native#text/native
 src/other/jove/BUGS svneol=native#text/plain
 src/other/jove/Makefile.am svneol=native#text/plain
 src/other/jove/README svneol=native#text/plain
@@ -7909,7 +7911,6 @@ src/other/jove/jove_temp.h svneol=native#text/plain
 src/other/jove/jove_term.c svneol=native#text/plain
 src/other/jove/jove_tune.c svneol=native#text/plain
 src/other/jove/jove_wind.c svneol=native#text/plain
-src/other/jove/mkversion.sh svneol=native#text/x-sh
 src/other/jove/teach-jove.in svneol=native#text/plain
 src/other/jove/termcap.h svneol=native#text/plain
 src/other/libpng/ANNOUNCE -text
@@ -7920,6 +7921,7 @@ src/other/libpng/LICENSE -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
+src/other/libpng/autogen.sh svneol=native#text/x-sh
 src/other/libpng/configure.ac svneol=native#text/plain
 src/other/libpng/contrib/gregbook/COPYING svneol=native#text/plain
 src/other/libpng/contrib/gregbook/LICENSE -text
@@ -8007,12 +8009,11 @@ src/other/libpng/contrib/visupng/VisualPng.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/contrib/visupng/cexcept.h svneol=native#text/plain
 src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
-src/other/libpng/libpng-1.4.3.txt svneol=native#text/plain
+src/other/libpng/libpng-1.4.5.txt svneol=native#text/plain
 src/other/libpng/libpng-config.in svneol=native#text/plain
 src/other/libpng/libpng.3 svneol=native#text/plain
 src/other/libpng/libpng.pc.in svneol=native#text/plain
 src/other/libpng/libpngpf.3 svneol=native#text/plain
-src/other/libpng/new_push_process_row.c svneol=native#text/plain
 src/other/libpng/png.5 svneol=native#text/plain
 src/other/libpng/png.c svneol=native#text/plain
 src/other/libpng/png.h svneol=native#text/plain
@@ -8054,7 +8055,6 @@ src/other/libpng/projects/vstudio/readme.txt svneol=native#text/plain
 src/other/libpng/projects/vstudio/vstudio.sln svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/vstudio/zlib.props svneol=native#text/plain
 src/other/libpng/projects/vstudio/zlib/zlib.vcxproj svneol=CRLF#text/plain eol=crlf
-src/other/libpng/projects/xcode/Info.plist svneol=native#text/plain
 src/other/libpng/projects/xcode/README.txt svneol=native#text/plain
 src/other/libpng/projects/xcode/libpng.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/libpng/scripts/README.txt svneol=native#text/plain
@@ -8219,17 +8219,10 @@ src/other/libz/ChangeLog svneol=native#text/plain
 src/other/libz/FAQ -text
 src/other/libz/INDEX -text
 src/other/libz/Makefile.am svneol=native#text/plain
-src/other/libz/Makefile.in.orig svneol=native#text/plain
-src/other/libz/Makefile.orig svneol=native#text/plain
 src/other/libz/README svneol=native#text/plain
 src/other/libz/adler32.c svneol=native#text/plain
-src/other/libz/algorithm.txt svneol=native#text/plain
 src/other/libz/amiga/Makefile.pup svneol=native#text/plain
 src/other/libz/amiga/Makefile.sas svneol=native#text/plain
-src/other/libz/as400/bndsrc -text
-src/other/libz/as400/compile.clp -text
-src/other/libz/as400/readme.txt svneol=native#text/plain
-src/other/libz/as400/zlib.inc -text
 src/other/libz/compress.c svneol=native#text/plain
 src/other/libz/configure -text
 src/other/libz/contrib/README.contrib svneol=native#text/plain
@@ -8245,8 +8238,7 @@ src/other/libz/contrib/ada/zlib-thin.ads -text
 src/other/libz/contrib/ada/zlib.adb -text
 src/other/libz/contrib/ada/zlib.ads -text
 src/other/libz/contrib/ada/zlib.gpr -text
-src/other/libz/contrib/asm586/README.586 svneol=native#text/plain
-src/other/libz/contrib/asm586/match.S svneol=native#text/plain
+src/other/libz/contrib/amd64/amd64-match.S svneol=native#text/plain
 src/other/libz/contrib/asm686/README.686 svneol=native#text/plain
 src/other/libz/contrib/asm686/match.S svneol=native#text/plain
 src/other/libz/contrib/blast/README svneol=native#text/plain
@@ -8273,6 +8265,7 @@ src/other/libz/contrib/dotzlib/DotZLib/Inflater.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/UnitTests.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/LICENSE_1_0.txt svneol=native#text/plain
 src/other/libz/contrib/dotzlib/readme.txt svneol=native#text/plain
+src/other/libz/contrib/gcc_gvmat64/gvmat64.S svneol=native#text/plain
 src/other/libz/contrib/infback9/README svneol=native#text/plain
 src/other/libz/contrib/infback9/infback9.c svneol=native#text/plain
 src/other/libz/contrib/infback9/infback9.h svneol=native#text/plain
@@ -8292,25 +8285,24 @@ src/other/libz/contrib/iostream3/TODO svneol=native#text/plain
 src/other/libz/contrib/iostream3/test.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.h svneol=native#text/plain
-src/other/libz/contrib/masm686/match.asm -text
 src/other/libz/contrib/masmx64/bld_ml64.bat svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/masmx64/gvmat64.asm -text
 src/other/libz/contrib/masmx64/inffas8664.c svneol=native#text/plain
 src/other/libz/contrib/masmx64/inffasx64.asm -text
 src/other/libz/contrib/masmx64/readme.txt svneol=native#text/plain
 src/other/libz/contrib/masmx86/bld_ml32.bat svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/masmx86/gvmat32.asm -text
-src/other/libz/contrib/masmx86/gvmat32c.c svneol=native#text/plain
 src/other/libz/contrib/masmx86/inffas32.asm -text
-src/other/libz/contrib/masmx86/mkasm.bat svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/masmx86/match686.asm svneol=native#text/plain
 src/other/libz/contrib/masmx86/readme.txt svneol=native#text/plain
-src/other/libz/contrib/minizip/ChangeLogUnzip svneol=native#text/plain
 src/other/libz/contrib/minizip/Makefile svneol=native#text/plain
+src/other/libz/contrib/minizip/MiniZip64_Changes.txt svneol=native#text/plain
+src/other/libz/contrib/minizip/MiniZip64_info.txt svneol=native#text/plain
 src/other/libz/contrib/minizip/crypt.h svneol=native#text/plain
 src/other/libz/contrib/minizip/ioapi.c svneol=native#text/plain
 src/other/libz/contrib/minizip/ioapi.h svneol=native#text/plain
 src/other/libz/contrib/minizip/iowin32.c svneol=native#text/plain
 src/other/libz/contrib/minizip/iowin32.h svneol=native#text/plain
+src/other/libz/contrib/minizip/make_vms.com svneol=native#text/plain
 src/other/libz/contrib/minizip/miniunz.c svneol=native#text/plain
 src/other/libz/contrib/minizip/minizip.c svneol=native#text/plain
 src/other/libz/contrib/minizip/mztools.c svneol=native#text/plain
@@ -8332,29 +8324,48 @@ src/other/libz/contrib/testzlib/testzlib.txt svneol=native#text/plain
 src/other/libz/contrib/untgz/Makefile.msc svneol=native#text/plain
 src/other/libz/contrib/untgz/untgz.c svneol=native#text/plain
 src/other/libz/contrib/vstudio/readme.txt svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc7/miniunz.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc7/minizip.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc7/testzlib.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc7/zlib.rc svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc7/zlibstat.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc7/zlibvc.def svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc7/zlibvc.sln eol=crlf
-src/other/libz/contrib/vstudio/vc7/zlibvc.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/miniunz.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/minizip.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/testzlib.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/testzlibdll.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/zlib.rc svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/zlibstat.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/vstudio/vc8/zlibvc.def svneol=native#text/plain
-src/other/libz/contrib/vstudio/vc8/zlibvc.sln eol=crlf
-src/other/libz/contrib/vstudio/vc8/zlibvc.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc10/miniunz.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/miniunz.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/miniunz.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/minizip.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/minizip.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/minizip.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlib.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlib.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlib.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlibdll.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlibdll.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/testzlibdll.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlib.rc svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc10/zlibstat.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibstat.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibstat.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibvc.def svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibvc.sln svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc10/zlibvc.vcxproj svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibvc.vcxproj.filters svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc10/zlibvc.vcxproj.user svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc9/miniunz.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/minizip.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/testzlib.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/testzlibdll.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/zlib.rc svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/zlibstat.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/zlibvc.def svneol=native#text/plain
+src/other/libz/contrib/vstudio/vc9/zlibvc.sln svneol=CRLF#text/plain eol=crlf
+src/other/libz/contrib/vstudio/vc9/zlibvc.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libz/crc32.c svneol=native#text/plain
 src/other/libz/crc32.h svneol=native#text/plain
 src/other/libz/deflate.c svneol=native#text/plain
 src/other/libz/deflate.h svneol=native#text/plain
+src/other/libz/doc/algorithm.txt svneol=native#text/plain
+src/other/libz/doc/rfc1950.txt svneol=native#text/plain
+src/other/libz/doc/rfc1951.txt svneol=native#text/plain
+src/other/libz/doc/rfc1952.txt svneol=native#text/plain
+src/other/libz/doc/txtvsbin.txt svneol=native#text/plain
 src/other/libz/example.c svneol=native#text/plain
 src/other/libz/examples/README.examples svneol=native#text/plain
+src/other/libz/examples/enough.c svneol=native#text/plain
 src/other/libz/examples/fitblk.c svneol=native#text/plain
 src/other/libz/examples/gun.c svneol=native#text/plain
 src/other/libz/examples/gzappend.c svneol=native#text/plain
@@ -8364,7 +8375,11 @@ src/other/libz/examples/gzlog.h svneol=native#text/plain
 src/other/libz/examples/zlib_how.html svneol=native#text/html
 src/other/libz/examples/zpipe.c svneol=native#text/plain
 src/other/libz/examples/zran.c svneol=native#text/plain
-src/other/libz/gzio.c svneol=native#text/plain
+src/other/libz/gzclose.c svneol=native#text/plain
+src/other/libz/gzguts.h svneol=native#text/plain
+src/other/libz/gzlib.c svneol=native#text/plain
+src/other/libz/gzread.c svneol=native#text/plain
+src/other/libz/gzwrite.c svneol=native#text/plain
 src/other/libz/infback.c svneol=native#text/plain
 src/other/libz/inffast.c svneol=native#text/plain
 src/other/libz/inffast.h svneol=native#text/plain
@@ -8380,35 +8395,47 @@ src/other/libz/msdos/Makefile.dj2 svneol=native#text/plain
 src/other/libz/msdos/Makefile.emx svneol=native#text/plain
 src/other/libz/msdos/Makefile.msc svneol=native#text/plain
 src/other/libz/msdos/Makefile.tc svneol=native#text/plain
+src/other/libz/nintendods/README svneol=native#text/plain
 src/other/libz/old/Makefile.riscos svneol=native#text/plain
 src/other/libz/old/README svneol=native#text/plain
+src/other/libz/old/as400/bndsrc svneol=native#text/plain
+src/other/libz/old/as400/compile.clp svneol=native#text/plain
+src/other/libz/old/as400/readme.txt svneol=native#text/plain
+src/other/libz/old/as400/zlib.inc svneol=native#text/plain
 src/other/libz/old/descrip.mms -text
 src/other/libz/old/os2/Makefile.os2 svneol=native#text/plain
 src/other/libz/old/os2/zlib.def svneol=native#text/plain
 src/other/libz/old/visual-basic.txt svneol=native#text/plain
-src/other/libz/old/zlib.html svneol=native#text/html
-src/other/libz/projects/README.projects svneol=native#text/plain
-src/other/libz/projects/visualc6/README.txt svneol=native#text/plain
-src/other/libz/projects/visualc6/example.dsp svneol=CRLF#text/plain eol=crlf
-src/other/libz/projects/visualc6/minigzip.dsp svneol=CRLF#text/plain eol=crlf
-src/other/libz/projects/visualc6/zlib.dsp svneol=CRLF#text/plain eol=crlf
-src/other/libz/projects/visualc6/zlib.dsw svneol=CRLF#text/plain eol=crlf
+src/other/libz/old/visualc6/README.txt svneol=native#text/plain
+src/other/libz/old/visualc6/example.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/old/visualc6/minigzip.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/old/visualc6/zlib.dsp svneol=CRLF#text/plain eol=crlf
+src/other/libz/old/visualc6/zlib.dsw svneol=CRLF#text/plain eol=crlf
 src/other/libz/qnx/package.qpg svneol=native#text/xml
+src/other/libz/treebuild.xml svneol=native#text/xml
 src/other/libz/trees.c svneol=native#text/plain
 src/other/libz/trees.h svneol=native#text/plain
 src/other/libz/uncompr.c svneol=native#text/plain
+src/other/libz/watcom/watcom_f.mak svneol=native#text/plain
+src/other/libz/watcom/watcom_l.mak svneol=native#text/plain
 src/other/libz/win32/DLL_FAQ.txt svneol=native#text/plain
 src/other/libz/win32/Makefile.bor svneol=native#text/plain
 src/other/libz/win32/Makefile.emx svneol=native#text/plain
 src/other/libz/win32/Makefile.gcc svneol=native#text/plain
 src/other/libz/win32/Makefile.msc svneol=native#text/plain
+src/other/libz/win32/README-WIN32.txt svneol=native#text/plain
 src/other/libz/win32/VisualC.txt svneol=native#text/plain
 src/other/libz/win32/zlib.def svneol=native#text/plain
 src/other/libz/win32/zlib1.rc svneol=CRLF#text/plain eol=crlf
 src/other/libz/zconf.h svneol=native#text/plain
-src/other/libz/zconf.in.h svneol=native#text/plain
+src/other/libz/zconf.h.cmakein svneol=native#text/plain
+src/other/libz/zconf.h.in svneol=native#text/plain
 src/other/libz/zlib.3 svneol=native#text/plain
+src/other/libz/zlib.3.pdf -text svneol=unset#application/pdf
 src/other/libz/zlib.h svneol=native#text/plain
+src/other/libz/zlib.map svneol=native#text/plain
+src/other/libz/zlib.pc.in svneol=native#text/plain
+src/other/libz/zlib2ansi svneol=native#text/plain
 src/other/libz/zutil.c svneol=native#text/plain
 src/other/libz/zutil.h svneol=native#text/plain
 src/other/openNURBS/BRL-CAD_changes.txt svneol=native#text/plain
@@ -9698,6 +9725,7 @@ src/other/tcl/library/tzdata/America/Asuncion -text
 src/other/tcl/library/tzdata/America/Atikokan -text
 src/other/tcl/library/tzdata/America/Atka -text
 src/other/tcl/library/tzdata/America/Bahia -text
+src/other/tcl/library/tzdata/America/Bahia_Banderas svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Barbados -text
 src/other/tcl/library/tzdata/America/Belem -text
 src/other/tcl/library/tzdata/America/Belize -text
@@ -9770,6 +9798,7 @@ src/other/tcl/library/tzdata/America/Managua -text
 src/other/tcl/library/tzdata/America/Manaus -text
 src/other/tcl/library/tzdata/America/Marigot svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Martinique -text
+src/other/tcl/library/tzdata/America/Matamoros svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Mazatlan -text
 src/other/tcl/library/tzdata/America/Mendoza -text
 src/other/tcl/library/tzdata/America/Menominee -text
@@ -9788,6 +9817,7 @@ src/other/tcl/library/tzdata/America/Nome -text
 src/other/tcl/library/tzdata/America/Noronha -text
 src/other/tcl/library/tzdata/America/North_Dakota/Center -text
 src/other/tcl/library/tzdata/America/North_Dakota/New_Salem -text
+src/other/tcl/library/tzdata/America/Ojinaga svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Panama -text
 src/other/tcl/library/tzdata/America/Pangnirtung -text
 src/other/tcl/library/tzdata/America/Paramaribo -text
@@ -9804,6 +9834,7 @@ src/other/tcl/library/tzdata/America/Regina -text
 src/other/tcl/library/tzdata/America/Resolute -text
 src/other/tcl/library/tzdata/America/Rio_Branco -text
 src/other/tcl/library/tzdata/America/Rosario -text
+src/other/tcl/library/tzdata/America/Santa_Isabel svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Santarem svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Santiago -text
 src/other/tcl/library/tzdata/America/Santo_Domingo -text
@@ -9832,6 +9863,7 @@ src/other/tcl/library/tzdata/America/Yellowknife -text
 src/other/tcl/library/tzdata/Antarctica/Casey -text
 src/other/tcl/library/tzdata/Antarctica/Davis -text
 src/other/tcl/library/tzdata/Antarctica/DumontDUrville -text
+src/other/tcl/library/tzdata/Antarctica/Macquarie svneol=native#text/plain
 src/other/tcl/library/tzdata/Antarctica/Mawson -text
 src/other/tcl/library/tzdata/Antarctica/McMurdo -text
 src/other/tcl/library/tzdata/Antarctica/Palmer -text
@@ -10120,6 +10152,7 @@ src/other/tcl/library/tzdata/PST8PDT -text
 src/other/tcl/library/tzdata/Pacific/Apia -text
 src/other/tcl/library/tzdata/Pacific/Auckland -text
 src/other/tcl/library/tzdata/Pacific/Chatham -text
+src/other/tcl/library/tzdata/Pacific/Chuuk svneol=native#text/plain
 src/other/tcl/library/tzdata/Pacific/Easter -text
 src/other/tcl/library/tzdata/Pacific/Efate -text
 src/other/tcl/library/tzdata/Pacific/Enderbury -text
@@ -10145,6 +10178,7 @@ src/other/tcl/library/tzdata/Pacific/Noumea -text
 src/other/tcl/library/tzdata/Pacific/Pago_Pago -text
 src/other/tcl/library/tzdata/Pacific/Palau -text
 src/other/tcl/library/tzdata/Pacific/Pitcairn -text
+src/other/tcl/library/tzdata/Pacific/Pohnpei svneol=native#text/plain
 src/other/tcl/library/tzdata/Pacific/Ponape -text
 src/other/tcl/library/tzdata/Pacific/Port_Moresby -text
 src/other/tcl/library/tzdata/Pacific/Rarotonga -text
@@ -10726,6 +10760,7 @@ src/other/tk/doc/ttk_scale.n svneol=native#text/plain
 src/other/tk/doc/ttk_scrollbar.n svneol=native#text/plain
 src/other/tk/doc/ttk_separator.n svneol=native#text/plain
 src/other/tk/doc/ttk_sizegrip.n svneol=native#text/plain
+src/other/tk/doc/ttk_spinbox.n svneol=native#text/plain
 src/other/tk/doc/ttk_style.n svneol=native#text/plain
 src/other/tk/doc/ttk_treeview.n svneol=native#text/plain
 src/other/tk/doc/ttk_vsapi.n svneol=native#text/plain
@@ -10960,6 +10995,7 @@ src/other/tk/library/demos/ttkmenu.tcl -text
 src/other/tk/library/demos/ttknote.tcl -text
 src/other/tk/library/demos/ttkpane.tcl -text
 src/other/tk/library/demos/ttkprogress.tcl -text
+src/other/tk/library/demos/ttkscale.tcl svneol=native#text/plain
 src/other/tk/library/demos/twind.tcl svneol=native#text/plain
 src/other/tk/library/demos/unicodeout.tcl svneol=native#text/plain
 src/other/tk/library/demos/vscale.tcl svneol=native#text/plain
@@ -11031,6 +11067,7 @@ src/other/tk/library/ttk/progress.tcl svneol=native#text/plain
 src/other/tk/library/ttk/scale.tcl svneol=native#text/plain
 src/other/tk/library/ttk/scrollbar.tcl svneol=native#text/plain
 src/other/tk/library/ttk/sizegrip.tcl svneol=native#text/plain
+src/other/tk/library/ttk/spinbox.tcl svneol=native#text/plain
 src/other/tk/library/ttk/treeview.tcl svneol=native#text/plain
 src/other/tk/library/ttk/ttk.tcl svneol=native#text/plain
 src/other/tk/library/ttk/utils.tcl svneol=native#text/plain
@@ -11194,6 +11231,7 @@ src/other/tk/tests/textTag.test svneol=native#text/plain
 src/other/tk/tests/textWind.test svneol=native#text/plain
 src/other/tk/tests/tk.test svneol=native#text/plain
 src/other/tk/tests/ttk/all.tcl svneol=native#text/plain
+src/other/tk/tests/ttk/checkbutton.test svneol=native#text/plain
 src/other/tk/tests/ttk/combobox.test svneol=native#text/plain
 src/other/tk/tests/ttk/entry.test svneol=native#text/plain
 src/other/tk/tests/ttk/image.test svneol=native#text/plain
@@ -11202,7 +11240,9 @@ src/other/tk/tests/ttk/layout.test svneol=native#text/plain
 src/other/tk/tests/ttk/notebook.test svneol=native#text/plain
 src/other/tk/tests/ttk/panedwindow.test svneol=native#text/plain
 src/other/tk/tests/ttk/progressbar.test svneol=native#text/plain
+src/other/tk/tests/ttk/radiobutton.test svneol=native#text/plain
 src/other/tk/tests/ttk/scrollbar.test svneol=native#text/plain
+src/other/tk/tests/ttk/spinbox.test svneol=native#text/plain
 src/other/tk/tests/ttk/treetags.test svneol=native#text/plain
 src/other/tk/tests/ttk/treeview.test svneol=native#text/plain
 src/other/tk/tests/ttk/ttk.test svneol=native#text/plain
@@ -11473,11 +11513,13 @@ src/other/tkhtml/src/tkhtml.tcl svneol=native#text/plain
 src/other/tkhtml/src/tokenlist.txt svneol=native#text/plain
 src/other/tkhtml/tclconfig/README.txt svneol=native#text/plain
 src/other/tkhtml/tclconfig/tcl.m4 svneol=native#text/plain
+src/other/tkpng/ChangeLog svneol=native#text/plain
 src/other/tkpng/Makefile.am svneol=native#text/plain
 src/other/tkpng/README svneol=native#text/plain
+src/other/tkpng/generic/tkImgPNG.c svneol=native#text/plain
+src/other/tkpng/generic/tkImgPNGInit.c svneol=native#text/plain
 src/other/tkpng/license.terms svneol=native#text/plain
-src/other/tkpng/tkImgPNG.c svneol=native#text/plain
-src/other/tkpng/tkImgPNGInit.c svneol=native#text/plain
+src/other/tkpng/pkgIndex.tcl.in svneol=native#text/plain
 src/other/tktable/ChangeLog svneol=native#text/plain
 src/other/tktable/Makefile.in svneol=native#text/plain
 src/other/tktable/README.blt svneol=native#text/plain
@@ -11517,6 +11559,7 @@ src/other/tktable/license.txt svneol=native#text/plain
 src/other/tktable/mac/mac_tkTable.mcp.xml svneol=native#text/plain
 src/other/tktable/mac/mac_tkTable.r svneol=native#text/plain
 src/other/tktable/mac/mac_tkTable_prefix.h svneol=native#text/plain
+src/other/tktable/misc/tkTable_header.tcl svneol=native#text/plain
 src/other/tktable/tclconfig/README.txt svneol=native#text/plain
 src/other/tktable/tclconfig/install-sh svneol=native#text/plain
 src/other/tktable/tclconfig/tcl.m4 svneol=native#text/plain
@@ -11553,28 +11596,36 @@ src/other/tnt/tnt_stopwatch.h svneol=native#text/plain
 src/other/tnt/tnt_subscript.h svneol=native#text/plain
 src/other/tnt/tnt_vector.h svneol=native#text/plain
 src/other/tnt/tnt_version.h svneol=native#text/plain
-src/other/togl/GL/glext.h svneol=native#text/plain
-src/other/togl/GL/glxext.h svneol=native#text/plain
-src/other/togl/GL/wglext.h svneol=native#text/plain
+src/other/togl/CMake/CheckCFileRuns.cmake svneol=native#text/plain
+src/other/togl/CMake/CheckFunctions.cmake svneol=native#text/plain
+src/other/togl/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
+src/other/togl/CMake/FindGL.cmake svneol=native#text/plain
+src/other/togl/CMake/FindTCL.cmake svneol=native#text/plain
+src/other/togl/CMake/test_srcs/ctypes_test.c svneol=native#text/plain
+src/other/togl/CMakeLists.txt svneol=native#text/plain
 src/other/togl/LICENSE svneol=native#text/plain
-src/other/togl/Makefile.in svneol=native#text/plain
 src/other/togl/README svneol=native#text/plain
-src/other/togl/README.bin svneol=native#text/plain
-src/other/togl/README.stubs svneol=native#text/plain
-src/other/togl/README.togl svneol=native#text/plain
-src/other/togl/StereoI/README.txt svneol=native#text/plain
-src/other/togl/StereoI/StereoI.h svneol=native#text/plain
-src/other/togl/StereoI/StereoI.lib -text
-src/other/togl/Togl.py svneol=native#text/plain
-src/other/togl/Xmu_CmapAlloc.c svneol=native#text/plain
-src/other/togl/Xmu_CrCmap.c svneol=native#text/plain
-src/other/togl/Xmu_DelCmap.c svneol=native#text/plain
-src/other/togl/Xmu_LookupCmap.c svneol=native#text/plain
-src/other/togl/Xmu_StdCmap.c svneol=native#text/plain
-src/other/togl/Xmu_StdCmap.h svneol=native#text/plain
-src/other/togl/aclocal.m4 svneol=native#text/plain
-src/other/togl/ben.rgb -text svneol=unset#image/x-rgb
+src/other/togl/configure svneol=native#text/plain
 src/other/togl/configure.in svneol=native#text/plain
+src/other/togl/demo/CMakeLists.txt svneol=native#text/plain
+src/other/togl/demo/ben.rgb -text svneol=unset#image/x-rgb
+src/other/togl/demo/double.c svneol=native#text/plain
+src/other/togl/demo/double.tcl svneol=native#text/plain
+src/other/togl/demo/gears.c svneol=native#text/plain
+src/other/togl/demo/gears.tcl svneol=native#text/plain
+src/other/togl/demo/image.h svneol=native#text/plain
+src/other/togl/demo/index.c svneol=native#text/plain
+src/other/togl/demo/index.tcl svneol=native#text/plain
+src/other/togl/demo/multisample.tcl svneol=native#text/plain
+src/other/togl/demo/overlay.c svneol=native#text/plain
+src/other/togl/demo/overlay.tcl svneol=native#text/plain
+src/other/togl/demo/pbuffer.c svneol=native#text/plain
+src/other/togl/demo/pbuffer.tcl svneol=native#text/plain
+src/other/togl/demo/stereo.c svneol=native#text/plain
+src/other/togl/demo/stereo.tcl svneol=native#text/plain
+src/other/togl/demo/texture.c svneol=native#text/plain
+src/other/togl/demo/texture.tcl svneol=native#text/plain
+src/other/togl/demo/tree2.rgba -text
 src/other/togl/doc/README.txt svneol=native#text/plain
 src/other/togl/doc/capi.html svneol=native#text/html
 src/other/togl/doc/download.html svneol=native#text/html
@@ -11585,43 +11636,118 @@ src/other/togl/doc/stereo.html svneol=native#text/html
 src/other/togl/doc/tclapi.html svneol=native#text/html
 src/other/togl/doc/upgrading.html svneol=native#text/html
 src/other/togl/doc/using.html svneol=native#text/html
-src/other/togl/double.c svneol=native#text/plain
-src/other/togl/double.tcl svneol=native#text/plain
-src/other/togl/gears.c svneol=native#text/plain
-src/other/togl/gears.tcl svneol=native#text/plain
-src/other/togl/image.c svneol=native#text/plain
-src/other/togl/image.h svneol=native#text/plain
-src/other/togl/index.c svneol=native#text/plain
-src/other/togl/index.tcl svneol=native#text/plain
-src/other/togl/multisample.tcl svneol=native#text/plain
-src/other/togl/overlay.c svneol=native#text/plain
-src/other/togl/overlay.tcl svneol=native#text/plain
-src/other/togl/pbuffer.c svneol=native#text/plain
-src/other/togl/pbuffer.tcl svneol=native#text/plain
-src/other/togl/pkgIndex.tcl.in svneol=native#text/plain
-src/other/togl/stereo.c svneol=native#text/plain
-src/other/togl/stereo.tcl svneol=native#text/plain
-src/other/togl/tclconfig/README.txt svneol=native#text/plain
-src/other/togl/tclconfig/install-sh svneol=native#text/plain
-src/other/togl/tclconfig/tcl.m4 svneol=native#text/plain
-src/other/togl/texture.c svneol=native#text/plain
-src/other/togl/texture.tcl svneol=native#text/plain
-src/other/togl/togl.c svneol=native#text/plain
-src/other/togl/togl.decls svneol=native#text/plain
-src/other/togl/togl.h svneol=native#text/plain
-src/other/togl/toglAGL.c svneol=native#text/plain
-src/other/togl/toglDecls.h svneol=native#text/plain
-src/other/togl/toglFont.c svneol=native#text/plain
-src/other/togl/toglGLX.c svneol=native#text/plain
-src/other/togl/toglProcAddr.c svneol=native#text/plain
-src/other/togl/toglStubInit.c svneol=native#text/plain
-src/other/togl/toglStubLib.c svneol=native#text/plain
-src/other/togl/toglWGL.c svneol=native#text/plain
-src/other/togl/togl_ws.h.in svneol=native#text/plain
-src/other/togl/toglpy.h svneol=native#text/plain
-src/other/togl/tree2.rgba -text
-src/other/togl/valgrind-togl.supp svneol=native#text/plain
-src/other/togl/valgrind.cmd svneol=native#text/plain
+src/other/togl/include/GL/glext.h svneol=native#text/plain
+src/other/togl/include/GL/glxext.h svneol=native#text/plain
+src/other/togl/include/GL/wglext.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tclInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tclIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkWin.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkWinInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.2/tkWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/default.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tclInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tclIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkMacDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkUnixDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkWin.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkWinDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkWinInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.3/tkWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/default.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tclInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tclIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkMacDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkMacOSXDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkMacOSXInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkMacOSXPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkUnixDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkWin.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkWinDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkWinInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.4/tkWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/default.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tclWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkMacOSXDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkMacOSXInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkMacOSXPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkUnixDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkWin.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkWinDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkWinInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.5/tkWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/default.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tclWinPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkIntDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkIntPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkMacOSXDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkMacOSXInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkMacOSXPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkPlatDecls.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkUnixDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkUnixPort.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkWin.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkWinDefault.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkWinInt.h svneol=native#text/plain
+src/other/togl/include/tcltk/tk8.6/tkWinPort.h svneol=native#text/plain
+src/other/togl/include/togl.h svneol=native#text/plain
+src/other/togl/include/togl_config.h.in svneol=native#text/plain
+src/other/togl/include/toglpy.h svneol=native#text/plain
+src/other/togl/src/CMakeLists.txt svneol=native#text/plain
+src/other/togl/src/Togl.py svneol=native#text/plain
+src/other/togl/src/Xmu/CmapAlloc.c svneol=native#text/plain
+src/other/togl/src/Xmu/CrCmap.c svneol=native#text/plain
+src/other/togl/src/Xmu/DelCmap.c svneol=native#text/plain
+src/other/togl/src/Xmu/LookupCmap.c svneol=native#text/plain
+src/other/togl/src/Xmu/README svneol=native#text/plain
+src/other/togl/src/Xmu/README.togl svneol=native#text/plain
+src/other/togl/src/Xmu/StdCmap.c svneol=native#text/plain
+src/other/togl/src/Xmu/StdCmap.h svneol=native#text/plain
+src/other/togl/src/togl.c svneol=native#text/plain
+src/other/togl/src/togl.decls svneol=native#text/plain
+src/other/togl/src/toglAGL.c svneol=native#text/plain
+src/other/togl/src/toglGLX.c svneol=native#text/plain
+src/other/togl/src/toglNSOpenGL.c svneol=native#text/plain
+src/other/togl/src/toglProcAddr.c svneol=native#text/plain
+src/other/togl/src/toglStubLib.c svneol=native#text/plain
+src/other/togl/src/toglWGL.c svneol=native#text/plain
+src/other/togl/tools/genStubs.tcl svneol=native#text/plain
+src/other/togl/tools/valgrind-togl.supp svneol=native#text/plain
+src/other/togl/tools/valgrind.cmd svneol=native#text/plain
 src/proc-db/Makefile.am svneol=native#text/plain
 src/proc-db/bottest.c svneol=native#text/plain
 src/proc-db/brep_cube.cpp svneol=native#text/plain
@@ -11700,6 +11826,7 @@ src/rt/rtscale.1 svneol=native#text/plain
 src/rt/rtscale.c svneol=native#text/plain
 src/rt/rtshot.1 svneol=native#text/plain
 src/rt/rtshot.c svneol=native#text/plain
+src/rt/rtuif.h svneol=native#text/plain
 src/rt/rtwalk.1 svneol=native#text/plain
 src/rt/rtwalk.c svneol=native#text/plain
 src/rt/rtweight.1 svneol=native#text/plain
@@ -11845,239 +11972,6 @@ src/tclscripts/archer/Wizard.tcl svneol=native#text/plain
 src/tclscripts/archer/bgerror.tcl svneol=native#text/plain
 src/tclscripts/archer/cursor.tcl svneol=native#text/plain
 src/tclscripts/archer/images/Makefile.am svneol=native#text/plain
-src/tclscripts/archer/images/Themes/Crystal/Makefile.am svneol=native#text/plain
-src/tclscripts/archer/images/Themes/Crystal/arrow_back.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/arrow_forward.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/bug.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/checkpoint.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/closeall.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/combination.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/command.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/compErase.png -text
-src/tclscripts/archer/images/Themes/Crystal/compExclude.png -text
-src/tclscripts/archer/images/Themes/Crystal/compSelect.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/configure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_copy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_cut.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_paste.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_select.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/edit_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/file_new.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/file_text_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/file_text_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/find.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/folder_closed_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/folder_closed_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/folder_open.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/folder_open_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/folder_open_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/framebuffer.png -text
-src/tclscripts/archer/images/Themes/Crystal/framebuffer_clear.png -text
-src/tclscripts/archer/images/Themes/Crystal/global_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/measure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/object_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/open.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/option_text.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/option_tree.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/pane_blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/pane_collapse.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/pane_expand.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_arb6.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_arb8.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_bot.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_cone.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_ehy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_ell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_epa.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_eto.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_extrude.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_grip.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_half.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_hyp.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_list.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_other.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_part.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_pipe.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_rhc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_rpc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_sketch.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_sph.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_superell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_tgc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/primitive_tor.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/raytrace.png -text
-src/tclscripts/archer/images/Themes/Crystal/raytrace_abort.png -text
-src/tclscripts/archer/images/Themes/Crystal/refresh.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/revert.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/run.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/save.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_left_right_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_obj_select.png -text
-src/tclscripts/archer/images/Themes/Crystal/view_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_select.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_top_bottom_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/view_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal/wizard.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/Makefile.am svneol=native#text/plain
-src/tclscripts/archer/images/Themes/Crystal_Large/arrow_back.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/arrow_forward.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/bug.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/checkpoint.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/closeall.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/combination.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/command.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/component_erase.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/component_pick.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/configure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_copy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_cut.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_paste.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_select.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/edit_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/file_new.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/file_text_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/file_text_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/find.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/folder_closed_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/folder_closed_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/folder_open_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/folder_open_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_clear.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_interlay.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_off.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_overlay.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/framebuffer_underlay.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/global_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/measure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/object_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/open.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/option_text.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/option_tree.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/pane_blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/pane_collapse.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/pane_expand.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_arb6.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_arb8.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_bot.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_cone.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_ehy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_ell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_epa.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_eto.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_extrude.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_grip.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_half.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_hyp.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_list.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_other.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_part.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_pipe.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_rhc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_rpc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_sketch.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_sph.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_superell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_tgc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/primitive_tor.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/raytrace.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/raytrace_abort.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/refresh.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/revert.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/run.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/save.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_center.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/view_left_right_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_obj_select.png -text
-src/tclscripts/archer/images/Themes/Crystal_Large/view_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_top_bottom_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/view_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Crystal_Large/wizard.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Makefile.am svneol=native#text/plain
-src/tclscripts/archer/images/Themes/Windows/Makefile.am svneol=native#text/plain
-src/tclscripts/archer/images/Themes/Windows/arrow_back.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/arrow_forward.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/bug.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/checkpoint.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/closeall.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/combination.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/command.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/compErase.png -text
-src/tclscripts/archer/images/Themes/Windows/compExclude.png -text
-src/tclscripts/archer/images/Themes/Windows/compSelect.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/configure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_copy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_cut.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_paste.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_select.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/edit_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/file_new.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/file_text_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/file_text_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/find.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/folder_closed_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/folder_closed_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/folder_open_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/folder_open_small_disabled.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/framebuffer.png -text
-src/tclscripts/archer/images/Themes/Windows/framebuffer_clear.png -text
-src/tclscripts/archer/images/Themes/Windows/global_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/measure.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/object_undo.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/open.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/option_text.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/option_tree.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/pane_blank.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/pane_collapse.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/pane_expand.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_arb6.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_arb8.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_bot.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_cone.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_ehy.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_ell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_epa.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_eto.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_extrude.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_grip.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_half.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_hyp.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_list.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_other.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_part.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_pipe.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_rhc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_rpc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_sketch.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_sph.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_superell.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_tgc.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/primitive_tor.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/raytrace.png -text
-src/tclscripts/archer/images/Themes/Windows/raytrace_abort.png -text
-src/tclscripts/archer/images/Themes/Windows/refresh.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/revert.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/run.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/save.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_left_right_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_obj_select.png -text
-src/tclscripts/archer/images/Themes/Windows/view_rotate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_scale.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_select.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_top_bottom_small.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/view_translate.png -text svneol=unset#image/png
-src/tclscripts/archer/images/Themes/Windows/wizard.png -text svneol=unset#image/png
 src/tclscripts/archer/images/aboutArcher.png -text svneol=unset#image/png
 src/tclscripts/archer/images/air.png -text
 src/tclscripts/archer/images/air_intersect.png -text
@@ -12337,6 +12231,7 @@ src/tclscripts/archer/images/view_scale.png -text
 src/tclscripts/archer/images/view_top_bottom_small.png -text
 src/tclscripts/archer/images/view_translate.png -text
 src/tclscripts/archer/images/wizard.png -text
+src/tclscripts/archer/itk_redefines.tcl svneol=native#text/plain
 src/tclscripts/archer/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/archer/tabwindow.itk svneol=native#text/plain
 src/tclscripts/archer/tclIndex -text
@@ -12394,6 +12289,7 @@ src/tclscripts/lib/RtControl.tcl svneol=native#text/plain
 src/tclscripts/lib/Splash.tcl svneol=native#text/plain
 src/tclscripts/lib/Table.tcl svneol=native#text/plain
 src/tclscripts/lib/TableView.tcl svneol=native#text/plain
+src/tclscripts/lib/TkTable.tcl svneol=native#text/plain
 src/tclscripts/lib/View.tcl svneol=native#text/plain
 src/tclscripts/lib/ViewAxesControl.tcl svneol=native#text/plain
 src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
@@ -12528,10 +12424,6 @@ src/tclscripts/mged/titles.tcl svneol=native#text/plain
 src/tclscripts/mged/tree.tcl svneol=native#text/plain
 src/tclscripts/mged/xclone.tcl -text
 src/tclscripts/mouse.tcl svneol=native#text/plain
-src/tclscripts/nirt/Makefile.am svneol=native#text/plain
-src/tclscripts/nirt/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/nirt/prototype.sh svneol=native#text/x-sh
-src/tclscripts/nirt/tclIndex -text
 src/tclscripts/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/Makefile.am svneol=native#text/plain
 src/tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
