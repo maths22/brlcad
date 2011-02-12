@@ -1338,14 +1338,6 @@ src/other/step/doc/man/man1/Makefile
 src/other/step/doc/man/man1/Makefile.in
 src/other/step/include/Makefile
 src/other/step/include/Makefile.in
-src/other/step/include/conf/COUNT
-src/other/step/include/conf/DATE
-src/other/step/include/conf/HOST
-src/other/step/include/conf/Makefile
-src/other/step/include/conf/Makefile.in
-src/other/step/include/conf/PATH
-src/other/step/include/conf/TS
-src/other/step/include/conf/USER
 src/other/step/include/exppp/Makefile
 src/other/step/include/exppp/Makefile.in
 src/other/step/include/express/Makefile
