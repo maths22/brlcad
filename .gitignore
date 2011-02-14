@@ -767,7 +767,7 @@ src/conv/g-nff
 src/conv/g-nmg
 src/conv/g-obj
 src/conv/g-off
-src/conv/g-shell.rect
+src/conv/g-shell-rect
 src/conv/g-stl
 src/conv/g-tankill
 src/conv/g-var
@@ -822,6 +822,7 @@ src/conv/ply-g
 src/conv/poly-bot
 src/conv/proe-g
 src/conv/rpatch
+src/conv/shp-g
 src/conv/step/.deps
 src/conv/step/.libs
 src/conv/step/Makefile
