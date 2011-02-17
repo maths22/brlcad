@@ -11951,7 +11951,6 @@ src/tab/tabinterp.c svneol=native#text/plain
 src/tab/tabsub.1 svneol=native#text/plain
 src/tab/tabsub.c svneol=native#text/plain
 src/tab/tokens.h svneol=native#text/plain
-src/tab/txyz-pl.c svneol=native#text/plain
 src/tclscripts/Makefile.am svneol=native#text/plain
 src/tclscripts/README svneol=native#text/plain
 src/tclscripts/ami.tcl svneol=native#text/plain
