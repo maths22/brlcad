@@ -11989,7 +11989,6 @@ src/tclscripts/archer/TorusEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Utility.tcl svneol=native#text/plain
 src/tclscripts/archer/Wizard.tcl svneol=native#text/plain
 src/tclscripts/archer/bgerror.tcl svneol=native#text/plain
-src/tclscripts/archer/cursor.tcl svneol=native#text/plain
 src/tclscripts/archer/images/Makefile.am svneol=native#text/plain
 src/tclscripts/archer/images/aboutArcher.png -text svneol=unset#image/png
 src/tclscripts/archer/images/air.png -text
@@ -12311,6 +12310,7 @@ src/tclscripts/lib/TableView.tcl svneol=native#text/plain
 src/tclscripts/lib/TkTable.tcl svneol=native#text/plain
 src/tclscripts/lib/View.tcl svneol=native#text/plain
 src/tclscripts/lib/ViewAxesControl.tcl svneol=native#text/plain
+src/tclscripts/lib/cursor.tcl svneol=native#text/plain
 src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/lib/tclIndex -text
 src/tclscripts/libdm.tcl svneol=native#text/plain
