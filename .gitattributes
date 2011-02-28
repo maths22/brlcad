@@ -2554,6 +2554,7 @@ include/Makefile.am svneol=native#text/plain
 include/RtServerImpl.h svneol=native#text/plain
 include/analyze.h svneol=native#text/plain
 include/anim.h svneol=native#text/plain
+include/bin.h svneol=native#text/plain
 include/bio.h svneol=native#text/plain
 include/bn.h svneol=native#text/plain
 include/bot.h svneol=native#text/plain
