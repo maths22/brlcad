@@ -1884,7 +1884,6 @@ src/util/random
 src/util/remapid
 src/util/rle-pix
 src/util/roots_example
-src/util/rtwizard
 src/util/sgi-pix
 src/util/sun-pix
 src/util/terrain
