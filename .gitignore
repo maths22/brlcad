@@ -625,10 +625,6 @@ src/adrt/librender/.deps
 src/adrt/librender/.libs
 src/adrt/librender/Makefile
 src/adrt/librender/Makefile.in
-src/adrt/libtie/.deps
-src/adrt/libtie/.libs
-src/adrt/libtie/Makefile
-src/adrt/libtie/Makefile.in
 src/adrt/libtienet
 src/adrt/libutil
 src/adrt/master/.deps
@@ -762,7 +758,7 @@ src/conv/g-nff
 src/conv/g-nmg
 src/conv/g-obj
 src/conv/g-off
-src/conv/g-shell.rect
+src/conv/g-shell-rect
 src/conv/g-stl
 src/conv/g-tankill
 src/conv/g-var
@@ -817,6 +813,7 @@ src/conv/ply-g
 src/conv/poly-bot
 src/conv/proe-g
 src/conv/rpatch
+src/conv/shp-g
 src/conv/step/.deps
 src/conv/step/.libs
 src/conv/step/Makefile
@@ -1333,14 +1330,6 @@ src/other/step/doc/man/man1/Makefile
 src/other/step/doc/man/man1/Makefile.in
 src/other/step/include/Makefile
 src/other/step/include/Makefile.in
-src/other/step/include/conf/COUNT
-src/other/step/include/conf/DATE
-src/other/step/include/conf/HOST
-src/other/step/include/conf/Makefile
-src/other/step/include/conf/Makefile.in
-src/other/step/include/conf/PATH
-src/other/step/include/conf/TS
-src/other/step/include/conf/USER
 src/other/step/include/exppp/Makefile
 src/other/step/include/exppp/Makefile.in
 src/other/step/include/express/Makefile
@@ -1886,7 +1875,6 @@ src/util/random
 src/util/remapid
 src/util/rle-pix
 src/util/roots_example
-src/util/rtwizard
 src/util/sgi-pix
 src/util/sun-pix
 src/util/terrain
