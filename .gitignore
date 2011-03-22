@@ -1,6 +1,7 @@
 /.cdtproject
 /.cproject
 /.deps
+/.externalToolBuilders
 /.project
 /.settings
 /Makefile
