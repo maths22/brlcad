@@ -937,16 +937,6 @@ src/irprep/irdisp
 src/irprep/secpass
 src/irprep/shapefact
 src/irprep/showtherm
-src/java/Makefile
-src/java/Makefile.in
-src/java/mil/Makefile
-src/java/mil/Makefile.in
-src/java/mil/army/Makefile
-src/java/mil/army/Makefile.in
-src/java/mil/army/arl/Makefile
-src/java/mil/army/arl/Makefile.in
-src/java/mil/army/arl/brlcad/Makefile
-src/java/mil/army/arl/brlcad/Makefile.in
 src/lgt/.deps
 src/lgt/.libs
 src/lgt/Makefile
