@@ -4031,14 +4031,6 @@ src/irprep/shapefact.c svneol=native#text/plain
 src/irprep/showtherm.1 svneol=native#text/plain
 src/irprep/showtherm.c svneol=native#text/plain
 src/irprep/subroutines.c svneol=native#text/plain
-src/java/Makefile.am svneol=native#text/plain
-src/java/mil/Makefile.am svneol=native#text/plain
-src/java/mil/army/Makefile.am svneol=native#text/plain
-src/java/mil/army/arl/Makefile.am svneol=native#text/plain
-src/java/mil/army/arl/brlcad/BrlcadGeometry.java svneol=native#text/plain
-src/java/mil/army/arl/brlcad/BrlcadGeometryServer.java svneol=native#text/plain
-src/java/mil/army/arl/brlcad/Makefile.am svneol=native#text/plain
-src/java/mil/army/arl/brlcad/Partition.java svneol=native#text/plain
 src/lgt/Makefile.am svneol=native#text/plain
 src/lgt/ascii.h svneol=native#text/plain
 src/lgt/char.c svneol=native#text/plain
@@ -4876,10 +4868,10 @@ src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/Makefile.am svneol=native#text/plain
-src/libtclcad/ged_obj.c svneol=native#text/plain
 src/libtclcad/libtclcad.dsp svneol=CRLF#text/plain eol=crlf
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
+src/libtclcad/tclcad_obj.c svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
 src/libtermio/libtermio.dsp svneol=CRLF#text/plain eol=crlf
