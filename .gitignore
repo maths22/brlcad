@@ -950,6 +950,7 @@ src/libbn/.deps
 src/libbn/.libs
 src/libbn/Makefile
 src/libbn/Makefile.in
+src/libbn/bntester
 src/libbn/libbn.plg
 src/libbu/.deps
 src/libbu/.libs
