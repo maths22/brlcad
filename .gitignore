@@ -957,6 +957,7 @@ src/libbu/Makefile
 src/libbu/Makefile.in
 src/libbu/htester
 src/libbu/libbu.plg
+src/libbu/timetester
 src/libcursor/.deps
 src/libcursor/.libs
 src/libcursor/Makefile
