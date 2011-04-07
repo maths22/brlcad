@@ -1027,6 +1027,7 @@ src/libpc/.deps
 src/libpc/.libs
 src/libpc/Makefile
 src/libpc/Makefile.in
+src/libpc/pc_test
 src/libpc/solver_test
 src/libpc/vm_test
 src/libpkg/.deps
