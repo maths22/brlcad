@@ -3062,6 +3062,7 @@ regress/mged_test.sh svneol=native#text/x-sh
 regress/moss.sh svneol=native#text/x-sh
 regress/mosspix.asc svneol=native#text/plain
 regress/nightly.sh svneol=native#text/x-sh
+regress/red.sh svneol=native#text/x-sh
 regress/repository.sh svneol=native#text/x-sh
 regress/shaders.sh svneol=native#text/x-sh
 regress/shaderspix.asc svneol=native#text/plain

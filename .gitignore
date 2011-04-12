@@ -941,6 +941,7 @@ src/libbn/.deps
 src/libbn/.libs
 src/libbn/Makefile
 src/libbn/Makefile.in
+src/libbn/bntester
 src/libbn/libbn.plg
 src/libbu/.deps
 src/libbu/.libs
@@ -948,6 +949,7 @@ src/libbu/Makefile
 src/libbu/Makefile.in
 src/libbu/htester
 src/libbu/libbu.plg
+src/libbu/timetester
 src/libcursor/.deps
 src/libcursor/.libs
 src/libcursor/Makefile
@@ -1017,6 +1019,7 @@ src/libpc/.deps
 src/libpc/.libs
 src/libpc/Makefile
 src/libpc/Makefile.in
+src/libpc/pc_test
 src/libpc/solver_test
 src/libpc/vm_test
 src/libpkg/.deps
