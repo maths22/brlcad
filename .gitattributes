@@ -4643,6 +4643,7 @@ src/librt/db_io.c svneol=native#text/plain
 src/librt/db_lookup.c svneol=native#text/plain
 src/librt/db_match.c svneol=native#text/plain
 src/librt/db_open.c svneol=native#text/plain
+src/librt/db_path.c svneol=native#text/plain
 src/librt/db_scan.c svneol=native#text/plain
 src/librt/db_tree.c svneol=native#text/plain
 src/librt/db_walk.c svneol=native#text/plain
