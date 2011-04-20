@@ -8289,9 +8289,9 @@ src/other/libz/contrib/iostream3/test.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.cc svneol=native#text/plain
 src/other/libz/contrib/iostream3/zfstream.h svneol=native#text/plain
 src/other/libz/contrib/masmx64/bld_ml64.bat svneol=CRLF#text/plain eol=crlf
-src/other/libz/contrib/masmx64/gvmat64.asm -text
+src/other/libz/contrib/masmx64/gvmat64.asm svneol=native#text/plain
 src/other/libz/contrib/masmx64/inffas8664.c svneol=native#text/plain
-src/other/libz/contrib/masmx64/inffasx64.asm -text
+src/other/libz/contrib/masmx64/inffasx64.asm svneol=native#text/plain
 src/other/libz/contrib/masmx64/readme.txt svneol=native#text/plain
 src/other/libz/contrib/masmx86/bld_ml32.bat svneol=CRLF#text/plain eol=crlf
 src/other/libz/contrib/masmx86/inffas32.asm svneol=native#text/plain
