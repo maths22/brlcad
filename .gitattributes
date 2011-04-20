@@ -8253,7 +8253,7 @@ src/other/libz/contrib/delphi/ZLib.pas -text
 src/other/libz/contrib/delphi/ZLibConst.pas -text
 src/other/libz/contrib/delphi/readme.txt svneol=native#text/plain
 src/other/libz/contrib/delphi/zlibd32.mak -text
-src/other/libz/contrib/dotzlib/DotZLib.build -text
+src/other/libz/contrib/dotzlib/DotZLib.build svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib.chm -text
 src/other/libz/contrib/dotzlib/DotZLib.sln eol=crlf
 src/other/libz/contrib/dotzlib/DotZLib/AssemblyInfo.cs svneol=native#text/plain
@@ -8262,7 +8262,7 @@ src/other/libz/contrib/dotzlib/DotZLib/CircularBuffer.cs svneol=native#text/plai
 src/other/libz/contrib/dotzlib/DotZLib/CodecBase.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/Deflater.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/DotZLib.cs svneol=native#text/plain
-src/other/libz/contrib/dotzlib/DotZLib/DotZLib.csproj -text
+src/other/libz/contrib/dotzlib/DotZLib/DotZLib.csproj svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/GZipStream.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/Inflater.cs svneol=native#text/plain
 src/other/libz/contrib/dotzlib/DotZLib/UnitTests.cs svneol=native#text/plain
