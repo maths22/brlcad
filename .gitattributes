@@ -5,6 +5,7 @@
 /COPYING svneol=native#text/plain
 /ChangeLog svneol=native#text/plain
 /HACKING svneol=native#text/plain
+/HACKING.cmake svneol=native#text/plain
 /INSTALL svneol=native#text/plain
 /INSTALL.cmake svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
