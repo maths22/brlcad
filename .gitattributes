@@ -2674,6 +2674,7 @@ m4/patch.m4 svneol=native#text/plain
 m4/prefix.m4 svneol=native#text/plain
 m4/search.m4 svneol=native#text/plain
 m4/stage.m4 svneol=native#text/plain
+misc/CMake/BRLCAD_CPackOptions.cmake.in svneol=native#text/plain
 misc/CMake/BRLCAD_CheckFunctions.cmake svneol=native#text/native
 misc/CMake/BRLCAD_Dependent_Options.cmake svneol=native#text/plain
 misc/CMake/BRLCAD_Util.cmake svneol=native#text/plain
