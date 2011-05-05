@@ -11827,6 +11827,7 @@ src/other/togl/doc/using.html svneol=native#text/html
 src/other/togl/include/GL/glew.h svneol=native#text/plain
 src/other/togl/include/GL/glxew.h svneol=native#text/plain
 src/other/togl/include/GL/wglew.h svneol=native#text/plain
+src/other/togl/include/config.h.in svneol=native#text/plain
 src/other/togl/include/tcltk/tk8.2/tclInt.h svneol=native#text/plain
 src/other/togl/include/tcltk/tk8.2/tclIntDecls.h svneol=native#text/plain
 src/other/togl/include/tcltk/tk8.2/tkInt.h svneol=native#text/plain
