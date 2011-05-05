@@ -11936,6 +11936,7 @@ src/other/togl/src/toglNSOpenGL.c svneol=native#text/plain
 src/other/togl/src/toglProcAddr.c svneol=native#text/plain
 src/other/togl/src/toglStubLib.c svneol=native#text/plain
 src/other/togl/src/toglWGL.c svneol=native#text/plain
+src/other/togl/src/wglext.h svneol=native#text/plain
 src/other/togl/tools/genStubs.tcl svneol=native#text/plain
 src/other/togl/tools/valgrind-togl.supp svneol=native#text/plain
 src/other/togl/tools/valgrind.cmd svneol=native#text/plain
