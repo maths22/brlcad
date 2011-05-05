@@ -11927,6 +11927,7 @@ src/other/togl/src/Xmu/README.togl svneol=native#text/plain
 src/other/togl/src/Xmu/StdCmap.c svneol=native#text/plain
 src/other/togl/src/Xmu/StdCmap.h svneol=native#text/plain
 src/other/togl/src/glew/glew.c svneol=native#text/plain
+src/other/togl/src/glext.h svneol=native#text/plain
 src/other/togl/src/togl.c svneol=native#text/plain
 src/other/togl/src/togl.decls svneol=native#text/plain
 src/other/togl/src/toglAGL.c svneol=native#text/plain
