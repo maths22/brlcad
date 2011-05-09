@@ -3197,6 +3197,7 @@ src/adrt/Makefile.am svneol=native#text/plain
 src/adrt/adrt.h svneol=native#text/plain
 src/adrt/adrt_struct.h svneol=native#text/plain
 src/adrt/isst svneol=native#text/plain
+src/adrt/isst.bat svneol=native#text/plain
 src/adrt/isst.h svneol=native#text/plain
 src/adrt/isst_tcltk.c svneol=native#text/plain
 src/adrt/librender/camera.c svneol=native#text/plain
