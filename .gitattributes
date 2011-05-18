@@ -11825,6 +11825,7 @@ src/other/togl/doc/stereo.html svneol=native#text/html
 src/other/togl/doc/tclapi.html svneol=native#text/html
 src/other/togl/doc/upgrading.html svneol=native#text/html
 src/other/togl/doc/using.html svneol=native#text/html
+src/other/togl/include/CMakeLists.txt svneol=native#text/plain
 src/other/togl/include/GL/glew.h svneol=native#text/plain
 src/other/togl/include/GL/glext.h svneol=native#text/plain
 src/other/togl/include/GL/glxew.h svneol=native#text/plain
