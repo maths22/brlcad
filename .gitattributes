@@ -4245,7 +4245,6 @@ src/libbu/magic.c svneol=native#text/plain
 src/libbu/malloc.c svneol=native#text/plain
 src/libbu/mappedfile.c svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
-src/libbu/mro.c svneol=native#text/plain
 src/libbu/observer.c svneol=native#text/plain
 src/libbu/parallel.c svneol=native#text/plain
 src/libbu/parse.c svneol=native#text/plain
