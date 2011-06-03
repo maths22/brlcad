@@ -4355,6 +4355,7 @@ src/libfft/splitditc.c svneol=native#text/plain
 src/libgcv/CMakeLists.txt svneol=native#text/plain
 src/libgcv/Makefile.am svneol=native#text/plain
 src/libgcv/NOTES svneol=native#text/plain
+src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
 src/libgcv/region_end_mc.c svneol=native#text/plain
 src/libgcv/wfobj/Makefile.am svneol=native#text/plain
