@@ -4206,6 +4206,7 @@ src/libbu/avs.c svneol=native#text/plain
 src/libbu/backtrace.c svneol=native#text/plain
 src/libbu/badmagic.c svneol=native#text/plain
 src/libbu/basename.c svneol=native#text/plain
+src/libbu/basenametester.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
 src/libbu/bomb.c svneol=native#text/plain
 src/libbu/booleanize.c svneol=native#text/plain
