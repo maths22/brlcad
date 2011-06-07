@@ -12501,6 +12501,7 @@ src/tclscripts/lib/cursor.tcl svneol=native#text/plain
 src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/lib/tclIndex -text
 src/tclscripts/libdm.tcl svneol=native#text/plain
+src/tclscripts/man_browser.tcl svneol=native#text/plain
 src/tclscripts/menu_override.tcl svneol=native#text/plain
 src/tclscripts/mged/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/mged/Makefile.am svneol=native#text/plain
