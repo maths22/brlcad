@@ -270,8 +270,6 @@ misc/win32-msvc8/bwish/Release
 misc/win32-msvc8/bwish/Win32
 misc/win32-msvc8/bwmod/*.user
 misc/win32-msvc8/bwmod/Win32
-misc/win32-msvc8/cat2fb/*.user
-misc/win32-msvc8/cat2fb/Win32
 misc/win32-msvc8/cell2fb/*.user
 misc/win32-msvc8/cell2fb/Win32
 misc/win32-msvc8/clutter/*.user

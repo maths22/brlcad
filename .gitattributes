@@ -2849,7 +2849,6 @@ misc/win32-msvc8/bw2fb/bw2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/bw2pix/bw2pix.vcproj -text
 misc/win32-msvc8/bwish/bwish.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/bwmod/bwmod.vcproj -text
-misc/win32-msvc8/cat2fb/cat2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/cell2fb/cell2fb.vcproj svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc8/clutter/clutter.vcproj svneol=native#text/plain
 misc/win32-msvc8/cmap2fb/cmap2fb.vcproj svneol=CRLF#text/plain eol=crlf
