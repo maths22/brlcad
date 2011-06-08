@@ -2722,6 +2722,7 @@ misc/CMake/test_srcs/termlib.c.in svneol=native#text/plain
 misc/CMake/test_srcs/time.c.in svneol=native#text/plain
 misc/CMake/test_srcs/timedelta_end.c.in svneol=native#text/plain
 misc/CMake/test_srcs/timedelta_start.c.in svneol=native#text/plain
+misc/CMake/util_macros.cmake svneol=native#text/plain
 misc/CMakeLists.txt svneol=native#text/plain
 misc/Description.txt svneol=native#text/plain
 misc/Doxyfile -text
