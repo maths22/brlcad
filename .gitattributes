@@ -4652,6 +4652,7 @@ src/liboptical/liboptical.dsp -text svneol=CRLF#text/plain
 src/liboptical/material.c svneol=native#text/plain
 src/liboptical/osl-renderer.cpp svneol=native#text/plain
 src/liboptical/osl-renderer.h svneol=native#text/plain
+src/liboptical/osl_rt.cpp svneol=native#text/plain
 src/liboptical/oslexec_pvt.h svneol=native#text/plain
 src/liboptical/photonmap.c svneol=native#text/plain
 src/liboptical/refract.c svneol=native#text/plain
