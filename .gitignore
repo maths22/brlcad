@@ -1303,11 +1303,11 @@ src/other/libz/Makefile.in
 src/other/libz/example
 src/other/libz/libz.plg
 src/other/libz/minigzip
-src/other/openNURBS/.deps
-src/other/openNURBS/.libs
-src/other/openNURBS/Makefile
-src/other/openNURBS/Makefile.in
-src/other/openNURBS/opennurbs.plg
+src/other/opennurbs/.deps
+src/other/opennurbs/.libs
+src/other/opennurbs/Makefile
+src/other/opennurbs/Makefile.in
+src/other/opennurbs/opennurbs.plg
 src/other/step/Makefile
 src/other/step/Makefile.in
 src/other/step/aclocal.m4
