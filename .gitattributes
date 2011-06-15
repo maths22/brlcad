@@ -2649,7 +2649,6 @@ include/redblack.h svneol=native#text/plain
 include/rtfunc.h svneol=native#text/plain
 include/rtgeom.h svneol=native#text/plain
 include/rtserver.h svneol=native#text/plain
-include/sed4 -text
 include/shadefuncs.h svneol=native#text/plain
 include/shadework.h svneol=native#text/plain
 include/solid.h svneol=native#text/plain
