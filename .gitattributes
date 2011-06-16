@@ -4254,6 +4254,7 @@ src/libbu/parse.c svneol=native#text/plain
 src/libbu/printb.c svneol=native#text/plain
 src/libbu/process.c svneol=native#text/plain
 src/libbu/progname.c svneol=native#text/plain
+src/libbu/prognametester.c svneol=native#text/plain
 src/libbu/ptbl.c svneol=native#text/plain
 src/libbu/quote.c svneol=native#text/plain
 src/libbu/rb_create.c svneol=native#text/plain
