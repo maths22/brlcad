@@ -4601,6 +4601,7 @@ src/libged/tops.c svneol=native#text/plain
 src/libged/tra.c svneol=native#text/plain
 src/libged/trace.c svneol=native#text/plain
 src/libged/track.c svneol=native#text/plain
+src/libged/translate.c svneol=native#text/plain
 src/libged/translate_extrude.c svneol=native#text/plain
 src/libged/translate_tgc.c svneol=native#text/plain
 src/libged/tree.c svneol=native#text/plain
