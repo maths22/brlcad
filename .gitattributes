@@ -7426,6 +7426,7 @@ src/other/byacc/verbose.c svneol=native#text/plain
 src/other/byacc/warshall.c svneol=native#text/plain
 src/other/byacc/yacc.1 svneol=native#text/plain
 src/other/flex/AUTHORS svneol=native#text/plain
+src/other/flex/CMake/FindREGEX.cmake svneol=native#text/plain
 src/other/flex/CMakeLists.txt svneol=native#text/plain
 src/other/flex/COPYING svneol=native#text/plain
 src/other/flex/ChangeLog svneol=native#text/plain
