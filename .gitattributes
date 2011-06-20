@@ -8551,6 +8551,7 @@ src/other/libz/zlib.pc.in svneol=native#text/plain
 src/other/libz/zlib2ansi svneol=native#text/plain
 src/other/libz/zutil.c svneol=native#text/plain
 src/other/libz/zutil.h svneol=native#text/plain
+src/other/m4/CMake/FindREGEX.cmake svneol=native#text/plain
 src/other/m4/CMakeLists.txt svneol=native#text/plain
 src/other/m4/NOTES svneol=native#text/plain
 src/other/m4/README svneol=native#text/plain
