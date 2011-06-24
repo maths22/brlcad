@@ -4319,6 +4319,7 @@ src/libged/orotate.c svneol=native#text/plain
 src/libged/oscale.c svneol=native#text/plain
 src/libged/otranslate.c svneol=native#text/plain
 src/libged/overlay.c svneol=native#text/plain
+src/libged/path.c svneol=native#text/plain
 src/libged/pathlist.c svneol=native#text/plain
 src/libged/pathsum.c svneol=native#text/plain
 src/libged/perspective.c svneol=native#text/plain
