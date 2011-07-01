@@ -7772,6 +7772,7 @@ src/other/iwidgets/demos/timeentry svneol=native#text/native
 src/other/iwidgets/demos/timefield svneol=native#text/native
 src/other/iwidgets/demos/toolbar svneol=native#text/native
 src/other/iwidgets/demos/watch svneol=native#text/native
+src/other/iwidgets/doc/CMakeLists.txt svneol=native#text/plain
 src/other/iwidgets/doc/Makefile.am svneol=native#text/plain
 src/other/iwidgets/doc/buttonbox.n svneol=native#text/plain
 src/other/iwidgets/doc/calendar.n svneol=native#text/plain
