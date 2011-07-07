@@ -8820,6 +8820,7 @@ src/other/openNURBS/readme.txt svneol=native#text/plain
 src/other/osl/shaders/checker.osl svneol=native#text/plain
 src/other/osl/shaders/cornell_wall.osl svneol=native#text/plain
 src/other/osl/shaders/emitter.osl svneol=native#text/plain
+src/other/osl/shaders/gen_color.osl svneol=native#text/plain
 src/other/osl/shaders/glass.osl svneol=native#text/plain
 src/other/osl/shaders/image.osl svneol=native#text/plain
 src/other/osl/shaders/matte.osl svneol=native#text/plain
