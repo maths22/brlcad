@@ -8820,6 +8820,7 @@ src/other/openNURBS/opennurbs_zlib_memory.cpp svneol=native#text/plain
 src/other/openNURBS/readme.txt svneol=native#text/plain
 src/other/osl/shaders/blue.osl svneol=native#text/plain
 src/other/osl/shaders/checker.osl svneol=native#text/plain
+src/other/osl/shaders/cloud.osl svneol=native#text/plain
 src/other/osl/shaders/converter.osl svneol=native#text/plain
 src/other/osl/shaders/cornell_wall.osl svneol=native#text/plain
 src/other/osl/shaders/emitter.osl svneol=native#text/plain
