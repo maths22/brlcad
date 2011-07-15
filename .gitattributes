@@ -3917,7 +3917,6 @@ src/halftone/tone_folly.c svneol=native#text/plain
 src/halftone/tone_simple.c svneol=native#text/plain
 src/halftone/tonescale.c svneol=native#text/plain
 src/irprep/CMakeLists.txt svneol=native#text/plain
-src/irprep/Compile.sgi -text
 src/irprep/Makefile.am svneol=native#text/plain
 src/irprep/all_sf.c svneol=native#text/plain
 src/irprep/firpass.1 svneol=native#text/plain
