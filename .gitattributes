@@ -8825,6 +8825,7 @@ src/other/osl/shaders/image.osl svneol=native#text/plain
 src/other/osl/shaders/matte.osl svneol=native#text/plain
 src/other/osl/shaders/mirror.osl svneol=native#text/plain
 src/other/osl/shaders/red.osl svneol=native#text/plain
+src/other/osl/shaders/sh_texture.osl svneol=native#text/plain
 src/other/osl/shaders/stdosl.h svneol=native#text/plain
 src/other/step.dist svneol=native#text/plain
 src/other/step/AUTHORS svneol=native#text/plain
