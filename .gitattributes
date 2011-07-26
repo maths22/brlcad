@@ -8088,7 +8088,6 @@ src/other/libpng/contrib/visupng/VisualPng.png -text svneol=unset#image/png
 src/other/libpng/contrib/visupng/VisualPng.rc svneol=CRLF#text/plain eol=crlf
 src/other/libpng/contrib/visupng/cexcept.h svneol=native#text/plain
 src/other/libpng/contrib/visupng/resource.h svneol=native#text/plain
-src/other/libpng/depcomp svneol=native#text/plain
 src/other/libpng/example.c svneol=native#text/plain
 src/other/libpng/libpng-config.in svneol=native#text/plain
 src/other/libpng/libpng-manual.txt svneol=native#text/plain
