@@ -7454,6 +7454,7 @@ src/other/incrTcl/itcl/CMake/CheckCFileRuns.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
+src/other/incrTcl/itcl/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/tcl.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMakeLists.txt svneol=native#text/plain
 src/other/incrTcl/itcl/Makefile.am svneol=native#text/plain
