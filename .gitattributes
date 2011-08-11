@@ -7557,6 +7557,7 @@ src/other/incrTcl/itk/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/FindX11.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
+src/other/incrTcl/itk/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/tcl.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMakeLists.txt svneol=native#text/plain
 src/other/incrTcl/itk/Makefile.am svneol=native#text/plain
