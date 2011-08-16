@@ -1171,6 +1171,7 @@ src/proc-db/pipetest
 src/proc-db/pix2g
 src/proc-db/pyramid
 src/proc-db/rawbot
+src/proc-db/ringworld
 src/proc-db/room
 src/proc-db/sketch
 src/proc-db/sphflake
