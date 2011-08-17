@@ -1930,6 +1930,7 @@ doc/docbook/system/mann/en/edcodes.xml svneol=native#text/xml
 doc/docbook/system/mann/en/edcolor.xml svneol=native#text/xml
 doc/docbook/system/mann/en/edcomb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/edgedir.xml svneol=native#text/xml
+doc/docbook/system/mann/en/edit.xml svneol=native#text/xml
 doc/docbook/system/mann/en/edmater.xml svneol=native#text/xml
 doc/docbook/system/mann/en/em.xml svneol=native#text/xml
 doc/docbook/system/mann/en/eqn.xml svneol=native#text/xml
