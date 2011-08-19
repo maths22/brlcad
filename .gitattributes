@@ -4386,6 +4386,7 @@ src/libged/shaded_mode.c svneol=native#text/plain
 src/libged/shader.c svneol=native#text/plain
 src/libged/shells.c svneol=native#text/plain
 src/libged/showmats.c svneol=native#text/plain
+src/libged/simulate.c svneol=native#text/plain
 src/libged/size.c svneol=native#text/plain
 src/libged/slew.c svneol=native#text/plain
 src/libged/solids_on_ray.c svneol=native#text/plain
