@@ -8739,6 +8739,7 @@ src/other/jove/jove_wind.c svneol=native#text/plain
 src/other/jove/teach-jove.in svneol=native#text/plain
 src/other/jove/termcap.h svneol=native#text/plain
 src/other/lemon/CMakeLists.txt svneol=native#text/plain
+src/other/lemon/README svneol=native#text/plain
 src/other/lemon/lemon.c svneol=native#text/plain
 src/other/lemon/lempar.c svneol=native#text/plain
 src/other/libpng.dist svneol=native#text/plain
