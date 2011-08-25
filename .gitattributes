@@ -2705,6 +2705,7 @@ misc/CMake/FindX11.cmake svneol=native#text/plain
 misc/CMake/FindYACC.cmake svneol=native#text/plain
 misc/CMake/FindZLIB.cmake svneol=native#text/plain
 misc/CMake/NSIS.template.in svneol=native#text/plain
+misc/CMake/ResetCache.cmake svneol=native#text/plain
 misc/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 misc/CMake/ThirdParty.cmake svneol=native#text/plain
 misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
