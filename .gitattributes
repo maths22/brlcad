@@ -4447,6 +4447,7 @@ src/libged/wmater.c svneol=native#text/plain
 src/libged/xpush.c svneol=native#text/plain
 src/libged/ypr.c svneol=native#text/plain
 src/libged/zap.c svneol=native#text/plain
+src/libged/zoom/CMakeLists.txt svneol=native#text/plain
 src/libged/zoom/zoom.c svneol=native#text/plain
 src/libicv/CMakeLists.txt svneol=native#text/plain
 src/libicv/Makefile.am svneol=native#text/plain
