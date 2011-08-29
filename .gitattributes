@@ -9556,6 +9556,7 @@ src/other/re2c/README.in svneol=native#text/plain
 src/other/re2c/actions.cc svneol=native#text/plain
 src/other/re2c/basics.h svneol=native#text/plain
 src/other/re2c/bootstrap/parser.cc svneol=native#text/plain
+src/other/re2c/bootstrap/parser.hh svneol=native#text/plain
 src/other/re2c/bootstrap/scanner.cc svneol=native#text/plain
 src/other/re2c/bootstrap/y.tab.h svneol=native#text/plain
 src/other/re2c/code.cc svneol=native#text/plain
