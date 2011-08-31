@@ -13315,6 +13315,7 @@ src/tclscripts/archer/HypEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/LoadArcherLibs.tcl svneol=native#text/plain
 src/tclscripts/archer/Makefile.am svneol=native#text/plain
 src/tclscripts/archer/PartEditFrame.tcl svneol=native#text/plain
+src/tclscripts/archer/PipeEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/Plugin.tcl svneol=native#text/plain
 src/tclscripts/archer/RhcEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/RpcEditFrame.tcl svneol=native#text/plain
