@@ -2608,7 +2608,7 @@ include/conf/Makefile.am svneol=native#text/plain
 include/conf/PATCH -text
 include/conf/make.vbs svneol=native#text/plain
 include/config_win.h svneol=native#text/plain
-include/config_win_cmake.h svneol=native#text/plain
+include/config_win_cmake.h.in svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
 include/dg.h svneol=native#text/plain
@@ -2717,6 +2717,7 @@ misc/CMake/test_srcs/alloca_test.c svneol=native#text/plain
 misc/CMake/test_srcs/builddelta_end.c.in svneol=native#text/plain
 misc/CMake/test_srcs/builddelta_start.c.in svneol=native#text/plain
 misc/CMake/test_srcs/ctypes_test.c svneol=native#text/plain
+misc/CMake/test_srcs/hypot_test.c svneol=native#text/plain
 misc/CMake/test_srcs/lex_test.l svneol=native#text/plain
 misc/CMake/test_srcs/print_timestamp.c svneol=native#text/plain
 misc/CMake/test_srcs/report_hostname.c.in svneol=native#text/plain
