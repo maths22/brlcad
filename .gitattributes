@@ -1938,6 +1938,7 @@ doc/docbook/system/mann/en/eqn.xml svneol=native#text/xml
 doc/docbook/system/mann/en/erase.xml svneol=native#text/xml
 doc/docbook/system/mann/en/erase_all.xml svneol=native#text/xml
 doc/docbook/system/mann/en/ev.xml svneol=native#text/xml
+doc/docbook/system/mann/en/exists.xml svneol=native#text/xml
 doc/docbook/system/mann/en/exit.xml svneol=native#text/xml
 doc/docbook/system/mann/en/expand.xml svneol=native#text/xml
 doc/docbook/system/mann/en/export_body.xml svneol=native#text/xml
