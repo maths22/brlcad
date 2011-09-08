@@ -32,7 +32,7 @@ db/axis.asc svneol=native#text/plain
 db/bldg391.asc svneol=native#text/plain
 db/boolean-ops.asc svneol=native#text/plain
 db/castle.asc svneol=native#text/plain
-db/cornell-kunigami.g -text
+db/cornell-kunigami.asc svneol=native#text/plain
 db/cornell.asc svneol=native#text/plain
 db/cornell.rt svneol=native#text/x-sh
 db/cray.asc svneol=native#text/plain
