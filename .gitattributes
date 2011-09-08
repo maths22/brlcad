@@ -2686,6 +2686,7 @@ misc/CMake/BRLCAD_Util.cmake svneol=native#text/plain
 misc/CMake/CheckCFileRuns.cmake svneol=native#text/plain
 misc/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 misc/CMake/CompilerFlags.cmake svneol=native#text/plain
+misc/CMake/DiffCache.cmake svneol=native#text/plain
 misc/CMake/FindGL.cmake svneol=native#text/plain
 misc/CMake/FindLEMON.cmake svneol=native#text/plain
 misc/CMake/FindLEX.cmake svneol=native#text/plain
