@@ -3882,7 +3882,6 @@ src/fbed/glob.c svneol=native#text/plain
 src/fbed/popup.h svneol=native#text/plain
 src/fbed/pos_pad.c svneol=native#text/plain
 src/fbed/prnt.c svneol=native#text/plain
-src/fbed/sgi_dep.c svneol=native#text/plain
 src/fbed/squash.c svneol=native#text/plain
 src/fbed/std.h svneol=native#text/plain
 src/fbed/try.c svneol=native#text/plain
