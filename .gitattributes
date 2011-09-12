@@ -2706,6 +2706,7 @@ misc/CMake/FindUTAHRLE.cmake svneol=native#text/plain
 misc/CMake/FindX11.cmake svneol=native#text/plain
 misc/CMake/FindYACC.cmake svneol=native#text/plain
 misc/CMake/FindZLIB.cmake svneol=native#text/plain
+misc/CMake/Fink_MacPorts.cmake svneol=native#text/plain
 misc/CMake/NSIS.template.in svneol=native#text/plain
 misc/CMake/ResetCache.cmake svneol=native#text/plain
 misc/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
