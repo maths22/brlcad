@@ -10630,7 +10630,6 @@ src/other/tcl/doc/upvar.n svneol=native#text/plain
 src/other/tcl/doc/variable.n svneol=native#text/plain
 src/other/tcl/doc/vwait.n svneol=native#text/plain
 src/other/tcl/doc/while.n svneol=native#text/plain
-src/other/tcl/generic/CMakeLists.txt svneol=native#text/plain
 src/other/tcl/generic/README svneol=native#text/plain
 src/other/tcl/generic/regc_color.c svneol=native#text/plain
 src/other/tcl/generic/regc_cvec.c svneol=native#text/plain
@@ -11552,7 +11551,6 @@ src/other/tcl/library/tzdata/W-SU -text
 src/other/tcl/library/tzdata/WET -text
 src/other/tcl/library/tzdata/Zulu -text
 src/other/tcl/library/word.tcl svneol=native#text/plain
-src/other/tcl/libtommath/CMakeLists.txt svneol=native#text/plain
 src/other/tcl/libtommath/bn_fast_s_mp_mul_digs.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_fast_s_mp_sqr.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_add.c svneol=native#text/plain
