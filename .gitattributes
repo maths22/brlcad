@@ -2745,7 +2745,6 @@ misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
-misc/comm.c svneol=native#text/plain
 misc/debian/brlcad-archer.desktop svneol=native#text/plain
 misc/debian/brlcad-archer.png -text svneol=unset#image/png
 misc/debian/brlcad-db.desktop svneol=native#text/plain
