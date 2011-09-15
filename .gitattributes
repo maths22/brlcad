@@ -538,18 +538,6 @@ doc/docbook/resources/docbook-5.0/tools/db4-upgrade.xsl -text svneol=unset#appli
 doc/docbook/resources/docbook-5.0/xsd/docbook.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xlink.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xml.xsd -text svneol=unset#application/xml
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeMono.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeMonoBold.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeMonoBoldOblique.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeMonoOblique.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSans.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSansBold.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSansBoldOblique.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSansOblique.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerif.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifBold.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifBoldItalic.ttf -text
-doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifItalic.ttf -text
 doc/docbook/resources/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
 doc/docbook/resources/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
 doc/docbook/resources/offo-hyphenation-binary-v2.0/index.html svneol=native#text/html
