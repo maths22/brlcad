@@ -538,6 +538,11 @@ doc/docbook/resources/docbook-5.0/tools/db4-upgrade.xsl -text svneol=unset#appli
 doc/docbook/resources/docbook-5.0/xsd/docbook.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xlink.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xml.xsd -text svneol=unset#application/xml
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-BoldItalic.ttf -text
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Italic.ttf -text
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Regular.ttf -text
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
 doc/docbook/resources/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
 doc/docbook/resources/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
 doc/docbook/resources/offo-hyphenation-binary-v2.0/index.html svneol=native#text/html
