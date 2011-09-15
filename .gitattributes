@@ -550,6 +550,18 @@ doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerif.ttf -text
 doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifBold.ttf -text
 doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifBoldItalic.ttf -text
 doc/docbook/resources/fonts/truetype/gnu-freefonts/FreeSerifItalic.ttf -text
+doc/docbook/resources/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
+doc/docbook/resources/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
+doc/docbook/resources/offo-hyphenation-binary-v2.0/index.html svneol=native#text/html
+doc/docbook/resources/offo-hyphenation-binary-v2.0/installation.html svneol=native#text/html
+doc/docbook/resources/offo-hyphenation-binary-v2.0/languages-info.dtd svneol=native#text/plain
+doc/docbook/resources/offo-hyphenation-binary-v2.0/languages-info.xml svneol=native#text/xml
+doc/docbook/resources/offo-hyphenation-binary-v2.0/languages-info.xsl -text svneol=unset#application/xml
+doc/docbook/resources/offo-hyphenation-binary-v2.0/skin/forrest.css svneol=native#text/css
+doc/docbook/resources/offo-hyphenation-binary-v2.0/skin/inst.css svneol=native#text/css
+doc/docbook/resources/offo-hyphenation-binary-v2.0/skin/quirks.css svneol=native#text/css
+doc/docbook/resources/offo-hyphenation-binary-v2.0/skin/tigris.css svneol=native#text/css
+doc/docbook/resources/offo-hyphenation-binary-v2.0/skin/tigris.js -text svneol=unset#application/javascript
 doc/docbook/resources/standard/xsl/AUTHORS svneol=native#text/plain
 doc/docbook/resources/standard/xsl/BUGS svneol=native#text/plain
 doc/docbook/resources/standard/xsl/COPYING svneol=native#text/plain
