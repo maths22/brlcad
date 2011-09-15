@@ -542,6 +542,10 @@ doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Bold.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-BoldItalic.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Italic.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Regular.ttf -text
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneralBol.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneralBolIta.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneralItalic.otf.pdf -text svneol=unset#application/pdf
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
 doc/docbook/resources/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
 doc/docbook/resources/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
