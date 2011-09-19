@@ -538,6 +538,27 @@ doc/docbook/resources/docbook-5.0/tools/db4-upgrade.xsl -text svneol=unset#appli
 doc/docbook/resources/docbook-5.0/xsd/docbook.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xlink.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xml.xsd -text svneol=unset#application/xml
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-BoldOblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-ExtraLight.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-Oblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansCondensed-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansCondensed-BoldOblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansCondensed-Oblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansCondensed.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansMono-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansMono-BoldOblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansMono-Oblique.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSansMono.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerif-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerif-BoldItalic.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerif-Italic.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerif.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-Bold.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-BoldItalic.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-Italic.ttf -text
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Bold.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-BoldItalic.ttf -text
 doc/docbook/resources/fonts/truetype/stix-v1.0.0/STIXGeneral-Italic.ttf -text
