@@ -2174,7 +2174,6 @@ doc/docbook/system/mann/en/wmater.xml svneol=native#text/xml
 doc/docbook/system/mann/en/x.xml svneol=native#text/xml
 doc/docbook/system/mann/en/xpush.xml svneol=native#text/xml
 doc/docbook/system/mann/en/zoom.xml svneol=native#text/xml
-doc/docbook/system/mann/mged_cmd_template.xml svneol=native#text/xml
 doc/ged.tr svneol=native#text/plain
 doc/history.txt svneol=native#text/plain
 doc/html/CMakeLists.txt svneol=native#text/plain
