@@ -92,6 +92,7 @@ doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
 doc/docbook/BRLCAD_DB_VALIDATION.pm svneol=native#text/plain
 doc/docbook/CMakeLists.txt svneol=native#text/plain
+doc/docbook/DBPATH.pm.in svneol=native#text/plain
 doc/docbook/Makefile.am svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
 doc/docbook/articles/CMakeLists.txt svneol=native#text/plain
