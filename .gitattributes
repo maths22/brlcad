@@ -521,6 +521,7 @@ doc/docbook/resources/brlcad/brlcad-fonts.xsl -text svneol=unset#application/xml
 doc/docbook/resources/brlcad/brlcad-man-stylesheet.xsl -text svneol=unset#application/xml
 doc/docbook/resources/brlcad/brlcad-xhtml-header-navigation.xsl -text svneol=unset#application/xml
 doc/docbook/resources/brlcad/brlcad-xhtml-stylesheet.xsl -text svneol=unset#application/xml
+doc/docbook/resources/brlcad/center-table-print.xsl -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/ChangeLog svneol=native#text/plain
 doc/docbook/resources/docbook-5.0/README svneol=native#text/plain
 doc/docbook/resources/docbook-5.0/VERSION svneol=native#text/plain
