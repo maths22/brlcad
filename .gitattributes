@@ -538,6 +538,11 @@ doc/docbook/resources/docbook-5.0/tools/db4-upgrade.xsl -text svneol=unset#appli
 doc/docbook/resources/docbook-5.0/xsd/docbook.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xlink.xsd -text svneol=unset#application/xml
 doc/docbook/resources/docbook-5.0/xsd/xml.xsd -text svneol=unset#application/xml
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/AUTHORS svneol=native#text/plain
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/BUGS svneol=native#text/plain
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/LICENSE svneol=native#text/plain
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/NEWS svneol=native#text/plain
+doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/README svneol=native#text/plain
 doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-Bold.ttf -text
 doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-BoldOblique.ttf -text
 doc/docbook/resources/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSans-ExtraLight.ttf -text
