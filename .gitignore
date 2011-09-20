@@ -577,6 +577,7 @@ src/libbu/Makefile
 src/libbu/Makefile.in
 src/libbu/libbu.plg
 src/libbu/test_basename
+src/libbu/test_htond
 src/libbu/test_progname
 src/libbu/test_timer
 src/libbu/test_vls
