@@ -87,6 +87,7 @@ doc/docbook/lessons/es/*.pdf
 doc/docbook/lessons/mged
 doc/docbook/resources/brlcad/CatalogManager.properties
 doc/docbook/resources/brlcad/brlcad-xml-catalog-autogen.xml
+doc/docbook/resources/fonts/STIXv1.0.0
 doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile
 doc/docbook/system/Makefile.in
