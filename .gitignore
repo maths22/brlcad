@@ -575,9 +575,11 @@ src/libbu/.deps
 src/libbu/.libs
 src/libbu/Makefile
 src/libbu/Makefile.in
-src/libbu/htester
 src/libbu/libbu.plg
-src/libbu/timetester
+src/libbu/test_basename
+src/libbu/test_progname
+src/libbu/test_timer
+src/libbu/test_vls
 src/libcursor/.deps
 src/libcursor/.libs
 src/libcursor/Makefile
