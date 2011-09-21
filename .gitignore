@@ -59,6 +59,7 @@ db/world.g
 db/xmp.g
 doc/Makefile
 doc/Makefile.in
+doc/docbook/DBPATH.pm
 doc/docbook/Makefile
 doc/docbook/Makefile.in
 doc/docbook/articles/Makefile
@@ -78,6 +79,7 @@ doc/docbook/books/Makefile.in
 doc/docbook/books/en/*.html
 doc/docbook/books/tutorial_series
 doc/docbook/fop.xconf
+doc/docbook/index.html
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
 doc/docbook/lessons/en/*.html
