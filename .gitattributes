@@ -3374,6 +3374,7 @@ src/conv/fast4-g.1 svneol=native#text/plain
 src/conv/fast4-g.c svneol=native#text/plain
 src/conv/g-acad.1 svneol=native#text/plain
 src/conv/g-acad.c svneol=native#text/plain
+src/conv/g-dot.c svneol=native#text/plain
 src/conv/g-egg.1 svneol=native#text/plain
 src/conv/g-egg.c svneol=native#text/plain
 src/conv/g-nff.1 svneol=native#text/plain
