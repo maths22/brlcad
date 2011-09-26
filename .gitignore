@@ -74,6 +74,7 @@ doc/docbook/articles/oed
 doc/docbook/articles/pipes
 doc/docbook/articles/projection_shader
 doc/docbook/articles/tire
+doc/docbook/book-covers-fo-autogen.xsl
 doc/docbook/books/Makefile
 doc/docbook/books/Makefile.in
 doc/docbook/books/en/*.html
