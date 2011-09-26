@@ -198,6 +198,7 @@ doc/docbook/articles/en/oed.xml svneol=native#text/xml
 doc/docbook/articles/en/pipes.xml svneol=native#text/xml
 doc/docbook/articles/en/projection_shader.xml svneol=native#text/xml
 doc/docbook/articles/en/tire.xml svneol=native#text/xml
+doc/docbook/book-covers-fo-template.xsl -text svneol=unset#application/xml
 doc/docbook/books/CMakeLists.txt svneol=native#text/plain
 doc/docbook/books/README svneol=native#text/plain
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeI.xml svneol=native#text/xml
