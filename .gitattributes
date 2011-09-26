@@ -246,6 +246,7 @@ doc/docbook/books/en/images/tutorial_series_volI_fig05.png -text svneol=unset#im
 doc/docbook/books/en/images/tutorial_series_volI_fig06.png -text svneol=unset#image/png
 doc/docbook/books/en/images/tutorial_series_volI_fig07.png -text svneol=unset#image/png
 doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
+doc/docbook/brlcad-fo-stylesheet-covers.xsl -text svneol=unset#application/xml
 doc/docbook/create-book-covers.pl svneol=native#text/plain
 doc/docbook/create-index.pl svneol=native#text/plain
 doc/docbook/create-xml-catalogs.pl svneol=native#text/plain
