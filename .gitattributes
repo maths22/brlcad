@@ -530,6 +530,7 @@ doc/docbook/resources/brlcad/brlcad-man-stylesheet.xsl svneol=native#text/xml
 doc/docbook/resources/brlcad/brlcad-xhtml-header-navigation.xsl svneol=native#text/xml
 doc/docbook/resources/brlcad/brlcad-xhtml-stylesheet.xsl svneol=native#text/xml
 doc/docbook/resources/brlcad/center-table-print.xsl svneol=native#text/xml
+doc/docbook/resources/brlcad/images/brlcad-logo-green.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/resources/brlcad/images/brlcad-logo-red.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/resources/docbook-5.0/ChangeLog svneol=native#text/plain
 doc/docbook/resources/docbook-5.0/README svneol=native#text/plain
