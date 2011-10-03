@@ -261,6 +261,7 @@ doc/docbook/books/en/tutorial_series_authors.xml svneol=native#text/xml
 doc/docbook/create-book-covers.pl svneol=native#text/plain
 doc/docbook/create-index.pl svneol=native#text/plain
 doc/docbook/create-xml-catalogs.pl svneol=native#text/plain
+doc/docbook/css/brlcad.css svneol=native#text/css
 doc/docbook/dummy.xml svneol=native#text/xml
 doc/docbook/find-db-files.pl svneol=native#text/plain
 doc/docbook/fop.xconf.in svneol=native#text/plain
