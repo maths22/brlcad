@@ -609,16 +609,16 @@ doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuL
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-BoldItalic.ttf -text
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-Italic.ttf -text
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/README svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-BoldItalic.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-Italic.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-Regular.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneralBol.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneralBolIta.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneralItalic.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/truetype/stix/README svneol=native#text/plain
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Bold.ttf -text
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-BoldItalic.ttf -text
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Italic.ttf -text
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Regular.ttf -text
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralBol.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralBolIta.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralItalic.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/truetype/stix/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/index.html svneol=native#text/html
