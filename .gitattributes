@@ -609,6 +609,7 @@ doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuL
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-BoldItalic.ttf -text
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed-Italic.ttf -text
 doc/docbook/resources/other/fonts/truetype/dejavu-lgc-fonts-ttf-2.33/ttf/DejaVuLGCSerifCondensed.ttf -text
+doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/README svneol=native#text/plain
 doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-Bold.ttf -text
 doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-BoldItalic.ttf -text
 doc/docbook/resources/other/fonts/truetype/stix-v1.0.0/STIXGeneral-Italic.ttf -text
