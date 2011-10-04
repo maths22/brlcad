@@ -583,42 +583,42 @@ doc/docbook/resources/other/docbook-schema/tools/db4-upgrade.xsl svneol=native#t
 doc/docbook/resources/other/docbook-schema/xsd/docbook.xsd -text svneol=unset#application/xml
 doc/docbook/resources/other/docbook-schema/xsd/xlink.xsd -text svneol=unset#application/xml
 doc/docbook/resources/other/docbook-schema/xsd/xml.xsd -text svneol=unset#application/xml
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/AUTHORS svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/BUGS svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/LICENSE svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/NEWS svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/README svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSans-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSans-BoldOblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSans-ExtraLight.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSans-Oblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSans.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansCondensed-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansCondensed-BoldOblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansCondensed-Oblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansCondensed.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansMono-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansMono-BoldOblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansMono-Oblique.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSansMono.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerif-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerif-BoldItalic.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerif-Italic.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerif.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-BoldItalic.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-Italic.ttf -text
-doc/docbook/resources/other/fonts/truetype/dejavu-lgc/ttf/DejaVuLGCSerifCondensed.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix/README svneol=native#text/plain
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Bold.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-BoldItalic.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Italic.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral-Regular.ttf -text
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneral.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralBol.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralBolIta.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix/STIXGeneralItalic.otf.pdf -text svneol=unset#application/pdf
-doc/docbook/resources/other/fonts/truetype/stix/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/dejavu-lgc/AUTHORS svneol=native#text/plain
+doc/docbook/resources/other/fonts/dejavu-lgc/BUGS svneol=native#text/plain
+doc/docbook/resources/other/fonts/dejavu-lgc/LICENSE svneol=native#text/plain
+doc/docbook/resources/other/fonts/dejavu-lgc/NEWS svneol=native#text/plain
+doc/docbook/resources/other/fonts/dejavu-lgc/README svneol=native#text/plain
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSans-Bold.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSans-BoldOblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSans-ExtraLight.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSans-Oblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSans.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansCondensed-Bold.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansCondensed-BoldOblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansCondensed-Oblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansCondensed.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansMono-Bold.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansMono-BoldOblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansMono-Oblique.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSansMono.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerif-Bold.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerif-BoldItalic.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerif-Italic.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerif.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-Bold.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-BoldItalic.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerifCondensed-Italic.ttf -text
+doc/docbook/resources/other/fonts/dejavu-lgc/ttf/DejaVuLGCSerifCondensed.ttf -text
+doc/docbook/resources/other/fonts/stix/README svneol=native#text/plain
+doc/docbook/resources/other/fonts/stix/STIXGeneral-Bold.ttf -text
+doc/docbook/resources/other/fonts/stix/STIXGeneral-BoldItalic.ttf -text
+doc/docbook/resources/other/fonts/stix/STIXGeneral-Italic.ttf -text
+doc/docbook/resources/other/fonts/stix/STIXGeneral-Regular.ttf -text
+doc/docbook/resources/other/fonts/stix/STIXGeneral.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/stix/STIXGeneralBol.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/stix/STIXGeneralBolIta.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/stix/STIXGeneralItalic.otf.pdf -text svneol=unset#application/pdf
+doc/docbook/resources/other/fonts/stix/STIX_Font_License_2010.pdf -text svneol=unset#application/pdf
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/fop-hyph.jar -text svneol=unset#application/java-archive
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/images/project.png -text svneol=unset#image/png
 doc/docbook/resources/other/offo/offo-hyphenation-binary-v2.0/index.html svneol=native#text/html
