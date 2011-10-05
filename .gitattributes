@@ -13763,8 +13763,8 @@ src/tclscripts/archer/images/node.gif -text svneol=unset#image/gif
 src/tclscripts/archer/images/object_undo.png -text
 src/tclscripts/archer/images/open.png -text
 src/tclscripts/archer/images/openf.gif -text svneol=unset#image/gif
+src/tclscripts/archer/images/option_edit.png -text
 src/tclscripts/archer/images/option_text.png -text
-src/tclscripts/archer/images/option_tree.png -text
 src/tclscripts/archer/images/other.png -text svneol=unset#image/png
 src/tclscripts/archer/images/other_intersect.png -text svneol=unset#image/png
 src/tclscripts/archer/images/other_subtract.png -text svneol=unset#image/png
@@ -13841,6 +13841,7 @@ src/tclscripts/archer/images/tgc_intersect.png -text
 src/tclscripts/archer/images/tgc_labeled.png -text svneol=unset#image/png
 src/tclscripts/archer/images/tgc_subtract.png -text
 src/tclscripts/archer/images/tgc_union.png -text
+src/tclscripts/archer/images/tools.png -text
 src/tclscripts/archer/images/tor.png -text
 src/tclscripts/archer/images/tor_intersect.png -text
 src/tclscripts/archer/images/tor_labeled.png -text svneol=unset#image/png
