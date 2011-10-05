@@ -4662,6 +4662,7 @@ src/libged/simulate/simcollisionalgo.h svneol=native#text/plain
 src/libged/simulate/simphysics.cpp svneol=native#text/plain
 src/libged/simulate/simulate.c svneol=native#text/plain
 src/libged/simulate/simulate.h svneol=native#text/plain
+src/libged/simulate/simutils.c svneol=native#text/plain
 src/libged/size.c svneol=native#text/plain
 src/libged/slew.c svneol=native#text/plain
 src/libged/solids_on_ray.c svneol=native#text/plain
