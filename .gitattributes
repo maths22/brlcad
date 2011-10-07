@@ -10589,6 +10589,7 @@ src/other/step/src/express/expparse.y svneol=native#text/plain
 src/other/step/src/express/expparse_new.y svneol=native#text/plain
 src/other/step/src/express/expr.c svneol=native#text/plain
 src/other/step/src/express/express.c svneol=native#text/plain
+src/other/step/src/express/express_new.c svneol=native#text/plain
 src/other/step/src/express/expscan.l svneol=native#text/plain
 src/other/step/src/express/expscan.re svneol=native#text/plain
 src/other/step/src/express/exptoks.h svneol=native#text/plain
