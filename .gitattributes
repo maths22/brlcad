@@ -3584,7 +3584,6 @@ src/conv/iges/recsize.c svneol=native#text/plain
 src/conv/iges/revolve.c svneol=native#text/plain
 src/conv/iges/showtree.c svneol=native#text/plain
 src/conv/iges/sphere.c svneol=native#text/plain
-src/conv/iges/spl.c svneol=native#text/plain
 src/conv/iges/spline.c svneol=native#text/plain
 src/conv/iges/splinef.c svneol=native#text/plain
 src/conv/iges/stack.c svneol=native#text/plain
