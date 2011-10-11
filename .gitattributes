@@ -5149,7 +5149,6 @@ src/mged/edsol.c svneol=native#text/plain
 src/mged/facedef.c svneol=native#text/plain
 src/mged/fbserv.c svneol=native#text/plain
 src/mged/fbserv.h svneol=native#text/plain
-src/mged/fbserv_win32.c svneol=native#text/plain
 src/mged/grid.c svneol=native#text/plain
 src/mged/hideline.c svneol=native#text/plain
 src/mged/history.c svneol=native#text/plain
