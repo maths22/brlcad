@@ -2352,6 +2352,7 @@ doc/docbook/system/mann/en/xpush.xml svneol=native#text/xml
 doc/docbook/system/mann/en/zoom.xml svneol=native#text/xml
 doc/docbook/system/mann/mged_cmd_template.xml svneol=native#text/xml
 doc/docbook/validate.pl svneol=native#text/plain
+doc/ecosystem.dot svneol=native#text/plain
 doc/flex_to_re2c.txt svneol=native#text/plain
 doc/ged.tr svneol=native#text/plain
 doc/history.txt svneol=native#text/plain
