@@ -10692,6 +10692,7 @@ src/other/step/src/express/stack.h svneol=native#text/plain
 src/other/step/src/express/stmt.c svneol=native#text/plain
 src/other/step/src/express/symbol.c svneol=native#text/plain
 src/other/step/src/express/symlink.c svneol=native#text/plain
+src/other/step/src/express/token_type.h svneol=native#text/plain
 src/other/step/src/express/type.c svneol=native#text/plain
 src/other/step/src/express/variable.c svneol=native#text/plain
 src/other/step/src/express/y.tok.h svneol=native#text/plain
