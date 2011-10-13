@@ -14001,6 +14001,7 @@ src/tclscripts/hv3/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/hv3/snit.tcl svneol=native#text/plain
 src/tclscripts/hv3/tclIndex svneol=native#text/plain
 src/tclscripts/hv3/tkhtml.n svneol=native#text/plain
+src/tclscripts/hv3_man_browser_test.tcl svneol=native#text/plain
 src/tclscripts/lib/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/lib/CellPlot.tcl svneol=native#text/plain
 src/tclscripts/lib/ColorEntry.tcl svneol=native#text/plain
