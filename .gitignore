@@ -59,6 +59,9 @@ db/world.g
 db/xmp.g
 doc/Makefile
 doc/Makefile.in
+doc/docbook/DBPATH.pm
+doc/docbook/Makefile
+doc/docbook/Makefile.in
 doc/docbook/articles/Makefile
 doc/docbook/articles/Makefile.in
 doc/docbook/articles/build_pattern
@@ -71,11 +74,13 @@ doc/docbook/articles/oed
 doc/docbook/articles/pipes
 doc/docbook/articles/projection_shader
 doc/docbook/articles/tire
+doc/docbook/book-covers-fo-autogen.xsl
 doc/docbook/books/Makefile
 doc/docbook/books/Makefile.in
 doc/docbook/books/en/*.html
 doc/docbook/books/tutorial_series
 doc/docbook/fop.xconf
+doc/docbook/index.html
 doc/docbook/lessons/Makefile
 doc/docbook/lessons/Makefile.in
 doc/docbook/lessons/en/*.html
@@ -83,6 +88,10 @@ doc/docbook/lessons/en/*.pdf
 doc/docbook/lessons/es/*.html
 doc/docbook/lessons/es/*.pdf
 doc/docbook/lessons/mged
+doc/docbook/resources/brlcad/*autogen*
+doc/docbook/resources/brlcad/CatalogManager.properties
+doc/docbook/resources/other/fonts/STIXv1.0.0
+doc/docbook/resources/other/fonts/dejavu-lgc/fontconfig
 doc/docbook/specifications/en/*.html
 doc/docbook/system/Makefile
 doc/docbook/system/Makefile.in
@@ -564,9 +573,12 @@ src/libbu/.deps
 src/libbu/.libs
 src/libbu/Makefile
 src/libbu/Makefile.in
-src/libbu/htester
 src/libbu/libbu.plg
-src/libbu/timetester
+src/libbu/test_basename
+src/libbu/test_htond
+src/libbu/test_progname
+src/libbu/test_timer
+src/libbu/test_vls
 src/libcursor/.deps
 src/libcursor/.libs
 src/libcursor/Makefile
@@ -1152,6 +1164,7 @@ src/proc-db/human
 src/proc-db/kurt
 src/proc-db/lens
 src/proc-db/masonry
+src/proc-db/menger
 src/proc-db/metaball
 src/proc-db/mkbuilding
 src/proc-db/molecule
@@ -1162,6 +1175,7 @@ src/proc-db/pipetest
 src/proc-db/pix2g
 src/proc-db/pyramid
 src/proc-db/rawbot
+src/proc-db/ringworld
 src/proc-db/room
 src/proc-db/sketch
 src/proc-db/sphflake
