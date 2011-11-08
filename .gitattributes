@@ -4962,6 +4962,7 @@ src/librt/primitives/nmg/nmg_bool.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_brep.cpp svneol=native#text/plain
 src/librt/primitives/nmg/nmg_ck.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_class.c svneol=native#text/plain
+src/librt/primitives/nmg/nmg_copy.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_eval.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_extrude.c svneol=native#text/plain
 src/librt/primitives/nmg/nmg_fcut.c svneol=native#text/plain
