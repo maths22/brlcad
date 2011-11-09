@@ -10358,6 +10358,7 @@ src/other/sqlite3/tcl/tclsqlite3.c svneol=native#text/plain
 src/other/step.dist svneol=native#text/plain
 src/other/step/AUTHORS svneol=native#text/plain
 src/other/step/CMake/CheckCFileRuns.cmake svneol=native#text/plain
+src/other/step/CMake/FindLEMON.cmake svneol=native#text/plain
 src/other/step/CMake/FindLEX.cmake svneol=native#text/plain
 src/other/step/CMake/FindYACC.cmake svneol=native#text/plain
 src/other/step/CMake/SCL_Utils.cmake svneol=native#text/plain
