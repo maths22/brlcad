@@ -4484,6 +4484,7 @@ src/libged/cat.c svneol=native#text/plain
 src/libged/cc.c svneol=native#text/plain
 src/libged/center.c svneol=native#text/plain
 src/libged/clip.c svneol=native#text/plain
+src/libged/clipper.cpp svneol=native#text/plain
 src/libged/clone.c svneol=native#text/plain
 src/libged/color.c svneol=native#text/plain
 src/libged/comb.c svneol=native#text/plain
