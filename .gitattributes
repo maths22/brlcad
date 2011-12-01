@@ -4434,6 +4434,7 @@ src/libgcv/NOTES svneol=native#text/plain
 src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
 src/libgcv/region_end_mc.c svneol=native#text/plain
+src/libgcv/test_bottess.c svneol=native#text/plain
 src/libgcv/wfobj/CMakeLists.txt svneol=native#text/plain
 src/libgcv/wfobj/Makefile.am svneol=native#text/plain
 src/libgcv/wfobj/Makefile.sample svneol=native#text/plain
