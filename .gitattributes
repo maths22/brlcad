@@ -4306,7 +4306,6 @@ src/libbu/interrupt.c svneol=native#text/plain
 src/libbu/ispar.c svneol=native#text/plain
 src/libbu/kill.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
-src/libbu/libbu.3 svneol=native#text/plain
 src/libbu/linebuf.c svneol=native#text/plain
 src/libbu/list.c svneol=native#text/plain
 src/libbu/log.c svneol=native#text/plain
