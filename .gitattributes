@@ -2920,6 +2920,7 @@ misc/CMake/BRLCAD_CPackOptions.cmake.in svneol=native#text/plain
 misc/CMake/BRLCAD_CheckFunctions.cmake svneol=native#text/native
 misc/CMake/BRLCAD_CompilerFlags.cmake svneol=native#text/plain
 misc/CMake/BRLCAD_Dependent_Options.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_Options.cmake svneol=native#text/plain
 misc/CMake/BRLCAD_Util.cmake svneol=native#text/plain
 misc/CMake/CMakeFiles.cmake svneol=native#text/plain
 misc/CMake/CheckCFileRuns.cmake svneol=native#text/plain
