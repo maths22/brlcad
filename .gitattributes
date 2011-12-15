@@ -2957,6 +2957,7 @@ misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
 misc/CMake/distcheck_buildsys.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_message.in svneol=native#text/plain
 misc/CMake/fop.cmake.in svneol=native#text/plain
+misc/CMake/msv.cmake.in svneol=native#text/plain
 misc/CMake/rnv.cmake.in svneol=native#text/plain
 misc/CMake/test_srcs/alloca_header_test.c svneol=native#text/plain
 misc/CMake/test_srcs/alloca_test.c svneol=native#text/plain
