@@ -5,15 +5,11 @@
 /COPYING svneol=native#text/plain
 /ChangeLog svneol=native#text/plain
 /HACKING svneol=native#text/plain
-/HACKING.cmake svneol=native#text/plain
 /INSTALL svneol=native#text/plain
-/INSTALL.cmake svneol=native#text/plain
 /Makefile.am svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
-/README.cmake svneol=native#text/plain
 /TODO svneol=native#text/plain
-/TODO.cmake svneol=native#text/plain
 /autogen.sh svneol=native#text/x-sh
 bench/CMakeLists.txt svneol=native#text/plain
 bench/Makefile.am svneol=native#text/plain
