@@ -2950,7 +2950,6 @@ misc/CMake/ResetCache.cmake svneol=native#text/plain
 misc/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 misc/CMake/ThirdParty.cmake svneol=native#text/plain
 misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
-misc/CMake/ThirdParty_TCL2.cmake svneol=native#text/plain
 misc/CMake/distcheck_buildsys.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_message.in svneol=native#text/plain
 misc/CMake/fop.cmake.in svneol=native#text/plain
