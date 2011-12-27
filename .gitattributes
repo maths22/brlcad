@@ -9909,6 +9909,7 @@ src/other/osl/shaders/sh_texture.osl svneol=native#text/plain
 src/other/osl/shaders/stdosl.h svneol=native#text/plain
 src/other/perplex.dist svneol=native#text/plain
 src/other/perplex/CMakeLists.txt svneol=native#text/plain
+src/other/perplex/README.txt svneol=native#text/plain
 src/other/perplex/mbo_getopt.cpp svneol=native#text/plain
 src/other/perplex/mbo_getopt.h svneol=native#text/plain
 src/other/perplex/parser.y svneol=native#text/plain
