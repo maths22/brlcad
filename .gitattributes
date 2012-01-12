@@ -4331,7 +4331,6 @@ src/libbu/temp.c svneol=native#text/plain
 src/libbu/test_basename.c svneol=native#text/plain
 src/libbu/test_dirname.c svneol=native#text/plain
 src/libbu/test_escape.c svneol=native#text/plain
-src/libbu/test_htond.c svneol=native#text/plain
 src/libbu/test_progname.c svneol=native#text/plain
 src/libbu/test_quote.c svneol=native#text/plain
 src/libbu/test_timer.c svneol=native#text/plain
