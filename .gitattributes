@@ -1479,6 +1479,7 @@ misc/NIST_DENSITIES svneol=native#text/plain
 misc/archlinux/PKGBUILD svneol=native#text/plain
 misc/archlinux/brlcad.install svneol=native#text/plain
 misc/archlinux/brlcad.sh svneol=native#text/plain
+misc/astyle.opt svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
