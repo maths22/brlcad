@@ -540,6 +540,8 @@ doc/docbook/resources/other/fonts/dejavu-lgc-fonts.tar.bz2 -text svneol=unset#ap
 doc/docbook/resources/other/fonts/dejavu_COPYING.txt svneol=native#text/plain
 doc/docbook/resources/other/fonts/stix-fonts.tar.bz2 -text svneol=unset#application/x-bzip2
 doc/docbook/resources/other/fonts/stix_COPYING.txt svneol=native#text/plain
+doc/docbook/resources/other/fonts/y14.5.tar.bz2 -text
+doc/docbook/resources/other/fonts/y14.5_COPYING svneol=native#text/plain
 doc/docbook/resources/other/offo/README svneol=native#text/plain
 doc/docbook/resources/other/offo/licenses.txt svneol=native#text/plain
 doc/docbook/resources/other/offo/offo-2.0.tar.bz2 -text svneol=unset#application/x-bzip2
