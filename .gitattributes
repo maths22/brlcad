@@ -92,6 +92,7 @@ doc/docbook/README svneol=native#text/plain
 doc/docbook/README.DB_authors_notes svneol=native#text/plain
 doc/docbook/articles/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/articles/en/TEMPLATE.xml svneol=native#text/xml
 doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
 doc/docbook/articles/en/build_region.xml svneol=native#text/xml
 doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
