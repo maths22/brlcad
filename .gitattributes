@@ -1415,6 +1415,7 @@ misc/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
 misc/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 misc/CMake/CompilerFlags.cmake svneol=native#text/plain
 misc/CMake/DiffCache.cmake svneol=native#text/plain
+misc/CMake/Distclean.cmake svneol=native#text/plain
 misc/CMake/DocBook.cmake svneol=native#text/plain
 misc/CMake/FindGL.cmake svneol=native#text/plain
 misc/CMake/FindLEMON.cmake svneol=native#text/plain
