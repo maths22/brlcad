@@ -8202,7 +8202,6 @@ src/other/libz/win32/VisualC.txt svneol=native#text/plain
 src/other/libz/win32/zlib.def svneol=native#text/plain
 src/other/libz/win32/zlib1.rc svneol=CRLF#text/plain eol=crlf
 src/other/libz/zconf.h svneol=native#text/plain
-src/other/libz/zconf.h.in svneol=native#text/plain
 src/other/libz/zlib.3 svneol=native#text/plain
 src/other/libz/zlib.3.pdf -text svneol=unset#application/pdf
 src/other/libz/zlib.h svneol=native#text/plain
