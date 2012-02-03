@@ -8486,7 +8486,6 @@ src/other/re2c/CMake/FindLEMON.cmake svneol=native#text/plain
 src/other/re2c/CMake/FindYACC.cmake svneol=native#text/plain
 src/other/re2c/CMake/LEMON_Util.cmake svneol=native#text/plain
 src/other/re2c/CMakeLists.txt svneol=native#text/plain
-src/other/re2c/README svneol=native#text/plain
 src/other/re2c/README.in svneol=native#text/plain
 src/other/re2c/actions.cc svneol=native#text/plain
 src/other/re2c/basics.h svneol=native#text/plain
