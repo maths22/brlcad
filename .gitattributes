@@ -1453,6 +1453,7 @@ misc/CMake/configure_prefix.sh svneol=native#text/x-sh
 misc/CMake/configure_suffix.sh svneol=native#text/x-sh
 misc/CMake/distcheck_buildsys.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_message.in svneol=native#text/plain
+misc/CMake/distclean.cmake.in svneol=native#text/plain
 misc/CMake/fop.cmake.in svneol=native#text/plain
 misc/CMake/msv.cmake.in svneol=native#text/plain
 misc/CMake/rnv.cmake.in svneol=native#text/plain
