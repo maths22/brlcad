@@ -1447,6 +1447,7 @@ misc/CMake/PERPLEX_Util.cmake svneol=native#text/plain
 misc/CMake/RE2C_Util.cmake svneol=native#text/plain
 misc/CMake/ResetCache.cmake svneol=native#text/plain
 misc/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
+misc/CMake/TCL_PKGINDEX.cmake svneol=native#text/plain
 misc/CMake/ThirdParty.cmake svneol=native#text/plain
 misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
 misc/CMake/configure_prefix.sh svneol=native#text/x-sh
