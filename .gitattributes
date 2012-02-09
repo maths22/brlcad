@@ -3282,7 +3282,6 @@ src/libicv/fileformat.c svneol=native#text/plain
 src/libicv/rot.c svneol=native#text/plain
 src/libmultispectral/CMakeLists.txt svneol=native#text/plain
 src/libmultispectral/Makefile.am svneol=native#text/plain
-src/libmultispectral/init.c svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
 src/liboptical/CMakeLists.txt svneol=native#text/plain
 src/liboptical/Makefile.am svneol=native#text/plain
