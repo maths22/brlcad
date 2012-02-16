@@ -3123,6 +3123,7 @@ pix/world.log svneol=native#text/plain
 pix/world.pix -text svneol=unset#image/x-rgb
 regress/CMakeLists.txt svneol=native#text/plain
 regress/Makefile.am svneol=native#text/plain
+regress/analyze.asc svneol=native#text/plain
 regress/bots.sh svneol=native#text/x-sh
 regress/fastgen.sh svneol=native#text/x-sh
 regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
