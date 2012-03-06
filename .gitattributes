@@ -540,6 +540,7 @@ doc/docbook/presentations/en/images/tk-based-gui-for-mged.png -text svneol=unset
 doc/docbook/presentations/en/intro-to-tcltk.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
 doc/docbook/resources/brlcad/brlcad-common.xsl svneol=native#text/xml
+doc/docbook/resources/brlcad/brlcad-fo-stylesheet.xsl.in svneol=native#text/plain
 doc/docbook/resources/brlcad/brlcad-fonts.xsl svneol=native#text/xml
 doc/docbook/resources/brlcad/brlcad-gendata.xsl svneol=native#text/xml
 doc/docbook/resources/brlcad/brlcad-man-stylesheet.xsl.in svneol=native#text/plain
