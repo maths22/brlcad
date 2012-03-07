@@ -205,7 +205,6 @@ doc/docbook/articles/it/images/brlcad-overview-benchmark-Sphflake.jpg -text svne
 doc/docbook/articles/it/images/brlcad-overview-benchmark-Star.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/it/images/brlcad-overview-benchmark-World.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/it/images/brlcad-overview-data-flow.png -text svneol=unset#image/png
-doc/docbook/articles/it/images/image008.png -text svneol=unset#image/png
 doc/docbook/articles/it/images/sflogo.png -text svneol=unset#image/png
 doc/docbook/articles/ru/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/ru/about_ru.xml svneol=native#text/xml
