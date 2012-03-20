@@ -1464,7 +1464,6 @@ misc/CMake/FindYACC.cmake svneol=native#text/plain
 misc/CMake/FindZLIB.cmake svneol=native#text/plain
 misc/CMake/Fink_MacPorts.cmake svneol=native#text/plain
 misc/CMake/LEMON_Util.cmake svneol=native#text/plain
-misc/CMake/LoadMacros.cmake svneol=native#text/plain
 misc/CMake/NSIS.template.in svneol=native#text/plain
 misc/CMake/PERPLEX_Util.cmake svneol=native#text/plain
 misc/CMake/RE2C_Util.cmake svneol=native#text/plain
