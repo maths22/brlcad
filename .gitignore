@@ -996,12 +996,6 @@ src/other/step/src/cleditor/.deps
 src/other/step/src/cleditor/.libs
 src/other/step/src/cleditor/Makefile
 src/other/step/src/cleditor/Makefile.in
-src/other/step/src/clivfasd/.deps
-src/other/step/src/clivfasd/Makefile
-src/other/step/src/clivfasd/Makefile.in
-src/other/step/src/clivfasd/fasdBitmaps/.deps
-src/other/step/src/clivfasd/fasdBitmaps/Makefile
-src/other/step/src/clivfasd/fasdBitmaps/Makefile.in
 src/other/step/src/clprobe-ui/.deps
 src/other/step/src/clprobe-ui/Makefile
 src/other/step/src/clprobe-ui/Makefile.in
