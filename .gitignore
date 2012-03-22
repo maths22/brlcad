@@ -945,12 +945,8 @@ src/other/step/config.status
 src/other/step/configure
 src/other/step/data/Makefile
 src/other/step/data/Makefile.in
-src/other/step/data/ap203/Makefile
-src/other/step/data/ap203/Makefile.in
 src/other/step/data/ap227/Makefile
 src/other/step/data/ap227/Makefile.in
-src/other/step/data/example/Makefile
-src/other/step/data/example/Makefile.in
 src/other/step/doc/Makefile
 src/other/step/doc/Makefile.in
 src/other/step/doc/man/Makefile
