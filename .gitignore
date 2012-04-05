@@ -454,6 +454,11 @@ src/conv/step/Makefile.in
 src/conv/step/step-g
 src/conv/stl-g
 src/conv/tankill-g
+src/conv/vdeck/.deps
+src/conv/vdeck/.libs
+src/conv/vdeck/Makefile
+src/conv/vdeck/Makefile.in
+src/conv/vdeck/vdeck
 src/conv/viewpoint-g
 src/conv/walk_example
 src/external/Cubit/.deps
@@ -1498,11 +1503,6 @@ src/util/ttcp
 src/util/wavelet
 src/util/xyz-pl
 src/util/yuv-pix
-src/vdeck/.deps
-src/vdeck/.libs
-src/vdeck/Makefile
-src/vdeck/Makefile.in
-src/vdeck/vdeck
 src/vfont/.deps
 src/vfont/.libs
 src/vfont/Makefile
