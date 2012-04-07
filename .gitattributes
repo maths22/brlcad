@@ -1964,7 +1964,6 @@ src/conv/bot_dump.1 svneol=native#text/plain
 src/conv/bot_dump.c svneol=native#text/plain
 src/conv/bot_shell-vtk.1 svneol=native#text/plain
 src/conv/bot_shell-vtk.c svneol=native#text/plain
-src/conv/comgeom/3d.h svneol=native#text/plain
 src/conv/comgeom/comgeom-g.1 svneol=native#text/plain
 src/conv/comgeom/cvt.c svneol=native#text/plain
 src/conv/comgeom/f2a.c svneol=native#text/plain
