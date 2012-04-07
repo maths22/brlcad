@@ -1750,6 +1750,7 @@ regress/solidspix.asc svneol=native#text/plain
 regress/spdi.sh svneol=native#text/x-sh
 regress/spdipix.asc svneol=native#text/plain
 regress/testlib.c svneol=native#text/plain
+regress/vdeck-comgeom-g.sh svneol=native#text/x-sh
 regress/vls.sh svneol=native#text/x-sh
 regress/weight.sh svneol=native#text/x-sh
 sh/CMakeLists.txt svneol=native#text/plain
