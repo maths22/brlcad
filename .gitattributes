@@ -1634,7 +1634,6 @@ regress/bots.sh svneol=native#text/x-sh
 regress/comgeom.sh svneol=native#text/x-sh
 regress/comgeom/m35.asc.gz -text svneol=unset#application/x-gtar
 regress/comgeom/m35.cg.gz -text svneol=unset#application/x-gtar
-regress/comgeom/m35.g.gift5.txt svneol=native#text/plain
 regress/dsp.sh svneol=native#text/x-sh
 regress/fastgen.sh svneol=native#text/x-sh
 regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
