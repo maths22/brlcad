@@ -1632,8 +1632,6 @@ regress/Makefile.am svneol=native#text/plain
 regress/analyze.asc svneol=native#text/plain
 regress/bots.sh svneol=native#text/x-sh
 regress/comgeom.sh svneol=native#text/x-sh
-regress/comgeom/m35.asc.gz -text svneol=unset#application/x-gtar
-regress/comgeom/m35.cg.gz -text svneol=unset#application/x-gtar
 regress/dsp.sh svneol=native#text/x-sh
 regress/fastgen.sh svneol=native#text/x-sh
 regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
@@ -1756,6 +1754,8 @@ regress/solidspix.asc svneol=native#text/plain
 regress/spdi.sh svneol=native#text/x-sh
 regress/spdipix.asc svneol=native#text/plain
 regress/testlib.c svneol=native#text/plain
+regress/tgms/m35.asc.gz -text svneol=unset#application/x-gtar
+regress/tgms/m35.cg.gz -text svneol=unset#application/x-gtar
 regress/vls.sh svneol=native#text/x-sh
 regress/weight.sh svneol=native#text/x-sh
 sh/CMakeLists.txt svneol=native#text/plain
