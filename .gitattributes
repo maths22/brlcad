@@ -1638,6 +1638,8 @@ regress/dsp.sh svneol=native#text/x-sh
 regress/fastgen.sh svneol=native#text/x-sh
 regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
 regress/flawfinder.sh svneol=native#text/x-sh
+regress/g-dot.sh svneol=native#text/x-sh
+regress/g-nff.sh svneol=native#text/x-sh
 regress/gcv/CMakeLists.txt svneol=native#text/plain
 regress/gcv/README svneol=native#text/plain
 regress/gcv/dem/README svneol=native#text/plain
