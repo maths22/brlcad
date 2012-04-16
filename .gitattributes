@@ -1744,6 +1744,7 @@ regress/mosspix.asc svneol=native#text/plain
 regress/nightly.sh svneol=native#text/x-sh
 regress/nirt.sh svneol=native#text/x-sh
 regress/nurbs/brep-3dm.tar.bz2 -text
+regress/quote.sh svneol=native#text/x-sh
 regress/red.sh svneol=native#text/x-sh
 regress/repository.sh svneol=native#text/x-sh
 regress/shaders.sh svneol=native#text/x-sh
