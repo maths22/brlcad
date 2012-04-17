@@ -12444,7 +12444,6 @@ src/sig/imod.c svneol=native#text/plain
 src/sig/interp.c svneol=native#text/plain
 src/sig/istats.c svneol=native#text/plain
 src/sig/smod.c svneol=native#text/plain
-src/sig/syn.c svneol=native#text/plain
 src/sig/u-a.c svneol=native#text/plain
 src/sig/u-bw.c svneol=native#text/plain
 src/sig/u-d.c svneol=native#text/plain
