@@ -588,6 +588,7 @@ doc/docbook/system/man1/en/rt.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtcheck.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtedge.xml svneol=native#text/xml
+doc/docbook/system/man1/en/rtwizard.xml svneol=native#text/plain
 doc/docbook/system/man1/en/tire.xml svneol=native#text/xml
 doc/docbook/system/man3/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man3/en/CMakeLists.txt svneol=native#text/plain
@@ -13080,6 +13081,7 @@ src/tclscripts/tclIndex -text
 src/tclscripts/util/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/util/Makefile.am svneol=native#text/plain
 src/tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
+src/tclscripts/util/getopt.tcl svneol=native#text/plain
 src/tclscripts/util/luniq.tcl svneol=native#text/plain
 src/tclscripts/util/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/util/tclIndex -text
