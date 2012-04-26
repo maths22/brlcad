@@ -3670,6 +3670,7 @@ src/libtclcad/cmdhist_obj.c svneol=native#text/plain
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
 src/libtclcad/tclcad_obj.c svneol=native#text/plain
+src/libtclcad/tclcad_private.h svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/CMakeLists.txt svneol=native#text/plain
 src/libtermio/Makefile.am svneol=native#text/plain
