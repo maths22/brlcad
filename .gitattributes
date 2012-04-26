@@ -9114,8 +9114,10 @@ src/other/libpng/LICENSE -text
 src/other/libpng/Makefile.am svneol=native#text/plain
 src/other/libpng/README svneol=native#text/plain
 src/other/libpng/TODO svneol=native#text/plain
+src/other/libpng/arm/filter_neon.S svneol=native#text/plain
 src/other/libpng/autogen.sh svneol=native#text/x-sh
 src/other/libpng/configure.ac svneol=native#text/plain
+src/other/libpng/contrib/README.txt svneol=native#text/plain
 src/other/libpng/contrib/gregbook/COPYING svneol=native#text/plain
 src/other/libpng/contrib/gregbook/LICENSE -text
 src/other/libpng/contrib/gregbook/Makefile.mingw32 svneol=native#text/plain
@@ -9137,6 +9139,7 @@ src/other/libpng/contrib/gregbook/toucan.png -text svneol=unset#image/png
 src/other/libpng/contrib/gregbook/wpng.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/writepng.c svneol=native#text/plain
 src/other/libpng/contrib/gregbook/writepng.h svneol=native#text/plain
+src/other/libpng/contrib/libtests/pngvalid.c svneol=native#text/plain
 src/other/libpng/contrib/pngminim/README svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/README svneol=native#text/plain
 src/other/libpng/contrib/pngminim/decoder/makefile svneol=native#text/plain
@@ -9231,7 +9234,7 @@ src/other/libpng/pngstruct.h svneol=native#text/plain
 src/other/libpng/pngtest.c svneol=native#text/plain
 src/other/libpng/pngtest.png -text svneol=unset#image/png
 src/other/libpng/pngtrans.c svneol=native#text/plain
-src/other/libpng/pngvalid.c svneol=native#text/plain
+src/other/libpng/pngusr.dfa svneol=native#text/plain
 src/other/libpng/pngwio.c svneol=native#text/plain
 src/other/libpng/pngwrite.c svneol=native#text/plain
 src/other/libpng/pngwtran.c svneol=native#text/plain
