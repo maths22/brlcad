@@ -7828,6 +7828,7 @@ src/other/libpng/pngstruct.h svneol=native#text/plain
 src/other/libpng/pngtest.c svneol=native#text/plain
 src/other/libpng/pngtest.png -text svneol=unset#image/png
 src/other/libpng/pngtrans.c svneol=native#text/plain
+src/other/libpng/pngusr.dfa svneol=native#text/plain
 src/other/libpng/pngwio.c svneol=native#text/plain
 src/other/libpng/pngwrite.c svneol=native#text/plain
 src/other/libpng/pngwtran.c svneol=native#text/plain
