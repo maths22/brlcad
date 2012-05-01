@@ -157,13 +157,6 @@ include/stamp-h1
 /install.*.log
 /libtool
 /ltmain.sh
-m4/Makefile
-m4/Makefile.in
-m4/libtool.m4
-m4/ltoptions.m4
-m4/ltsugar.m4
-m4/ltversion.m4
-m4/lt~obsolete.m4
 misc/Doxyfile.bak
 misc/Makefile
 misc/Makefile.in
