@@ -3023,7 +3023,6 @@ src/libgcv/test_bottess.c svneol=native#text/plain
 src/libgcv/tri_intersect.c svneol=native#text/plain
 src/libgcv/tri_intersect.h svneol=native#text/plain
 src/libgcv/wfobj/CMakeLists.txt svneol=native#text/plain
-src/libgcv/wfobj/Makefile.am svneol=native#text/plain
 src/libgcv/wfobj/obj_grammar.yy svneol=native#text/plain
 src/libgcv/wfobj/obj_grammar_decls.h svneol=native#text/plain
 src/libgcv/wfobj/obj_parser.cpp svneol=native#text/plain
