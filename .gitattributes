@@ -1453,6 +1453,7 @@ misc/CMake/FindPkgMacros.cmake svneol=native#text/plain
 misc/CMake/FindRE2C.cmake svneol=native#text/plain
 misc/CMake/FindREGEX.cmake svneol=native#text/plain
 misc/CMake/FindSCL.cmake svneol=native#text/plain
+misc/CMake/FindSTL.cmake svneol=native#text/plain
 misc/CMake/FindShellDeps.cmake svneol=native#text/native
 misc/CMake/FindTBB.cmake svneol=native#text/plain
 misc/CMake/FindTCL.cmake svneol=native#text/plain
