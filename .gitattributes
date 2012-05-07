@@ -715,6 +715,7 @@ doc/docbook/system/mann/en/knob.xml svneol=native#text/xml
 doc/docbook/system/mann/en/l.xml svneol=native#text/xml
 doc/docbook/system/mann/en/l_muves.xml svneol=native#text/xml
 doc/docbook/system/mann/en/labelvert.xml svneol=native#text/xml
+doc/docbook/system/mann/en/lc.xml svneol=native#text/plain
 doc/docbook/system/mann/en/listeval.xml svneol=native#text/xml
 doc/docbook/system/mann/en/lm.xml svneol=native#text/xml
 doc/docbook/system/mann/en/loadtk.xml svneol=native#text/xml
