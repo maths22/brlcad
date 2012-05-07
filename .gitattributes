@@ -723,6 +723,7 @@ doc/docbook/system/mann/en/lookat.xml svneol=native#text/xml
 doc/docbook/system/mann/en/ls.xml svneol=native#text/xml
 doc/docbook/system/mann/en/make.xml svneol=native#text/xml
 doc/docbook/system/mann/en/make_bb.xml svneol=native#text/xml
+doc/docbook/system/mann/en/make_pnts.xml svneol=native#text/plain
 doc/docbook/system/mann/en/mater.xml svneol=native#text/xml
 doc/docbook/system/mann/en/matpick.xml svneol=native#text/xml
 doc/docbook/system/mann/en/memprint.xml svneol=native#text/xml
