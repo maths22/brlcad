@@ -12836,6 +12836,7 @@ src/tclscripts/lib/Mged.tcl svneol=native#text/plain
 src/tclscripts/lib/ModelAxesControl.tcl svneol=native#text/plain
 src/tclscripts/lib/QuadDisplay.tcl svneol=native#text/plain
 src/tclscripts/lib/RtControl.tcl svneol=native#text/plain
+src/tclscripts/lib/RtImage.tcl svneol=native#text/plain
 src/tclscripts/lib/Splash.tcl svneol=native#text/plain
 src/tclscripts/lib/Table.tcl svneol=native#text/plain
 src/tclscripts/lib/TableView.tcl svneol=native#text/plain
