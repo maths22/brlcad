@@ -1753,6 +1753,8 @@ regress/nurbs/brep-3dm.tar.bz2 -text
 regress/quote.sh svneol=native#text/x-sh
 regress/red.sh svneol=native#text/x-sh
 regress/repository.sh svneol=native#text/x-sh
+regress/rtwizard.sh svneol=native#text/plain
+regress/rtwizard/rtwizard_test1_ref.asc.gz -text
 regress/shaders.sh svneol=native#text/x-sh
 regress/shaderspix.asc svneol=native#text/plain
 regress/slave_build.sh svneol=native#text/x-sh
