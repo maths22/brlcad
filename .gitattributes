@@ -2954,6 +2954,8 @@ src/libbu/vers.c svneol=native#text/plain
 src/libbu/vfont.c svneol=native#text/plain
 src/libbu/vlb.c -text
 src/libbu/vls.c svneol=native#text/plain
+src/libbu/vls_internals.h svneol=native#text/plain
+src/libbu/vls_vprintf.c svneol=native#text/plain
 src/libbu/whereis.c svneol=native#text/plain
 src/libbu/which.c svneol=native#text/plain
 src/libbu/xdr.c svneol=native#text/plain
