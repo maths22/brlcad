@@ -2941,6 +2941,7 @@ src/libbu/temp.c svneol=native#text/plain
 src/libbu/test_basename.c svneol=native#text/plain
 src/libbu/test_bitv.c svneol=native#text/plain
 src/libbu/test_booleanize.c svneol=native#text/plain
+src/libbu/test_ctype.c -text svneol=native#test/plain
 src/libbu/test_dirname.c svneol=native#text/plain
 src/libbu/test_escape.c svneol=native#text/plain
 src/libbu/test_progname.c svneol=native#text/plain
