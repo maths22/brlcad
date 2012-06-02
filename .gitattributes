@@ -1758,6 +1758,7 @@ regress/rtwizard/rtwizard_test1_ref.asc.gz -text
 regress/shaders.sh svneol=native#text/x-sh
 regress/shaderspix.asc svneol=native#text/plain
 regress/slave_build.sh svneol=native#text/x-sh
+regress/solids-simplepix.asc svneol=native#text/plain
 regress/solids.sh svneol=native#text/x-sh
 regress/solidspix.asc svneol=native#text/plain
 regress/spdi.sh svneol=native#text/x-sh
