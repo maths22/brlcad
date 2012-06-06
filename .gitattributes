@@ -9118,6 +9118,7 @@ src/other/step/include/express/symbol.h svneol=native#text/plain
 src/other/step/include/express/type.h svneol=native#text/plain
 src/other/step/include/express/variable.h svneol=native#text/plain
 src/other/step/include/scl_cf_cmake.h.in svneol=native#text/plain
+src/other/step/include/scl_export.h svneol=native#text/plain
 src/other/step/include/scl_stdbool.h svneol=native#text/plain
 src/other/step/misc/astyle.cfg svneol=native#text/plain
 src/other/step/misc/flawfinder svneol=native#text/plain
