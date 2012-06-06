@@ -1928,8 +1928,7 @@ src/archer/plugins/Wizards/tirewizard.tcl svneol=native#text/plain
 src/archer/plugins/Wizards/tirewizard/Makefile.am svneol=native#text/plain
 src/archer/plugins/Wizards/tirewizard/TireWizard.tcl svneol=native#text/plain
 src/brlman/CMakeLists.txt svneol=native#text/plain
-src/brlman/Makefile.am svneol=native#text/plain
-src/brlman/brlman.1 svneol=native#text/plain
+src/brlman/brlman.bat svneol=CRLF#text/plain eol=crlf
 src/brlman/brlman.sh.in svneol=native#text/plain
 src/burst/CMakeLists.txt svneol=native#text/plain
 src/burst/Hm.c svneol=native#text/plain
