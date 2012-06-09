@@ -1978,6 +1978,7 @@ src/conv/3dm/3dm-g.cpp svneol=native#text/plain
 src/conv/CMakeLists.txt svneol=native#text/plain
 src/conv/Formats.csv svneol=native#text/plain
 src/conv/Makefile.am svneol=native#text/plain
+src/conv/asc/asc2g.1 svneol=native#text/plain
 src/conv/asc/asc2g.c svneol=native#text/plain
 src/conv/asc/asc2pix.1 svneol=native#text/plain
 src/conv/asc/asc2pix.c svneol=native#text/plain
