@@ -3251,6 +3251,7 @@ src/libged/rrt.c svneol=native#text/plain
 src/libged/rt.c svneol=native#text/plain
 src/libged/rtabort.c svneol=native#text/plain
 src/libged/rtcheck.c svneol=native#text/plain
+src/libged/rtwizard.c svneol=native#text/plain
 src/libged/savekey.c svneol=native#text/plain
 src/libged/saveview.c svneol=native#text/plain
 src/libged/scale.c svneol=native#text/plain
