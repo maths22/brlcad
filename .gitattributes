@@ -12770,6 +12770,7 @@ src/tclscripts/archer/images/rpc_intersect.png -text
 src/tclscripts/archer/images/rpc_labeled.png -text svneol=unset#image/png
 src/tclscripts/archer/images/rpc_subtract.png -text
 src/tclscripts/archer/images/rpc_union.png -text
+src/tclscripts/archer/images/rtimage.png -text
 src/tclscripts/archer/images/run.png -text
 src/tclscripts/archer/images/save.png -text
 src/tclscripts/archer/images/sketch.png -text
