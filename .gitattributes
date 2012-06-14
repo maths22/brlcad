@@ -1657,6 +1657,7 @@ regress/dsp/dsp-3-5.asc svneol=native#text/plain
 regress/dsp/dsp-3-6.asc svneol=native#text/plain
 regress/dsp/dsp-3-7.asc svneol=native#text/plain
 regress/dsp/dsp-3-8.asc svneol=native#text/plain
+regress/dsp/dsp-common.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-0.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-1.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-2.sh svneol=native#text/x-sh
