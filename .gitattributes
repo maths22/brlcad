@@ -3131,6 +3131,7 @@ src/libged/copy.c svneol=native#text/plain
 src/libged/copyeval.c svneol=native#text/plain
 src/libged/copymat.c svneol=native#text/plain
 src/libged/cpi.c svneol=native#text/plain
+src/libged/dag.cpp svneol=native#text/plain
 src/libged/dbip.c svneol=native#text/plain
 src/libged/debugbu.c svneol=native#text/plain
 src/libged/debugdir.c svneol=native#text/plain
