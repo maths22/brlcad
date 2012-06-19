@@ -776,6 +776,7 @@ doc/docbook/system/mann/en/refresh.xml svneol=native#text/xml
 doc/docbook/system/mann/en/regdebug.xml svneol=native#text/xml
 doc/docbook/system/mann/en/regdef.xml svneol=native#text/xml
 doc/docbook/system/mann/en/regions.xml svneol=native#text/xml
+doc/docbook/system/mann/en/reid.xml svneol=native#text/plain
 doc/docbook/system/mann/en/release.xml svneol=native#text/xml
 doc/docbook/system/mann/en/rfarb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/rm.xml svneol=native#text/xml
