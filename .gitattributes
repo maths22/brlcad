@@ -3658,6 +3658,7 @@ src/librt/primitives/obj_uv.c svneol=native#text/plain
 src/librt/primitives/obj_vshot.c svneol=native#text/plain
 src/librt/primitives/obj_xform.c svneol=native#text/plain
 src/librt/primitives/part/part.c svneol=native#text/plain
+src/librt/primitives/part/part_brep.cpp svneol=native#text/plain
 src/librt/primitives/part/part_mirror.c svneol=native#text/plain
 src/librt/primitives/pipe/pipe.c svneol=native#text/plain
 src/librt/primitives/pipe/pipe_brep.cpp svneol=native#text/plain
