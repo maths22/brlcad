@@ -3603,6 +3603,7 @@ src/librt/primitives/half/half.c svneol=native#text/plain
 src/librt/primitives/half/half_brep.cpp svneol=native#text/plain
 src/librt/primitives/half/half_mirror.c svneol=native#text/plain
 src/librt/primitives/hf/hf.c svneol=native#text/plain
+src/librt/primitives/hf/hf_brep.cpp svneol=native#text/plain
 src/librt/primitives/hyp/hyp.c svneol=native#text/plain
 src/librt/primitives/hyp/hyp_brep.cpp svneol=native#text/plain
 src/librt/primitives/hyp/hyp_mirror.c svneol=native#text/plain
