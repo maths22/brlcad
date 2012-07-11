@@ -3683,6 +3683,7 @@ src/librt/primitives/rpc/rpc_brep.cpp svneol=native#text/plain
 src/librt/primitives/rpc/rpc_mirror.c svneol=native#text/plain
 src/librt/primitives/sketch/sketch.c svneol=native#text/plain
 src/librt/primitives/sketch/sketch_brep.cpp svneol=native#text/plain
+src/librt/primitives/sketch/sketch_tess.cpp svneol=native#text/plain
 src/librt/primitives/sph/sph.c svneol=native#text/plain
 src/librt/primitives/sph/sph_brep.cpp svneol=native#text/plain
 src/librt/primitives/submodel/submodel.c svneol=native#text/plain
