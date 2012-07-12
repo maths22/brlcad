@@ -3349,6 +3349,7 @@ src/libged/view2model_lu.c svneol=native#text/plain
 src/libged/view2model_vec.c svneol=native#text/plain
 src/libged/view_obj.c svneol=native#text/plain
 src/libged/viewdir.c svneol=native#text/plain
+src/libged/voxelize.c svneol=native#text/plain
 src/libged/vrot.c svneol=native#text/plain
 src/libged/vutil.c svneol=native#text/plain
 src/libged/wcodes.c svneol=native#text/plain
