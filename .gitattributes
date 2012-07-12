@@ -9401,6 +9401,7 @@ src/other/step/src/fedex_python/python/SCL/ConstructedDataTypes.py svneol=native
 src/other/step/src/fedex_python/python/SCL/Expr.py svneol=native#text/plain
 src/other/step/src/fedex_python/python/SCL/Model.py svneol=native#text/plain
 src/other/step/src/fedex_python/python/SCL/Part21.py svneol=native#text/plain
+src/other/step/src/fedex_python/python/SCL/Rules.py svneol=native#text/plain
 src/other/step/src/fedex_python/python/SCL/SCLBase.py svneol=native#text/plain
 src/other/step/src/fedex_python/python/SCL/SimpleDataTypes.py svneol=native#text/plain
 src/other/step/src/fedex_python/python/SCL/TypeChecker.py svneol=native#text/plain
