@@ -9046,7 +9046,6 @@ src/other/step/cmake/FindRE2C.cmake svneol=native#text/plain
 src/other/step/cmake/Generated_Source_Utils.cmake svneol=native#text/plain
 src/other/step/cmake/LEMON_Util.cmake svneol=native#text/plain
 src/other/step/cmake/PERPLEX_Util.cmake svneol=native#text/plain
-src/other/step/cmake/RE2C_Util.cmake svneol=native#text/plain
 src/other/step/cmake/SCL_Utils.cmake svneol=native#text/plain
 src/other/step/cmake/cmake_uninstall.cmake.in svneol=native#text/plain
 src/other/step/cmake/manage_generated.cmake.in svneol=native#text/plain
