@@ -9049,6 +9049,7 @@ src/other/step/cmake/PERPLEX_Util.cmake svneol=native#text/plain
 src/other/step/cmake/RE2C_Util.cmake svneol=native#text/plain
 src/other/step/cmake/SCL_Utils.cmake svneol=native#text/plain
 src/other/step/cmake/cmake_uninstall.cmake.in svneol=native#text/plain
+src/other/step/cmake/manage_generated.cmake.in svneol=native#text/plain
 src/other/step/cmake/scl_version_string.cmake svneol=native#text/plain
 src/other/step/cmake/test_srcs/sys_wait_test.c svneol=native#text/plain
 src/other/step/cmake/verify_generated.cmake.in svneol=native#text/plain
