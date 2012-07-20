@@ -2988,6 +2988,7 @@ src/libbu/tests/bu_booleanize.c svneol=native#text/plain
 src/libbu/tests/bu_ctype.c svneol=native#text/plain
 src/libbu/tests/bu_dirname.c svneol=native#text/plain
 src/libbu/tests/bu_escape.c svneol=native#text/plain
+src/libbu/tests/bu_hex_to_bitv.c svneol=native#text/plain
 src/libbu/tests/bu_progname.c svneol=native#text/plain
 src/libbu/tests/bu_quote.c svneol=native#text/plain
 src/libbu/tests/bu_sscanf.c svneol=native#text/plain
