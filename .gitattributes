@@ -12896,6 +12896,12 @@ src/tclscripts/geometree/Makefile.am svneol=native#text/plain
 src/tclscripts/geometree/geometree.tcl svneol=native#text/plain
 src/tclscripts/geometree/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/geometree/tclIndex -text
+src/tclscripts/graph/CMakeLists.txt svneol=native#text/plain
+src/tclscripts/graph/GraphEditor.tcl svneol=native#text/plain
+src/tclscripts/graph/Makefile.am svneol=native#text/plain
+src/tclscripts/graph/graph.tcl svneol=native#text/plain
+src/tclscripts/graph/pkgIndex.tcl svneol=native#text/plain
+src/tclscripts/graph/tclIndex svneol=native#text/plain
 src/tclscripts/helpcomm.tcl svneol=native#text/plain
 src/tclscripts/helplib.tcl svneol=native#text/plain
 src/tclscripts/hoc.tcl svneol=native#text/plain
