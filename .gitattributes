@@ -3128,6 +3128,7 @@ src/libged/bot_dump.c svneol=native#text/plain
 src/libged/bot_face_fuse.c svneol=native#text/plain
 src/libged/bot_face_sort.c svneol=native#text/plain
 src/libged/bot_flip.c svneol=native#text/plain
+src/libged/bot_fuse.c svneol=native#text/plain
 src/libged/bot_merge.c svneol=native#text/plain
 src/libged/bot_smooth.c svneol=native#text/plain
 src/libged/bot_split.c svneol=native#text/plain
