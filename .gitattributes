@@ -827,6 +827,7 @@ doc/docbook/system/mann/en/vdraw.xml svneol=native#text/xml
 doc/docbook/system/mann/en/view.xml svneol=native#text/xml
 doc/docbook/system/mann/en/viewsize.xml svneol=native#text/xml
 doc/docbook/system/mann/en/vnirt.xml svneol=native#text/xml
+doc/docbook/system/mann/en/voxelize.xml svneol=native#text/plain
 doc/docbook/system/mann/en/vquery_ray.xml svneol=native#text/xml
 doc/docbook/system/mann/en/vrmgr.xml svneol=native#text/xml
 doc/docbook/system/mann/en/vrot.xml svneol=native#text/xml
