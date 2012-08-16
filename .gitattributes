@@ -697,6 +697,7 @@ doc/docbook/system/mann/en/garbage_collect.xml svneol=native#text/xml
 doc/docbook/system/mann/en/gastank.xml svneol=native#text/xml
 doc/docbook/system/mann/en/gqa.xml svneol=native#text/xml
 doc/docbook/system/mann/en/gr.xml svneol=native#text/plain
+doc/docbook/system/mann/en/graph.xml svneol=native#text/plain
 doc/docbook/system/mann/en/gui.xml svneol=native#text/xml
 doc/docbook/system/mann/en/handle.xml svneol=native#text/xml
 doc/docbook/system/mann/en/help.xml svneol=native#text/xml
