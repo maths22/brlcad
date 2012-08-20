@@ -707,6 +707,7 @@ doc/docbook/system/mann/en/hide.xml svneol=native#text/xml
 doc/docbook/system/mann/en/history.xml svneol=native#text/xml
 doc/docbook/system/mann/en/i.xml svneol=native#text/xml
 doc/docbook/system/mann/en/idents.xml svneol=native#text/xml
+doc/docbook/system/mann/en/igraph.xml svneol=native#text/plain
 doc/docbook/system/mann/en/ill.xml svneol=native#text/xml
 doc/docbook/system/mann/en/in.xml svneol=native#text/xml
 doc/docbook/system/mann/en/inside.xml svneol=native#text/xml
