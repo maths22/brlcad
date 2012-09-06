@@ -3396,6 +3396,7 @@ src/libmultispectral/CMakeLists.txt svneol=native#text/plain
 src/libmultispectral/Makefile.am svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
 src/libnurbs/CMakeLists.txt svneol=native#text/plain
+src/libnurbs/Makefile.am svneol=native#text/plain
 src/libnurbs/PullbackCurve.cpp svneol=native#text/plain
 src/libnurbs/PullbackCurve.h svneol=native#text/plain
 src/libnurbs/opennurbs_ext.cpp svneol=native#text/plain
