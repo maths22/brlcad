@@ -3884,7 +3884,6 @@ src/mged/update.c svneol=native#text/plain
 src/mged/usepen.c svneol=native#text/plain
 src/mged/utility1.c svneol=native#text/plain
 src/mged/vparse.c svneol=native#text/plain
-src/mged/vrlink.c svneol=native#text/plain
 src/nirt/CMakeLists.txt svneol=native#text/plain
 src/nirt/Makefile.am svneol=native#text/plain
 src/nirt/bsphere.c svneol=native#text/plain
