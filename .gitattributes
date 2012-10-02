@@ -3695,6 +3695,7 @@ src/librt/primitives/pnts/pnts_brep.cpp svneol=native#text/plain
 src/librt/primitives/poly/poly.c svneol=native#text/plain
 src/librt/primitives/poly/poly_brep.cpp svneol=native#text/plain
 src/librt/primitives/poly/poly_mirror.c svneol=native#text/plain
+src/librt/primitives/primitive_util.c svneol=native#text/plain
 src/librt/primitives/rec/rec.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.c svneol=native#text/plain
 src/librt/primitives/revolve/revolve.h svneol=native#text/plain
