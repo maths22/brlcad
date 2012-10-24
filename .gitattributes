@@ -2877,7 +2877,6 @@ src/libbn/bntester.c svneol=native#text/plain
 src/libbn/bntester.dat svneol=native#text/plain
 src/libbn/complex.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
-src/libbn/fortran.c svneol=native#text/plain
 src/libbn/globals.c svneol=native#text/plain
 src/libbn/libplot3.3 svneol=native#text/plain
 src/libbn/list.c svneol=native#text/plain
