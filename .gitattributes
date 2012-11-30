@@ -12997,6 +12997,7 @@ src/tclscripts/archer/Plugin.tcl svneol=native#text/plain
 src/tclscripts/archer/RhcEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/RpcEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/ShaderEdit.tcl svneol=native#text/plain
+src/tclscripts/archer/SketchEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/SphereEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/SuperellEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/TgcEditFrame.tcl svneol=native#text/plain
