@@ -3001,7 +3001,6 @@ src/irprep/all_sf.c svneol=native#text/plain
 src/irprep/firpass.c svneol=native#text/plain
 src/irprep/ir-X.c svneol=native#text/plain
 src/irprep/irdisp.c svneol=native#text/plain
-src/irprep/pictx.1 svneol=native#text/plain
 src/irprep/pictx.c svneol=native#text/plain
 src/irprep/secpass.c svneol=native#text/plain
 src/irprep/shapefact.c svneol=native#text/plain
