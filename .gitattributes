@@ -597,6 +597,7 @@ doc/docbook/system/man1/en/enf-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/euclid-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fast4-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fb-bw.xml svneol=native#text/xml
+doc/docbook/system/man1/en/fb-cmap.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fb-fb.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fb-orle.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fb-pix.xml svneol=native#text/xml
