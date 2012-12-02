@@ -3701,7 +3701,6 @@ src/librt/dspline.c svneol=native#text/plain
 src/librt/fortray.c svneol=native#text/plain
 src/librt/globals.c svneol=native#text/plain
 src/librt/htbl.c svneol=native#text/plain
-src/librt/librt.3 svneol=native#text/plain
 src/librt/librt_private.h svneol=native#text/plain
 src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
