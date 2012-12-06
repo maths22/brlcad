@@ -800,7 +800,6 @@ doc/docbook/system/man1/en/secpass.xml svneol=native#text/xml
 doc/docbook/system/man1/en/shapefact.xml svneol=native#text/xml
 doc/docbook/system/man1/en/showshot.xml svneol=native#text/xml
 doc/docbook/system/man1/en/showtherm.xml svneol=native#text/xml
-doc/docbook/system/man1/en/sqlite3.xml svneol=native#text/xml
 doc/docbook/system/man1/en/ssamp-bw.xml svneol=native#text/xml
 doc/docbook/system/man1/en/stl-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/sun-pix.xml svneol=native#text/xml
