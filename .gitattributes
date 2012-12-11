@@ -3914,6 +3914,7 @@ src/librt/search.c svneol=native#text/plain
 src/librt/search.h svneol=native#text/plain
 src/librt/shoot.c svneol=native#text/plain
 src/librt/spectrum.c svneol=native#text/plain
+src/librt/subd_test_bot.asc svneol=native#text/plain
 src/librt/tcl.c svneol=native#text/plain
 src/librt/test_botpatches.cpp svneol=native#text/plain
 src/librt/test_dvec.cpp svneol=native#text/plain
