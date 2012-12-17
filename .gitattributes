@@ -631,7 +631,6 @@ doc/docbook/system/man1/en/dunncolor.xml svneol=native#text/xml
 doc/docbook/system/man1/en/dunnsnap.xml svneol=native#text/xml
 doc/docbook/system/man1/en/dxf-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/enf-g.xml svneol=native#text/xml
-doc/docbook/system/man1/en/enigma.xml svneol=native#text/xml
 doc/docbook/system/man1/en/euclid-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fast4-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fb-bw.xml svneol=native#text/xml
@@ -1852,17 +1851,6 @@ misc/debian/rules svneol=native#text/plain
 misc/debian/source/format svneol=native#text/plain
 misc/debian/source/include-binaries svneol=native#text/plain
 misc/doxygen_structure -text
-misc/enigma/AUTHORS svneol=native#text/plain
-misc/enigma/CMakeLists.txt svneol=native#text/plain
-misc/enigma/COPYING svneol=native#text/plain
-misc/enigma/ChangeLog svneol=native#text/plain
-misc/enigma/INSTALL svneol=native#text/plain
-misc/enigma/Makefile.am svneol=native#text/plain
-misc/enigma/NEWS svneol=native#text/plain
-misc/enigma/README svneol=native#text/plain
-misc/enigma/configure.ac svneol=native#text/plain
-misc/enigma/crypt.c svneol=native#text/plain
-misc/enigma/enigma.c svneol=native#text/plain
 misc/flawfinder -text
 misc/fortran_example.f svneol=native#text/plain
 misc/libtool.m4 svneol=native#text/plain
