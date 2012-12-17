@@ -12921,6 +12921,7 @@ src/proc-db/mkbuilding.c svneol=native#text/plain
 src/proc-db/mkbuilding.h svneol=native#text/plain
 src/proc-db/molecule.c svneol=native#text/plain
 src/proc-db/nmgmodel.c svneol=native#text/plain
+src/proc-db/pdb-g.c svneol=native#text/plain
 src/proc-db/pipe.c svneol=native#text/plain
 src/proc-db/pipetest.c svneol=native#text/plain
 src/proc-db/pix2g.c svneol=native#text/plain
