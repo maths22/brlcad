@@ -1,6 +1,7 @@
 * text=auto !eol
 /AUTHORS svneol=native#text/plain
 /BUGS svneol=native#text/plain
+/CHANGES svneol=native#text/plain
 /CMakeLists.txt svneol=native#text/plain
 /COPYING svneol=native#text/plain
 /ChangeLog svneol=native#text/plain
@@ -81,7 +82,6 @@ doc/benchmark.tr svneol=native#text/plain
 doc/bison_to_lemon.txt svneol=native#text/plain
 doc/brep.txt svneol=native#text/plain
 doc/cvs.txt svneol=native#text/plain
-doc/deprecation.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
 doc/docbook/CMakeLists.txt svneol=native#text/plain
 doc/docbook/README svneol=native#text/plain
