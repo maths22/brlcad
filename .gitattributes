@@ -8637,7 +8637,6 @@ src/other/libvds/geom.h svneol=native#text/plain
 src/other/libvds/path.h svneol=native#text/plain
 src/other/libvds/render.c svneol=native#text/plain
 src/other/libvds/stdfold.c svneol=native#text/plain
-src/other/libvds/stdrender.c svneol=native#text/plain
 src/other/libvds/stdvds.c svneol=native#text/plain
 src/other/libvds/stdvds.h svneol=native#text/plain
 src/other/libvds/stdvis.c svneol=native#text/plain
