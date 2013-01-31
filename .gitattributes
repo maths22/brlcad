@@ -1698,6 +1698,7 @@ misc/CMake/FindTBB.cmake svneol=native#text/plain
 misc/CMake/FindTCL.cmake svneol=native#text/plain
 misc/CMake/FindTERMLIB.cmake svneol=native#text/plain
 misc/CMake/FindUTAHRLE.cmake svneol=native#text/plain
+misc/CMake/FindVDS.cmake svneol=native#text/plain
 misc/CMake/FindX11.cmake svneol=native#text/plain
 misc/CMake/FindXMLLINT.cmake svneol=native#text/plain
 misc/CMake/FindXSLTPROC.cmake svneol=native#text/plain
