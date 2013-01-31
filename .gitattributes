@@ -8623,6 +8623,7 @@ src/other/libutahrle/rle_skiprow.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.3 svneol=native#text/plain
 src/other/libutahrle/scanargs.c svneol=native#text/plain
 src/other/libutahrle/vaxshort.c svneol=native#text/plain
+src/other/libvds.dist svneol=native#text/plain
 src/other/libvds/CMakeLists.txt svneol=native#text/plain
 src/other/libvds/COPYING svneol=native#text/plain
 src/other/libvds/README svneol=native#text/plain
