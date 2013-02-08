@@ -884,6 +884,7 @@ doc/docbook/system/mann/en/dall.xml svneol=native#text/xml
 doc/docbook/system/mann/en/db.xml svneol=native#text/xml
 doc/docbook/system/mann/en/db_glob.xml svneol=native#text/xml
 doc/docbook/system/mann/en/dbconcat.xml svneol=native#text/xml
+doc/docbook/system/mann/en/dbupgrade.xml svneol=native#text/xml
 doc/docbook/system/mann/en/debugbu.xml svneol=native#text/xml
 doc/docbook/system/mann/en/debugdir.xml svneol=native#text/xml
 doc/docbook/system/mann/en/debuglib.xml svneol=native#text/xml
