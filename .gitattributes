@@ -8627,6 +8627,7 @@ src/other/libutahrle/vaxshort.c svneol=native#text/plain
 src/other/libvds.dist svneol=native#text/plain
 src/other/libvds/CMakeLists.txt svneol=native#text/plain
 src/other/libvds/COPYING svneol=native#text/plain
+src/other/libvds/Makefile.am svneol=native#text/plain
 src/other/libvds/README svneol=native#text/plain
 src/other/libvds/build.c svneol=native#text/plain
 src/other/libvds/cluster.c svneol=native#text/plain
