@@ -12635,6 +12635,7 @@ src/other/togl/doc/using.html svneol=native#text/html
 src/other/togl/include/CMakeLists.txt svneol=native#text/plain
 src/other/togl/include/GL/glew.h svneol=native#text/plain
 src/other/togl/include/GL/glext.h svneol=native#text/plain
+src/other/togl/include/GL/glu.h svneol=native#text/plain
 src/other/togl/include/GL/glxew.h svneol=native#text/plain
 src/other/togl/include/GL/wglew.h svneol=native#text/plain
 src/other/togl/include/GL/wglext.h svneol=native#text/plain
