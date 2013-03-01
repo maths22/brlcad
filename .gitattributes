@@ -8635,6 +8635,7 @@ src/other/libvds/docs/fold.png -text svneol=unset#image/png
 src/other/libvds/docs/intro.html svneol=native#text/html
 src/other/libvds/dynamic.c svneol=native#text/plain
 src/other/libvds/file.c svneol=native#text/plain
+src/other/libvds/notes.txt svneol=native#text/plain
 src/other/libvds/path.h svneol=native#text/plain
 src/other/libvds/render.c svneol=native#text/plain
 src/other/libvds/stdfold.c svneol=native#text/plain
