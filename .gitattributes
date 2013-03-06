@@ -3121,6 +3121,7 @@ src/libbu/gethostname.c svneol=native#text/plain
 src/libbu/getopt.c svneol=native#text/plain
 src/libbu/globals.c svneol=native#text/plain
 src/libbu/hash.c svneol=native#text/plain
+src/libbu/heap.c svneol=native#text/plain
 src/libbu/hist.c svneol=native#text/plain
 src/libbu/hook.c svneol=native#text/plain
 src/libbu/htond.c svneol=native#text/plain
