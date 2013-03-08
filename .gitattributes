@@ -3746,6 +3746,7 @@ src/librt/primitives/bot/tieprivate.h svneol=native#text/plain
 src/librt/primitives/brep/brep.cpp svneol=native#text/plain
 src/librt/primitives/brep/brep_debug.cpp svneol=native#text/plain
 src/librt/primitives/brep/brep_debug.h svneol=native#text/plain
+src/librt/primitives/brep/brep_local.h svneol=native#text/plain
 src/librt/primitives/bspline/bspline.cpp svneol=native#text/plain
 src/librt/primitives/bspline/bspline_mirror.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_basis.c svneol=native#text/plain
