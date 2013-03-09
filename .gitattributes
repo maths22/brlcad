@@ -8875,29 +8875,44 @@ src/other/openNURBS.dist svneol=native#text/plain
 src/other/openNURBS/BRL-CAD_changes.txt svneol=native#text/plain
 src/other/openNURBS/CMakeLists.txt svneol=native#text/plain
 src/other/openNURBS/Makefile.am svneol=native#text/plain
+src/other/openNURBS/build_opennurbs_vs2010.sln svneol=native#text/plain
+src/other/openNURBS/build_opennurbs_xcode.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/example_brep/example_brep.cpp svneol=native#text/plain
-src/other/openNURBS/example_brep/example_brep.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_dump/example_dump.cpp svneol=native#text/plain
-src/other/openNURBS/example_dump/example_dump.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/example_brep/example_brep.vcxproj svneol=native#text/plain
+src/other/openNURBS/example_brep/example_brep.vcxproj.filters svneol=native#text/plain
+src/other/openNURBS/example_brep/example_brep.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/openNURBS/example_brep/example_brep.xcodeproj/project.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/example_gl/example_gl.cpp svneol=native#text/plain
-src/other/openNURBS/example_gl/example_gl.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/openNURBS/example_read/example_read.cpp svneol=native#text/plain
-src/other/openNURBS/example_read/example_read.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/example_read/example_read.vcxproj svneol=native#text/plain
+src/other/openNURBS/example_read/example_read.vcxproj.filters svneol=native#text/plain
+src/other/openNURBS/example_read/example_read.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/openNURBS/example_read/example_read.xcodeproj/project.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/example_roundtrip/example_roundtrip.cpp svneol=native#text/plain
-src/other/openNURBS/example_roundtrip/example_roundtrip.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/example_roundtrip/example_roundtrip.vcxproj svneol=native#text/plain
+src/other/openNURBS/example_roundtrip/example_roundtrip.vcxproj.filters svneol=native#text/plain
+src/other/openNURBS/example_roundtrip/example_roundtrip.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/openNURBS/example_roundtrip/example_roundtrip.xcodeproj/project.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_ud.cpp svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_ud.h svneol=native#text/plain
 src/other/openNURBS/example_userdata/example_userdata.cpp svneol=native#text/plain
-src/other/openNURBS/example_userdata/example_userdata.vcproj svneol=CRLF#text/plain eol=crlf
-src/other/openNURBS/example_userdata/example_userdata_vc60.dsp svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/example_userdata/example_userdata.vcxproj svneol=native#text/plain
+src/other/openNURBS/example_userdata/example_userdata.vcxproj.filters svneol=native#text/plain
+src/other/openNURBS/example_userdata/example_userdata.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/openNURBS/example_userdata/example_userdata.xcodeproj/project.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/example_write/example_texture.bmp -text svneol=unset#image/bmp
 src/other/openNURBS/example_write/example_write.cpp svneol=native#text/plain
-src/other/openNURBS/example_write/example_write.vcproj svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/example_write/example_write.vcxproj svneol=native#text/plain
+src/other/openNURBS/example_write/example_write.vcxproj.filters svneol=native#text/plain
+src/other/openNURBS/example_write/example_write.xcodeproj/project.pbxproj svneol=native#text/plain
+src/other/openNURBS/example_write/example_write.xcodeproj/project.xcworkspace/contents.xcworkspacedata svneol=native#text/plain
 src/other/openNURBS/examples_linking_pragmas.h svneol=native#text/plain
 src/other/openNURBS/faq.txt svneol=native#text/plain
 src/other/openNURBS/license.txt svneol=native#text/plain
 src/other/openNURBS/opennurbs.h svneol=native#text/plain
 src/other/openNURBS/opennurbs.rc svneol=CRLF#text/plain eol=crlf
+src/other/openNURBS/opennurbs.vcxproj svneol=native#text/plain
+src/other/openNURBS/opennurbs.vcxproj.filters svneol=native#text/plain
 src/other/openNURBS/opennurbs_3dm.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_3dm_attributes.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_3dm_attributes.h svneol=native#text/plain
@@ -8936,9 +8951,11 @@ src/other/openNURBS/opennurbs_box.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_box.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_brep_changesrf.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_extrude.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_io.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_isvalid.cpp svneol=native#text/plain
+src/other/openNURBS/opennurbs_brep_kinky.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_region.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_tools.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_brep_v2valid.cpp svneol=native#text/plain
@@ -9078,6 +9095,8 @@ src/other/openNURBS/opennurbs_rtree.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_sort.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_sphere.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_sphere.h svneol=native#text/plain
+src/other/openNURBS/opennurbs_staticlib.vcxproj svneol=native#text/plain
+src/other/openNURBS/opennurbs_staticlib.vcxproj.filters svneol=native#text/plain
 src/other/openNURBS/opennurbs_string.cpp svneol=native#text/plain
 src/other/openNURBS/opennurbs_string.h svneol=native#text/plain
 src/other/openNURBS/opennurbs_sum.cpp svneol=native#text/plain
