@@ -3409,6 +3409,7 @@ src/libged/killtree.c svneol=native#text/plain
 src/libged/label.c svneol=native#text/plain
 src/libged/list.c svneol=native#text/plain
 src/libged/loadview.c svneol=native#text/plain
+src/libged/lod.c svneol=native#text/plain
 src/libged/log.c svneol=native#text/plain
 src/libged/lookat.c svneol=native#text/plain
 src/libged/ls.c svneol=native#text/plain
