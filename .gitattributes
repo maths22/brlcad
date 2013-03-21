@@ -10708,6 +10708,7 @@ src/other/tcl/library/tzdata/Africa/Freetown -text
 src/other/tcl/library/tzdata/Africa/Gaborone -text
 src/other/tcl/library/tzdata/Africa/Harare -text
 src/other/tcl/library/tzdata/Africa/Johannesburg -text
+src/other/tcl/library/tzdata/Africa/Juba svneol=native#text/plain
 src/other/tcl/library/tzdata/Africa/Kampala -text
 src/other/tcl/library/tzdata/Africa/Khartoum -text
 src/other/tcl/library/tzdata/Africa/Kigali -text
@@ -10779,6 +10780,7 @@ src/other/tcl/library/tzdata/America/Chihuahua -text
 src/other/tcl/library/tzdata/America/Coral_Harbour -text
 src/other/tcl/library/tzdata/America/Cordoba -text
 src/other/tcl/library/tzdata/America/Costa_Rica -text
+src/other/tcl/library/tzdata/America/Creston svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Cuiaba -text
 src/other/tcl/library/tzdata/America/Curacao -text
 src/other/tcl/library/tzdata/America/Danmarkshavn -text
@@ -10822,10 +10824,12 @@ src/other/tcl/library/tzdata/America/Juneau -text
 src/other/tcl/library/tzdata/America/Kentucky/Louisville -text
 src/other/tcl/library/tzdata/America/Kentucky/Monticello -text
 src/other/tcl/library/tzdata/America/Knox_IN -text
+src/other/tcl/library/tzdata/America/Kralendijk svneol=native#text/plain
 src/other/tcl/library/tzdata/America/La_Paz -text
 src/other/tcl/library/tzdata/America/Lima -text
 src/other/tcl/library/tzdata/America/Los_Angeles -text
 src/other/tcl/library/tzdata/America/Louisville -text
+src/other/tcl/library/tzdata/America/Lower_Princes svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Maceio -text
 src/other/tcl/library/tzdata/America/Managua -text
 src/other/tcl/library/tzdata/America/Manaus -text
@@ -10836,6 +10840,7 @@ src/other/tcl/library/tzdata/America/Mazatlan -text
 src/other/tcl/library/tzdata/America/Mendoza -text
 src/other/tcl/library/tzdata/America/Menominee -text
 src/other/tcl/library/tzdata/America/Merida -text
+src/other/tcl/library/tzdata/America/Metlakatla svneol=native#text/plain
 src/other/tcl/library/tzdata/America/Mexico_City -text
 src/other/tcl/library/tzdata/America/Miquelon -text
 src/other/tcl/library/tzdata/America/Moncton -text
@@ -10848,6 +10853,7 @@ src/other/tcl/library/tzdata/America/New_York -text
 src/other/tcl/library/tzdata/America/Nipigon -text
 src/other/tcl/library/tzdata/America/Nome -text
 src/other/tcl/library/tzdata/America/Noronha -text
+src/other/tcl/library/tzdata/America/North_Dakota/Beulah svneol=native#text/plain
 src/other/tcl/library/tzdata/America/North_Dakota/Center -text
 src/other/tcl/library/tzdata/America/North_Dakota/New_Salem -text
 src/other/tcl/library/tzdata/America/Ojinaga svneol=native#text/plain
@@ -10874,6 +10880,7 @@ src/other/tcl/library/tzdata/America/Santo_Domingo -text
 src/other/tcl/library/tzdata/America/Sao_Paulo -text
 src/other/tcl/library/tzdata/America/Scoresbysund -text
 src/other/tcl/library/tzdata/America/Shiprock -text
+src/other/tcl/library/tzdata/America/Sitka svneol=native#text/plain
 src/other/tcl/library/tzdata/America/St_Barthelemy svneol=native#text/plain
 src/other/tcl/library/tzdata/America/St_Johns -text
 src/other/tcl/library/tzdata/America/St_Kitts -text
@@ -10933,6 +10940,7 @@ src/other/tcl/library/tzdata/Asia/Dubai -text
 src/other/tcl/library/tzdata/Asia/Dushanbe -text
 src/other/tcl/library/tzdata/Asia/Gaza -text
 src/other/tcl/library/tzdata/Asia/Harbin -text
+src/other/tcl/library/tzdata/Asia/Hebron svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Ho_Chi_Minh svneol=native#text/plain
 src/other/tcl/library/tzdata/Asia/Hong_Kong -text
 src/other/tcl/library/tzdata/Asia/Hovd -text
@@ -11274,6 +11282,7 @@ src/other/tcl/libtommath/bn_mp_clear_multi.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_cmp.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_cmp_d.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_cmp_mag.c svneol=native#text/plain
+src/other/tcl/libtommath/bn_mp_cnt_lsb.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_copy.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_count_bits.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_div.c svneol=native#text/plain
@@ -11288,6 +11297,7 @@ src/other/tcl/libtommath/bn_mp_init.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_init_copy.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_init_multi.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_init_set.c svneol=native#text/plain
+src/other/tcl/libtommath/bn_mp_init_set_int.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_init_size.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_karatsuba_mul.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_karatsuba_sqr.c svneol=native#text/plain
@@ -11305,6 +11315,7 @@ src/other/tcl/libtommath/bn_mp_radix_smap.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_read_radix.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_rshd.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_set.c svneol=native#text/plain
+src/other/tcl/libtommath/bn_mp_set_int.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_shrink.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_sqr.c svneol=native#text/plain
 src/other/tcl/libtommath/bn_mp_sqrt.c svneol=native#text/plain
@@ -11818,7 +11829,6 @@ src/other/tk/doc/wm.n svneol=native#text/plain
 src/other/tk/generic/README svneol=native#text/plain
 src/other/tk/generic/default.h svneol=native#text/plain
 src/other/tk/generic/ks_names.h svneol=native#text/plain
-src/other/tk/generic/prolog.ps -text svneol=unset#application/postscript
 src/other/tk/generic/tk.decls svneol=native#text/plain
 src/other/tk/generic/tk.h svneol=native#text/plain
 src/other/tk/generic/tk3d.c svneol=native#text/plain
@@ -12128,14 +12138,14 @@ src/other/tk/license.terms svneol=native#text/plain
 src/other/tk/macosx/GNUmakefile -text
 src/other/tk/macosx/README svneol=native#text/plain
 src/other/tk/macosx/Tk-Info.plist.in svneol=native#text/plain
+src/other/tk/macosx/Tk.icns -text
+src/other/tk/macosx/Tk.tiff -text svneol=unset#image/tiff
 src/other/tk/macosx/Wish-Common.xcconfig -text
 src/other/tk/macosx/Wish-Debug.xcconfig -text
 src/other/tk/macosx/Wish-Info.plist.in svneol=native#text/plain
 src/other/tk/macosx/Wish-Release.xcconfig -text
 src/other/tk/macosx/Wish.icns -text svneol=unset#unset
-src/other/tk/macosx/Wish.pbproj/default.pbxuser -text
-src/other/tk/macosx/Wish.pbproj/jingham.pbxuser -text
-src/other/tk/macosx/Wish.pbproj/project.pbxproj svneol=native#text/plain
+src/other/tk/macosx/Wish.sdef svneol=native#text/plain
 src/other/tk/macosx/Wish.xcode/default.pbxuser -text
 src/other/tk/macosx/Wish.xcode/project.pbxproj svneol=native#text/plain
 src/other/tk/macosx/Wish.xcodeproj/default.pbxuser -text
@@ -12143,17 +12153,14 @@ src/other/tk/macosx/Wish.xcodeproj/project.pbxproj svneol=native#text/plain
 src/other/tk/macosx/configure -text
 src/other/tk/macosx/configure.ac svneol=native#text/plain
 src/other/tk/macosx/license.terms svneol=native#text/plain
-src/other/tk/macosx/tkAboutDlg.r svneol=native#text/plain
 src/other/tk/macosx/tkMacOSX.h svneol=native#text/plain
-src/other/tk/macosx/tkMacOSXAETE.r svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXBitmap.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXButton.c svneol=native#text/plain
-src/other/tk/macosx/tkMacOSXCarbonEvents.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXClipboard.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXColor.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXConfig.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXCursor.c svneol=native#text/plain
-src/other/tk/macosx/tkMacOSXCursors.r svneol=native#text/plain
+src/other/tk/macosx/tkMacOSXCursors.h svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXDebug.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXDebug.h svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXDefault.h svneol=native#text/plain
@@ -12186,7 +12193,7 @@ src/other/tk/macosx/tkMacOSXTest.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXWindowEvent.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXWm.c svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXWm.h svneol=native#text/plain
-src/other/tk/macosx/tkMacOSXXCursors.r svneol=native#text/plain
+src/other/tk/macosx/tkMacOSXXCursors.h svneol=native#text/plain
 src/other/tk/macosx/tkMacOSXXStubs.c svneol=native#text/plain
 src/other/tk/macosx/ttkMacOSXTheme.c svneol=native#text/plain
 src/other/tk/tests/README svneol=native#text/plain
@@ -12489,7 +12496,6 @@ src/other/tk/win/ttkWinMonitor.c svneol=native#text/plain
 src/other/tk/win/ttkWinTheme.c svneol=native#text/plain
 src/other/tk/win/ttkWinXPTheme.c svneol=native#text/plain
 src/other/tk/win/winMain.c svneol=native#text/plain
-src/other/tk/win/wish.exe.manifest svneol=native#text/plain
 src/other/tk/win/wish.exe.manifest.in svneol=native#text/plain
 src/other/tk/xlib/X11/X.h svneol=native#text/plain
 src/other/tk/xlib/X11/Xatom.h svneol=native#text/plain
