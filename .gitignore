@@ -859,16 +859,6 @@ src/other/iwidgets/generic/Makefile
 src/other/iwidgets/generic/Makefile.in
 src/other/iwidgets/iwidgets.tcl
 src/other/iwidgets/pkgIndex.tcl
-src/other/jove/.deps
-src/other/jove/.libs
-src/other/jove/Makefile
-src/other/jove/Makefile.in
-src/other/jove/findcom
-src/other/jove/jove
-src/other/jove/teach-jove
-src/other/jove/tune.c
-src/other/jove/version.c
-src/other/jove/version.number
 src/other/libpng/.deps
 src/other/libpng/.libs
 src/other/libpng/Makefile
