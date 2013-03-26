@@ -3101,6 +3101,7 @@ src/libbrep/opennurbs_fit.cpp svneol=native#text/plain
 src/libbrep/opennurbs_fit.h svneol=native#text/plain
 src/libbu/CMakeLists.txt svneol=native#text/plain
 src/libbu/Makefile.am svneol=native#text/plain
+src/libbu/affinity.c svneol=native#text/plain
 src/libbu/argv.c svneol=native#text/plain
 src/libbu/avs.c svneol=native#text/plain
 src/libbu/backtrace.c svneol=native#text/plain
