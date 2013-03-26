@@ -3150,6 +3150,7 @@ src/libbu/mappedfile.c svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
 src/libbu/observer.c svneol=native#text/plain
 src/libbu/parallel.c svneol=native#text/plain
+src/libbu/parallel.h svneol=native#text/plain
 src/libbu/parse.c svneol=native#text/plain
 src/libbu/printb.c svneol=native#text/plain
 src/libbu/process.c svneol=native#text/plain
