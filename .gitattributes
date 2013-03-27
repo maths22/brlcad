@@ -3126,7 +3126,6 @@ src/libbu/fchmod.c svneol=native#text/plain
 src/libbu/fgets.c svneol=native#text/plain
 src/libbu/file.c svneol=native#text/plain
 src/libbu/fnmatch.c svneol=native#text/plain
-src/libbu/fopen_uniq.c svneol=native#text/plain
 src/libbu/getcwd.c svneol=native#text/plain
 src/libbu/gethostname.c svneol=native#text/plain
 src/libbu/getopt.c svneol=native#text/plain
