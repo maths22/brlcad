@@ -3137,7 +3137,6 @@ src/libbu/hook.c svneol=native#text/plain
 src/libbu/htond.c svneol=native#text/plain
 src/libbu/htonf.c svneol=native#text/plain
 src/libbu/interrupt.c svneol=native#text/plain
-src/libbu/ispar.c svneol=native#text/plain
 src/libbu/kill.c svneol=native#text/plain
 src/libbu/lex.c svneol=native#text/plain
 src/libbu/linebuf.c svneol=native#text/plain
