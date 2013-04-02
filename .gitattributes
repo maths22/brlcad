@@ -13364,6 +13364,46 @@ src/tclscripts/archer/images/invalid.png -text svneol=unset#image/png
 src/tclscripts/archer/images/invalid_intersect.png -text svneol=unset#image/png
 src/tclscripts/archer/images/invalid_subtract.png -text svneol=unset#image/png
 src/tclscripts/archer/images/invalid_union.png -text svneol=unset#image/png
+src/tclscripts/archer/images/l_i0_v0_s0.gif -text
+src/tclscripts/archer/images/l_i0_v0_s1.gif -text
+src/tclscripts/archer/images/l_i0_v0_s2.gif -text
+src/tclscripts/archer/images/l_i0_v0_s3.gif -text
+src/tclscripts/archer/images/l_i0_v0_s4.gif -text
+src/tclscripts/archer/images/l_i0_v0_s5.gif -text
+src/tclscripts/archer/images/l_i0_v0_s6.gif -text
+src/tclscripts/archer/images/l_i0_v0_s7.gif -text
+src/tclscripts/archer/images/l_i0_v0_s8.gif -text
+src/tclscripts/archer/images/l_i0_v0_s9.gif -text
+src/tclscripts/archer/images/l_i0_v1_s0.gif -text
+src/tclscripts/archer/images/l_i0_v1_s1.gif -text
+src/tclscripts/archer/images/l_i0_v1_s2.gif -text
+src/tclscripts/archer/images/l_i0_v1_s3.gif -text
+src/tclscripts/archer/images/l_i0_v1_s4.gif -text
+src/tclscripts/archer/images/l_i0_v1_s5.gif -text
+src/tclscripts/archer/images/l_i0_v1_s6.gif -text
+src/tclscripts/archer/images/l_i0_v1_s7.gif -text
+src/tclscripts/archer/images/l_i0_v1_s8.gif -text
+src/tclscripts/archer/images/l_i0_v1_s9.gif -text
+src/tclscripts/archer/images/l_i1_v0_s0.gif -text
+src/tclscripts/archer/images/l_i1_v0_s1.gif -text
+src/tclscripts/archer/images/l_i1_v0_s2.gif -text
+src/tclscripts/archer/images/l_i1_v0_s3.gif -text
+src/tclscripts/archer/images/l_i1_v0_s4.gif -text
+src/tclscripts/archer/images/l_i1_v0_s5.gif -text
+src/tclscripts/archer/images/l_i1_v0_s6.gif -text
+src/tclscripts/archer/images/l_i1_v0_s7.gif -text
+src/tclscripts/archer/images/l_i1_v0_s8.gif -text
+src/tclscripts/archer/images/l_i1_v0_s9.gif -text
+src/tclscripts/archer/images/l_i1_v1_s0.gif -text
+src/tclscripts/archer/images/l_i1_v1_s1.gif -text
+src/tclscripts/archer/images/l_i1_v1_s2.gif -text
+src/tclscripts/archer/images/l_i1_v1_s3.gif -text
+src/tclscripts/archer/images/l_i1_v1_s4.gif -text
+src/tclscripts/archer/images/l_i1_v1_s5.gif -text
+src/tclscripts/archer/images/l_i1_v1_s6.gif -text
+src/tclscripts/archer/images/l_i1_v1_s7.gif -text
+src/tclscripts/archer/images/l_i1_v1_s8.gif -text
+src/tclscripts/archer/images/l_i1_v1_s9.gif -text
 src/tclscripts/archer/images/matrixModeAbove.png -text
 src/tclscripts/archer/images/matrixModeBelow.png -text
 src/tclscripts/archer/images/measure.png -text
