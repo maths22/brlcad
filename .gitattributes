@@ -9142,6 +9142,7 @@ src/other/poly2tri.dist svneol=native#text/plain
 src/other/poly2tri/AUTHORS svneol=native#text/plain
 src/other/poly2tri/CMakeLists.txt svneol=native#text/plain
 src/other/poly2tri/LICENSE svneol=native#text/plain
+src/other/poly2tri/Makefile.am svneol=native#text/plain
 src/other/poly2tri/README.md svneol=native#text/plain
 src/other/poly2tri/poly2tri/common/shapes.cc svneol=native#text/plain
 src/other/poly2tri/poly2tri/common/shapes.h svneol=native#text/plain
