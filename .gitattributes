@@ -4422,6 +4422,7 @@ src/other/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h svneol=native#text/plain
 src/other/Eigen/INSTALL svneol=native#text/plain
 src/other/Eigen/VERSION svneol=native#text/plain
 src/other/Makefile.am svneol=native#text/plain
+src/other/README svneol=native#text/plain
 src/other/URToolkit.dist svneol=native#text/plain
 src/other/URToolkit/3.1-changes -text
 src/other/URToolkit/CHANGES -text
