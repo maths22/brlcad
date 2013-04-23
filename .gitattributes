@@ -13947,3 +13947,4 @@ src/vfont/fix.6r -text svneol=unset#unset
 src/vfont/getfont.c svneol=native#text/plain
 src/vfont/nonie.r.12 -text svneol=unset#unset
 src/vfont/vfont.h svneol=native#text/plain
+/t.c svneol=native#text/plain
