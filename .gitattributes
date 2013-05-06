@@ -3464,6 +3464,7 @@ src/libged/preview.c svneol=native#text/plain
 src/libged/protate.c svneol=native#text/plain
 src/libged/ps.c svneol=native#text/plain
 src/libged/pscale.c svneol=native#text/plain
+src/libged/pset.c svneol=native#text/plain
 src/libged/ptranslate.c svneol=native#text/plain
 src/libged/push.c svneol=native#text/plain
 src/libged/put.c svneol=native#text/plain
