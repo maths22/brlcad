@@ -3460,6 +3460,7 @@ src/libged/plot.c svneol=native#text/plain
 src/libged/pmat.c svneol=native#text/plain
 src/libged/pmodel2view.c svneol=native#text/plain
 src/libged/png.c svneol=native#text/plain
+src/libged/polybinout.c svneol=native#text/plain
 src/libged/polyclip.cpp svneol=native#text/plain
 src/libged/pov.c svneol=native#text/plain
 src/libged/prcolor.c svneol=native#text/plain
