@@ -8505,6 +8505,7 @@ src/other/libpng/test-pngvalid-full.sh svneol=native#text/x-sh
 src/other/libpng/test-pngvalid-simple.sh svneol=native#text/x-sh
 src/other/libregex.dist svneol=native#text/plain
 src/other/libregex/CMakeLists.txt svneol=native#text/plain
+src/other/libregex/CheckCInline.cmake svneol=native#text/plain
 src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
 src/other/libregex/cname.h svneol=native#text/plain
