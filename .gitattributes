@@ -3364,6 +3364,7 @@ src/libged/dump.c svneol=native#text/plain
 src/libged/dup.c svneol=native#text/plain
 src/libged/eac.c svneol=native#text/plain
 src/libged/echo.c svneol=native#text/plain
+src/libged/edarb.c svneol=native#text/plain
 src/libged/edbot.c svneol=native#text/plain
 src/libged/edcodes.c svneol=native#text/plain
 src/libged/edcomb.c svneol=native#text/plain
