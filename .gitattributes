@@ -3378,6 +3378,7 @@ src/libged/exists.c svneol=native#text/plain
 src/libged/expand.c svneol=native#text/plain
 src/libged/eye.c svneol=native#text/plain
 src/libged/eye_pos.c svneol=native#text/plain
+src/libged/facedef.c svneol=native#text/plain
 src/libged/facetize.c svneol=native#text/plain
 src/libged/fb2pix.c svneol=native#text/plain
 src/libged/find.c svneol=native#text/plain
