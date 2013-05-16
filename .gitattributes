@@ -3360,6 +3360,7 @@ src/libged/delay.c svneol=native#text/plain
 src/libged/dg_obj.c svneol=native#text/plain
 src/libged/dir2ae.c svneol=native#text/plain
 src/libged/draw.c svneol=native#text/plain
+src/libged/draw_calc.cpp svneol=native#text/plain
 src/libged/dump.c svneol=native#text/plain
 src/libged/dup.c svneol=native#text/plain
 src/libged/eac.c svneol=native#text/plain
