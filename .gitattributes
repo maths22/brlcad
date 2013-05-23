@@ -3933,6 +3933,7 @@ src/librt/test_bot2nurbs.cpp svneol=native#text/plain
 src/librt/test_nurbsfit.cpp svneol=native#text/plain
 src/librt/test_root3-subd.cpp svneol=native#text/plain
 src/librt/tests/CMakeLists.txt svneol=native#text/plain
+src/librt/tests/arb_intersect.g -text
 src/librt/tests/nurbs_surfaces.g -text
 src/librt/tests/nurbs_tests.cpp svneol=native#text/plain
 src/librt/tests/test_dvec.cpp svneol=native#text/plain
