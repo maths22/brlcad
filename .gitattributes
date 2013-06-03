@@ -3102,6 +3102,7 @@ src/libbrep/libbrep_brep_tools.h svneol=native#text/plain
 src/libbrep/opennurbs_ext.cpp svneol=native#text/plain
 src/libbrep/opennurbs_fit.cpp svneol=native#text/plain
 src/libbrep/opennurbs_fit.h svneol=native#text/plain
+src/libbrep/px_event.cpp svneol=native#text/plain
 src/libbrep/ssx_event.cpp svneol=native#text/plain
 src/libbu/CMakeLists.txt svneol=native#text/plain
 src/libbu/Makefile.am svneol=native#text/plain
