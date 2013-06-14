@@ -1681,7 +1681,6 @@ misc/CMake/ThirdParty.cmake svneol=native#text/plain
 misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
 misc/CMake/configure_prefix.sh svneol=native#text/x-sh
 misc/CMake/configure_suffix.sh svneol=native#text/x-sh
-misc/CMake/distcheck_autotools.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_in_src_dir.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_repo_verify.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_target.cmake.in svneol=native#text/plain
