@@ -10,6 +10,7 @@
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
 /TODO svneol=native#text/plain
+/TODO.shaded_displays svneol=native#text/plain
 bench/CMakeLists.txt svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
