@@ -13225,14 +13225,11 @@ src/tclscripts/archer/images/view_top_bottom_small.png -text
 src/tclscripts/archer/images/view_translate.png -text
 src/tclscripts/archer/images/wizard.png -text
 src/tclscripts/archer/itk_redefines.tcl svneol=native#text/plain
-src/tclscripts/archer/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/archer/tabwindow.itk svneol=native#text/plain
-src/tclscripts/archer/tclIndex -text
 src/tclscripts/boteditor/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/boteditor/botEditor.tcl svneol=native#text/plain
 src/tclscripts/boteditor/botPropertyBox.tcl svneol=native#text/plain
 src/tclscripts/boteditor/botTools.tcl svneol=native#text/plain
-src/tclscripts/boteditor/tclIndex svneol=native#text/plain
 src/tclscripts/cad_clrpick.tcl svneol=native#text/plain
 src/tclscripts/cad_dialog.tcl svneol=native#text/plain
 src/tclscripts/chkexterns.tcl svneol=native#text/plain
@@ -13240,8 +13237,6 @@ src/tclscripts/fs_dialog.tk svneol=native#text/plain
 src/tclscripts/geometree/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/geometree/GeometryBrowser.tcl svneol=native#text/plain
 src/tclscripts/geometree/geometree.tcl svneol=native#text/plain
-src/tclscripts/geometree/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/geometree/tclIndex -text
 src/tclscripts/helpcomm.tcl svneol=native#text/plain
 src/tclscripts/helplib.tcl svneol=native#text/plain
 src/tclscripts/hoc.tcl svneol=native#text/plain
@@ -13259,16 +13254,12 @@ src/tclscripts/hv3/hv3_request.tcl svneol=native#text/plain
 src/tclscripts/hv3/hv3_util.tcl svneol=native#text/plain
 src/tclscripts/hv3/license.txt svneol=native#text/plain
 src/tclscripts/hv3/license_snit.txt svneol=native#text/plain
-src/tclscripts/hv3/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/hv3/snit.tcl svneol=native#text/plain
-src/tclscripts/hv3/tclIndex svneol=native#text/plain
 src/tclscripts/hv3/tkhtml.n svneol=native#text/plain
 src/tclscripts/hv3_man_browser_test.tcl svneol=native#text/plain
 src/tclscripts/igraph/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/igraph/GraphEditor.tcl svneol=native#text/plain
 src/tclscripts/igraph/igraph.tcl svneol=native#text/plain
-src/tclscripts/igraph/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/igraph/tclIndex svneol=native#text/plain
 src/tclscripts/lib/Accordian.tcl svneol=native#text/plain
 src/tclscripts/lib/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/lib/CellPlot.tcl svneol=native#text/plain
@@ -13298,12 +13289,9 @@ src/tclscripts/lib/apply_mat.tcl svneol=native#text/plain
 src/tclscripts/lib/cursor.tcl svneol=native#text/plain
 src/tclscripts/lib/pattern.tcl svneol=native#text/plain
 src/tclscripts/lib/pattern_gui.tcl svneol=native#text/plain
-src/tclscripts/lib/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/lib/tclIndex -text
 src/tclscripts/libdm.tcl svneol=native#text/plain
 src/tclscripts/lod/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/lod/LODDialog.tcl svneol=native#text/plain
-src/tclscripts/lod/tclIndex svneol=native#text/plain
 src/tclscripts/man_browser.tcl svneol=native#text/plain
 src/tclscripts/menu_override.tcl svneol=native#text/plain
 src/tclscripts/mged/CMakeLists.txt svneol=native#text/plain
@@ -13409,7 +13397,6 @@ src/tclscripts/mged/muves.tcl svneol=native#text/plain
 src/tclscripts/mged/mview.tcl svneol=native#text/plain
 src/tclscripts/mged/openw.tcl svneol=native#text/plain
 src/tclscripts/mged/overlap.tcl svneol=native#text/plain
-src/tclscripts/mged/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/mged/plot.tcl svneol=native#text/plain
 src/tclscripts/mged/points.tcl svneol=native#text/plain
 src/tclscripts/mged/prj_add.tcl svneol=native#text/plain
@@ -13430,19 +13417,15 @@ src/tclscripts/mged/skt_ed.tcl svneol=native#text/plain
 src/tclscripts/mged/solclick.tcl svneol=native#text/plain
 src/tclscripts/mged/solcreate.tcl svneol=native#text/plain
 src/tclscripts/mged/solid.tcl svneol=native#text/plain
-src/tclscripts/mged/tclIndex -text
 src/tclscripts/mged/text.tcl svneol=native#text/plain
 src/tclscripts/mged/titles.tcl svneol=native#text/plain
 src/tclscripts/mged/tree.tcl svneol=native#text/plain
 src/tclscripts/mged/xclone.tcl -text
 src/tclscripts/mouse.tcl svneol=native#text/plain
-src/tclscripts/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/pl-dm/bindings.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/help.tcl svneol=native#text/plain
 src/tclscripts/pl-dm/menu.tcl svneol=native#text/plain
-src/tclscripts/pl-dm/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/pl-dm/tclIndex -text
 src/tclscripts/rtwizard/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/rtwizard/RaytraceWizard.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/examples/PictureTypeA/desc.txt svneol=native#text/plain
@@ -13496,21 +13479,14 @@ src/tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
-src/tclscripts/rtwizard/lib/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/rtwizard/lib/tclIndex -text
-src/tclscripts/rtwizard/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard.bat svneol=CRLF#text/plain eol=crlf
-src/tclscripts/rtwizard/tclIndex -text
 src/tclscripts/sdialogs/CMakeLists.txt svneol=native#text/plain
-src/tclscripts/sdialogs/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/entrydialog.itk svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/listdialog.itk svneol=native#text/plain
 src/tclscripts/sdialogs/scripts/stddlgs.tcl svneol=native#text/plain
-src/tclscripts/sdialogs/scripts/tclIndex -text
 src/tclscripts/sdialogs/sdialogs.tcl svneol=native#text/plain
-src/tclscripts/sdialogs/tclIndex -text
 src/tclscripts/swidgets/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/swidgets/images/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/swidgets/images/closed.gif -text svneol=unset#image/gif
@@ -13519,23 +13495,17 @@ src/tclscripts/swidgets/images/minus.xbm -text svneol=unset#image/x-xbitmap
 src/tclscripts/swidgets/images/open.gif -text svneol=unset#image/gif
 src/tclscripts/swidgets/images/plus.xbm -text svneol=unset#image/x-xbitmap
 src/tclscripts/swidgets/images/tip.gif -text svneol=unset#image/gif
-src/tclscripts/swidgets/pkgIndex.tcl svneol=native#text/plain
 src/tclscripts/swidgets/scripts/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/swidgets/scripts/selectlists.itk svneol=native#text/plain
-src/tclscripts/swidgets/scripts/tclIndex -text
 src/tclscripts/swidgets/scripts/tkgetdir.itk svneol=native#text/plain
 src/tclscripts/swidgets/scripts/togglearrow.itk svneol=native#text/plain
 src/tclscripts/swidgets/scripts/tooltip.itk svneol=native#text/plain
 src/tclscripts/swidgets/scripts/tree.itk svneol=native#text/plain
 src/tclscripts/swidgets/swidgets.tcl svneol=native#text/plain
-src/tclscripts/swidgets/tclIndex -text
-src/tclscripts/tclIndex -text
 src/tclscripts/util/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 src/tclscripts/util/getopt.tcl svneol=native#text/plain
 src/tclscripts/util/luniq.tcl svneol=native#text/plain
-src/tclscripts/util/pkgIndex.tcl svneol=native#text/plain
-src/tclscripts/util/tclIndex -text
 src/tclscripts/vmath.tcl svneol=native#text/plain
 src/util/CMakeLists.txt svneol=native#text/plain
 src/util/alias-pix.c svneol=native#text/plain
