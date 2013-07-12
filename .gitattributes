@@ -10,7 +10,6 @@
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
 /TODO svneol=native#text/plain
-/TODO.shaded_displays svneol=native#text/plain
 bench/CMakeLists.txt svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
 bench/pixcmp.c svneol=native#text/plain
@@ -71,6 +70,7 @@ doc/README.VAX svneol=native#text/plain
 doc/README.Windows svneol=native#text/plain
 doc/STARTERS svneol=native#text/plain
 doc/TODO.BREP svneol=native#text/plain
+doc/TODO.shaded_displays svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
 doc/archer_ack.txt svneol=native#text/plain
 doc/benchmark.tr svneol=native#text/plain
