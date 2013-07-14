@@ -1593,6 +1593,7 @@ include/dm-ogl.h svneol=native#text/plain
 include/dm-pex.h svneol=native#text/plain
 include/dm-plot.h svneol=native#text/plain
 include/dm-ps.h svneol=native#text/plain
+include/dm-qt.h svneol=native#text/plain
 include/dm-rtgl.h svneol=native#text/plain
 include/dm-tk.h svneol=native#text/plain
 include/dm-wgl.h svneol=native#text/plain
