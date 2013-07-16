@@ -2794,6 +2794,7 @@ src/conv/step/VolumeSiUnit.cpp svneol=native#text/plain
 src/conv/step/VolumeSiUnit.h svneol=native#text/plain
 src/conv/step/VolumeUnit.cpp svneol=native#text/plain
 src/conv/step/VolumeUnit.h svneol=native#text/plain
+src/conv/step/g-step.cpp svneol=native#text/plain
 src/conv/step/step-g.cpp svneol=native#text/plain
 src/conv/stl/g-stl.c svneol=native#text/plain
 src/conv/stl/stl-g.c svneol=native#text/plain
