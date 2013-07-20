@@ -12898,6 +12898,7 @@ src/proc-db/brepintersect.cpp svneol=native#text/plain
 src/proc-db/brepintersect.h svneol=native#text/plain
 src/proc-db/breplicator.cpp -text
 src/proc-db/brickwall.c svneol=native#text/plain
+src/proc-db/cchannel.c svneol=native#text/plain
 src/proc-db/clutter.c svneol=native#text/plain
 src/proc-db/common.c svneol=native#text/plain
 src/proc-db/contours.c svneol=native#text/plain
