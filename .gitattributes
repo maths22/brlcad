@@ -883,6 +883,7 @@ doc/docbook/system/mann/en/c.xml svneol=native#text/xml
 doc/docbook/system/mann/en/cat.xml svneol=native#text/xml
 doc/docbook/system/mann/en/center.xml svneol=native#text/xml
 doc/docbook/system/mann/en/color.xml svneol=native#text/xml
+doc/docbook/system/mann/en/comb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/comb_color.xml svneol=native#text/xml
 doc/docbook/system/mann/en/copyeval.xml svneol=native#text/xml
 doc/docbook/system/mann/en/copymat.xml svneol=native#text/xml
