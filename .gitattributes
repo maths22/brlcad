@@ -13111,6 +13111,7 @@ src/tclscripts/archer/ArcherCore.tcl svneol=native#text/plain
 src/tclscripts/archer/AttrGroupsDisplayUtility.tcl svneol=native#text/plain
 src/tclscripts/archer/BotEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/BotUtility.tcl svneol=native#text/plain
+src/tclscripts/archer/BrepEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/archer/CombEditFrame.tcl svneol=native#text/plain
 src/tclscripts/archer/DataUtils.tcl svneol=native#text/plain
