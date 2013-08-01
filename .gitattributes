@@ -3512,6 +3512,7 @@ src/libged/ypr.c svneol=native#text/plain
 src/libged/zap.c svneol=native#text/plain
 src/libged/zoom/zoom.c svneol=native#text/plain
 src/libicv/CMakeLists.txt svneol=native#text/plain
+src/libicv/bw.c svneol=native#text/plain
 src/libicv/color_space.c svneol=native#text/plain
 src/libicv/crop.c svneol=native#text/plain
 src/libicv/fileformat.c svneol=native#text/plain
