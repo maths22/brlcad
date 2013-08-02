@@ -108,6 +108,7 @@ doc/burst/macros.mm svneol=native#text/plain
 doc/burst/outline.mm svneol=native#text/plain
 doc/burst/overlap.tbl svneol=native#text/plain
 doc/burst/plot.tbl svneol=native#text/plain
+doc/burst/run_doclifter.sh svneol=native#text/x-sh
 doc/burst/screen.tbl svneol=native#text/plain
 doc/burst/scrollmenu.tbl svneol=native#text/plain
 doc/burst/shotlines.tbl svneol=native#text/plain
