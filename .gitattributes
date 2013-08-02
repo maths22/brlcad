@@ -2935,6 +2935,7 @@ src/fbserv/CMakeLists.txt svneol=native#text/plain
 src/fbserv/fbserv.c svneol=native#text/plain
 src/fbserv/server.c svneol=native#text/plain
 src/gtools/CMakeLists.txt svneol=native#text/plain
+src/gtools/beset/CMakeLists.txt svneol=native#text/plain
 src/gtools/beset/beset.c svneol=native#text/plain
 src/gtools/beset/beset.h svneol=native#text/plain
 src/gtools/beset/fitness.c svneol=native#text/plain
