@@ -92,6 +92,7 @@ doc/brep.txt svneol=native#text/plain
 doc/burst/Funcs svneol=native#text/plain
 doc/burst/Make-paper.sh svneol=native#text/x-sh
 doc/burst/Make-tables.sh svneol=native#text/x-sh
+doc/burst/Makefile svneol=native#text/plain
 doc/burst/README svneol=native#text/plain
 doc/burst/abstract.mm svneol=native#text/plain
 doc/burst/bpl.tbl svneol=native#text/plain
