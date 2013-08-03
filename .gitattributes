@@ -3028,6 +3028,7 @@ src/libbn/tabdata.c svneol=native#text/plain
 src/libbn/tcl.c svneol=native#text/plain
 src/libbn/tests/CMakeLists.txt svneol=native#text/plain
 src/libbn/tests/bn_list.c svneol=native#text/plain
+src/libbn/tests/bn_poly_multiply.c svneol=native#text/plain
 src/libbn/tests/bn_tri_tri_isect.c svneol=native#text/plain
 src/libbn/tests/bn_tri_tri_isect_coplanar.c svneol=native#text/plain
 src/libbn/tplot.c svneol=native#text/plain
