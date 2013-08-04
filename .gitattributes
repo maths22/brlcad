@@ -3948,7 +3948,6 @@ src/mged/adc.c svneol=native#text/plain
 src/mged/arbs.c svneol=native#text/plain
 src/mged/attach.c svneol=native#text/plain
 src/mged/axes.c svneol=native#text/plain
-src/mged/bodyio.c svneol=native#text/plain
 src/mged/bool_rewrite.c svneol=native#text/plain
 src/mged/buttons.c svneol=native#text/plain
 src/mged/cad_boundp.c svneol=native#text/plain
