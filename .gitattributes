@@ -3141,6 +3141,7 @@ src/libbu/tests/bu_hex_to_bitv.c svneol=native#text/plain
 src/libbu/tests/bu_progname.c svneol=native#text/plain
 src/libbu/tests/bu_quote.c svneol=native#text/plain
 src/libbu/tests/bu_redblack.c svneol=native#text/plain
+src/libbu/tests/bu_semaphore.c svneol=native#text/plain
 src/libbu/tests/bu_sscanf.c svneol=native#text/plain
 src/libbu/tests/bu_str_isprint.c svneol=native#text/plain
 src/libbu/tests/bu_timer.c svneol=native#text/plain
