@@ -8233,6 +8233,7 @@ src/other/lemon/CMakeLists.txt svneol=native#text/plain
 src/other/lemon/README svneol=native#text/plain
 src/other/lemon/lemon.c svneol=native#text/plain
 src/other/lemon/lempar.c svneol=native#text/plain
+src/other/libgdiam.dist svneol=native#text/plain
 src/other/libgdiam/CMakeLists.txt svneol=native#text/plain
 src/other/libgdiam/LICENSE.GPL2 svneol=native#text/plain
 src/other/libgdiam/LICENSE.LGPL21 svneol=native#text/plain
