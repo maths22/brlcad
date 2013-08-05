@@ -3041,6 +3041,7 @@ src/libbn/wavelet.c svneol=native#text/plain
 src/libbrep/CMakeLists.txt svneol=native#text/plain
 src/libbrep/PullbackCurve.cpp svneol=native#text/plain
 src/libbrep/PullbackCurve.h svneol=native#text/plain
+src/libbrep/boolean.cpp svneol=native#text/plain
 src/libbrep/intersect.cpp svneol=native#text/plain
 src/libbrep/libbrep_brep_tools.cpp svneol=native#text/plain
 src/libbrep/libbrep_brep_tools.h svneol=native#text/plain
