@@ -2631,6 +2631,7 @@ src/conv/step/MechanicalContext.h svneol=native#text/plain
 src/conv/step/NamedUnit.cpp svneol=native#text/plain
 src/conv/step/NamedUnit.h svneol=native#text/plain
 src/conv/step/ON_Brep.cpp svneol=native#text/plain
+src/conv/step/ON_Brep.h svneol=native#text/plain
 src/conv/step/OffsetCurve2D.cpp svneol=native#text/plain
 src/conv/step/OffsetCurve2D.h svneol=native#text/plain
 src/conv/step/OffsetCurve3D.cpp svneol=native#text/plain
