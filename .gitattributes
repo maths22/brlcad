@@ -1763,6 +1763,7 @@ misc/archlinux/PKGBUILD svneol=native#text/plain
 misc/archlinux/brlcad.install svneol=native#text/plain
 misc/astyle.opt svneol=native#text/plain
 misc/auto-man-page/README.auto-man-page-handling svneol=native#text/plain
+misc/auto-man-page/auto-man-progs.txt svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
