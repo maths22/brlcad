@@ -1653,6 +1653,7 @@ include/plastic.h svneol=native#text/plain
 include/plot3.h svneol=native#text/plain
 include/pstdint.h svneol=native#text/plain
 include/raytrace.h svneol=native#text/plain
+include/raytrace_deprecated_db_search.h svneol=native#text/plain
 include/redblack.h svneol=native#text/plain
 include/rt/defines.h svneol=native#text/plain
 include/rtfunc.h svneol=native#text/plain
