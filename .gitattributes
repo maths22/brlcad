@@ -1241,6 +1241,7 @@ doc/html/manuals/Anim_Tutorial/transboth.gif -text svneol=unset#image/gif
 doc/html/manuals/Anim_Tutorial/transboth_sm.gif -text svneol=unset#image/gif
 doc/html/manuals/Anim_Tutorial/v_eqn1.gif -text svneol=unset#image/gif
 doc/html/manuals/Anim_Tutorial/v_eqn2.gif -text svneol=unset#image/gif
+doc/html/manuals/BRL-CAD_gear_logo.ico -text
 doc/html/manuals/Install.html svneol=native#text/html
 doc/html/manuals/Obtain.html svneol=native#text/html
 doc/html/manuals/Overview.html svneol=native#text/html
