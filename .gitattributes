@@ -3554,6 +3554,7 @@ src/libicv/bw.c svneol=native#text/plain
 src/libicv/color_space.c svneol=native#text/plain
 src/libicv/crop.c svneol=native#text/plain
 src/libicv/decimate.c svneol=native#text/plain
+src/libicv/dpix.c svneol=native#text/plain
 src/libicv/encoding.c svneol=native#text/plain
 src/libicv/fileformat.c svneol=native#text/plain
 src/libicv/filter.c svneol=native#text/plain
