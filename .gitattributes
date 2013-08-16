@@ -3032,6 +3032,7 @@ src/libbn/tabdata.c svneol=native#text/plain
 src/libbn/tcl.c svneol=native#text/plain
 src/libbn/tests/CMakeLists.txt svneol=native#text/plain
 src/libbn/tests/bn_list.c svneol=native#text/plain
+src/libbn/tests/bn_poly_add.c svneol=native#text/plain
 src/libbn/tests/bn_poly_cubic_rts.c svneol=native#text/plain
 src/libbn/tests/bn_poly_multiply.c svneol=native#text/plain
 src/libbn/tests/bn_poly_quartic_rts.c svneol=native#text/plain
