@@ -7731,7 +7731,6 @@ src/other/incrTcl/itcl/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/FindTIMEZONE.cmake svneol=native#text/plain
-src/other/incrTcl/itcl/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/tcl.cmake svneol=native#text/plain
 src/other/incrTcl/itcl/CMake/test_sources/alloca_header_test.c svneol=native#text/plain
@@ -7839,7 +7838,6 @@ src/other/incrTcl/itk/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/FindTIMEZONE.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/FindX11.cmake svneol=native#text/plain
-src/other/incrTcl/itk/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/tcl.cmake svneol=native#text/plain
 src/other/incrTcl/itk/CMake/test_sources/alloca_header_test.c svneol=native#text/plain
@@ -8577,7 +8575,6 @@ src/other/libtermlib/termcap.src -text
 src/other/libtermlib/tgoto.c svneol=native#text/plain
 src/other/libtermlib/tputs.c svneol=native#text/plain
 src/other/libutahrle.dist svneol=native#text/plain
-src/other/libutahrle/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/libutahrle/CMake/UTAH_CheckFunctions.cmake svneol=native#text/plain
 src/other/libutahrle/CMakeLists.txt svneol=native#text/plain
 src/other/libutahrle/Makefile.am svneol=native#text/plain
@@ -9668,7 +9665,6 @@ src/other/re2c/token.h svneol=native#text/plain
 src/other/re2c/translate.cc svneol=native#text/plain
 src/other/sqlite3.dist svneol=native#text/plain
 src/other/sqlite3/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
-src/other/sqlite3/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/sqlite3/CMakeLists.txt svneol=native#text/plain
 src/other/sqlite3/shell.c svneol=native#text/plain
 src/other/sqlite3/sqlite3.1 svneol=native#text/plain
@@ -9677,7 +9673,6 @@ src/other/sqlite3/sqlite3.h svneol=native#text/plain
 src/other/sqlite3/sqlite3ext.h svneol=native#text/plain
 src/other/sqlite3/tcl/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
 src/other/sqlite3/tcl/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
-src/other/sqlite3/tcl/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/sqlite3/tcl/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/sqlite3/tcl/CMake/tcl.cmake svneol=native#text/plain
 src/other/sqlite3/tcl/CMakeLists.txt svneol=native#text/plain
@@ -10221,7 +10216,6 @@ src/other/tcl/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
 src/other/tcl/CMake/CheckPrototypeExists.cmake svneol=native#text/plain
 src/other/tcl/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/tcl/CMake/FindTIMEZONE.cmake svneol=native#text/plain
-src/other/tcl/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/tcl/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/tcl/CMake/tcl.cmake svneol=native#text/plain
 src/other/tcl/CMake/test_sources/alloca_header_test.c svneol=native#text/plain
@@ -10994,7 +10988,6 @@ src/other/tcl/library/tzdata/America/Rainy_River -text
 src/other/tcl/library/tzdata/America/Rankin_Inlet -text
 src/other/tcl/library/tzdata/America/Recife -text
 src/other/tcl/library/tzdata/America/Regina -text
-src/other/tcl/library/tzdata/America/Resolute -text
 src/other/tcl/library/tzdata/America/Rio_Branco -text
 src/other/tcl/library/tzdata/America/Rosario -text
 src/other/tcl/library/tzdata/America/Santa_Isabel svneol=native#text/plain
@@ -11742,7 +11735,6 @@ src/other/tk/CMake/CheckSystemFunctionality.cmake svneol=native#text/plain
 src/other/tk/CMake/FindFontconfig.cmake svneol=native#text/plain
 src/other/tk/CMake/FindTIMEZONE.cmake svneol=native#text/plain
 src/other/tk/CMake/FindX11.cmake svneol=native#text/plain
-src/other/tk/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/tk/CMake/ac_std_funcs.cmake svneol=native#text/plain
 src/other/tk/CMake/tcl.cmake svneol=native#text/plain
 src/other/tk/CMake/test_sources/alloca_header_test.c svneol=native#text/plain
@@ -12787,7 +12779,6 @@ src/other/tnt/tnt_subscript.h svneol=native#text/plain
 src/other/tnt/tnt_vector.h svneol=native#text/plain
 src/other/tnt/tnt_version.h svneol=native#text/plain
 src/other/xmltools.dist svneol=native#text/plain
-src/other/xmltools/CMake/ResolveCompilerPaths.cmake svneol=native#text/plain
 src/other/xmltools/CMakeLists.txt svneol=native#text/plain
 src/other/xmltools/README svneol=native#text/plain
 src/other/xmltools/libexslt/CMakeLists.txt svneol=native#text/plain
