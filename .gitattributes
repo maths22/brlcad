@@ -3080,6 +3080,7 @@ src/libbu/color.c svneol=native#text/plain
 src/libbu/convert.c svneol=native#text/plain
 src/libbu/crashreport.c svneol=native#text/plain
 src/libbu/ctype.c svneol=native#text/plain
+src/libbu/date-time.c svneol=native#text/plain
 src/libbu/dirent.c svneol=native#text/plain
 src/libbu/dirname.c svneol=native#text/plain
 src/libbu/dlfcn.c svneol=native#text/plain
