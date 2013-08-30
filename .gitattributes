@@ -3663,6 +3663,7 @@ src/librt/bundle.c svneol=native#text/plain
 src/librt/cmd.c svneol=native#text/plain
 src/librt/columnparse.c svneol=native#text/plain
 src/librt/comb/comb.c svneol=native#text/plain
+src/librt/comb/comb_brep.cpp svneol=native#text/plain
 src/librt/comb/comb_mirror.c svneol=native#text/plain
 src/librt/comb/db_comb.c svneol=native#text/plain
 src/librt/constraint.c svneol=native#text/plain
