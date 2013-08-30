@@ -554,6 +554,7 @@ doc/docbook/log4j.properties svneol=native#text/plain
 doc/docbook/presentations/CMakeLists.txt svneol=native#text/plain
 doc/docbook/presentations/README svneol=native#text/plain
 doc/docbook/presentations/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/presentations/en/README.txt svneol=native#text/plain
 doc/docbook/presentations/en/brlcad-app-devel.xml svneol=native#text/xml
 doc/docbook/presentations/en/images/copy-sph-part-left.png -text svneol=unset#image/png
 doc/docbook/presentations/en/images/copy-sph-part-right.png -text svneol=unset#image/png
