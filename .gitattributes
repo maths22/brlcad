@@ -563,6 +563,8 @@ doc/docbook/presentations/en/images/special-character-interpretation.png -text s
 doc/docbook/presentations/en/images/tk-based-gui-for-mged.png -text svneol=unset#image/png
 doc/docbook/presentations/en/intro-to-tcltk.xml svneol=native#text/xml
 doc/docbook/resources/README svneol=native#text/plain
+doc/docbook/resources/brlcad/brlcad-article-fo-stylesheet.xsl.in svneol=native#text/plain
+doc/docbook/resources/brlcad/brlcad-article-xhtml-stylesheet.xsl.in svneol=native#text/plain
 doc/docbook/resources/brlcad/brlcad-common.xsl.in svneol=native#text/xml
 doc/docbook/resources/brlcad/brlcad-fo-stylesheet.xsl.in svneol=native#text/plain
 doc/docbook/resources/brlcad/brlcad-fonts.xsl.in svneol=native#text/xml
