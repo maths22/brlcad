@@ -859,7 +859,6 @@ doc/docbook/system/man1/en/viewpoint-g.xml svneol=native#text/xml
 doc/docbook/system/man1/en/wavelet.xml svneol=native#text/xml
 doc/docbook/system/man3/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man3/en/CMakeLists.txt svneol=native#text/plain
-doc/docbook/system/man3/en/bu_htond.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libcursor.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libfb.xml svneol=native#text/xml
 doc/docbook/system/man3/en/liborle.xml svneol=native#text/xml
