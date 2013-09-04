@@ -13824,6 +13824,7 @@ src/util/decimate.c svneol=native#text/plain
 src/util/double-asc.c svneol=native#text/plain
 src/util/dpix-pix.c svneol=native#text/plain
 src/util/dsp_add.c svneol=native#text/plain
+src/util/dsp_add_t.cpp svneol=native#text/plain
 src/util/dunncolor.c svneol=native#text/plain
 src/util/dunncomm.c svneol=native#text/plain
 src/util/dunnsnap.c svneol=native#text/plain
