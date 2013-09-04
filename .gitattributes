@@ -11746,6 +11746,7 @@ src/other/tcl/win/tclWinTime.c svneol=native#text/plain
 src/other/tcl/win/tclsh.ico -text svneol=unset#image/x-icon
 src/other/tcl/win/tclsh.rc svneol=CRLF#text/plain eol=crlf
 src/other/tclap/AUTHORS svneol=native#text/plain
+src/other/tclap/CMakeLists.txt svneol=native#text/plain
 src/other/tclap/COPYING svneol=native#text/plain
 src/other/tclap/ChangeLog svneol=native#text/plain
 src/other/tclap/NEWS svneol=native#text/plain
