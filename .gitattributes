@@ -865,7 +865,6 @@ doc/docbook/system/man3/en/liborle.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libplot3.xml svneol=native#text/xml
 doc/docbook/system/man3/en/librt.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libwdb.xml svneol=native#text/xml
-doc/docbook/system/man3/en/popt.xml svneol=native#text/xml
 doc/docbook/system/man3/en/redblack.xml svneol=native#text/xml
 doc/docbook/system/man5/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man5/en/CMakeLists.txt svneol=native#text/plain
