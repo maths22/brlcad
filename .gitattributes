@@ -2455,6 +2455,7 @@ src/conv/step/CMakeLists.txt svneol=native#text/plain
 src/conv/step/STEPWrapper.cpp svneol=native#text/plain
 src/conv/step/STEPWrapper.h svneol=native#text/plain
 src/conv/step/g-step/CMakeLists.txt svneol=native#text/plain
+src/conv/step/g-step/Default_Geometric_Context.cpp svneol=native#text/plain
 src/conv/step/g-step/G_STEP_Util.cpp svneol=native#text/plain
 src/conv/step/g-step/G_STEP_internal.h svneol=native#text/plain
 src/conv/step/g-step/ON_Brep.cpp svneol=native#text/plain
