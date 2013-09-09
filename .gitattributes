@@ -2460,6 +2460,7 @@ src/conv/step/g-step/G_STEP_internal.h svneol=native#text/plain
 src/conv/step/g-step/ON_Brep.cpp svneol=native#text/plain
 src/conv/step/g-step/ON_Brep.h svneol=native#text/plain
 src/conv/step/g-step/ON_NurbsCurve.cpp svneol=native#text/plain
+src/conv/step/g-step/ON_NurbsSurface.cpp svneol=native#text/plain
 src/conv/step/g-step/g-step.cpp svneol=native#text/plain
 src/conv/step/step-g/AdvancedBrepShapeRepresentation.cpp svneol=native#text/plain
 src/conv/step/step-g/AdvancedBrepShapeRepresentation.h svneol=native#text/plain
