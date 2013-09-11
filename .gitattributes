@@ -13813,6 +13813,7 @@ src/util/bombardier.c svneol=native#text/plain
 src/util/bombardier.h svneol=native#text/plain
 src/util/bu_opt_parse.cpp svneol=native#text/plain
 src/util/bu_opt_parse.h svneol=native#text/plain
+src/util/bu_opt_parse_private.h svneol=native#text/plain
 src/util/buffer.c svneol=native#text/plain
 src/util/bw-a.c svneol=native#text/plain
 src/util/bw-imp.c svneol=native#text/plain
