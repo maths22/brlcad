@@ -3588,6 +3588,7 @@ src/libicv/fileformat.c svneol=native#text/plain
 src/libicv/filter.c svneol=native#text/plain
 src/libicv/operations.c svneol=native#text/plain
 src/libicv/pix.c svneol=native#text/plain
+src/libicv/ppm.c svneol=native#text/plain
 src/libicv/rot.c svneol=native#text/plain
 src/libicv/size.c svneol=native#text/plain
 src/libicv/stat.c svneol=native#text/plain
