@@ -8454,6 +8454,7 @@ src/other/libpng/projects/visualc71/zlib.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/vstudio/WARNING svneol=native#text/plain
 src/other/libpng/projects/vstudio/libpng/libpng.vcxproj svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/vstudio/pnglibconf/pnglibconf.vcxproj svneol=native#text/plain
+src/other/libpng/projects/vstudio/pngstest/pngstest.vcxproj svneol=native#text/plain
 src/other/libpng/projects/vstudio/pngtest/pngtest.vcxproj svneol=CRLF#text/plain eol=crlf
 src/other/libpng/projects/vstudio/pngunknown/pngunknown.vcxproj svneol=native#text/plain
 src/other/libpng/projects/vstudio/pngvalid/pngvalid.vcxproj svneol=native#text/plain
