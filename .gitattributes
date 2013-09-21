@@ -3596,6 +3596,7 @@ src/libicv/size.c svneol=native#text/plain
 src/libicv/stat.c svneol=native#text/plain
 src/libicv/tests/CMakeLists.txt svneol=native#text/plain
 src/libicv/tests/icv_crop.c svneol=native#text/plain
+src/libicv/tests/icv_filter.c svneol=native#text/plain
 src/libicv/tests/icv_read_write.c svneol=native#text/plain
 src/libicv/tests/icv_rect.c svneol=native#text/plain
 src/libmultispectral/CMakeLists.txt svneol=native#text/plain
