@@ -3600,6 +3600,7 @@ src/libicv/tests/icv_fade.c svneol=native#text/plain
 src/libicv/tests/icv_filter.c svneol=native#text/plain
 src/libicv/tests/icv_read_write.c svneol=native#text/plain
 src/libicv/tests/icv_rect.c svneol=native#text/plain
+src/libicv/tests/icv_size_down.c svneol=native#text/plain
 src/libicv/tests/icv_size_up.c svneol=native#text/plain
 src/libmultispectral/CMakeLists.txt svneol=native#text/plain
 src/libmultispectral/sh_temp.c svneol=native#text/plain
