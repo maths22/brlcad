@@ -2456,6 +2456,7 @@ src/conv/step/CMakeLists.txt svneol=native#text/plain
 src/conv/step/STEPWrapper.cpp svneol=native#text/plain
 src/conv/step/STEPWrapper.h svneol=native#text/plain
 src/conv/step/g-step/Assembly_Product.cpp svneol=native#text/plain
+src/conv/step/g-step/Assembly_Product.h svneol=native#text/plain
 src/conv/step/g-step/CMakeLists.txt svneol=native#text/plain
 src/conv/step/g-step/Comb_Tree.cpp svneol=native#text/plain
 src/conv/step/g-step/Comb_Tree.h svneol=native#text/plain
