@@ -1037,6 +1037,7 @@ doc/docbook/system/mann/en/press.xml svneol=native#text/xml
 doc/docbook/system/mann/en/preview.xml svneol=native#text/xml
 doc/docbook/system/mann/en/prj_add.xml svneol=native#text/xml
 doc/docbook/system/mann/en/ps.xml svneol=native#text/xml
+doc/docbook/system/mann/en/pull.xml svneol=native#text/xml
 doc/docbook/system/mann/en/push.xml svneol=native#text/xml
 doc/docbook/system/mann/en/put_comb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/putmat.xml svneol=native#text/xml
