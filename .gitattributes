@@ -8597,7 +8597,6 @@ src/other/libpng/tests/pngvalid-progressive-standard svneol=native#text/plain
 src/other/libpng/tests/pngvalid-standard svneol=native#text/plain
 src/other/libregex.dist svneol=native#text/plain
 src/other/libregex/CMakeLists.txt svneol=native#text/plain
-src/other/libregex/CheckCInline.cmake svneol=native#text/plain
 src/other/libregex/Makefile.am svneol=native#text/plain
 src/other/libregex/cclass.h svneol=native#text/plain
 src/other/libregex/cname.h svneol=native#text/plain
