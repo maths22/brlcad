@@ -2086,7 +2086,6 @@ regress/tgms/m35.asc.gz -text svneol=unset#application/x-gtar
 regress/tgms/m35.cg.gz -text svneol=unset#application/x-gtar
 regress/tgms/solids-simple.mged svneol=native#text/plain
 regress/tgms/solids.mged svneol=native#text/plain
-regress/vls_vprintf.sh svneol=native#text/x-sh
 regress/weight.sh svneol=native#text/x-sh
 sh/CMakeLists.txt svneol=native#text/plain
 sh/any-png.sh svneol=native#text/x-sh
