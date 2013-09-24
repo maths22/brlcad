@@ -10283,6 +10283,7 @@ src/other/tcl/compat/dlfcn.h svneol=native#text/plain
 src/other/tcl/compat/fixstrtod.c svneol=native#text/plain
 src/other/tcl/compat/float.h svneol=native#text/plain
 src/other/tcl/compat/gettod.c svneol=native#text/plain
+src/other/tcl/compat/hypot.c svneol=native#text/plain
 src/other/tcl/compat/license.terms svneol=native#text/plain
 src/other/tcl/compat/limits.h svneol=native#text/plain
 src/other/tcl/compat/memcmp.c svneol=native#text/plain
