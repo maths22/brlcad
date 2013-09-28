@@ -2266,6 +2266,7 @@ src/compat/README.compat svneol=native#text/plain
 src/compat/fdopen_compat.h svneol=native#text/plain
 src/compat/fileno_compat.h svneol=native#text/plain
 src/compat/gethostname_compat.h svneol=native#text/plain
+src/compat/hypot_compat.h svneol=native#text/plain
 src/compat/posix_memalign_compat.h svneol=native#text/plain
 src/compat/realpath_compat.h svneol=native#text/plain
 src/compat/snprintf_compat.h svneol=native#text/plain
