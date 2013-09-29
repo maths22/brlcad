@@ -2263,6 +2263,7 @@ src/canon/canonlib.c svneol=native#text/plain
 src/canon/chore.h svneol=native#text/plain
 src/compat/README svneol=native#text/plain
 src/compat/README.compat svneol=native#text/plain
+src/compat/README.compat.c99 svneol=native#text/plain
 src/compat/fdopen_compat.h svneol=native#text/plain
 src/compat/fileno_compat.h svneol=native#text/plain
 src/compat/gethostname_compat.h svneol=native#text/plain
