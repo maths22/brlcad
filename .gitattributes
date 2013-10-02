@@ -2490,6 +2490,7 @@ src/conv/step/g-step/Shape_Definition_Representation.cpp svneol=native#text/plai
 src/conv/step/g-step/Shape_Representation.cpp svneol=native#text/plain
 src/conv/step/g-step/Shape_Representation_Relationship.cpp svneol=native#text/plain
 src/conv/step/g-step/g-step.cpp svneol=native#text/plain
+src/conv/step/g-step/list_elements.cpp svneol=native#text/plain
 src/conv/step/step-g/AdvancedBrepShapeRepresentation.cpp svneol=native#text/plain
 src/conv/step/step-g/AdvancedBrepShapeRepresentation.h svneol=native#text/plain
 src/conv/step/step-g/AdvancedFace.cpp svneol=native#text/plain
