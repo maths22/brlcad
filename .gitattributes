@@ -13906,6 +13906,7 @@ src/util/dpix-pix.c svneol=native#text/plain
 src/util/dsp_add.c svneol=native#text/plain
 src/util/dsp_add2.c svneol=native#text/plain
 src/util/dsp_add3.c svneol=native#text/plain
+src/util/dsp_add4.c svneol=native#text/plain
 src/util/dsp_add_t.cpp svneol=native#text/plain
 src/util/dunncolor.c svneol=native#text/plain
 src/util/dunncomm.c svneol=native#text/plain
