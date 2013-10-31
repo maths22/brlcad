@@ -13876,6 +13876,7 @@ src/tclscripts/util/getopt.tcl svneol=native#text/plain
 src/tclscripts/util/luniq.tcl svneol=native#text/plain
 src/tclscripts/vmath.tcl svneol=native#text/plain
 src/util/CMakeLists.txt svneol=native#text/plain
+src/util/admin-db.cpp svneol=native#text/plain
 src/util/alias-pix.c svneol=native#text/plain
 src/util/ap-pix.c svneol=native#text/plain
 src/util/asc-plot3.c svneol=native#text/plain
