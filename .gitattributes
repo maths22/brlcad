@@ -3083,6 +3083,7 @@ src/libbn/anim.c svneol=native#text/plain
 src/libbn/axis.c svneol=native#text/plain
 src/libbn/bntester.c svneol=native#text/plain
 src/libbn/bntester.dat svneol=native#text/plain
+src/libbn/chull.c svneol=native#text/plain
 src/libbn/complex.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
 src/libbn/globals.c svneol=native#text/plain
