@@ -13921,6 +13921,7 @@ src/util/dunncolor.c svneol=native#text/plain
 src/util/dunncomm.c svneol=native#text/plain
 src/util/dunnsnap.c svneol=native#text/plain
 src/util/fix_polysolids.c svneol=native#text/plain
+src/util/gen-registered-attributes-html.cpp svneol=native#text/plain
 src/util/gencolor.c svneol=native#text/plain
 src/util/hex.c svneol=native#text/plain
 src/util/imgdims.c svneol=native#text/plain
