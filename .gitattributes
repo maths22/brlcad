@@ -3490,6 +3490,7 @@ src/libged/open.c svneol=native#text/plain
 src/libged/orient.c svneol=native#text/plain
 src/libged/orotate.c svneol=native#text/plain
 src/libged/oscale.c svneol=native#text/plain
+src/libged/osg.cpp svneol=native#text/plain
 src/libged/otranslate.c svneol=native#text/plain
 src/libged/overlay.c svneol=native#text/plain
 src/libged/path.c svneol=native#text/plain
