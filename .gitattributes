@@ -7740,6 +7740,7 @@ src/other/boost/libs/thread/src/win32/thread.cpp svneol=native#text/plain
 src/other/boost/libs/thread/src/win32/timeconv.inl svneol=native#text/plain
 src/other/boost/libs/thread/src/win32/tss_dll.cpp svneol=native#text/plain
 src/other/boost/libs/thread/src/win32/tss_pe.cpp svneol=native#text/plain
+src/other/boost/update-boost-tree.pl svneol=native#text/plain
 src/other/boost/update-brlcad-boost.sh svneol=native#text/x-sh
 src/other/clipper.dist svneol=native#text/plain
 src/other/clipper/CMakeLists.txt svneol=native#text/plain
