@@ -7349,6 +7349,7 @@ src/other/boost/boost/type_traits/has_trivial_constructor.hpp svneol=native#text
 src/other/boost/boost/type_traits/has_trivial_copy.hpp svneol=native#text/plain
 src/other/boost/boost/type_traits/has_trivial_destructor.hpp svneol=native#text/plain
 src/other/boost/boost/type_traits/has_trivial_move_assign.hpp svneol=native#text/plain
+src/other/boost/boost/type_traits/has_trivial_move_constructor.hpp svneol=native#text/plain
 src/other/boost/boost/type_traits/has_virtual_destructor.hpp svneol=native#text/plain
 src/other/boost/boost/type_traits/ice.hpp svneol=native#text/plain
 src/other/boost/boost/type_traits/integral_constant.hpp svneol=native#text/plain
