@@ -6530,6 +6530,7 @@ src/other/boost/boost/predef/os/bsd/free.h svneol=native#text/plain
 src/other/boost/boost/predef/os/bsd/net.h svneol=native#text/plain
 src/other/boost/boost/predef/os/bsd/open.h svneol=native#text/plain
 src/other/boost/boost/predef/os/macos.h svneol=native#text/plain
+src/other/boost/boost/predef/os_detected.h svneol=native#text/plain
 src/other/boost/boost/predef/other/endian.h svneol=native#text/plain
 src/other/boost/boost/predef/version_number.h svneol=native#text/plain
 src/other/boost/boost/preprocessor/arithmetic/add.hpp svneol=native#text/plain
