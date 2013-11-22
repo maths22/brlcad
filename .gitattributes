@@ -245,6 +245,32 @@ doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xml
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIV.xml svneol=native#text/xml
 doc/docbook/books/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/books/en/HACKING_BRL-CAD.xml svneol=native#text/plain
+doc/docbook/books/en/images/hacking_brlcad_M1A1_9x10_300dpi_cc.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_Sgi_cube_cc.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_article_tire_pdf.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_bearing_cc.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_book_vol3_pdf.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_brlcad-wiki.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_brlcad_intro_hy.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_csg.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_cubit.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_docbook_CMakeLists.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_docbook_working_session.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_doxygen_output.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_emacs-nxml.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_example_docbook_default_output.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_g_spec_pdf.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_havoc_c.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_havoc_views_c.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_man_page_search.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_sflake2_cc.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_stryker_slat.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_tcl_tk_presentation.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_teapot.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_tracked_mine.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_tutorial_1_pdf.png -text svneol=unset#image/png
+doc/docbook/books/en/images/hacking_brlcad_xyz.png -text svneol=unset#image/png
 doc/docbook/books/en/images/tutorial_series_volIII_fig01.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig02.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig03.png -text
