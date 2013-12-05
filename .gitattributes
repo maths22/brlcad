@@ -3110,6 +3110,7 @@ src/libbn/CMakeLists.txt svneol=native#text/plain
 src/libbn/README svneol=native#text/plain
 src/libbn/anim.c svneol=native#text/plain
 src/libbn/axis.c svneol=native#text/plain
+src/libbn/bn_private.h svneol=native#text/plain
 src/libbn/bntester.c svneol=native#text/plain
 src/libbn/bntester.dat svneol=native#text/plain
 src/libbn/chull.c svneol=native#text/plain
