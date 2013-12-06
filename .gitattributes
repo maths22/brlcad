@@ -3304,7 +3304,6 @@ src/libdm/dm-wgl.c svneol=native#text/plain
 src/libdm/dm_obj.c svneol=native#text/plain
 src/libdm/dm_util.c svneol=native#text/plain
 src/libdm/dm_util.h svneol=native#text/plain
-src/libdm/focus.c svneol=native#text/plain
 src/libdm/grid.c svneol=native#text/plain
 src/libdm/knob.c svneol=native#text/plain
 src/libdm/labels.c svneol=native#text/plain
