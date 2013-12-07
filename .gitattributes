@@ -853,6 +853,7 @@ doc/docbook/system/man1/en/rt_bot_faces.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtarea.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtcheck.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtedge.xml svneol=native#text/xml
+doc/docbook/system/man1/en/rtexample.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtg3.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rthide.xml svneol=native#text/xml
 doc/docbook/system/man1/en/rtpp.xml svneol=native#text/xml
