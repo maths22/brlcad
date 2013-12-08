@@ -662,6 +662,7 @@ doc/docbook/system/man1/en/bary.xml svneol=native#text/xml
 doc/docbook/system/man1/en/benchmark.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bot_dump.xml svneol=native#text/xml
 doc/docbook/system/man1/en/bot_shell-vtk.xml svneol=native#text/xml
+doc/docbook/system/man1/en/brep_simple.xml svneol=native#text/xml
 doc/docbook/system/man1/en/brlcad-config.xml svneol=native#text/xml
 doc/docbook/system/man1/en/brlcad.xml svneol=native#text/xml
 doc/docbook/system/man1/en/buffer.xml svneol=native#text/xml
