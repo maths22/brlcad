@@ -3801,6 +3801,7 @@ src/librt/constraint.c svneol=native#text/plain
 src/librt/cut.c svneol=native#text/plain
 src/librt/db5_alloc.c svneol=native#text/plain
 src/librt/db5_attr.c svneol=native#text/plain
+src/librt/db5_attr_registry.cpp svneol=native#text/plain
 src/librt/db5_io.c svneol=native#text/plain
 src/librt/db5_scan.c svneol=native#text/plain
 src/librt/db5_types.c svneol=native#text/plain
