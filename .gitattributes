@@ -946,6 +946,7 @@ doc/docbook/system/mann/en/bot_flip.xml svneol=native#text/plain
 doc/docbook/system/mann/en/bot_split.xml svneol=native#text/plain
 doc/docbook/system/mann/en/bot_sync.xml svneol=native#text/plain
 doc/docbook/system/mann/en/bot_vertex_fuse.xml svneol=native#text/xml
+doc/docbook/system/mann/en/brep.xml svneol=native#text/xml
 doc/docbook/system/mann/en/build_region.xml svneol=native#text/xml
 doc/docbook/system/mann/en/c.xml svneol=native#text/xml
 doc/docbook/system/mann/en/cat.xml svneol=native#text/xml
