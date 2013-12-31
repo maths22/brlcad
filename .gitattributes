@@ -3263,6 +3263,7 @@ src/libbu/str.c svneol=native#text/plain
 src/libbu/tcl.c svneol=native#text/plain
 src/libbu/temp.c svneol=native#text/plain
 src/libbu/tests/CMakeLists.txt svneol=native#text/plain
+src/libbu/tests/bu_badmagic.c svneol=native#text/plain
 src/libbu/tests/bu_basename.c svneol=native#text/plain
 src/libbu/tests/bu_bitv_and.c svneol=native#text/plain
 src/libbu/tests/bu_bitv_or.c svneol=native#text/plain
