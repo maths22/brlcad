@@ -3666,7 +3666,6 @@ src/libged/voxelize.c svneol=native#text/plain
 src/libged/vrot.c svneol=native#text/plain
 src/libged/vutil.c svneol=native#text/plain
 src/libged/wcodes.c svneol=native#text/plain
-src/libged/wdb_bigE.c svneol=native#text/plain
 src/libged/wdb_comb_std.c svneol=native#text/plain
 src/libged/wdb_importFg4Section.c svneol=native#text/plain
 src/libged/wdb_nirt.c svneol=native#text/plain
