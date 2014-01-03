@@ -3273,6 +3273,7 @@ src/libbu/tests/bu_bitv_to_hex.c svneol=native#text/plain
 src/libbu/tests/bu_bitv_vls.c svneol=native#text/plain
 src/libbu/tests/bu_booleanize.c svneol=native#text/plain
 src/libbu/tests/bu_color.c svneol=native#text/plain
+src/libbu/tests/bu_date-time.c svneol=native#text/x-csrc
 src/libbu/tests/bu_dirname.c svneol=native#text/plain
 src/libbu/tests/bu_escape.c svneol=native#text/plain
 src/libbu/tests/bu_gethostname.c svneol=native#text/plain
