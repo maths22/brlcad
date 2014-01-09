@@ -78,6 +78,7 @@ doc/README.BSD svneol=native#text/plain
 doc/README.IRIX svneol=native#text/plain
 doc/README.Linux svneol=native#text/plain
 doc/README.MacOSX svneol=native#text/plain
+doc/README.OSCON-2014 svneol=native#text/plain
 doc/README.Solaris svneol=native#text/plain
 doc/README.VAX svneol=native#text/plain
 doc/README.Windows svneol=native#text/plain
