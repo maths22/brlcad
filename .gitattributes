@@ -3115,6 +3115,7 @@ src/libanalyze/diff.c svneol=native#text/plain
 src/libanalyze/overlaps.c svneol=native#text/plain
 src/libanalyze/tests/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/tests/density.c svneol=native#text/plain
+src/libanalyze/tests/diff.c svneol=native#text/plain
 src/libanalyze/voxels.c svneol=native#text/plain
 src/libbn/CMakeLists.txt svneol=native#text/plain
 src/libbn/README svneol=native#text/plain
