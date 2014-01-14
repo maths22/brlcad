@@ -1660,6 +1660,7 @@ include/config_win_cmake.h.in svneol=native#text/plain
 include/cursor.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
+include/db_diff.h svneol=native#text/plain
 include/dg.h svneol=native#text/plain
 include/dm-Null.h svneol=native#text/plain
 include/dm-X.h svneol=native#text/plain
