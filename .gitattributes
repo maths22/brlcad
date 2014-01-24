@@ -4111,7 +4111,6 @@ src/libtclcad/tclcad_private.h svneol=native#text/plain
 src/libtclcad/tkImgFmtPIX.c svneol=native#text/plain
 src/libtermio/CMakeLists.txt svneol=native#text/plain
 src/libtermio/termio.c svneol=native#text/plain
-src/libtermio/termio_win32.c svneol=native#text/plain
 src/libwdb/CMakeLists.txt svneol=native#text/plain
 src/libwdb/arbn.c svneol=native#text/plain
 src/libwdb/ars.c svneol=native#text/plain
