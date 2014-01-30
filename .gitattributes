@@ -3297,6 +3297,7 @@ src/libbu/str.c svneol=native#text/plain
 src/libbu/tcl.c svneol=native#text/plain
 src/libbu/temp.c svneol=native#text/plain
 src/libbu/tests/CMakeLists.txt svneol=native#text/plain
+src/libbu/tests/bitv-tests.txt svneol=native#text/plain
 src/libbu/tests/bu_badmagic.c svneol=native#text/plain
 src/libbu/tests/bu_basename.c svneol=native#text/plain
 src/libbu/tests/bu_bitv.c svneol=native#text/plain
