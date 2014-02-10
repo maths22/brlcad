@@ -3326,6 +3326,7 @@ src/libbu/tests/bu_vls.c svneol=native#text/plain
 src/libbu/tests/bu_vls_vprintf.c svneol=native#text/plain
 src/libbu/tests/test_funcs.c svneol=native#text/plain
 src/libbu/tests/test_internals.h svneol=native#text/plain
+src/libbu/tests/vls-tests.cmake svneol=native#text/plain
 src/libbu/thread.cpp svneol=native#text/plain
 src/libbu/timer.c svneol=native#text/plain
 src/libbu/uce-dirent.h svneol=native#text/plain
