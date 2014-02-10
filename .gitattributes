@@ -1675,6 +1675,7 @@ include/dm-rtgl.h svneol=native#text/plain
 include/dm-tk.h svneol=native#text/plain
 include/dm-wgl.h svneol=native#text/plain
 include/dm.h svneol=native#text/plain
+include/dm/defines.h svneol=native#text/plain
 include/dm_color.h svneol=native#text/plain
 include/dm_xvars.h svneol=native#text/plain
 include/dvec.h svneol=native#text/plain
