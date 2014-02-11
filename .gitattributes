@@ -1649,6 +1649,7 @@ include/brlcad_version.h svneol=native#text/plain
 include/bselect.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
 include/bu/avs.h svneol=native#text/plain
+include/bu/cv.h svneol=native#text/plain
 include/bu/defines.h svneol=native#text/plain
 include/bu/list.h svneol=native#text/plain
 include/bu/vlb.h svneol=native#text/plain
