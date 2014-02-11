@@ -1650,6 +1650,7 @@ include/bselect.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
 include/bu/avs.h svneol=native#text/plain
 include/bu/defines.h svneol=native#text/plain
+include/bu/list.h svneol=native#text/plain
 include/bu/vls.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
