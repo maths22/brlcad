@@ -1656,6 +1656,7 @@ include/bu/defines.h svneol=native#text/plain
 include/bu/hash.h svneol=native#text/plain
 include/bu/list.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
+include/bu/mapped_file.h svneol=native#text/plain
 include/bu/parse.h svneol=native#text/plain
 include/bu/ptbl.h svneol=native#text/plain
 include/bu/rb.h svneol=native#text/plain
