@@ -1655,6 +1655,7 @@ include/bu/defines.h svneol=native#text/plain
 include/bu/list.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
 include/bu/ptbl.h svneol=native#text/plain
+include/bu/rb.h svneol=native#text/plain
 include/bu/vlb.h svneol=native#text/plain
 include/bu/vls.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
