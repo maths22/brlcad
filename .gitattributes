@@ -1839,10 +1839,6 @@ misc/CMake/xmllint.cmake.in svneol=native#text/plain
 misc/CMake/xsltproc.cmake.in svneol=native#text/plain
 misc/CMakeLists.txt svneol=native#text/plain
 misc/Description.txt svneol=native#text/plain
-misc/Doxyfile -text
-misc/Doxyfile.in svneol=native#text/plain
-misc/DoxyfileLibs-defaults.in svneol=native#text/plain
-misc/DoxyfileLibs.in svneol=native#text/plain
 misc/GQA_SAMPLE_DENSITIES svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
 misc/NIST_DENSITIES svneol=native#text/plain
@@ -1953,8 +1949,13 @@ misc/debian/rtwizard.desktop svneol=native#text/plain
 misc/debian/rules svneol=native#text/plain
 misc/debian/source/format svneol=native#text/plain
 misc/debian/source/include-binaries svneol=native#text/plain
-misc/doxygen_structure -text
-misc/doxygen_structure_libs.txt svneol=native#text/plain
+misc/doxygen/Doxyfile.in svneol=native#text/plain
+misc/doxygen/DoxyfileLibs-defaults.in svneol=native#text/plain
+misc/doxygen/DoxyfileLibs.in svneol=native#text/plain
+misc/doxygen/doxygen_intro.h svneol=native#text/plain
+misc/doxygen/doxygen_structure svneol=native#text/plain
+misc/doxygen/doxygen_structure_libbu.h svneol=native#text/plain
+misc/doxygen/doxygen_structure_libs.txt svneol=native#text/plain
 misc/flawfinder -text
 misc/fortran_example.f svneol=native#text/plain
 misc/jove.emacs svneol=native#text/plain
