@@ -4190,6 +4190,7 @@ src/mged/dir.c svneol=native#text/plain
 src/mged/dm-X.c svneol=native#text/plain
 src/mged/dm-generic.c svneol=native#text/plain
 src/mged/dm-ogl.c svneol=native#text/plain
+src/mged/dm-osg.c svneol=native#text/plain
 src/mged/dm-plot.c svneol=native#text/plain
 src/mged/dm-ps.c svneol=native#text/plain
 src/mged/dm-qt.c svneol=native#text/plain
