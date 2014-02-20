@@ -1961,6 +1961,7 @@ misc/doxygen/DoxyfileLibs-defaults.in svneol=native#text/plain
 misc/doxygen/DoxyfileLibs.in svneol=native#text/plain
 misc/doxygen/doxygen_intro.h svneol=native#text/plain
 misc/doxygen/doxygen_structure svneol=native#text/plain
+misc/doxygen/doxygen_structure_libbn.h svneol=native#text/plain
 misc/doxygen/doxygen_structure_libbu.h svneol=native#text/plain
 misc/doxygen/doxygen_structure_libs.txt svneol=native#text/plain
 misc/flawfinder -text
