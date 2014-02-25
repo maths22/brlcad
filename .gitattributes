@@ -1658,6 +1658,7 @@ include/bu/endian.h svneol=native#text/plain
 include/bu/hash.h svneol=native#text/plain
 include/bu/hist.h svneol=native#text/plain
 include/bu/list.h svneol=native#text/plain
+include/bu/log.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
 include/bu/malloc.h svneol=native#text/plain
 include/bu/mapped_file.h svneol=native#text/plain
