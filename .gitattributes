@@ -1652,6 +1652,7 @@ include/bu/avs.h svneol=native#text/plain
 include/bu/bitv.h svneol=native#text/plain
 include/bu/color.h svneol=native#text/plain
 include/bu/cv.h svneol=native#text/plain
+include/bu/debug.h svneol=native#text/plain
 include/bu/defines.h svneol=native#text/plain
 include/bu/endian.h svneol=native#text/plain
 include/bu/hash.h svneol=native#text/plain
