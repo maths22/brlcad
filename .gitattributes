@@ -1655,6 +1655,7 @@ include/bu/cv.h svneol=native#text/plain
 include/bu/debug.h svneol=native#text/plain
 include/bu/defines.h svneol=native#text/plain
 include/bu/endian.h svneol=native#text/plain
+include/bu/file.h svneol=native#text/plain
 include/bu/hash.h svneol=native#text/plain
 include/bu/hist.h svneol=native#text/plain
 include/bu/list.h svneol=native#text/plain
