@@ -1671,6 +1671,7 @@ include/bu/ptbl.h svneol=native#text/plain
 include/bu/rb.h svneol=native#text/plain
 include/bu/str.h svneol=native#text/plain
 include/bu/time.h svneol=native#text/plain
+include/bu/units.h svneol=native#text/plain
 include/bu/vlb.h svneol=native#text/plain
 include/bu/vls.h svneol=native#text/plain
 include/cmd.h svneol=native#text/plain
