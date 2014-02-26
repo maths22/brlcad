@@ -1670,6 +1670,7 @@ include/bu/parse.h svneol=native#text/plain
 include/bu/ptbl.h svneol=native#text/plain
 include/bu/rb.h svneol=native#text/plain
 include/bu/simd.h svneol=native#text/plain
+include/bu/sort.h svneol=native#text/plain
 include/bu/str.h svneol=native#text/plain
 include/bu/time.h svneol=native#text/plain
 include/bu/units.h svneol=native#text/plain
