@@ -1648,6 +1648,7 @@ include/brlcad.i svneol=native#text/plain
 include/brlcad_version.h svneol=native#text/plain
 include/bselect.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
+include/bu/CMakeLists.txt svneol=native#text/plain
 include/bu/avs.h svneol=native#text/plain
 include/bu/bitv.h svneol=native#text/plain
 include/bu/bu_tcl.h svneol=native#text/plain
