@@ -2238,7 +2238,6 @@ sh/make_pkg.sh svneol=native#text/x-sh
 sh/make_rpm.sh svneol=native#text/x-sh
 sh/make_tar.sh svneol=native#text/x-sh
 sh/make_tgz.sh svneol=native#text/x-sh
-sh/make_zip.sh svneol=native#text/x-sh
 sh/news2tracker.sh svneol=native#text/x-sh
 sh/orbit.sh -text svneol=unset#text/x-sh
 sh/pixinfo.sh svneol=native#text/x-sh
