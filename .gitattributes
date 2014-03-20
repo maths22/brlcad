@@ -2581,6 +2581,7 @@ src/conv/step/CMakeLists.txt svneol=native#text/plain
 src/conv/step/STEPWrapper.cpp svneol=native#text/plain
 src/conv/step/STEPWrapper.h svneol=native#text/plain
 src/conv/step/ap203_elements.txt svneol=native#text/plain
+src/conv/step/ap203e2-g/CMakeLists.txt svneol=native#text/plain
 src/conv/step/ap203e2_elements.txt svneol=native#text/plain
 src/conv/step/ap214e3_elements.txt svneol=native#text/plain
 src/conv/step/ap_schema.h svneol=native#text/plain
