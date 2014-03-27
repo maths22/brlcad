@@ -14018,6 +14018,7 @@ src/tclscripts/lib/Display.tcl svneol=native#text/plain
 src/tclscripts/lib/Dm.tcl svneol=native#text/plain
 src/tclscripts/lib/Drawable.tcl svneol=native#text/plain
 src/tclscripts/lib/Ged.tcl svneol=native#text/plain
+src/tclscripts/lib/GeometryLoad.tcl svneol=native#text/plain
 src/tclscripts/lib/Help.tcl svneol=native#text/plain
 src/tclscripts/lib/Legend.tcl svneol=native#text/plain
 src/tclscripts/lib/Mged.tcl svneol=native#text/plain
