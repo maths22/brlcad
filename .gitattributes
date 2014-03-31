@@ -13726,6 +13726,11 @@ src/tclscripts/archer/images/bot_intersect.png -text
 src/tclscripts/archer/images/bot_labeled.png -text svneol=unset#image/png
 src/tclscripts/archer/images/bot_subtract.png -text
 src/tclscripts/archer/images/bot_union.png -text
+src/tclscripts/archer/images/brep.png -text svneol=unset#image/png
+src/tclscripts/archer/images/brep_intersect.png -text svneol=unset#image/png
+src/tclscripts/archer/images/brep_labeled.png -text svneol=unset#image/png
+src/tclscripts/archer/images/brep_subtract.png -text svneol=unset#image/png
+src/tclscripts/archer/images/brep_union.png -text svneol=unset#image/png
 src/tclscripts/archer/images/bug.png -text
 src/tclscripts/archer/images/checkpoint.png -text
 src/tclscripts/archer/images/closeall.png -text
