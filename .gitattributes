@@ -1850,6 +1850,7 @@ misc/CMake/test_srcs/builddelta_end.c.in svneol=native#text/plain
 misc/CMake/test_srcs/builddelta_start.c.in svneol=native#text/plain
 misc/CMake/test_srcs/ctypes_test.c svneol=native#text/plain
 misc/CMake/test_srcs/lex_test.l svneol=native#text/plain
+misc/CMake/test_srcs/lrint_macro.h svneol=native#text/plain
 misc/CMake/test_srcs/print_timestamp.c svneol=native#text/plain
 misc/CMake/test_srcs/report_hostname.c.in svneol=native#text/plain
 misc/CMake/test_srcs/report_username.c.in svneol=native#text/plain
