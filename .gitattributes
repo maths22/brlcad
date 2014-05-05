@@ -1646,6 +1646,7 @@ include/bot.h svneol=native#text/plain
 include/brep.h svneol=native#text/plain
 include/brlcad.h svneol=native#text/plain
 include/brlcad.i svneol=native#text/plain
+include/brlcad_ident.h svneol=native#text/plain
 include/brlcad_version.h svneol=native#text/plain
 include/bselect.h svneol=native#text/plain
 include/bu.h svneol=native#text/plain
