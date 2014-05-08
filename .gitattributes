@@ -1863,6 +1863,7 @@ misc/CMake/test_srcs/termlib.c.in svneol=native#text/plain
 misc/CMake/test_srcs/time.c.in svneol=native#text/plain
 misc/CMake/test_srcs/timedelta_end.c.in svneol=native#text/plain
 misc/CMake/test_srcs/timedelta_start.c.in svneol=native#text/plain
+misc/CMake/validate_checkstamp.cmake.in svneol=native#text/plain
 misc/CMake/validate_style.cmake.in svneol=native#text/plain
 misc/CMake/xmllint.cmake.in svneol=native#text/plain
 misc/CMake/xsltproc.cmake.in svneol=native#text/plain
