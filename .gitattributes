@@ -2007,7 +2007,6 @@ misc/nsis/header.bmp -text svneol=unset#image/bmp
 misc/nsis/side.bmp -text svneol=unset#image/bmp
 misc/nsis/uninstall.ico -text svneol=unset#image/x-icon
 misc/nsis/updateVersion.tcl svneol=native#text/plain
-misc/osg_changes.patch svneol=native#text/plain
 misc/perl/CMakeLists.txt svneol=native#text/plain
 misc/perl/rt.i svneol=native#text/plain
 misc/pkgconfig/CMakeLists.txt svneol=native#text/plain
