@@ -1636,6 +1636,7 @@ doc/sun.txt svneol=native#text/plain
 doc/tool_categories.txt svneol=native#text/plain
 doc/tube.txt svneol=native#text/plain
 include/CMakeLists.txt svneol=native#text/plain
+include/D.pm svneol=native#text/plain
 include/RtServerImpl.h svneol=native#text/plain
 include/analyze.h svneol=native#text/plain
 include/anim.h svneol=native#text/plain
