@@ -1636,7 +1636,6 @@ doc/sun.txt svneol=native#text/plain
 doc/tool_categories.txt svneol=native#text/plain
 doc/tube.txt svneol=native#text/plain
 include/CMakeLists.txt svneol=native#text/plain
-include/D.pm svneol=native#text/plain
 include/RtServerImpl.h svneol=native#text/plain
 include/analyze.h svneol=native#text/plain
 include/anim.h svneol=native#text/plain
@@ -1691,7 +1690,6 @@ include/conf/MINOR -text
 include/conf/PATCH -text
 include/conf/make.vbs svneol=native#text/plain
 include/config_win.h.in svneol=native#text/plain
-include/convert-h2d.pl svneol=native#text/plain
 include/cursor.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
@@ -1886,6 +1884,8 @@ misc/auto-man-page/auto-man-progs.txt svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
+misc/d-bindings/D.pm svneol=native#text/plain
+misc/d-bindings/convert-h2d.pl svneol=native#text/plain
 misc/debian/archer.desktop svneol=native#text/plain
 misc/debian/brlcad-db.desktop svneol=native#text/plain
 misc/debian/brlcad-doc-animation.desktop svneol=native#text/plain
