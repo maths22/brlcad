@@ -1709,7 +1709,6 @@ include/dm/dm-qt.h svneol=native#text/plain
 include/dm/dm-rtgl.h svneol=native#text/plain
 include/dm/dm-tk.h svneol=native#text/plain
 include/dm/dm-wgl.h svneol=native#text/plain
-include/dm/dm_color.h svneol=native#text/plain
 include/dm/dm_xvars.h svneol=native#text/plain
 include/dvec.h svneol=native#text/plain
 include/fb.h svneol=native#text/plain
