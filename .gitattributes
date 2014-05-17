@@ -1691,7 +1691,7 @@ include/conf/MINOR -text
 include/conf/PATCH -text
 include/conf/make.vbs svneol=native#text/plain
 include/config_win.h.in svneol=native#text/plain
-include/convert-h2di.pl svneol=native#text/plain
+include/convert-h2d.pl svneol=native#text/plain
 include/cursor.h svneol=native#text/plain
 include/db.h svneol=native#text/plain
 include/db5.h svneol=native#text/plain
