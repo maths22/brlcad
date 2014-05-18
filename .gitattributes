@@ -1885,6 +1885,7 @@ misc/batch-indent-region.el -text
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
+misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
 misc/d-bindings/makefile svneol=native#text/plain
 misc/d-bindings/test_bu.d svneol=native#text/plain
