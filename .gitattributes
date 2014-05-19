@@ -4163,6 +4163,7 @@ src/librt/tests/nurbs_tests.cpp svneol=native#text/plain
 src/librt/tests/test_bundle.c svneol=native#text/plain
 src/librt/tests/test_diff.c svneol=native#text/plain
 src/librt/tests/test_dvec.cpp svneol=native#text/plain
+src/librt/tests/test_nmg_copy.c svneol=native#text/plain
 src/librt/tests/test_nmg_mk.c svneol=native#text/plain
 src/librt/tests/test_ssi.cpp svneol=native#text/plain
 src/librt/timer-nt.c svneol=native#text/plain
