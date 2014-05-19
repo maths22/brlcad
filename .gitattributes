@@ -3163,6 +3163,7 @@ src/gtools/g_qa.c svneol=native#text/plain
 src/gtools/g_transfer.c svneol=native#text/plain
 src/gtools/gdiff2/CMakeLists.txt svneol=native#text/plain
 src/gtools/gdiff2/gdiff2.c svneol=native#text/plain
+src/gtools/gdiff2/gdiff2.h svneol=native#text/plain
 src/gtools/remapid.c svneol=native#text/plain
 src/halftone/CMakeLists.txt svneol=native#text/plain
 src/halftone/main.c svneol=native#text/plain
