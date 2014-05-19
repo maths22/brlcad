@@ -1884,6 +1884,7 @@ misc/auto-man-page/auto-man-progs.txt svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
+misc/d-bindings/CParse.pm svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
 misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
