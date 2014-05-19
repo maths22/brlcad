@@ -3167,6 +3167,7 @@ src/gtools/gdiff2/diff3_callbacks.c svneol=native#text/plain
 src/gtools/gdiff2/diff_callbacks.c svneol=native#text/plain
 src/gtools/gdiff2/gdiff2.c svneol=native#text/plain
 src/gtools/gdiff2/gdiff2.h svneol=native#text/plain
+src/gtools/gdiff2/summary.c svneol=native#text/plain
 src/gtools/remapid.c svneol=native#text/plain
 src/halftone/CMakeLists.txt svneol=native#text/plain
 src/halftone/main.c svneol=native#text/plain
