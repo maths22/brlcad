@@ -3170,6 +3170,7 @@ src/gtools/gdiff2/gdiff2.h svneol=native#text/plain
 src/gtools/gdiff2/summary.c svneol=native#text/plain
 src/gtools/gdiff2/tests/00_moss-control.asc svneol=native#text/plain
 src/gtools/gdiff2/tests/01_moss-diff.asc svneol=native#text/plain
+src/gtools/gdiff2/utility.c svneol=native#text/plain
 src/gtools/remapid.c svneol=native#text/plain
 src/halftone/CMakeLists.txt svneol=native#text/plain
 src/halftone/main.c svneol=native#text/plain
