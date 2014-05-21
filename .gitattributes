@@ -1893,6 +1893,7 @@ misc/d-bindings/Phobos.pm svneol=native#text/plain
 misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/TODO svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
+misc/d-bindings/demo_Cgrammar_v2.pl svneol=native#text/plain
 misc/d-bindings/makefile svneol=native#text/plain
 misc/d-bindings/test_bu.d svneol=native#text/plain
 misc/debian/archer.desktop svneol=native#text/plain
