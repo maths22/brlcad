@@ -1895,6 +1895,7 @@ misc/d-bindings/TODO svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
 misc/d-bindings/demo_Cgrammar_v2.pl svneol=native#text/plain
 misc/d-bindings/makefile svneol=native#text/plain
+misc/d-bindings/recdecent-example.pl svneol=native#text/plain
 misc/d-bindings/test_bu.d svneol=native#text/plain
 misc/debian/archer.desktop svneol=native#text/plain
 misc/debian/brlcad-db.desktop svneol=native#text/plain
