@@ -1889,6 +1889,7 @@ misc/d-bindings/CParse.pm svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
 misc/d-bindings/DS.pm svneol=native#text/plain
 misc/d-bindings/HObj.pm svneol=native#text/plain
+misc/d-bindings/ParseCChunk.pm svneol=native#text/plain
 misc/d-bindings/Phobos.pm svneol=native#text/plain
 misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/TODO svneol=native#text/plain
