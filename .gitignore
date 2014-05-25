@@ -6,6 +6,6 @@ misc/d-bindings/.path_md5hash_tablestore
 misc/d-bindings/.svnignore
 misc/d-bindings/BE.pm
 misc/d-bindings/BH.pm
-misc/d-bindings/di
+misc/d-bindings/CGrammar.pm
 misc/d-bindings/di/*.*
 misc/d-bindings/di/.svnignore
