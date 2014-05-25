@@ -1897,6 +1897,7 @@ misc/d-bindings/c-grammar.txt svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
 misc/d-bindings/examples/demo_Cgrammar_v2.pl svneol=native#text/plain
 misc/d-bindings/examples/recdecent-example.pl svneol=native#text/plain
+misc/d-bindings/gen-cgrammar-module.sh svneol=native#text/x-sh
 misc/d-bindings/makefile svneol=native#text/plain
 misc/d-bindings/test_bu.d svneol=native#text/plain
 misc/debian/archer.desktop svneol=native#text/plain
