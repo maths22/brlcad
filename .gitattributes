@@ -1889,6 +1889,7 @@ misc/d-bindings/CParse.pm svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
 misc/d-bindings/DS.pm svneol=native#text/plain
 misc/d-bindings/HObj.pm svneol=native#text/plain
+misc/d-bindings/Parse-RecDescent-master-demo/README.demo_dot.pl svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/README.demo_undumper.pl svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/demo.c svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/demo.pl svneol=native#text/plain
