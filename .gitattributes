@@ -1958,6 +1958,7 @@ misc/d-bindings/Parse-RecDescent-master-demo/demo_tokens.pl svneol=native#text/p
 misc/d-bindings/Parse-RecDescent-master-demo/demo_undumper.pl svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/demo_whoson.pl svneol=native#text/plain
 misc/d-bindings/ParseCChunk.pm svneol=native#text/plain
+misc/d-bindings/ParseCChunk2.pm svneol=native#text/plain
 misc/d-bindings/Phobos.pm svneol=native#text/plain
 misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/TODO svneol=native#text/plain
