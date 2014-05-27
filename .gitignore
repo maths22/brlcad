@@ -7,5 +7,10 @@ misc/d-bindings/.svnignore
 misc/d-bindings/BE.pm
 misc/d-bindings/BH.pm
 misc/d-bindings/CGrammar.pm
+misc/d-bindings/Parse-RecDescent-master-demo/.svnignore
+misc/d-bindings/Parse-RecDescent-master-demo/Calc.pm
+misc/d-bindings/Parse-RecDescent-master-demo/RD_TRACE
+misc/d-bindings/Parse-RecDescent-master-demo/t
+misc/d-bindings/Parse-RecDescent-master-demo/t0
 misc/d-bindings/di/*.*
 misc/d-bindings/di/.svnignore
