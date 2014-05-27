@@ -3465,6 +3465,7 @@ src/libfb/if_disk.c svneol=native#text/plain
 src/libfb/if_mem.c svneol=native#text/plain
 src/libfb/if_null.c svneol=native#text/plain
 src/libfb/if_ogl.c svneol=native#text/plain
+src/libfb/if_qt.c svneol=native#text/plain
 src/libfb/if_remote.c svneol=native#text/plain
 src/libfb/if_stack.c svneol=native#text/plain
 src/libfb/if_tk.c svneol=native#text/plain
