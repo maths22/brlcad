@@ -12,5 +12,9 @@ misc/d-bindings/Parse-RecDescent-master-demo/Calc.pm
 misc/d-bindings/Parse-RecDescent-master-demo/RD_TRACE
 misc/d-bindings/Parse-RecDescent-master-demo/t
 misc/d-bindings/Parse-RecDescent-master-demo/t0
+misc/d-bindings/bu.i
 misc/d-bindings/di/*.*
 misc/d-bindings/di/.svnignore
+misc/d-bindings/parse-eyeapp-svn-trunk
+misc/d-bindings/test-hdr.h
+misc/d-bindings/tmp-mod-examples-tmp
