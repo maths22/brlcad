@@ -1962,6 +1962,7 @@ misc/d-bindings/Phobos.pm svneol=native#text/plain
 misc/d-bindings/README.txt svneol=native#text/plain
 misc/d-bindings/TODO svneol=native#text/plain
 misc/d-bindings/c-grammar.txt svneol=native#text/plain
+misc/d-bindings/c-grammar2.txt svneol=native#text/plain
 misc/d-bindings/convert-h2d.pl svneol=native#text/plain
 misc/d-bindings/examples/demo_Cgrammar_v2.pl svneol=native#text/plain
 misc/d-bindings/examples/recdecent-example.pl svneol=native#text/plain
