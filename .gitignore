@@ -9,6 +9,7 @@ misc/d-bindings/.svnignore
 misc/d-bindings/BE.pm
 misc/d-bindings/BH.pm
 misc/d-bindings/CGrammar.pm
+misc/d-bindings/CGrammar2.pm
 misc/d-bindings/Parse-RecDescent-master-demo/.svnignore
 misc/d-bindings/Parse-RecDescent-master-demo/Calc.pm
 misc/d-bindings/Parse-RecDescent-master-demo/RD_TRACE
@@ -19,6 +20,8 @@ misc/d-bindings/di/*.*
 misc/d-bindings/di/.svnignore
 misc/d-bindings/parse-eyeapp-svn-trunk
 misc/d-bindings/t
+misc/d-bindings/t.dumper
 misc/d-bindings/t0
+misc/d-bindings/t2
 misc/d-bindings/test-hdr.h
 misc/d-bindings/tmp-mod-examples-tmp
