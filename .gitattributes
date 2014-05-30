@@ -3166,6 +3166,7 @@ src/gtools/gdiff2/diff3_summary.c svneol=native#text/plain
 src/gtools/gdiff2/diff_summary.c svneol=native#text/plain
 src/gtools/gdiff2/gdiff2.c svneol=native#text/plain
 src/gtools/gdiff2/gdiff2.h svneol=native#text/plain
+src/gtools/gdiff2/merge.c svneol=native#text/plain
 src/gtools/gdiff2/tests/00_moss-control.asc svneol=native#text/plain
 src/gtools/gdiff2/tests/01_moss-diff.asc svneol=native#text/plain
 src/gtools/gdiff2/utility.c svneol=native#text/plain
