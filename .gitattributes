@@ -1888,6 +1888,7 @@ misc/d-bindings/BP.pm svneol=native#text/plain
 misc/d-bindings/CExtract.pm svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
 misc/d-bindings/DS.pm svneol=native#text/plain
+misc/d-bindings/G.pm svneol=native#text/plain
 misc/d-bindings/HObj.pm svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/README.demo_dot.txt svneol=native#text/plain
 misc/d-bindings/Parse-RecDescent-master-demo/README.demo_undumper.txt svneol=native#text/plain
