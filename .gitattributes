@@ -3329,8 +3329,10 @@ src/libbu/escape.c svneol=native#text/plain
 src/libbu/fchmod.c svneol=native#text/plain
 src/libbu/fgets.c svneol=native#text/plain
 src/libbu/file.c svneol=native#text/plain
+src/libbu/fix.6r -text
 src/libbu/fnmatch.c svneol=native#text/plain
 src/libbu/getcwd.c svneol=native#text/plain
+src/libbu/getfont.c svneol=native#text/plain
 src/libbu/gethostname.c svneol=native#text/plain
 src/libbu/getopt.c svneol=native#text/plain
 src/libbu/globals.c svneol=native#text/plain
@@ -3350,6 +3352,7 @@ src/libbu/magic.c svneol=native#text/plain
 src/libbu/malloc.c svneol=native#text/plain
 src/libbu/mappedfile.c svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
+src/libbu/nonie.r.12 -text
 src/libbu/observer.c svneol=native#text/plain
 src/libbu/parallel.c svneol=native#text/plain
 src/libbu/parallel.h svneol=native#text/plain
@@ -3409,6 +3412,7 @@ src/libbu/uce-dirent.h svneol=native#text/plain
 src/libbu/units.c svneol=native#text/plain
 src/libbu/vers.c svneol=native#text/plain
 src/libbu/vfont.c svneol=native#text/plain
+src/libbu/vfont.h svneol=native#text/plain
 src/libbu/vlb.c -text
 src/libbu/vls.c svneol=native#text/plain
 src/libbu/vls_internals.h svneol=native#text/plain
@@ -14392,8 +14396,3 @@ src/util/ttcp.c svneol=native#text/plain
 src/util/wavelet.c svneol=native#text/plain
 src/util/xyz-plot3.c svneol=native#text/plain
 src/util/yuv-pix.c svneol=native#text/plain
-src/vfont/CMakeLists.txt svneol=native#text/plain
-src/vfont/fix.6r -text svneol=unset#unset
-src/vfont/getfont.c svneol=native#text/plain
-src/vfont/nonie.r.12 -text svneol=unset#unset
-src/vfont/vfont.h svneol=native#text/plain
