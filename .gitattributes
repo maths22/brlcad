@@ -10564,7 +10564,6 @@ src/other/stepcode/src/exp2cxx/selects.c svneol=native#text/plain
 src/other/stepcode/src/exp2cxx/trynext.cc svneol=native#text/plain
 src/other/stepcode/src/exp2cxx/write.cc svneol=native#text/plain
 src/other/stepcode/src/exp2python/CMakeLists.txt svneol=native#text/plain
-src/other/stepcode/src/exp2python/REAMDE.md svneol=native#text/plain
 src/other/stepcode/src/exp2python/examples/unitary_schemas/gcc_incomplete_type.py svneol=native#text/plain
 src/other/stepcode/src/exp2python/examples/unitary_schemas/generate_schemas_modules.py svneol=native#text/plain
 src/other/stepcode/src/exp2python/examples/unitary_schemas/index_attribute.py svneol=native#text/plain
