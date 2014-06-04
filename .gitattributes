@@ -3332,7 +3332,6 @@ src/libbu/file.c svneol=native#text/plain
 src/libbu/fix.6r -text
 src/libbu/fnmatch.c svneol=native#text/plain
 src/libbu/getcwd.c svneol=native#text/plain
-src/libbu/getfont.c svneol=native#text/plain
 src/libbu/gethostname.c svneol=native#text/plain
 src/libbu/getopt.c svneol=native#text/plain
 src/libbu/globals.c svneol=native#text/plain
