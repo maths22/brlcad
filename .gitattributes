@@ -1886,6 +1886,7 @@ misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
 misc/d-bindings/BP.pm svneol=native#text/plain
 misc/d-bindings/CExtract.pm svneol=native#text/plain
+misc/d-bindings/D.g4.txt svneol=native#text/plain
 misc/d-bindings/D.pm svneol=native#text/plain
 misc/d-bindings/DS.pm svneol=native#text/plain
 misc/d-bindings/G.pm svneol=native#text/plain
