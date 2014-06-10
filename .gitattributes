@@ -1973,6 +1973,7 @@ misc/d-bindings/examples/recdecent-example.pl svneol=native#text/plain
 misc/d-bindings/gen-cgrammar-modules.sh svneol=native#text/x-sh
 misc/d-bindings/makefile svneol=native#text/plain
 misc/d-bindings/test_bu.d svneol=native#text/plain
+misc/d-bindings/test_hdr.h svneol=native#text/plain
 misc/debian/archer.desktop svneol=native#text/plain
 misc/debian/brlcad-db.desktop svneol=native#text/plain
 misc/debian/brlcad-doc-animation.desktop svneol=native#text/plain
