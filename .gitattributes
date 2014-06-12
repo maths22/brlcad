@@ -1963,6 +1963,7 @@ misc/d-bindings/Parse-RecDescent-master-demo/demo_undumper.pl svneol=native#text
 misc/d-bindings/Parse-RecDescent-master-demo/demo_whoson.pl svneol=native#text/plain
 misc/d-bindings/ParsePPCHeader.pm svneol=native#text/plain
 misc/d-bindings/Phobos.pm svneol=native#text/plain
+misc/d-bindings/R.pm svneol=native#text/plain
 misc/d-bindings/TODO svneol=native#text/plain
 misc/d-bindings/c-grammar.txt svneol=native#text/plain
 misc/d-bindings/c-grammar2.txt svneol=native#text/plain
