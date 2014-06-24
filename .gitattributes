@@ -9608,6 +9608,7 @@ src/other/osl/shaders/red.osl svneol=native#text/plain
 src/other/osl/shaders/sh_texture.osl svneol=native#text/plain
 src/other/osl/shaders/stdosl.h svneol=native#text/plain
 src/other/perplex.dist svneol=native#text/plain
+src/other/perplex/CHANGELOG.txt svneol=native#text/plain
 src/other/perplex/CMake/FindLEMON.cmake svneol=native#text/plain
 src/other/perplex/CMake/FindRE2C.cmake svneol=native#text/plain
 src/other/perplex/CMake/LEMON_Util.cmake svneol=native#text/plain
