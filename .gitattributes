@@ -3878,6 +3878,7 @@ src/libpc/CMakeLists.txt svneol=native#text/plain
 src/libpc/NOTES svneol=native#text/plain
 src/libpc/TODO svneol=native#text/plain
 src/libpc/cartesian-heart.cpp svneol=native#text/plain
+src/libpc/gecode_solver_test.cpp svneol=native#text/plain
 src/libpc/pcBasic.h svneol=native#text/plain
 src/libpc/pcConstraint.cpp svneol=native#text/plain
 src/libpc/pcConstraint.h svneol=native#text/plain
