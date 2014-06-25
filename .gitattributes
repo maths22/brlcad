@@ -4883,6 +4883,7 @@ src/other/clipper/clipper.cpp svneol=native#text/plain
 src/other/clipper/clipper.hpp svneol=native#text/plain
 src/other/gecode/CMakeLists.txt svneol=native#text/plain
 src/other/gecode/LICENSE svneol=native#text/plain
+src/other/gecode/Makefile.in svneol=native#text/plain
 src/other/gecode/configure.ac svneol=native#text/plain
 src/other/gecode/gecode/driver.hh svneol=native#text/plain
 src/other/gecode/gecode/driver/options.cpp svneol=native#text/plain
