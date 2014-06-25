@@ -1741,6 +1741,7 @@ include/redblack.h svneol=native#text/plain
 include/rt/CMakeLists.txt svneol=native#text/plain
 include/rt/arb_edit.h svneol=native#text/plain
 include/rt/db_diff.h svneol=native#text/plain
+include/rt/db_fullpath.h svneol=native#text/plain
 include/rt/defines.h svneol=native#text/plain
 include/rt/search.h svneol=native#text/plain
 include/rtfunc.h svneol=native#text/plain
