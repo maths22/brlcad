@@ -4215,6 +4215,7 @@ src/libged/eye_pos.c svneol=native#text/plain
 src/libged/facedef.c svneol=native#text/plain
 src/libged/facetize.c svneol=native#text/plain
 src/libged/fb2pix.c svneol=native#text/plain
+src/libged/fbclear.c svneol=native#text/plain
 src/libged/find.c svneol=native#text/plain
 src/libged/form.c svneol=native#text/plain
 src/libged/fracture.c svneol=native#text/plain
