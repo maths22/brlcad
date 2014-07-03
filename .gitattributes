@@ -2664,68 +2664,260 @@ m4/patch.m4 svneol=native#text/plain
 m4/prefix.m4 svneol=native#text/plain
 m4/search.m4 svneol=native#text/plain
 m4/stage.m4 svneol=native#text/plain
+misc/CMake/BRLCAD_CMakeFiles.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_CPackOptions.cmake.in svneol=native#text/plain
+misc/CMake/BRLCAD_CheckFunctions.cmake svneol=native#text/native
+misc/CMake/BRLCAD_CompilerFlags.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_Options.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_Summary.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_Targets.cmake svneol=native#text/plain
+misc/CMake/BRLCAD_Util.cmake svneol=native#text/plain
+misc/CMake/CheckCInline.cmake svneol=native#text/plain
+misc/CMake/CheckCSourceRuns.cmake svneol=native#text/plain
+misc/CMake/CompilerFlags.cmake svneol=native#text/plain
+misc/CMake/DiffCache.cmake svneol=native#text/plain
+misc/CMake/Distcheck.cmake svneol=native#text/plain
+misc/CMake/DocBook.cmake svneol=native#text/plain
+misc/CMake/FindADAPTAGRAMS.cmake svneol=native#text/plain
+misc/CMake/FindASTYLE.cmake svneol=native#text/plain
+misc/CMake/FindFontconfig.cmake svneol=native#text/plain
+misc/CMake/FindGL.cmake svneol=native#text/plain
+misc/CMake/FindLEMON.cmake svneol=native#text/plain
+misc/CMake/FindLEX.cmake svneol=native#text/plain
+misc/CMake/FindOIIO.cmake svneol=native#text/plain
+misc/CMake/FindOPENNURBS.cmake svneol=native#text/plain
+misc/CMake/FindOSL.cmake svneol=native#text/plain
+misc/CMake/FindOpenEXR.cmake svneol=native#text/plain
+misc/CMake/FindPERPLEX.cmake svneol=native#text/plain
+misc/CMake/FindPkgMacros.cmake svneol=native#text/plain
+misc/CMake/FindRE2C.cmake svneol=native#text/plain
+misc/CMake/FindREGEX.cmake svneol=native#text/plain
+misc/CMake/FindSCL.cmake svneol=native#text/plain
+misc/CMake/FindSTL.cmake svneol=native#text/plain
+misc/CMake/FindShellDeps.cmake svneol=native#text/native
+misc/CMake/FindTBB.cmake svneol=native#text/plain
+misc/CMake/FindTCL.cmake svneol=native#text/plain
+misc/CMake/FindTERMLIB.cmake svneol=native#text/plain
+misc/CMake/FindUTAHRLE.cmake svneol=native#text/plain
+misc/CMake/FindVDS.cmake svneol=native#text/plain
+misc/CMake/FindX11.cmake svneol=native#text/plain
+misc/CMake/FindXMLLINT.cmake svneol=native#text/plain
+misc/CMake/FindXSLTPROC.cmake svneol=native#text/plain
+misc/CMake/FindYACC.cmake svneol=native#text/plain
+misc/CMake/FindZLIB.cmake svneol=native#text/plain
+misc/CMake/Fink_MacPorts.cmake svneol=native#text/plain
+misc/CMake/LEMON_Util.cmake svneol=native#text/plain
+misc/CMake/NSIS.template.in svneol=native#text/plain
+misc/CMake/PERPLEX_Util.cmake svneol=native#text/plain
+misc/CMake/Path_Setup.cmake svneol=native#text/plain
+misc/CMake/RE2C_Util.cmake svneol=native#text/plain
+misc/CMake/RPath_Setup.cmake svneol=native#text/plain
+misc/CMake/ResetCache.cmake svneol=native#text/plain
+misc/CMake/TCL_PKGINDEX.cmake svneol=native#text/plain
+misc/CMake/ThirdParty.cmake svneol=native#text/plain
+misc/CMake/ThirdParty_TCL.cmake svneol=native#text/plain
+misc/CMake/compat/README svneol=native#text/plain
+misc/CMake/compat/README.compat svneol=native#text/plain
+misc/CMake/compat/README.compat.c99 svneol=native#text/plain
+misc/CMake/compat/fdopen_compat.h svneol=native#text/plain
+misc/CMake/compat/fileno_compat.h svneol=native#text/plain
+misc/CMake/compat/gethostname_compat.h svneol=native#text/plain
+misc/CMake/compat/hypot_compat.h svneol=native#text/plain
+misc/CMake/compat/posix_memalign_compat.h svneol=native#text/plain
+misc/CMake/compat/realpath_compat.h svneol=native#text/plain
+misc/CMake/compat/sigaction_compat.h svneol=native#text/plain
+misc/CMake/compat/snprintf_compat.h svneol=native#text/plain
+misc/CMake/compat/strcasecmp_compat.h svneol=native#text/plain
+misc/CMake/compat/strncasecmp_compat.h svneol=native#text/plain
+misc/CMake/compat/strtok_r_compat.h svneol=native#text/plain
+misc/CMake/compat/test_fdopen.c svneol=native#text/plain
+misc/CMake/compat/test_fileno.c svneol=native#text/plain
+misc/CMake/compat/test_gethostname.c svneol=native#text/plain
+misc/CMake/compat/test_posix_memalign.c svneol=native#text/plain
+misc/CMake/compat/test_realpath.c svneol=native#text/plain
+misc/CMake/compat/test_sigaction.c svneol=native#text/plain
+misc/CMake/compat/test_strcasecmp.c svneol=native#text/plain
+misc/CMake/compat/test_strncasecmp.c svneol=native#text/plain
+misc/CMake/compat/test_strtok_r.c svneol=native#text/plain
+misc/CMake/configure_prefix.sh svneol=native#text/x-sh
+misc/CMake/configure_suffix.sh svneol=native#text/x-sh
+misc/CMake/distcheck_in_src_dir.cmake.in svneol=native#text/plain
+misc/CMake/distcheck_repo_verify.cmake.in svneol=native#text/plain
+misc/CMake/distcheck_target.cmake.in svneol=native#text/plain
+misc/CMake/distclean.cmake.in svneol=native#text/plain
+misc/CMake/fop.cmake.in svneol=native#text/plain
+misc/CMake/md5_compiletest.cmake.in svneol=native#text/plain
+misc/CMake/msv.cmake.in svneol=native#text/plain
+misc/CMake/multiconfig_path_clean.cmake.in svneol=native#text/plain
+misc/CMake/multiconfig_path_read.cmake.in svneol=native#text/plain
+misc/CMake/rnv.cmake.in svneol=native#text/plain
+misc/CMake/style/astyle.cmake.in svneol=native#text/plain
+misc/CMake/style/test_list.cmake svneol=native#text/plain
+misc/CMake/tcltest.tcl.in svneol=native#text/plain
+misc/CMake/test_srcs/alloca_header_test.c svneol=native#text/plain
+misc/CMake/test_srcs/alloca_test.c svneol=native#text/plain
+misc/CMake/test_srcs/builddelta_end.c.in svneol=native#text/plain
+misc/CMake/test_srcs/builddelta_start.c.in svneol=native#text/plain
+misc/CMake/test_srcs/ctypes_test.c svneol=native#text/plain
+misc/CMake/test_srcs/lex_test.l svneol=native#text/plain
+misc/CMake/test_srcs/lrint_macro.h svneol=native#text/plain
+misc/CMake/test_srcs/print_timestamp.c svneol=native#text/plain
+misc/CMake/test_srcs/report_hostname.c.in svneol=native#text/plain
+misc/CMake/test_srcs/report_username.c.in svneol=native#text/plain
+misc/CMake/test_srcs/sleep.c svneol=native#text/plain
+misc/CMake/test_srcs/sys_wait_test.c svneol=native#text/plain
+misc/CMake/test_srcs/termlib.c.in svneol=native#text/plain
+misc/CMake/test_srcs/time.c.in svneol=native#text/plain
+misc/CMake/test_srcs/timedelta_end.c.in svneol=native#text/plain
+misc/CMake/test_srcs/timedelta_start.c.in svneol=native#text/plain
+misc/CMake/validate_checkstamp.cmake.in svneol=native#text/plain
+misc/CMake/validate_style.cmake.in svneol=native#text/plain
+misc/CMake/xmllint.cmake.in svneol=native#text/plain
+misc/CMake/xsltproc.cmake.in svneol=native#text/plain
+misc/CMakeLists.txt svneol=native#text/plain
 misc/Description.txt svneol=native#text/plain
-misc/Doxyfile -text
 misc/GQA_SAMPLE_DENSITIES svneol=native#text/plain
-misc/Makefile.am svneol=native#text/plain
 misc/Makefile.defs svneol=native#text/plain
 misc/NIST_DENSITIES svneol=native#text/plain
 misc/archlinux/PKGBUILD svneol=native#text/plain
 misc/archlinux/brlcad.install svneol=native#text/plain
-misc/archlinux/brlcad.sh svneol=native#text/plain
+misc/astyle.opt svneol=native#text/plain
+misc/attributes/CMakeLists.txt svneol=native#text/plain
+misc/attributes/gen-attributes-file.cpp svneol=native#text/plain
+misc/attributes/gen-attributes-files.cpp.in svneol=native#text/plain
+misc/auto-man-page/BIN_OPT_ARG_ANALYSIS.txt svneol=native#text/plain
+misc/auto-man-page/README.auto-man-page-handling svneol=native#text/plain
+misc/auto-man-page/auto-man-progs.txt svneol=native#text/plain
 misc/batch-indent-region.el -text
-misc/brlcad-config.1 svneol=native#text/plain
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
 misc/debian/Makefile.am svneol=native#text/plain
-misc/debian/brlcad-bin.docs svneol=native#text/plain
-misc/debian/brlcad-bin.install svneol=native#text/plain
-misc/debian/brlcad-bin.lintian-overrides svneol=native#text/plain
-misc/debian/brlcad-data.install svneol=native#text/plain
-misc/debian/brlcad-dev.install svneol=native#text/plain
-misc/debian/brlcad-doc.install svneol=native#text/plain
+misc/debian/archer.desktop svneol=native#text/plain
+misc/debian/brlcad-db.desktop svneol=native#text/plain
+misc/debian/brlcad-doc-animation.desktop svneol=native#text/plain
+misc/debian/brlcad-doc-mged.desktop svneol=native#text/plain
+misc/debian/brlcad-doc.desktop svneol=native#text/plain
+misc/debian/brlcad-doc.directory svneol=native#text/plain
+misc/debian/brlcad.directory svneol=native#text/plain
+misc/debian/brlcad.docs svneol=native#text/plain
+misc/debian/brlcad.install svneol=native#text/plain
+misc/debian/brlcad.menu svneol=native#text/plain
+misc/debian/brlcad.postinst svneol=native#text/x-sh
+misc/debian/brlcad.postrm svneol=native#text/x-sh
+misc/debian/brlcad.sh svneol=native#text/x-sh
+misc/debian/brlcad.xml svneol=native#text/plain
 misc/debian/changelog svneol=native#text/plain
 misc/debian/compat svneol=native#text/plain
 misc/debian/control svneol=native#text/plain
 misc/debian/copyright svneol=native#text/plain
+misc/debian/icons/128x128/archer.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/128x128/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/128x128/mged.png -text svneol=unset#image/png
+misc/debian/icons/128x128/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/16x16/archer.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/16x16/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/16x16/mged.png -text svneol=unset#image/png
+misc/debian/icons/16x16/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/24x24/archer.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/24x24/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/24x24/mged.png -text svneol=unset#image/png
+misc/debian/icons/24x24/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/256x256/archer.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/256x256/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/256x256/mged.png -text svneol=unset#image/png
+misc/debian/icons/256x256/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/36x36/archer.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/36x36/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/36x36/mged.png -text svneol=unset#image/png
+misc/debian/icons/36x36/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/48x48/archer.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/48x48/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/48x48/mged.png -text svneol=unset#image/png
+misc/debian/icons/48x48/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/64x64/archer.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/64x64/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/64x64/mged.png -text svneol=unset#image/png
+misc/debian/icons/64x64/rtwizard.png -text svneol=unset#image/png
+misc/debian/icons/96x96/archer.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad-db.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad-doc.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad-v4.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad-v5.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad-v6.png -text svneol=unset#image/png
+misc/debian/icons/96x96/brlcad.png -text svneol=unset#image/png
+misc/debian/icons/96x96/mged.png -text svneol=unset#image/png
+misc/debian/icons/96x96/rtwizard.png -text svneol=unset#image/png
+misc/debian/mged.desktop svneol=native#text/plain
+misc/debian/rtwizard.desktop svneol=native#text/plain
 misc/debian/rules svneol=native#text/plain
 misc/debian/source/format svneol=native#text/plain
-misc/debian/watch svneol=native#text/plain
-misc/doxygen_structure -text
-misc/enigma/AUTHORS svneol=native#text/plain
-misc/enigma/COPYING svneol=native#text/plain
-misc/enigma/ChangeLog svneol=native#text/plain
-misc/enigma/INSTALL svneol=native#text/plain
-misc/enigma/Makefile.am svneol=native#text/plain
-misc/enigma/NEWS svneol=native#text/plain
-misc/enigma/README svneol=native#text/plain
-misc/enigma/configure.ac svneol=native#text/plain
-misc/enigma/enigma.1 svneol=native#text/plain
-misc/enigma/enigma.c svneol=native#text/plain
+misc/debian/source/include-binaries svneol=native#text/plain
+misc/doxygen/Doxyfile.in svneol=native#text/plain
+misc/doxygen/DoxyfileLibs-defaults.in svneol=native#text/plain
+misc/doxygen/DoxyfileLibs.in svneol=native#text/plain
+misc/doxygen/doxygen_intro.h svneol=native#text/plain
+misc/doxygen/doxygen_structure svneol=native#text/plain
+misc/doxygen/doxygen_structure_libbn.h svneol=native#text/plain
+misc/doxygen/doxygen_structure_libbu.h svneol=native#text/plain
+misc/doxygen/doxygen_structure_libs.txt svneol=native#text/plain
 misc/flawfinder -text
 misc/fortran_example.f svneol=native#text/plain
-misc/libtool.m4 svneol=native#text/plain
-misc/macosx/Makefile.am svneol=native#text/plain
+misc/jove.emacs svneol=native#text/plain
 misc/macosx/README svneol=native#text/plain
 misc/macosx/Resources/License.rtf svneol=native#text/rtf
-misc/macosx/Resources/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/.typeAttributes.dict -text
-misc/macosx/Resources/ReadMe.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/ReadMe.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/ReadMe.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/Resources/Welcome.rtfd/.typeAttributes.dict -text
-misc/macosx/Resources/Welcome.rtfd/Makefile.am svneol=native#text/plain
 misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
+misc/nsis/archer.ico -text
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
 misc/nsis/header.bmp -text svneol=unset#image/bmp
 misc/nsis/side.bmp -text svneol=unset#image/bmp
 misc/nsis/uninstall.ico -text svneol=unset#image/x-icon
 misc/nsis/updateVersion.tcl svneol=native#text/plain
-misc/pkgconfig/Makefile.am svneol=native#text/plain
+misc/perl/CMakeLists.txt svneol=native#text/plain
+misc/perl/rt.i svneol=native#text/plain
+misc/pkgconfig/CMakeLists.txt svneol=native#text/plain
 misc/pkgconfig/libanalyze.pc.in svneol=native#text/plain
 misc/pkgconfig/libbn.pc.in svneol=native#text/plain
 misc/pkgconfig/libbrlcad.pc.in svneol=native#text/plain
@@ -2742,6 +2934,9 @@ misc/pkgconfig/libpc.pc.in svneol=native#text/plain
 misc/pkgconfig/libpkg.pc.in svneol=native#text/plain
 misc/pkgconfig/librt.pc.in svneol=native#text/plain
 misc/pkgconfig/libwdb.pc.in svneol=native#text/plain
+misc/svn2git/README svneol=native#text/plain
+misc/svn2git/account-map svneol=native#text/plain
+misc/svn2git/rules svneol=native#text/plain
 misc/tools/CMakeLists.txt svneol=native#text/plain
 misc/tools/astyle.dist svneol=native#text/plain
 misc/tools/astyle/ASBeautifier.cpp svneol=native#text/plain
@@ -3390,200 +3585,6 @@ misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/bootstrap.cpp svneol=native#text/plain
-misc/win32-msvc8/3dm2g/3dm2g.vcproj svneol=native#text/plain
-misc/win32-msvc8/Makefile.am svneol=native#text/plain
-misc/win32-msvc8/asc2g/asc2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/asc2nmg/asc2nmg.vcproj -text
-misc/win32-msvc8/asc2pix/asc2pix.vcproj -text
-misc/win32-msvc8/bolt/bolt.vcproj svneol=native#text/plain
-misc/win32-msvc8/bot2bldxf/bot2bldxf.vcproj -text
-misc/win32-msvc8/bot_dump/bot_dump.vcproj svneol=native#text/plain
-misc/win32-msvc8/bot_shell2vtk/bot_shell2vtk.vcproj -text
-misc/win32-msvc8/bottest/bottest.vcproj svneol=native#text/plain
-misc/win32-msvc8/brep_cube/brep_cube.vcproj svneol=native#text/plain
-misc/win32-msvc8/brep_simple/brep_simple.vcproj svneol=native#text/plain
-misc/win32-msvc8/breplicator/breplicator.vcproj -text
-misc/win32-msvc8/brickwall/brickwall.vcproj svneol=native#text/plain
-misc/win32-msvc8/brlcad/brlcad.sln eol=crlf
-misc/win32-msvc8/btclsh/btclsh.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/bw2fb/bw2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/bw2pix/bw2pix.vcproj -text
-misc/win32-msvc8/bwish/bwish.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/bwmod/bwmod.vcproj -text
-misc/win32-msvc8/cat2fb/cat2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/cell2fb/cell2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/clutter/clutter.vcproj svneol=native#text/plain
-misc/win32-msvc8/cmap2fb/cmap2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/coil/coil.vcproj svneol=native#text/plain
-misc/win32-msvc8/contours/contours.vcproj svneol=native#text/plain
-misc/win32-msvc8/cy2g/cy2g.vcproj -text
-misc/win32-msvc8/dbupgrade/dbupgrade.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/dxf2g/dxf2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/enf2g/enf2g.vcproj -text
-misc/win32-msvc8/euclid2g/euclid2g.vcproj -text
-misc/win32-msvc8/euclid_format/euclid_format.vcproj -text
-misc/win32-msvc8/euclid_unformat/euclid_unformat.vcproj -text
-misc/win32-msvc8/fast42g/fast42g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2bw/fb2bw.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2cmap/fb2cmap.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2fb/fb2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2orle/fb2orle.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2pix/fb2pix.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2png/fb2png.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fb2rle/fb2rle.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbanim/fbanim.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbcbars/fbcbars.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbclear/fbclear.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbcmap/fbcmap.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbcmrot/fbcmrot.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbcolor/fbcolor.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbfade/fbfade.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbframe/fbframe.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbfree/fbfree.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbgamma/fbgamma.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbgammamod/fbgammamod.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbgrid/fbgrid.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbhelp/fbhelp.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fblabel/fblabel.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbline/fbline.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbpoint/fbpoint.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbscanplot/fbscanplot.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbserv/fbserv.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbstretch/fbstretch.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fbzoom/fbzoom.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/fence/fence.vcproj svneol=native#text/plain
-misc/win32-msvc8/g2acad/g2acad.vcproj -text
-misc/win32-msvc8/g2asc/g2asc.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2dxf/g2dxf.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2euclid/g2euclid.vcproj -text
-misc/win32-msvc8/g2euclid1/g2euclid1.vcproj -text
-misc/win32-msvc8/g2iges/g2iges.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2nff/g2nff.vcproj -text
-misc/win32-msvc8/g2nmg/g2nmg.vcproj -text
-misc/win32-msvc8/g2obj/g2obj.vcproj -text
-misc/win32-msvc8/g2shellrect/g2shellrect.vcproj -text
-misc/win32-msvc8/g2stl/g2stl.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/g2tankill/g2tankill.vcproj -text
-misc/win32-msvc8/g2var/g2var.vcproj -text
-misc/win32-msvc8/g2vrml/g2vrml.vcproj -text
-misc/win32-msvc8/g2x3d/g2x3d.vcproj -text
-misc/win32-msvc8/g42g5/g42g5.vcproj -text
-misc/win32-msvc8/g52g4/g52g4.vcproj -text
-misc/win32-msvc8/g_diff/g_diff.vcproj svneol=native#text/plain
-misc/win32-msvc8/g_lint/g_lint.vcproj svneol=native#text/plain
-misc/win32-msvc8/g_qa/g_qa.vcproj svneol=native#text/plain
-misc/win32-msvc8/g_transfer/g_transfer.vcproj svneol=native#text/plain
-misc/win32-msvc8/gastank/gastank.vcproj svneol=native#text/plain
-misc/win32-msvc8/gif2fb/gif2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/globe/globe.vcproj svneol=native#text/plain
-misc/win32-msvc8/handle/handle.vcproj svneol=native#text/plain
-misc/win32-msvc8/human/human.vcproj svneol=native#text/plain
-misc/win32-msvc8/iges2g/iges2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/itclstub/itclstub.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/itkstub/itkstub.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/kurt/kurt.vcproj svneol=native#text/plain
-misc/win32-msvc8/libItcl/libItcl.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libItk/libItk.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libanalyze/libanalyze.vcproj svneol=native#text/plain
-misc/win32-msvc8/libbn/libbn.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libbu/libbu.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libdm/libdm.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libfb/libfb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libgcv/libgcv.vcproj svneol=native#text/plain
-misc/win32-msvc8/libged/libged.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/liboptical/liboptical.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/liborle/liborle.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libpkg/libpkg.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libpng/libpng.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libregex/libregex.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/librender/librender.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/librt/librt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libsysv/libsysv.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libtcl/libtcl.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libtclcad/libtclcad.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libtie/libtie.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libtk/libtk.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libutahrle/libutahrle.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libwdb/libwdb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/libz/libz.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/masonry/masonry.vcproj svneol=native#text/plain
-misc/win32-msvc8/mged/mged.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/molecule/molecule.vcproj svneol=native#text/plain
-misc/win32-msvc8/nastran2g/nastran2g.vcproj -text
-misc/win32-msvc8/nirt/nirt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/nmg2bot/nmg2bot.vcproj -text
-misc/win32-msvc8/nmg2rib/nmg2rib.vcproj -text
-misc/win32-msvc8/nmg2sgp/nmg2sgp.vcproj -text
-misc/win32-msvc8/nmgmodel/nmgmodel.vcproj svneol=native#text/plain
-misc/win32-msvc8/opennurbs/opennurbs.vcproj -text
-misc/win32-msvc8/orle2fb/orle2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/picket_fence/picket_fence.vcproj svneol=native#text/plain
-misc/win32-msvc8/pipe/pipe.vcproj svneol=native#text/plain
-misc/win32-msvc8/pipetest/pipetest.vcproj svneol=native#text/plain
-misc/win32-msvc8/pix2asc/pix2asc.vcproj -text
-misc/win32-msvc8/pix2bw/pix2bw.vcproj -text
-misc/win32-msvc8/pix2fb/pix2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pix2g/pix2g.vcproj svneol=native#text/plain
-misc/win32-msvc8/pixautosize/pixautosize.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pixcmp/pixcmp.vcproj svneol=native#text/plain
-misc/win32-msvc8/pixflip2fb/pixflip2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pixmatte/pixmatte.vcproj -text
-misc/win32-msvc8/pl2fb/pl2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/ply2g/ply2g.vcproj -text
-misc/win32-msvc8/png2fb/png2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/polar2fb/polar2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/poly2bot/poly2bot.vcproj -text
-misc/win32-msvc8/pp2fb/pp2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/pyramid/pyramid.vcproj svneol=native#text/plain
-misc/win32-msvc8/rawbot/rawbot.vcproj svneol=native#text/plain
-misc/win32-msvc8/rle2fb/rle2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/room/room.vcproj svneol=native#text/plain
-misc/win32-msvc8/rt/rt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rt_bot_faces/rt_bot_faces.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtarea/rtarea.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtcell/rtcell.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtcheck/rtcheck.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtedge/rtedge.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtfrac/rtfrac.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtg3/rtg3.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rthide/rthide.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtmlt/rtmlt.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtpp/rtpp.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtrad/rtrad.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtrange/rtrange.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtray/rtray.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtsil/rtsil.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtweight/rtweight.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/rtxray/rtxray.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/sketch/sketch.vcproj svneol=native#text/plain
-misc/win32-msvc8/sphflake/sphflake.vcproj svneol=native#text/plain
-misc/win32-msvc8/spltest/spltest.vcproj svneol=native#text/plain
-misc/win32-msvc8/spm2fb/spm2fb.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/stl2g/stl2g.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tankill2g/tankill2g.vcproj -text
-misc/win32-msvc8/tclpipe/tclpipe.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tclsh/library/installTree.tcl svneol=native#text/plain
-misc/win32-msvc8/tclsh/tclsh.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tclstub/tclstub.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tea/tea.vcproj svneol=native#text/plain
-misc/win32-msvc8/tea_nmg/tea_nmg.vcproj svneol=native#text/plain
-misc/win32-msvc8/terrain/terrain.vcproj svneol=native#text/plain
-misc/win32-msvc8/tire/tire.vcproj svneol=native#text/plain
-misc/win32-msvc8/tkhtml/tkhtml.vcproj svneol=native#text/plain
-misc/win32-msvc8/tkpng/tkpng.vcproj svneol=native#text/plain
-misc/win32-msvc8/tkstub/tkstub.vcproj svneol=CRLF#text/plain eol=crlf
-misc/win32-msvc8/tktable/tktable.vcproj svneol=native#text/plain
-misc/win32-msvc8/torii/torii.vcproj svneol=native#text/plain
-misc/win32-msvc8/tube/tube.vcproj svneol=native#text/plain
-misc/win32-msvc8/vegetation/vegetation.vcproj svneol=native#text/plain
-misc/win32-msvc8/vg2g/vg2g.vcproj -text
-misc/win32-msvc8/viewpoint2g/viewpoint2g.vcproj -text
-misc/win32-msvc8/wavy/wavy.vcproj svneol=native#text/plain
-misc/win32-msvc8/wdb_example/wdb_example.vcproj svneol=native#text/plain
-misc/win32-msvc8/window/window.vcproj svneol=native#text/plain
-misc/win32-msvc8/window_frame/window_frame.vcproj svneol=native#text/plain
-misc/win32-msvc8/wire/wire.vcproj svneol=native#text/plain
-misc/win32-msvc8/wish/wish.vcproj svneol=CRLF#text/plain eol=crlf
 pix/Makefile.am svneol=native#text/plain
 pix/bldg391.log svneol=native#text/plain
 pix/bldg391.pix -text svneol=unset#image/x-rgb
