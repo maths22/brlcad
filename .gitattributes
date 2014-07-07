@@ -3008,6 +3008,7 @@ src/bwish/tcl.c svneol=native#text/plain
 src/bwish/unixMain.c svneol=native#text/plain
 src/bwish/winMain.c svneol=native#text/plain
 src/conv/3dm/3dm-g.cpp svneol=native#text/plain
+src/conv/3dm/CMakeLists.txt svneol=native#text/plain
 src/conv/3dm/conv3dm-g.cpp svneol=native#text/plain
 src/conv/3dm/conv3dm-g.hpp svneol=native#text/plain
 src/conv/CMakeLists.txt svneol=native#text/plain
