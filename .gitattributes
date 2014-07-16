@@ -4506,6 +4506,7 @@ src/liboptical/vers.c svneol=native#text/plain
 src/liboptical/wray.c svneol=native#text/plain
 src/libpc/CMakeLists.txt svneol=native#text/plain
 src/libpc/cartesian-heart.cpp svneol=native#text/plain
+src/libpc/domain_constraint_propagator.cpp svneol=native#text/plain
 src/libpc/gecode_librt_test.cpp svneol=native#text/plain
 src/libpc/gecode_solver_test.cpp svneol=native#text/plain
 src/libpc/solver_test.cpp svneol=native#text/plain
