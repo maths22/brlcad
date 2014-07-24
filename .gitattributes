@@ -3012,6 +3012,7 @@ src/conv/3dm/conv3dm-g.cpp svneol=native#text/plain
 src/conv/3dm/conv3dm-g.hpp svneol=native#text/plain
 src/conv/3dm/solidity.cpp svneol=native#text/plain
 src/conv/3dm/solidity.h svneol=native#text/plain
+src/conv/3dm/test_solidity.cpp svneol=native#text/plain
 src/conv/CMakeLists.txt svneol=native#text/plain
 src/conv/Formats.csv svneol=native#text/plain
 src/conv/asc/asc2dsp.c svneol=native#text/plain
