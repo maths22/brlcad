@@ -4079,7 +4079,6 @@ src/libdm/tcl.c svneol=native#text/plain
 src/libdm/vers.c svneol=native#text/plain
 src/libfb/CMakeLists.txt svneol=native#text/plain
 src/libfb/asize.c svneol=native#text/plain
-src/libfb/dmdfb.h svneol=native#text/plain
 src/libfb/fb_generic.c svneol=native#text/plain
 src/libfb/fb_log.c svneol=native#text/plain
 src/libfb/fb_obj.c svneol=native#text/plain
