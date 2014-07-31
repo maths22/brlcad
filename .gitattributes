@@ -4112,6 +4112,7 @@ src/libfft/splitdit.c svneol=native#text/plain
 src/libfft/splitditc.c svneol=native#text/plain
 src/libgcv/CMakeLists.txt svneol=native#text/plain
 src/libgcv/NOTES svneol=native#text/plain
+src/libgcv/bot_solidity.c svneol=native#text/plain
 src/libgcv/bot_solidity.h svneol=native#text/plain
 src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
