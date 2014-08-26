@@ -3795,6 +3795,7 @@ src/gtools/gdiff2/gdiff2.h svneol=native#text/plain
 src/gtools/gdiff2/merge.c svneol=native#text/plain
 src/gtools/gdiff2/tests/00_moss-control.asc svneol=native#text/plain
 src/gtools/gdiff2/tests/01_moss-diff.asc svneol=native#text/plain
+src/gtools/gdiff2/tests/02_moss-3diff.asc svneol=native#text/plain
 src/gtools/gdiff2/utility.c svneol=native#text/plain
 src/gtools/glint.c svneol=native#text/plain
 src/gtools/gqa.c svneol=native#text/plain
