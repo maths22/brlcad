@@ -2033,6 +2033,7 @@ misc/pkgconfig/librt.pc.in svneol=native#text/plain
 misc/pkgconfig/libwdb.pc.in svneol=native#text/plain
 misc/svn2git/README svneol=native#text/plain
 misc/svn2git/account-map svneol=native#text/plain
+misc/svn2git/archive_branches.sh svneol=native#text/x-sh
 misc/svn2git/rules svneol=native#text/plain
 misc/svn2git/svnlog2csv svneol=native#text/plain
 misc/tools/CMakeLists.txt svneol=native#text/plain
