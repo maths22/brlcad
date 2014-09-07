@@ -2035,6 +2035,7 @@ misc/svn2git/README svneol=native#text/plain
 misc/svn2git/account-map svneol=native#text/plain
 misc/svn2git/rules svneol=native#text/plain
 misc/svn2git/rules.brlcad_branches svneol=native#text/plain
+misc/svn2git/svnlog2csv svneol=native#text/plain
 misc/tools/CMakeLists.txt svneol=native#text/plain
 misc/tools/astyle.dist svneol=native#text/plain
 misc/tools/astyle/ASBeautifier.cpp svneol=native#text/plain
