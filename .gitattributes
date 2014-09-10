@@ -1725,7 +1725,6 @@ include/nmg.h svneol=native#text/plain
 include/nurb.h svneol=native#text/plain
 include/obj.h svneol=native#text/plain
 include/optical.h svneol=native#text/plain
-include/orle.h svneol=native#text/plain
 include/pc.h svneol=native#text/plain
 include/photonmap.h svneol=native#text/plain
 include/pkg.h svneol=native#text/plain
