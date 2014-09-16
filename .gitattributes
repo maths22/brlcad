@@ -4131,6 +4131,7 @@ src/libfb/if_remote.c svneol=native#text/plain
 src/libfb/if_stack.c svneol=native#text/plain
 src/libfb/if_tk.c svneol=native#text/plain
 src/libfb/if_wgl.c svneol=native#text/plain
+src/libfb/osg_fb_manipulator.h svneol=native#text/plain
 src/libfb/tcl.c svneol=native#text/plain
 src/libfb/vers.c svneol=native#text/plain
 src/libfft/CMakeLists.txt svneol=native#text/plain
