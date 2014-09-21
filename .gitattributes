@@ -8594,6 +8594,7 @@ src/other/openscenegraph/src/osgGA/TrackballManipulator.cpp svneol=native#text/p
 src/other/openscenegraph/src/osgGA/UFOManipulator.cpp svneol=native#text/plain
 src/other/openscenegraph/src/osgGA/Version.cpp svneol=native#text/plain
 src/other/openscenegraph/src/osgPlugins/CMakeLists.txt svneol=native#text/plain
+src/other/openscenegraph/src/osgPlugins/Path_Setup.cmake svneol=native#text/plain
 src/other/openscenegraph/src/osgPlugins/freetype/CMakeLists.txt svneol=native#text/plain
 src/other/openscenegraph/src/osgPlugins/freetype/FreeTypeFont.cpp svneol=native#text/plain
 src/other/openscenegraph/src/osgPlugins/freetype/FreeTypeFont.h svneol=native#text/plain
