@@ -2698,6 +2698,10 @@ misc/win32-msvc/Dll/TclDummies.c svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.def svneol=native#text/plain
 misc/win32-msvc/Dll/brlcad.rc svneol=CRLF#text/plain eol=crlf
 misc/win32-msvc/bootstrap.cpp svneol=native#text/plain
+misc/wix/License.rtf svneol=native#text/rtf
+misc/wix/brlcad_banner.bmp -text svneol=unset#image/bmp
+misc/wix/brlcad_dialog.bmp -text svneol=unset#image/bmp
+misc/wix/brlcad_product.ico -text svneol=unset#image/x-icon
 regress/CMakeLists.txt svneol=native#text/plain
 regress/analyze.asc svneol=native#text/plain
 regress/asc2dsp.sh svneol=native#text/x-sh
