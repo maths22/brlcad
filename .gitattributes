@@ -1677,6 +1677,7 @@ include/bu/sort.h svneol=native#text/plain
 include/bu/str.h svneol=native#text/plain
 include/bu/time.h svneol=native#text/plain
 include/bu/units.h svneol=native#text/plain
+include/bu/version.h svneol=native#text/plain
 include/bu/vfont.h svneol=native#text/plain
 include/bu/vlb.h svneol=native#text/plain
 include/bu/vls.h svneol=native#text/plain
