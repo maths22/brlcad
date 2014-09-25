@@ -10,9 +10,9 @@ dnl Copyright:
 dnl   Guido Tack, 2004, 2005
 dnl
 dnl Last modified:
-dnl   $Date: 2013-07-23 14:30:31 +0200 (Tue, 23 Jul 2013) $
+dnl   $Date: 2014-08-28 14:37:14 +0200 (Thu, 28 Aug 2014) $
 dnl   by $Author: schulte $
-dnl   $Revision: 13938 $
+dnl   $Revision: 14204 $
 dnl
 dnl This file is part of Gecode, the generic constraint
 dnl development environment:
@@ -39,13 +39,13 @@ dnl WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 dnl
 dnl
 
-AC_REVISION([$Id: configure.ac 13938 2013-07-23 12:30:31Z schulte $])
+AC_REVISION([$Id: configure.ac 14204 2014-08-28 12:37:14Z schulte $])
 AC_PREREQ(2.53)
-AC_INIT(GECODE, 4.2.1, users@gecode.org)
+AC_INIT(GECODE, 4.3.0, users@gecode.org)
 AC_CONFIG_HEADERS([gecode/support/config.hpp])
 AC_CONFIG_SRCDIR(gecode/kernel.hh)
 
-ac_gecode_soversion=36
+ac_gecode_soversion=37
 AC_SUBST(GECODE_SOVERSION, ${ac_gecode_soversion})
 ac_gecode_flatzincversion=1.6
 AC_SUBST(GECODE_FLATZINC_VERSION, ${ac_gecode_flatzincversion})
@@ -322,10 +322,7 @@ AC_SUBST(ALLVIS, ${ac_gecode_vis})
 
 VERSION_DASHES=`echo $PACKAGE_VERSION | sed -e s/\\\\./-/g`
 
-ARR=($(echo $PACKAGE_VERSION | sed 's/\./ /g'))
-changequote(,)
-PACKAGE_VERSION_NUMBER=$(expr $(expr $(expr ${ARR[0]} "*" 100000) + $(expr ${ARR[1]} "*" 100)) + ${ARR[2]})
-changequote([,])
+PACKAGE_VERSION_NUMBER=`echo $PACKAGE_VERSION | awk -F. '{print $1 * 100000 + $2 * 100 + $3}'`
 
 AC_DEFINE_UNQUOTED(GECODE_VERSION,
   "${PACKAGE_VERSION}",

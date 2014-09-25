@@ -11,8 +11,8 @@
  *     Vincent Barichard, 2012
  *
  *  Last modified:
- *     $Date: 2013-07-23 14:31:03 +0200 (Tue, 23 Jul 2013) $ by $Author: schulte $
- *     $Revision: 13939 $
+ *     $Date: 2014-04-28 20:54:50 +0200 (Mon, 28 Apr 2014) $ by $Author: schulte $
+ *     $Revision: 14116 $
  *
  *  This file is part of Gecode, the generic constraint
  *  development environment:
@@ -1650,7 +1650,7 @@ namespace Gecode {
       SEL_SPLIT_MIN, ///< Select values not greater than mean of smallest and largest value
       SEL_SPLIT_MAX, ///< Select values greater than mean of smallest and largest value
       SEL_SPLIT_RND,  ///< Select values randomly which are not greater or not smaller than mean of largest and smallest value
-      SEL_VAL_COMMIT, ///< Select value according to user-defined functions
+      SEL_VAL_COMMIT  ///< Select value according to user-defined functions
     };
   protected:
     /// Which value to select
