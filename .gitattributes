@@ -4436,6 +4436,7 @@ src/libged/showmats.c svneol=native#text/plain
 src/libged/simulate/collision.cpp svneol=native#text/plain
 src/libged/simulate/collision.hpp svneol=native#text/plain
 src/libged/simulate/physics_world.cpp svneol=native#text/plain
+src/libged/simulate/physics_world.hpp svneol=native#text/plain
 src/libged/simulate/simrt.c svneol=native#text/plain
 src/libged/simulate/simrt.h svneol=native#text/plain
 src/libged/simulate/simulate.cpp svneol=native#text/plain
