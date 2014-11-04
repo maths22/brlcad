@@ -12020,6 +12020,7 @@ src/qbrlcad/cadconsole.h svneol=native#text/plain
 src/qbrlcad/cadimport.cxx svneol=native#text/plain
 src/qbrlcad/cadimport.h svneol=native#text/plain
 src/qbrlcad/cadresources.qrc svneol=native#text/plain
+src/qbrlcad/cadstyle.qss svneol=native#text/plain
 src/qbrlcad/cadtreemodel.cxx svneol=native#text/plain
 src/qbrlcad/cadtreemodel.h svneol=native#text/plain
 src/qbrlcad/cadtreenode.cxx svneol=native#text/plain
