@@ -12030,6 +12030,7 @@ src/qbrlcad/cadtreeview.cxx svneol=native#text/plain
 src/qbrlcad/cadtreeview.h svneol=native#text/plain
 src/qbrlcad/console.cxx svneol=native#text/plain
 src/qbrlcad/console.h svneol=native#text/plain
+src/qbrlcad/fonts/ProFont.ttf -text
 src/qbrlcad/images/primitives/air.png -text svneol=unset#image/png
 src/qbrlcad/images/primitives/airregion.png -text svneol=unset#image/png
 src/qbrlcad/images/primitives/arb4.png -text svneol=unset#image/png
