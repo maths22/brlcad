@@ -12762,6 +12762,7 @@ src/tclscripts/util/CMakeLists.txt svneol=native#text/plain
 src/tclscripts/util/expand_int_ranges.tcl svneol=native#text/plain
 src/tclscripts/util/getopt.tcl svneol=native#text/plain
 src/tclscripts/util/luniq.tcl svneol=native#text/plain
+src/tclscripts/util/regionstobots.tcl svneol=native#text/plain
 src/tclscripts/vmath.tcl svneol=native#text/plain
 src/util/CMakeLists.txt svneol=native#text/plain
 src/util/admin-db.cpp svneol=native#text/plain
