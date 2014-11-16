@@ -2704,6 +2704,7 @@ misc/tools/xmltools/libxslt/src/xsltutils.c svneol=native#text/plain
 misc/tools/xmltools/libxslt/xsltconfig.h.in svneol=native#text/plain
 misc/tools/xmltools/xmllint.c svneol=native#text/plain
 misc/tools/xmltools/xsltproc.c svneol=native#text/plain
+misc/uncpowerplant2g.sh svneol=native#text/x-sh
 misc/win32-msvc/CMakeLists.txt svneol=native#text/plain
 misc/win32-msvc/Dll/BrlcadCore.def svneol=native#text/plain
 misc/win32-msvc/Dll/BrlcadCore.rc -text
