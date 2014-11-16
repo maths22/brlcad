@@ -12017,6 +12017,7 @@ src/qbrlcad/QFlowLayout.cxx svneol=native#text/plain
 src/qbrlcad/QFlowLayout.h svneol=native#text/plain
 src/qbrlcad/QToolPalette.cxx svneol=native#text/plain
 src/qbrlcad/QToolPalette.h svneol=native#text/plain
+src/qbrlcad/TODO svneol=native#text/plain
 src/qbrlcad/cadapp.cxx svneol=native#text/plain
 src/qbrlcad/cadapp.h svneol=native#text/plain
 src/qbrlcad/cadappexec.cxx svneol=native#text/plain
