@@ -3218,6 +3218,7 @@ src/conv/patch/rpatch.c svneol=native#text/plain
 src/conv/patch/rpatch.f svneol=native#text/plain
 src/conv/ply/CMakeLists.txt svneol=native#text/plain
 src/conv/ply/LICENSE svneol=native#text/plain
+src/conv/ply/g-ply.c svneol=native#text/plain
 src/conv/ply/ply-g.c svneol=native#text/plain
 src/conv/ply/rply.c svneol=native#text/plain
 src/conv/ply/rply.h svneol=native#text/plain
