@@ -4870,6 +4870,7 @@ src/librtserver/rtserver.c svneol=native#text/plain
 src/librtserver/rtserverTest.c svneol=native#text/plain
 src/libsysv/CMakeLists.txt svneol=native#text/plain
 src/libsysv/memset.c svneol=native#text/plain
+src/libsysv/setenv.c svneol=native#text/plain
 src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
