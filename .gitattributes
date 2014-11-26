@@ -3979,6 +3979,8 @@ src/libbrep/opennurbs_ext.cpp svneol=native#text/plain
 src/libbrep/opennurbs_fit.cpp svneol=native#text/plain
 src/libbrep/opennurbs_fit.h svneol=native#text/plain
 src/libbrep/px_event.cpp svneol=native#text/plain
+src/libbrep/shape_recognition.cpp svneol=native#text/plain
+src/libbrep/shape_recognition.h svneol=native#text/plain
 src/libbrep/ssx_event.cpp svneol=native#text/plain
 src/libbrep/surface_tree_queue_tests.patch svneol=native#text/plain
 src/libbrep/test_curve_intersect.cpp svneol=native#text/plain
@@ -4841,6 +4843,7 @@ src/librt/tcl.c svneol=native#text/plain
 src/librt/test_bot2nurbs.cpp svneol=native#text/plain
 src/librt/test_nurbsfit.cpp svneol=native#text/plain
 src/librt/test_root3-subd.cpp svneol=native#text/plain
+src/librt/test_shape_recognition.cpp svneol=native#text/plain
 src/librt/tests/CMakeLists.txt svneol=native#text/plain
 src/librt/tests/arb_intersect.g -text
 src/librt/tests/brep_boolean_tests.g -text
