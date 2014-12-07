@@ -4061,6 +4061,7 @@ src/libbu/rb_rotate.c svneol=native#text/plain
 src/libbu/rb_search.c svneol=native#text/plain
 src/libbu/rb_walk.c svneol=native#text/plain
 src/libbu/realpath.c svneol=native#text/plain
+src/libbu/scan.c svneol=native#text/plain
 src/libbu/semaphore.c svneol=native#text/plain
 src/libbu/simd.c svneol=native#text/plain
 src/libbu/sort.c svneol=native#text/x-csrc
