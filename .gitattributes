@@ -12005,6 +12005,7 @@ src/proc-db/naca/CMakeLists.txt svneol=native#text/plain
 src/proc-db/naca/epspsi.c svneol=native#text/plain
 src/proc-db/naca/naca.h svneol=native#text/plain
 src/proc-db/naca/naca456.c svneol=native#text/plain
+src/proc-db/naca/nacax.c svneol=native#text/plain
 src/proc-db/naca/splprocs.c svneol=native#text/plain
 src/proc-db/nmgmodel.c svneol=native#text/plain
 src/proc-db/pdb-g.c svneol=native#text/plain
