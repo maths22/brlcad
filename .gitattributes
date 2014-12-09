@@ -3913,6 +3913,7 @@ src/libbn/bn_private.h svneol=native#text/plain
 src/libbn/bntester.c svneol=native#text/plain
 src/libbn/bntester.dat svneol=native#text/plain
 src/libbn/chull.c svneol=native#text/plain
+src/libbn/chull3d.c svneol=native#text/plain
 src/libbn/clip.c svneol=native#text/plain
 src/libbn/complex.c svneol=native#text/plain
 src/libbn/font.c svneol=native#text/plain
