@@ -7336,7 +7336,6 @@ src/other/libpng/scripts/makefile.cegcc svneol=native#text/plain
 src/other/libpng/scripts/makefile.darwin svneol=native#text/plain
 src/other/libpng/scripts/makefile.dec svneol=native#text/plain
 src/other/libpng/scripts/makefile.dj2 svneol=native#text/plain
-src/other/libpng/scripts/makefile.elf svneol=native#text/plain
 src/other/libpng/scripts/makefile.freebsd svneol=native#text/plain
 src/other/libpng/scripts/makefile.gcc svneol=native#text/plain
 src/other/libpng/scripts/makefile.hp64 svneol=native#text/plain
