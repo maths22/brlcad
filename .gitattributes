@@ -3967,6 +3967,7 @@ src/libbn/tabdata.c svneol=native#text/plain
 src/libbn/tcl.c svneol=native#text/plain
 src/libbn/tests/CMakeLists.txt svneol=native#text/plain
 src/libbn/tests/bn_chull.c svneol=native#text/plain
+src/libbn/tests/bn_chull3d.c svneol=native#text/plain
 src/libbn/tests/bn_chull_test003_bot.asc svneol=native#text/plain
 src/libbn/tests/bn_chull_test004_bot.asc svneol=native#text/plain
 src/libbn/tests/bn_complex.c svneol=native#text/plain
