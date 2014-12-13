@@ -737,6 +737,7 @@ doc/docbook/system/man1/en/fbstretch.xml svneol=native#text/xml
 doc/docbook/system/man1/en/fbzoom.xml svneol=native#text/xml
 doc/docbook/system/man1/en/firpass.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-acad.xml svneol=native#text/xml
+doc/docbook/system/man1/en/g-dot.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-dxf.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-egg.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-euclid.xml svneol=native#text/xml
