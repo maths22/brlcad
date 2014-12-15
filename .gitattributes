@@ -751,6 +751,7 @@ doc/docbook/system/man1/en/g-step.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-stl.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-tankill.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-var.xml svneol=native#text/xml
+doc/docbook/system/man1/en/g-voxel.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-vrml.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g-x3d.xml svneol=native#text/xml
 doc/docbook/system/man1/en/g2asc.xml svneol=native#text/plain
