@@ -938,6 +938,7 @@ doc/docbook/system/mann/en/bb.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bev.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bo.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bolt.xml svneol=native#text/xml
+doc/docbook/system/mann/en/bot.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bot_condense.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bot_decimate.xml svneol=native#text/xml
 doc/docbook/system/mann/en/bot_face_fuse.xml svneol=native#text/xml
