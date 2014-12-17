@@ -3282,7 +3282,6 @@ src/conv/step/ap214-g/CMakeLists.txt svneol=native#text/plain
 src/conv/step/ap214e3_elements.txt svneol=native#text/plain
 src/conv/step/ap242-g/CMakeLists.txt svneol=native#text/plain
 src/conv/step/ap242-g/Factory.cpp svneol=native#text/plain
-src/conv/step/ap242-g/Factory.h svneol=native#text/plain
 src/conv/step/ap242-g/GlobalUnitAssignedContext.cpp svneol=native#text/plain
 src/conv/step/ap242-g/GlobalUnitAssignedContext.h svneol=native#text/plain
 src/conv/step/ap242-g/MeasureValue.cpp svneol=native#text/plain
