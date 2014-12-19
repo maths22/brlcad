@@ -55,6 +55,13 @@ db/ktank.asc svneol=native#text/plain
 db/lgt-test.asc svneol=native#text/plain
 db/m35.asc svneol=native#text/plain
 db/moss.asc svneol=native#text/plain
+db/nist/CMakeLists.txt svneol=native#text/plain
+db/nist/NIST_MBE_PMI_1.stp svneol=native#text/plain
+db/nist/NIST_MBE_PMI_2.stp svneol=native#text/plain
+db/nist/NIST_MBE_PMI_3.stp svneol=native#text/plain
+db/nist/NIST_MBE_PMI_4.stp svneol=native#text/plain
+db/nist/NIST_MBE_PMI_5.stp svneol=native#text/plain
+db/nist/README svneol=native#text/plain
 db/operators.asc svneol=native#text/plain
 db/pic.asc svneol=native#text/plain
 db/pinewood.asc -text
