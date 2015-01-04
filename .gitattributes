@@ -7377,7 +7377,7 @@ src/other/libpng/scripts/SCOPTIONS.ppc svneol=native#text/plain
 src/other/libpng/scripts/checksym.awk svneol=native#text/plain
 src/other/libpng/scripts/def.c svneol=native#text/plain
 src/other/libpng/scripts/descrip.mms -text
-src/other/libpng/scripts/dfn.awk -text svneol=native#application/octet-stream
+src/other/libpng/scripts/dfn.awk -text svneol=unset#application/octet-stream
 src/other/libpng/scripts/intprefix.c svneol=native#text/plain
 src/other/libpng/scripts/libpng-config-body.in svneol=native#text/plain
 src/other/libpng/scripts/libpng-config-head.in svneol=native#text/plain
