@@ -7375,10 +7375,10 @@ src/other/libpng/projects/vstudio/zlib/zlib.vcxproj svneol=CRLF#text/plain eol=c
 src/other/libpng/scripts/README.txt svneol=native#text/plain
 src/other/libpng/scripts/SCOPTIONS.ppc svneol=native#text/plain
 src/other/libpng/scripts/checksym.awk svneol=native#text/plain
-src/other/libpng/scripts/def.dfn svneol=native#text/plain
+src/other/libpng/scripts/def.c svneol=native#text/plain
 src/other/libpng/scripts/descrip.mms -text
 src/other/libpng/scripts/dfn.awk svneol=native#text/plain
-src/other/libpng/scripts/intprefix.dfn svneol=native#text/plain
+src/other/libpng/scripts/intprefix.c svneol=native#text/plain
 src/other/libpng/scripts/libpng-config-body.in svneol=native#text/plain
 src/other/libpng/scripts/libpng-config-head.in svneol=native#text/plain
 src/other/libpng/scripts/libpng.pc.in svneol=native#text/plain
@@ -7432,12 +7432,12 @@ src/other/libpng/scripts/pnglibconf.dfa svneol=native#text/plain
 src/other/libpng/scripts/pnglibconf.h.prebuilt svneol=native#text/plain
 src/other/libpng/scripts/pnglibconf.mak svneol=native#text/plain
 src/other/libpng/scripts/pngwin.rc svneol=CRLF#text/plain eol=crlf
-src/other/libpng/scripts/prefix.dfn svneol=native#text/plain
+src/other/libpng/scripts/prefix.c svneol=native#text/plain
 src/other/libpng/scripts/smakefile.ppc -text
-src/other/libpng/scripts/sym.dfn svneol=native#text/plain
+src/other/libpng/scripts/sym.c svneol=native#text/plain
+src/other/libpng/scripts/symbols.c svneol=native#text/plain
 src/other/libpng/scripts/symbols.def svneol=native#text/plain
-src/other/libpng/scripts/symbols.dfn svneol=native#text/plain
-src/other/libpng/scripts/vers.dfn svneol=native#text/plain
+src/other/libpng/scripts/vers.c svneol=native#text/plain
 src/other/libpng/test-driver svneol=native#text/plain
 src/other/libpng/tests/pngimage-full svneol=native#text/plain
 src/other/libpng/tests/pngimage-quick svneol=native#text/plain
