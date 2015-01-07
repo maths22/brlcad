@@ -1750,6 +1750,7 @@ include/fbmsg.h svneol=native#text/plain
 include/fbserv_obj.h svneol=native#text/plain
 include/fft.h svneol=native#text/plain
 include/gcv.h svneol=native#text/plain
+include/gcv_util.h svneol=native#text/plain
 include/ged.h svneol=native#text/plain
 include/icv.h svneol=native#text/plain
 include/libtermio.h svneol=native#text/plain
