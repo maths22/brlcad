@@ -62,6 +62,11 @@ db/nist/NIST_MBE_PMI_3.stp svneol=native#text/plain
 db/nist/NIST_MBE_PMI_4.stp svneol=native#text/plain
 db/nist/NIST_MBE_PMI_5.stp svneol=native#text/plain
 db/nist/README svneol=native#text/plain
+db/nist/pdf/1.pdf -text svneol=unset#application/pdf
+db/nist/pdf/2.pdf -text svneol=unset#application/pdf
+db/nist/pdf/3.pdf -text svneol=unset#application/pdf
+db/nist/pdf/4.pdf -text svneol=unset#application/pdf
+db/nist/pdf/5.pdf -text svneol=unset#application/pdf
 db/operators.asc svneol=native#text/plain
 db/pic.asc svneol=native#text/plain
 db/pinewood.asc -text
