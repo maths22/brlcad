@@ -48,6 +48,7 @@ db/demo.asc svneol=native#text/plain
 db/faa/Business_Jet.fg4 svneol=native#text/plain
 db/faa/CMakeLists.txt svneol=native#text/plain
 db/faa/Generic_Twin.fg4 svneol=native#text/plain
+db/faa/README svneol=native#text/plain
 db/galileo.asc svneol=native#text/plain
 db/goliath.asc svneol=native#text/plain
 db/havoc.asc svneol=native#text/plain
