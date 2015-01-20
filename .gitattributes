@@ -4281,6 +4281,7 @@ src/libgcv/gcv.c svneol=native#text/plain
 src/libgcv/plugin.c svneol=native#text/plain
 src/libgcv/plugin.h svneol=native#text/plain
 src/libgcv/plugin/setup.cpp svneol=native#text/plain
+src/libgcv/plugin/stl/stl_export.c svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
 src/libgcv/region_end_mc.c svneol=native#text/plain
 src/libgcv/soup.h svneol=native#text/plain
