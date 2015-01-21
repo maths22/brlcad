@@ -4283,6 +4283,7 @@ src/libgcv/plugin.c svneol=native#text/plain
 src/libgcv/plugin.h svneol=native#text/plain
 src/libgcv/plugin/brlcad.c svneol=native#text/plain
 src/libgcv/plugin/setup.cpp svneol=native#text/plain
+src/libgcv/plugin/stl/stl_read.c svneol=native#text/plain
 src/libgcv/plugin/stl/stl_write.c svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
 src/libgcv/region_end_mc.c svneol=native#text/plain
