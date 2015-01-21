@@ -4278,6 +4278,7 @@ src/libgcv/bot_solidity.c svneol=native#text/plain
 src/libgcv/bot_solidity.h svneol=native#text/plain
 src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/gcv.c svneol=native#text/plain
+src/libgcv/gcv_private.h svneol=native#text/plain
 src/libgcv/plugin.c svneol=native#text/plain
 src/libgcv/plugin.h svneol=native#text/plain
 src/libgcv/plugin/setup.cpp svneol=native#text/plain
