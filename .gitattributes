@@ -9040,6 +9040,7 @@ src/other/stepcode/data/ap235/AP235_TC_engineering_properties_schema_20110222.ex
 src/other/stepcode/data/ap238/ap238-aim-long.exp svneol=native#text/plain
 src/other/stepcode/data/ap239/ap239_arm_lf.exp svneol=native#text/plain
 src/other/stepcode/data/ap240/AP240_aim_lf.exp svneol=native#text/plain
+src/other/stepcode/data/ap242/ap242_1_34_mim_lf.exp svneol=native#text/plain
 src/other/stepcode/data/cd209/ATS1-out.stp svneol=native#text/plain
 src/other/stepcode/data/cd209/ATS10-out.stp svneol=native#text/plain
 src/other/stepcode/data/cd209/ATS10Mod0-out.stp svneol=native#text/plain
