@@ -4053,6 +4053,7 @@ src/libbrep/opennurbs_fit.h svneol=native#text/plain
 src/libbrep/px_event.cpp svneol=native#text/plain
 src/libbrep/shape_recognition.cpp svneol=native#text/plain
 src/libbrep/shape_recognition.h svneol=native#text/plain
+src/libbrep/shape_recognition_cone.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_cylinder.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_planar.cpp svneol=native#text/plain
 src/libbrep/ssx_event.cpp svneol=native#text/plain
