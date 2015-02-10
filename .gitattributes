@@ -4056,6 +4056,7 @@ src/libbrep/shape_recognition.h svneol=native#text/plain
 src/libbrep/shape_recognition_cone.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_cylinder.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_planar.cpp svneol=native#text/plain
+src/libbrep/shape_recognition_sphere.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_util.cpp svneol=native#text/plain
 src/libbrep/ssx_event.cpp svneol=native#text/plain
 src/libbrep/surface_tree_queue_tests.patch svneol=native#text/plain
