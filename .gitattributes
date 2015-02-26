@@ -4019,6 +4019,7 @@ src/libbn/tests/bn_poly_quartic_roots.c svneol=native#text/plain
 src/libbn/tests/bn_poly_scale.c svneol=native#text/plain
 src/libbn/tests/bn_poly_sub.c svneol=native#text/plain
 src/libbn/tests/bn_poly_synthetic_div.c svneol=native#text/plain
+src/libbn/tests/bn_polygon_triangulate.c svneol=native#text/plain
 src/libbn/tests/bn_qmath.c svneol=native#text/plain
 src/libbn/tests/bn_tabdata.c svneol=native#text/plain
 src/libbn/tests/bn_tri_tri_isect.c svneol=native#text/plain
