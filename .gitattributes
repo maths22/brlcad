@@ -913,6 +913,7 @@ doc/docbook/system/man3/en/libwdb.xml svneol=native#text/xml
 doc/docbook/system/man3/en/redblack.xml svneol=native#text/xml
 doc/docbook/system/man5/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man5/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/system/man5/en/STEP.xml svneol=native#text/xml
 doc/docbook/system/man5/en/attributes.xml.in svneol=native#text/plain
 doc/docbook/system/man5/en/bw.xml svneol=native#text/xml
 doc/docbook/system/man5/en/cmap.xml svneol=native#text/xml
