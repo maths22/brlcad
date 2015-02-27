@@ -3339,7 +3339,6 @@ src/conv/step/g-ap214/Shape_Definition_Representation.cpp svneol=native#text/pla
 src/conv/step/g-ap214/g-ap214.cpp svneol=native#text/plain
 src/conv/step/g-ap242/AP242.h svneol=native#text/plain
 src/conv/step/g-ap242/CMakeLists.txt svneol=native#text/plain
-src/conv/step/g-ap242/ap242.exp svneol=native#text/plain
 src/conv/step/g-ap242/g-ap242.cpp svneol=native#text/plain
 src/conv/step/g-step/AP203.cpp svneol=native#text/plain
 src/conv/step/g-step/AP203.h svneol=native#text/plain
