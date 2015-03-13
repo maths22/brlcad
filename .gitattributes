@@ -4940,6 +4940,7 @@ src/librt/regionfix.c svneol=native#text/plain
 src/librt/roots.c svneol=native#text/plain
 src/librt/search.c svneol=native#text/plain
 src/librt/search.h svneol=native#text/plain
+src/librt/shape_recognition.cpp svneol=native#text/plain
 src/librt/shoot.c svneol=native#text/plain
 src/librt/spectrum.c svneol=native#text/plain
 src/librt/subd_test_bot.asc svneol=native#text/plain
@@ -4947,7 +4948,6 @@ src/librt/tcl.c svneol=native#text/plain
 src/librt/test_bot2nurbs.cpp svneol=native#text/plain
 src/librt/test_nurbsfit.cpp svneol=native#text/plain
 src/librt/test_root3-subd.cpp svneol=native#text/plain
-src/librt/test_shape_recognition.cpp svneol=native#text/plain
 src/librt/tests/CMakeLists.txt svneol=native#text/plain
 src/librt/tests/arb_intersect.g -text
 src/librt/tests/brep_boolean_tests.g -text
