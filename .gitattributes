@@ -4287,6 +4287,7 @@ src/libgcv/bot_solidity.c svneol=native#text/plain
 src/libgcv/bot_solidity.h svneol=native#text/plain
 src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/conv/brlcad.c svneol=native#text/plain
+src/libgcv/conv/fastgen4/NOTES svneol=native#text/plain
 src/libgcv/conv/fastgen4/fastgen4_read.c svneol=native#text/plain
 src/libgcv/conv/fastgen4/fastgen4_write.cpp svneol=native#text/plain
 src/libgcv/conv/obj/obj_read.c svneol=native#text/plain
