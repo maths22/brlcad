@@ -4344,6 +4344,7 @@ src/libgcv/poissonrecon/Time.cpp svneol=native#text/plain
 src/libgcv/poissonrecon/Time.h svneol=native#text/plain
 src/libgcv/poissonrecon/Vector.h svneol=native#text/plain
 src/libgcv/poissonrecon/Vector.inl svneol=native#text/plain
+src/libgcv/poissonrecon/license.txt svneol=native#text/plain
 src/libgcv/region_end.c svneol=native#text/plain
 src/libgcv/region_end_mc.c svneol=native#text/plain
 src/libgcv/screened_poisson.cpp svneol=native#text/plain
