@@ -5163,6 +5163,7 @@ src/nirt/showshot.c svneol=native#text/plain
 src/nirt/str_manip.c svneol=native#text/plain
 src/nirt/usrfmt.h svneol=native#text/plain
 src/other/CMakeLists.txt svneol=native#text/plain
+src/other/PoissonRecon.dist svneol=native#text/plain
 src/other/PoissonRecon/CMakeLists.txt svneol=native#text/plain
 src/other/PoissonRecon/LICENSE svneol=native#text/plain
 src/other/PoissonRecon/PoissonRecon.sln svneol=CRLF#text/plain eol=crlf
