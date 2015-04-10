@@ -4304,7 +4304,6 @@ src/libgcv/region_end_mc.c svneol=native#text/plain
 src/libgcv/setup.cpp svneol=native#text/plain
 src/libgcv/soup.h svneol=native#text/plain
 src/libgcv/test_bottess.c svneol=native#text/plain
-src/libgcv/test_screened_poisson.cpp svneol=native#text/plain
 src/libgcv/tri_intersect.c svneol=native#text/plain
 src/libgcv/tri_intersect.h svneol=native#text/plain
 src/libgcv/wfobj/obj_grammar.yy svneol=native#text/plain
