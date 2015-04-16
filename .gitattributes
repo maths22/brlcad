@@ -1825,6 +1825,7 @@ misc/CMake/Distcheck.cmake svneol=native#text/plain
 misc/CMake/DocBook.cmake svneol=native#text/plain
 misc/CMake/FindADAPTAGRAMS.cmake svneol=native#text/plain
 misc/CMake/FindASTYLE.cmake svneol=native#text/plain
+misc/CMake/FindEMBREE.cmake svneol=native#text/plain
 misc/CMake/FindFontconfig.cmake svneol=native#text/plain
 misc/CMake/FindGL.cmake svneol=native#text/plain
 misc/CMake/FindLEMON.cmake svneol=native#text/plain
