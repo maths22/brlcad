@@ -4161,6 +4161,7 @@ src/libbu/tests/bu_escape.c svneol=native#text/plain
 src/libbu/tests/bu_gethostname.c svneol=native#text/plain
 src/libbu/tests/bu_heap.c svneol=native#text/plain
 src/libbu/tests/bu_parallel.c svneol=native#text/plain
+src/libbu/tests/bu_path_component.c svneol=native#text/plain
 src/libbu/tests/bu_progname.c svneol=native#text/plain
 src/libbu/tests/bu_redblack.c svneol=native#text/plain
 src/libbu/tests/bu_semaphore.c svneol=native#text/plain
