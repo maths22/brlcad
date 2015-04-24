@@ -5949,6 +5949,7 @@ src/other/freetype/builds/atari/gen-purec-patch.sh svneol=native#text/x-sh
 src/other/freetype/builds/beos/beos-def.mk svneol=native#text/plain
 src/other/freetype/builds/beos/beos.mk svneol=native#text/plain
 src/other/freetype/builds/beos/detect.mk svneol=native#text/plain
+src/other/freetype/builds/cmake/iOS.cmake svneol=native#text/plain
 src/other/freetype/builds/compiler/ansi-cc.mk svneol=native#text/plain
 src/other/freetype/builds/compiler/bcc-dev.mk svneol=native#text/plain
 src/other/freetype/builds/compiler/bcc.mk svneol=native#text/plain
@@ -5977,6 +5978,7 @@ src/other/freetype/builds/mac/FreeType.ppc_carbon.make.txt svneol=native#text/pl
 src/other/freetype/builds/mac/FreeType.ppc_classic.make.txt svneol=native#text/plain
 src/other/freetype/builds/mac/README svneol=native#text/plain
 src/other/freetype/builds/mac/ascii2mpw.py svneol=native#text/plain
+src/other/freetype/builds/mac/freetype-Info.plist svneol=native#text/plain
 src/other/freetype/builds/mac/ftlib.prj.xml svneol=native#text/xml
 src/other/freetype/builds/mac/ftmac.c svneol=native#text/plain
 src/other/freetype/builds/modules.mk svneol=native#text/plain
@@ -6030,6 +6032,7 @@ src/other/freetype/builds/windows/vc2008/freetype.sln svneol=CRLF#text/plain eol
 src/other/freetype/builds/windows/vc2008/freetype.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/freetype/builds/windows/vc2008/index.html svneol=native#text/html
 src/other/freetype/builds/windows/vc2010/freetype.sln svneol=CRLF#text/plain eol=crlf
+src/other/freetype/builds/windows/vc2010/freetype.user.props svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/freetype.vcxproj svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/freetype.vcxproj.filters svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/index.html svneol=native#text/html
