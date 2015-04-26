@@ -928,6 +928,7 @@ doc/docbook/system/man1/en/wavelet.xml svneol=native#text/xml
 doc/docbook/system/man1/en/wdb_example.xml svneol=native#text/xml
 doc/docbook/system/man3/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man3/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/system/man3/en/TODO svneol=native#text/plain
 doc/docbook/system/man3/en/libbu.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libcursor.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libdm.xml svneol=native#text/xml
