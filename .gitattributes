@@ -146,9 +146,12 @@ doc/docbook/articles/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/en/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/en/TEMPLATE.xml svneol=native#text/xml
 doc/docbook/articles/en/about.xml svneol=native#text/xml
+doc/docbook/articles/en/animation_tutorial.xml svneol=native#text/xml
 doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
 doc/docbook/articles/en/build_region.xml svneol=native#text/xml
 doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
+doc/docbook/articles/en/images/Lee_tux.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/animtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/build_pattern_fig01.png -text
 doc/docbook/articles/en/images/build_pattern_fig02.png -text
 doc/docbook/articles/en/images/build_pattern_fig03.png -text
@@ -160,12 +163,23 @@ doc/docbook/articles/en/images/build_region_fig01.png -text
 doc/docbook/articles/en/images/build_region_fig02.png -text
 doc/docbook/articles/en/images/build_region_fig03.png -text
 doc/docbook/articles/en/images/build_region_fig04.png -text
+doc/docbook/articles/en/images/dagtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/ebm_primitive_fig01.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig02.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig03.png -text
+doc/docbook/articles/en/images/ell.mpg -text svneol=unset#video/mpeg
+doc/docbook/articles/en/images/ell_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/ell_ssm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/equation.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/film.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/fn.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/matrix.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/mgedrc_fig01.png -text svneol=unset#image/png
 doc/docbook/articles/en/images/mgedrc_fig02.png -text
 doc/docbook/articles/en/images/mgedrc_fig03.png -text
+doc/docbook/articles/en/images/moss.mpg -text svneol=unset#video/mpeg
+doc/docbook/articles/en/images/moss_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/moss_ssm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/nirt_fig01.png -text
 doc/docbook/articles/en/images/nirt_fig02.png -text
 doc/docbook/articles/en/images/nirt_fig03.png -text
@@ -239,6 +253,11 @@ doc/docbook/articles/en/images/tire_fig12.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/articles/en/images/tire_fig13.png -text
 doc/docbook/articles/en/images/tire_fig13.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/articles/en/images/tire_fig14.png -text
+doc/docbook/articles/en/images/trans.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/transboth.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/transboth_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/v_eqn1.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/v_eqn2.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/mgedrc.xml svneol=native#text/xml
 doc/docbook/articles/en/nirt.xml svneol=native#text/xml
 doc/docbook/articles/en/oed.xml svneol=native#text/xml
@@ -268,16 +287,6 @@ doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIII.xml svneol=native#text/xm
 doc/docbook/books/en/BRL-CAD_Tutorial_Series-VolumeIV.xml svneol=native#text/xml
 doc/docbook/books/en/CMakeLists.txt svneol=native#text/plain
 doc/docbook/books/en/HACKING_BRL-CAD.xml svneol=native#text/plain
-doc/docbook/books/en/animation_tutorial.xml svneol=native#text/xml
-doc/docbook/books/en/images/Lee_tux.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/animtbl.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/dagtbl.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/ell.mpg -text svneol=unset#video/mpeg
-doc/docbook/books/en/images/ell_sm.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/ell_ssm.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/equation.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/film.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/fn.gif -text svneol=unset#image/gif
 doc/docbook/books/en/images/hacking_brlcad_M1A1_9x10_300dpi_cc.png -text svneol=unset#image/png
 doc/docbook/books/en/images/hacking_brlcad_Sgi_cube_cc.png -text svneol=unset#image/png
 doc/docbook/books/en/images/hacking_brlcad_article_tire_pdf.png -text svneol=unset#image/png
@@ -303,13 +312,6 @@ doc/docbook/books/en/images/hacking_brlcad_teapot.png -text svneol=unset#image/p
 doc/docbook/books/en/images/hacking_brlcad_tracked_mine.png -text svneol=unset#image/png
 doc/docbook/books/en/images/hacking_brlcad_tutorial_1_pdf.png -text svneol=unset#image/png
 doc/docbook/books/en/images/hacking_brlcad_xyz.png -text svneol=unset#image/png
-doc/docbook/books/en/images/matrix.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/moss.mpg -text svneol=unset#video/mpeg
-doc/docbook/books/en/images/moss_sm.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/moss_ssm.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/trans.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/transboth.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/transboth_sm.gif -text svneol=unset#image/gif
 doc/docbook/books/en/images/tutorial_series_volIII_fig01.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig02.png -text
 doc/docbook/books/en/images/tutorial_series_volIII_fig03.png -text
@@ -359,8 +361,6 @@ doc/docbook/books/en/images/v4-image008.gif -text svneol=unset#image/gif
 doc/docbook/books/en/images/v4-image009.jpg -text svneol=unset#image/jpeg
 doc/docbook/books/en/images/v4-image010.jpg -text svneol=unset#image/jpeg
 doc/docbook/books/en/images/v4-image011.jpg -text svneol=unset#image/jpeg
-doc/docbook/books/en/images/v_eqn1.gif -text svneol=unset#image/gif
-doc/docbook/books/en/images/v_eqn2.gif -text svneol=unset#image/gif
 doc/docbook/books/en/libbu.xml svneol=native#text/xml
 doc/docbook/books/en/libdm.xml svneol=native#text/xml
 doc/docbook/books/en/shader.xml svneol=native#text/xml
