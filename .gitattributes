@@ -4140,7 +4140,7 @@ src/libbu/log.c svneol=native#text/plain
 src/libbu/magic.c svneol=native#text/plain
 src/libbu/malloc.c svneol=native#text/plain
 src/libbu/mappedfile.c svneol=native#text/plain
-src/libbu/mime.cmake.in svneol=native#text/plain
+src/libbu/mime.cmake svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
 src/libbu/nonie.r.12 -text
 src/libbu/observer.c svneol=native#text/plain
