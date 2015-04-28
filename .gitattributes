@@ -146,9 +146,13 @@ doc/docbook/articles/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/en/CMakeLists.txt svneol=native#text/plain
 doc/docbook/articles/en/TEMPLATE.xml svneol=native#text/xml
 doc/docbook/articles/en/about.xml svneol=native#text/xml
+doc/docbook/articles/en/animation_tutorial.xml svneol=native#text/xml
 doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
 doc/docbook/articles/en/build_region.xml svneol=native#text/xml
+doc/docbook/articles/en/camo_shader.xml svneol=native#text/xml
 doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
+doc/docbook/articles/en/images/Lee_tux.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/animtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/build_pattern_fig01.png -text
 doc/docbook/articles/en/images/build_pattern_fig02.png -text
 doc/docbook/articles/en/images/build_pattern_fig03.png -text
@@ -160,12 +164,23 @@ doc/docbook/articles/en/images/build_region_fig01.png -text
 doc/docbook/articles/en/images/build_region_fig02.png -text
 doc/docbook/articles/en/images/build_region_fig03.png -text
 doc/docbook/articles/en/images/build_region_fig04.png -text
+doc/docbook/articles/en/images/dagtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/ebm_primitive_fig01.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig02.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig03.png -text
+doc/docbook/articles/en/images/ell.mpg -text svneol=unset#video/mpeg
+doc/docbook/articles/en/images/ell_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/ell_ssm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/equation.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/film.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/fn.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/matrix.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/mgedrc_fig01.png -text svneol=unset#image/png
 doc/docbook/articles/en/images/mgedrc_fig02.png -text
 doc/docbook/articles/en/images/mgedrc_fig03.png -text
+doc/docbook/articles/en/images/moss.mpg -text svneol=unset#video/mpeg
+doc/docbook/articles/en/images/moss_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/moss_ssm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/nirt_fig01.png -text
 doc/docbook/articles/en/images/nirt_fig02.png -text
 doc/docbook/articles/en/images/nirt_fig03.png -text
@@ -239,6 +254,11 @@ doc/docbook/articles/en/images/tire_fig12.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/articles/en/images/tire_fig13.png -text
 doc/docbook/articles/en/images/tire_fig13.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/articles/en/images/tire_fig14.png -text
+doc/docbook/articles/en/images/trans.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/transboth.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/transboth_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/v_eqn1.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/v_eqn2.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/mgedrc.xml svneol=native#text/xml
 doc/docbook/articles/en/nirt.xml svneol=native#text/xml
 doc/docbook/articles/en/oed.xml svneol=native#text/xml
@@ -908,7 +928,10 @@ doc/docbook/system/man1/en/wavelet.xml svneol=native#text/xml
 doc/docbook/system/man1/en/wdb_example.xml svneol=native#text/xml
 doc/docbook/system/man3/CMakeLists.txt svneol=native#text/plain
 doc/docbook/system/man3/en/CMakeLists.txt svneol=native#text/plain
+doc/docbook/system/man3/en/TODO svneol=native#text/plain
+doc/docbook/system/man3/en/libbu.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libcursor.xml svneol=native#text/xml
+doc/docbook/system/man3/en/libdm.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libfb.xml svneol=native#text/xml
 doc/docbook/system/man3/en/liborle.xml svneol=native#text/xml
 doc/docbook/system/man3/en/libplot3.xml svneol=native#text/xml
@@ -1723,8 +1746,11 @@ include/bu/log.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
 include/bu/malloc.h svneol=native#text/plain
 include/bu/mapped_file.h svneol=native#text/plain
+include/bu/mime.types svneol=native#text/plain
+include/bu/mime_cad.types svneol=native#text/plain
 include/bu/parallel.h svneol=native#text/plain
 include/bu/parse.h svneol=native#text/plain
+include/bu/path.h svneol=native#text/plain
 include/bu/ptbl.h svneol=native#text/plain
 include/bu/rb.h svneol=native#text/plain
 include/bu/simd.h svneol=native#text/plain
@@ -4076,7 +4102,6 @@ src/libbu/avs.c svneol=native#text/plain
 src/libbu/b64.c svneol=native#text/plain
 src/libbu/backtrace.c svneol=native#text/plain
 src/libbu/badmagic.c svneol=native#text/plain
-src/libbu/basename.c svneol=native#text/plain
 src/libbu/bitv.c svneol=native#text/plain
 src/libbu/bomb.c svneol=native#text/plain
 src/libbu/booleanize.c svneol=native#text/plain
@@ -4090,7 +4115,6 @@ src/libbu/crashreport.c svneol=native#text/plain
 src/libbu/ctype.c svneol=native#text/plain
 src/libbu/date-time.c svneol=native#text/plain
 src/libbu/dirent.c svneol=native#text/plain
-src/libbu/dirname.c svneol=native#text/plain
 src/libbu/dlfcn.c svneol=native#text/plain
 src/libbu/encode.c svneol=native#text/plain
 src/libbu/endian.c svneol=native#text/plain
@@ -4119,12 +4143,14 @@ src/libbu/log.c svneol=native#text/plain
 src/libbu/magic.c svneol=native#text/plain
 src/libbu/malloc.c svneol=native#text/plain
 src/libbu/mappedfile.c svneol=native#text/plain
+src/libbu/mime.cmake.in svneol=native#text/plain
 src/libbu/mread.c svneol=native#text/plain
 src/libbu/nonie.r.12 -text
 src/libbu/observer.c svneol=native#text/plain
 src/libbu/parallel.c svneol=native#text/plain
 src/libbu/parallel.h svneol=native#text/plain
 src/libbu/parse.c svneol=native#text/plain
+src/libbu/path.c svneol=native#text/plain
 src/libbu/printb.c svneol=native#text/plain
 src/libbu/process.c svneol=native#text/plain
 src/libbu/progname.c svneol=native#text/plain
@@ -4161,9 +4187,11 @@ src/libbu/tests/bu_date-time.c svneol=native#text/x-csrc
 src/libbu/tests/bu_dirname.c svneol=native#text/plain
 src/libbu/tests/bu_encode.c svneol=native#text/plain
 src/libbu/tests/bu_escape.c svneol=native#text/plain
+src/libbu/tests/bu_file_mime.c svneol=native#text/plain
 src/libbu/tests/bu_gethostname.c svneol=native#text/plain
 src/libbu/tests/bu_heap.c svneol=native#text/plain
 src/libbu/tests/bu_parallel.c svneol=native#text/plain
+src/libbu/tests/bu_path_component.c svneol=native#text/plain
 src/libbu/tests/bu_progname.c svneol=native#text/plain
 src/libbu/tests/bu_redblack.c svneol=native#text/plain
 src/libbu/tests/bu_semaphore.c svneol=native#text/plain
@@ -4731,7 +4759,6 @@ src/librt/db_io.c svneol=native#text/plain
 src/librt/db_lookup.c svneol=native#text/plain
 src/librt/db_match.c svneol=native#text/plain
 src/librt/db_open.c svneol=native#text/plain
-src/librt/db_path.c svneol=native#text/plain
 src/librt/db_scan.c svneol=native#text/plain
 src/librt/db_tree.c svneol=native#text/plain
 src/librt/db_walk.c svneol=native#text/plain
@@ -5952,6 +5979,7 @@ src/other/freetype/builds/atari/gen-purec-patch.sh svneol=native#text/x-sh
 src/other/freetype/builds/beos/beos-def.mk svneol=native#text/plain
 src/other/freetype/builds/beos/beos.mk svneol=native#text/plain
 src/other/freetype/builds/beos/detect.mk svneol=native#text/plain
+src/other/freetype/builds/cmake/iOS.cmake svneol=native#text/plain
 src/other/freetype/builds/compiler/ansi-cc.mk svneol=native#text/plain
 src/other/freetype/builds/compiler/bcc-dev.mk svneol=native#text/plain
 src/other/freetype/builds/compiler/bcc.mk svneol=native#text/plain
@@ -5980,6 +6008,7 @@ src/other/freetype/builds/mac/FreeType.ppc_carbon.make.txt svneol=native#text/pl
 src/other/freetype/builds/mac/FreeType.ppc_classic.make.txt svneol=native#text/plain
 src/other/freetype/builds/mac/README svneol=native#text/plain
 src/other/freetype/builds/mac/ascii2mpw.py svneol=native#text/plain
+src/other/freetype/builds/mac/freetype-Info.plist svneol=native#text/plain
 src/other/freetype/builds/mac/ftlib.prj.xml svneol=native#text/xml
 src/other/freetype/builds/mac/ftmac.c svneol=native#text/plain
 src/other/freetype/builds/modules.mk svneol=native#text/plain
@@ -6033,6 +6062,7 @@ src/other/freetype/builds/windows/vc2008/freetype.sln svneol=CRLF#text/plain eol
 src/other/freetype/builds/windows/vc2008/freetype.vcproj svneol=CRLF#text/plain eol=crlf
 src/other/freetype/builds/windows/vc2008/index.html svneol=native#text/html
 src/other/freetype/builds/windows/vc2010/freetype.sln svneol=CRLF#text/plain eol=crlf
+src/other/freetype/builds/windows/vc2010/freetype.user.props svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/freetype.vcxproj svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/freetype.vcxproj.filters svneol=native#text/plain
 src/other/freetype/builds/windows/vc2010/index.html svneol=native#text/html
