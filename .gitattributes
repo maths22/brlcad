@@ -1746,8 +1746,6 @@ include/bu/log.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
 include/bu/malloc.h svneol=native#text/plain
 include/bu/mapped_file.h svneol=native#text/plain
-include/bu/mime.types svneol=native#text/plain
-include/bu/mime_cad.types svneol=native#text/plain
 include/bu/parallel.h svneol=native#text/plain
 include/bu/parse.h svneol=native#text/plain
 include/bu/path.h svneol=native#text/plain
@@ -2094,6 +2092,8 @@ misc/macosx/Resources/Welcome.rtfd/TXT.rtf svneol=native#text/rtf
 misc/macosx/Resources/Welcome.rtfd/brlcad_logo_tiny.png -text svneol=unset#image/png
 misc/macosx/background.png -text svneol=unset#image/png
 misc/macosx/openUp.c svneol=native#text/plain
+misc/mime.types svneol=native#text/plain
+misc/mime_cad.types svneol=native#text/plain
 misc/nsis/archer.ico -text
 misc/nsis/brlcad.ico -text svneol=unset#image/x-icon
 misc/nsis/brlcad.nsi svneol=native#text/plain
