@@ -1827,6 +1827,7 @@ include/rt/nongeom.h svneol=native#text/plain
 include/rt/op.h svneol=native#text/plain
 include/rt/pattern.h svneol=native#text/plain
 include/rt/piece.h svneol=native#text/plain
+include/rt/private.h svneol=native#text/plain
 include/rt/ray_partition.h svneol=native#text/plain
 include/rt/region.h svneol=native#text/plain
 include/rt/resource.h svneol=native#text/plain
