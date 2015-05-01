@@ -1817,6 +1817,7 @@ include/rt/anim.h svneol=native#text/plain
 include/rt/application.h svneol=native#text/plain
 include/rt/arb_edit.h svneol=native#text/plain
 include/rt/boolweave.h svneol=native#text/plain
+include/rt/cmd.h svneol=native#text/plain
 include/rt/db_diff.h svneol=native#text/plain
 include/rt/db_fullpath.h svneol=native#text/plain
 include/rt/db_instance.h svneol=native#text/plain
