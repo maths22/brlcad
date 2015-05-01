@@ -151,6 +151,7 @@ doc/docbook/articles/en/build_pattern.xml svneol=native#text/xml
 doc/docbook/articles/en/build_region.xml svneol=native#text/xml
 doc/docbook/articles/en/camo_shader.xml svneol=native#text/xml
 doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
+doc/docbook/articles/en/ged.xml svneol=native#text/xml
 doc/docbook/articles/en/images/Lee_tux.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/animtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/build_pattern_fig01.png -text
