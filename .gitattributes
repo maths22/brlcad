@@ -1715,7 +1715,6 @@ include/bn/vert_tree.h svneol=native#text/plain
 include/bn/vlist.h svneol=native#text/plain
 include/bn/wavelet.h svneol=native#text/plain
 include/bnetwork.h svneol=native#text/plain
-include/bot.h svneol=native#text/plain
 include/brep.h svneol=native#text/plain
 include/brlcad.h svneol=native#text/plain
 include/brlcad.i svneol=native#text/plain
