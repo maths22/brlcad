@@ -1707,7 +1707,6 @@ include/bn/qmath.h svneol=native#text/plain
 include/bn/rand.h svneol=native#text/plain
 include/bn/randmt.h svneol=native#text/plain
 include/bn/tabdata.h svneol=native#text/plain
-include/bn/tcl_encode.h svneol=native#text/plain
 include/bn/tol.h svneol=native#text/plain
 include/bn/vectfont.h svneol=native#text/plain
 include/bn/version.h svneol=native#text/plain
