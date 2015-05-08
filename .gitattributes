@@ -1836,6 +1836,7 @@ include/rt/directory.h svneol=native#text/plain
 include/rt/dspline.h svneol=native#text/plain
 include/rt/func.h svneol=native#text/plain
 include/rt/functab.h svneol=native#text/plain
+include/rt/geom.h svneol=native#text/plain
 include/rt/global.h svneol=native#text/plain
 include/rt/hit.h svneol=native#text/plain
 include/rt/htbl.h svneol=native#text/plain
