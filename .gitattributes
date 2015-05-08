@@ -1797,7 +1797,6 @@ include/gm/tri_tri.h svneol=native#text/plain
 include/icv.h svneol=native#text/plain
 include/libtermio.h svneol=native#text/plain
 include/light.h svneol=native#text/plain
-include/mater.h svneol=native#text/plain
 include/nmg.h svneol=native#text/plain
 include/nurb.h svneol=native#text/plain
 include/obj.h svneol=native#text/plain
