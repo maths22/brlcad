@@ -1890,7 +1890,6 @@ include/spectrum.h svneol=native#text/plain
 include/sysv.h svneol=native#text/plain
 include/tclcad.h svneol=native#text/plain
 include/tie.h svneol=native#text/plain
-include/tol.h svneol=native#text/plain
 include/vmath.h svneol=native#text/plain
 include/wdb.h svneol=native#text/plain
 misc/Bullet_Box_Chain_Demo.cpp svneol=native#text/plain
