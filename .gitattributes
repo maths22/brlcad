@@ -154,6 +154,13 @@ doc/docbook/articles/en/ebm_primitive.xml svneol=native#text/xml
 doc/docbook/articles/en/ged.xml svneol=native#text/xml
 doc/docbook/articles/en/images/Lee_tux.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/animtbl.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/az_el.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/az_el.jpg -text svneol=unset#image/jpeg
+doc/docbook/articles/en/images/az_el_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/azel.jpg -text svneol=unset#image/jpeg
+doc/docbook/articles/en/images/base.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/base.jpg -text svneol=unset#image/jpeg
+doc/docbook/articles/en/images/bool.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/build_pattern_fig01.png -text
 doc/docbook/articles/en/images/build_pattern_fig02.png -text
 doc/docbook/articles/en/images/build_pattern_fig03.png -text
@@ -165,6 +172,12 @@ doc/docbook/articles/en/images/build_region_fig01.png -text
 doc/docbook/articles/en/images/build_region_fig02.png -text
 doc/docbook/articles/en/images/build_region_fig03.png -text
 doc/docbook/articles/en/images/build_region_fig04.png -text
+doc/docbook/articles/en/images/coord-axes.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/cup_and_mug.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/cup_and_mug_small.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/cup_out+in.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/cup_outside.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/cup_w_handle.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/dagtbl.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/ebm_primitive_fig01.png -text
 doc/docbook/articles/en/images/ebm_primitive_fig02.png -text
@@ -173,8 +186,16 @@ doc/docbook/articles/en/images/ell.mpg -text svneol=unset#video/mpeg
 doc/docbook/articles/en/images/ell_sm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/ell_ssm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/equation.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/faceplate.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/faceplate_menu.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/faceplate_menu_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/faceplate_sm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/fillet.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/fillet.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/en/images/film.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/fn.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/handle.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/handle.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/en/images/matrix.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/mgedrc_fig01.png -text svneol=unset#image/png
 doc/docbook/articles/en/images/mgedrc_fig02.png -text
@@ -182,6 +203,10 @@ doc/docbook/articles/en/images/mgedrc_fig03.png -text
 doc/docbook/articles/en/images/moss.mpg -text svneol=unset#video/mpeg
 doc/docbook/articles/en/images/moss_sm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/moss_ssm.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/mug_camo.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/mug_camo.jpg -text svneol=unset#image/jpeg
+doc/docbook/articles/en/images/mug_green.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/mug_green.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/en/images/nirt_fig01.png -text
 doc/docbook/articles/en/images/nirt_fig02.png -text
 doc/docbook/articles/en/images/nirt_fig03.png -text
@@ -232,6 +257,7 @@ doc/docbook/articles/en/images/pipes_fig10.png -text
 doc/docbook/articles/en/images/pipes_fig11.png -text
 doc/docbook/articles/en/images/pipes_fig12.png -text
 doc/docbook/articles/en/images/pipes_fig13.png -text
+doc/docbook/articles/en/images/prims.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/projection_shader_fig01.png -text
 doc/docbook/articles/en/images/projection_shader_fig02.png -text
 doc/docbook/articles/en/images/projection_shader_fig03.png -text
@@ -239,6 +265,8 @@ doc/docbook/articles/en/images/projection_shader_fig04.png -text
 doc/docbook/articles/en/images/projection_shader_fig05.png -text
 doc/docbook/articles/en/images/projection_shader_fig06.png -text
 doc/docbook/articles/en/images/projection_shader_fig07.png -text
+doc/docbook/articles/en/images/rim.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/images/rim.jpg -text svneol=unset#image/jpeg
 doc/docbook/articles/en/images/tire_fig01.png -text
 doc/docbook/articles/en/images/tire_fig02.png -text
 doc/docbook/articles/en/images/tire_fig03.png -text
@@ -260,6 +288,7 @@ doc/docbook/articles/en/images/transboth.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/transboth_sm.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/v_eqn1.gif -text svneol=unset#image/gif
 doc/docbook/articles/en/images/v_eqn2.gif -text svneol=unset#image/gif
+doc/docbook/articles/en/mged.xml svneol=native#text/xml
 doc/docbook/articles/en/mgedrc.xml svneol=native#text/xml
 doc/docbook/articles/en/nirt.xml svneol=native#text/xml
 doc/docbook/articles/en/oed.xml svneol=native#text/xml
