@@ -2154,6 +2154,7 @@ misc/doxygen/Doxyfile.in svneol=native#text/plain
 misc/doxygen/common.dox svneol=native#text/plain
 misc/doxygen/images/README.txt svneol=native#text/plain
 misc/doxygen/images/rt_pattern_circ_spiral.png -text svneol=unset#image/png
+misc/doxygen/images/rt_pattern_rect_orthogrid.png -text svneol=unset#image/png
 misc/doxygen/intro.dox svneol=native#text/plain
 misc/doxygen/libanalyze.dox svneol=native#text/plain
 misc/doxygen/libbg.dox svneol=native#text/plain
