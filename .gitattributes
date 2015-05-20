@@ -1915,7 +1915,6 @@ include/rt/tol.h svneol=native#text/plain
 include/rt/tree.h svneol=native#text/plain
 include/rt/version.h svneol=native#text/plain
 include/rt/view.h svneol=native#text/plain
-include/rt/vlblock.h svneol=native#text/plain
 include/rt/vlist.h svneol=native#text/plain
 include/rt/wdb.h svneol=native#text/plain
 include/rt/xray.h svneol=native#text/plain
