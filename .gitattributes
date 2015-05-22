@@ -1780,6 +1780,7 @@ include/bu/log.h svneol=native#text/plain
 include/bu/magic.h svneol=native#text/plain
 include/bu/malloc.h svneol=native#text/plain
 include/bu/mapped_file.h svneol=native#text/plain
+include/bu/mime.h svneol=native#text/plain
 include/bu/parallel.h svneol=native#text/plain
 include/bu/parse.h svneol=native#text/plain
 include/bu/path.h svneol=native#text/plain
