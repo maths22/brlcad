@@ -4103,8 +4103,11 @@ src/lgt/trie.c svneol=native#text/plain
 src/libanalyze/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/density.c svneol=native#text/plain
 src/libanalyze/overlaps.c svneol=native#text/plain
+src/libanalyze/raydiff.c svneol=native#text/plain
 src/libanalyze/tests/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/tests/density.c svneol=native#text/plain
+src/libanalyze/tests/raydiff.c svneol=native#text/plain
+src/libanalyze/tests/raydiff.g -text
 src/libanalyze/voxels.c svneol=native#text/plain
 src/libbg/CMakeLists.txt svneol=native#text/plain
 src/libbg/bg_private.h svneol=native#text/plain
