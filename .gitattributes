@@ -13135,6 +13135,7 @@ src/util/double-asc.c svneol=native#text/plain
 src/util/dpix-pix.c svneol=native#text/plain
 src/util/dsp_add.c svneol=native#text/plain
 src/util/dsp_add4.c svneol=native#text/plain
+src/util/dsp_add_opt.c svneol=native#text/plain
 src/util/dsp_add_t.cpp svneol=native#text/plain
 src/util/fix_polysolids.c svneol=native#text/plain
 src/util/gencolor.c svneol=native#text/plain
