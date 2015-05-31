@@ -3301,7 +3301,6 @@ src/conv/g5-g4.c svneol=native#text/plain
 src/conv/gcv/CMakeLists.txt svneol=native#text/plain
 src/conv/gcv/gcv.cpp svneol=native#text/plain
 src/conv/gcv/gcv.sh svneol=native#text/x-sh
-src/conv/gcv/optionparser.h svneol=native#text/plain
 src/conv/iges/BrepHandler.cpp svneol=native#text/plain
 src/conv/iges/CMakeLists.txt svneol=native#text/plain
 src/conv/iges/PullbackCurve.cpp svneol=native#text/plain
