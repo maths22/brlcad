@@ -136,6 +136,7 @@ doc/burst/shotlines.tbl svneol=native#text/plain
 doc/burst/submenu.tbl svneol=native#text/plain
 doc/burst/title.mm svneol=native#text/plain
 doc/burst/topmenu.tbl svneol=native#text/plain
+doc/code_review.txt svneol=native#text/plain
 doc/csv_to_comgeom.txt svneol=native#text/plain
 doc/cvs.txt svneol=native#text/plain
 doc/description.txt svneol=native#text/plain
