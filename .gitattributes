@@ -694,6 +694,7 @@ doc/docbook/resources/brlcad/images/logo-vm-gears.png -text svneol=unset#image/p
 doc/docbook/resources/brlcad/images/logo-vm-gears.svg -text svneol=unset#image/svg%2Bxml
 doc/docbook/resources/brlcad/tutorial-cover-template.xsl.in svneol=native#text/plain
 doc/docbook/resources/brlcad/tutorial-template.xsl.in svneol=native#text/plain
+doc/docbook/resources/brlcad/wordpress.xsl.in svneol=native#text/plain
 doc/docbook/resources/other/README.schema svneol=native#text/plain
 doc/docbook/resources/other/docbook-5.0.tar.bz2 -text svneol=unset#application/x-bzip2
 doc/docbook/resources/other/docbookxi.nvdl svneol=native#text/xml
