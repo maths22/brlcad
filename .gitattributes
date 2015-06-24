@@ -5097,6 +5097,7 @@ src/librt/primitives/vol/vol_mirror.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.c svneol=native#text/plain
 src/librt/primitives/xxx/xxx.h svneol=native#text/plain
 src/librt/raydebug.tcl svneol=native#text/plain
+src/librt/reduce.c svneol=native#text/plain
 src/librt/regionfix.c svneol=native#text/plain
 src/librt/roots.c svneol=native#text/plain
 src/librt/screened_poisson.cpp svneol=native#text/plain
