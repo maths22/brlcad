@@ -4923,7 +4923,6 @@ src/librt/primitives/bot/btg.c svneol=native#text/plain
 src/librt/primitives/bot/btg.h svneol=native#text/plain
 src/librt/primitives/bot/btgf.c svneol=native#text/plain
 src/librt/primitives/bot/g_bot_include.c svneol=native#text/plain
-src/librt/primitives/bot/gct_decimation/auxiliary/CMakeLists.txt svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/cc.c svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/cc.h svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/ccmergesort.h svneol=native#text/plain
