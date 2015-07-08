@@ -4861,6 +4861,7 @@ src/liboptical/turb.c svneol=native#text/plain
 src/liboptical/vers.c svneol=native#text/plain
 src/liboptical/wray.c svneol=native#text/plain
 src/libpc/CMakeLists.txt svneol=native#text/plain
+src/libpc/README svneol=native#text/plain
 src/libpc/solver_test.cpp svneol=native#text/plain
 src/libpc/vm_test.cpp svneol=native#text/plain
 src/libpkg/CMakeLists.txt svneol=native#text/plain
