@@ -5201,6 +5201,7 @@ src/libsysv/strtok.c svneol=native#text/plain
 src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/CMakeLists.txt svneol=native#text/plain
 src/libtclcad/cmdhist_obj.c svneol=native#text/plain
+src/libtclcad/libfuncs.c svneol=native#text/plain
 src/libtclcad/tclcad.c svneol=native#text/plain
 src/libtclcad/tclcadAutoPath.c svneol=native#text/plain
 src/libtclcad/tclcad_eval.c svneol=native#text/plain
