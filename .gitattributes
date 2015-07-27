@@ -4954,7 +4954,6 @@ src/librt/primitives/bot/g_bot_include.c svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/cc.h svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/cpuconfig.h svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/cpuinfo.h svneol=native#text/plain
-src/librt/primitives/bot/gct_decimation/auxiliary/math3d.h svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/mm.c svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/mm.h svneol=native#text/plain
 src/librt/primitives/bot/gct_decimation/auxiliary/mmatomic.h svneol=native#text/plain
