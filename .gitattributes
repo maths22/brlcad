@@ -4120,6 +4120,7 @@ src/lgt/trie.c svneol=native#text/plain
 src/libanalyze/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/analyze_private.h svneol=native#text/plain
 src/libanalyze/density.c svneol=native#text/plain
+src/libanalyze/find_subtracted_shapes.cpp svneol=native#text/plain
 src/libanalyze/inside.c svneol=native#text/plain
 src/libanalyze/overlaps.c svneol=native#text/plain
 src/libanalyze/raydiff.c svneol=native#text/plain
