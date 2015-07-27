@@ -4128,7 +4128,7 @@ src/libanalyze/tests/CMakeLists.txt svneol=native#text/plain
 src/libanalyze/tests/density.c svneol=native#text/plain
 src/libanalyze/tests/raydiff.c svneol=native#text/plain
 src/libanalyze/tests/raydiff.g -text
-src/libanalyze/util.c svneol=native#text/plain
+src/libanalyze/util.cpp svneol=native#text/plain
 src/libanalyze/voxels.c svneol=native#text/plain
 src/libbg/CMakeLists.txt svneol=native#text/plain
 src/libbg/bg_private.h svneol=native#text/plain
