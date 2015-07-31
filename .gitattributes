@@ -4584,7 +4584,6 @@ src/libged/get_obj_bounds.c svneol=native#text/plain
 src/libged/get_solid_kp.c svneol=native#text/plain
 src/libged/get_type.c svneol=native#text/plain
 src/libged/glob.c svneol=native#text/plain
-src/libged/globals.c svneol=native#text/plain
 src/libged/gqa.c svneol=native#text/plain
 src/libged/grid.c svneol=native#text/plain
 src/libged/grid2model_lu.c svneol=native#text/plain
