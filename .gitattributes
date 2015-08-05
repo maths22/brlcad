@@ -5012,6 +5012,7 @@ src/librt/primitives/ebm/ebm_brep.cpp svneol=native#text/plain
 src/librt/primitives/ebm/ebm_mirror.c svneol=native#text/plain
 src/librt/primitives/ehy/ehy.c svneol=native#text/plain
 src/librt/primitives/ehy/ehy_brep.cpp svneol=native#text/plain
+src/librt/primitives/ehy/ehy_shot.cl svneol=native#text/plain
 src/librt/primitives/ell/ell.c svneol=native#text/plain
 src/librt/primitives/ell/ell_brep.cpp svneol=native#text/plain
 src/librt/primitives/ell/ell_mirror.c svneol=native#text/plain
