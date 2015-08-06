@@ -5133,6 +5133,7 @@ src/librt/primitives/superell/superell.c svneol=native#text/plain
 src/librt/primitives/superell/superell_brep.cpp svneol=native#text/plain
 src/librt/primitives/superell/superell_mirror.c svneol=native#text/plain
 src/librt/primitives/table.c svneol=native#text/plain
+src/librt/primitives/table.cl svneol=native#text/plain
 src/librt/primitives/tgc/tgc.c svneol=native#text/plain
 src/librt/primitives/tgc/tgc_brep.cpp svneol=native#text/plain
 src/librt/primitives/tgc/tgc_mirror.c svneol=native#text/plain
