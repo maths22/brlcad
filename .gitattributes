@@ -5002,6 +5002,7 @@ src/librt/primitives/bspline/nurb_util.c svneol=native#text/plain
 src/librt/primitives/bspline/nurb_xsplit.c svneol=native#text/plain
 src/librt/primitives/cline/cline.c svneol=native#text/plain
 src/librt/primitives/cline/cline_brep.cpp svneol=native#text/plain
+src/librt/primitives/common.cl svneol=native#text/plain
 src/librt/primitives/datum/datum.c svneol=native#text/plain
 src/librt/primitives/datum/datum.h svneol=native#text/plain
 src/librt/primitives/dsp/dsp.c svneol=native#text/plain
