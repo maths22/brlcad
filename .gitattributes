@@ -5121,6 +5121,7 @@ src/librt/primitives/rhc/rhc_mirror.c svneol=native#text/plain
 src/librt/primitives/rpc/rpc.c svneol=native#text/plain
 src/librt/primitives/rpc/rpc_brep.cpp svneol=native#text/plain
 src/librt/primitives/rpc/rpc_mirror.c svneol=native#text/plain
+src/librt/primitives/scan.cl svneol=native#text/plain
 src/librt/primitives/sketch/sketch.c svneol=native#text/plain
 src/librt/primitives/sketch/sketch_brep.cpp svneol=native#text/plain
 src/librt/primitives/sketch/sketch_tess.cpp svneol=native#text/plain
