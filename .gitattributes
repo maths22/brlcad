@@ -883,6 +883,7 @@ doc/docbook/system/man1/en/pixbustup.xml svneol=native#text/xml
 doc/docbook/system/man1/en/pixclump.xml svneol=native#text/xml
 doc/docbook/system/man1/en/pixcmp.xml svneol=native#text/xml
 doc/docbook/system/man1/en/pixcolors.xml svneol=native#text/xml
+doc/docbook/system/man1/en/pixcrop.xml svneol=native#text/plain
 doc/docbook/system/man1/en/pixcut.xml svneol=native#text/xml
 doc/docbook/system/man1/en/pixdiff.xml svneol=native#text/xml
 doc/docbook/system/man1/en/pixdsplit.xml svneol=native#text/xml
