@@ -13279,6 +13279,7 @@ src/util/pixbustup.c svneol=native#text/plain
 src/util/pixclump.c svneol=native#text/plain
 src/util/pixcolors.c svneol=native#text/plain
 src/util/pixcount.c svneol=native#text/plain
+src/util/pixcrop.c svneol=native#text/plain
 src/util/pixcut.c svneol=native#text/plain
 src/util/pixdiff.c svneol=native#text/plain
 src/util/pixdsplit.c svneol=native#text/plain
