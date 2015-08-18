@@ -4641,6 +4641,7 @@ src/libged/nmg_fix_normals.c svneol=native#text/plain
 src/libged/nmg_kill_f.c svneol=native#text/plain
 src/libged/nmg_kill_v.c svneol=native#text/plain
 src/libged/nmg_mm.c svneol=native#text/plain
+src/libged/nmg_move_v.c svneol=native#text/plain
 src/libged/nmg_simplify.c svneol=native#text/plain
 src/libged/ocenter.c svneol=native#text/plain
 src/libged/open.c svneol=native#text/plain
