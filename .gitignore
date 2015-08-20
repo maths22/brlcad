@@ -1,4 +1,5 @@
 /bin
 /build
 /lib
+src/rt/.do.c.swo
 src/rt/.view.c.swo
