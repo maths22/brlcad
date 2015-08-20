@@ -5380,6 +5380,7 @@ src/other/PoissonRecon/Src/PlyFile.cpp svneol=native#text/plain
 src/other/PoissonRecon/Src/PointStream.h svneol=native#text/plain
 src/other/PoissonRecon/Src/PointStream.inl svneol=native#text/plain
 src/other/PoissonRecon/Src/PoissonRecon.cpp svneol=native#text/plain
+src/other/PoissonRecon/Src/PoissonRecon_new.cpp svneol=native#text/plain
 src/other/PoissonRecon/Src/Polynomial.h svneol=native#text/plain
 src/other/PoissonRecon/Src/Polynomial.inl svneol=native#text/plain
 src/other/PoissonRecon/Src/SPR.cpp svneol=native#text/plain
