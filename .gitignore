@@ -1,5 +1,6 @@
 /bin
 /build
 /lib
+src/librt/primitives/.rt.cl.swo
 src/rt/.do.c.swo
 src/rt/.view.c.swo
