@@ -5206,7 +5206,6 @@ src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/strtok.c svneol=native#text/plain
-src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/CMakeLists.txt svneol=native#text/plain
 src/libtclcad/cmdhist_obj.c svneol=native#text/plain
 src/libtclcad/libfuncs.c svneol=native#text/plain
