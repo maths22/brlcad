@@ -4233,6 +4233,9 @@ src/libbrep/ssx_event.cpp svneol=native#text/plain
 src/libbrep/surface_tree_queue_tests.patch svneol=native#text/plain
 src/libbrep/test_curve_intersect.cpp svneol=native#text/plain
 src/libbrep/test_point_intersect.cpp svneol=native#text/plain
+src/libbrep/tests/CMakeLists.txt svneol=native#text/plain
+src/libbrep/tests/brep_csg_1.g -text
+src/libbrep/tests/brep_csg_2.g -text
 src/libbu/CMakeLists.txt svneol=native#text/plain
 src/libbu/affinity.c svneol=native#text/plain
 src/libbu/argv.c svneol=native#text/plain
@@ -4640,6 +4643,7 @@ src/libged/nmg_collapse.c svneol=native#text/plain
 src/libged/nmg_fix_normals.c svneol=native#text/plain
 src/libged/nmg_kill_f.c svneol=native#text/plain
 src/libged/nmg_kill_v.c svneol=native#text/plain
+src/libged/nmg_make_v.c svneol=native#text/plain
 src/libged/nmg_mm.c svneol=native#text/plain
 src/libged/nmg_move_v.c svneol=native#text/plain
 src/libged/nmg_simplify.c svneol=native#text/plain
@@ -5205,7 +5209,6 @@ src/libsysv/strchr.c svneol=native#text/plain
 src/libsysv/strdup.c svneol=native#text/plain
 src/libsysv/strsep.c svneol=native#text/plain
 src/libsysv/strtok.c svneol=native#text/plain
-src/libsysv/tcl.c svneol=native#text/plain
 src/libtclcad/CMakeLists.txt svneol=native#text/plain
 src/libtclcad/cmdhist_obj.c svneol=native#text/plain
 src/libtclcad/libfuncs.c svneol=native#text/plain
