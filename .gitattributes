@@ -4234,8 +4234,7 @@ src/libbrep/surface_tree_queue_tests.patch svneol=native#text/plain
 src/libbrep/test_curve_intersect.cpp svneol=native#text/plain
 src/libbrep/test_point_intersect.cpp svneol=native#text/plain
 src/libbrep/tests/CMakeLists.txt svneol=native#text/plain
-src/libbrep/tests/brep_csg_1.g -text
-src/libbrep/tests/brep_csg_2.g -text
+src/libbrep/tests/nurbs_csg.g -text
 src/libbu/CMakeLists.txt svneol=native#text/plain
 src/libbu/affinity.c svneol=native#text/plain
 src/libbu/argv.c svneol=native#text/plain
