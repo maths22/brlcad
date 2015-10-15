@@ -4225,6 +4225,7 @@ src/libbrep/shape_recognition.cpp svneol=native#text/plain
 src/libbrep/shape_recognition.h svneol=native#text/plain
 src/libbrep/shape_recognition_cone.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_cylinder.cpp svneol=native#text/plain
+src/libbrep/shape_recognition_pipeline.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_planar.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_sphere.cpp svneol=native#text/plain
 src/libbrep/shape_recognition_torus.cpp svneol=native#text/plain
