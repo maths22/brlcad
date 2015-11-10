@@ -5401,6 +5401,7 @@ src/other/URToolkit/cnv/CMakeLists.txt svneol=native#text/plain
 src/other/URToolkit/cnv/Makefile.am svneol=native#text/plain
 src/other/URToolkit/cnv/README svneol=native#text/plain
 src/other/URToolkit/cnv/aliastorle.c svneol=native#text/plain
+src/other/URToolkit/cnv/config.h.in svneol=native#text/plain
 src/other/URToolkit/cnv/cubitorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/giftorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/graytorle.c svneol=native#text/plain
@@ -5442,7 +5443,6 @@ src/other/URToolkit/cnv/tifftorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/vcrtorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/wasatchrle.c svneol=native#text/plain
 src/other/URToolkit/cnv/xbmtorle.c svneol=native#text/plain
-src/other/URToolkit/config.h.in svneol=native#text/plain
 src/other/URToolkit/copyright -text
 src/other/URToolkit/man/CMakeLists.txt svneol=native#text/plain
 src/other/URToolkit/man/Makefile.am svneol=native#text/plain
