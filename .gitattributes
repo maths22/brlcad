@@ -5442,6 +5442,7 @@ src/other/URToolkit/cnv/tifftorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/vcrtorle.c svneol=native#text/plain
 src/other/URToolkit/cnv/wasatchrle.c svneol=native#text/plain
 src/other/URToolkit/cnv/xbmtorle.c svneol=native#text/plain
+src/other/URToolkit/config.h.in svneol=native#text/plain
 src/other/URToolkit/copyright -text
 src/other/URToolkit/man/CMakeLists.txt svneol=native#text/plain
 src/other/URToolkit/man/Makefile.am svneol=native#text/plain
