@@ -9,6 +9,7 @@
 /INSTALL svneol=native#text/plain
 /NEWS svneol=native#text/plain
 /README svneol=native#text/plain
+/README.binary_attributes svneol=native#text/plain
 /TODO svneol=native#text/plain
 bench/CMakeLists.txt svneol=native#text/plain
 bench/lgt.sh svneol=native#text/x-sh
