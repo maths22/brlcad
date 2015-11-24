@@ -2030,6 +2030,7 @@ misc/CMake/distcheck_repo_verify.cmake.in svneol=native#text/plain
 misc/CMake/distcheck_target.cmake.in svneol=native#text/plain
 misc/CMake/distclean.cmake.in svneol=native#text/plain
 misc/CMake/fop.cmake.in svneol=native#text/plain
+misc/CMake/make_check_msg.cmake svneol=native#text/plain
 misc/CMake/msv.cmake.in svneol=native#text/plain
 misc/CMake/multiconfig_path_clean.cmake.in svneol=native#text/plain
 misc/CMake/multiconfig_path_read.cmake.in svneol=native#text/plain
