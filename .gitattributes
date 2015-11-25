@@ -13253,6 +13253,7 @@ src/util/dsp_add_t.cpp svneol=native#text/plain
 src/util/fix_polysolids.c svneol=native#text/plain
 src/util/gencolor.c svneol=native#text/plain
 src/util/hex.c svneol=native#text/plain
+src/util/icv.cpp svneol=native#text/plain
 src/util/imgdims.c svneol=native#text/plain
 src/util/loop.c svneol=native#text/plain
 src/util/lowp.c svneol=native#text/plain
