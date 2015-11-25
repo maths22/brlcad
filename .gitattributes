@@ -5208,7 +5208,6 @@ src/librtserver/rtserver.c svneol=native#text/plain
 src/librtserver/rtserverTest.c svneol=native#text/plain
 src/libsysv/CMakeLists.txt svneol=native#text/plain
 src/libsysv/setenv.c svneol=native#text/plain
-src/libsysv/strsep.c svneol=native#text/plain
 src/libtclcad/CMakeLists.txt svneol=native#text/plain
 src/libtclcad/cmdhist_obj.c svneol=native#text/plain
 src/libtclcad/libfuncs.c svneol=native#text/plain
