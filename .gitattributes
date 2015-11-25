@@ -2073,6 +2073,7 @@ misc/auto-man-page/auto-man-progs.txt svneol=native#text/plain
 misc/batch-indent-region.el -text
 misc/brlcad-config.in svneol=native#text/plain
 misc/brlcad.spec.in svneol=native#text/plain
+misc/clang-static-analyzer-run.sh svneol=native#text/x-sh
 misc/debian/archer.desktop svneol=native#text/plain
 misc/debian/brlcad-db.desktop svneol=native#text/plain
 misc/debian/brlcad-doc-animation.desktop svneol=native#text/plain
