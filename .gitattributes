@@ -3110,7 +3110,6 @@ sh/CMakeLists.txt svneol=native#text/plain
 sh/cmp.sh svneol=native#text/x-sh
 sh/conversion.sh svneol=native#text/x-sh
 sh/copyright.sh svneol=native#text/x-sh
-sh/distcheck_screen.sh svneol=native#text/x-sh
 sh/elapsed.sh svneol=native#text/x-sh
 sh/enumerate.sh svneol=native#text/x-sh
 sh/facetall.sh svneol=native#text/x-sh
