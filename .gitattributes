@@ -3125,7 +3125,6 @@ sh/news2tracker.sh svneol=native#text/x-sh
 sh/orbit.sh -text svneol=unset#text/x-sh
 sh/pixinfo.sh svneol=native#text/x-sh
 sh/show.sh svneol=native#text/x-sh
-sh/shtool -text
 sh/template.sh svneol=native#text/x-sh
 sh/tracker.sh svneol=native#text/x-sh
 sh/ws.sh svneol=native#text/x-sh
