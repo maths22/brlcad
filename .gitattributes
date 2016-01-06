@@ -114,6 +114,7 @@ doc/README.Solaris svneol=native#text/plain
 doc/README.VAX svneol=native#text/plain
 doc/README.Windows svneol=native#text/plain
 doc/STARTERS svneol=native#text/plain
+doc/STRATEGY svneol=native#text/plain
 doc/TODO.BREP svneol=native#text/plain
 doc/TODO.shaded_displays svneol=native#text/plain
 doc/anim.txt svneol=native#text/plain
