@@ -1818,7 +1818,6 @@ include/bu/vfont.h svneol=native#text/plain
 include/bu/vlb.h svneol=native#text/plain
 include/bu/vls.h svneol=native#text/plain
 include/common.h svneol=native#text/plain
-include/conf.h svneol=native#text/plain
 include/conf/BrlcadConfig.tmpl svneol=native#text/plain
 include/conf/CMakeLists.txt svneol=native#text/plain
 include/conf/MAJOR -text
