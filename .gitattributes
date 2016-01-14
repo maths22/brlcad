@@ -4457,6 +4457,7 @@ src/libgcv/bot_solidity.c svneol=native#text/plain
 src/libgcv/bottess.c svneol=native#text/plain
 src/libgcv/facetize.c svneol=native#text/plain
 src/libgcv/gcv.c svneol=native#text/plain
+src/libgcv/plugins/CMakeLists.txt svneol=native#text/plain
 src/libgcv/plugins/decimate/CMakeLists.txt svneol=native#text/plain
 src/libgcv/plugins/decimate/decimate.c svneol=native#text/plain
 src/libgcv/plugins/fastgen4/CMakeLists.txt svneol=native#text/plain
