@@ -4916,7 +4916,6 @@ src/libpkg/example/client.c svneol=native#text/plain
 src/libpkg/example/ntp.h svneol=native#text/plain
 src/libpkg/example/server.c svneol=native#text/plain
 src/libpkg/pkg.c svneol=native#text/plain
-src/libpkg/tcl.c svneol=native#text/plain
 src/libpkg/tpkg.c svneol=native#text/plain
 src/libpkg/vers.c svneol=native#text/plain
 src/librt/CMakeLists.txt svneol=native#text/plain
