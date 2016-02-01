@@ -1842,6 +1842,7 @@ include/dm.h svneol=native#text/plain
 include/dm/CMakeLists.txt svneol=native#text/plain
 include/dm/bview.h svneol=native#text/plain
 include/dm/defines.h svneol=native#text/plain
+include/dm/dm-design.h svneol=native#text/plain
 include/dm/dm_xvars.h svneol=native#text/plain
 include/fb.h svneol=native#text/plain
 include/fb/CMakeLists.txt svneol=native#text/plain
