@@ -3148,7 +3148,6 @@ sh/orbit.sh -text svneol=unset#text/x-sh
 sh/pixinfo.sh svneol=native#text/x-sh
 sh/show.sh svneol=native#text/x-sh
 sh/template.sh svneol=native#text/x-sh
-sh/tracker.sh svneol=native#text/x-sh
 sh/ws.sh svneol=native#text/x-sh
 src/CMakeLists.txt svneol=native#text/plain
 src/README svneol=native#text/plain
