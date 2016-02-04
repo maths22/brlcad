@@ -2326,7 +2326,6 @@ misc/tools/astyle/README svneol=native#text/plain
 misc/tools/astyle/astyle.h svneol=native#text/plain
 misc/tools/astyle/astyle_main.cpp svneol=native#text/plain
 misc/tools/astyle/astyle_main.h svneol=native#text/plain
-misc/tools/astyle/gpl-3.0.txt svneol=native#text/plain
 misc/tools/dom2dox.dist svneol=native#text/plain
 misc/tools/dom2dox/CMake/FindLEMON.cmake svneol=native#text/plain
 misc/tools/dom2dox/CMake/FindPERPLEX.cmake svneol=native#text/plain
