@@ -4965,7 +4965,6 @@ src/librt/globals.c svneol=native#text/plain
 src/librt/htbl.c svneol=native#text/plain
 src/librt/librt_private.h svneol=native#text/plain
 src/librt/ls.c svneol=native#text/plain
-src/librt/many.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
 src/librt/mkbundle.c svneol=native#text/plain
