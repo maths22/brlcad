@@ -4965,7 +4965,6 @@ src/librt/ls.c svneol=native#text/plain
 src/librt/mater.c svneol=native#text/plain
 src/librt/memalloc.c svneol=native#text/plain
 src/librt/mkbundle.c svneol=native#text/plain
-src/librt/namegen.c svneol=native#text/plain
 src/librt/nurb_example.c svneol=native#text/plain
 src/librt/op.c svneol=native#text/plain
 src/librt/oslo_calc.c svneol=native#text/plain
