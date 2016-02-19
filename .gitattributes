@@ -2991,17 +2991,19 @@ regress/dsp/run-dsp-case-set-0.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-1.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-2.sh svneol=native#text/x-sh
 regress/dsp/run-dsp-case-set-3.sh svneol=native#text/x-sh
-regress/fastgen.sh svneol=native#text/x-sh
-regress/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
 regress/flawfinder.sh svneol=native#text/x-sh
 regress/g-dot.sh svneol=native#text/x-sh
 regress/g-nff.sh svneol=native#text/x-sh
 regress/gcv/CMakeLists.txt svneol=native#text/plain
 regress/gcv/README svneol=native#text/plain
+regress/gcv/dem/CMakeLists.txt svneol=native#text/plain
 regress/gcv/dem/README svneol=native#text/plain
-regress/gcv/dem/hawaii-c-control.tar.bz2 -text
 regress/gcv/dem/hawaii-c.tar.bz2 -text
 regress/gcv/dem/regress-dem.cmake.in svneol=native#text/plain
+regress/gcv/fastgen/CMakeLists.txt svneol=native#text/plain
+regress/gcv/fastgen/fastgen_box.fast4 -text svneol=unset#application/octet-stream
+regress/gcv/fastgen/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
+regress/gcv/fastgen/regress-fastgen.cmake.in svneol=native#text/plain
 regress/gqa.sh svneol=native#text/x-sh
 regress/iges.sh svneol=native#text/x-sh
 regress/library.sh svneol=native#text/x-sh
