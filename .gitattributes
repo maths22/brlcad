@@ -3007,7 +3007,6 @@ regress/iges.sh svneol=native#text/x-sh
 regress/library.sh svneol=native#text/x-sh
 regress/lights.sh svneol=native#text/x-sh
 regress/lights_ref.asc svneol=native#text/plain
-regress/main.sh svneol=native#text/x-sh
 regress/master_fetch.sh svneol=native#text/x-sh
 regress/master_prep.sh svneol=native#text/x-sh
 regress/mged.sh svneol=native#text/x-sh
@@ -3097,7 +3096,6 @@ regress/mged/zoom.mged svneol=native#text/plain
 regress/mged_test.sh svneol=native#text/x-sh
 regress/moss.sh svneol=native#text/x-sh
 regress/mosspix.asc svneol=native#text/plain
-regress/nightly.sh svneol=native#text/x-sh
 regress/nirt.sh svneol=native#text/x-sh
 regress/nurbs/brep-3dm.tar.bz2 -text
 regress/quote.sh svneol=native#text/x-sh
