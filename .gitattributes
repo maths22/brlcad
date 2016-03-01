@@ -3010,6 +3010,7 @@ regress/icv/m35.bw.tbz2 -text
 regress/icv/m35.dpix.tbz2 -text
 regress/icv/m35.png -text svneol=unset#image/png
 regress/icv/m35.ppm.tbz2 -text
+regress/icv/m35_bw.pix.tbz2 -text
 regress/icv/m35_bw.png -text svneol=unset#image/png
 regress/icv/regress-icv_export.cmake.in svneol=native#text/plain
 regress/icv/regress-icv_import.cmake.in svneol=native#text/plain
