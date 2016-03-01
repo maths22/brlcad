@@ -3006,8 +3006,9 @@ regress/gcv/fastgen_dos.fast4 svneol=CRLF#text/plain eol=crlf
 regress/gcv/regress-fastgen.cmake.in svneol=native#text/plain
 regress/gqa.sh svneol=native#text/x-sh
 regress/icv/CMakeLists.txt svneol=native#text/plain
+regress/icv/m35.dpix.tbz2 -text
 regress/icv/m35.png -text svneol=unset#image/png
-regress/icv/m35.ppm -text svneol=unset#image/x-portable-pixmap
+regress/icv/m35.ppm.tbz2 -text
 regress/icv/regress-icv_export.cmake.in svneol=native#text/plain
 regress/icv/regress-icv_import.cmake.in svneol=native#text/plain
 regress/iges.sh svneol=native#text/x-sh
