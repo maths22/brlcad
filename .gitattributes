@@ -13152,6 +13152,7 @@ src/tclscripts/rtwizard/lib/PictureTypeD.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeE.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/PictureTypeF.itcl svneol=native#text/plain
 src/tclscripts/rtwizard/lib/Wizard.itk svneol=native#text/plain
+src/tclscripts/rtwizard/main.c svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard svneol=native#text/plain
 src/tclscripts/rtwizard/rtwizard.bat svneol=CRLF#text/plain eol=crlf
 src/tclscripts/sdialogs/CMakeLists.txt svneol=native#text/plain
